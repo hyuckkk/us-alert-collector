@@ -1,7 +1,11 @@
-"""us-alert-worker 관리 경로 호출. dry-run 이면 아무것도 쓰지 않고 '처음 본 항목'으로만 대답한다."""
+"""us-alert-worker 관리 경로 호출.
+
+dry-run 이면 Worker 에 아무것도 쓰지 않는다. 대기열·행사 목록은 메모리로 흉내 내서 실행 흐름 전체를 시험할 수 있게 한다.
+"""
 from __future__ import annotations
 
 import os
+from datetime import datetime, timezone
 
 import httpx
 
@@ -13,6 +17,7 @@ class WorkerAPI:
         self.dry_run = dry_run or not (url and key)
         self.url = (url or "").rstrip("/")
         self.client = client or httpx.Client(timeout=60, headers={"authorization": f"Bearer {key}", "user-agent": UA})
+        self._mem: dict[str, dict] = {}  # dry-run 대기열
 
     @classmethod
     def from_env(cls, dry_run: bool = False) -> "WorkerAPI":
@@ -28,60 +33,132 @@ class WorkerAPI:
         r.raise_for_status()
         return r.json()
 
-    def seen_check(self, items: list[dict]) -> tuple[set, set]:
+    # ------------------------------------------------ 처리 대기열
+    def queue_check(self, items: list[dict]) -> tuple[set, set]:
         if self.dry_run:
-            return {x["key"] for x in items}, set()
+            new = {x["key"] for x in items if x["key"] not in self._mem}
+            changed = {x["key"] for x in items if x["key"] in self._mem and self._mem[x["key"]]["hash"] != x["hash"]}
+            return new, changed
         new, changed = set(), set()
-        for i in range(0, len(items), 300):
-            r = self._post("/admin/seen", {"op": "check", "items": items[i:i + 300]})
+        for i in range(0, len(items), 400):
+            r = self._post("/admin/queue", {"op": "check", "items": [{"key": x["key"], "hash": x["hash"]} for x in items[i:i + 400]]})
             new.update(r["new"])
             changed.update(r["changed"])
         return new, changed
 
-    def seen_mark(self, items: list[dict]) -> None:
+    def queue_add(self, items: list[dict]) -> int:
         if self.dry_run:
+            now = datetime.now(timezone.utc).isoformat()
+            for x in items:
+                self._mem[x["key"]] = {**x, "status": "queued", "attempts": 0, "result": None, "first_seen": now}
+            return len(items)
+        n = 0
+        for i in range(0, len(items), 25):
+            n += self._post("/admin/queue", {"op": "add", "items": items[i:i + 25]}).get("written", 0)
+        return n
+
+    def queue_take(self, limit: int) -> list[dict]:
+        if self.dry_run:
+            rows = [r for r in self._mem.values() if r["status"] in ("queued", "extracted")]
+            rows.sort(key=lambda r: (r["status"] != "extracted", -r.get("priority", 0), r["first_seen"]))
+            return rows[:limit]
+        out: list[dict] = []
+        while len(out) < limit:
+            got = self._post("/admin/queue", {"op": "take", "limit": min(60, limit - len(out))})["items"]
+            got = [g for g in got if g["key"] not in {o["key"] for o in out}]
+            if not got:
+                break
+            out += got
+            if len(got) < 60:
+                break
+        return out
+
+    def queue_result(self, items: list[dict]) -> None:
+        if self.dry_run:
+            for x in items:
+                r = self._mem.get(x["key"])
+                if r is None:
+                    continue
+                if x["status"] == "retry":
+                    r["attempts"] += 1
+                    r["status"] = "stuck" if r["attempts"] >= 6 else "queued"
+                else:
+                    r["status"], r["result"] = x["status"], x.get("result")
             return
-        for i in range(0, len(items), 300):
-            self._post("/admin/seen", {"op": "mark", "items": items[i:i + 300]})
+        for i in range(0, len(items), 100):
+            self._post("/admin/queue", {"op": "result", "items": items[i:i + 100]})
+
+    def queue_stats(self) -> dict:
+        if self.dry_run:
+            st = [r["status"] for r in self._mem.values()]
+            return {"queued": st.count("queued"), "extracted": st.count("extracted"), "stuck": st.count("stuck"), "oldest_queued_hours": 0}
+        return self._post("/admin/queue", {"op": "stats"})
+
+    # ------------------------------------------------ 행사·감시·상태
+    def event_index(self) -> list[dict]:
+        return [] if self.dry_run else self._get("/admin/event-index").get("events", [])
 
     def enqueue(self, events: list[dict]) -> dict:
-        tot: dict = {"new": 0, "changed": 0, "same": 0, "outbox": 0, "accepted": 0, "skipped": {}}
+        tot: dict = {"new": 0, "changed": 0, "same": 0, "outbox": 0, "accepted": 0, "watch": 0, "skipped": {}}
         if self.dry_run:
             return {**tot, "dry_run": True, "accepted": len(events)}
         for i in range(0, len(events), 10):
             r = self._post("/admin/enqueue", {"events": events[i:i + 10]})
-            for k in ("new", "changed", "same", "outbox", "accepted"):
+            for k in ("new", "changed", "same", "outbox", "accepted", "watch"):
                 tot[k] += r.get(k, 0)
             for k, v in r.get("skipped", {}).items():
                 tot["skipped"][k] = tot["skipped"].get(k, 0) + v
         return tot
 
+    def watch_due(self, limit: int) -> list[dict]:
+        return [] if self.dry_run else self._post("/admin/watch", {"op": "due", "limit": limit}).get("items", [])
+
+    def watch_update(self, items: list[dict]) -> None:
+        if not self.dry_run and items:
+            self._post("/admin/watch", {"op": "update", "items": items})
+
+    def ai_health(self) -> dict:
+        return {} if self.dry_run else self._get("/admin/ai-health")
+
+    def unverified(self, items: list[dict], outage_hours: int, pending: int) -> dict:
+        return {"dry_run": True} if self.dry_run else self._post("/admin/unverified", {"items": items, "outage_hours": outage_hours, "pending": pending})
+
     def dispatch(self) -> dict:
         if self.dry_run:
             return {"dry_run": True}
-        tot = {"sent": 0, "failed": 0, "deferred": 0}
+        tot = {"sent": 0, "failed": 0, "deferred": 0, "uncertain": 0, "expired": 0}
         for _ in range(5):
             r = self._post("/admin/dispatch", {})
             for k in tot:
                 tot[k] += r.get(k, 0)
-            if r.get("sent", 0) + r.get("failed", 0) == 0 or r.get("pending", 0) <= r.get("deferred", 0):
+            if r.get("sent", 0) + r.get("failed", 0) + r.get("uncertain", 0) == 0:
                 break
         return tot
+
+    def digest(self) -> dict:
+        return {"dry_run": True} if self.dry_run else self._post("/admin/digest", {})
 
     def month_usd(self) -> float:
         return 0.0 if self.dry_run else float(self._get("/admin/usage").get("usd", 0))
 
-    def add_usage(self, by_model: dict) -> None:
+    def add_usage(self, by_model: dict, budget: float) -> None:
         if self.dry_run:
             return
+        keys = ("input_tokens", "output_tokens", "cache_write_tokens", "cache_read_tokens", "usd", "calls", "searches", "errors")
         for model, m in by_model.items():
-            self._post("/admin/usage", {"model": model, **{k: m[k] for k in ("input_tokens", "output_tokens", "usd", "calls")}})
+            self._post("/admin/usage", {"model": model, "budget": budget, **{k: m.get(k, 0) for k in keys}})
 
     def sources_extra(self) -> list[dict]:
         return [] if self.dry_run else self._get("/admin/sources-extra").get("sources", [])
 
     def candidates(self, cands: list[dict]) -> dict:
         return {"dry_run": True} if self.dry_run or not cands else self._post("/admin/candidates", {"candidates": cands})
+
+    def candidates_unverified(self) -> list[dict]:
+        return [] if self.dry_run else self._post("/admin/candidates", {"op": "unverified"}).get("items", [])
+
+    def candidates_verify(self, results: list[dict]) -> dict:
+        return {"dry_run": True} if self.dry_run or not results else self._post("/admin/candidates", {"op": "verify", "results": results})
 
     def run_log(self, body: dict) -> dict:
         return {"dry_run": True} if self.dry_run else self._post("/admin/run-log", body)

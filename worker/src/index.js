@@ -170,7 +170,7 @@ const HELP_ALL = [
   "/quiet 22 7 — 알림 정지 시간(현지 22시~7시)",
   "/tz America/Denver — 내 시간대",
   "/city Westminster — 이동시간 기준 도시(주소는 넣지 마세요)",
-  "/from 2027-01-01 — 이 날짜 이후 행사만 받기 (/from off 로 해제)",
+  "/from 2027-07-01 — 이 날짜 이후 행사만 받기 (/from off 로 해제)",
   "/digest daily|weekly|off — 요약 방식 · /digest 8 — 요약 받을 시각(현지)",
   "/myid — 내 텔레그램 ID",
 ].join("\n");
@@ -217,7 +217,7 @@ async function personCommand(env, fromId, cmd, args) {
   }
   if (cmd === "/from") {
     if (args[0] === "off") { await set("available_from", null); return "참가 가능 시작일 해제: 지금 열리는 행사부터 받습니다."; }
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(args[0] || "")) return "형식: /from 2027-01-01 (해제: /from off)";
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(args[0] || "")) return "형식: /from 2027-07-01 (해제: /from off)";
     await set("available_from", args[0]);
     return `참가 가능 시작일: ${args[0]} (그 이전 행사는 연례행사 예고로만 받습니다)`;
   }

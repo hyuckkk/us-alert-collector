@@ -2,14 +2,17 @@
 
 - 링크 환각 방지: 행사 url 은 그 항목을 수집할 때 받은 주소 중 하나여야 한다. 아니면 수집 주소로 바꾼다.
 - 날짜 검증: YYYY-MM-DD 가 아니면 버리고, 이미 끝난 행사는 뺀다.
-- 유급 활동(F-2 취업 불가)은 뺀다.
-- 긴급도: 마감 7일 이내 / 선착순 접수가 7일 안에 열림 → 즉시(now), 그 외 주간 요약(weekly).
-- 행사 키: 영문 제목 + 시작일 + 도시로 만든 짧은 해시. 같은 행사가 여러 정보원에서 와도 한 건이 된다.
+- 유급 활동(취업이 허용되지 않는 체류 신분)은 뺀다.
+- 긴급도: 마감 7일 이내 / 선착순·추첨 접수가 7일 안에 열림 / 취소·연기 → 즉시(now), 그 외 요약(weekly).
+- 행사 키는 identity.py 가 정한다(여기서는 식별 기준 _anchor 만 붙인다).
+- 처리 우선순위(토큰 0): AI 로 넘기기 전, 접수·마감 관련 낱말과 가까운 날짜가 보이면 먼저 처리한다.
 """
 from __future__ import annotations
 
 import hashlib
 import re
+
+import identity
 from datetime import date, datetime, timedelta, timezone
 
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -35,11 +38,41 @@ def entry_hash(e) -> str:
     return hashlib.sha1(f"{e.title}|{e.text}|{e.published}".encode()).hexdigest()[:12]
 
 
-def event_key(title: str, start: str | None, city: str | None) -> str:
-    norm = re.sub(r"[^a-z0-9]+", " ", (title or "").lower()).strip()
-    norm = re.sub(r"\b(the|a|an|20\d\d)\b", " ", norm)
-    norm = re.sub(r"\s+", " ", norm).strip()
-    return "e" + hashlib.sha1(f"{norm}|{start or ''}|{(city or '').lower()}".encode()).hexdigest()[:15]
+MONTHS = {m: i + 1 for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"])}
+REG_WORDS = re.compile(r"regist|sign[- ]?up|enroll|deadline|apply|application|lottery|limited|spots|waitlist|sold out|tickets? on sale|opens?\b|last chance", re.I)
+DATE_MD = re.compile(r"\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?\s+(\d{1,2})\b", re.I)
+DATE_ISO = re.compile(r"\b(20\d\d)-(\d\d)-(\d\d)\b")
+
+
+def near_dates(text: str, today: date, days: int = 14) -> int:
+    """본문에 오늘부터 days 일 안의 날짜가 몇 번 보이는지(연도 없는 '월 일'은 다가오는 날짜로 본다)."""
+    n = 0
+    for m, d in DATE_MD.findall(text or ""):
+        try:
+            cand = date(today.year, MONTHS[m[:3].lower()], int(d))
+        except (ValueError, KeyError):
+            continue
+        if cand < today:
+            cand = cand.replace(year=today.year + 1)
+        n += cand <= today + timedelta(days=days)
+    for y, mo, d in DATE_ISO.findall(text or ""):
+        try:
+            n += today <= date(int(y), int(mo), int(d)) <= today + timedelta(days=days)
+        except ValueError:
+            pass
+    return n
+
+
+def priority(entry, today: date, official: bool) -> int:
+    """대기열 처리 순서 점수(높을수록 먼저). 정확한 마감일은 AI 추출 전에는 모르므로 낱말·날짜로 추정한다."""
+    text = f"{entry.title} {entry.text or ''}"
+    score = 3 if official else 0
+    if REG_WORDS.search(text):
+        score += 3
+    score += min(near_dates(text, today), 3) * 2
+    if entry.extra.get("hint"):
+        score += 4  # 이미 알려진 행사의 상세 페이지 변경
+    return score
 
 
 def urgency(ev: dict, today: date) -> str:
@@ -48,6 +81,8 @@ def urgency(ev: dict, today: date) -> str:
         return "now"
     opens = _d(ev.get("registration_opens"))
     if ev.get("signup") in ("fcfs", "lottery") and opens and today <= opens <= today + timedelta(days=URGENT_DAYS):
+        return "now"
+    if ev.get("registration_status") in ("cancelled", "postponed"):
         return "now"
     return "weekly"
 
@@ -62,11 +97,12 @@ def year_label(ev: dict, today: date) -> str | None:
 
 
 def finalize(extracted, entries: list, today: date, checked_at: str | None = None) -> tuple[list[dict], dict]:
-    """extracted: ai.EntryResult 목록(index 는 entries 기준). 반환: (보낼 행사 목록, 버린 이유별 건수)."""
+    """extracted: ai.EntryResult 목록(index 는 entries 기준). 반환: (행사 목록, 버린 이유별 건수).
+    행사 키는 아직 없다(identity.assign_keys 가 기존 행사 목록과 대조해 정한다)."""
     checked_at = checked_at or datetime.now(timezone.utc).isoformat(timespec="seconds")
     dropped: dict[str, int] = {}
     drop = lambda why: dropped.__setitem__(why, dropped.get(why, 0) + 1)  # noqa: E731
-    out: dict[str, dict] = {}
+    out: list[dict] = []
     for r in extracted:
         if not r.relevant:
             drop("not-relevant")
@@ -91,21 +127,14 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             if not d["start_date"] and not d["annual"] and not d.get("registration_opens") and not d.get("deadline"):
                 # 날짜가 전혀 없는 항목은 생활정보로만 주간 요약에 넣는다
                 d["tags"] = list(dict.fromkeys([*d["tags"], "info"]))[:5]
-            d["event_key"] = event_key(d["title"], d["start_date"], d["city"])
             d["urgency"] = urgency(d, today)
             d["year_label"] = year_label(d, today)
             d["source_id"] = entry.source_id
             d["checked_at"] = checked_at
             d["_entry_index"] = r.index
-            prev = out.get(d["event_key"])
-            if prev:
-                drop("duplicate")
-                # 공식 정보원 쪽을 남긴다(검색 결과보다 우선)
-                if prev["source_id"].startswith("gnews") and not d["source_id"].startswith("gnews"):
-                    out[d["event_key"]] = d
-                continue
-            out[d["event_key"]] = d
-    return list(out.values()), dropped
+            d["_anchor"] = identity.anchor(d, entry, official=bool(entry.extra.get("official")))
+            out.append(d)
+    return out, dropped
 
 
 def apply_verdicts(events: list[dict], review_idx: list[int], verdicts) -> tuple[list[dict], int]:
@@ -125,7 +154,7 @@ def apply_verdicts(events: list[dict], review_idx: list[int], verdicts) -> tuple
 
 def for_worker(ev: dict) -> dict:
     """Worker 로 보내는 필드만 남긴다."""
-    keep = ("event_key", "bot", "title", "title_ko", "org", "start_date", "end_date", "time_text", "event_tz", "location", "city",
-            "age_text", "english", "cost_text", "signup", "deadline", "status_note", "url", "checked_at", "urgency", "tags", "annual",
-            "year_label", "source_id", "registration_opens")
+    keep = ("event_key", "identity", "bot", "title", "title_ko", "org", "start_date", "end_date", "time_text", "event_tz", "location", "city",
+            "age_text", "english", "cost_text", "signup", "registration_opens", "registration_status", "deadline", "eligibility", "status_note",
+            "url", "checked_at", "urgency", "tags", "annual", "year_label", "source_id")
     return {k: ev.get(k) for k in keep}

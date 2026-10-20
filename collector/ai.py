@@ -49,32 +49,52 @@ def check_key() -> dict:
 # ---------------------------------------------------------------- 사용량
 @dataclass
 class Usage:
+    """모델별 사용량. 가격은 config/models.json 의 prices(백만 토큰당 달러: input, output, cache_write, cache_read).
+    웹 검색 횟수는 응답의 usage.server_tool_use.web_search_requests 를 우선 쓴다."""
     prices: dict
     web_search_usd: float = 0.01
     by_model: dict = field(default_factory=dict)
 
+    def _m(self, model: str) -> dict:
+        return self.by_model.setdefault(model, {"input_tokens": 0, "output_tokens": 0, "cache_write_tokens": 0, "cache_read_tokens": 0,
+                                                "usd": 0.0, "calls": 0, "searches": 0, "errors": 0})
+
     def add(self, model: str, usage, searches: int = 0) -> None:
-        m = self.by_model.setdefault(model, {"input_tokens": 0, "output_tokens": 0, "usd": 0.0, "calls": 0, "searches": 0})
-        inp = (usage.input_tokens or 0) + (getattr(usage, "cache_creation_input_tokens", 0) or 0) + (getattr(usage, "cache_read_input_tokens", 0) or 0)
+        m = self._m(model)
+        p = self.prices.get(model, {})
+        if isinstance(p, (list, tuple)):  # 예전 형식 [입력, 출력]
+            p = {"input": p[0], "output": p[1], "cache_write": p[0] * 1.25, "cache_read": p[0] * 0.1}
+        inp = usage.input_tokens or 0
+        cw = getattr(usage, "cache_creation_input_tokens", 0) or 0
+        cr = getattr(usage, "cache_read_input_tokens", 0) or 0
         out = usage.output_tokens or 0
-        pin, pout = self.prices.get(model, (0, 0))
+        stu = getattr(usage, "server_tool_use", None)
+        searches = (getattr(stu, "web_search_requests", None) if stu is not None else None) or searches
         m["input_tokens"] += inp
+        m["cache_write_tokens"] += cw
+        m["cache_read_tokens"] += cr
         m["output_tokens"] += out
         m["calls"] += 1
         m["searches"] += searches
-        m["usd"] += inp / 1e6 * pin + out / 1e6 * pout + searches * self.web_search_usd
+        m["usd"] += (inp * p.get("input", 0) + cw * p.get("cache_write", 0) + cr * p.get("cache_read", 0) + out * p.get("output", 0)) / 1e6 \
+            + searches * self.web_search_usd
+
+    def error(self, model: str) -> None:
+        self._m(model)["errors"] += 1
 
     @property
     def usd(self) -> float:
         return sum(m["usd"] for m in self.by_model.values())
 
     def totals(self) -> dict:
-        return {k: sum(m[k] for m in self.by_model.values()) for k in ("input_tokens", "output_tokens", "calls", "searches")}
+        keys = ("input_tokens", "output_tokens", "cache_write_tokens", "cache_read_tokens", "calls", "searches", "errors")
+        return {k: sum(m[k] for m in self.by_model.values()) for k in keys}
 
 
 # ---------------------------------------------------------------- 추출(작은 모델)
 EnglishAttr = Literal["초보 가능", "보호자 동반", "시범 중심", "반복 만남"]
 Signup = Literal["fcfs", "lottery", "open", "none", "unknown"]
+RegStatus = Literal["upcoming", "open", "closed", "soldout", "waitlist", "cancelled", "postponed", "unknown"]
 Bot = Literal["life", "family", "kids"]
 
 
@@ -94,7 +114,9 @@ class ExtractedEvent(BaseModel):
     cost_text: Optional[str]
     signup: Signup
     registration_opens: Optional[str]
+    registration_status: RegStatus
     deadline: Optional[str]
+    eligibility: Optional[str]
     status_note: Optional[str]
     tags: list[str]
     annual: bool
@@ -115,8 +137,16 @@ class ExtractBatch(BaseModel):
     results: list[EntryResult]
 
 
-EXTRACT_SYSTEM = """You turn raw web items into structured event records for a Korean family living in Westminster, Colorado (Denver metro, ZIP [redacted]) from [stay period redacted].
-Household: [redacted - supplied at runtime via HOUSEHOLD_PROFILE secret]
+# 가족 구성·체류 신분 같은 개인 정보는 공개 저장소에 두지 않는다. GitHub 비밀값 HOUSEHOLD_PROFILE 이 있으면 그 문장을 쓴다.
+DEFAULT_PROFILE = ("Audience: Korean residents and long-term visitors in the Denver metro around Westminster, Colorado, and their local friends. "
+                   "Some hold non-immigrant visas that do not allow paid work; hobby or recreational classes are fine.")
+
+
+def household_profile() -> str:
+    return os.environ.get("HOUSEHOLD_PROFILE") or DEFAULT_PROFILE
+
+
+EXTRACT_RULES = """You turn raw web items into structured event records.
 Three audiences: life (adult hobbies, skills, sports, weekday classes, shows, clubs), family (outings, school games/shows, festivals, national parks, special experiences, cruise/travel promotions), kids (after-school, camps, sports clubs, school programs, arts/science classes).
 
 Rules:
@@ -128,6 +158,8 @@ Rules:
 - title_ko: short natural Korean title. Keep proper nouns in English in parentheses if useful.
 - english: pick only attributes the text supports — 초보 가능 (beginners welcome), 보호자 동반 (parent accompanies), 시범 중심 (demonstration-based), 반복 만남 (recurring sessions with the same group).
 - signup: fcfs = first come first served / limited spots; lottery = drawing; open = register any time; none = drop-in; unknown.
+- registration_opens: the date registration/sign-up starts, only if stated. registration_status: upcoming (not open yet), open, closed, soldout, waitlist, cancelled (event cancelled), postponed, unknown.
+- eligibility: Korean note on who may join (residents only, members only, age/grade limits, skill level) when stated; else null.
 - tags: 1-4 short lowercase English slugs (e.g. "swim", "camp", "hockey", "museum").
 - annual: true if the text says it happens every year or is the Nth annual.
 - paid_work: true if participating means paid employment (hiring instructors, paid assistants).
@@ -135,7 +167,11 @@ Rules:
 - needs_review: true when eligibility, age fit, visa/status fit or whether it is an event at all is unclear. Put the doubt in review_reason (Korean).
 - relevant=false (events=[]) for news without an attendable event or program, job postings, ads, or places outside the U.S. unless it is a travel promotion departing Denver.
 - One item may contain several distinct events (e.g. a calendar page); list each.
-Return results for every item index you were given."""
+Return exactly one result for EVERY item index you were given, including irrelevant ones."""
+
+
+def extract_system() -> str:
+    return EXTRACT_RULES + "\n\n" + household_profile()
 
 
 def _clip(s: str, n: int) -> str:
@@ -152,25 +188,56 @@ def build_extract_prompt(entries: list, today: str, text_chars: int) -> str:
     return "\n".join(parts)
 
 
-def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> list[EntryResult]:
+STOP_ERRORS = (anthropic.RateLimitError, anthropic.AuthenticationError, anthropic.PermissionDeniedError)
+
+
+@dataclass
+class ExtractOutcome:
+    results: dict = field(default_factory=dict)   # 입력 index → EntryResult
+    failed: dict = field(default_factory=dict)    # 입력 index → 실패 사유(다음 실행에서 재시도)
+    stopped: str | None = None                    # 사용량 제한 등으로 남은 묶음을 시도하지 않은 이유
+
+
+def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> ExtractOutcome:
+    """묶음별로 독립 처리한다. 한 묶음이 실패해도 앞 묶음 결과는 남고, AI 가 빠뜨린 항목은 실패로 표시해 재시도한다(1차 검증 1-2)."""
     c = cfg["extract"]
-    out: list[EntryResult] = []
+    out = ExtractOutcome()
     for start in range(0, len(entries), c["batch"]):
         chunk = entries[start:start + c["batch"]]
-        resp = client.messages.parse(
-            model=c["model"],
-            max_tokens=c["max_tokens"],
-            system=EXTRACT_SYSTEM,
-            messages=[{"role": "user", "content": build_extract_prompt(chunk, today, c["text_chars"])}],
-            output_config={"effort": c["effort"]},
-            output_format=ExtractBatch,
-        )
+        idx = range(start, start + len(chunk))
+        if out.stopped:
+            out.failed.update({i: f"not-attempted: {out.stopped}" for i in idx})
+            continue
+        try:
+            resp = client.messages.parse(
+                model=c["model"],
+                max_tokens=c["max_tokens"],
+                system=extract_system(),
+                messages=[{"role": "user", "content": build_extract_prompt(chunk, today, c["text_chars"])}],
+                output_config={"effort": c["effort"]},
+                output_format=ExtractBatch,
+            )
+        except STOP_ERRORS as e:
+            usage.error(c["model"])
+            out.stopped = type(e).__name__
+            out.failed.update({i: out.stopped for i in idx})
+            continue
+        except (anthropic.APIError, ValueError) as e:
+            usage.error(c["model"])
+            out.failed.update({i: f"{type(e).__name__}: {str(e)[:120]}" for i in idx})
+            continue
         usage.add(c["model"], resp.usage)
         if resp.stop_reason in ("refusal", "max_tokens") or resp.parsed_output is None:
-            raise RuntimeError(f"extract stopped: {resp.stop_reason}")
+            out.failed.update({i: f"stop_reason={resp.stop_reason}" for i in idx})
+            continue
+        got = set()
         for r in resp.parsed_output.results:
-            if 0 <= r.index < len(chunk):
-                out.append(r.model_copy(update={"index": start + r.index}))
+            if 0 <= r.index < len(chunk) and r.index not in got:
+                got.add(r.index)
+                out.results[start + r.index] = r.model_copy(update={"index": start + r.index})
+        for j in range(len(chunk)):
+            if j not in got:
+                out.failed[start + j] = "missing-in-output"
     return out
 
 
@@ -189,7 +256,7 @@ class JudgeBatch(BaseModel):
     verdicts: list[Verdict]
 
 
-JUDGE_SYSTEM = EXTRACT_SYSTEM.split("Rules:")[0] + """Children: [redacted].
+JUDGE_RULES = """U.S. camps usually state the grade a child enters in the fall; compare with the audience's school grades when given.
 You review events a smaller model flagged as uncertain. For each, decide keep (worth sending to this family or local friends), the right audience bot, and correct age_text, status_note (Korean) and english attributes using only the source text. Drop paid jobs, events requiring U.S. citizenship, and items that are not attendable events or programs. Reason in Korean, one sentence."""
 
 
@@ -203,7 +270,7 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> lis
         resp = client.beta.messages.parse(
             model=c["model"],
             max_tokens=c["max_tokens"],
-            system=JUDGE_SYSTEM,
+            system=JUDGE_RULES + "\n\n" + household_profile(),
             messages=[{"role": "user", "content": body}],
             output_config={"effort": c["effort"]},
             output_format=JudgeBatch,
@@ -220,7 +287,7 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> lis
 
 
 # ---------------------------------------------------------------- 발굴(큰 모델 + 웹 검색)
-DISCOVER_SYSTEM = """You look for NEW official sources of family, kids and adult activities near Westminster, Colorado (Denver metro) for a Korean family arriving June 2027.
+DISCOVER_SYSTEM = """You look for NEW official sources of family, kids and adult activities near Westminster, Colorado (Denver metro) for Korean residents and their local friends.
 Search the web for the theme you are given. Report:
 - sources: official organization pages that list recurring events, classes or registrations (city recreation, libraries, museums, universities, parks, clubs). Prefer pages with calendars or RSS.
 - events: specific upcoming events or registration openings worth checking.
@@ -238,11 +305,11 @@ def _json_from_text(text: str) -> dict:
         return {}
 
 
-def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage) -> dict:
+def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_searches: int | None = None) -> dict:
     """반환: {"sources": [...], "events": [...], "result_urls": set}. 검색 결과에 실제로 나온 URL 만 남긴다."""
     c = cfg["discover"]
     messages = [{"role": "user", "content": f"Theme: {theme}\nknown: {json.dumps(known[:60])}"}]
-    tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": c["max_searches"],
+    tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": max_searches or c["max_searches"],
               "user_location": {"type": "approximate", "city": "Westminster", "region": "Colorado", "country": "US", "timezone": "America/Denver"}}]
     seen_urls: set[str] = set()
     text = ""

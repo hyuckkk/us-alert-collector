@@ -109,7 +109,7 @@ def parse_ical(text: str, source_id: str, base: str) -> list[Entry]:
                 url = cur.get("URL") or f"{base}#{cur.get('UID', title)}"
                 text = clean_text(" ".join(filter(None, [cur.get("LOCATION", ""), cur.get("DESCRIPTION", "")])))
                 out.append(Entry(source_id, normalize_url(url, base) if cur.get("URL") else url, title, text, cur.get("DTSTART"),
-                                 {"location": cur.get("LOCATION", "")}))
+                                 {"location": cur.get("LOCATION", ""), "uid": cur.get("UID")}))
             cur = None
         elif cur is not None and ":" in ln:
             k, v = ln.split(":", 1)
@@ -201,16 +201,39 @@ def parse_html(html: str, source: dict) -> list[Entry]:
 
 
 # ---------------------------------------------------------------- 상세 페이지
+# 행사 정보와 관련된 문장만 골라 지문을 만든다(메뉴·광고·장식 변경으로 AI 를 다시 부르지 않기 위함)
+RELEVANT = re.compile(
+    r"(\$\s?\d|\bfree\b|\bfee|\bprice|\bcost|regist|sign[- ]?up|deadline|enroll|waitlist|wait list|sold out|spots?\b|capacity|seats?\b|"
+    r"cancel|postpone|reschedul|\bages?\b|grades?\b|\byears? old|\blocation|\bvenue|\baddress|"
+    r"\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?\s+\d{1,2}|\b\d{1,2}/\d{1,2}(/\d{2,4})?\b|\b\d{1,2}(:\d{2})?\s?(am|pm)\b|\b20\d\d-\d\d-\d\d)",
+    re.I)
+
+
+def fingerprint(text: str) -> tuple[str, str]:
+    """반환: (해시, 관련 문장 묶음). 관련 문장이 하나도 없으면 본문 앞부분으로 대신한다."""
+    parts = re.split(r"(?<=[.!?])\s+|\s{2,}|\s[•|·]\s", text or "")
+    keep = [re.sub(r"\s+", " ", p).strip().lower() for p in parts if RELEVANT.search(p)]
+    basis = " | ".join(dict.fromkeys(k for k in keep if 3 < len(k) < 400)) or (text or "")[:1500].lower()
+    return hashlib.sha1(basis.encode()).hexdigest()[:16], basis[:3000]
+
+
+def page_text(client: httpx.Client, url: str) -> tuple[int | None, str]:
+    r = client.get(url)
+    if r.status_code >= 400 or not r.content:
+        return r.status_code, ""
+    p = _LinkParser()
+    p.feed(r.content[:MAX_BYTES].decode(r.encoding or "utf-8", errors="replace"))
+    return r.status_code, clean_text(" ".join(p.text), 20000)
+
+
 def fetch_detail(entry: Entry, client: httpx.Client, chars: int = 3000) -> bool:
     """html 정보원의 새 링크는 링크 글자만 있으므로, 상세 페이지 본문을 가져와 AI 가 날짜·가격·연령을 볼 수 있게 한다(토큰 0)."""
     try:
-        r = client.get(entry.url)
-        if r.status_code >= 400 or not r.content:
-            entry.extra["detail_error"] = f"HTTP {r.status_code}"
+        status, text = page_text(client, entry.url)
+        if not text:
+            entry.extra["detail_error"] = f"HTTP {status}"
             return False
-        p = _LinkParser()
-        p.feed(r.content[:MAX_BYTES].decode(r.encoding or "utf-8", errors="replace"))
-        text = clean_text(" ".join(p.text), 20000)
+        entry.extra["fingerprint"] = fingerprint(text)[0]
         # 페이지 앞부분의 메뉴를 건너뛰려고 제목이 처음 나오는 곳부터 자른다
         i = text.lower().find(entry.title.lower()[:40])
         entry.text = text[i if i > 0 else 0:][:chars]

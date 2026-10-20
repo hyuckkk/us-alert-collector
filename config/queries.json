@@ -1,20 +1,54 @@
 {
-  "_comment": "B: 신규 정보원 발굴. daily 는 매일, weekday 는 요일별 심층(0=월 … 6=일, 설계안의 요일 주제). 검색은 Google News RSS(토큰 0). AI 탐색(ai_discovery)은 config/models.json 의 설정을 따른다.",
-  "daily": [
-    "Westminster Colorado family events",
-    "Westminster Colorado kids classes registration",
-    "Adams County Colorado free family event",
-    "Denver kids summer camp registration opens",
-    "Denver adult classes community center",
-    "Colorado state park free day"
-  ],
+  "_comment": "무토큰 키워드 검색(Google News RSS). daily 는 분야별로 매일, weekday 는 요일별 심층(0=월 … 6=일). 뉴스에 잘 안 나오는 학교·시설·동호회 정보는 config/sources.json 의 공식 정보원과 AI 발굴로 보완한다.",
+  "daily": {
+    "kids": [
+      "Westminster Colorado kids classes",
+      "Westminster Colorado summer camp registration",
+      "Denver kids camp registration opens",
+      "Thornton Broomfield Arvada youth programs",
+      "Adams County library kids events",
+      "Denver youth sports league registration",
+      "Colorado kids swim lessons registration",
+      "Denver museum kids workshop",
+      "Boulder kids science program",
+      "Jefferson County library children events",
+      "Denver teen program free",
+      "Colorado STEM camp kids"
+    ],
+    "family": [
+      "Westminster Colorado family events",
+      "Adams County Colorado free family event",
+      "Denver free day museum zoo",
+      "Denver family festival this weekend",
+      "Colorado state park free day",
+      "Rocky Mountain National Park reservation",
+      "Denver university game family tickets",
+      "Westminster Colorado community event",
+      "Broomfield Thornton family event",
+      "Colorado holiday lights family event",
+      "Denver farmers market family",
+      "Denver flight deal family"
+    ],
+    "life": [
+      "Westminster Colorado adult classes",
+      "Denver adult pottery cooking class",
+      "Denver community center adult class",
+      "Front Range community college noncredit class",
+      "Denver adult sports league registration",
+      "Denver English conversation group",
+      "Denver library adult workshop",
+      "Boulder adult education class",
+      "Denver makerspace workshop beginner",
+      "Denver Korean community event"
+    ]
+  },
   "weekday": {
-    "0": ["Denver kids after school program", "Broomfield Thornton kids camp", "Colorado youth sports registration Westminster"],
-    "1": ["Denver adult pottery class", "Front Range Community College noncredit class", "Denver makerspace workshop beginner"],
+    "0": ["Denver kids after school program", "Colorado youth sports registration Westminster", "Denver kids art class"],
+    "1": ["Denver adult hobby class beginner", "Denver language exchange meetup", "Denver photography workshop"],
     "2": ["Westminster Colorado city news recreation", "Adams 12 Five Star Schools family event", "Westminster Public Schools community event"],
     "3": ["Colorado air show", "Buckley Space Force Base open house", "Air Force Academy public event", "Wings Over the Rockies event"],
-    "4": ["Rocky Mountain National Park reservation", "Great Sand Dunes event", "Colorado national park ranger program kids"],
-    "5": ["University of Denver hockey tickets family", "Colorado State University open house", "Colorado School of Mines public event", "CU Boulder family event"],
-    "6": ["Denver airport flight deal family", "cruise kids sail free promotion", "Colorado family road trip event"]
+    "4": ["Great Sand Dunes event", "Colorado national park ranger program kids", "Colorado state park ranger program"],
+    "5": ["University of Denver hockey family", "Colorado State University open house", "Colorado School of Mines public event", "CU Boulder family event"],
+    "6": ["cruise kids sail free promotion", "Colorado family road trip event", "Denver airport new route deal"]
   }
 }

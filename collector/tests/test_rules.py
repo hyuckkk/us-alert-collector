@@ -36,12 +36,11 @@ def test_urgency_rules():
     assert rules.urgency({"signup": "open", "registration_opens": "2026-10-22"}, TODAY) == "weekly"
 
 
-def test_event_key_is_stable_across_sources_and_prefers_official():
-    a = res(0, ev(title="The Kids Clay Workshop 2027"))
-    b = res(1, ev(title="kids clay workshop", url="https://news.com/a"))
-    out, dropped = rules.finalize([b, a], E, TODAY)
-    assert len(out) == 1 and dropped["duplicate"] == 1 and out[0]["source_id"] == "butterfly"
-    assert len(out[0]["event_key"]) == 16
+def test_priority_prefers_registration_words_and_near_dates():
+    e1 = Entry("a", "https://x.org/1", "Summer camp registration opens Oct 25", "Limited spots")
+    e2 = Entry("b", "https://x.org/2", "City council meeting minutes")
+    assert rules.priority(e1, TODAY, True) > rules.priority(e2, TODAY, True)
+    assert rules.near_dates("Join us Oct 25 and Nov 30", TODAY) == 1
 
 
 def test_year_label_and_annual():
@@ -56,7 +55,15 @@ def test_apply_verdicts():
     assert removed == 1 and out == [{"event_key": "a", "bot": "family", "age_text": "6+", "status_note": None, "english": ["보호자 동반"], "review_reason": "ok"}]
 
 
-def test_for_worker_drops_internal_fields():
-    out, _ = rules.finalize([res(0, ev())], E, TODAY)
+def test_for_worker_drops_internal_fields_and_keeps_registration():
+    out, _ = rules.finalize([res(0, ev(registration_opens="2027-01-05", registration_status="upcoming", eligibility="주민 우선"))], E, TODAY)
+    import identity
+    identity.assign_keys(out, [])
     w = rules.for_worker(out[0])
-    assert "_entry_index" not in w and "paid_work" not in w and w["bot"] == "kids"
+    assert "_entry_index" not in w and "_anchor" not in w and "paid_work" not in w and w["bot"] == "kids"
+    assert (w["registration_opens"], w["registration_status"], w["eligibility"]) == ("2027-01-05", "upcoming", "주민 우선")
+    assert w["event_key"].startswith("e") and w["identity"]
+
+
+def test_cancelled_is_urgent():
+    assert rules.urgency({"registration_status": "cancelled"}, TODAY) == "now"
