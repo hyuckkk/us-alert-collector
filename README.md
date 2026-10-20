@@ -7,7 +7,7 @@
 | 역할 | 위치 |
 |---|---|
 | 수집·AI 판정 | 이 저장소 + GitHub Actions (`collector/`) |
-| 발송·버튼·DB | Cloudflare Worker `us-alert-worker` + D1 `us-alert-db` (`worker/`) |
+| 발송·버튼·DB | Cloudflare Worker `us-alert-worker` + D1 `us-alert-db` (`worker/`). 비밀값은 GitHub 에만 넣고 배포 때 Worker 로 복사 |
 | 봇 | @ColoradoLife_bot(성인·시스템 알림), @ColoradoFamily_bot(가족), @ColoradoKids_bot(어린이) |
 | AI | `collector/ai.py` 한 곳에서만 호출. 키는 colorado-alerts 워크스페이스 키(GitHub 비밀값 `ANTHROPIC_API_KEY`) |
 
@@ -22,7 +22,7 @@
 ## 워크플로
 | 이름 | 언제 | 하는 일 |
 |---|---|---|
-| deploy-worker | `worker/` push, 수동 | D1 생성·스키마 적용, Worker 배포, 웹훅 등록 |
+| deploy-worker | `worker/` push, 수동 | D1 생성·스키마 적용, Worker 배포, 비밀값 복사, 웹훅 등록 |
 | admin | 수동(action 선택), `ticks/admin` push | test-send / clicks / status / setup / run-cron |
 | key-check | 매일 23:40 UTC, 수동 | Anthropic 키 유효성 점검 → Worker 보고 |
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# CLOUDFLARE_ACCOUNT_ID 와 Worker 주소(US_WORKER_URL)를 찾아 GITHUB_ENV 에 넣는다.
+# CLOUDFLARE_ACCOUNT_ID, Worker 주소(US_WORKER_URL), 관리 키(US_ADMIN_KEY)를 GITHUB_ENV 에 넣는다.
+# 관리 키는 Cloudflare 토큰에서 파생한다(따로 입력할 비밀값 없음). 토큰을 바꾸면 다음 배포 때 Worker 쪽도 함께 바뀐다.
 set -euo pipefail
 : "${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN secret not set}"
 api() { curl -sS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/$1"; }
@@ -10,7 +11,10 @@ fi
 echo "::add-mask::$CLOUDFLARE_ACCOUNT_ID"
 SUB=$(api "accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | python3 -c "import json,sys;print((json.load(sys.stdin).get('result') or {}).get('subdomain',''))")
 [ -n "$SUB" ] || { echo "workers.dev subdomain not found. Open Cloudflare dashboard → Workers & Pages once to create it."; exit 1; }
+US_ADMIN_KEY=$(printf 'us-admin:%s' "$CLOUDFLARE_API_TOKEN" | sha256sum | cut -d' ' -f1)
+echo "::add-mask::$US_ADMIN_KEY"
 {
+  echo "US_ADMIN_KEY=$US_ADMIN_KEY"
   echo "CLOUDFLARE_ACCOUNT_ID=$CLOUDFLARE_ACCOUNT_ID"
   echo "US_WORKER_URL=https://us-alert-worker.$SUB.workers.dev"
 } >> "${GITHUB_ENV:-/dev/stdout}"

@@ -1,6 +1,6 @@
 name: deploy-worker
 # worker/ 가 바뀌면 us-alert-worker 를 배포한다. D1(us-alert-db)은 없으면 만들고 스키마를 적용한다.
-# 비밀값(봇 토큰 등)은 Cloudflare 에만 있고, 배포해도 지워지지 않는다.
+# 봇 토큰·소유자 ID 는 GitHub 비밀값에서 Worker 비밀값으로 복사한다(비어 있는 값은 건너뜀).
 on:
   push:
     branches: [main]
@@ -18,7 +18,6 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      US_ADMIN_KEY: ${{ secrets.US_ADMIN_KEY }}
     defaults:
       run:
         working-directory: worker
@@ -40,9 +39,26 @@ jobs:
         run: npx wrangler d1 migrations apply us-alert-db --remote
       - name: Deploy
         run: npx wrangler deploy
+      - name: Sync Worker secrets from GitHub
+        env:
+          BOT_TOKEN_LIFE: ${{ secrets.BOT_TOKEN_LIFE }}
+          BOT_TOKEN_FAMILY: ${{ secrets.BOT_TOKEN_FAMILY }}
+          BOT_TOKEN_KIDS: ${{ secrets.BOT_TOKEN_KIDS }}
+          OWNER_CHAT_ID: ${{ secrets.OWNER_CHAT_ID }}
+        run: |
+          umask 077
+          python3 - > "$RUNNER_TEMP/secrets.json" <<'PY'
+          import json, os
+          keys = ["BOT_TOKEN_LIFE", "BOT_TOKEN_FAMILY", "BOT_TOKEN_KIDS", "OWNER_CHAT_ID"]
+          out = {k: os.environ[k] for k in keys if os.environ.get(k)}
+          out["ADMIN_KEY"] = os.environ["US_ADMIN_KEY"]
+          print(json.dumps(out))
+          PY
+          python3 -c "import json,os;print('syncing:', ', '.join(json.load(open(os.environ['RUNNER_TEMP']+'/secrets.json'))))"
+          npx wrangler secret bulk "$RUNNER_TEMP/secrets.json"
+          rm -f "$RUNNER_TEMP/secrets.json"
       - name: Register Telegram webhooks
         run: |
-          if [ -z "$US_ADMIN_KEY" ]; then echo "::warning::US_ADMIN_KEY not set yet - skipped webhook setup"; exit 0; fi
-          bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - check bot token secrets in Cloudflare, then run the 'admin' workflow with action=setup"
+          bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - add BOT_TOKEN_* secrets in GitHub and re-run deploy-worker, then run the 'admin' workflow with action=setup"
       - name: Summary
         run: echo "Worker URL - $US_WORKER_URL" >> "$GITHUB_STEP_SUMMARY"

@@ -4,12 +4,12 @@
  * 한국 시스템(telegram-relay Worker, alert-collector, telegram-relay 저장소)과는 코드 구조만 참고했고
  * 봇·비밀값·저장소·DB 를 하나도 공유하지 않는다.
  *
- * 비밀값 (Cloudflare 대시보드 → Workers → us-alert-worker → Settings → Variables and Secrets):
+ * 비밀값 (GitHub 비밀값에서 deploy-worker 워크플로가 Worker 비밀값으로 복사한다):
  *   BOT_TOKEN_LIFE   @ColoradoLife_bot   (성인)
  *   BOT_TOKEN_FAMILY @ColoradoFamily_bot (가족)
  *   BOT_TOKEN_KIDS   @ColoradoKids_bot   (어린이)
  *   OWNER_CHAT_ID    소유자 텔레그램 숫자 ID
- *   ADMIN_KEY        GitHub Actions → Worker 호출용 임의 문자열 (웹훅 비밀값도 여기서 파생)
+ *   ADMIN_KEY        GitHub Actions → Worker 호출용. Cloudflare 토큰에서 자동 파생 (웹훅 비밀값도 여기서 파생)
  * 일반 변수(wrangler.toml [vars]): TG_API, SYSTEM_BOT, OWNER_TZ
  *
  * 경로
@@ -247,7 +247,7 @@ async function handleMessage(env, bot, m) {
     }
     if (owner) { await reply(`${BOTS[bot].label} 봇 소유자로 확인되었습니다.\n\n${HELP_OWNER}`); return; }
     if (!env.OWNER_CHAT_ID) {
-      await reply(`내 텔레그램 ID: ${fromId}\n\n아직 소유자가 설정되지 않았습니다. 이 숫자를 Cloudflare 의 OWNER_CHAT_ID 비밀값으로 넣으면 이 계정이 소유자가 됩니다.`);
+      await reply(`내 텔레그램 ID: ${fromId}\n\n아직 소유자가 설정되지 않았습니다. 이 숫자를 GitHub 비밀값 OWNER_CHAT_ID 로 넣고 deploy-worker 를 다시 실행하면 이 계정이 소유자가 됩니다.`);
       return;
     }
     await reply(`${BOTS[bot].label} 알림 신청이 접수되었습니다. 소유자 승인 후 알림이 옵니다.\n내 텔레그램 ID: ${fromId}`);
@@ -335,7 +335,7 @@ async function checkExpiries(env) {
         : `⏰ ${r.name} 만료 ${left}일 전입니다 (${r.expires_on}).`;
     const body = [head];
     if (r.note) body.push(r.note);
-    body.push("새 키를 발급해 저장 위치(docs/SETUP-0.md '비밀값 입력 위치')에 바꿔 넣은 뒤, 이 봇에 /expiry " + r.name + " <새 만료일> 로 날짜를 갱신해 주세요.");
+    body.push("새 키를 발급해 GitHub 비밀값(docs/SETUP-0.md)에 바꿔 넣은 뒤, 이 봇에 /expiry " + r.name + " <새 만료일> 로 날짜를 갱신해 주세요.");
     const d = await notifyOwner(env, body.join("\n"));
     sent.push({ name: r.name, left, ok: !!d.ok });
   }
@@ -352,7 +352,7 @@ async function keyCheckReport(env, body) {
   if (!ok && ["invalid", "missing", "permission"].includes(rec.status)) {
     if (await claimNotice(env, `keycheck:${name}:${rec.status}:${localDate(env)}`)) {
       const why = { invalid: "키가 거부되었습니다(만료·폐기 가능성)", missing: "GitHub 비밀값이 비어 있습니다", permission: "키 권한이 부족합니다" }[rec.status];
-      await notifyOwner(env, `⛔ ${name} API 키 점검 실패: ${why}.\n${rec.detail}\n교체 방법: docs/SETUP-0.md '비밀값 입력 위치'`);
+      await notifyOwner(env, `⛔ ${name} API 키 점검 실패: ${why}.\n${rec.detail}\n교체 방법: GitHub 비밀값 ANTHROPIC_API_KEY 를 새 키로 바꾸기 (docs/SETUP-0.md)`);
       alerted = true;
     }
   }
