@@ -60,5 +60,3 @@ jobs:
       - name: Register Telegram webhooks
         run: |
           bash ../scripts/run.sh bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - add BOT_TOKEN_* secrets in GitHub and re-run deploy-worker, then run the 'admin' workflow with action=setup"
-      - name: Summary
-        run: echo "Worker URL - $US_WORKER_URL" >> "$GITHUB_STEP_SUMMARY"
