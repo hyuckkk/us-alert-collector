@@ -1,0 +1,44 @@
+name: experiments
+# 개발 브랜치 전용 시험. Worker·텔레그램에는 아무것도 쓰지 않는다. 결과는 같은 브랜치에 커밋(공개 웹 정보만).
+#  ticks/compare   push → AI 발굴 모델 비교(Opus vs Sonnet, 같은 주제)          — 유료(1회 약 $2)
+#  ticks/reference push → 기준 목록 후보(공식 게시판 패널, AI 없음)               — 무료
+on:
+  push:
+    branches-ignore: [main]
+    paths: ["ticks/compare", "ticks/reference"]
+permissions:
+  contents: write
+concurrency:
+  group: experiments-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt
+      - name: Which experiment
+        run: |
+          changed=$(git diff --name-only HEAD~1 HEAD -- ticks/ || true)
+          echo "COMPARE=$(echo "$changed" | grep -q ticks/compare && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "REFERENCE=$(echo "$changed" | grep -q ticks/reference && echo 1 || echo 0)" >> "$GITHUB_ENV"
+      - name: Model comparison
+        if: env.COMPARE == '1'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python collector/compare_discover.py --out reports/model-compare.json
+      - name: Reference candidates
+        if: env.REFERENCE == '1'
+        run: python collector/reference_snapshot.py
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "us-alert-collector[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/model-compare.json eval/reference_candidates.json 2>/dev/null || true
+          git commit -q -m "experiment results [skip ci]" || exit 0
+          git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"

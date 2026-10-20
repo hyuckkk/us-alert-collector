@@ -1,0 +1,16 @@
+{
+  "_comment": "기준 목록 후보를 뽑을 공식 게시판 패널. AI 를 쓰지 않고 공식 목록을 그대로 읽는다. monitored=false 인 곳은 수집기가 감시하지 않는 공식 페이지라, 발견율(정보원 커버리지)까지 잴 수 있다. 여기서 나온 후보는 사람이 원문을 확인한 뒤 ground_truth.json 으로 옮긴다.",
+  "sources": [
+    {"id": "westminster-calendar", "monitored": true, "type": "rss", "url": "https://www.westminsterco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+    {"id": "hyland-hills-events-api", "monitored": true, "type": "json", "url": "https://www.hylandhills.gov/wp-json/tribe/events/v1/events?per_page=50", "json": {"items": "events", "title": "title", "url": "url", "date": "start_date", "text": "description"}},
+    {"id": "butterfly-pavilion", "monitored": true, "type": "html", "url": "https://butterflies.org/events/"},
+    {"id": "anythink-communico", "monitored": true, "type": "html", "url": "https://events.anythinklibraries.org/events"},
+    {"id": "usafa-events", "monitored": true, "type": "html", "url": "https://www.usafa.edu/events/"},
+    {"id": "cu-boulder-localist", "monitored": true, "type": "json", "url": "https://calendar.colorado.edu/api/2/events?days=60&pp=100", "json": {"items": "events", "title": "event.title", "url": "event.localist_url", "date": "event.first_date", "text": "event.description_text"}},
+    {"id": "thornton-youth-teen", "monitored": false, "type": "html", "url": "https://www.thorntonco.gov/parks-recreation/recreation-programs/youth-teen"},
+    {"id": "westminster-adult-learning", "monitored": false, "type": "html", "url": "https://www.westminsterco.gov/292/Adult-Lifelong-Learning"},
+    {"id": "broomfield-programs", "monitored": false, "type": "html", "url": "https://broomfield.org/4508/Programs-and-Activities"},
+    {"id": "frcc-continuing-ed", "monitored": false, "type": "html", "url": "https://continuingeducation.frontrange.edu/frontrange/course/course.aspx?catid=17"},
+    {"id": "denver-art-museum-free-days", "monitored": false, "type": "html", "url": "https://www.denverartmuseum.org/en/free-days-dam"}
+  ]
+}

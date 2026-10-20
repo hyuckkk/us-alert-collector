@@ -12,10 +12,19 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Secret / personal data scan
+        with: { fetch-depth: 0 }
+      - name: Fetch all branches (history scan)
+        run: git fetch --quiet origin '+refs/heads/*:refs/remotes/origin/*'
+      # 검사어(PRIVACY_TERMS)가 비어 있으면 '불완전'으로 실패한다. 검사어는 로그에 출력하지 않는다.
+      - name: Secret / personal data scan (current files)
         env:
           PRIVACY_TERMS: ${{ secrets.PRIVACY_TERMS }}
         run: python3 scripts/privacy_scan.py
+      - name: Secret / personal data scan (all commits, all branches)
+        if: always()
+        env:
+          PRIVACY_TERMS: ${{ secrets.PRIVACY_TERMS }}
+        run: python3 scripts/privacy_scan.py --history
   collector:
     runs-on: ubuntu-latest
     timeout-minutes: 10
