@@ -90,3 +90,13 @@ def test_unexpected_payload_shape_is_an_error_not_a_crash():
     assert r.ok is False and r.error == "json mapping matched 0 items"
     r = fetch_source(src, client=_client(lambda req: httpx.Response(200, json=["not", "a", "dict"])))
     assert r.ok is False and r.error
+
+
+def test_probe_runs_with_current_config(monkeypatch, tmp_path):
+    import probe
+    from fetch import FetchResult
+    monkeypatch.setattr(probe, "fetch_source", lambda s, **k: FetchResult(False, 403, error="HTTP 403"))
+    monkeypatch.setattr(probe, "ROOT", probe.ROOT)
+    out = tmp_path / "reports"
+    monkeypatch.setattr(probe.Path, "mkdir", lambda self, **k: None) if False else None
+    assert probe.main() == 0

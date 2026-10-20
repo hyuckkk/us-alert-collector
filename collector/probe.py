@@ -32,7 +32,9 @@ def main() -> int:
             "snippet": r.snippet,
         })
         print(f"{'OK ' if r.ok else 'ERR'} {r.status} {len(r.entries):3d} {s['id']} {r.error or ''}")
-    g = fetch_source({"id": "gnews", "type": "gnews", "query": queries["daily"][0]}, probe=True)
+    daily = queries["daily"]
+    first = next(iter(daily.values()))[0] if isinstance(daily, dict) else daily[0]
+    g = fetch_source({"id": "gnews", "type": "gnews", "query": first}, probe=True)
     out["gnews"] = {"ok": g.ok, "status": g.status, "items": len(g.entries), "error": g.error, "sample_titles": [e.title for e in g.entries[:3]]}
     print(f"gnews {g.status} {len(g.entries)} {g.error or ''}")
     (ROOT / "reports").mkdir(exist_ok=True)
