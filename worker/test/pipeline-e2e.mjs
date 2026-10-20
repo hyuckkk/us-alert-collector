@@ -13,7 +13,7 @@ const ev = (key, over = {}) => ({
 });
 
 // ---------------------------------------------------------------- A. 모든 사람에게 보내는 모드(DELIVERY_MODE=all)
-let E = await startEnv({ tgPort: 9991, wPort: 8801, vars: { DELIVERY_MODE: "all", FAMILY_AVAILABLE_FROM: "2027-01-01" } });
+let E = await startEnv({ tgPort: 9991, wPort: 8801, vars: { DELIVERY_MODE: "all", FAMILY_AVAILABLE_FROM: "2027-07-01" } });
 try {
   const { admin, hook, msg, since } = E;
   const sends = (n, to) => since(n).filter((c) => c.method === "sendMessage" && (!to || String(c.payload.chat_id) === to));

@@ -20,7 +20,7 @@ def main() -> int:
     sources = json.loads((ROOT / "config/sources.json").read_text())["sources"]
     queries = json.loads((ROOT / "config/queries.json").read_text())
     out = {"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "user_agent": USER_AGENT, "sources": [], "gnews": None}
-    for s in sources:
+    for s in [x for x in sources if x.get("enabled", True)]:
         t0 = time.time()
         r = fetch_source(s, secrets=os.environ, probe=True)
         out["sources"].append({

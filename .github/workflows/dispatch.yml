@@ -1,11 +1,14 @@
 name: dispatch
-# 매시: 정지 시간대 때문에 미뤄진 즉시 알림 발송 + 주간 요약(각자 현지 토요일 9시 이후 1회).
+# 매시: 미뤄진 즉시 알림·재시도 발송, 일간 요약(각자 현지 시각), 월요일 주간 보고,
+# 그리고 매일 수집 감시 — 성공 기록이 26시간 넘게 없으면 collect(full)를 다시 실행한다(1차 검증 5).
+# GitHub Actions 가 통째로 멈추면 이 감시도 멈추므로, Worker 는 소유자가 봇을 쓸 때마다 같은 검사를 따로 한다.
 on:
   schedule:
     - cron: "20 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
+  actions: write   # 감시가 collect 를 다시 실행할 때 필요(같은 저장소 안에서만)
 concurrency:
   group: dispatch
   cancel-in-progress: false
@@ -16,12 +19,22 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - run: bash scripts/cf_env.sh
       - run: bash scripts/run.sh bash scripts/admin_call.sh dispatch
       - run: bash scripts/run.sh bash scripts/admin_call.sh digest
       - name: Weekly report (Monday 15:20 UTC)
-        if: github.event_name == 'schedule' && github.event.schedule == '20 * * * *'
+        if: github.event_name == 'schedule'
         run: |
           if [ "$(date -u +%u%H)" = "115" ]; then bash scripts/run.sh bash scripts/admin_call.sh report; fi
+      - name: Collect watchdog
+        run: |
+          bash scripts/admin_call.sh watchdog || true
+          stale=$(python3 -c "import json;print(json.load(open('out.json')).get('stale'))")
+          running=$(gh run list --workflow collect.yml --status in_progress --json databaseId --jq 'length' 2>/dev/null || echo 0)
+          if [ "$stale" = "True" ] && [ "$running" = "0" ]; then
+            echo "::warning::collect stale — re-running collect (full)"
+            gh workflow run collect.yml -f mode=full -f dry_run=false
+          fi
