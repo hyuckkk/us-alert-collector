@@ -52,3 +52,16 @@ GitHub Actions (이 저장소, 공개)                         Cloudflare Worker
 - **비용 상한**: 실행당 AI 처리 건수 상한, 월 예산 초과 시 AI 단계 건너뜀(80% 경고).
 - **비밀값**: GitHub 비밀값에만. 배포 때 Worker 비밀값으로 복사. 관리 키는 Cloudflare 토큰에서 파생. 로그에서 Worker 주소 가림.
 - **개인정보**: 주소·아이 정보·텔레그램 ID 는 저장소에 없음. `/city` 는 숫자가 들어간 입력(번지·우편번호)을 거부.
+
+## 2단계 변경 (1차 검증 반영, 브랜치 `stage2-fixes`)
+```
+collect full(매일)  : sources → search(34+) → discover(Kids·Family·Life + 요일 심층) → watch → queue → ai → enqueue → annual → candidates → fallback → dispatch → log
+collect light(4시간): watch → queue → ai → enqueue → fallback → dispatch → log
+dispatch(매시)      : 발송·재시도 → 일간 요약 → (월) 주간 보고 → 수집 감시(26시간 넘으면 collect 재실행)
+```
+- **처리 대기열**(D1 `pending`): 새·바뀐 항목은 AI 전에 모두 보존. AI 결과는 `extracted` 로 저장 후 Worker 등록이 끝나야 `done`.
+- **행사 식별**(`collector/identity.py`): 기준(iCal UID → 공식 상세 주소 → 기관+제목) + 연도 + 회차, 기존 행사와 유사도 대조.
+- **상세 재검사**(D1 `watch`): 행사 관련 문장 지문이 바뀐 경우만 AI, 접수 상태별 주기.
+- **발송**: 선점(`sending`) → 성공/재시도(`failed`)/불명(`uncertain`)/확실한 실패(`dead`), 요약은 10건씩 여러 통.
+- **상태 기록**: 정보원별 상태(`source_health`), AI 중단(`kv.ai_health`), 마지막 수집 성공(`kv.last_collect_ok_at`), 사용량(캐시·검색·오류 포함).
+- **개인정보**: 가족 정보는 `HOUSEHOLD_PROFILE`·`FAMILY_AVAILABLE_FROM` 비밀값, CI 에서 `PRIVACY_TERMS` 로 검사.
