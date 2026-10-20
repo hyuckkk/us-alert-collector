@@ -11,6 +11,7 @@ fi
 echo "::add-mask::$CLOUDFLARE_ACCOUNT_ID"
 SUB=$(api "accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | python3 -c "import json,sys;print((json.load(sys.stdin).get('result') or {}).get('subdomain',''))")
 [ -n "$SUB" ] || { echo "workers.dev subdomain not found. Open Cloudflare dashboard → Workers & Pages once to create it."; exit 1; }
+echo "::add-mask::$SUB"   # workers.dev 서브도메인은 계정 이메일에서 만들어질 수 있어 로그에서 가린다
 US_ADMIN_KEY=$(printf 'us-admin:%s' "$CLOUDFLARE_API_TOKEN" | sha256sum | cut -d' ' -f1)
 echo "::add-mask::$US_ADMIN_KEY"
 {

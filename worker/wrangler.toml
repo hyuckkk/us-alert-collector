@@ -4,9 +4,11 @@ main = "src/index.js"
 compatibility_date = "2026-10-01"
 workers_dev = true
 
-# 매일 00:05 UTC = 09:05 한국 / 18:05 덴버(서머타임) — 만료일 알림, 웹훅 점검
+# Cloudflare 무료 요금제는 계정당 예약 실행 5개까지이고 한국 Worker 가 5개를 모두 쓴다.
+# 그래서 매일 점검(만료일 알림, 웹훅 점검)은 GitHub Actions key-check 가 /admin/run-cron 으로 부른다.
+# Workers Paid 로 바꾸면 crons = ["5 0 * * *"] 로 되돌릴 수 있다.
 [triggers]
-crons = ["5 0 * * *"]
+crons = []
 
 [vars]
 TG_API = "https://api.telegram.org"

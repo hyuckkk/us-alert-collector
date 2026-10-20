@@ -1,12 +1,19 @@
 name: key-check
-# 매일 Anthropic API 키(colorado-alerts 워크스페이스)가 살아 있는지 확인한다. 모델 목록 조회라 토큰을 쓰지 않는다.
-# 키가 거부되면 Worker 가 소유자 DM(@ColoradoLife_bot)으로 알린다. 만료 2주 전 알림은 Worker 예약 실행이 따로 한다.
+# 매일 1회:
+#  1) Anthropic API 키(colorado-alerts 워크스페이스) 유효성 점검 — 모델 목록 조회라 토큰을 쓰지 않는다.
+#     키가 거부되면 Worker 가 소유자 DM(@ColoradoLife_bot)으로 알린다.
+#  2) Worker 매일 점검(/admin/run-cron): 만료 14·7·3·1·0일 전 알림, 웹훅 점검.
+#     (Cloudflare 무료 요금제 cron 한도를 한국 Worker 가 모두 써서 여기서 대신 부른다)
+#  3) 공개 저장소는 60일 동안 활동이 없으면 예약 실행이 멈추므로, 30일 넘게 커밋이 없으면 ticks/heartbeat 를 커밋한다.
 on:
   schedule:
-    - cron: "40 23 * * *"
+    - cron: "5 0 * * *"   # 09:05 한국 / 18:05 덴버(서머타임)
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: key-check
+  cancel-in-progress: false
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -21,4 +28,21 @@ jobs:
         with: { python-version: "3.12" }
       - run: pip install -r collector/requirements.txt
       - run: bash scripts/cf_env.sh
-      - run: python collector/key_check.py
+      - name: API key check
+        id: key
+        continue-on-error: true
+        run: python collector/key_check.py
+      - name: Daily Worker check (expiry alerts, webhooks)
+        run: bash scripts/run.sh bash scripts/admin_call.sh run-cron
+      - name: Keep scheduled runs alive
+        run: |
+          last=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last )) -gt $(( 30 * 86400 )) ]; then
+            date -u +%FT%TZ > ticks/heartbeat
+            git config user.name "us-alert-collector[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add ticks/heartbeat && git commit -m "heartbeat [skip ci]" && git push
+          fi
+      - name: Fail if key check failed
+        if: steps.key.outcome == 'failure'
+        run: exit 1

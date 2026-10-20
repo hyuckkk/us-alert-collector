@@ -15,7 +15,7 @@
 - Worker·D1 뼈대, 봇 3개 웹훅, 소유자 DM 테스트 발송
 - 버튼 `[✅ 확인] [🚫 관심없음] [🔕 이 태그 그만]` → D1 `clicks`·`item_state`·`muted_tags` 기록 (다시 누르면 취소)
 - 만료일 알림: `/expiry <이름> <YYYY-MM-DD>` 로 등록 → 14·7·3·1·0일 전에 @ColoradoLife_bot DM
-- API 키 점검: 매일 `key-check` 워크플로(토큰 0) → 키가 거부되면 DM, 점검이 3일 넘게 끊겨도 DM
+- API 키 점검: 매일 `key-check` 워크플로(토큰 0) → 키가 거부되면 DM. 같은 워크플로가 만료일 점검도 실행(Cloudflare 무료 cron 한도는 한국 Worker 가 사용 중)
 
 설치·비밀값 입력: [docs/SETUP-0.md](docs/SETUP-0.md)
 
@@ -24,7 +24,7 @@
 |---|---|---|
 | deploy-worker | `worker/` push, 수동 | D1 생성·스키마 적용, Worker 배포, 비밀값 복사, 웹훅 등록 |
 | admin | 수동(action 선택), `ticks/admin` push | test-send / clicks / status / setup / run-cron |
-| key-check | 매일 23:40 UTC, 수동 | Anthropic 키 유효성 점검 → Worker 보고 |
+| key-check | 매일 00:05 UTC(09:05 한국), 수동 | Anthropic 키 점검, 만료일 알림·웹훅 점검 실행(run-cron), 30일 무활동 방지 커밋 |
 
 ## 로컬 검사
 ```bash

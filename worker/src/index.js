@@ -21,7 +21,8 @@
  *   POST /admin/expiry        {"name","expires_on","note"} 만료일 등록
  *   POST /admin/key-check     GitHub Actions 의 API 키 점검 결과 수신
  *   GET  /health              공개 상태 (빌드명만)
- * 예약 실행(매일): 만료 임박 알림, 웹훅 주소 점검.
+ * 매일 점검(만료 임박 알림, 웹훅 주소 점검)은 GitHub Actions key-check 가 /admin/run-cron 으로 부른다
+ * (Cloudflare 무료 요금제 cron 5개를 한국 Worker 가 모두 사용). scheduled() 는 유료 전환 시를 위해 남겨 둔다.
  */
 
 const BUILD = "us-0.1.0";
@@ -359,18 +360,6 @@ async function keyCheckReport(env, body) {
   return { ok: true, recorded: rec, alerted };
 }
 
-// GitHub 예약 실행이 멈추면(공개 저장소 60일 무활동 등) 키 점검 보고가 끊긴다. 3일 넘게 없으면 알린다.
-async function checkKeyCheckStale(env) {
-  const raw = await kvGet(env, "keycheck:anthropic");
-  if (!raw) return false; // 아직 한 번도 보고되지 않음(설치 전)
-  const hours = (Date.now() - Date.parse(JSON.parse(raw).at)) / 3600000;
-  if (hours < 72) return false;
-  if (await claimNotice(env, `keycheck-stale:${localDate(env)}`)) {
-    await notifyOwner(env, `⚠️ API 키 점검 보고가 ${Math.floor(hours / 24)}일째 없습니다. GitHub us-alert-collector 저장소 Actions 탭에서 key-check 실행 상태를 확인해 주세요.`);
-  }
-  return true;
-}
-
 // ---------------------------------------------------------------- 웹훅 등록
 async function setupWebhooks(env, origin) {
   if (!env.ADMIN_KEY) return { ok: false, error: "ADMIN_KEY not set" };
@@ -443,7 +432,6 @@ export default {
     ctx.waitUntil((async () => {
       const r = { at: nowIso() };
       try { r.expiry = await checkExpiries(env); } catch (e) { r.expiry_error = String(e && e.message); }
-      try { r.keycheck_stale = await checkKeyCheckStale(env); } catch (e) { r.keycheck_error = String(e && e.message); }
       try { r.webhooks = await ensureWebhooks(env); } catch (e) { r.webhook_error = String(e && e.message); }
       await kvSet(env, "last_cron", r);
     })());
@@ -487,7 +475,11 @@ export default {
       if (p === "/admin/status") return json({ ok: true, ...(await status(env)) });
       if (p === "/admin/expiry" && request.method === "POST") return json(await setExpiry(env, body.name, body.expires_on, body.note || null));
       if (p === "/admin/key-check" && request.method === "POST") return json(await keyCheckReport(env, body));
-      if (p === "/admin/run-cron" && request.method === "POST") return json({ ok: true, expiry: await checkExpiries(env), webhooks: await ensureWebhooks(env) });
+      if (p === "/admin/run-cron" && request.method === "POST") {
+        const r = { at: nowIso(), via: "actions", expiry: await checkExpiries(env), webhooks: await ensureWebhooks(env) };
+        await kvSet(env, "last_cron", r);
+        return json({ ok: true, ...r });
+      }
       return json({ ok: false, error: "not found" }, 404);
     }
     return new Response("not found", { status: 404 });

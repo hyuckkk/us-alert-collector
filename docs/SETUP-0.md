@@ -46,7 +46,7 @@ D1 `us-alert-db` 생성·스키마 적용 → Worker `us-alert-worker` 배포 �
 
 ## 5. API 키 점검
 **Actions → key-check → Run workflow** 1회 → 봇에 `/status` → `API 키 점검: 정상`.
-이후 매일 자동 점검(토큰 0). 키가 거부되면 즉시 DM, 점검 보고가 3일 넘게 끊겨도 DM.
+이후 매일 자동 점검(토큰 0). 키가 거부되면 즉시 DM. 같은 실행에서 만료일 알림도 확인합니다.
 
 ## 6. 만료일 등록 (만료 2주 전 DM)
 @ColoradoLife_bot 에 보냅니다.
