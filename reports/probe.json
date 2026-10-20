@@ -1,5 +1,5 @@
 {
- "at": "2026-10-20T07:11:04+00:00",
+ "at": "2026-10-20T07:20:16+00:00",
  "user_agent": "Mozilla/5.0 (compatible; us-alert-collector/1.0; +https://github.com/hyuckkk/us-alert-collector)",
  "sources": [
   {
@@ -13,7 +13,7 @@
    "items": 19,
    "filtered": 0,
    "error": null,
-   "seconds": 0.7,
+   "seconds": 0.5,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -31,7 +31,7 @@
     "https://www.westminsterco.gov/Calendar.aspx?EID=1376",
     "https://www.westminsterco.gov/Calendar.aspx?EID=1593"
    ],
-   "snippet": "Westminster, CO - Calendar https://www.westminsterco.gov/Calendar.aspx Tue, 20 Oct 2026 01:11:05 -0700 Westminster, CO - Get the latest events en-us Fire Safety Booth @ City Park Fitness Center https://www.westminsterco.gov/Calendar.aspx?EID=1740 Mon, 12 Oct 2026 16:49:20 -0700 &lt;strong&gt;Event date:&lt;/strong&gt; October 20, 2026 &lt;br&gt;&lt;strong&gt;Event Time: &lt;/strong&gt;08:00 AM - 10:00 AM&lt;br&gt;&lt;strong&gt;Location:&lt;/strong&gt; &lt;br&gt;10475 Sheridan Boulevard&lt;br&gt;Westminster, CO 80020 October 20, 2026 08:00 AM - 10:00 AM 10475 Sheridan BoulevardWestminster, CO 8"
+   "snippet": "Westminster, CO - Calendar https://www.westminsterco.gov/Calendar.aspx Tue, 20 Oct 2026 01:20:16 -0700 Westminster, CO - Get the latest events en-us Fire Safety Booth @ City Park Fitness Center https://www.westminsterco.gov/Calendar.aspx?EID=1740 Mon, 12 Oct 2026 16:49:20 -0700 &lt;strong&gt;Event date:&lt;/strong&gt; October 20, 2026 &lt;br&gt;&lt;strong&gt;Event Time: &lt;/strong&gt;08:00 AM - 10:00 AM&lt;br&gt;&lt;strong&gt;Location:&lt;/strong&gt; &lt;br&gt;10475 Sheridan Boulevard&lt;br&gt;Westminster, CO 80020 October 20, 2026 08:00 AM - 10:00 AM 10475 Sheridan BoulevardWestminster, CO 8"
   },
   {
    "id": "westminster-news",
@@ -44,7 +44,7 @@
    "items": 4,
    "filtered": 0,
    "error": null,
-   "seconds": 0.7,
+   "seconds": 0.4,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -58,7 +58,7 @@
     "https://westy.news/champion-apple-tree/",
     "https://westy.news/penny-farthing-paul/"
    ],
-   "snippet": "Westminster, CO - News Flash https://www.westminsterco.gov/CivicAlerts.aspx Tue, 20 Oct 2026 01:11:05 -0700 Westminster, CO - Get the latest news en-us Best Photos from Westy Fest 2026 https://westy.news/best-photos-from-westy-fest-2026/ Mon, 19 Oct 2026 12:10:10 -0700 Westy Fest launched the fall season at City Park featuring enhancements like a second stage for live music and a better layout. Attendees enjoyed live performances, carnival games, a State of the City address, and the iconic hot air balloon glow. Special https://westy.news/best-photos-from-westy-fest-2026//639280158100000000 Wes"
+   "snippet": "Westminster, CO - News Flash https://www.westminsterco.gov/CivicAlerts.aspx Tue, 20 Oct 2026 01:20:17 -0700 Westminster, CO - Get the latest news en-us Best Photos from Westy Fest 2026 https://westy.news/best-photos-from-westy-fest-2026/ Mon, 19 Oct 2026 12:10:10 -0700 Westy Fest launched the fall season at City Park featuring enhancements like a second stage for live music and a better layout. Attendees enjoyed live performances, carnival games, a State of the City address, and the iconic hot air balloon glow. Special https://westy.news/best-photos-from-westy-fest-2026//639280158100000000 Wes"
   },
   {
    "id": "westminster-camps",
@@ -71,7 +71,7 @@
    "items": 1,
    "filtered": 0,
    "error": null,
-   "seconds": 1.4,
+   "seconds": 0.6,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -93,7 +93,7 @@
    "items": 4,
    "filtered": 0,
    "error": null,
-   "seconds": 1.9,
+   "seconds": 1.2,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -120,7 +120,7 @@
    "items": 62,
    "filtered": 0,
    "error": null,
-   "seconds": 0.2,
+   "seconds": 0.5,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -151,7 +151,7 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 403",
-   "seconds": 0.0,
+   "seconds": 0.2,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
@@ -169,12 +169,12 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 403",
-   "seconds": 0.1,
+   "seconds": 0.2,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
    "sample_urls": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'H6k9Jt7x4cFTyuQTNZtEf0Sl20Ow9F1T60nHaK"
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'IEQ9u9czY_u5SF6iS9pFfCB3ETIJtYfi5oCSlM"
   },
   {
    "id": "adams-county-events",
@@ -187,12 +187,12 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 403",
-   "seconds": 0.3,
+   "seconds": 0.1,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
    "sample_urls": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '469DO6JO4ddwVYsBDVP4in_IPmaQGAUd.rckE7"
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'esuNTQy.HWtZOBDoN0aQFFgw60dcgRBY7l4zIo"
   },
   {
    "id": "denver-zoo-events",
@@ -205,12 +205,12 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 403",
-   "seconds": 0.1,
+   "seconds": 0.2,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
    "sample_urls": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'bgtIces_.dT9QWQkY6uKd_EyIrv77FPItkdO2m"
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'LsDBz.4_bUdRt5Gb50jWWsl_Rw4wuxMqfIubFM"
   },
   {
    "id": "childrens-museum",
@@ -223,7 +223,7 @@
    "items": 3,
    "filtered": 0,
    "error": null,
-   "seconds": 0.3,
+   "seconds": 0.9,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -254,7 +254,7 @@
    "retest": true,
    "sample_titles": [],
    "sample_urls": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '.vSf2m2bBB9C8Owqsn7xCaQEHUIBZN20YokgZV"
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'EcqUH9HRABlRK38Lewfz1.BSKPCG1KxjJr8Sbk"
   },
   {
    "id": "rmnp-news",
@@ -267,7 +267,7 @@
    "items": 1,
    "filtered": 0,
    "error": null,
-   "seconds": 0.0,
+   "seconds": 0.1,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -329,7 +329,7 @@
    "items": 18,
    "filtered": 0,
    "error": null,
-   "seconds": 0.4,
+   "seconds": 0.8,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -360,12 +360,12 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 403",
-   "seconds": 0.4,
+   "seconds": 0.2,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
    "sample_urls": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'rq0t91xw0B68Of0C9gL0ZnBggAp.69qJSuPIdA"
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'BEwkk1qLelZD_4b5SK1etCA0z04.yZTWznFRG7"
   },
   {
    "id": "ncar-visit",
@@ -396,12 +396,12 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 403",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
    "sample_urls": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '_O_aSvHOMYvcSJN33db9vIPW3UEW51GZaTuPsP"
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'bi1mhfp8fJsTFf4ayG6CzCzljQ1NzHK21qp0b8"
   },
   {
    "id": "du-athletics-ics",
@@ -411,28 +411,28 @@
    "status": 200,
    "content_type": "text/calendar",
    "bytes": 141141,
-   "items": 169,
-   "filtered": 114,
+   "items": 133,
+   "filtered": 150,
    "error": null,
-   "seconds": 0.8,
+   "seconds": 0.5,
    "enabled": true,
    "retest": false,
    "sample_titles": [
-    "[L] University of Denver Men's Soccer vs Creighton - Two Ticket Tuesday (2 for 1) | Crimson Out | DU Student Taco Night",
     "[W] University of Denver Volleyball vs Pacific",
-    "University of Denver Women's Lacrosse at Colorado"
+    "[L] University of Denver Volleyball vs Saint Mary's",
+    "[W] University of Denver #4 Ice Hockey at Alaska Anchorage"
    ],
    "sample_urls": [
-    "https://admin.denverpioneers.com/calendar.aspx?game_id=16055&amp%3Bsport_id=7",
     "https://admin.denverpioneers.com/calendar.aspx?game_id=16078&amp%3Bsport_id=18",
-    "https://admin.denverpioneers.com/calendar.aspx?game_id=16297&amp%3Bsport_id=13",
     "https://admin.denverpioneers.com/calendar.aspx?game_id=16079&amp%3Bsport_id=18",
-    "https://admin.denverpioneers.com/calendar.aspx?game_id=16056&amp%3Bsport_id=7",
-    "https://admin.denverpioneers.com/calendar.aspx?game_id=16027&amp%3Bsport_id=15",
     "https://admin.denverpioneers.com/calendar.aspx?game_id=15973&amp%3Bsport_id=4",
-    "https://admin.denverpioneers.com/calendar.aspx?game_id=16080&amp%3Bsport_id=18"
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16080&amp%3Bsport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=15974&amp%3Bsport_id=4",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16081&amp%3Bsport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16082&amp%3Bsport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16045&amp%3Bsport_id=4"
    ],
-   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:University of Denver Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_16141-admin.denverpioneers.com DTSTAMP:20261020T071112Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:Colorado Springs\\, Colo. SUMMARY:[N] University of Denver Men's Golf at Round 2 DESCRIPTION:[N] University of Denver Men's Golf at Round 2\\n T2/18\\n URL:https://admin.denverpioneers.com/calendar.aspx?game_id=16141&amp;sport_id=3 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_16142-admin.denverpioneers.com DTSTAMP:202610"
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:University of Denver Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_16141-admin.denverpioneers.com DTSTAMP:20261020T072023Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:Colorado Springs\\, Colo. SUMMARY:[N] University of Denver Men's Golf at Round 2 DESCRIPTION:[N] University of Denver Men's Golf at Round 2\\n T2/18\\n URL:https://admin.denverpioneers.com/calendar.aspx?game_id=16141&amp;sport_id=3 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_16142-admin.denverpioneers.com DTSTAMP:202610"
   },
   {
    "id": "space-launches",
@@ -445,7 +445,7 @@
    "items": 20,
    "filtered": 0,
    "error": null,
-   "seconds": 0.2,
+   "seconds": 0.5,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -476,7 +476,7 @@
    "items": 42,
    "filtered": 0,
    "error": null,
-   "seconds": 1.9,
+   "seconds": 0.8,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -556,7 +556,7 @@
    "items": 1,
    "filtered": 0,
    "error": null,
-   "seconds": 0.9,
+   "seconds": 0.5,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -578,7 +578,7 @@
    "items": 15,
    "filtered": 0,
    "error": null,
-   "seconds": 0.5,
+   "seconds": 0.3,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -609,7 +609,7 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 404",
-   "seconds": 0.5,
+   "seconds": 0.4,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
@@ -627,7 +627,7 @@
    "items": 62,
    "filtered": 0,
    "error": null,
-   "seconds": 1.0,
+   "seconds": 0.9,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -645,7 +645,7 @@
     "https://jeffcolibrary.bibliocommons.com/events/search/index",
     "https://jeffcolibrary.bibliocommons.com/v2/events/69f408fe5c04bc0fc0640d6c"
    ],
-   "snippet": "dataLayer = [{\"bc.localBranch\":null,\"bc.product\":\"core\",\"bc.gaCrossDomainEnabled\":true,\"bc.cmsEnabled\":true,\"bc.language\":\"en-US\",\"bc.externalEventsGAId\":null,\"bc.libraryId\":132,\"bc.ga4MeasurementId\":\"G-TLER9C9ELE\",\"bc.version\":\"nerf05 Version 9.38.3@35270678 Last updated 2026/10/19 13:14 Built 2026/10/19 17:03\",\"bc.gaCrossDomainNames\":[],\"bc.externalCoreGAId\":\"UA-104075346-2\",\"bc.externalGaId\":\"UA-104075346-2\",\"bc.siteId\":\"CO-JEFFERSON\",\"context\":{},\"bc.domain\":\"jeffcolibrary\",\"bc.cmsUrl\":\"https://jeffcolibrary.org\",\"bc.longName\":\"Jefferson County Public Library\",\"bc.allowGoogleAdFeatures\":fa"
+   "snippet": "dataLayer = [{\"bc.localBranch\":null,\"bc.product\":\"core\",\"bc.gaCrossDomainEnabled\":true,\"bc.cmsEnabled\":true,\"bc.language\":\"en-US\",\"bc.externalEventsGAId\":null,\"bc.libraryId\":132,\"bc.ga4MeasurementId\":\"G-TLER9C9ELE\",\"bc.version\":\"nerf13 Version 9.38.3@35270678 Last updated 2026/10/19 13:31 Built 2026/10/19 17:03\",\"bc.gaCrossDomainNames\":[],\"bc.externalCoreGAId\":\"UA-104075346-2\",\"bc.externalGaId\":\"UA-104075346-2\",\"bc.siteId\":\"CO-JEFFERSON\",\"context\":{},\"bc.domain\":\"jeffcolibrary\",\"bc.cmsUrl\":\"https://jeffcolibrary.org\",\"bc.longName\":\"Jefferson County Public Library\",\"bc.allowGoogleAdFeatures\":fa"
   },
   {
    "id": "denver-library-html",
@@ -658,7 +658,7 @@
    "items": 1,
    "filtered": 0,
    "error": null,
-   "seconds": 1.2,
+   "seconds": 0.8,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -680,7 +680,7 @@
    "items": 100,
    "filtered": 0,
    "error": null,
-   "seconds": 0.7,
+   "seconds": 3.2,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -711,7 +711,7 @@
    "items": 15,
    "filtered": 0,
    "error": null,
-   "seconds": 1.1,
+   "seconds": 0.9,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -729,7 +729,7 @@
     "https://www.broomfield.org/Calendar.aspx?EID=11171",
     "https://www.broomfield.org/Calendar.aspx?EID=11359"
    ],
-   "snippet": "City and County of Broomfield, CO - Calendar https://www.broomfield.org/Calendar.aspx Tue, 20 Oct 2026 01:11:20 -0700 City and County of Broomfield, CO - Get the latest events en-us Medical Care Expense Plan Board of Trustees Meeting - 2 p.m. https://www.broomfield.org/Calendar.aspx?EID=11360 Wed, 14 Oct 2026 08:20:55 -0700 &lt;strong&gt;Event date:&lt;/strong&gt; October 20, 2026 &lt;br&gt;&lt;strong&gt;Event Time: &lt;/strong&gt;02:00 PM - 11:59 PM&lt;br&gt;&lt;strong&gt;Location:&lt;/strong&gt; &lt;br&gt;Broomfield, CO 80020 October 20, 2026 02:00 PM - 11:59 PM Broomfield, CO 80020 https://"
+   "snippet": "City and County of Broomfield, CO - Calendar https://www.broomfield.org/Calendar.aspx Tue, 20 Oct 2026 01:20:31 -0700 City and County of Broomfield, CO - Get the latest events en-us Medical Care Expense Plan Board of Trustees Meeting - 2 p.m. https://www.broomfield.org/Calendar.aspx?EID=11360 Wed, 14 Oct 2026 08:20:55 -0700 &lt;strong&gt;Event date:&lt;/strong&gt; October 20, 2026 &lt;br&gt;&lt;strong&gt;Event Time: &lt;/strong&gt;02:00 PM - 11:59 PM&lt;br&gt;&lt;strong&gt;Location:&lt;/strong&gt; &lt;br&gt;Broomfield, CO 80020 October 20, 2026 02:00 PM - 11:59 PM Broomfield, CO 80020 https://"
   },
   {
    "id": "arvada-calendar",
@@ -751,7 +751,7 @@
    "sample_urls": [
     "https://www.arvadaco.gov/Calendar.aspx?EID=3845"
    ],
-   "snippet": "Arvada, CO - Calendar https://www.arvadaco.gov/Calendar.aspx Tue, 20 Oct 2026 01:11:21 -0700 Arvada, CO - Get the latest events en-us Forest Immersion (Shinrin-Yoku) Workshop https://www.arvadaco.gov/Calendar.aspx?EID=3845 Thu, 08 Oct 2026 13:06:52 -0700 &lt;strong&gt;Event date:&lt;/strong&gt; October 24, 2026 &lt;br&gt;&lt;strong&gt;Event Time: &lt;/strong&gt;02:00 PM - 04:00 PM&lt;br&gt;&lt;strong&gt;Description:&lt;/strong&gt;&lt;br&gt;Ages 16+ October 24, 2026 02:00 PM - 04:00 PM https://www.arvadaco.gov/Calendar.aspx?EID=3845/639270688120000000"
+   "snippet": "Arvada, CO - Calendar https://www.arvadaco.gov/Calendar.aspx Tue, 20 Oct 2026 01:20:32 -0700 Arvada, CO - Get the latest events en-us Forest Immersion (Shinrin-Yoku) Workshop https://www.arvadaco.gov/Calendar.aspx?EID=3845 Thu, 08 Oct 2026 13:06:52 -0700 &lt;strong&gt;Event date:&lt;/strong&gt; October 24, 2026 &lt;br&gt;&lt;strong&gt;Event Time: &lt;/strong&gt;02:00 PM - 04:00 PM&lt;br&gt;&lt;strong&gt;Description:&lt;/strong&gt;&lt;br&gt;Ages 16+ October 24, 2026 02:00 PM - 04:00 PM https://www.arvadaco.gov/Calendar.aspx?EID=3845/639270688120000000"
   },
   {
    "id": "thornton-calendar",
@@ -764,7 +764,7 @@
    "items": 0,
    "filtered": 0,
    "error": "HTTP 404",
-   "seconds": 0.6,
+   "seconds": 0.5,
    "enabled": false,
    "retest": true,
    "sample_titles": [],
@@ -779,28 +779,28 @@
    "status": 200,
    "content_type": "text/calendar",
    "bytes": 107151,
-   "items": 110,
-   "filtered": 172,
+   "items": 94,
+   "filtered": 188,
    "error": null,
-   "seconds": 0.5,
+   "seconds": 0.4,
    "enabled": true,
    "retest": false,
    "sample_titles": [
-    "[W] Colorado Soccer vs West Virginia",
     "[L] Colorado Volleyball vs Utah",
-    "[L] Colorado Football at Baylor"
+    "[L] Colorado Football at Baylor",
+    "[W] Colorado Volleyball vs Arizona"
    ],
    "sample_urls": [
-    "https://admin.cubuffs.com/calendar.aspx?game_id=17990&amp%3Bsport_id=17",
     "https://admin.cubuffs.com/calendar.aspx?game_id=18011&amp%3Bsport_id=20",
     "https://admin.cubuffs.com/calendar.aspx?game_id=17944&amp%3Bsport_id=2",
-    "https://admin.cubuffs.com/calendar.aspx?game_id=18317&amp%3Bsport_id=15",
-    "https://admin.cubuffs.com/calendar.aspx?game_id=17991&amp%3Bsport_id=17",
     "https://admin.cubuffs.com/calendar.aspx?game_id=18012&amp%3Bsport_id=20",
-    "https://admin.cubuffs.com/calendar.aspx?game_id=17993&amp%3Bsport_id=17",
-    "https://admin.cubuffs.com/calendar.aspx?game_id=18013&amp%3Bsport_id=20"
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18013&amp%3Bsport_id=20",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=17945&amp%3Bsport_id=2",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18014&amp%3Bsport_id=20",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18015&amp%3Bsport_id=20",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18016&amp%3Bsport_id=20"
    ],
-   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_18098-admin.cubuffs.com DTSTAMP:20261020T071122Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:USAFA\\, Colo. SUMMARY:[N] Colorado Men's Golf vs Second Round DESCRIPTION:[N] Colorado Men's Golf vs Second Round\\n 1st/18\\n URL:https://admin.cubuffs.com/calendar.aspx?game_id=18098&amp;sport_id=7 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_18099-admin.cubuffs.com DTSTAMP:20261020T071122Z DTSTART;VALUE=DATE:20260921 DTEND;VALUE=DATE:2"
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_18098-admin.cubuffs.com DTSTAMP:20261020T072033Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:USAFA\\, Colo. SUMMARY:[N] Colorado Men's Golf vs Second Round DESCRIPTION:[N] Colorado Men's Golf vs Second Round\\n 1st/18\\n URL:https://admin.cubuffs.com/calendar.aspx?game_id=18098&amp;sport_id=7 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_18099-admin.cubuffs.com DTSTAMP:20261020T072033Z DTSTART;VALUE=DATE:20260921 DTEND;VALUE=DATE:2"
   },
   {
    "id": "csu-athletics-ics",
@@ -810,28 +810,28 @@
    "status": 200,
    "content_type": "text/calendar",
    "bytes": 87977,
-   "items": 111,
-   "filtered": 76,
+   "items": 93,
+   "filtered": 94,
    "error": null,
-   "seconds": 0.5,
+   "seconds": 0.4,
    "enabled": true,
    "retest": false,
    "sample_titles": [
-    "[T] Colorado State University Women's Soccer at Colorado College",
     "[W] Colorado State University Volleyball vs San Diego State",
-    "Colorado State University Softball at Northern Colorado"
+    "[L] Colorado State University Football at UTSA",
+    "[W] Colorado State University Volleyball at Texas State"
    ],
    "sample_urls": [
-    "https://admin.csurams.com/calendar.aspx?game_id=22124&amp%3Bsport_id=10",
     "https://admin.csurams.com/calendar.aspx?game_id=22086&amp%3Bsport_id=14",
-    "https://admin.csurams.com/calendar.aspx?game_id=22206&amp%3Bsport_id=15",
-    "https://admin.csurams.com/calendar.aspx?game_id=22125&amp%3Bsport_id=10",
     "https://admin.csurams.com/calendar.aspx?game_id=21957&amp%3Bsport_id=1",
     "https://admin.csurams.com/calendar.aspx?game_id=22087&amp%3Bsport_id=14",
-    "https://admin.csurams.com/calendar.aspx?game_id=22207&amp%3Bsport_id=15",
-    "https://admin.csurams.com/calendar.aspx?game_id=22088&amp%3Bsport_id=14"
+    "https://admin.csurams.com/calendar.aspx?game_id=22088&amp%3Bsport_id=14",
+    "https://admin.csurams.com/calendar.aspx?game_id=22246&amp%3Bsport_id=3",
+    "https://admin.csurams.com/calendar.aspx?game_id=22089&amp%3Bsport_id=14",
+    "https://admin.csurams.com/calendar.aspx?game_id=21973&amp%3Bsport_id=1",
+    "https://admin.csurams.com/calendar.aspx?game_id=22090&amp%3Bsport_id=14"
    ],
-   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado State University Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_22191-admin.csurams.com DTSTAMP:20261020T071122Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:Fort Collins\\, CO, CSU Tennis Complex SUMMARY:[N] Colorado State University Women's Tennis vs Jon Messick Invitational DESCRIPTION:[N] Colorado State University Women's Tennis vs Jon Messick Invitational\\n\\n URL:https://admin.csurams.com/calendar.aspx?game_id=22191&amp;sport_id=12 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID"
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado State University Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_22191-admin.csurams.com DTSTAMP:20261020T072033Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:Fort Collins\\, CO, CSU Tennis Complex SUMMARY:[N] Colorado State University Women's Tennis vs Jon Messick Invitational DESCRIPTION:[N] Colorado State University Women's Tennis vs Jon Messick Invitational\\n\\n URL:https://admin.csurams.com/calendar.aspx?game_id=22191&amp;sport_id=12 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID"
   },
   {
    "id": "mines-athletics-ics",
@@ -841,28 +841,28 @@
    "status": 200,
    "content_type": "text/calendar",
    "bytes": 217570,
-   "items": 217,
-   "filtered": 261,
+   "items": 122,
+   "filtered": 356,
    "error": null,
-   "seconds": 0.4,
+   "seconds": 0.3,
    "enabled": true,
    "retest": false,
    "sample_titles": [
-    "[T] Colorado School of Mines Club Baseball at Colorado State University",
-    "[L] Colorado School of Mines Club Baseball at Colorado State University",
-    "[W] Colorado School of Mines Club Women's Volleyball vs University of Wyoming \"A\""
+    "[W] Colorado School of Mines Club Women's Volleyball vs University of Wyoming \"A\"",
+    "[W] Colorado School of Mines Club Women's Volleyball vs Regis University \"B\"",
+    "[W] Colorado School of Mines Club Women's Volleyball vs Regis University \"A\""
    ],
    "sample_urls": [
-    "https://minesathletics.com/calendar.aspx?game_id=27186&amp%3Bsport_id=23",
-    "https://minesathletics.com/calendar.aspx?game_id=27187&amp%3Bsport_id=23",
     "https://minesathletics.com/calendar.aspx?game_id=27214&amp%3Bsport_id=42",
     "https://minesathletics.com/calendar.aspx?game_id=27215&amp%3Bsport_id=42",
     "https://minesathletics.com/calendar.aspx?game_id=27216&amp%3Bsport_id=42",
     "https://minesathletics.com/calendar.aspx?game_id=27218&amp%3Bsport_id=42",
-    "https://minesathletics.com/calendar.aspx?game_id=26798&amp%3Bsport_id=13",
-    "https://minesathletics.com/calendar.aspx?game_id=27217&amp%3Bsport_id=42"
+    "https://minesathletics.com/calendar.aspx?game_id=27217&amp%3Bsport_id=42",
+    "https://minesathletics.com/calendar.aspx?game_id=27220&amp%3Bsport_id=42",
+    "https://minesathletics.com/calendar.aspx?game_id=27219&amp%3Bsport_id=42",
+    "https://minesathletics.com/calendar.aspx?game_id=26888&amp%3Bsport_id=16"
    ],
-   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado School of Mines Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_27186-minesathletics.com DTSTAMP:20261020T071123Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:Fort Collins\\, CO SUMMARY:[T] Colorado School of Mines Club Baseball at Colorado State University DESCRIPTION:[T] Colorado School of Mines Club Baseball at Colorado State University\\nT 10-10\\nStreaming Video: https://clubcast.tv/teams/team_01k4bk5wvef6btkgxt994xwv4f#games\\n URL:https://minesathletics.com/calendar.aspx?"
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado School of Mines Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_27186-minesathletics.com DTSTAMP:20261020T072033Z DTSTART;VALUE=DATE:20260920 DTEND;VALUE=DATE:20260921 LOCATION:Fort Collins\\, CO SUMMARY:[T] Colorado School of Mines Club Baseball at Colorado State University DESCRIPTION:[T] Colorado School of Mines Club Baseball at Colorado State University\\nT 10-10\\nStreaming Video: https://clubcast.tv/teams/team_01k4bk5wvef6btkgxt994xwv4f#games\\n URL:https://minesathletics.com/calendar.aspx?"
   },
   {
    "id": "afa-athletics-ics",
@@ -872,28 +872,28 @@
    "status": 200,
    "content_type": "text/calendar",
    "bytes": 212039,
-   "items": 160,
-   "filtered": 306,
+   "items": 137,
+   "filtered": 329,
    "error": null,
-   "seconds": 0.7,
+   "seconds": 0.4,
    "enabled": true,
    "retest": false,
    "sample_titles": [
-    "[T] Air Force Academy Women's Soccer vs Eastern Washington University - Senior Day",
     "[W] Air Force Academy Women's Volleyball vs San Jose State - White Out",
-    "[W] Air Force Academy Women's Soccer vs UC Davis"
+    "[W] Air Force Academy Women's Volleyball vs San Jose State - Bruno Mars Pre-Show Match",
+    "[W] Air Force Academy Football at Nevada"
    ],
    "sample_urls": [
-    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26460&amp%3Bsport_id=19",
     "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26487&amp%3Bsport_id=22",
-    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26440&amp%3Bsport_id=19",
     "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26488&amp%3Bsport_id=22",
-    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26517&amp%3Bsport_id=11",
     "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24310&amp%3Bsport_id=4",
-    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26441&amp%3Bsport_id=19",
-    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26518&amp%3Bsport_id=11"
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26489&amp%3Bsport_id=22",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24329&amp%3Bsport_id=9",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24311&amp%3Bsport_id=4",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26490&amp%3Bsport_id=22",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26491&amp%3Bsport_id=22"
    ],
-   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Air Force Academy Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_27004-admin.goairforcefalcons.com DTSTAMP:20261020T071123Z DTSTART:20260920T140000Z DTEND:20260920T170000Z LOCATION:Eisenhower/USAFA\\, Colo. SUMMARY:[N] Air Force Academy Men's Golf vs Gene Miranda Falcon Invitational DESCRIPTION:[N] Air Force Academy Men's Golf vs Gene Miranda Falcon Invitational\\n\\n URL:https://admin.goairforcefalcons.com/calendar.aspx?game_id=27004&amp;sport_id=7 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_26460-admi"
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Air Force Academy Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_27004-admin.goairforcefalcons.com DTSTAMP:20261020T072034Z DTSTART:20260920T140000Z DTEND:20260920T170000Z LOCATION:Eisenhower/USAFA\\, Colo. SUMMARY:[N] Air Force Academy Men's Golf vs Gene Miranda Falcon Invitational DESCRIPTION:[N] Air Force Academy Men's Golf vs Gene Miranda Falcon Invitational\\n\\n URL:https://admin.goairforcefalcons.com/calendar.aspx?game_id=27004&amp;sport_id=7 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_26460-admi"
   },
   {
    "id": "botanic-gardens",
@@ -906,7 +906,7 @@
    "items": 8,
    "filtered": 0,
    "error": null,
-   "seconds": 1.5,
+   "seconds": 0.5,
    "enabled": true,
    "retest": false,
    "sample_titles": [
@@ -933,11 +933,11 @@
    "ok": true,
    "status": 200,
    "content_type": "text/html",
-   "bytes": 124512,
+   "bytes": 124462,
    "items": 16,
    "filtered": 0,
    "error": null,
-   "seconds": 0.3,
+   "seconds": 0.5,
    "enabled": true,
    "retest": false,
    "sample_titles": [
