@@ -1,0 +1,61 @@
+name: collect
+# 하루 1회 수집·판정·발송. 예약 실행은 main 에서만 돈다.
+# 다른 브랜치에서 ticks/collect-dry 를 push 하면 시험 실행(--dry-run): Worker·텔레그램에 아무것도 쓰지 않고 결과를 아티팩트로만 남긴다.
+on:
+  schedule:
+    - cron: "30 12 * * *"   # 06:30 덴버(서머타임) / 21:30 한국
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "시험 실행(Worker 에 쓰지 않음)"
+        type: boolean
+        default: true
+      max:
+        description: "AI 로 넘길 최대 건수(비우면 설정값)"
+        required: false
+  push:
+    branches-ignore: [main]
+    paths: ["ticks/collect-dry"]
+permissions:
+  contents: read
+concurrency:
+  group: collect-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt
+      - name: Decide mode
+        run: |
+          DRY=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then DRY=false; fi
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "false" ] && [ "${{ github.ref_name }}" = "main" ]; then DRY=false; fi
+          echo "DRY=$DRY" >> "$GITHUB_ENV"
+          MAX="${{ inputs.max }}"; [ -z "$MAX" ] && [ -f ticks/collect-dry ] && [ "${{ github.event_name }}" = "push" ] && MAX=$(grep -oE '^max=[0-9]+' ticks/collect-dry | cut -d= -f2)
+          echo "MAX=$MAX" >> "$GITHUB_ENV"
+          echo "mode: dry=$DRY max=${MAX:-config}"
+      - name: Worker address
+        if: env.DRY == 'false'
+        run: bash scripts/cf_env.sh
+      - name: Collect
+        run: |
+          args="--out reports/run.json"
+          [ "$DRY" = "true" ] && args="$args --dry-run"
+          [ -n "$MAX" ] && args="$args --max $MAX"
+          python collector/run.py $args
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: run-report
+          path: reports/run.json
+          retention-days: 30

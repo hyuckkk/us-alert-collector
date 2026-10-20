@@ -1,0 +1,27 @@
+name: dispatch
+# 매시: 정지 시간대 때문에 미뤄진 즉시 알림 발송 + 주간 요약(각자 현지 토요일 9시 이후 1회).
+on:
+  schedule:
+    - cron: "20 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: dispatch
+  cancel-in-progress: false
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/cf_env.sh
+      - run: bash scripts/run.sh bash scripts/admin_call.sh dispatch
+      - run: bash scripts/run.sh bash scripts/admin_call.sh digest
+      - name: Weekly report (Monday 15:20 UTC)
+        if: github.event_name == 'schedule' && github.event.schedule == '20 * * * *'
+        run: |
+          if [ "$(date -u +%u%H)" = "115" ]; then bash scripts/run.sh bash scripts/admin_call.sh report; fi

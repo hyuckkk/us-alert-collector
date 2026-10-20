@@ -28,6 +28,7 @@ def main() -> int:
             "ok": r.ok, "status": r.status, "content_type": r.content_type, "bytes": r.size,
             "items": len(r.entries), "error": r.error, "seconds": round(time.time() - t0, 1),
             "sample_titles": [e.title for e in r.entries[:3]],
+            "sample_urls": [e.url for e in r.entries[:8]],
             "snippet": r.snippet,
         })
         print(f"{'OK ' if r.ok else 'ERR'} {r.status} {len(r.entries):3d} {s['id']} {r.error or ''}")

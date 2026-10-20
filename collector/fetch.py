@@ -17,6 +17,8 @@ import httpx
 USER_AGENT = "Mozilla/5.0 (compatible; us-alert-collector/1.0; +https://github.com/hyuckkk/us-alert-collector)"
 TIMEOUT = 25.0
 MAX_BYTES = 3_000_000
+# html 정보원에 link_pattern 이 없을 때 쓰는 기본 거르기: 행사·강좌·소식으로 보이는 주소만 남겨 메뉴 링크를 뺀다
+EVENTISH = re.compile(r"/(events?|calendar|programs?|class(es)?|camps?|activit|exhibit|news|release|register|tickets?|schedule|workshop|festival)", re.I)
 TRACKING = re.compile(r"^(utm_[a-z]+|fbclid|gclid|mc_[a-z]+|_hs[a-z]+|ref)$", re.I)
 
 
@@ -182,7 +184,7 @@ def parse_html(html: str, source: dict) -> list[Entry]:
         digest = hashlib.sha1(page_text.encode()).hexdigest()[:12]
         return [Entry(source["id"], normalize_url(base), source.get("name", source["id"]), page_text[:3000], None, {"page_hash": digest})]
     host = _host(base)
-    pat = re.compile(source["link_pattern"]) if source.get("link_pattern") else None
+    pat = re.compile(source["link_pattern"]) if source.get("link_pattern") else EVENTISH
     seen, out = set(), []
     for href, label in p.links:
         label = clean_text(label, 300)
@@ -191,7 +193,7 @@ def parse_html(html: str, source: dict) -> list[Entry]:
         url = normalize_url(href, base)
         if _host(url) != host or url in seen or url.rstrip("/") == normalize_url(base).rstrip("/"):
             continue
-        if pat and not pat.search(url):
+        if not pat.search(urllib.parse.urlsplit(url).path + "?" + urllib.parse.urlsplit(url).query):
             continue
         seen.add(url)
         out.append(Entry(source["id"], url, label))
@@ -223,6 +225,9 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
             res.snippet = clean_text(text, 600)
         if not res.ok:
             res.error = f"HTTP {r.status_code}"
+            return res
+        if not body.strip():
+            res.ok, res.error = False, "empty body"
             return res
         sid, base = source["id"], str(r.url)
         t = source["type"]
