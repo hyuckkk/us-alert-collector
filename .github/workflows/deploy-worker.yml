@@ -1,0 +1,48 @@
+name: deploy-worker
+# worker/ 가 바뀌면 us-alert-worker 를 배포한다. D1(us-alert-db)은 없으면 만들고 스키마를 적용한다.
+# 비밀값(봇 토큰 등)은 Cloudflare 에만 있고, 배포해도 지워지지 않는다.
+on:
+  push:
+    branches: [main]
+    paths: ["worker/**", ".github/workflows/deploy-worker.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: deploy-worker
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      US_ADMIN_KEY: ${{ secrets.US_ADMIN_KEY }}
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm ci --no-audit --no-fund
+      - name: Find Cloudflare account and Worker URL
+        run: bash ../scripts/cf_env.sh
+      - name: Ensure D1 database us-alert-db
+        run: |
+          find_id() { npx wrangler d1 list --json | python3 -c "import json,sys;print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']=='us-alert-db'),''))"; }
+          ID=$(find_id)
+          if [ -z "$ID" ]; then npx wrangler d1 create us-alert-db; ID=$(find_id); fi
+          [ -n "$ID" ] || { echo "D1 lookup failed"; exit 1; }
+          sed -i "s/__D1_DATABASE_ID__/$ID/" wrangler.toml
+      - name: Apply D1 migrations
+        run: npx wrangler d1 migrations apply us-alert-db --remote
+      - name: Deploy
+        run: npx wrangler deploy
+      - name: Register Telegram webhooks
+        run: |
+          if [ -z "$US_ADMIN_KEY" ]; then echo "::warning::US_ADMIN_KEY not set yet - skipped webhook setup"; exit 0; fi
+          bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - check bot token secrets in Cloudflare, then run the 'admin' workflow with action=setup"
+      - name: Summary
+        run: echo "Worker URL - $US_WORKER_URL" >> "$GITHUB_STEP_SUMMARY"

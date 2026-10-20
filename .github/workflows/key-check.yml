@@ -1,0 +1,25 @@
+name: key-check
+# 매일 Anthropic API 키(colorado-alerts 워크스페이스)가 살아 있는지 확인한다. 모델 목록 조회라 토큰을 쓰지 않는다.
+# 키가 거부되면 Worker 가 소유자 DM(@ColoradoLife_bot)으로 알린다. 만료 2주 전 알림은 Worker 예약 실행이 따로 한다.
+on:
+  schedule:
+    - cron: "40 23 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      US_ADMIN_KEY: ${{ secrets.US_ADMIN_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt
+      - run: bash scripts/cf_env.sh
+      - run: python collector/key_check.py

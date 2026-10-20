@@ -1,0 +1,13 @@
+{
+  "name": "us-alert-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node test/local-e2e.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.146.0"
+  }
+}

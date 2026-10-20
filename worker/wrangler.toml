@@ -1,0 +1,24 @@
+# us-alert-worker — 미국 체류 알림 시스템 (한국 telegram-relay Worker 와 완전히 별개)
+name = "us-alert-worker"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+# 매일 00:05 UTC = 09:05 한국 / 18:05 덴버(서머타임) — 만료일 알림, 웹훅 점검
+[triggers]
+crons = ["5 0 * * *"]
+
+[vars]
+TG_API = "https://api.telegram.org"
+SYSTEM_BOT = "life"        # 시스템 알림(만료·키 점검)을 보낼 봇
+OWNER_TZ = "Asia/Seoul"    # 소유자 기준 날짜·시각. 입국 후 "America/Denver" 로 변경
+
+[[d1_databases]]
+binding = "DB"
+database_name = "us-alert-db"
+# 배포 워크플로가 이름으로 찾아 채운다(없으면 만든다). 직접 배포할 때는 `npx wrangler d1 list` 의 ID 로 바꾼다.
+database_id = "__D1_DATABASE_ID__"
+migrations_dir = "migrations"
+
+[observability]
+enabled = true
