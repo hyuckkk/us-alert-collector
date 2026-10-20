@@ -36,9 +36,9 @@ jobs:
           [ -n "$ID" ] || { echo "D1 lookup failed"; exit 1; }
           sed -i "s/__D1_DATABASE_ID__/$ID/" wrangler.toml
       - name: Apply D1 migrations
-        run: npx wrangler d1 migrations apply us-alert-db --remote
+        run: bash ../scripts/run.sh npx wrangler d1 migrations apply us-alert-db --remote
       - name: Deploy
-        run: npx wrangler deploy
+        run: bash ../scripts/run.sh npx wrangler deploy
       - name: Sync Worker secrets from GitHub
         env:
           BOT_TOKEN_LIFE: ${{ secrets.BOT_TOKEN_LIFE }}
@@ -55,10 +55,10 @@ jobs:
           print(json.dumps(out))
           PY
           python3 -c "import json,os;print('syncing:', ', '.join(json.load(open(os.environ['RUNNER_TEMP']+'/secrets.json'))))"
-          npx wrangler secret bulk "$RUNNER_TEMP/secrets.json"
-          rm -f "$RUNNER_TEMP/secrets.json"
+          rc=0; bash ../scripts/run.sh npx wrangler secret bulk "$RUNNER_TEMP/secrets.json" || rc=$?
+          rm -f "$RUNNER_TEMP/secrets.json"; exit $rc
       - name: Register Telegram webhooks
         run: |
-          bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - add BOT_TOKEN_* secrets in GitHub and re-run deploy-worker, then run the 'admin' workflow with action=setup"
+          bash ../scripts/run.sh bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - add BOT_TOKEN_* secrets in GitHub and re-run deploy-worker, then run the 'admin' workflow with action=setup"
       - name: Summary
         run: echo "Worker URL - $US_WORKER_URL" >> "$GITHUB_STEP_SUMMARY"
