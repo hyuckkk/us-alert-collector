@@ -1,34 +1,34 @@
 {
- "run_id": "20261020T055700Z",
- "today": "2026-10-19",
+ "run_id": "20261020T060056Z",
+ "today": "2026-10-20",
  "dry_run": true,
  "sources": [
   {
    "id": "westminster-calendar",
-   "ok": false,
+   "ok": true,
    "status": 200,
-   "items": 0,
-   "error": "empty body"
+   "items": 19,
+   "error": null
   },
   {
    "id": "westminster-news",
-   "ok": false,
+   "ok": true,
    "status": 200,
-   "items": 0,
-   "error": "empty body"
+   "items": 4,
+   "error": null
+  },
+  {
+   "id": "westminster-camps",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
   },
   {
    "id": "hyland-hills",
-   "ok": false,
-   "status": null,
-   "items": 0,
-   "error": "ConnectTimeout: timed out"
-  },
-  {
-   "id": "butterfly-pavilion",
    "ok": true,
    "status": 200,
-   "items": 62,
+   "items": 11,
    "error": null
   },
   {
@@ -39,25 +39,18 @@
    "error": "HTTP 403"
   },
   {
-   "id": "boulder-library",
+   "id": "denver-zoo-events",
    "ok": false,
    "status": 403,
    "items": 0,
    "error": "HTTP 403"
   },
   {
-   "id": "adams-county-events",
-   "ok": false,
-   "status": 403,
-   "items": 0,
-   "error": "HTTP 403"
-  },
-  {
-   "id": "cpw-events",
-   "ok": false,
-   "status": 403,
-   "items": 0,
-   "error": "HTTP 403"
+   "id": "childrens-museum",
+   "ok": true,
+   "status": 200,
+   "items": 3,
+   "error": null
   },
   {
    "id": "rmnp-news",
@@ -81,7 +74,21 @@
    "error": "skipped: NPS_API_KEY not set"
   },
   {
-   "id": "national-western",
+   "id": "usafa-events",
+   "ok": true,
+   "status": 200,
+   "items": 18,
+   "error": null
+  },
+  {
+   "id": "usopm-events",
+   "ok": false,
+   "status": 403,
+   "items": 0,
+   "error": "HTTP 403"
+  },
+  {
+   "id": "ncar-visit",
    "ok": false,
    "status": 403,
    "items": 0,
@@ -91,7 +98,7 @@
    "id": "du-athletics-ics",
    "ok": true,
    "status": 200,
-   "items": 284,
+   "items": 283,
    "error": null
   },
   {
@@ -103,506 +110,250 @@
   }
  ],
  "dropped": {
-  "not-relevant": 6,
-  "duplicate": 15,
+  "not-relevant": 24,
   "judge-removed": 0
  },
  "events": [
   {
-   "event_key": "e5b24f93e77ab541",
-   "bot": "life",
-   "title": "Beekeeping Bootcamp 2027",
-   "title_ko": "양봉 부트캠프 2027 (Beekeeping Bootcamp)",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": null,
+   "event_key": "ec780cca6d75aabc",
+   "bot": "family",
+   "title": "Fire Safety Booth @ West View Recreation Center",
+   "title_ko": "웨스트 뷰 레크리에이션 센터 화재 안전 부스",
+   "org": null,
+   "start_date": "2026-10-28",
+   "end_date": "2026-10-28",
+   "time_text": "08:00 AM - 10:00 AM",
    "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": "성인",
-   "english": [
-    "초보 가능"
-   ],
+   "location": "West View Recreation Center, 10747 W. 108th Avenue",
+   "city": "Westminster",
+   "age_text": null,
+   "english": [],
    "cost_text": null,
    "signup": "unknown",
    "deadline": null,
-   "status_note": "5회 시리즈 강좌, 일정 미정",
-   "url": "https://butterflies.org/event/toxic-terrors/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
+   "status_note": null,
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1743",
+   "checked_at": "2026-10-20T06:00:56+00:00",
    "urgency": "weekly",
    "tags": [
-    "beekeeping",
-    "pollinator",
-    "info"
+    "safety",
+    "community"
    ],
    "annual": false,
    "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
+   "source_id": "westminster-calendar",
+   "registration_opens": null,
+   "_source_text": "Event date: October 28, 2026 Event Time: 08:00 AM - 10:00 AM Location: 10747 W. 108th Avenue Westminster, CO 80021"
   },
   {
-   "event_key": "e72a134faa0d6001",
+   "event_key": "e8a7fc18f368710a",
    "bot": "family",
-   "title": "Family Night Adventure: Around the World",
-   "title_ko": "가족 야간 탐험: 세계 일주 (Family Night Adventure)",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": "5:30 PM – 7:00 PM",
+   "title": "Fire Safety Booth @ Adams County Human Services",
+   "title_ko": "애덤스 카운티 인간서비스 센터 화재 안전 부스",
+   "org": null,
+   "start_date": "2026-10-29",
+   "end_date": "2026-10-29",
+   "time_text": "12:00 PM - 03:00 PM",
    "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
+   "location": "Adams County Human Services, 11860 N. Pecos St",
+   "city": "Westminster",
    "age_text": null,
-   "english": [
-    "보호자 동반"
-   ],
-   "cost_text": "비회원 성인 $10.00, 비회원 아동 $5.00, 회원 성인 $8.00, 회원 아동 $4.00",
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "6월 8일 저녁 폐관 후 관람",
-   "url": "https://butterflies.org/event/sensory-friendly-afternoon-10-21/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "museum",
-    "family-night",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e6bc88776aae6692",
-   "bot": "family",
-   "title": "Sensory Friendly Afternoon",
-   "title_ko": "감각 친화 오후 관람",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": "3:00 PM – 5:00 PM",
-   "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": null,
-   "english": [
-    "보호자 동반"
-   ],
+   "english": [],
    "cost_text": null,
    "signup": "unknown",
    "deadline": null,
-   "status_note": "감각 민감 가족을 위한 조용한 관람 시간",
-   "url": "https://butterflies.org/event/sensory-friendly-afternoon-10-21/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
+   "status_note": null,
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1744",
+   "checked_at": "2026-10-20T06:00:56+00:00",
    "urgency": "weekly",
    "tags": [
-    "museum",
-    "sensory-friendly",
-    "info"
+    "safety",
+    "community"
    ],
    "annual": false,
    "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
+   "source_id": "westminster-calendar",
+   "registration_opens": null,
+   "_source_text": "Event date: October 29, 2026 Event Time: 12:00 PM - 03:00 PM Location: 11860 N. Pecos St Westminster, CO 80234"
   },
   {
-   "event_key": "ed54f808563869db",
+   "event_key": "e2a7ce90c26f9ea6",
    "bot": "life",
-   "title": "Adults Only Evening (18+)",
-   "title_ko": "성인 전용 야간 관람 (18세 이상)",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": "6:00 PM – 8:00 PM",
+   "title": "Winter Coed BB Volleyball League",
+   "title_ko": "겨울 혼성 BB 배구 리그",
+   "org": "Westminster Parks and Recreation",
+   "start_date": "2027-01-06",
+   "end_date": "2027-03-10",
+   "time_text": "18:00-20:00",
    "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
+   "location": "West View Recreation Center, 10747 W 108th Ave",
+   "city": "Westminster",
    "age_text": "18세 이상",
-   "english": [],
-   "cost_text": null,
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "성인 전용 야간 관람",
-   "url": "https://butterflies.org/event/mikes-camera-workshop/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "museum",
-    "adults-only",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e3b9e74b06ce31b5",
-   "bot": "life",
-   "title": "Rainforest Yoga (Callie Phelps)",
-   "title_ko": "레인포레스트 요가 (Callie Phelps 강사)",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": "7:45 AM – 8:45 AM",
-   "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": null,
    "english": [
-    "초보 가능"
+    "반복 만남"
    ],
-   "cost_text": null,
+   "cost_text": "팀 참가비 $345",
    "signup": "unknown",
    "deadline": null,
-   "status_note": "수준 무관 1시간 요가",
-   "url": "https://butterflies.org/event/rainforest-yoga-kelsey-mueller-3/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
+   "status_note": null,
+   "url": "https://www.westminsterco.gov/adultvolleyball",
+   "checked_at": "2026-10-20T06:00:56+00:00",
    "urgency": "weekly",
    "tags": [
-    "yoga",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e532317c0f716ea5",
-   "bot": "life",
-   "title": "Rainforest Yoga (Kelsey Mueller)",
-   "title_ko": "레인포레스트 요가 (Kelsey Mueller 강사)",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": "6:45 PM – 7:45 PM",
-   "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": null,
-   "english": [
-    "초보 가능"
-   ],
-   "cost_text": null,
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "수준 무관 1시간 요가",
-   "url": "https://butterflies.org/event/rainforest-yoga-kelsey-mueller-3/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "yoga",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "ebccbd5505ba5172",
-   "bot": "family",
-   "title": "Crawl-o-ween",
-   "title_ko": "크롤로윈 (할로윈 행사)",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": "9:00 a.m. – 5:00 p.m.",
-   "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": null,
-   "english": [],
-   "cost_text": null,
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "10월 24·25·31일 운영, 코스튬 환영(무기·전면 마스크 금지)",
-   "url": "https://butterflies.org/event/crawl-o-ween/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "halloween",
-    "costume",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e938408ce1effe32",
-   "bot": "life",
-   "title": "Beekeeping 101",
-   "title_ko": "양봉 입문 101 (Beekeeping 101)",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": null,
-   "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": "성인",
-   "english": [
-    "초보 가능"
-   ],
-   "cost_text": null,
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "강의 + 양봉장 실습, 일정 미정",
-   "url": "https://butterflies.org/event/family-flashlight-tours-escape-the-pavilion-2/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "beekeeping",
-    "pollinator",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e5175729a89e25a5",
-   "bot": "family",
-   "title": "Crawl-o-ween Trick-or-Treating",
-   "title_ko": "크롤로윈 트릭오트리팅",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": "09:00-17:00",
-   "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": null,
-   "english": [],
-   "cost_text": null,
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "2026년 10월 24·25·31일 오전 9시~오후 5시, 티켓 필요, 코스튬 환영(무기·전체 가면 금지)",
-   "url": "https://butterflies.org/event/crawl-o-ween-trick-or-treating/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "halloween",
-    "family",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e289be71907f7a8b",
-   "bot": "life",
-   "title": "Bugs & Brews: Toxic Terrors",
-   "title_ko": "벌레와 맥주: Toxic Terrors",
-   "org": "Butterfly Pavilion",
-   "start_date": null,
-   "end_date": null,
-   "time_text": null,
-   "event_tz": "America/Denver",
-   "location": "Butterfly Pavilion",
-   "city": null,
-   "age_text": "21세 이상",
-   "english": [],
-   "cost_text": "비회원 $45, 회원 $40",
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "10월 30일 행사, 티켓 구매 필요",
-   "url": "https://butterflies.org/event/bugs-brews-toxic-terrors/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "adult",
-    "insects",
-    "info"
-   ],
-   "annual": false,
-   "year_label": null,
-   "source_id": "butterfly-pavilion",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e4bda2734749de06",
-   "bot": "kids",
-   "title": "Hyland Hills Youth Fall Sports",
-   "title_ko": "Hyland Hills 청소년 가을 스포츠",
-   "org": "Hyland Hills",
-   "start_date": null,
-   "end_date": null,
-   "time_text": null,
-   "event_tz": "America/Denver",
-   "location": null,
-   "city": "Westminster",
-   "age_text": null,
-   "english": [],
-   "cost_text": null,
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "매년 8월 1일경 등록 시작",
-   "url": "https://www.hylandhills.gov/2026/08/01/fall-sports-open-for-registration/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "sports",
-    "fall"
-   ],
-   "annual": true,
-   "year_label": "연례행사 — 내년에도 열릴 가능성",
-   "source_id": "ai-discover",
-   "registration_opens": null
-  },
-  {
-   "event_key": "e59d1aedd57f9671",
-   "bot": "life",
-   "title": "Hyland Hills Summer Sports Leagues",
-   "title_ko": "Hyland Hills 여름 스포츠 리그 (청소년·성인)",
-   "org": "Hyland Hills",
-   "start_date": null,
-   "end_date": null,
-   "time_text": null,
-   "event_tz": "America/Denver",
-   "location": null,
-   "city": "Westminster",
-   "age_text": null,
-   "english": [],
-   "cost_text": null,
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "매년 4월 1일경 등록 시작",
-   "url": "https://www.hylandhills.gov/event/summer-sports-open-for-registration/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "sports",
-    "summer",
+    "volleyball",
     "league"
    ],
-   "annual": true,
-   "year_label": "연례행사 — 내년에도 열릴 가능성",
+   "annual": false,
+   "year_label": "2027년 행사",
    "source_id": "ai-discover",
-   "registration_opens": null
+   "registration_opens": null,
+   "_source_text": "Adult Volleyball | Westminster, CO Skip to Main Content Search Programs & Classes Libraries Golf Events Parks & Open Space Facilities Parks and Recreation /QuickLinks.aspx Home Government Departments Parks & Recreation Programs & Classes Athletics Adult Volleyball Adult Volleyball Bump, set, spike! Volleyball is a great way to get together with friends and get a great workout in. Learn more about "
   },
   {
-   "event_key": "eb6a5755fb4b99e2",
-   "bot": "kids",
-   "title": "Youth Basketball Leagues (ages 6–13)",
-   "title_ko": "청소년 농구 리그 (6–13세)",
-   "org": "Hyland Hills",
+   "event_key": "e01eefdc9f8aa444",
+   "bot": "life",
+   "title": "Senior Women's Volleyball Drop-In",
+   "title_ko": "시니어 여성 배구 드롭인",
+   "org": "Westminster Parks and Recreation",
    "start_date": null,
    "end_date": null,
-   "time_text": null,
+   "time_text": "09:00-12:00",
    "event_tz": "America/Denver",
-   "location": "Hyland Hills Sports Center, 4201 W 94th Ave, Westminster",
+   "location": "City Park Recreation Center",
    "city": "Westminster",
-   "age_text": "6–13세",
-   "english": [],
-   "cost_text": "마지막으로 공지된 참가비 $85",
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": "등록 10월~1월, 경기 1월~2월",
-   "url": "https://www.hylandhills.gov/event/youth-basketball-leagues-start/",
-   "checked_at": "2026-10-20T05:57:00+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "basketball",
-    "league"
+   "age_text": "시니어 여성 대상",
+   "english": [
+    "초보 가능",
+    "반복 만남"
    ],
-   "annual": true,
-   "year_label": "연례행사 — 내년에도 열릴 가능성",
-   "source_id": "ai-discover",
-   "registration_opens": null
-  },
-  {
-   "event_key": "ef01150a407249e3",
-   "bot": "kids",
-   "title": "City of Westminster Summer Camp Day Program",
-   "title_ko": "웨스트민스터시 여름 캠프 (종일 프로그램)",
-   "org": "City of Westminster",
-   "start_date": null,
-   "end_date": null,
-   "time_text": null,
-   "event_tz": "America/Denver",
-   "location": null,
-   "city": "Westminster",
-   "age_text": null,
-   "english": [],
-   "cost_text": null,
-   "signup": "unknown",
+   "cost_text": "가입비 없음, 일일 입장료 또는 이용권 필요",
+   "signup": "none",
    "deadline": null,
-   "status_note": "봄에 등록 시작, 6월 초~8월 초 운영",
-   "url": "https://www.westminsterco.gov/376/Camps",
-   "checked_at": "2026-10-20T05:57:00+00:00",
+   "status_note": "매주 월요일 오전 9시~정오 진행, 최소 10명이 모여야 경기 가능, TeamReach 앱에서 그룹 코드 westydropin1로 가입 후 출석 기록",
+   "url": "https://www.westminsterco.gov/adultvolleyball",
+   "checked_at": "2026-10-20T06:00:56+00:00",
    "urgency": "weekly",
    "tags": [
-    "camp",
-    "summer",
+    "volleyball",
+    "drop-in",
     "info"
    ],
    "annual": false,
    "year_label": null,
    "source_id": "ai-discover",
-   "registration_opens": null
+   "registration_opens": null,
+   "_source_text": "Adult Volleyball | Westminster, CO Skip to Main Content Search Programs & Classes Libraries Golf Events Parks & Open Space Facilities Parks and Recreation /QuickLinks.aspx Home Government Departments Parks & Recreation Programs & Classes Athletics Adult Volleyball Adult Volleyball Bump, set, spike! Volleyball is a great way to get together with friends and get a great workout in. Learn more about "
   }
  ],
  "discover": {
   "dropped_urls": 0,
-  "result_urls": 28,
-  "raw_text": "with news and calendar of events)\",\"reason\":\"Home page of the district's .gov site. It posts recurring news and calendar items for each season's registration opening (spring, summer and fall sports). Information on the resident discount card is also here.\",\"bots\":[\"kids\",\"family\"]}],\"events\":[{\"url\":\"https://www.hylandhills.gov/2026/08/01/fall-sports-open-for-registration/\",\"title\":\"Hyland Hills – Fall Sports Open for Registration\",\"why\":\"Registration for youth fall sports opens around August 1 each year. If you arrive in June 2027, the August 2027 opening is the first season your kids can join.\"},{\"url\":\"https://www.hylandhills.gov/event/summer-sports-open-for-registration/\",\"title\":\"Hyland Hills – Summer Sports Open for Registration\",\"why\":\"Youth and adult summer leagues open for registration around April 1 each year. Watch for the 2027 opening if you can sign up before you arrive.\"},{\"url\":\"https://www.hylandhills.gov/event/youth-basketball-leagues-start/\",\"title\":\"Hyland Hills – Youth Basketball Leagues (ages 6–13)\",\"why\":\"A yearly winter league at Hyland Hills Sports Center (4201 W 94th Ave, Westminster) for ages 6–13. Registration runs October to January, and games run January to February. The last listed fee was $85.\"},{\"url\":\"https://www.westminsterco.gov/376/Camps\",\"title\":\"City of Westminster Summer Camp Day Program\",\"why\":\"The full-summer day camp runs early June to early August, which fits a June 2027 arrival. Watch for 2027 registration to open in the spring.\"}]}",
-  "theme": "kids after-school programs, camps, youth sports and arts/science classes",
+  "result_urls": 29,
+  "raw_text": "3/Adult-Softball\",\"name\":\"City of Westminster – Adult Softball\",\"reason\":\"Page for the city's adult softball leagues, which run by season.\",\"bots\":[\"adults\"]},{\"url\":\"https://www.westminsterco.gov/336/Nature-Outdoor\",\"name\":\"City of Westminster – Nature & Outdoor\",\"reason\":\"Nature and outdoor recreation programs run by the city.\",\"bots\":[\"adults\",\"family\"]},{\"url\":\"https://www.denverlibrary.org/library-lineup\",\"name\":\"Denver Public Library – The Library Lineup\",\"reason\":\"Adult programs held across Denver in library branches, galleries, parks and public spaces. Includes reading, discussion and creative programs.\",\"bots\":[\"adults\"]},{\"url\":\"https://www.denverlibrary.org/category/blog-categories/library-events\",\"name\":\"Denver Public Library – Library Events\",\"reason\":\"The library's ongoing events listing.\",\"bots\":[\"adults\",\"family\"]},{\"url\":\"https://www.denverlibrary.org/category/free-tagging/programs-programming-adult\",\"name\":\"Denver Public Library – Adult Programming\",\"reason\":\"Collects the library's posts about adult programs.\",\"bots\":[\"adults\"]}],\"events\":[{\"url\":\"https://www.westminsterco.gov/adultvolleyball\",\"title\":\"Westminster adult volleyball league registration\",\"why\":\"Leagues run by season. Check summer/fall 2027 registration dates soon after arriving in June.\"},{\"url\":\"https://www.westminsterco.gov/313/Adult-Softball\",\"title\":\"Westminster adult softball season registration\",\"why\":\"Fall league sign-up may open around the time the family arrives in summer 2027.\"}]}\n```",
+  "theme": "adult hobby and skills classes (crafts, cooking, tech, language exchange, sports leagues)",
   "sources": [
    {
-    "url": "https://www.westminsterco.gov/376/Camps",
-    "name": "City of Westminster – Youth & Teen Camps",
-    "reason": "The City of Westminster's official camps page covers winter, spring break and summer day camps, with online registration. It lists the summer camp day program, which runs early June to early August. This is the main city source for school-break childcare in June 2027.",
+    "url": "https://www.westminsterco.gov/292/Adult-Lifelong-Learning",
+    "name": "City of Westminster – Adult Lifelong Learning",
+    "reason": "The city recreation department runs educational seminars, classes and special events for adults. Topics include arts, music, health and wellness, parenting, genealogy, and tech such as AI.",
     "bots": [
-     "kids"
+     "adults"
     ]
    },
    {
-    "url": "https://www.hylandhills.gov/programs/youth-adult-sports/",
-    "name": "Hyland Hills Park & Recreation District – Youth & Adult Sports",
-    "reason": "Hyland Hills' official page for youth leagues (basketball, soccer, baseball, softball, flag football), with registration windows, seasons, practice and game schedules. You can register online, in person or by phone at 303-428-7488. Residents of the district or the City of Westminster get discounted pricing. This is the .gov site, not the hylandhills.org site already on your list.",
+    "url": "https://www.westminsterco.gov/173/Programs-Classes",
+    "name": "City of Westminster – Programs & Classes",
+    "reason": "Main page for Westminster recreation programs: adult trips, events and athletics, aquatics, and the scholarship/reduced-rate pass program for Westminster and Hyland Hills residents.",
     "bots": [
-     "kids"
-    ]
-   },
-   {
-    "url": "https://www.hylandhills.gov/",
-    "name": "Hyland Hills Park & Recreation District (.gov site with news and calendar of events)",
-    "reason": "Home page of the district's .gov site. It posts recurring news and calendar items for each season's registration opening (spring, summer and fall sports). Information on the resident discount card is also here.",
-    "bots": [
+     "adults",
      "kids",
      "family"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/325/Fitness-Wellness",
+    "name": "City of Westminster – Fitness & Wellness",
+    "reason": "Lists more than 170 drop-in fitness classes a week, Active Adults programs, and flying trapeze and aerial fitness (Fly Mile High).",
+    "bots": [
+     "adults"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/adultvolleyball",
+    "name": "City of Westminster – Adult Volleyball Leagues",
+    "reason": "Volleyball league information. You can register online or by calling City Park Recreation Center or the Westminster Sports Center.",
+    "bots": [
+     "adults"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/312/Adult-Indoor-Soccer",
+    "name": "City of Westminster – Adult Indoor Soccer",
+    "reason": "Page for the city's adult indoor soccer league.",
+    "bots": [
+     "adults"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/318/Adult-Pickleball-Tennis",
+    "name": "City of Westminster – Adult Pickleball & Tennis",
+    "reason": "Page for the city's adult pickleball and tennis programs.",
+    "bots": [
+     "adults"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/313/Adult-Softball",
+    "name": "City of Westminster – Adult Softball",
+    "reason": "Page for the city's adult softball leagues, which run by season.",
+    "bots": [
+     "adults"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/336/Nature-Outdoor",
+    "name": "City of Westminster – Nature & Outdoor",
+    "reason": "Nature and outdoor recreation programs run by the city.",
+    "bots": [
+     "adults",
+     "family"
+    ]
+   },
+   {
+    "url": "https://www.denverlibrary.org/library-lineup",
+    "name": "Denver Public Library – The Library Lineup",
+    "reason": "Adult programs held across Denver in library branches, galleries, parks and public spaces. Includes reading, discussion and creative programs.",
+    "bots": [
+     "adults"
+    ]
+   },
+   {
+    "url": "https://www.denverlibrary.org/category/blog-categories/library-events",
+    "name": "Denver Public Library – Library Events",
+    "reason": "The library's ongoing events listing.",
+    "bots": [
+     "adults",
+     "family"
+    ]
+   },
+   {
+    "url": "https://www.denverlibrary.org/category/free-tagging/programs-programming-adult",
+    "name": "Denver Public Library – Adult Programming",
+    "reason": "Collects the library's posts about adult programs.",
+    "bots": [
+     "adults"
     ]
    }
   ],
   "events": [
    {
-    "url": "https://www.hylandhills.gov/2026/08/01/fall-sports-open-for-registration/",
-    "title": "Hyland Hills – Fall Sports Open for Registration",
-    "why": "Registration for youth fall sports opens around August 1 each year. If you arrive in June 2027, the August 2027 opening is the first season your kids can join."
+    "url": "https://www.westminsterco.gov/adultvolleyball",
+    "title": "Westminster adult volleyball league registration",
+    "why": "Leagues run by season. Check summer/fall 2027 registration dates soon after arriving in June."
    },
    {
-    "url": "https://www.hylandhills.gov/event/summer-sports-open-for-registration/",
-    "title": "Hyland Hills – Summer Sports Open for Registration",
-    "why": "Youth and adult summer leagues open for registration around April 1 each year. Watch for the 2027 opening if you can sign up before you arrive."
-   },
-   {
-    "url": "https://www.hylandhills.gov/event/youth-basketball-leagues-start/",
-    "title": "Hyland Hills – Youth Basketball Leagues (ages 6–13)",
-    "why": "A yearly winter league at Hyland Hills Sports Center (4201 W 94th Ave, Westminster) for ages 6–13. Registration runs October to January, and games run January to February. The last listed fee was $85."
-   },
-   {
-    "url": "https://www.westminsterco.gov/376/Camps",
-    "title": "City of Westminster Summer Camp Day Program",
-    "why": "The full-summer day camp runs early June to early August, which fits a June 2027 arrival. Watch for 2027 registration to open in the spring."
+    "url": "https://www.westminsterco.gov/313/Adult-Softball",
+    "title": "Westminster adult softball season registration",
+    "why": "Fall league sign-up may open around the time the family arrives in summer 2027."
    }
   ]
  },
@@ -611,7 +362,7 @@
   "changed": 0,
   "same": 0,
   "outbox": 0,
-  "accepted": 14,
+  "accepted": 4,
   "skipped": {},
   "dry_run": true
  },
@@ -620,40 +371,39 @@
  },
  "usage": {
   "claude-opus-5-5": {
-   "input_tokens": 52135,
-   "output_tokens": 3911,
-   "usd": 0.33676,
-   "calls": 3,
+   "input_tokens": 49851,
+   "output_tokens": 2494,
+   "usd": 0.299284,
+   "calls": 2,
    "searches": 5
   },
   "claude-haiku-5-5": {
-   "input_tokens": 25408,
-   "output_tokens": 20452,
-   "usd": 0.012766800000000002,
+   "input_tokens": 17117,
+   "output_tokens": 6520,
+   "usd": 0.004971700000000001,
    "calls": 3,
    "searches": 0
   }
  },
  "metrics": {
-  "sources_total": 14,
-  "sources_ok": 5,
+  "sources_total": 15,
+  "sources_ok": 10,
   "queries": 9,
-  "entries_fetched": 493,
+  "entries_fetched": 472,
   "entries_new": 25,
   "entries_seen": 0,
-  "ai_items": 29,
-  "events_out": 14,
+  "ai_items": 27,
+  "events_out": 4,
   "outbox": 0,
-  "input_tokens": 77543,
-  "output_tokens": 24363,
-  "usd": 0.3495,
+  "input_tokens": 66968,
+  "output_tokens": 9014,
+  "usd": 0.3043,
   "searches": 5,
-  "details_ok": 25,
-  "details_total": 25,
-  "calls": 6
+  "details_ok": 1,
+  "details_total": 1,
+  "calls": 5
  },
  "alerts": [
-  "정보원 조회 성공률 5/14",
-  "신규 493건 중 25건만 처리(실행당 상한)"
+  "신규 472건 중 25건만 처리(실행당 상한)"
  ]
 }
