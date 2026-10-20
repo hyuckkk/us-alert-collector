@@ -10,6 +10,8 @@ from ai import check_key
 def main() -> int:
     result = {"name": "anthropic", **check_key()}
     print(json.dumps(result, ensure_ascii=False))
+    level = "notice" if result["ok"] else "error"
+    print(f"::{level} title=API key check::{result['status']} - {result['detail']}")
     url, key = os.environ.get("US_WORKER_URL"), os.environ.get("US_ADMIN_KEY")
     if not url or not key:
         print("US_WORKER_URL / US_ADMIN_KEY not set; result not reported")
