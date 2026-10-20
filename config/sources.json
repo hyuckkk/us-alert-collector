@@ -1,0 +1,26 @@
+{
+  "_comment": "정보원 등록부(A: 기존 정보원 감시). 수집은 프로그램이 하고(토큰 0) 새 항목만 AI 로 넘긴다. type: rss | ical | json | html. every_days: N일마다 확인. verified: GitHub Actions 시험 조회(probe-sources)로 응답을 확인했는지. requires_secret: 이 GitHub 비밀값이 있어야 조회.",
+  "sources": [
+    {"id": "westminster-calendar", "name": "City of Westminster calendar", "type": "rss", "url": "https://www.cityofwestminster.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml", "bots": ["family", "kids", "life"], "every_days": 1, "official": true, "region": "westminster"},
+    {"id": "westminster-news", "name": "City of Westminster news flash", "type": "rss", "url": "https://www.cityofwestminster.us/RSSFeed.aspx?ModID=1&CID=All-newsflash.xml", "bots": ["family", "life"], "every_days": 1, "official": true, "region": "westminster"},
+    {"id": "hyland-hills", "name": "Hyland Hills Parks & Recreation", "type": "html", "url": "https://www.hylandhills.org/", "bots": ["kids", "family", "life"], "every_days": 1, "official": true, "region": "westminster"},
+    {"id": "butterfly-pavilion", "name": "Butterfly Pavilion events", "type": "html", "url": "https://butterflies.org/events/", "bots": ["kids", "family"], "every_days": 2, "official": true, "region": "westminster"},
+    {"id": "anythink-events", "name": "Anythink Libraries events", "type": "html", "url": "https://www.anythinklibraries.org/events", "bots": ["kids", "life"], "every_days": 1, "official": true, "region": "adams-county"},
+    {"id": "dpl-events", "name": "Denver Public Library events", "type": "json", "url": "https://gateway.bibliocommons.com/v2/libraries/denverlibrary/events?limit=50", "bots": ["kids", "life"], "every_days": 1, "official": true, "region": "denver"},
+    {"id": "boulder-library", "name": "Boulder Public Library events", "type": "html", "url": "https://boulderlibrary.org/events/", "bots": ["kids", "life"], "every_days": 2, "official": true, "region": "boulder"},
+    {"id": "adams-county-events", "name": "Adams County events", "type": "html", "url": "https://adcogov.org/events", "bots": ["family", "kids"], "every_days": 2, "official": true, "region": "adams-county"},
+    {"id": "dmns-events", "name": "Denver Museum of Nature & Science events", "type": "html", "url": "https://www.dmns.org/visit/events/", "bots": ["family", "kids", "life"], "every_days": 2, "official": true, "region": "denver"},
+    {"id": "denver-zoo-events", "name": "Denver Zoo events", "type": "html", "url": "https://denverzoo.org/events/", "bots": ["family", "kids"], "every_days": 3, "official": true, "region": "denver"},
+    {"id": "childrens-museum", "name": "Children's Museum of Denver events", "type": "html", "url": "https://www.mychildsmuseum.org/events", "bots": ["kids", "family"], "every_days": 3, "official": true, "region": "denver"},
+    {"id": "cpw-events", "name": "Colorado Parks & Wildlife events", "type": "html", "url": "https://cpw.state.co.us/events", "bots": ["family", "kids"], "every_days": 2, "official": true, "region": "colorado"},
+    {"id": "rmnp-news", "name": "Rocky Mountain NP news releases", "type": "html", "url": "https://www.nps.gov/romo/learn/news/newsreleases.htm", "bots": ["family"], "every_days": 1, "official": true, "region": "estes-park"},
+    {"id": "rmnp-timed-entry", "name": "Rocky Mountain NP timed entry page", "type": "html", "url": "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm", "bots": ["family"], "every_days": 1, "official": true, "region": "estes-park", "mode": "page-change"},
+    {"id": "nps-events", "name": "NPS events API (CO/UT parks)", "type": "json", "url": "https://developer.nps.gov/api/v1/events?parkCode=romo,grsa,meve,blca,arch,cany&pageSize=50", "bots": ["family"], "every_days": 1, "official": true, "region": "colorado", "requires_secret": "NPS_API_KEY", "json": {"items": "data", "title": "title", "url": "infourl", "date": "datestart", "text": "description"}},
+    {"id": "usafa-events", "name": "US Air Force Academy events", "type": "html", "url": "https://www.usafa.edu/events/", "bots": ["family", "life"], "every_days": 2, "official": true, "region": "colorado-springs"},
+    {"id": "usopm-events", "name": "US Olympic & Paralympic Museum events", "type": "html", "url": "https://usopm.org/events/", "bots": ["family", "kids"], "every_days": 3, "official": true, "region": "colorado-springs"},
+    {"id": "ncar-visit", "name": "NCAR Mesa Lab visitor center", "type": "html", "url": "https://scied.ucar.edu/visit", "bots": ["family", "kids"], "every_days": 7, "official": true, "region": "boulder", "mode": "page-change"},
+    {"id": "national-western", "name": "National Western Stock Show", "type": "html", "url": "https://nationalwestern.com/", "bots": ["family"], "every_days": 3, "official": true, "region": "denver"},
+    {"id": "du-athletics-ics", "name": "University of Denver athletics calendar", "type": "ical", "url": "https://denverpioneers.com/calendar.ashx/calendar.ics", "bots": ["family"], "every_days": 1, "official": true, "region": "denver"},
+    {"id": "space-launches", "name": "Launch Library 2 upcoming launches", "type": "json", "url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/?limit=20&mode=list", "bots": ["family"], "every_days": 1, "official": false, "region": "usa", "json": {"items": "results", "title": "name", "url": "url", "date": "net", "text": "location"}}
+  ]
+}

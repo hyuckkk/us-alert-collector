@@ -1,0 +1,20 @@
+{
+  "_comment": "B: 신규 정보원 발굴. daily 는 매일, weekday 는 요일별 심층(0=월 … 6=일, 설계안의 요일 주제). 검색은 Google News RSS(토큰 0). AI 탐색(ai_discovery)은 config/models.json 의 설정을 따른다.",
+  "daily": [
+    "Westminster Colorado family events",
+    "Westminster Colorado kids classes registration",
+    "Adams County Colorado free family event",
+    "Denver kids summer camp registration opens",
+    "Denver adult classes community center",
+    "Colorado state park free day"
+  ],
+  "weekday": {
+    "0": ["Denver kids after school program", "Broomfield Thornton kids camp", "Colorado youth sports registration Westminster"],
+    "1": ["Denver adult pottery class", "Front Range Community College noncredit class", "Denver makerspace workshop beginner"],
+    "2": ["Westminster Colorado city news recreation", "Adams 12 Five Star Schools family event", "Westminster Public Schools community event"],
+    "3": ["Colorado air show", "Buckley Space Force Base open house", "Air Force Academy public event", "Wings Over the Rockies event"],
+    "4": ["Rocky Mountain National Park reservation", "Great Sand Dunes event", "Colorado national park ranger program kids"],
+    "5": ["University of Denver hockey tickets family", "Colorado State University open house", "Colorado School of Mines public event", "CU Boulder family event"],
+    "6": ["Denver airport flight deal family", "cruise kids sail free promotion", "Colorado family road trip event"]
+  }
+}
