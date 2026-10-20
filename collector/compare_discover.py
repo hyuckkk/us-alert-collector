@@ -45,10 +45,11 @@ def main(argv=None) -> int:
     for model in a.models.split(","):
         cfg = {**models, "discover": {**models["discover"], "model": model}}
         usage = ai.Usage(prices, models.get("web_search_usd", 0.01))
-        found_s, found_e, errors, t0 = [], [], [], time.time()
+        found_s, found_e, errors, t0, raw = [], [], [], time.time(), {}
         for bot, theme in themes:
             try:
                 d = ai.discover(client, cfg, theme, known, usage, max_searches=models["discover"]["max_searches_deep" if bot == "deep" else "max_searches"])
+                raw[bot] = {"text_tail": d.get("raw_text", "")[-800:], "dropped_urls": d.get("dropped_urls"), "result_urls": d.get("result_urls")}
                 found_s += [{**s, "theme": bot} for s in d["sources"]]
                 found_e += [{**e, "theme": bot} for e in d["events"]]
             except Exception as e:  # noqa: BLE001
@@ -65,7 +66,7 @@ def main(argv=None) -> int:
             "sources_with_event_links": sum(1 for u in src_urls if url_checks[u]["ok"] and url_checks[u]["event_links"] >= 3),
             "already_known_host": sum(1 for u in src_urls if identity._host(u) in known_hosts),
             "usd": round(usage.usd, 4), "usage": usage.by_model, "seconds": round(time.time() - t0),
-            "errors": errors, "source_list": found_s, "event_list": found_e,
+            "errors": errors, "source_list": found_s, "event_list": found_e, "raw": raw,
         }
     names = list(out["models"])
     if len(names) == 2:

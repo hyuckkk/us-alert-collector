@@ -30,7 +30,10 @@ jobs:
         if: env.COMPARE == '1'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python collector/compare_discover.py --out reports/model-compare.json
+        run: |
+          MODELS=$(grep -oE '^models=[a-z0-9,.-]+' ticks/compare | cut -d= -f2)
+          OUT=reports/model-compare.json; [ -n "$MODELS" ] && OUT="reports/model-compare-$(echo $MODELS | tr ',' '_').json"
+          python collector/compare_discover.py ${MODELS:+--models $MODELS} --out "$OUT"
       - name: Reference candidates
         if: env.REFERENCE == '1'
         run: python collector/reference_snapshot.py
@@ -39,6 +42,6 @@ jobs:
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/model-compare.json eval/reference_candidates.json 2>/dev/null || true
+          git add reports/model-compare*.json eval/reference_candidates.json 2>/dev/null || true
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"

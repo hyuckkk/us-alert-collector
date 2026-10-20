@@ -109,3 +109,9 @@ def test_judge_completeness_missing_and_duplicate_indexes():
     c = FakeClient(beta_replies=[lambda kw: ai.JudgeBatch(verdicts=[v(0), v(0), v(7)])])
     out = ai.judge(c, CFG, [({"t": 1}, ""), ({"t": 2}, ""), ({"t": 3}, "")], ai.Usage(PRICES))
     assert list(out.verdicts) == [0] and out.duplicates == 1 and out.missing == {1: "missing-verdict", 2: "missing-verdict"}
+
+
+def test_json_from_text_handles_prose_braces_and_code_fences():
+    text = 'Searching {not json}. Here is the result:\n```json\n{"sources": [{"url": "https://a.gov/x"}], "events": []}\n```\nDone {x}'
+    assert ai._json_from_text(text) == {"sources": [{"url": "https://a.gov/x"}], "events": []}
+    assert ai._json_from_text("no json here") == {}

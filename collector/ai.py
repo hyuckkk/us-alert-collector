@@ -321,13 +321,17 @@ Answer with JSON only, no prose: {"sources":[{"url":"","name":"","reason":"","bo
 
 
 def _json_from_text(text: str) -> dict:
-    m = re.search(r"\{.*\}", text, re.S)
-    if not m:
-        return {}
-    try:
-        return json.loads(m.group(0))
-    except json.JSONDecodeError:
-        return {}
+    """응답 글에서 {"sources": …} 객체를 찾는다. 앞뒤 설명·코드 블록·여러 조각이 섞여 있어도, 뒤에서부터 해석되는 첫 객체를 쓴다."""
+    dec = json.JSONDecoder()
+    starts = [m.start() for m in re.finditer(r"\{", text)]
+    for i in reversed(starts):
+        try:
+            obj, _ = dec.raw_decode(text[i:])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict) and ("sources" in obj or "events" in obj):
+            return obj
+    return {}
 
 
 BOT_ALIASES = {"life": "life", "adult": "life", "adults": "life", "family": "family", "families": "family",
