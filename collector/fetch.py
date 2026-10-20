@@ -41,6 +41,7 @@ class FetchResult:
     entries: list[Entry] = field(default_factory=list)
     error: str | None = None
     snippet: str = ""
+    filtered: int = 0
 
 
 def normalize_url(url: str, base: str | None = None) -> str:
@@ -295,6 +296,13 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
             res.entries = parse_html(text, source)
         else:
             res.ok, res.error = False, f"unknown type {t}"
+        # 제목으로 미리 거르기(토큰 0): 예) 대학 경기 일정에서 원정 경기·관심 밖 종목 제외
+        inc = re.compile(source["include"], re.I) if source.get("include") else None
+        exc = re.compile(source["exclude"], re.I) if source.get("exclude") else None
+        if inc or exc:
+            before = len(res.entries)
+            res.entries = [e for e in res.entries if (not inc or inc.search(e.title)) and not (exc and exc.search(e.title))]
+            res.filtered = before - len(res.entries)
         return res
     except Exception as e:  # noqa: BLE001  정보원 하나의 이상한 응답이 실행 전체를 멈추지 않게
         return FetchResult(False, error=f"{type(e).__name__}: {str(e)[:200]}")

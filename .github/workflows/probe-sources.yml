@@ -1,6 +1,9 @@
 name: probe-sources
 # 정보원 시험 조회. 결과를 reports/probe.json 으로 커밋한다(같은 브랜치). 텔레그램·Worker 에는 아무것도 보내지 않는다.
+# 매주 월요일에는 매일 수집에서 빠진(retest) 정보원까지 다시 시험한다.
 on:
+  schedule:
+    - cron: "10 14 * * 1"
   push:
     paths: ["config/sources.json", "collector/probe.py", "collector/fetch.py", ".github/workflows/probe-sources.yml"]
   workflow_dispatch:

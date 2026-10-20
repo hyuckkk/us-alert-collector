@@ -105,3 +105,10 @@ def test_probe_runs_with_current_config(monkeypatch, tmp_path):
     monkeypatch.setattr(probe, "fetch_source", lambda s, **k: FetchResult(False, 403, error="HTTP 403"))
     assert probe.main() == 0
     assert (tmp_path / "reports/probe.json").exists()
+
+
+def test_include_exclude_title_filter():
+    ics = "BEGIN:VEVENT\nSUMMARY:[H] Denver Hockey vs CU\nEND:VEVENT\nBEGIN:VEVENT\nSUMMARY:[A] Denver Hockey at CC\nEND:VEVENT\nBEGIN:VEVENT\nSUMMARY:[N] Denver Golf\nEND:VEVENT"
+    src = {"id": "du", "type": "ical", "url": "https://d.com/c.ics", "include": "hockey", "exclude": r"^\[A\]"}
+    r = fetch_source(src, client=_client(lambda req: httpx.Response(200, text=ics)))
+    assert [e.title for e in r.entries] == ["[H] Denver Hockey vs CU"] and r.filtered == 2

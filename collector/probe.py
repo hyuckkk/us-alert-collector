@@ -20,13 +20,14 @@ def main() -> int:
     sources = json.loads((ROOT / "config/sources.json").read_text())["sources"]
     queries = json.loads((ROOT / "config/queries.json").read_text())
     out = {"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "user_agent": USER_AGENT, "sources": [], "gnews": None}
-    for s in [x for x in sources if x.get("enabled", True)]:
+    for s in [x for x in sources if x.get("enabled", True) or x.get("retest")]:
         t0 = time.time()
         r = fetch_source(s, secrets=os.environ, probe=True)
         out["sources"].append({
             "id": s["id"], "type": s["type"], "url": s["url"],
             "ok": r.ok, "status": r.status, "content_type": r.content_type, "bytes": r.size,
-            "items": len(r.entries), "error": r.error, "seconds": round(time.time() - t0, 1),
+            "items": len(r.entries), "filtered": r.filtered, "error": r.error, "seconds": round(time.time() - t0, 1),
+            "enabled": s.get("enabled", True), "retest": bool(s.get("retest")),
             "sample_titles": [e.title for e in r.entries[:3]],
             "sample_urls": [e.url for e in r.entries[:8]],
             "snippet": r.snippet,
