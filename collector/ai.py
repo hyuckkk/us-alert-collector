@@ -292,6 +292,7 @@ Search the web for the theme you are given. Report:
 - sources: official organization pages that list recurring events, classes or registrations (city recreation, libraries, museums, universities, parks, clubs). Prefer pages with calendars or RSS.
 - events: specific upcoming events or registration openings worth checking.
 Use only URLs that appeared in your search results. Skip pages already listed under "known".
+Use only these bot names: kids, family, life (life = adults).
 Answer with JSON only, no prose: {"sources":[{"url":"","name":"","reason":"","bots":["kids"]}],"events":[{"url":"","title":"","why":""}]}"""
 
 
@@ -303,6 +304,15 @@ def _json_from_text(text: str) -> dict:
         return json.loads(m.group(0))
     except json.JSONDecodeError:
         return {}
+
+
+BOT_ALIASES = {"life": "life", "adult": "life", "adults": "life", "family": "family", "families": "family",
+               "kids": "kids", "kid": "kids", "children": "kids", "teens": "kids", "youth": "kids"}
+
+
+def norm_bots(bots) -> list[str]:
+    """발굴 결과의 분야 이름을 봇 이름으로 맞춘다(예: adults → life). 모르는 이름은 버린다."""
+    return list(dict.fromkeys(BOT_ALIASES[b.lower()] for b in (bots or []) if isinstance(b, str) and b.lower() in BOT_ALIASES))
 
 
 def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_searches: int | None = None) -> dict:
@@ -336,7 +346,7 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_
         return isinstance(u, str) and u.rstrip("/") in {x.rstrip("/") for x in seen_urls}
 
     raw_s, raw_e = data.get("sources") or [], data.get("events") or []
-    sources = [s for s in raw_s if isinstance(s, dict) and ok(s.get("url"))]
+    sources = [{**s, "bots": norm_bots(s.get("bots"))} for s in raw_s if isinstance(s, dict) and ok(s.get("url"))]
     events = [e for e in raw_e if isinstance(e, dict) and ok(e.get("url"))]
     return {"sources": sources, "events": events, "dropped_urls": len(raw_s) + len(raw_e) - len(sources) - len(events),
             "result_urls": len(seen_urls), "raw_text": text[-1500:]}

@@ -98,3 +98,7 @@ def test_discover_keeps_only_urls_seen_in_search_results_and_resumes_pause_turn(
 def test_check_key_missing(monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     assert ai.check_key()["status"] == "missing"
+
+
+def test_discover_bot_names_are_normalized():
+    assert ai.norm_bots(["adults", "Kids", "families", "seniors", 3]) == ["life", "kids", "family"]
