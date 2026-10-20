@@ -2,6 +2,7 @@
 import json
 import os
 import sys
+import urllib.error
 import urllib.request
 
 from ai import check_key
@@ -19,11 +20,15 @@ def main() -> int:
     req = urllib.request.Request(
         f"{url.rstrip('/')}/admin/key-check",
         data=json.dumps(result).encode(),
-        headers={"authorization": f"Bearer {key}", "content-type": "application/json"},
+        headers={"authorization": f"Bearer {key}", "content-type": "application/json", "user-agent": "us-alert-collector/key-check"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=30) as r:
-        print(r.read().decode())
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            print(r.read().decode())
+    except urllib.error.HTTPError as e:
+        print(f"::error title=Worker report::HTTP {e.code} {e.read()[:200]!r}")
+        return 1
     return 0 if result["ok"] or result["status"] == "transient" else 1
 
 
