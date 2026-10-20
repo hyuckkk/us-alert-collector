@@ -89,12 +89,12 @@ try {
     assert.match(s[0].payload.text, /바뀐 점: 비용 \$20 → \$25/);
   });
 
-  await step("주간 요약(force): 사람·봇별 1통, 줄마다 번호 버튼", async () => {
+  await step("요약(force): 사람·봇별 1통, 줄마다 번호 버튼", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
-    assert.equal(r.sent, 2, JSON.stringify(r));
+    assert.equal(r.messages, 2, JSON.stringify(r));
     const f = sends(n, FRIEND)[0];
-    assert.match(f.payload.text, /주간 요약 \(2건\)/);
+    assert.match(f.payload.text, /오늘의 새 정보 \(2건\)/);
     assert.deepEqual(f.payload.reply_markup.inline_keyboard.map((row) => row.map((b) => b.text)), [["1 ✅", "1 🚫"], ["2 ✅", "2 🚫"]]);
     E.digestMarkup = f.payload.reply_markup;
   });
@@ -144,14 +144,18 @@ try {
     assert.equal(sends(n, OWNER).filter((s) => /예산/.test(s.payload.text)).length, 1);
   });
 
-  await step("정보원 후보: 2회째에 소유자에게 질문 → 추가 누르면 sources-extra 에 등록", async () => {
+  await step("정보원 후보: 2회 발견 → 자동 검증 결과를 붙여 소유자에게 질문 → 추가 누르면 sources-extra 에 등록", async () => {
     const c = { url: "https://newsite.org/events", name: "New Site", reason: "kids classes", bots: ["kids"] };
+    await admin("/admin/candidates", { candidates: [c] });
     let r = await admin("/admin/candidates", { candidates: [c] });
-    assert.equal(r.asked, 0);
+    assert.equal(r.awaiting_verification, 1);
+    const todo = await admin("/admin/candidates", { op: "unverified" });
+    assert.equal(todo.items.length, 1);
     const n = E.calls.length;
-    r = await admin("/admin/candidates", { candidates: [c] });
+    r = await admin("/admin/candidates", { op: "verify", results: [{ id: todo.items[0].id, verified: { fetchable: true, eventish: 12, future_dates: 5, official: true, type: "html" } }] });
     assert.equal(r.asked, 1);
     const q = sends(n, OWNER)[0];
+    assert.match(q.payload.text, /자동 검증: 조회 가능 · 행사 링크 12개/);
     const data = q.payload.reply_markup.inline_keyboard[0][0].callback_data;
     assert.match(data, /^cpro:/);
     await hook("life", E.cb(OWNER, data, 9));

@@ -21,8 +21,13 @@
  *   POST /admin/digest          주간 요약(각자 토요일 9시 이후)
  *   POST /admin/run-log         실행 기록(측정 항목)
  *   GET|POST /admin/usage       월별 AI 사용량
- *   POST /admin/candidates      정보원 후보 → 2회 이상이면 소유자에게 승격 여부 질문
+ *   POST /admin/candidates      정보원 후보(op 없음: 추가, unverified: 검증할 후보, verify: 검증 결과 → 소유자 질문)
  *   GET  /admin/sources-extra   승격된 정보원
+ *   POST /admin/queue           수집기 처리 대기열 {op: check|add|take|result|stats}
+ *   GET  /admin/event-index     같은 행사 판별용 최근 행사 목록
+ *   POST /admin/watch           상세 페이지 재검사 {op: due|update|stats}
+ *   GET  /admin/ai-health       AI 중단 여부 · POST /admin/unverified  AI 장기 중단 시 검증 전 정보(소유자만)
+ *   GET  /admin/watchdog        수집 실행 감시 · GET /admin/source-health  정보원별 상태
  *   POST /admin/report          주간 보고를 소유자 DM 으로
  *   GET  /health
  * 1차 검증 전에는 DELIVERY_MODE=owner-only 로 소유자 외에는 아무에게도 보내지 않는다.
@@ -166,6 +171,7 @@ const HELP_ALL = [
   "/tz America/Denver — 내 시간대",
   "/city Westminster — 이동시간 기준 도시(주소는 넣지 마세요)",
   "/from 2027-01-01 — 이 날짜 이후 행사만 받기 (/from off 로 해제)",
+  "/digest daily|weekly|off — 요약 방식 · /digest 8 — 요약 받을 시각(현지)",
   "/myid — 내 텔레그램 ID",
 ].join("\n");
 const HELP_OWNER = [
@@ -202,6 +208,13 @@ async function personCommand(env, fromId, cmd, args) {
     await set("city", c);
     return `기준 도시: ${c}`;
   }
+  if (cmd === "/digest") {
+    const a = (args[0] || "").toLowerCase();
+    if (["daily", "weekly", "off"].includes(a)) { await set("digest_mode", a); return `요약 방식: ${a === "daily" ? "매일" : a === "weekly" ? "매주 토요일" : "받지 않음"}`; }
+    const h = parseInt(a, 10);
+    if (h >= 0 && h <= 23) { await set("digest_hour", h); return `요약 시각: 현지 ${h}시 이후`; }
+    return "형식: /digest daily | weekly | off, 또는 /digest 8 (시각)";
+  }
   if (cmd === "/from") {
     if (args[0] === "off") { await set("available_from", null); return "참가 가능 시작일 해제: 지금 열리는 행사부터 받습니다."; }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(args[0] || "")) return "형식: /from 2027-01-01 (해제: /from off)";
@@ -212,6 +225,7 @@ async function personCommand(env, fromId, cmd, args) {
     "내 설정",
     `시간대 ${p.tz} · 알림 정지 ${p.quiet_start}시~${p.quiet_end}시`,
     `참가 가능 시작일 ${p.available_from || "지금"} · 기준 도시 ${p.city || "미설정"}`,
+    `요약 ${p.digest_mode === "weekly" ? "매주 토요일" : p.digest_mode === "off" ? "받지 않음" : "매일"} ${p.digest_hour ?? 8}시 이후`,
   ].join("\n");
 }
 
@@ -249,7 +263,8 @@ async function handleMessage(env, bot, m) {
   }
   const active = await isActiveRecipient(env, bot, fromId);
   if (!active) return;
-  if (["/settings", "/quiet", "/tz", "/city", "/from"].includes(cmd)) { await reply(await personCommand(env, fromId, cmd, args)); return; }
+  if (isOwner(env, fromId)) await pipeline.watchdog(env); // GitHub Actions 가 통째로 멈춰도 소유자가 봇을 쓰면 감지
+  if (["/settings", "/quiet", "/tz", "/city", "/from", "/digest"].includes(cmd)) { await reply(await personCommand(env, fromId, cmd, args)); return; }
   if (!isOwner(env, fromId)) {
     await reply("알림의 [✅ 확인] [🚫 관심없음] [🔕 이 태그 그만] 버튼은 본인에게만 적용됩니다. 다시 누르면 취소됩니다.\n\n" + HELP_ALL);
     return;
@@ -416,6 +431,9 @@ async function status(env) {
     expiries: (await env.DB.prepare("SELECT name, expires_on FROM key_expiry ORDER BY expires_on").all()).results,
     key_check: kc ? JSON.parse(kc) : null,
     last_run: await one("SELECT run_id, started_at, finished_at FROM runs ORDER BY started_at DESC LIMIT 1"),
+    queue: await pipeline.queueStats(env),
+    ai: (await pipeline.aiHealth(env)),
+    watchdog: await pipeline.watchdog(env),
     last_cron: await kvGet(env, "last_cron"),
   };
 }
@@ -428,6 +446,9 @@ function formatStatus(s) {
   lines.push("만료일: " + (s.expiries.map((e) => `${e.name} ${e.expires_on}`).join(", ") || "등록 없음 → /expiry anthropic YYYY-MM-DD"));
   if (s.key_check) lines.push(`API 키 점검: ${s.key_check.ok ? "정상" : "실패 " + s.key_check.status} (${s.key_check.at.slice(0, 16)}Z)`);
   if (s.last_run && s.last_run.run_id) lines.push(`마지막 수집: ${s.last_run.run_id} (${String(s.last_run.started_at).slice(0, 16)}Z)`);
+  lines.push(`처리 대기 ${s.queue.queued}건(가장 오래 ${s.queue.oldest_queued_hours}시간) · 보류 ${s.queue.stuck}건`);
+  if (s.ai && s.ai.failing_since) lines.push(`AI 분석 중단 중 (${String(s.ai.failing_since).slice(0, 16)}Z부터)`);
+  if (s.watchdog && s.watchdog.stale) lines.push(`⚠️ 매일 수집 ${Math.floor(s.watchdog.hours_since)}시간째 성공 기록 없음`);
   return lines.join("\n");
 }
 
@@ -492,8 +513,15 @@ export default {
         if (p === "/admin/digest" && POST) return json(await pipeline.digest(env, body));
         if (p === "/admin/run-log" && POST) return json(await pipeline.runLog(env, body));
         if (p === "/admin/usage") return json(await pipeline.usage(env, request.method, body, url));
-        if (p === "/admin/candidates" && POST) return json(await pipeline.addCandidates(env, body));
+        if (p === "/admin/candidates") return json(await pipeline.candidates(env, body, url));
         if (p === "/admin/sources-extra") return json(await pipeline.sourcesExtra(env));
+        if (p === "/admin/queue" && POST) return json(await pipeline.queue(env, body));
+        if (p === "/admin/event-index") return json(await pipeline.eventIndex(env));
+        if (p === "/admin/watch" && POST) return json(await pipeline.watch(env, body));
+        if (p === "/admin/ai-health") return json(await pipeline.aiHealth(env));
+        if (p === "/admin/unverified" && POST) return json(await pipeline.unverified(env, body));
+        if (p === "/admin/watchdog") return json(await pipeline.watchdog(env));
+        if (p === "/admin/source-health") return json(await pipeline.sourceHealth(env));
         if (p === "/admin/report" && POST) return json(await pipeline.weeklyReport(env, body.send !== false));
       } catch (e) {
         console.log("admin error", p, String((e && e.stack) || e));

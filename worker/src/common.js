@@ -1,6 +1,6 @@
 // 공통: 봇 정의, 텔레그램 호출, 시간, D1 작은 도우미
 
-export const BUILD = "us-0.2.0";
+export const BUILD = "us-0.3.0";
 export const BOTS = {
   life: { label: "성인 활동", handle: "@ColoradoLife_bot", secret: "BOT_TOKEN_LIFE" },
   family: { label: "가족 활동", handle: "@ColoradoFamily_bot", secret: "BOT_TOKEN_FAMILY" },
@@ -60,7 +60,8 @@ export async function tg(env, bot, method, payload) {
     });
     try { return await r.json(); } catch { return { ok: false, description: `HTTP ${r.status}` }; }
   } catch (e) {
-    return { ok: false, description: String(e && e.message).slice(0, 200) };
+    // 요청이 텔레그램에 닿았는지 알 수 없는 경우. 발송 처리에서 '성공 여부 불명'으로 다룬다.
+    return { ok: false, network: true, description: String(e && e.message).slice(0, 200) };
   }
 }
 
@@ -91,7 +92,7 @@ export function defaultPerson(env, chatId) {
     role: owner ? "owner" : "friend",
     tz: owner ? ownerTz(env) : "America/Denver",
     available_from: owner ? env.FAMILY_AVAILABLE_FROM || null : null,
-    quiet_start: 22, quiet_end: 7, city: null,
+    quiet_start: 22, quiet_end: 7, city: null, digest_mode: "daily", digest_hour: 8,
   };
 }
 export async function ensurePerson(env, chatId) {

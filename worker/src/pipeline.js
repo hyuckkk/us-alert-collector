@@ -1,14 +1,23 @@
-// 수집기(GitHub Actions)가 보내는 판정 결과를 받아 사람별로 나눠 보내는 부분.
-// D1 은 무료 요금제에서 호출 1회당 쿼리 수가 제한되므로, 여러 건을 json_each 로 한 번에 처리한다.
+// 수집기(GitHub Actions)와 사람별 발송 사이의 모든 상태를 D1 에 둔다.
+// 원칙: 수집한 정보는 처리 전까지 대기열(pending)에 보존하고, 발송은 선점(claim) 후 보내며 결과를 확실/불명/실패로 나눠 기록한다.
+// D1 무료 요금제의 호출당 쿼리 수 제한 때문에 여러 건은 json_each 로 한 번에 처리한다.
 
-import { BOTS, isOwner, nowIso, ownerOnly, tg, claimNotice, notifyOwner, kvSet, defaultPerson, hourIn, weekdayIn, dateIn, inQuiet, localDate } from "./common.js";
+import { BOTS, isOwner, nowIso, ownerOnly, tg, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
 import { renderEvent, renderDigest, keyboard, compactRow } from "./render.js";
 
-const IMPORTANT = ["start_date", "end_date", "time_text", "location", "cost_text", "signup", "deadline", "status_note"];
-const FIELD_KO = { start_date: "시작일", end_date: "종료일", time_text: "시간", location: "장소", cost_text: "비용", signup: "신청 방식", deadline: "마감", status_note: "신분·주민 메모" };
+// 다시 알려야 하는 '참여 기회에 영향을 주는' 필드 (1차 검증 1-5)
+const IMPORTANT = ["start_date", "end_date", "time_text", "location", "cost_text", "signup", "registration_opens", "registration_status",
+  "deadline", "eligibility", "age_text", "status_note"];
+const FIELD_KO = { start_date: "시작일", end_date: "종료일", time_text: "시간", location: "장소", cost_text: "비용", signup: "신청 방식",
+  registration_opens: "접수 시작", registration_status: "접수 상태", deadline: "마감", eligibility: "참가 자격", age_text: "대상 연령", status_note: "신분·주민 메모" };
 const MAX_EVENTS_PER_CALL = 30;
-const SEND_LIMIT = 20;   // 무료 요금제 하위 요청 50개 한도 안에서 여유를 둔다
-const DIGEST_LIMIT = 10; // 요약 1통에 담는 최대 건수
+const SEND_LIMIT = 20;            // 무료 요금제 하위 요청 50개 한도 안에서 여유
+const DIGEST_CHUNK = 10;          // 요약 1통에 담는 건수(넘으면 여러 통으로 나눠 모두 보냄)
+const MAX_SEND_ATTEMPTS = 6;
+const BACKOFF_MIN = [5, 30, 120, 360, 720];
+const STALE_SENDING_MIN = 10;     // 'sending' 으로 이 시간 넘게 남으면 결과 불명으로 본다
+const QUEUE_MAX_ATTEMPTS = 6;
+const DENVER = "America/Denver";
 
 async function sha(text) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -20,8 +29,10 @@ function diffNote(oldD, newD) {
     .map((k) => `${FIELD_KO[k]} ${oldD[k] ?? "미확인"} → ${newD[k] ?? "미확인"}`).join(", ");
 }
 const all = async (stmt) => (await stmt.all()).results;
+const addMin = (iso, min) => new Date(Date.parse(iso) + min * 60000).toISOString();
+const plusDays = (ymd, n) => new Date(Date.parse(ymd + "T12:00:00Z") + n * 86400000).toISOString().slice(0, 10);
 
-// ---------------------------------------------------------------- 이미 본 항목
+// ---------------------------------------------------------------- 이미 본 항목(0단계 호환)
 export async function seen(env, body) {
   const items = (Array.isArray(body.items) ? body.items : []).filter((x) => x && x.key && x.hash).slice(0, 500);
   if (body.op === "mark") {
@@ -42,21 +53,133 @@ export async function seen(env, body) {
   };
 }
 
+// ---------------------------------------------------------------- 처리 대기열 (1차 검증 1-2, 3)
+export async function queue(env, body) {
+  const now = nowIso();
+  const op = body.op;
+  if (op === "check" || op === "add") {
+    const items = (Array.isArray(body.items) ? body.items : []).filter((x) => x && x.key && x.hash).slice(0, op === "add" ? 40 : 500);
+    const known = new Map((await all(env.DB.prepare("SELECT key, hash, status FROM pending WHERE key IN (SELECT value FROM json_each(?))")
+      .bind(JSON.stringify(items.map((x) => x.key))))).map((r) => [r.key, r]));
+    const fresh = items.filter((x) => !known.has(x.key)).map((x) => x.key);
+    const changed = items.filter((x) => known.has(x.key) && known.get(x.key).hash !== x.hash).map((x) => x.key);
+    if (op === "check") return { ok: true, new: fresh, changed };
+    const write = items.filter((x) => !known.has(x.key) || known.get(x.key).hash !== x.hash)
+      .map((x) => ({ ...x, url: x.url || "", body: JSON.stringify(x.body || {}), priority: x.priority | 0 }));
+    if (write.length) {
+      await env.DB.prepare(
+        "INSERT INTO pending (key, hash, source_id, url, title, body, hint, priority, status, attempts, first_seen, updated_at) " +
+        "SELECT json_extract(value,'$.key'), json_extract(value,'$.hash'), json_extract(value,'$.source_id'), json_extract(value,'$.url'), " +
+        "json_extract(value,'$.title'), json_extract(value,'$.body'), json_extract(value,'$.hint'), json_extract(value,'$.priority'), 'queued', 0, ?1, ?1 " +
+        "FROM json_each(?2) WHERE true ON CONFLICT(key) DO UPDATE SET hash = excluded.hash, url = excluded.url, title = excluded.title, body = excluded.body, " +
+        "hint = COALESCE(excluded.hint, pending.hint), priority = MAX(pending.priority, excluded.priority), status = 'queued', attempts = 0, last_error = NULL, " +
+        "result = NULL, updated_at = excluded.updated_at",
+      ).bind(now, JSON.stringify(write)).run();
+    }
+    return { ok: true, new: fresh, changed, written: write.length };
+  }
+  if (op === "take") {
+    const limit = Math.min(Math.max(body.limit | 0, 1), 60);
+    const rows = await all(env.DB.prepare(
+      "SELECT key, hash, source_id, url, title, body, hint, priority, status, attempts, result, first_seen FROM pending WHERE status IN ('queued', 'extracted') " +
+      "ORDER BY CASE status WHEN 'extracted' THEN 0 ELSE 1 END, priority DESC, first_seen LIMIT ?").bind(limit));
+    return { ok: true, items: rows.map((r) => ({ ...r, body: JSON.parse(r.body || "{}"), result: r.result ? JSON.parse(r.result) : null })) };
+  }
+  if (op === "result") {
+    const items = (body.items || []).filter((x) => x && x.key && ["done", "extracted", "retry"].includes(x.status)).slice(0, 100)
+      .map((x) => ({ key: x.key, status: x.status, result: x.result ? JSON.stringify(x.result) : null, error: x.error ? String(x.error).slice(0, 300) : null }));
+    if (!items.length) return { ok: true, updated: 0 };
+    await env.DB.prepare(
+      "UPDATE pending SET updated_at = ?1, " +
+      "status = CASE json_extract(j.value,'$.status') WHEN 'done' THEN 'done' WHEN 'extracted' THEN 'extracted' " +
+      "  ELSE CASE WHEN pending.attempts + 1 >= ?3 THEN 'stuck' ELSE 'queued' END END, " +
+      "attempts = CASE json_extract(j.value,'$.status') WHEN 'retry' THEN pending.attempts + 1 ELSE pending.attempts END, " +
+      "last_error = COALESCE(json_extract(j.value,'$.error'), pending.last_error), " +
+      "result = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN json_extract(j.value,'$.result') WHEN 'done' THEN NULL ELSE pending.result END, " +
+      "body = CASE json_extract(j.value,'$.status') WHEN 'done' THEN '{}' ELSE pending.body END " + // 끝난 항목은 본문을 비워 공간 절약(키·해시는 남겨 중복 방지)
+      "FROM (SELECT value FROM json_each(?2)) AS j WHERE pending.key = json_extract(j.value,'$.key')",
+    ).bind(now, JSON.stringify(items), QUEUE_MAX_ATTEMPTS).run();
+    return { ok: true, updated: items.length };
+  }
+  if (op === "stats") return { ok: true, ...(await queueStats(env)) };
+  return { ok: false, error: "unknown op" };
+}
+
+export async function queueStats(env) {
+  const by = await all(env.DB.prepare("SELECT status, COUNT(*) AS n, MIN(first_seen) AS oldest FROM pending GROUP BY status"));
+  const m = Object.fromEntries(by.map((r) => [r.status, r.n]));
+  const q = by.find((r) => r.status === "queued");
+  return { counts: m, queued: m.queued || 0, extracted: m.extracted || 0, stuck: m.stuck || 0,
+    oldest_queued_hours: q && q.oldest ? Math.round((Date.now() - Date.parse(q.oldest)) / 3600000) : 0 };
+}
+
+// ---------------------------------------------------------------- 행사 목록(수집기의 같은 행사 판별용)
+export async function eventIndex(env) {
+  const rows = await all(env.DB.prepare(
+    "SELECT event_key, bot, identity, url, start_date, end_date, json_extract(data,'$.title') AS title, json_extract(data,'$.title_ko') AS title_ko, " +
+    "json_extract(data,'$.org') AS org, json_extract(data,'$.city') AS city, source_id FROM events " +
+    "WHERE COALESCE(end_date, start_date, '9999-12-31') >= date('now', '-30 days') ORDER BY last_changed DESC LIMIT 2000"));
+  return { ok: true, events: rows };
+}
+
 // ---------------------------------------------------------------- 판정 결과 받기 → 사람별 대기열
+function regState(e, today) {
+  const st = e.registration_status;
+  if (st === "cancelled") return null;
+  if (e.registration_opens && e.registration_opens > today) {
+    return Date.parse(e.registration_opens) - Date.parse(today) <= 14 * 86400000 ? ["upcoming-soon", 6] : ["upcoming", 48];
+  }
+  if (st === "open") return ["open", 24];
+  if (st === "closed" || st === "soldout" || st === "waitlist") return ["closed", 72];
+  return ["unknown", 72];
+}
+
+async function recipientsFor(env) {
+  const recips = await all(env.DB.prepare(
+    "SELECT r.chat_id, r.bot, p.available_from AS available_from FROM recipients r LEFT JOIN people p ON p.chat_id = r.chat_id WHERE r.status = 'active'"));
+  const mutedTags = new Map();
+  for (const r of await all(env.DB.prepare("SELECT chat_id, tag FROM muted_tags"))) {
+    if (!mutedTags.has(r.chat_id)) mutedTags.set(r.chat_id, new Set());
+    mutedTags.get(r.chat_id).add(r.tag);
+  }
+  return { recips, mutedTags };
+}
+
+// 사람별 대상 판정. 반환: kind 또는 null(+사유)
+function targetKind(env, r, e, states, mutedTags, opts = {}) {
+  if (r.bot !== e.bot) return [null, null];
+  if (ownerOnly(env) && !isOwner(env, r.chat_id)) return [null, "owner-only"];
+  const st = states.get(`${r.chat_id}|${e.event_key}`);
+  if (st === "MUTED") return [null, "muted"];
+  if (opts.skipAcked && st === "ACKNOWLEDGED") return [null, "acknowledged"];
+  const mt = mutedTags.get(String(r.chat_id));
+  if (mt && (e.tags || []).some((t) => mt.has(t))) return [null, "muted-tag"];
+  const from = r.available_from ?? defaultPerson(env, r.chat_id).available_from;
+  const ref = e.end_date || e.start_date;
+  let kind = opts.kind || (e.urgency === "now" ? "now" : "digest");
+  if (from && ref && ref < from) {
+    if (!e.annual) return [null, "before-available"];
+    kind = "season"; // 참가 가능 시작일 이전의 연례행사: '내년에도 열릴 가능성' 예고
+  }
+  return [kind, null];
+}
+
 export async function enqueue(env, body) {
   const now = nowIso();
+  const today = dateIn(DENVER);
   const input = (Array.isArray(body.events) ? body.events : [])
     .filter((e) => e && typeof e.event_key === "string" && e.event_key.length <= 48 && BOTS[e.bot] && /^https?:\/\//.test(e.url || "") && (e.title || e.title_ko))
     .slice(0, MAX_EVENTS_PER_CALL);
-  const stats = { received: (body.events || []).length, accepted: input.length, new: 0, changed: 0, same: 0, outbox: 0, skipped: {} };
+  const stats = { received: (body.events || []).length, accepted: input.length, new: 0, changed: 0, same: 0, outbox: 0, watch: 0, skipped: {} };
   if (!input.length) return { ok: true, ...stats };
 
   const keys = input.map((e) => e.event_key);
-  const existing = new Map((await all(env.DB.prepare("SELECT event_key, version, content_hash, data FROM events WHERE event_key IN (SELECT value FROM json_each(?))").bind(JSON.stringify(keys))))
-    .map((r) => [r.event_key, r]));
+  const existing = new Map((await all(env.DB.prepare("SELECT event_key, version, content_hash, data FROM events WHERE event_key IN (SELECT value FROM json_each(?))")
+    .bind(JSON.stringify(keys)))).map((r) => [r.event_key, r]));
 
   const rows = [];
-  const fresh = []; // 새로 보내야 하는 판
+  const fresh = [];
+  const watches = [];
   for (const e of input) {
     const h = await sha(JSON.stringify(importantOf(e)));
     const ex = existing.get(e.event_key);
@@ -68,187 +191,440 @@ export async function enqueue(env, body) {
       event_key: e.event_key, bot: e.bot, version, content_hash: h, data: JSON.stringify(e), urgency: e.urgency === "now" ? "now" : "weekly",
       start_date: e.start_date || null, end_date: e.end_date || null, annual: e.annual ? 1 : 0, tags: JSON.stringify(e.tags || []),
       source_id: e.source_id || null, url: e.url, note, tag: (e.tags || [])[0] || null, title: e.title_ko || e.title,
-      changed: !ex || ex.content_hash !== h,
+      identity: e.identity || null, registration_opens: e.registration_opens || null, deadline: e.deadline || null,
     });
     if (!ex || ex.content_hash !== h) fresh.push({ e, version });
+    // 상세 페이지 재검사 등록(뉴스 기사·검색 결과는 제외)
+    const rs = regState(e, today);
+    if (rs && !String(e.source_id || "").startsWith("gnews")) {
+      watches.push({ url: e.url, event_key: e.event_key, source_id: e.source_id || null, reg_state: rs[0], interval_h: rs[1],
+        next_check: addMin(now, rs[1] * 60), until_date: e.end_date || e.start_date || plusDays(today, 60) });
+    }
   }
 
   const payload = JSON.stringify(rows);
   const stmts = [
     env.DB.prepare(
-      "INSERT INTO events (event_key, bot, version, content_hash, data, urgency, start_date, end_date, annual, tags, source_id, url, first_seen, last_changed, change_note) " +
+      "INSERT INTO events (event_key, bot, version, content_hash, data, urgency, start_date, end_date, annual, tags, source_id, url, first_seen, last_changed, change_note, identity, registration_opens, deadline) " +
       "SELECT json_extract(value,'$.event_key'), json_extract(value,'$.bot'), json_extract(value,'$.version'), json_extract(value,'$.content_hash'), json_extract(value,'$.data'), " +
       "json_extract(value,'$.urgency'), json_extract(value,'$.start_date'), json_extract(value,'$.end_date'), json_extract(value,'$.annual'), json_extract(value,'$.tags'), " +
-      "json_extract(value,'$.source_id'), json_extract(value,'$.url'), ?1, ?1, json_extract(value,'$.note') FROM json_each(?2) WHERE true " +
+      "json_extract(value,'$.source_id'), json_extract(value,'$.url'), ?1, ?1, json_extract(value,'$.note'), json_extract(value,'$.identity'), " +
+      "json_extract(value,'$.registration_opens'), json_extract(value,'$.deadline') FROM json_each(?2) WHERE true " +
       "ON CONFLICT(event_key) DO UPDATE SET data = excluded.data, urgency = excluded.urgency, tags = excluded.tags, url = excluded.url, " +
       "version = excluded.version, content_hash = excluded.content_hash, start_date = excluded.start_date, end_date = excluded.end_date, " +
+      "identity = COALESCE(excluded.identity, events.identity), registration_opens = excluded.registration_opens, deadline = excluded.deadline, " +
       "last_changed = CASE WHEN events.content_hash <> excluded.content_hash THEN excluded.last_changed ELSE events.last_changed END, " +
       "change_note = CASE WHEN events.content_hash <> excluded.content_hash THEN excluded.change_note ELSE events.change_note END",
     ).bind(now, payload),
-    // 버튼 처리(이 태그 그만)가 쓰는 items 표에도 같은 키로 넣는다
     env.DB.prepare(
       "INSERT INTO items (item_key, bot, title, tag, url, created_at) SELECT json_extract(value,'$.event_key'), json_extract(value,'$.bot'), json_extract(value,'$.title'), " +
       "json_extract(value,'$.tag'), json_extract(value,'$.url'), ?1 FROM json_each(?2) WHERE true " +
       "ON CONFLICT(item_key) DO UPDATE SET title = excluded.title, tag = excluded.tag, url = excluded.url",
     ).bind(now, payload),
   ];
+  if (watches.length) {
+    stmts.push(env.DB.prepare(
+      "INSERT INTO watch (url, event_key, source_id, reg_state, interval_h, next_check, until_date) SELECT json_extract(value,'$.url'), json_extract(value,'$.event_key'), " +
+      "json_extract(value,'$.source_id'), json_extract(value,'$.reg_state'), json_extract(value,'$.interval_h'), json_extract(value,'$.next_check'), json_extract(value,'$.until_date') " +
+      "FROM json_each(?1) WHERE true ON CONFLICT(url) DO UPDATE SET event_key = excluded.event_key, reg_state = excluded.reg_state, interval_h = excluded.interval_h, " +
+      "until_date = excluded.until_date, next_check = MIN(watch.next_check, excluded.next_check)",
+    ).bind(JSON.stringify(watches)));
+    stats.watch = watches.length;
+  }
   await env.DB.batch(stmts);
 
   if (!fresh.length) return { ok: true, ...stats };
-  const recips = await all(env.DB.prepare(
-    "SELECT r.chat_id, r.bot, p.available_from AS available_from, p.role AS role FROM recipients r LEFT JOIN people p ON p.chat_id = r.chat_id WHERE r.status = 'active'"));
+  const { recips, mutedTags } = await recipientsFor(env);
   const states = new Map((await all(env.DB.prepare("SELECT chat_id, item_key, state FROM item_state WHERE item_key IN (SELECT value FROM json_each(?))").bind(JSON.stringify(keys))))
     .map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
-  const mutedTags = new Map();
-  for (const r of await all(env.DB.prepare("SELECT chat_id, tag FROM muted_tags"))) {
-    if (!mutedTags.has(r.chat_id)) mutedTags.set(r.chat_id, new Set());
-    mutedTags.get(r.chat_id).add(r.tag);
-  }
-  const skip = (why) => { stats.skipped[why] = (stats.skipped[why] || 0) + 1; };
   const out = [];
   for (const { e, version } of fresh) {
     for (const r of recips) {
-      if (r.bot !== e.bot) continue;
-      if (ownerOnly(env) && !isOwner(env, r.chat_id)) { skip("owner-only"); continue; }
-      if (states.get(`${r.chat_id}|${e.event_key}`) === "MUTED") { skip("muted"); continue; }
-      const mt = mutedTags.get(String(r.chat_id));
-      if (mt && (e.tags || []).some((t) => mt.has(t))) { skip("muted-tag"); continue; }
-      const from = r.available_from ?? defaultPerson(env, r.chat_id).available_from;
-      const ref = e.end_date || e.start_date;
-      let kind = e.urgency === "now" ? "now" : "digest";
-      if (from && ref && ref < from) {
-        // 참가 가능 시작일 이전 행사: 연례행사면 '내년에도 열릴 가능성' 예고로, 아니면 보내지 않음
-        if (!e.annual) { skip("before-available"); continue; }
-        kind = "season";
-      }
-      out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind });
+      const [kind, why] = targetKind(env, r, e, states, mutedTags);
+      if (why) stats.skipped[why] = (stats.skipped[why] || 0) + 1;
+      if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind });
     }
   }
-  if (out.length) {
-    const res = await env.DB.prepare(
-      "INSERT INTO outbox (chat_id, bot, event_key, version, kind, created_at) SELECT json_extract(value,'$.chat_id'), json_extract(value,'$.bot'), " +
-      "json_extract(value,'$.event_key'), json_extract(value,'$.version'), json_extract(value,'$.kind'), ?1 FROM json_each(?2) WHERE true " +
-      "ON CONFLICT(chat_id, bot, event_key, version) DO NOTHING",
-    ).bind(now, JSON.stringify(out)).run();
-    stats.outbox = res.meta.changes;
-  }
+  stats.outbox = await insertOutbox(env, out);
   return { ok: true, ...stats };
 }
 
-// ---------------------------------------------------------------- 즉시·예고 알림 발송 (정지 시간대는 미룸)
+async function insertOutbox(env, out) {
+  if (!out.length) return 0;
+  const res = await env.DB.prepare(
+    "INSERT INTO outbox (chat_id, bot, event_key, version, kind, created_at) SELECT json_extract(value,'$.chat_id'), json_extract(value,'$.bot'), " +
+    "json_extract(value,'$.event_key'), json_extract(value,'$.version'), json_extract(value,'$.kind'), ?1 FROM json_each(?2) WHERE true " +
+    "ON CONFLICT(chat_id, bot, event_key, version) DO NOTHING",
+  ).bind(nowIso(), JSON.stringify(out)).run();
+  return res.meta.changes;
+}
+
+// ---------------------------------------------------------------- 시간 알림: 오늘 접수 시작 / 내일 마감 (1차 검증 1-5)
+async function timeTriggers(env) {
+  const today = dateIn(DENVER);
+  const tomorrow = plusDays(today, 1);
+  const evs = await all(env.DB.prepare(
+    "SELECT event_key, bot, version, data, registration_opens, deadline FROM events WHERE registration_opens = ?1 OR deadline = ?2 LIMIT 20").bind(today, tomorrow));
+  if (!evs.length) return { fired: 0 };
+  const { recips, mutedTags } = await recipientsFor(env);
+  const states = new Map((await all(env.DB.prepare("SELECT chat_id, item_key, state FROM item_state WHERE item_key IN (SELECT value FROM json_each(?))")
+    .bind(JSON.stringify(evs.map((e) => e.event_key))))).map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
+  let fired = 0;
+  for (const ev of evs) {
+    const type = ev.registration_opens === today ? "open" : "deadline";
+    if (!(await claimNotice(env, `trig:${type}:${ev.event_key}:${today}`))) continue;
+    const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot: ev.bot, urgency: "now" };
+    const version = ev.version + 1;
+    const note = type === "open" ? "⏰ 오늘 접수 시작" : "⏰ 내일 신청 마감";
+    await env.DB.prepare("UPDATE events SET version = ?, change_note = ?, last_changed = ? WHERE event_key = ?").bind(version, note, nowIso(), ev.event_key).run();
+    const out = [];
+    for (const r of recips) {
+      // 접수 시작은 확인한 사람에게도(신청 시점), 마감 알림은 확인하지 않은 사람에게만
+      const [kind] = targetKind(env, r, e, states, mutedTags, { kind: "now", skipAcked: type === "deadline" });
+      if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind: kind === "season" ? "season" : "now" });
+    }
+    await insertOutbox(env, out);
+    fired++;
+  }
+  return { fired };
+}
+
+// ---------------------------------------------------------------- 발송 결과 분류 (1차 검증 1-4)
+function classify(d, row, now) {
+  if (d.ok) return { status: "sent", message_id: d.result ? d.result.message_id : null, reason: null };
+  const err = String(d.description || "").slice(0, 200);
+  if (d.network) return { status: "uncertain", resend: 1, next_attempt_at: addMin(now, 10), reason: `불명: ${err}` };
+  const code = d.error_code | 0;
+  if (code === 429) return { status: "failed", next_attempt_at: addMin(now, Math.ceil(((d.parameters && d.parameters.retry_after) || 30) / 60) + 1), reason: err };
+  if (code === 403) return { status: "dead", reason: err, blocked: true };
+  if (code === 400) return { status: "dead", reason: err };
+  if (row.attempts >= MAX_SEND_ATTEMPTS) return { status: "dead", reason: `재시도 한도: ${err}` };
+  return { status: "failed", next_attempt_at: addMin(now, BACKOFF_MIN[Math.min(row.attempts - 1, BACKOFF_MIN.length - 1)] || 5), reason: err };
+}
+
 async function finish(env, updates) {
   if (!updates.length) return;
   const now = nowIso();
-  await env.DB.batch([
+  const stmts = [
     env.DB.prepare(
-      "UPDATE outbox SET status = json_extract(j.value,'$.status'), reason = json_extract(j.value,'$.reason'), message_id = json_extract(j.value,'$.message_id'), " +
+      "UPDATE outbox SET status = json_extract(j.value,'$.status'), reason = json_extract(j.value,'$.reason'), " +
+      "message_id = COALESCE(json_extract(j.value,'$.message_id'), outbox.message_id), next_attempt_at = json_extract(j.value,'$.next_attempt_at'), " +
+      "resend = COALESCE(json_extract(j.value,'$.resend'), outbox.resend), claim = NULL, " +
       "sent_at = CASE WHEN json_extract(j.value,'$.status') = 'sent' THEN ?1 ELSE sent_at END FROM (SELECT value FROM json_each(?2)) AS j WHERE outbox.id = json_extract(j.value,'$.id')",
     ).bind(now, JSON.stringify(updates)),
     env.DB.prepare(
       "INSERT INTO deliveries (bot, chat_id, item_key, message_id, ok, error, sent_at) SELECT json_extract(value,'$.bot'), json_extract(value,'$.chat_id'), " +
-      "json_extract(value,'$.event_key'), json_extract(value,'$.message_id'), json_extract(value,'$.ok'), json_extract(value,'$.error'), ?1 FROM json_each(?2) WHERE json_extract(value,'$.sent') = 1",
+      "json_extract(value,'$.event_key'), json_extract(value,'$.message_id'), json_extract(value,'$.status') = 'sent', json_extract(value,'$.reason'), ?1 " +
+      "FROM json_each(?2) WHERE json_extract(value,'$.attempted') = 1",
     ).bind(now, JSON.stringify(updates)),
-  ]);
+  ];
+  const blocked = updates.filter((u) => u.blocked);
+  if (blocked.length) {
+    stmts.push(env.DB.prepare("UPDATE recipients SET status = 'blocked', updated_at = ?1 FROM (SELECT value FROM json_each(?2)) AS j " +
+      "WHERE recipients.chat_id = json_extract(j.value,'$.chat_id') AND recipients.bot = json_extract(j.value,'$.bot')").bind(now, JSON.stringify(blocked)));
+  }
+  // D1 batch 는 한 트랜잭션이다. 텔레그램 발송 뒤 기록이 실패하면 한 번 더 시도하고, 그래도 실패하면
+  // 행이 'sending' 으로 남아 10분 뒤 '성공 여부 불명'으로 바뀌고 표시를 붙여 1회 재전송된다(유실보다 표시된 중복을 택함).
+  try { await env.DB.batch(stmts); } catch (e) { await env.DB.batch(stmts); }
+  const dead = updates.filter((u) => u.status === "dead");
+  if (dead.length) await notifyOwner(env, `⚠️ 발송 실패(재시도 중단) ${dead.length}건\n` + dead.slice(0, 5).map((u) => `- ${u.bot} ${u.event_key}: ${u.reason}`).join("\n"));
 }
 
+async function recoverStale(env) {
+  const r = await env.DB.prepare("UPDATE outbox SET status = 'uncertain', resend = 1, next_attempt_at = ?1, claim = NULL, reason = '선점 후 결과 기록 없음' " +
+    "WHERE status = 'sending' AND claimed_at < ?2").bind(nowIso(), addMin(nowIso(), -STALE_SENDING_MIN)).run();
+  return r.meta.changes;
+}
+
+// 같은 행을 두 실행이 동시에 보내지 못하게, 아직 보낼 수 있는 상태인 행만 'sending' 으로 바꾸고 바뀐 행만 보낸다
+async function claimRows(env, ids) {
+  if (!ids.length) return new Set();
+  const now = nowIso();
+  const claim = crypto.randomUUID();
+  const rows = await all(env.DB.prepare(
+    "UPDATE outbox SET status = 'sending', claim = ?1, claimed_at = ?2, attempts = attempts + 1 WHERE id IN (SELECT value FROM json_each(?3)) " +
+    "AND (status = 'pending' OR (status IN ('failed', 'uncertain') AND (next_attempt_at IS NULL OR next_attempt_at <= ?2))) RETURNING id").bind(claim, now, JSON.stringify(ids)));
+  return new Set(rows.map((r) => r.id));
+}
+
+function isExpired(data, tz) {
+  const ref = data.end_date || data.start_date;
+  return !!ref && ref < dateIn(tz || DENVER);
+}
+
+// ---------------------------------------------------------------- 즉시·예고 알림 발송 (정지 시간대는 미룸)
 export async function dispatch(env, opts = {}) {
   const limit = Math.min(opts.limit || SEND_LIMIT, SEND_LIMIT);
+  const trig = await timeTriggers(env);
+  const stale = await recoverStale(env);
+  const now = nowIso();
   const rows = await all(env.DB.prepare(
-    "SELECT o.id, o.chat_id, o.bot, o.event_key, o.version, o.kind, e.data, e.change_note, p.tz, p.quiet_start, p.quiet_end, s.state " +
-    "FROM outbox o JOIN events e ON e.event_key = o.event_key LEFT JOIN people p ON p.chat_id = o.chat_id " +
+    "SELECT o.id, o.chat_id, o.bot, o.event_key, o.version, o.kind, o.attempts, o.resend, e.data, e.change_note, e.version AS cur_version, " +
+    "p.tz, p.quiet_start, p.quiet_end, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key LEFT JOIN people p ON p.chat_id = o.chat_id " +
     "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key " +
-    "WHERE o.status = 'pending' AND o.kind IN ('now', 'season') ORDER BY o.id LIMIT 100"));
-  const r = { sent: 0, deferred: 0, skipped: 0, failed: 0 };
-  const updates = [];
+    "WHERE o.kind IN ('now', 'season') AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1))) " +
+    "ORDER BY o.id LIMIT 100").bind(now));
+  const r = { sent: 0, deferred: 0, skipped: 0, failed: 0, uncertain: 0, expired: 0, superseded: 0, triggers: trig.fired, recovered: stale };
+  const done = [];
+  const latest = new Map();
+  for (const row of rows) latest.set(`${row.chat_id}|${row.event_key}`, Math.max(latest.get(`${row.chat_id}|${row.event_key}`) || 0, row.version));
+  const sendable = [];
   for (const row of rows) {
-    if (ownerOnly(env) && !isOwner(env, row.chat_id)) { updates.push({ id: row.id, status: "skipped", reason: "owner-only" }); r.skipped++; continue; }
-    if (row.state === "MUTED") { updates.push({ id: row.id, status: "skipped", reason: "muted" }); r.skipped++; continue; }
+    const data = JSON.parse(row.data);
     const p = { ...defaultPerson(env, row.chat_id), ...(row.tz ? { tz: row.tz, quiet_start: row.quiet_start, quiet_end: row.quiet_end } : {}) };
+    if (ownerOnly(env) && !isOwner(env, row.chat_id)) { done.push({ id: row.id, status: "skipped", reason: "owner-only" }); r.skipped++; continue; }
+    if (row.state === "MUTED") { done.push({ id: row.id, status: "skipped", reason: "muted" }); r.skipped++; continue; }
+    if (row.version < latest.get(`${row.chat_id}|${row.event_key}`)) { done.push({ id: row.id, status: "superseded", reason: "새 판이 대신 감" }); r.superseded++; continue; }
+    if (isExpired(data, p.tz)) { done.push({ id: row.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
     if (!opts.ignoreQuiet && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.deferred++; continue; }
-    if (r.sent + r.failed >= limit) break;
-    const text = renderEvent(JSON.parse(row.data), { kind: row.kind, version: row.version, note: row.change_note });
-    const d = await tg(env, row.bot, "sendMessage", { chat_id: row.chat_id, text, disable_web_page_preview: true, reply_markup: keyboard(row.event_key, { state: row.state }) });
-    const mid = d.ok && d.result ? d.result.message_id : null;
-    updates.push({ id: row.id, status: d.ok ? "sent" : "failed", reason: d.ok ? null : String(d.description || "").slice(0, 200), message_id: mid,
-      sent: 1, ok: d.ok ? 1 : 0, error: d.ok ? null : String(d.description || "").slice(0, 200), bot: row.bot, chat_id: row.chat_id, event_key: row.event_key });
-    d.ok ? r.sent++ : r.failed++;
+    sendable.push({ ...row, data });
   }
-  await finish(env, updates);
-  const left = await env.DB.prepare("SELECT COUNT(*) AS n FROM outbox WHERE status = 'pending' AND kind IN ('now', 'season')").first();
+  const chosen = sendable.slice(0, limit);
+  const claimed = await claimRows(env, chosen.map((x) => x.id));
+  const now2 = nowIso();
+  for (const row of chosen) {
+    if (!claimed.has(row.id)) continue; // 다른 실행이 이미 가져감
+    const note = row.version === row.cur_version ? row.change_note : null;
+    let text = renderEvent(row.data, { kind: row.kind, version: row.version, note });
+    if (row.resend) text = "🔁 재전송 (이전 전송의 성공 여부를 확인하지 못했습니다)\n" + text;
+    const d = await tg(env, row.bot, "sendMessage", { chat_id: row.chat_id, text, disable_web_page_preview: true, reply_markup: keyboard(row.event_key, { state: row.state }) });
+    const c = classify(d, { attempts: row.attempts + 1 }, now2);
+    done.push({ id: row.id, ...c, attempted: 1, bot: row.bot, chat_id: row.chat_id, event_key: row.event_key });
+    if (c.status === "sent") r.sent++; else if (c.status === "uncertain") r.uncertain++; else r.failed++;
+  }
+  await finish(env, done);
+  const left = await env.DB.prepare("SELECT COUNT(*) AS n FROM outbox WHERE status IN ('pending', 'failed', 'uncertain', 'sending') AND kind IN ('now', 'season')").first();
   return { ok: true, ...r, pending: left.n };
 }
 
-// ---------------------------------------------------------------- 주간 요약 (각자 현지 토요일 9시 이후, 정지 시간 밖에서 1회)
+// ---------------------------------------------------------------- 요약 (기본: 매일 각자 현지 digest_hour 이후 1회, 여러 통으로 나눠 누락 없음)
 export async function digest(env, opts = {}) {
+  const now = nowIso();
   const groups = await all(env.DB.prepare(
-    "SELECT o.chat_id, o.bot, COUNT(*) AS n, p.tz, p.quiet_start, p.quiet_end FROM outbox o LEFT JOIN people p ON p.chat_id = o.chat_id " +
-    "WHERE o.status = 'pending' AND o.kind = 'digest' GROUP BY o.chat_id, o.bot"));
-  const r = { sent: 0, waiting: 0, skipped: 0 };
-  const updates = [];
+    "SELECT o.chat_id, o.bot, p.tz, p.quiet_start, p.quiet_end, p.digest_mode, p.digest_hour, " +
+    "SUM(o.status = 'pending') AS fresh, SUM(o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1)) AS retry " +
+    "FROM outbox o LEFT JOIN people p ON p.chat_id = o.chat_id WHERE o.kind = 'digest' AND o.status IN ('pending', 'failed', 'uncertain') GROUP BY o.chat_id, o.bot").bind(now));
+  const r = { messages: 0, items: 0, waiting: 0, skipped: 0, expired: 0, failed: 0 };
   let calls = 0;
   for (const g of groups) {
-    if (ownerOnly(env) && !isOwner(env, g.chat_id)) {
-      await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = 'owner-only' WHERE status = 'pending' AND kind = 'digest' AND chat_id = ?").bind(g.chat_id).run();
-      r.skipped += g.n; continue;
+    const p = { ...defaultPerson(env, g.chat_id), ...(g.tz ? { tz: g.tz, quiet_start: g.quiet_start, quiet_end: g.quiet_end, digest_mode: g.digest_mode, digest_hour: g.digest_hour } : {}) };
+    if ((ownerOnly(env) && !isOwner(env, g.chat_id)) || p.digest_mode === "off") {
+      await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = ? WHERE kind = 'digest' AND status IN ('pending', 'failed', 'uncertain') AND chat_id = ? AND bot = ?")
+        .bind(p.digest_mode === "off" ? "digest-off" : "owner-only", g.chat_id, g.bot).run();
+      r.skipped++; continue;
     }
-    const p = { ...defaultPerson(env, g.chat_id), ...(g.tz ? { tz: g.tz, quiet_start: g.quiet_start, quiet_end: g.quiet_end } : {}) };
-    const due = weekdayIn(p.tz) === 6 && hourIn(p.tz) >= 9 && !inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end);
-    if (!opts.force && !due) { r.waiting++; continue; }
-    if (!opts.force && !(await claimNotice(env, `digest:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`))) { r.waiting++; continue; }
-    if (calls >= 15) break;
-    const items = await all(env.DB.prepare(
-      "SELECT o.id, o.event_key, e.data, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key " +
-      "WHERE o.status = 'pending' AND o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? ORDER BY COALESCE(e.start_date, '9999') LIMIT ?").bind(g.chat_id, g.bot, DIGEST_LIMIT));
-    const live = items.filter((x) => x.state !== "MUTED").map((x) => ({ ...x, data: JSON.parse(x.data) }));
-    for (const x of items.filter((x) => x.state === "MUTED")) updates.push({ id: x.id, status: "skipped", reason: "muted" });
-    if (!live.length) continue;
-    const kb = { inline_keyboard: live.map((x, i) => compactRow(x.event_key, { state: x.state }, String(i + 1))) };
-    const d = await tg(env, g.bot, "sendMessage", { chat_id: g.chat_id, text: renderDigest(BOTS[g.bot].label, live), disable_web_page_preview: true, reply_markup: kb });
-    calls++;
-    const mid = d.ok && d.result ? d.result.message_id : null;
-    for (const x of live) {
-      updates.push({ id: x.id, status: d.ok ? "sent" : "failed", reason: d.ok ? null : String(d.description || "").slice(0, 200), message_id: mid,
-        sent: 1, ok: d.ok ? 1 : 0, error: d.ok ? null : String(d.description || "").slice(0, 200), bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
+    if (!opts.force && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.waiting++; continue; }
+    const dayOk = p.digest_mode === "weekly" ? weekdayIn(p.tz) === 6 : true;
+    const timeOk = dayOk && hourIn(p.tz) >= (p.digest_hour ?? 8);
+    let take = g.retry > 0; // 실패분 재시도는 시간 조건 없이
+    if (opts.force || (g.fresh > 0 && timeOk && (await claimNotice(env, `digest:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`)))) take = true;
+    if (!take) { r.waiting++; continue; }
+    const rows = await all(env.DB.prepare(
+      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+      "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? " +
+      "AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?))) " +
+      "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 60").bind(g.chat_id, g.bot, now));
+    const done = [];
+    const latest = new Map();
+    for (const x of rows) latest.set(x.event_key, Math.max(latest.get(x.event_key) || 0, x.version));
+    const live = [];
+    const seenKey = new Set();
+    for (const x of rows) {
+      const data = JSON.parse(x.data);
+      if (x.state === "MUTED") { done.push({ id: x.id, status: "skipped", reason: "muted" }); continue; }
+      if (x.version < latest.get(x.event_key) || seenKey.has(x.event_key)) { done.push({ id: x.id, status: "superseded", reason: "같은 행사 중복" }); continue; }
+      if (isExpired(data, p.tz)) { done.push({ id: x.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
+      seenKey.add(x.event_key);
+      live.push({ ...x, data });
     }
-    if (d.ok) r.sent++;
+    const parts = Math.ceil(live.length / DIGEST_CHUNK);
+    for (let i = 0; i < parts; i++) {
+      if (calls >= 15) break; // 남은 묶음은 다음 매시 실행에서 retry 로 이어감
+      const chunk = live.slice(i * DIGEST_CHUNK, (i + 1) * DIGEST_CHUNK);
+      const claimed = await claimRows(env, chunk.map((x) => x.id));
+      const mine = chunk.filter((x) => claimed.has(x.id));
+      if (!mine.length) continue;
+      const kb = { inline_keyboard: mine.map((x, j) => compactRow(x.event_key, { state: x.state }, String(i * DIGEST_CHUNK + j + 1))) };
+      const text = renderDigest(BOTS[g.bot].label, mine, { part: i + 1, parts, total: live.length, offset: i * DIGEST_CHUNK, mode: p.digest_mode });
+      const d = await tg(env, g.bot, "sendMessage", { chat_id: g.chat_id, text, disable_web_page_preview: true, reply_markup: kb });
+      calls++;
+      const c = classify(d, { attempts: Math.max(...mine.map((x) => x.attempts + 1)) }, nowIso());
+      for (const x of mine) done.push({ id: x.id, ...c, attempted: 1, bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
+      if (c.status === "sent") { r.messages++; r.items += mine.length; } else r.failed++;
+    }
+    // 아직 보내지 못한 묶음은 다음 실행에서 시간 조건 없이 보내도록 retry 상태로 둔다
+    const sentIds = new Set(done.map((u) => u.id));
+    for (const x of live) if (!sentIds.has(x.id)) done.push({ id: x.id, status: "failed", reason: "다음 실행에서 이어 보냄", next_attempt_at: nowIso() });
+    await finish(env, done);
   }
-  await finish(env, updates);
   return { ok: true, ...r };
 }
 
-// ---------------------------------------------------------------- 실행 기록·사용량
+// ---------------------------------------------------------------- 상세 페이지 재검사 목록 (1차 검증 1-3)
+export async function watch(env, body) {
+  const now = nowIso();
+  if (body.op === "due") {
+    await env.DB.prepare("DELETE FROM watch WHERE until_date IS NOT NULL AND until_date < ?").bind(plusDays(dateIn(DENVER), -1)).run();
+    const rows = await all(env.DB.prepare("SELECT url, event_key, source_id, fingerprint, reg_state, interval_h, failures FROM watch WHERE next_check <= ? ORDER BY next_check LIMIT ?")
+      .bind(now, Math.min(body.limit | 0 || 60, 150)));
+    return { ok: true, items: rows };
+  }
+  if (body.op === "update") {
+    const items = (body.items || []).filter((x) => x && x.url).slice(0, 150);
+    await env.DB.prepare(
+      "UPDATE watch SET last_checked = ?1, " +
+      "fingerprint = CASE WHEN json_extract(j.value,'$.ok') THEN json_extract(j.value,'$.fingerprint') ELSE watch.fingerprint END, " +
+      "failures = CASE WHEN json_extract(j.value,'$.ok') THEN 0 ELSE watch.failures + 1 END, " +
+      "next_check = CASE WHEN json_extract(j.value,'$.ok') THEN strftime('%Y-%m-%dT%H:%M:%fZ', ?1, '+' || watch.interval_h || ' hours') " +
+      "  ELSE strftime('%Y-%m-%dT%H:%M:%fZ', ?1, '+' || MIN(watch.interval_h * (1 << MIN(watch.failures + 1, 4)), 168) || ' hours') END " +
+      "FROM (SELECT value FROM json_each(?2)) AS j WHERE watch.url = json_extract(j.value,'$.url')",
+    ).bind(now, JSON.stringify(items)).run();
+    return { ok: true, updated: items.length };
+  }
+  if (body.op === "stats") {
+    return { ok: true, rows: await all(env.DB.prepare("SELECT reg_state, COUNT(*) AS n, SUM(failures > 0) AS failing FROM watch GROUP BY reg_state")) };
+  }
+  return { ok: false, error: "unknown op" };
+}
+
+// ---------------------------------------------------------------- 실행 기록, AI 상태, 정보원 상태, 실행 감시
 export async function runLog(env, body) {
   if (!body.run_id) return { ok: false, error: "run_id required" };
+  const now = nowIso();
   await env.DB.prepare("INSERT INTO runs (run_id, started_at, finished_at, data) VALUES (?, ?, ?, ?) ON CONFLICT(run_id) DO UPDATE SET finished_at = excluded.finished_at, data = excluded.data")
-    .bind(String(body.run_id), body.started_at || nowIso(), body.finished_at || null, JSON.stringify(body.metrics || {})).run();
-  const alerts = (body.alerts || []).filter(Boolean).slice(0, 5);
+    .bind(String(body.run_id), body.started_at || now, body.finished_at || null, JSON.stringify({ ...(body.metrics || {}), stages: body.stages || {} })).run();
+  await kvSet(env, "last_run_at", now);
+  if (body.completed) await kvSet(env, "last_collect_ok_at", now);
+  const alerts = (body.alerts || []).filter(Boolean).slice(0, 8);
+
+  // AI 상태: 성공 시 복구 알림, 실패 시 중단 시작 시각 유지
+  if (body.ai && typeof body.ai.ok === "boolean") {
+    const prev = JSON.parse((await kvGet(env, "ai_health")) || "{}");
+    if (body.ai.ok) {
+      if (prev.failing_since) {
+        const h = Math.round((Date.now() - Date.parse(prev.failing_since)) / 3600000);
+        alerts.push(`AI 분석 복구 (중단 약 ${h}시간, 실패 ${prev.consecutive || 0}회). 보존된 대기열부터 처리합니다.`);
+      }
+      await kvSet(env, "ai_health", { last_ok_at: now, failing_since: null, consecutive: 0 });
+    } else {
+      await kvSet(env, "ai_health", { ...prev, failing_since: prev.failing_since || now, consecutive: (prev.consecutive || 0) + 1, last_error: String(body.ai.error || "").slice(0, 200) });
+    }
+  }
+  // 정보원 상태
+  const src = (body.sources || []).filter((s) => s && s.id).slice(0, 200);
+  if (src.length) {
+    await env.DB.prepare(
+      "INSERT INTO source_health (id, last_attempt_at, last_ok_at, last_status, consecutive_failures, last_items, events_total, details_ok, details_total) " +
+      "SELECT json_extract(value,'$.id'), ?1, CASE WHEN json_extract(value,'$.ok') THEN ?1 END, json_extract(value,'$.status'), " +
+      "CASE WHEN json_extract(value,'$.ok') THEN 0 ELSE 1 END, COALESCE(json_extract(value,'$.items'), 0), COALESCE(json_extract(value,'$.events'), 0), " +
+      "COALESCE(json_extract(value,'$.details_ok'), 0), COALESCE(json_extract(value,'$.details_total'), 0) FROM json_each(?2) WHERE true " +
+      "ON CONFLICT(id) DO UPDATE SET last_attempt_at = excluded.last_attempt_at, last_ok_at = COALESCE(excluded.last_ok_at, source_health.last_ok_at), " +
+      "last_status = excluded.last_status, consecutive_failures = CASE WHEN excluded.last_ok_at IS NOT NULL THEN 0 ELSE source_health.consecutive_failures + 1 END, " +
+      "last_items = excluded.last_items, events_total = source_health.events_total + excluded.events_total, " +
+      "details_ok = source_health.details_ok + excluded.details_ok, details_total = source_health.details_total + excluded.details_total",
+    ).bind(now, JSON.stringify(src.map((s) => ({ ...s, status: s.ok ? String(s.status || "ok") : String(s.error || s.status || "error").slice(0, 120) })))).run();
+  }
+  // 재시도 한도를 넘긴 대기열 항목
+  const qs = await queueStats(env);
+  if (qs.stuck && (await claimNotice(env, `stuck:${qs.stuck}:${localDate(env)}`))) alerts.push(`처리하지 못한 항목 ${qs.stuck}건이 재시도 한도를 넘어 보류 중입니다(삭제하지 않음).`);
   let notified = false;
   if (alerts.length && (await claimNotice(env, `run-alert:${body.run_id}`))) {
     await notifyOwner(env, `⚠️ 수집 실행 ${body.run_id}\n` + alerts.map((a) => `- ${String(a).slice(0, 300)}`).join("\n"));
     notified = true;
   }
-  return { ok: true, notified };
+  return { ok: true, notified, queue: qs };
 }
 
-export async function usage(env, method, body, url) {
-  if (method === "POST") {
-    const m = body.month || nowIso().slice(0, 7);
-    await env.DB.prepare(
-      "INSERT INTO usage (month, model, input_tokens, output_tokens, usd, calls) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(month, model) DO UPDATE SET " +
-      "input_tokens = usage.input_tokens + excluded.input_tokens, output_tokens = usage.output_tokens + excluded.output_tokens, usd = usage.usd + excluded.usd, calls = usage.calls + excluded.calls",
-    ).bind(m, String(body.model || "?"), body.input_tokens | 0, body.output_tokens | 0, Number(body.usd) || 0, body.calls | 0 || 1).run();
+export async function aiHealth(env) {
+  return { ok: true, ...JSON.parse((await kvGet(env, "ai_health")) || "{}") };
+}
+
+// 수집 실행 감시 (1차 검증 5). GitHub Actions 매시 실행과, 소유자가 봇을 쓸 때(웹훅) 함께 확인한다.
+export async function watchdog(env) {
+  const last = await kvGet(env, "last_collect_ok_at");
+  const lastRun = await kvGet(env, "last_run_at");
+  const limit = Number(env.COLLECT_STALE_HOURS || 26);
+  const hours = last ? (Date.now() - Date.parse(last)) / 3600000 : null;
+  const stale = last !== null && hours > limit;
+  let notified = false;
+  if (stale && (await claimNotice(env, `watchdog:${localDate(env)}:${Math.floor(hourIn(ownerTz(env)) / 12)}`))) {
+    await notifyOwner(env, `⚠️ 매일 수집이 ${Math.floor(hours)}시간째 성공 기록이 없습니다 (기준 ${limit}시간).\n마지막 실행 시작: ${lastRun || "없음"}\nGitHub us-alert-collector 저장소 Actions 탭의 collect 실행을 확인해 주세요. 매시 감시가 살아 있으면 자동으로 다시 실행합니다.`);
+    notified = true;
   }
-  const month = (url && url.searchParams.get("month")) || body.month || nowIso().slice(0, 7);
-  const rows = await all(env.DB.prepare("SELECT * FROM usage WHERE month = ?").bind(month));
-  return { ok: true, month, rows, usd: rows.reduce((a, r) => a + r.usd, 0) };
+  return { ok: true, last_collect_ok_at: last, last_run_at: lastRun, hours_since: hours === null ? null : Math.round(hours * 10) / 10, stale, limit_hours: limit, notified };
 }
 
-// ---------------------------------------------------------------- 정보원 후보
-export async function addCandidates(env, body) {
-  const list = (body.candidates || []).filter((c) => c && /^https?:\/\//.test(c.url || "")).slice(0, 30);
+// AI 가 오래 막혔을 때: 공식 정보원 새 글 제목·링크를 '검증 전 정보'로 소유자에게만 (1차 검증 4)
+export async function unverified(env, body) {
+  const items = (body.items || []).filter((x) => x && /^https?:\/\//.test(x.url || "")).slice(0, 60);
+  if (!items.length) return { ok: true, sent: 0 };
+  if (!(await claimNotice(env, `unverified:${localDate(env)}`))) return { ok: true, sent: 0, reason: "already today" };
+  let sent = 0;
+  for (let i = 0; i < items.length; i += 20) {
+    const part = items.slice(i, i + 20);
+    const head = `⚠️ 검증 전 정보 (AI 분석 ${body.outage_hours || "?"}시간째 중단, 대기 ${body.pending || items.length}건)\n날짜·대상·비용·자격은 확인되지 않았습니다. 원문 링크로 직접 확인해 주세요. 지인에게는 보내지 않습니다.`;
+    const d = await notifyOwner(env, [head, "", ...part.map((x, j) => `${i + j + 1}. ${String(x.title || "").slice(0, 90)}\n   ${x.url}`)].join("\n"));
+    if (d.ok) sent++;
+  }
+  return { ok: true, sent };
+}
+
+// ---------------------------------------------------------------- 사용량·예산
+export async function usage(env, method, body, url) {
+  const month = (url && url.searchParams.get("month")) || body.month || nowIso().slice(0, 7);
+  if (method === "POST") {
+    await env.DB.prepare(
+      "INSERT INTO usage (month, model, input_tokens, output_tokens, usd, calls, cache_write_tokens, cache_read_tokens, searches, errors) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+      "ON CONFLICT(month, model) DO UPDATE SET input_tokens = usage.input_tokens + excluded.input_tokens, output_tokens = usage.output_tokens + excluded.output_tokens, " +
+      "usd = usage.usd + excluded.usd, calls = usage.calls + excluded.calls, cache_write_tokens = usage.cache_write_tokens + excluded.cache_write_tokens, " +
+      "cache_read_tokens = usage.cache_read_tokens + excluded.cache_read_tokens, searches = usage.searches + excluded.searches, errors = usage.errors + excluded.errors",
+    ).bind(month, String(body.model || "?"), body.input_tokens | 0, body.output_tokens | 0, Number(body.usd) || 0, body.calls | 0,
+      body.cache_write_tokens | 0, body.cache_read_tokens | 0, body.searches | 0, body.errors | 0).run();
+  }
+  const rows = await all(env.DB.prepare("SELECT * FROM usage WHERE month = ?").bind(month));
+  const usd = rows.reduce((a, r) => a + r.usd, 0);
+  // 예산 사전 경고(50·80·100%). 예산은 수집기 설정값을 받는다. 초과해도 대기열은 보존된다.
+  const budget = Number(body.budget) || 0;
+  if (method === "POST" && budget > 0) {
+    for (const pct of [50, 80, 100]) {
+      if (usd >= (budget * pct) / 100 && (await claimNotice(env, `budget:${month}:${pct}`))) {
+        await notifyOwner(env, pct < 100
+          ? `💰 이번 달 미국 시스템 AI 사용액 $${usd.toFixed(2)} — 예산 $${budget}의 ${pct}%`
+          : `💰 이번 달 AI 예산 $${budget} 도달 ($${usd.toFixed(2)}). AI 분석을 멈추고 수집 항목은 대기열에 보존합니다.\n예산을 올릴지 승인이 필요합니다(config/models.json monthly_budget_usd).`);
+      }
+    }
+  }
+  return { ok: true, month, rows, usd };
+}
+
+// ---------------------------------------------------------------- 정보원 후보 (2회 이상 발견 + 자동 검증 통과 후 질문)
+export async function candidates(env, body, url) {
   const now = nowIso();
+  if (body.op === "unverified" || (url && url.searchParams.get("op") === "unverified")) {
+    return { ok: true, items: await all(env.DB.prepare("SELECT id, url, name, bots, hits FROM candidates WHERE status = 'pending' AND hits >= 2 AND verified IS NULL LIMIT 10")) };
+  }
+  if (body.op === "verify") {
+    const res = (body.results || []).filter((x) => x && x.id).slice(0, 10);
+    let asked = 0;
+    for (const v of res) {
+      await env.DB.prepare("UPDATE candidates SET verified = ? WHERE id = ?").bind(JSON.stringify({ ...v.verified, checked_at: now }), v.id).run();
+      const c = await env.DB.prepare("SELECT * FROM candidates WHERE id = ?").bind(v.id).first();
+      if (!c || c.notified) continue;
+      const vv = v.verified || {};
+      const lines = [`🔎 정보원 후보 (${c.hits}회 발견)`, c.name || "", c.url, `이유: ${c.reason || "-"}`,
+        `자동 검증: 조회 ${vv.fetchable ? "가능" : "불가"} · 행사 링크 ${vv.eventish ?? "?"}개 · 앞으로의 날짜 ${vv.future_dates ?? "?"}개 · 공식 도메인 ${vv.official ? "예" : "아니오"}${vv.duplicate_of ? ` · 기존 정보원과 같은 사이트(${vv.duplicate_of})` : ""}`];
+      if (!vv.fetchable) lines.push("자동 조회가 막혀 있습니다. 추가하면 '대체 수집 방법 필요' 목록에 올립니다.");
+      await notifyOwner(env, lines.join("\n"), {
+        reply_markup: { inline_keyboard: [[{ text: "➕ 감시 목록에 추가", callback_data: `cpro:${c.id}` }, { text: "무시", callback_data: `cign:${c.id}` }]] },
+      });
+      await env.DB.prepare("UPDATE candidates SET notified = 1 WHERE id = ?").bind(c.id).run();
+      asked++;
+    }
+    return { ok: true, asked };
+  }
+  const list = (body.candidates || []).filter((c) => c && /^https?:\/\//.test(c.url || "")).slice(0, 30);
   const rows = [];
-  for (const c of list) rows.push({ id: await sha(c.url.replace(/\/+$/, "").toLowerCase()).then((h) => h.slice(0, 12)), url: c.url, name: c.name || null, reason: c.reason || null, bots: JSON.stringify(c.bots || []) });
+  for (const c of list) rows.push({ id: (await sha(c.url.replace(/\/+$/, "").toLowerCase())).slice(0, 12), url: c.url, name: c.name || null, reason: c.reason || null, bots: JSON.stringify(c.bots || []) });
   if (rows.length) {
     await env.DB.prepare(
       "INSERT INTO candidates (id, url, name, reason, bots, hits, first_seen, last_seen) SELECT json_extract(value,'$.id'), json_extract(value,'$.url'), json_extract(value,'$.name'), " +
@@ -256,25 +632,22 @@ export async function addCandidates(env, body) {
       "ON CONFLICT(id) DO UPDATE SET hits = candidates.hits + 1, last_seen = excluded.last_seen, reason = excluded.reason",
     ).bind(now, JSON.stringify(rows)).run();
   }
-  // 2회 이상 나온 후보는 소유자에게 승격 여부를 한 번 묻는다
-  const ready = await all(env.DB.prepare("SELECT * FROM candidates WHERE status = 'pending' AND notified = 0 AND hits >= 2 LIMIT 5"));
-  for (const c of ready) {
-    await notifyOwner(env, `🔎 정보원 후보 (${c.hits}회 발견)\n${c.name || ""}\n${c.url}\n이유: ${c.reason || "-"}`, {
-      reply_markup: { inline_keyboard: [[{ text: "➕ 감시 목록에 추가", callback_data: `cpro:${c.id}` }, { text: "무시", callback_data: `cign:${c.id}` }]] },
-    });
-    await env.DB.prepare("UPDATE candidates SET notified = 1 WHERE id = ?").bind(c.id).run();
-  }
-  return { ok: true, upserted: rows.length, asked: ready.length };
+  const waiting = await env.DB.prepare("SELECT COUNT(*) AS n FROM candidates WHERE status = 'pending' AND hits >= 2 AND verified IS NULL").first();
+  return { ok: true, upserted: rows.length, awaiting_verification: waiting.n };
 }
 
 export async function decideCandidate(env, id, promote) {
   const c = await env.DB.prepare("SELECT * FROM candidates WHERE id = ?").bind(id).first();
   if (!c) return null;
   const now = nowIso();
+  const v = JSON.parse(c.verified || "{}");
   const stmts = [env.DB.prepare("UPDATE candidates SET status = ? WHERE id = ?").bind(promote ? "promoted" : "ignored", id)];
   if (promote) {
-    stmts.push(env.DB.prepare("INSERT INTO sources_extra (id, url, name, type, bots, added_at) VALUES (?, ?, ?, 'html', ?, ?) ON CONFLICT(id) DO NOTHING")
-      .bind(`cand-${id}`, c.url, c.name, c.bots, now));
+    stmts.push(env.DB.prepare("INSERT INTO sources_extra (id, url, name, type, bots, added_at) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(id) DO NOTHING")
+      .bind(`cand-${id}`, c.url, c.name, v.type || "html", c.bots, now));
+    if (v.fetchable === false) {
+      stmts.push(env.DB.prepare("INSERT INTO source_health (id, alt) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET alt = excluded.alt").bind(`cand-${id}`, "자동 조회 불가 — 대체 수집 방법 필요"));
+    }
   }
   await env.DB.batch(stmts);
   return c;
@@ -283,6 +656,10 @@ export async function decideCandidate(env, id, promote) {
 export async function sourcesExtra(env) {
   const rows = await all(env.DB.prepare("SELECT id, url, name, type, bots FROM sources_extra ORDER BY added_at"));
   return { ok: true, sources: rows.map((r) => ({ ...r, bots: JSON.parse(r.bots || "[]"), every_days: 1, official: false, promoted: true })) };
+}
+
+export async function sourceHealth(env) {
+  return { ok: true, sources: await all(env.DB.prepare("SELECT * FROM source_health ORDER BY consecutive_failures DESC, id")) };
 }
 
 // ---------------------------------------------------------------- 주간 보고
@@ -295,16 +672,21 @@ export async function weeklyReport(env, send = true) {
   const u = await usage(env, "GET", { month });
   const del = await env.DB.prepare("SELECT COUNT(*) AS n, SUM(ok) AS ok FROM deliveries WHERE sent_at >= ?").bind(since).first();
   const clicks = await all(env.DB.prepare("SELECT action, COUNT(*) AS n FROM clicks WHERE at >= ? GROUP BY action").bind(since));
-  const report = { since: since.slice(0, 10), runs: runs.length, totals: sum, month_usd: Number(u.usd.toFixed(4)), deliveries: del, clicks };
+  const failing = await all(env.DB.prepare("SELECT id, consecutive_failures, last_status FROM source_health WHERE consecutive_failures >= 3 ORDER BY consecutive_failures DESC LIMIT 8"));
+  const qs = await queueStats(env);
+  const ob = await all(env.DB.prepare("SELECT status, COUNT(*) AS n FROM outbox WHERE created_at >= ? GROUP BY status").bind(since));
+  const report = { since: since.slice(0, 10), runs: runs.length, totals: sum, month_usd: Number(u.usd.toFixed(4)), deliveries: del, clicks, failing, queue: qs, outbox: ob };
   if (send) {
     const t = (k) => sum[k] || 0;
     const lines = [
       `📊 미국 알림 주간 보고 (${report.since}~${localDate(env)})`,
-      `실행 ${runs.length}회 · 정보원 조회 ${t("sources_ok")}/${t("sources_total")} 성공 · 검색 ${t("queries")}회`,
-      `수집 ${t("entries_fetched")}건 → 신규 ${t("entries_new")}건 (중복 제거 ${t("entries_seen")}건)`,
-      `판정 ${t("ai_items")}건 → 행사 ${t("events_out")}건 · 대기열 ${t("outbox")}건`,
-      `AI 입력 ${t("input_tokens")} / 출력 ${t("output_tokens")} 토큰 · 이번 달 $${report.month_usd}`,
+      `실행 ${runs.length}회 · 정보원 조회 ${t("sources_ok")}/${t("sources_total")} 성공 · 검색 ${t("queries")}회 · AI 발굴 ${t("discover_calls")}회`,
+      `수집 ${t("entries_fetched")}건 → 신규 ${t("entries_new")}건 · 상세 재검사 ${t("watch_checked")}건(변경 ${t("watch_changed")})`,
+      `AI 처리 ${t("ai_items")}건 → 행사 ${t("events_out")}건 · 누락 재시도 ${t("ai_missing")}건`,
+      `대기열 ${qs.queued}건(가장 오래 ${qs.oldest_queued_hours}시간) · 보류 ${qs.stuck}건`,
+      `AI 입력 ${t("input_tokens")} / 출력 ${t("output_tokens")} 토큰 · 검색 ${t("searches")}회 · 이번 달 $${report.month_usd}`,
       `발송 ${del.n || 0}건 (성공 ${del.ok || 0}) · 버튼 ${clicks.map((c) => `${c.action} ${c.n}`).join(", ") || "없음"}`,
+      failing.length ? `연속 실패 정보원: ${failing.map((f) => `${f.id}(${f.consecutive_failures})`).join(", ")}` : "연속 실패 정보원 없음",
     ];
     await notifyOwner(env, lines.join("\n"));
   }

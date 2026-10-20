@@ -11,16 +11,41 @@ export const HOOK = createHash("sha256").update(`us-hook:${ADMIN}`).digest("hex"
 export const OWNER = "111";
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// 테스트가 D1 을 직접 고치는 동안(execFileSync) 이벤트 루프가 멈춰 keep-alive 연결이 끊길 수 있으므로, 요청마다 새 연결을 쓴다
+function request(url, { method = "GET", headers = {}, body } = {}) {
+  return new Promise((resolve, reject) => {
+    const u = new URL(url);
+    const req = http.request({ hostname: u.hostname, port: u.port, path: u.pathname + u.search, method, headers, agent: false }, (res) => {
+      let b = "";
+      res.on("data", (c) => (b += c));
+      res.on("end", () => resolve({ status: res.statusCode, ok: res.statusCode < 400, text: async () => b, json: async () => JSON.parse(b) }));
+    });
+    req.on("error", reject);
+    if (body) req.write(body);
+    req.end();
+  });
+}
+
 export async function startEnv({ tgPort, wPort, vars = {} }) {
   const persist = mkdtempSync(join(tmpdir(), "us-d1-"));
   const calls = [];
   let nextMsgId = 500;
+  const failQueue = []; // 다음 sendMessage 들에 낼 실패: "network" | 429 | 403 | 400 | 500
   const tgServer = http.createServer((req, res) => {
     let b = "";
     req.on("data", (c) => (b += c));
     req.on("end", () => {
       const m = req.url.match(/^\/bot([^/]+)\/(\w+)$/);
       const payload = b ? JSON.parse(b) : {};
+      if (m[2] === "sendMessage" && failQueue.length) {
+        const f = failQueue.shift();
+        calls.push({ token: m[1], method: m[2], payload, failed: f });
+        if (f === "network") { req.socket.destroy(); return; }
+        res.setHeader("content-type", "application/json");
+        res.statusCode = f;
+        res.end(JSON.stringify({ ok: false, error_code: f, description: `fake ${f}`, ...(f === 429 ? { parameters: { retry_after: 1 } } : {}) }));
+        return;
+      }
       calls.push({ token: m[1], method: m[2], payload });
       let result = true;
       if (m[2] === "sendMessage") result = { message_id: nextMsgId++, chat: { id: payload.chat_id } };
@@ -53,19 +78,24 @@ export async function startEnv({ tgPort, wPort, vars = {} }) {
   let upd = 1000;
   const env = {
     W, calls,
+    failNext: (...kinds) => failQueue.push(...kinds),
     log: () => log,
     since: (n) => calls.slice(n),
-    admin: (path, body) => fetch(`${W}${path}`, {
+    get: (path) => request(`${W}${path}`),
+    admin: (path, body) => request(`${W}${path}`, {
       method: body === undefined ? "GET" : "POST",
       headers: { authorization: `Bearer ${ADMIN}`, "content-type": "application/json" },
       body: body === undefined ? undefined : JSON.stringify(body),
     }).then((r) => r.json()),
-    hook: (bot, update, secret = HOOK) => fetch(`${W}/hook/${bot}`, {
+    hook: (bot, update, secret = HOOK) => request(`${W}/hook/${bot}`, {
       method: "POST", headers: { "x-telegram-bot-api-secret-token": secret, "content-type": "application/json" },
       body: JSON.stringify({ update_id: update.update_id ?? ++upd, ...update }),
     }),
     msg: (from, text) => ({ message: { message_id: 1, from: { id: Number(from), first_name: "T" + from }, chat: { id: Number(from), type: "private" }, text } }),
     cb: (from, data, message_id, reply_markup) => ({ callback_query: { id: "cq" + upd, from: { id: Number(from) }, data, message: { message_id, chat: { id: Number(from) }, reply_markup } } }),
+    // 테스트에서 시간 경과를 흉내 내려고 로컬 D1 을 직접 고친다(운영 코드는 이 경로를 쓰지 않음)
+    sql: (command) => JSON.parse(execFileSync(wr, ["d1", "execute", "us-alert-db", "--local", "--persist-to", persist, "--json", "--command", command],
+      { stdio: "pipe", env: { ...process.env, CI: "1" } }).toString())[0].results,
     stop: () => { dev.kill("SIGTERM"); tgServer.close(); rmSync(persist, { recursive: true, force: true }); },
   };
   return env;
