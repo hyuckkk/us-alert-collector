@@ -122,7 +122,8 @@ Three audiences: life (adult hobbies, skills, sports, weekday classes, shows, cl
 Rules:
 - Use only facts present in the item. If a value is not stated, use null (or "unknown" for signup, [] for lists). Never guess dates, prices or ages.
 - url must be exactly one of the URLs given for that item. Never invent or edit URLs.
-- Dates as YYYY-MM-DD. If the year is missing, infer it only when unambiguous from the item; otherwise null.
+- Dates as YYYY-MM-DD. If a date has month and day but no year, use the next occurrence on or after today. If there is no date at all, null.
+- For a listing with several dates (e.g. weekly tours), use the earliest upcoming date as start_date and the last listed date as end_date.
 - event_tz: IANA zone of the event location (America/Denver for Colorado). time_text: local time as written, e.g. "10:00-12:00".
 - title_ko: short natural Korean title. Keep proper nouns in English in parentheses if useful.
 - english: pick only attributes the text supports — 초보 가능 (beginners welcome), 보호자 동반 (parent accompanies), 시범 중심 (demonstration-based), 반복 만남 (recurring sessions with the same group).

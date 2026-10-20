@@ -158,6 +158,8 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
                             if k in n2 or k in c2:
                                 by_key[k] = e
                                 fresh.append(e)
+                                with new_client() as hc:
+                                    fetch_detail(e, hc)  # 발굴한 페이지도 본문을 붙여 추출
                 # 5) 추출(작은 모델) → 규칙 → 애매한 건만 판단(큰 모델)
                 extracted = ai.extract(client, models, fresh, today.isoformat(), usage) if fresh else []
                 m["ai_items"] = len(fresh)
@@ -181,7 +183,8 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
     # 7) Worker 로 보내기 → 사람별 대기열 → 즉시 알림 발송
     out = [rules.for_worker(e) for e in events]
     m["events_out"] = len(out)
-    report["events"] = out
+    # 보고서에는 판정 근거를 볼 수 있게 원문 앞부분을 함께 남긴다(공개 웹 내용만)
+    report["events"] = [{**w, "_source_text": (fresh[e["_entry_index"]].text or "")[:400] if "_entry_index" in e else None} for w, e in zip(out, events)]
     if out:
         r = api.enqueue(out)
         m["outbox"] = r.get("outbox", 0)

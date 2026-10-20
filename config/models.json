@@ -1,6 +1,6 @@
 {
   "_comment": "AI 호출 설정. 설계안: 정형 추출은 작은 모델, 자격·신분·연령 판단과 애매한 건은 큰 모델. 가격은 백만 토큰당 달러(입력, 출력).",
-  "extract": {"model": "claude-haiku-5-5", "effort": "low", "batch": 12, "max_tokens": 16000, "text_chars": 1500},
+  "extract": {"model": "claude-haiku-5-5", "effort": "low", "batch": 12, "max_tokens": 16000, "text_chars": 2500},
   "judge": {"model": "claude-opus-5-5", "effort": "medium", "batch": 8, "max_tokens": 16000},
   "discover": {"enabled": true, "model": "claude-opus-5-5", "effort": "medium", "max_searches": 5, "max_tokens": 16000},
   "limits": {"max_new_entries_per_run": 120, "monthly_budget_usd": 20, "warn_ratio": 0.8},
