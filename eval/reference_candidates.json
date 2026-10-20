@@ -1,0 +1,1023 @@
+{
+ "_comment": "검증 전 후보. 사람이 공식 원문을 확인한 항목만 ground_truth.json 으로 옮긴다(날짜·장소·비용도 원문 그대로).",
+ "at": "2026-10-20T07:59:35+00:00",
+ "sources": [
+  {
+   "id": "westminster-calendar",
+   "monitored": true,
+   "ok": true,
+   "status": 200,
+   "items": 19,
+   "error": null
+  },
+  {
+   "id": "hyland-hills-events-api",
+   "monitored": true,
+   "ok": false,
+   "status": null,
+   "items": 0,
+   "error": "ConnectTimeout: timed out"
+  },
+  {
+   "id": "butterfly-pavilion",
+   "monitored": true,
+   "ok": true,
+   "status": 200,
+   "items": 62,
+   "error": null
+  },
+  {
+   "id": "anythink-communico",
+   "monitored": true,
+   "ok": true,
+   "status": 200,
+   "items": 15,
+   "error": null
+  },
+  {
+   "id": "usafa-events",
+   "monitored": true,
+   "ok": true,
+   "status": 200,
+   "items": 18,
+   "error": null
+  },
+  {
+   "id": "cu-boulder-localist",
+   "monitored": true,
+   "ok": true,
+   "status": 200,
+   "items": 100,
+   "error": null
+  },
+  {
+   "id": "thornton-youth-teen",
+   "monitored": false,
+   "ok": true,
+   "status": 200,
+   "items": 13,
+   "error": null
+  },
+  {
+   "id": "westminster-adult-learning",
+   "monitored": false,
+   "ok": true,
+   "status": 200,
+   "items": 4,
+   "error": null
+  },
+  {
+   "id": "broomfield-programs",
+   "monitored": false,
+   "ok": true,
+   "status": 200,
+   "items": 4,
+   "error": null
+  },
+  {
+   "id": "frcc-continuing-ed",
+   "monitored": false,
+   "ok": true,
+   "status": 200,
+   "items": 0,
+   "error": null
+  },
+  {
+   "id": "denver-art-museum-free-days",
+   "monitored": false,
+   "ok": true,
+   "status": 200,
+   "items": 7,
+   "error": null
+  }
+ ],
+ "candidates": [
+  {
+   "id": "westminster-calendar:0",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Fire Safety Booth @ City Park Fitness Center",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1740",
+   "date_raw": "Mon, 12 Oct 2026 16:49:20 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:1",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Music Bingo at Vatos Tacos & Tequila",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1723",
+   "date_raw": "Tue, 29 Sep 2026 10:05:24 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:2",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Fire Safety Booth @ Swim and Fitness Center",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1741",
+   "date_raw": "Mon, 12 Oct 2026 16:52:18 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:3",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Cancelled - Special Permit and License Board Meeting",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1354",
+   "date_raw": "Mon, 19 Oct 2026 16:23:59 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:4",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Partner Event: A Theatrical Drink Tasting Experience with a Twist: SIP",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1732",
+   "date_raw": "Mon, 28 Sep 2026 09:01:19 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:5",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Partner Event: A Theatrical Drink Tasting Experience with a Twist: SIP",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1733",
+   "date_raw": "Mon, 28 Sep 2026 09:01:19 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:6",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Car Seat Clinic",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1376",
+   "date_raw": "Tue, 27 Jan 2026 07:54:04 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:7",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Trunk or Treat Halloween Spooktacular in Downtown Westminster",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1593",
+   "date_raw": "Wed, 23 Sep 2026 12:38:37 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:8",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Partner Event: A Theatrical Drink Tasting Experience with a Twist: SIP",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1734",
+   "date_raw": "Mon, 28 Sep 2026 09:01:19 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:9",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Partner Event: A Theatrical Drink Tasting Experience with a Twist: SIP",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1738",
+   "date_raw": "Mon, 28 Sep 2026 09:04:06 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:10",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "City Council Meeting and Post Meeting",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1291",
+   "date_raw": "Tue, 28 Apr 2026 14:19:27 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:11",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Fire Safety Booth @ Westminster Sports Center",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1742",
+   "date_raw": "Mon, 12 Oct 2026 16:52:04 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:12",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Planning Commission Meeting",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1457",
+   "date_raw": "Wed, 28 Jan 2026 11:57:51 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:13",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Fire Safety Booth @ West View Recreation Center",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1743",
+   "date_raw": "Mon, 12 Oct 2026 16:53:02 -0700",
+   "verified": false
+  },
+  {
+   "id": "westminster-calendar:14",
+   "panel_source": "westminster-calendar",
+   "monitored_source": true,
+   "title": "Special Permit and License Board Meeting",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1746",
+   "date_raw": "Mon, 19 Oct 2026 16:27:29 -0700",
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:15",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Exhibits & Animals",
+   "url": "https://butterflies.org/exhibits-and-animals/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:16",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Newsroom",
+   "url": "https://butterflies.org/newsroom/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:17",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/toxic-terrors/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:18",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/spider-zone/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:19",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/sensory-friendly-afternoon-10-21/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:20",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/mikes-camera-workshop/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:21",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/rainforest-yoga-kelsey-mueller-3/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:22",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/toxic-terrors-after-dark-an-exclusive-tour-with-entomologist-cori-brant/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:23",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/family-flashlight-tours-escape-the-pavilion/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:24",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/adult-flashlight-tours-escape-the-pavilion/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:25",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/crawl-o-ween/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:26",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/family-flashlight-tours-escape-the-pavilion-2/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:27",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/rainforest-yoga-callie-phelps-oct-25/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:28",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/crawl-o-ween-trick-or-treating/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "butterfly-pavilion:29",
+   "panel_source": "butterfly-pavilion",
+   "monitored_source": true,
+   "title": "Learn More",
+   "url": "https://butterflies.org/event/toxic-terrors-vip-tour-1/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:30",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Babies and Toddlers",
+   "url": "https://events.anythinklibraries.org/events?a=Babies%2CToddlers&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:31",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Children",
+   "url": "https://events.anythinklibraries.org/events?a=Children%2CElementary&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:32",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Families",
+   "url": "https://events.anythinklibraries.org/events?a=Families&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:33",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Bennett Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Bennett&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:34",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Bookmobile Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+in+Motion%2FBookmobile&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:35",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Brighton Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Brighton&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:36",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Commerce City Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Commerce+City&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:37",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Huron Street Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Huron+Street&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:38",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Nature Library Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Nature+Library&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:39",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Perl Mack Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Perl+Mack&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:40",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Reunion Express Library Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Reunion+Express+Library&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:41",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "The Studio Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Wright+Farms%2CThe+Studio+at+Thornton+Community+Center&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:42",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Thornton Community Center Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Thornton+Community+Center&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:43",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink Wright Farms Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+Wright+Farms&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "anythink-communico:44",
+   "panel_source": "anythink-communico",
+   "monitored_source": true,
+   "title": "Anythink World Events",
+   "url": "https://events.anythinklibraries.org/events?l=Anythink+World&r=thismonth",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:45",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Apply Today",
+   "url": "https://www.usafa.edu/admissions/register/pre-candidate-questionnaire/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:46",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "USAFA Family Movie: The Nightmare Before Christmas on Thurs, Oct 29 @ 6 p.m.",
+   "url": "https://www.usafa.edu/event-single/nightmare-before/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:47",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Homeschool Program: The Outer Solar System Fri, Oct 30 @ 10:30 a.m.",
+   "url": "https://www.usafa.edu/event-single/homeschool-oct-30/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:48",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "USAFA Family Movie: Hocus Pocus on Fri, Oct 30 @ 7:45 p.m.",
+   "url": "https://www.usafa.edu/event-single/hocus-pocus/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:49",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "USAFA VS. UConn",
+   "url": "https://www.usafa.edu/event-single/usafa-vs-uconn/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:50",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m.",
+   "url": "https://www.usafa.edu/event-single/homeschool-nov-9/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:51",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "USAFA VS. San Jose State",
+   "url": "https://www.usafa.edu/event-single/usafa-vs-san-jose-state/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:52",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Homeschool Program: Earth – Sun – Moon System Wed, Nov 18 @ 10:30 a.m.",
+   "url": "https://www.usafa.edu/event-single/homeschool-nov-18/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:53",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "USAFA VS. UTEP",
+   "url": "https://www.usafa.edu/event-single/usafa-vs-utep/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:54",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Bluebards Theatre Troupe: Come From Away",
+   "url": "https://www.usafa.edu/event-single/bluebards-theatre-troupe-come-from-away/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:55",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Bluebards Theatre Troupe: Come From Away",
+   "url": "https://www.usafa.edu/event-single/bluebards-theatre-troupe-come-from-away-2/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:56",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Bluebards Theatre Troupe: Come From Away",
+   "url": "https://www.usafa.edu/event-single/bluebards-theatre-troupe-come-from-away-3/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:57",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Holly & Ivy Concert – Dec. 4",
+   "url": "https://www.usafa.edu/event-single/holly-ivy-concert/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:58",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Holly & Ivy Concert – Dec. 5",
+   "url": "https://www.usafa.edu/event-single/holly-ivy-concert-2/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "usafa-events:59",
+   "panel_source": "usafa-events",
+   "monitored_source": true,
+   "title": "Holly & Ivy Concert – Dec. 6",
+   "url": "https://www.usafa.edu/event-single/holly-ivy-concert-3/",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:60",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Design/HEALth Exhibition",
+   "url": "https://calendar.colorado.edu/event/designhealth-exhibition",
+   "date_raw": "2026-08-05",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:61",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Spring 2027 Last Day to Submit On-Track Lists (5 p.m.)",
+   "url": "https://calendar.colorado.edu/event/spring-2027-last-day-to-submit-on-track-lists-5-pm",
+   "date_raw": "2026-10-20",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:62",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "What a QUEER Creature!: Horror & LGBTQ+ Community",
+   "url": "https://calendar.colorado.edu/event/what-a-queer-creature-horror-lgbtq-community",
+   "date_raw": "2026-10-01",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:63",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "WorkWell Les Mills Body Pump Classes",
+   "url": "https://calendar.colorado.edu/event/les-mills-body-pump-f26",
+   "date_raw": "2026-08-25",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:64",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Grad+ Weekly Write-In for Grad Students - Fall 2026",
+   "url": "https://calendar.colorado.edu/event/grad-weekly-write-in-for-grad-students-fall-2026",
+   "date_raw": "2026-08-25",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:65",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Fall Mindfulness Series",
+   "url": "https://calendar.colorado.edu/event/mindfulness-staff-faculty",
+   "date_raw": "2026-09-15",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:66",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "2026 - 2027 Staff Council Communications Committee Monthly Meeting",
+   "url": "https://calendar.colorado.edu/event/copy-of-staff-council-communications-committee-monthly-meeting",
+   "date_raw": "2026-09-15",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:67",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Campus Life: 150 Years of Human and More-Than-Human Relationships at CU Boulder Exhibition",
+   "url": "https://calendar.colorado.edu/event/opening-reception-and-tree-walk-campus-life-exhibition",
+   "date_raw": "2026-04-29",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:68",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Employee Management and Compliance Essentials",
+   "url": "https://calendar.colorado.edu/event/managers_academy_employee_management_and_compliance_essentials",
+   "date_raw": "2026-06-03",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:69",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Prometheus Fire: Seeing and Sensing Climate Change",
+   "url": "https://calendar.colorado.edu/event/prometheus-fire-seeing-and-sensing-climate-change",
+   "date_raw": "2026-02-05",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:70",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Mornings at the Museum",
+   "url": "https://calendar.colorado.edu/event/copy-of-mornings-at-the-museum-482",
+   "date_raw": "2026-09-22",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:71",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "2026 - 2027 Staff Council Blood Drive & Community Service Committee Meeting",
+   "url": "https://calendar.colorado.edu/event/copy-of-staff-council-blood-drive-community-service-committee-meeting",
+   "date_raw": "2026-09-15",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:72",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "APPM Post-Doc Seminar - Abed Hammoud",
+   "url": "https://calendar.colorado.edu/event/appm-post-doc-seminar-abed-hammoud",
+   "date_raw": "2026-10-20",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:73",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Grad+ Seminar Series: Special Topics - Identity Cultivation & Application for Confidence",
+   "url": "https://calendar.colorado.edu/event/grad-seminar-series-special-topics-identity-cultivation-application-for-confidence",
+   "date_raw": "2026-09-15",
+   "verified": false
+  },
+  {
+   "id": "cu-boulder-localist:74",
+   "panel_source": "cu-boulder-localist",
+   "monitored_source": true,
+   "title": "Cruiser guided Ebike Tour of Boulder",
+   "url": "https://calendar.colorado.edu/event/cruiser-guided-ebike-tour-of-boulder",
+   "date_raw": "2026-08-02",
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:75",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Activity Registration Information",
+   "url": "https://www.thorntonco.gov/parks-recreation/activity-registration-information",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:76",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Festivals & Events",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:77",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Rhythms & Reels",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/rhythms-reels",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:78",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Eggcessible Eggstravaganza",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/eggcessible-eggstravaganza",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:79",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Fourth of July Celebration",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/fourth-july-celebration",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:80",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Lions Club Relays",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/lions-club-relays",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:81",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Paws for a Dip",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/paws-dip",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:82",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Thornton Barrel & Beer Festival",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/thornton-barrel-beer-festival",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:83",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Thorntonfest",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/thorntonfest",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:84",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Thornton Harvest Fest",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/thornton-harvest-fest",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:85",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Thornton WinterFest",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/thornton-winterfest",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:86",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Trunk or Treat",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/trunk-or-treat",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "thornton-youth-teen:87",
+   "panel_source": "thornton-youth-teen",
+   "monitored_source": false,
+   "title": "Vendor Information",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events/vendor-information",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "westminster-adult-learning:88",
+   "panel_source": "westminster-adult-learning",
+   "monitored_source": false,
+   "title": "Programs & Classes",
+   "url": "https://www.westminsterco.gov/173/Programs-Classes",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "westminster-adult-learning:89",
+   "panel_source": "westminster-adult-learning",
+   "monitored_source": false,
+   "title": "Activities at the MAC",
+   "url": "https://www.westminsterco.gov/289/Activities-at-the-MAC",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "westminster-adult-learning:90",
+   "panel_source": "westminster-adult-learning",
+   "monitored_source": false,
+   "title": "Activity Guides",
+   "url": "https://www.westminsterco.gov/188/Activity-Guides",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "westminster-adult-learning:91",
+   "panel_source": "westminster-adult-learning",
+   "monitored_source": false,
+   "title": "Special Events",
+   "url": "https://www.westminsterco.gov/175/Events",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "broomfield-programs:92",
+   "panel_source": "broomfield-programs",
+   "monitored_source": false,
+   "title": "Classes, Levels and Teams",
+   "url": "https://broomfield.org/4202/Classes-Levels-and-Teams",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "broomfield-programs:93",
+   "panel_source": "broomfield-programs",
+   "monitored_source": false,
+   "title": "Camp Explorer",
+   "url": "https://broomfield.org/3070/Camp-Explorer",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "broomfield-programs:94",
+   "panel_source": "broomfield-programs",
+   "monitored_source": false,
+   "title": "Camp Explorer",
+   "url": "https://www.broomfield.org/3070/Camp-Explorer",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "broomfield-programs:95",
+   "panel_source": "broomfield-programs",
+   "monitored_source": false,
+   "title": "Calendar",
+   "url": "https://broomfield.org/calendar.aspx",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "denver-art-museum-free-days:96",
+   "panel_source": "denver-art-museum-free-days",
+   "monitored_source": false,
+   "title": "Events Calendar",
+   "url": "https://www.denverartmuseum.org/en/calendar",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "denver-art-museum-free-days:97",
+   "panel_source": "denver-art-museum-free-days",
+   "monitored_source": false,
+   "title": "Event Rental",
+   "url": "https://www.denverartmuseum.org/en/event-rental",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "denver-art-museum-free-days:98",
+   "panel_source": "denver-art-museum-free-days",
+   "monitored_source": false,
+   "title": "Exhibitions",
+   "url": "https://www.denverartmuseum.org/en/exhibitions",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "denver-art-museum-free-days:99",
+   "panel_source": "denver-art-museum-free-days",
+   "monitored_source": false,
+   "title": "Nov 7, 2026 SCFD Free Day & Night at the Museums Enjoy free general admission at the DAM thanks to the residents who support SCFD.",
+   "url": "https://www.denverartmuseum.org/en/calendar/free-day-nov-7-2026",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "denver-art-museum-free-days:100",
+   "panel_source": "denver-art-museum-free-days",
+   "monitored_source": false,
+   "title": "Dec 8, 2026 SCFD Free Day Enjoy free general admission at the DAM thanks to the residents who support SCFD.",
+   "url": "https://www.denverartmuseum.org/en/calendar/free-day-dec-8-2026",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "denver-art-museum-free-days:101",
+   "panel_source": "denver-art-museum-free-days",
+   "monitored_source": false,
+   "title": "Apr 25, 2027 Día del Niño Join us for our annual Día del Niño (Children's Day) festivities, a day to celebrate children across the globe.",
+   "url": "https://www.denverartmuseum.org/en/calendar/dia-del-nino",
+   "date_raw": null,
+   "verified": false
+  },
+  {
+   "id": "denver-art-museum-free-days:102",
+   "panel_source": "denver-art-museum-free-days",
+   "monitored_source": false,
+   "title": "News Hub",
+   "url": "https://www.denverartmuseum.org/en/news-hub",
+   "date_raw": null,
+   "verified": false
+  }
+ ]
+}
