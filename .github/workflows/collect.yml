@@ -17,7 +17,7 @@ on:
     branches-ignore: [main]
     paths: ["ticks/collect-dry"]
 permissions:
-  contents: read
+  contents: write   # 브랜치 시험 실행 결과(reports/dry-run.json, 공개 정보만)를 커밋
 concurrency:
   group: collect-${{ github.ref }}
   cancel-in-progress: false
@@ -53,6 +53,15 @@ jobs:
           [ "$DRY" = "true" ] && args="$args --dry-run"
           [ -n "$MAX" ] && args="$args --max $MAX"
           python collector/run.py $args
+      - name: Commit dry-run report (branch only)
+        if: always() && env.DRY == 'true' && github.ref_name != 'main'
+        run: |
+          [ -f reports/run.json ] || exit 0
+          cp reports/run.json reports/dry-run.json
+          git config user.name "us-alert-collector[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/dry-run.json && git commit -q -m "dry-run report [skip ci]" || exit 0
+          git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -1,0 +1,30 @@
+name: test
+# 모든 push 에서 수집기(pytest)와 Worker(로컬 D1 + 가짜 텔레그램 종단 검사)를 돌린다. 외부로는 아무것도 보내지 않는다.
+on:
+  push:
+    paths-ignore: ["reports/**", "ticks/**", "docs/**", "*.md"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  collector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt pytest==8.3.4
+      - run: python -m pytest -q collector/tests
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
