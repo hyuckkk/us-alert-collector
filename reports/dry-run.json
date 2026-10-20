@@ -1,0 +1,473 @@
+{
+ "run_id": "20261020T055358Z",
+ "today": "2026-10-19",
+ "dry_run": true,
+ "sources": [
+  {
+   "id": "westminster-calendar",
+   "ok": false,
+   "status": 200,
+   "items": 0,
+   "error": "empty body"
+  },
+  {
+   "id": "westminster-news",
+   "ok": false,
+   "status": 200,
+   "items": 0,
+   "error": "empty body"
+  },
+  {
+   "id": "hyland-hills",
+   "ok": true,
+   "status": 200,
+   "items": 0,
+   "error": null
+  },
+  {
+   "id": "butterfly-pavilion",
+   "ok": true,
+   "status": 200,
+   "items": 62,
+   "error": null
+  },
+  {
+   "id": "anythink-events",
+   "ok": false,
+   "status": 403,
+   "items": 0,
+   "error": "HTTP 403"
+  },
+  {
+   "id": "boulder-library",
+   "ok": false,
+   "status": 403,
+   "items": 0,
+   "error": "HTTP 403"
+  },
+  {
+   "id": "adams-county-events",
+   "ok": false,
+   "status": 403,
+   "items": 0,
+   "error": "HTTP 403"
+  },
+  {
+   "id": "cpw-events",
+   "ok": false,
+   "status": 403,
+   "items": 0,
+   "error": "HTTP 403"
+  },
+  {
+   "id": "rmnp-news",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "nps-events",
+   "ok": false,
+   "status": null,
+   "items": 0,
+   "error": "skipped: NPS_API_KEY not set"
+  },
+  {
+   "id": "national-western",
+   "ok": false,
+   "status": 403,
+   "items": 0,
+   "error": "HTTP 403"
+  },
+  {
+   "id": "du-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 284,
+   "error": null
+  },
+  {
+   "id": "space-launches",
+   "ok": true,
+   "status": 200,
+   "items": 20,
+   "error": null
+  }
+ ],
+ "dropped": {
+  "not-relevant": 15,
+  "judge-removed": 0
+ },
+ "events": [
+  {
+   "event_key": "eb85e8cd710e5503",
+   "bot": "family",
+   "title": "Toxic Terrors",
+   "title_ko": "독성 생물 전시 (Toxic Terrors)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 전시 기간 확인 필요",
+   "url": "https://butterflies.org/event/toxic-terrors/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "exhibit",
+    "science",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "eee40fa6827e2ebe",
+   "bot": "family",
+   "title": "Spider Zone",
+   "title_ko": "거미 존 (Spider Zone)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 운영 여부 확인 필요",
+   "url": "https://butterflies.org/event/spider-zone/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "spider",
+    "museum",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "e6bc88776aae6692",
+   "bot": "family",
+   "title": "Sensory-Friendly Afternoon",
+   "title_ko": "감각 친화 오후 관람 (Sensory-Friendly Afternoon)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 다음 일정 확인 필요",
+   "url": "https://butterflies.org/event/sensory-friendly-afternoon-10-21/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "sensory",
+    "museum",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "ebabcb904c0ec06a",
+   "bot": "life",
+   "title": "Mike's Camera Workshop",
+   "title_ko": "마이크의 카메라 워크숍",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 일정과 비용 확인 필요",
+   "url": "https://butterflies.org/event/mikes-camera-workshop/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "photography",
+    "workshop",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "e04e3f7270af7ba5",
+   "bot": "life",
+   "title": "Rainforest Yoga with Kelsey Mueller",
+   "title_ko": "열대우림 요가 (Kelsey Mueller 진행)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 일정과 비용 확인 필요",
+   "url": "https://butterflies.org/event/rainforest-yoga-kelsey-mueller-3/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "yoga",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "e0b7e5524121ef67",
+   "bot": "life",
+   "title": "Toxic Terrors After Dark: Exclusive Tour with Entomologist Cori Brant",
+   "title_ko": "독성 생물 야간 투어 (Cori Brant 곤충학자)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 시즌 행사일 수 있어 일정 확인 필요",
+   "url": "https://butterflies.org/event/toxic-terrors-after-dark-an-exclusive-tour-with-entomologist-cori-brant/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "tour",
+    "entomology",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "e7a79fa02d7d9c5d",
+   "bot": "family",
+   "title": "Family Flashlight Tours: Escape the Pavilion",
+   "title_ko": "가족 손전등 투어 (Escape the Pavilion)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 일정과 예약 확인 필요",
+   "url": "https://butterflies.org/event/family-flashlight-tours-escape-the-pavilion/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "tour",
+    "night",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "ed1e94883e3d8804",
+   "bot": "life",
+   "title": "Adult Flashlight Tours: Escape the Pavilion",
+   "title_ko": "성인 손전등 투어 (Escape the Pavilion)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 정보 없음 — 일정과 예약 확인 필요",
+   "url": "https://butterflies.org/event/adult-flashlight-tours-escape-the-pavilion/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "tour",
+    "night",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "ebccbd5505ba5172",
+   "bot": "family",
+   "title": "Crawl-o-ween",
+   "title_ko": "크롤오윈 행사 (Crawl-o-ween)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 상세 정보 없음, 2026년 기준 페이지로 2027년 일정은 공식 사이트에서 확인 필요",
+   "url": "https://butterflies.org/event/crawl-o-ween/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "halloween",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  },
+  {
+   "event_key": "ee477185a3a0fb0a",
+   "bot": "family",
+   "title": "Family Flashlight Tours: Escape the Pavilion (2)",
+   "title_ko": "가족 손전등 투어 2 (Escape the Pavilion)",
+   "org": "Butterfly Pavilion",
+   "start_date": null,
+   "end_date": null,
+   "time_text": null,
+   "event_tz": null,
+   "location": null,
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "deadline": null,
+   "status_note": "원문 상세 정보 없음, 2026년 기준 페이지로 날짜·요금·예약 여부는 공식 사이트에서 확인 필요",
+   "url": "https://butterflies.org/event/family-flashlight-tours-escape-the-pavilion-2/",
+   "checked_at": "2026-10-20T05:53:58+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "tour",
+    "night",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "butterfly-pavilion",
+   "registration_opens": null
+  }
+ ],
+ "discover": {
+  "dropped_urls": 0,
+  "result_urls": 34,
+  "sources": [],
+  "events": []
+ },
+ "enqueue": {
+  "new": 0,
+  "changed": 0,
+  "same": 0,
+  "outbox": 0,
+  "accepted": 10,
+  "skipped": {},
+  "dry_run": true
+ },
+ "dispatch": {
+  "dry_run": true
+ },
+ "usage": {
+  "claude-opus-5-5": {
+   "input_tokens": 42777,
+   "output_tokens": 2668,
+   "usd": 0.274468,
+   "calls": 3,
+   "searches": 5
+  },
+  "claude-haiku-5-5": {
+   "input_tokens": 10599,
+   "output_tokens": 6626,
+   "usd": 0.0043729,
+   "calls": 3,
+   "searches": 0
+  }
+ },
+ "metrics": {
+  "sources_total": 14,
+  "sources_ok": 6,
+  "queries": 9,
+  "entries_fetched": 493,
+  "entries_new": 25,
+  "entries_seen": 0,
+  "ai_items": 25,
+  "events_out": 10,
+  "outbox": 0,
+  "input_tokens": 53376,
+  "output_tokens": 9294,
+  "usd": 0.2788,
+  "searches": 5,
+  "calls": 6
+ },
+ "alerts": [
+  "정보원 조회 성공률 6/14",
+  "신규 493건 중 25건만 처리(실행당 상한)"
+ ]
+}
