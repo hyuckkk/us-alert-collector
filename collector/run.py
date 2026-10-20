@@ -21,11 +21,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import annual  # noqa: E402
 import rules  # noqa: E402
-from fetch import fetch_source  # noqa: E402
+from fetch import fetch_detail, fetch_source, new_client  # noqa: E402
 from worker_api import WorkerAPI  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 DENVER = ZoneInfo("America/Denver")
+MAX_DETAIL_FETCH = 60  # 실행당 상세 페이지 조회 상한
 THEMES = {  # 설계안 요일별 심층 탐색(월=0)
     0: "kids after-school programs, camps, youth sports and arts/science classes",
     1: "adult hobby and skills classes (crafts, cooking, tech, language exchange, sports leagues)",
@@ -68,6 +69,7 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
 
     # 1) 정보원 목록: 저장소 등록부 + 소유자가 승격한 후보
     sources = [s for s in load("sources.json")["sources"] if s.get("enabled", True)]
+    html_link_sources = set()
     try:
         sources += api.sources_extra()
     except Exception as e:  # noqa: BLE001
@@ -79,6 +81,8 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
     # 2) 무토큰 수집
     entries = []
     for s in due:
+        if s["type"] == "html" and s.get("mode") != "page-change":
+            html_link_sources.add(s["id"])
         r = fetch_source(s, secrets=os.environ)
         m["sources_total"] += 1
         m["sources_ok"] += int(r.ok)
@@ -100,7 +104,8 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
     for e in entries:
         by_key.setdefault(rules.entry_key(e), e)
     m["entries_fetched"] = len(by_key)
-    items = [{"key": k, "hash": rules.entry_hash(e), "source_id": e.source_id} for k, e in by_key.items()]
+    hashes = {k: rules.entry_hash(e) for k, e in by_key.items()}  # 확인할 때의 해시를 표시할 때도 그대로 쓴다
+    items = [{"key": k, "hash": hashes[k], "source_id": e.source_id} for k, e in by_key.items()]
     new, changed = api.seen_check(items)
     fresh_keys = [k for k in by_key if k in new or k in changed]
     m["entries_seen"] = len(by_key) - len(fresh_keys)
@@ -112,6 +117,12 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
         fresh_keys = fresh_keys[:cap]
     fresh = [by_key[k] for k in fresh_keys]
     m["entries_new"] = len(fresh)
+    # html 링크 항목은 상세 페이지 본문을 붙인다(토큰 0)
+    targets = [e for e in fresh if e.source_id in html_link_sources and not e.text][:MAX_DETAIL_FETCH]
+    if targets:
+        with new_client() as hc:
+            m["details_ok"] = sum(fetch_detail(e, hc) for e in targets)
+        m["details_total"] = len(targets)
 
     events: list[dict] = []
     processed: list[str] = []
@@ -132,7 +143,7 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
                 if models["discover"]["enabled"] and args.only is None:
                     known = [s["url"] for s in sources]
                     d = ai.discover(client, models, THEMES[today.weekday()], known, usage)
-                    report["discover"] = {k: d[k] for k in ("dropped_urls", "result_urls")} | {"sources": d["sources"], "events": d["events"]}
+                    report["discover"] = {k: d[k] for k in ("dropped_urls", "result_urls", "raw_text")} | {"theme": THEMES[today.weekday()], "sources": d["sources"], "events": d["events"]}
                     api.candidates([{**s, "bots": s.get("bots") or []} for s in d["sources"]])
                     from fetch import Entry, normalize_url
                     found = {}
@@ -141,7 +152,8 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
                         found.setdefault(rules.entry_key(e), e)
                     found = {k: e for k, e in found.items() if k not in by_key}
                     if found:
-                        n2, c2 = api.seen_check([{"key": k, "hash": rules.entry_hash(e), "source_id": e.source_id} for k, e in found.items()])
+                        hashes.update({k: rules.entry_hash(e) for k, e in found.items()})
+                        n2, c2 = api.seen_check([{"key": k, "hash": hashes[k], "source_id": e.source_id} for k, e in found.items()])
                         for k, e in found.items():
                             if k in n2 or k in c2:
                                 by_key[k] = e
@@ -175,7 +187,7 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
         m["outbox"] = r.get("outbox", 0)
         report["enqueue"] = r
     if processed:
-        api.seen_mark([{"key": k, "hash": rules.entry_hash(by_key[k]), "source_id": by_key[k].source_id} for k in processed])
+        api.seen_mark([{"key": k, "hash": hashes[k], "source_id": by_key[k].source_id} for k in processed])
     report["dispatch"] = api.dispatch()
 
     if usage:

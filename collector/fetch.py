@@ -200,6 +200,30 @@ def parse_html(html: str, source: dict) -> list[Entry]:
     return out
 
 
+# ---------------------------------------------------------------- 상세 페이지
+def fetch_detail(entry: Entry, client: httpx.Client, chars: int = 3000) -> bool:
+    """html 정보원의 새 링크는 링크 글자만 있으므로, 상세 페이지 본문을 가져와 AI 가 날짜·가격·연령을 볼 수 있게 한다(토큰 0)."""
+    try:
+        r = client.get(entry.url)
+        if r.status_code >= 400 or not r.content:
+            entry.extra["detail_error"] = f"HTTP {r.status_code}"
+            return False
+        p = _LinkParser()
+        p.feed(r.content[:MAX_BYTES].decode(r.encoding or "utf-8", errors="replace"))
+        text = clean_text(" ".join(p.text), 20000)
+        # 페이지 앞부분의 메뉴를 건너뛰려고 제목이 처음 나오는 곳부터 자른다
+        i = text.lower().find(entry.title.lower()[:40])
+        entry.text = text[i if i > 0 else 0:][:chars]
+        return True
+    except httpx.HTTPError as e:
+        entry.extra["detail_error"] = type(e).__name__
+        return False
+
+
+def new_client() -> httpx.Client:
+    return httpx.Client(timeout=TIMEOUT, follow_redirects=True, headers={"user-agent": USER_AGENT, "accept-language": "en-US,en;q=0.8"})
+
+
 # ---------------------------------------------------------------- fetch
 def gnews_url(query: str) -> str:
     return "https://news.google.com/rss/search?" + urllib.parse.urlencode({"q": query, "hl": "en-US", "gl": "US", "ceid": "US:en"})
@@ -214,7 +238,7 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
             return FetchResult(False, error=f"skipped: {need} not set")
         url += ("&" if "?" in url else "?") + "api_key=" + urllib.parse.quote(secrets[need])
     own = client is None
-    client = client or httpx.Client(timeout=TIMEOUT, follow_redirects=True, headers={"user-agent": USER_AGENT, "accept-language": "en-US,en;q=0.8"})
+    client = client or new_client()
     try:
         r = client.get(url)
         body = r.content[:MAX_BYTES]

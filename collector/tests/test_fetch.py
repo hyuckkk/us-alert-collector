@@ -1,6 +1,6 @@
 import httpx
 
-from fetch import EVENTISH, fetch_source, gnews_url, normalize_url, parse_feed, parse_html, parse_ical, parse_json
+from fetch import EVENTISH, Entry, fetch_detail, fetch_source, gnews_url, normalize_url, parse_feed, parse_html, parse_ical, parse_json
 
 
 def test_normalize_strips_tracking_and_fragment():
@@ -72,3 +72,12 @@ def test_secret_required_source_is_skipped_without_key_and_key_not_in_result():
 
 def test_gnews_url():
     assert gnews_url("kids camp").startswith("https://news.google.com/rss/search?q=kids+camp&hl=en-US")
+
+
+def test_fetch_detail_skips_menu_before_title():
+    html = b"<nav>Home Visit Shop</nav><h1>Kids Clay Workshop</h1><p>July 10, 2027 - Ages 6-10 - $20</p><script>x</script>"
+    e = Entry("b", "https://b.org/events/clay", "Kids Clay Workshop")
+    assert fetch_detail(e, _client(lambda req: httpx.Response(200, content=html))) is True
+    assert e.text.startswith("Kids Clay Workshop") and "Ages 6-10" in e.text and "Shop" not in e.text
+    e2 = Entry("b", "https://b.org/x", "X")
+    assert fetch_detail(e2, _client(lambda req: httpx.Response(404))) is False and e2.extra["detail_error"] == "HTTP 404"

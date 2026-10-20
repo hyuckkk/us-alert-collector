@@ -18,6 +18,10 @@ def world(monkeypatch):
             return FetchResult(True, 200, entries=[Entry(src["id"], "https://butterflies.org/events/clay", "Kids Clay Workshop")])
         return FetchResult(False, 403, error="HTTP 403")
     monkeypatch.setattr(run, "fetch_source", fake_fetch)
+    def fake_detail(entry, client, chars=3000):
+        entry.text = "Kids Clay Workshop Saturday July 10, 2027 10am-noon. Ages 6-10. $20. Limited spots."
+        return True
+    monkeypatch.setattr(run, "fetch_detail", fake_detail)
     monkeypatch.setattr(run, "is_due", lambda s, today: True)
     real = run.load
     def load(name):
@@ -61,3 +65,14 @@ def test_budget_exceeded_skips_ai_and_does_not_mark_seen(world):
     assert c.messages.calls == []
     assert any("예산" in a for a in rep["alerts"])
     assert "seen_mark" not in [n for n, _ in api.log]
+
+
+def test_detail_text_reaches_ai_but_seen_hash_stays_the_one_checked(world):
+    api = FakeAPI()
+    c = FakeClient([extract_reply])
+    run.main([], client=c, api=api)
+    assert "Ages 6-10" in c.messages.calls[0]["messages"][0]["content"]
+    log = dict(api.log)
+    checked = {x["key"]: x["hash"] for x in log["seen_check"][0]}
+    marked = {x["key"]: x["hash"] for x in log["seen_mark"][0]}
+    assert marked and all(checked[k] == h for k, h in marked.items())

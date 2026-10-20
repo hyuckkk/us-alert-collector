@@ -270,4 +270,5 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage) -> d
     raw_s, raw_e = data.get("sources") or [], data.get("events") or []
     sources = [s for s in raw_s if isinstance(s, dict) and ok(s.get("url"))]
     events = [e for e in raw_e if isinstance(e, dict) and ok(e.get("url"))]
-    return {"sources": sources, "events": events, "dropped_urls": len(raw_s) + len(raw_e) - len(sources) - len(events), "result_urls": len(seen_urls)}
+    return {"sources": sources, "events": events, "dropped_urls": len(raw_s) + len(raw_e) - len(sources) - len(events),
+            "result_urls": len(seen_urls), "raw_text": text[-1500:]}
