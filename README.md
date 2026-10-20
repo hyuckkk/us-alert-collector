@@ -17,7 +17,7 @@
 - 만료일 알림: `/expiry <이름> <YYYY-MM-DD>` 로 등록 → 14·7·3·1·0일 전에 @ColoradoLife_bot DM
 - API 키 점검: 매일 `key-check` 워크플로(토큰 0) → 키가 거부되면 DM. 같은 워크플로가 만료일 점검도 실행(Cloudflare 무료 cron 한도는 한국 Worker 가 사용 중)
 
-설치·비밀값 입력: [docs/SETUP-0.md](docs/SETUP-0.md) · 구조: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · 1차 검증 자료: [docs/REVIEW-1.md](docs/REVIEW-1.md) · 2차 검증 자료: [docs/REVIEW-2.md](docs/REVIEW-2.md)
+설치·비밀값 입력: [docs/SETUP-0.md](docs/SETUP-0.md) · 구조: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · 1차 검증 자료: [docs/REVIEW-1.md](docs/REVIEW-1.md) · 2차 검증 자료: [docs/REVIEW-2.md](docs/REVIEW-2.md) · 3차 검증 자료: [docs/REVIEW-3.md](docs/REVIEW-3.md)
 
 ## 1단계 (브랜치 `stage1-review`, 운영 미반영)
 수집(A)·발굴(B)·AI 추출/판단·규칙 처리·사람별 대기열·주간 요약·측정. 지인 발송은 `DELIVERY_MODE=owner-only` 로 잠겨 있다.
