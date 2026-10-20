@@ -93,10 +93,15 @@ def test_unexpected_payload_shape_is_an_error_not_a_crash():
 
 
 def test_probe_runs_with_current_config(monkeypatch, tmp_path):
+    """시험 조회가 현재 설정 형식(분야별 검색어)으로 끝까지 도는지. 결과는 임시 폴더에만 쓴다."""
+    import shutil
+
     import probe
     from fetch import FetchResult
+    (tmp_path / "config").mkdir()
+    for n in ("sources.json", "queries.json"):
+        shutil.copy(probe.ROOT / "config" / n, tmp_path / "config" / n)
+    monkeypatch.setattr(probe, "ROOT", tmp_path)
     monkeypatch.setattr(probe, "fetch_source", lambda s, **k: FetchResult(False, 403, error="HTTP 403"))
-    monkeypatch.setattr(probe, "ROOT", probe.ROOT)
-    out = tmp_path / "reports"
-    monkeypatch.setattr(probe.Path, "mkdir", lambda self, **k: None) if False else None
     assert probe.main() == 0
+    assert (tmp_path / "reports/probe.json").exists()
