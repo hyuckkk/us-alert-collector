@@ -1,5 +1,5 @@
 {
- "at": "2026-10-20T05:38:32+00:00",
+ "at": "2026-10-20T05:50:53+00:00",
  "user_agent": "Mozilla/5.0 (compatible; us-alert-collector/1.0; +https://github.com/hyuckkk/us-alert-collector)",
  "sources": [
   {
@@ -7,13 +7,14 @@
    "type": "rss",
    "url": "https://www.cityofwestminster.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
    "ok": false,
-   "status": null,
-   "content_type": "",
+   "status": 200,
+   "content_type": "text/xml",
    "bytes": 0,
    "items": 0,
-   "error": "ParseError: no element found: line 1, column 0",
+   "error": "empty body",
    "seconds": 0.7,
    "sample_titles": [],
+   "sample_urls": [],
    "snippet": ""
   },
   {
@@ -21,28 +22,30 @@
    "type": "rss",
    "url": "https://www.cityofwestminster.us/RSSFeed.aspx?ModID=1&CID=All-newsflash.xml",
    "ok": false,
-   "status": null,
-   "content_type": "",
+   "status": 200,
+   "content_type": "text/xml",
    "bytes": 0,
    "items": 0,
-   "error": "ParseError: no element found: line 1, column 0",
-   "seconds": 0.6,
+   "error": "empty body",
+   "seconds": 0.7,
    "sample_titles": [],
+   "sample_urls": [],
    "snippet": ""
   },
   {
    "id": "hyland-hills",
    "type": "html",
    "url": "https://www.hylandhills.org/",
-   "ok": false,
-   "status": null,
-   "content_type": "",
-   "bytes": 0,
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 211842,
    "items": 0,
-   "error": "ConnectTimeout: timed out",
-   "seconds": 25.0,
+   "error": null,
+   "seconds": 2.9,
    "sample_titles": [],
-   "snippet": ""
+   "sample_urls": [],
+   "snippet": "Home - Hyland Hills Park &amp; Recreation District {\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/www.hylandhills.gov\\/\",\"url\":\"https:\\/\\/www.hylandhills.gov\\/\",\"name\":\"Home - Hyland Hills Park &amp; Recreation District\",\"isPartOf\":{\"@id\":\"https:\\/\\/www.hylandhills.gov\\/#website\"},\"datePublished\":\"2022-02-10T16:02:25+00:00\",\"dateModified\":\"2026-10-16T18:10:29+00:00\",\"description\":\"Hyland Hills Parks & Recreation serves 24 square miles in northern Denver including Federal Heights and parts of Westminster, Arvada, Thornton, and Northglenn.\",\"breadcrumb\":{\"@id\":\""
   },
   {
    "id": "butterfly-pavilion",
@@ -52,13 +55,23 @@
    "status": 200,
    "content_type": "text/html",
    "bytes": 154322,
-   "items": 92,
+   "items": 62,
    "error": null,
-   "seconds": 0.3,
+   "seconds": 0.4,
    "sample_titles": [
-    "Plan Your Visit",
-    "Hours & Admission",
-    "Accessibility"
+    "Exhibits & Animals",
+    "Newsroom",
+    "Learn More"
+   ],
+   "sample_urls": [
+    "https://butterflies.org/exhibits-and-animals/",
+    "https://butterflies.org/newsroom/",
+    "https://butterflies.org/event/toxic-terrors/",
+    "https://butterflies.org/event/spider-zone/",
+    "https://butterflies.org/event/sensory-friendly-afternoon-10-21/",
+    "https://butterflies.org/event/mikes-camera-workshop/",
+    "https://butterflies.org/event/rainforest-yoga-kelsey-mueller-3/",
+    "https://butterflies.org/event/toxic-terrors-after-dark-an-exclusive-tour-with-entomologist-cori-brant/"
    ],
    "snippet": "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-5HBNVMW'); (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, \"clarity\", \"script"
   },
@@ -72,8 +85,9 @@
    "bytes": 560,
    "items": 0,
    "error": "HTTP 403",
-   "seconds": 0.4,
+   "seconds": 0.3,
    "sample_titles": [],
+   "sample_urls": [],
    "snippet": "403 - Forbidden 403 Forbidden The page could not be loaded properly."
   },
   {
@@ -86,8 +100,9 @@
    "bytes": 99,
    "items": 0,
    "error": "HTTP 404",
-   "seconds": 0.2,
+   "seconds": 0.3,
    "sample_titles": [],
+   "sample_urls": [],
    "snippet": "{\"error\":{\"message\":\"Assets for denverlibrary was not found\",\"classification\":\"SiteNotFoundError\"}}"
   },
   {
@@ -100,9 +115,10 @@
    "bytes": 5653,
    "items": 0,
    "error": "HTTP 403",
-   "seconds": 0.2,
+   "seconds": 0.1,
    "sample_titles": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '9uiBGvsLM6yH1MKjJo.p3MVREjFdh9hPWEM7fX"
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'C1qKK09ilfYtjJTChZtbfQCZbJszr9xiXuOv0r"
   },
   {
    "id": "adams-county-events",
@@ -114,9 +130,10 @@
    "bytes": 5670,
    "items": 0,
    "error": "HTTP 403",
-   "seconds": 0.1,
+   "seconds": 0.4,
    "sample_titles": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'mKYOPbhB4YumfAQZSXPe.8i_JCqz11VQG9jjae"
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '2caB4DgVb7M.7azcu03prASxdlO7no5kETexBL"
   },
   {
    "id": "dmns-events",
@@ -125,11 +142,12 @@
    "ok": false,
    "status": 404,
    "content_type": "text/html",
-   "bytes": 93314,
+   "bytes": 93294,
    "items": 0,
    "error": "HTTP 404",
-   "seconds": 0.5,
+   "seconds": 1.0,
    "sample_titles": [],
+   "sample_urls": [],
    "snippet": "404 | Denver Museum of Nature &amp; Science (function(w,d,s,l,i){ var allowed = ['www.dmns.org']; //console.log(\"Google Tag Location: \" + w.location.hostname + \" Allowed URI is: \" + allowed); if (allowed.indexOf(w.location.hostname) === -1) return; w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-N4RDNZ9'); and tags on every page of your"
   },
   {
@@ -142,9 +160,10 @@
    "bytes": 5648,
    "items": 0,
    "error": "HTTP 403",
-   "seconds": 0.3,
+   "seconds": 0.4,
    "sample_titles": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'T9QdzBlLQrI9.L4PwejVjYXkMBSR5ePVLkCKdL"
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '4MDINOUIZx0nVE6DJlIPcgxmUB6rbAGVFOk30A"
   },
   {
    "id": "childrens-museum",
@@ -154,13 +173,16 @@
    "status": 200,
    "content_type": "text/html",
    "bytes": 23643,
-   "items": 23,
+   "items": 2,
    "error": null,
-   "seconds": 0.7,
+   "seconds": 1.1,
    "sample_titles": [
     "exhibits",
-    "museum guest expectations",
-    "babies at the museum"
+    "camps & workshops"
+   ],
+   "sample_urls": [
+    "https://www.mychildsmuseum.org/exhibits",
+    "https://www.mychildsmuseum.org/whats-happening/camps-workshops"
    ],
    "snippet": "Events .gradient { filter: none; } .ie-msg { display: block;width:100%;height:100%;top: 0; z-index: 9999;background-color:white; margin:0 auto;margin-top:40px; width:60%;} .ie-content{ margin: 0 auto} .outer-container{display:none;} h3{color:#007d85;margin-top:30px; margin-bottom:5px; font-weight:400;} h2{font-size:28px;color:#595d5f;text-transform:lowercase;font-weight:normal;} p{margin-bottom:10px;#595d5f;font-weight:400;} (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElements"
   },
@@ -176,7 +198,8 @@
    "error": "HTTP 403",
    "seconds": 0.2,
    "sample_titles": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'siCI80AnZG6t6mcAvVuhbIF5K.KkPWxzOyVsZ9"
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'RkLfh_8mddjYuUIt6ZLqx5JSPuFL9luxGrM6eX"
   },
   {
    "id": "rmnp-news",
@@ -186,13 +209,14 @@
    "status": 200,
    "content_type": "text/html",
    "bytes": 40627,
-   "items": 9,
+   "items": 1,
    "error": null,
-   "seconds": 0.0,
+   "seconds": 0.1,
    "sample_titles": [
-    "National Park Service",
-    "Rocky Mountain National Park",
     "Calendar"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/planyourvisit/calendar.htm"
    ],
    "snippet": "News Releases - Rocky Mountain National Park (U.S. National Park Service) var jsDlgLoader = '/romo/learn/news/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; var jsDlgLoader = '/romo/learn/news/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; --> table#cs_idLayout2, table#cs_idLayout2 > tbody, table#cs_idLayout2 > tbody > tr, table#cs_idLayout2 > tbody > tr > td { display: block; border-collapse:separate; } An official website of"
   },
@@ -210,6 +234,9 @@
    "sample_titles": [
     "Rocky Mountain NP timed entry page"
    ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm"
+   ],
    "snippet": "Timed Entry Permit System - Rocky Mountain National Park (U.S. National Park Service) var jsDlgLoader = '/romo/planyourvisit/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; var jsDlgLoader = '/romo/planyourvisit/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; --> table#cs_idLayout2, table#cs_idLayout2 > tbody, table#cs_idLayout2 > tbody > tr, table#cs_idLayout2 > tbody > tr > td { display: block; border-collapse:separate; } An o"
   },
   {
@@ -224,6 +251,7 @@
    "error": "skipped: NPS_API_KEY not set",
    "seconds": 0.0,
    "sample_titles": [],
+   "sample_urls": [],
    "snippet": ""
   },
   {
@@ -234,13 +262,23 @@
    "status": 200,
    "content_type": "text/html",
    "bytes": 191973,
-   "items": 95,
+   "items": 18,
    "error": null,
    "seconds": 0.7,
    "sample_titles": [
-    "Go to home page",
-    "Virtual Tour",
-    "Graduates"
+    "Apply Today",
+    "USAFA Family Movie: The Nightmare Before Christmas on Thurs, Oct 29 @ 6 p.m.",
+    "Homeschool Program: The Outer Solar System Fri, Oct 30 @ 10:30 a.m."
+   ],
+   "sample_urls": [
+    "https://www.usafa.edu/admissions/register/pre-candidate-questionnaire/",
+    "https://www.usafa.edu/event-single/nightmare-before/",
+    "https://www.usafa.edu/event-single/homeschool-oct-30/",
+    "https://www.usafa.edu/event-single/hocus-pocus/",
+    "https://www.usafa.edu/event-single/usafa-vs-uconn/",
+    "https://www.usafa.edu/event-single/homeschool-nov-9/",
+    "https://www.usafa.edu/event-single/usafa-vs-san-jose-state/",
+    "https://www.usafa.edu/event-single/homeschool-nov-18/"
    ],
    "snippet": "Events from Thursday, October 29 &#8211; Sunday, December 6 • United States Air Force Academy (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M8JHPHR'); var tag = document.createElement('script'); tag.src = \"https://www.youtube.com/iframe_api\"; var firstScriptTag = document.getElementsByTagName('script')[0]; firstSc"
   },
@@ -256,7 +294,8 @@
    "error": "HTTP 403",
    "seconds": 0.3,
    "sample_titles": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'LIrmtQoO_dCuDwac5DmiNrVu_S2zfq4UeZgoTj"
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'Yzxb.AEWgOZALDdh6QK9d.oHZi1o4KfAwRDxBK"
   },
   {
    "id": "ncar-visit",
@@ -270,6 +309,7 @@
    "error": "HTTP 403",
    "seconds": 0.2,
    "sample_titles": [],
+   "sample_urls": [],
    "snippet": "403 - Forbidden 403 Forbidden The page could not be loaded properly."
   },
   {
@@ -282,9 +322,10 @@
    "bytes": 5633,
    "items": 0,
    "error": "HTTP 403",
-   "seconds": 0.1,
+   "seconds": 0.2,
    "sample_titles": [],
-   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'rQSjyMPiuGal22TAccxwk7QxwzeMFI7.2lObHN"
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '3uEsuVxuWlDyfj658xWDBSrD3RWbDHaepa25wt"
   },
   {
    "id": "du-athletics-ics",
@@ -296,13 +337,23 @@
    "bytes": 141544,
    "items": 284,
    "error": null,
-   "seconds": 0.4,
+   "seconds": 0.6,
    "sample_titles": [
     "[N] University of Denver Men's Golf at Round 1",
     "[N] University of Denver Men's Golf at Round 2",
     "[N] University of Denver Men's Golf at Round 3"
    ],
-   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:University of Denver Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_16140-admin.denverpioneers.com DTSTAMP:20261020T053903Z DTSTART;VALUE=DATE:20260919 DTEND;VALUE=DATE:20260920 LOCATION:Colorado Springs\\, Colo. SUMMARY:[N] University of Denver Men's Golf at Round 1 DESCRIPTION:[N] University of Denver Men's Golf at Round 1\\n T3/18\\n URL:https://admin.denverpioneers.com/calendar.aspx?game_id=16140&amp;sport_id=3 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_16141-admin.denverpioneers.com DTSTAMP:202610"
+   "sample_urls": [
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16140&amp%3Bsport_id=3",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16141&amp%3Bsport_id=3",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16142&amp%3Bsport_id=3",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16185&amp%3Bsport_id=11",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16186&amp%3Bsport_id=11",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16055&amp%3Bsport_id=7",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16187&amp%3Bsport_id=11",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16078&amp%3Bsport_id=18"
+   ],
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:University of Denver Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_16140-admin.denverpioneers.com DTSTAMP:20261020T055103Z DTSTART;VALUE=DATE:20260919 DTEND;VALUE=DATE:20260920 LOCATION:Colorado Springs\\, Colo. SUMMARY:[N] University of Denver Men's Golf at Round 1 DESCRIPTION:[N] University of Denver Men's Golf at Round 1\\n T3/18\\n URL:https://admin.denverpioneers.com/calendar.aspx?game_id=16140&amp;sport_id=3 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_16141-admin.denverpioneers.com DTSTAMP:202610"
   },
   {
    "id": "space-launches",
@@ -314,11 +365,21 @@
    "bytes": 22930,
    "items": 20,
    "error": null,
-   "seconds": 0.4,
+   "seconds": 0.3,
    "sample_titles": [
     "H3-24 | Martian Moons eXploration (MMX)",
     "Falcon 9 Block 5 | Bandwagon 5 (Dedicated Mid-Inclination Rideshare)",
     "Falcon 9 Block 5 | Starlink Group 15-15"
+   ],
+   "sample_urls": [
+    "https://ll.thespacedevs.com/2.3.0/launches/69ebbcd2-b257-4070-9ef9-21e7d1f8a883/",
+    "https://ll.thespacedevs.com/2.3.0/launches/3b430f81-0ff1-4d85-8a1a-cef0de326198/",
+    "https://ll.thespacedevs.com/2.3.0/launches/f6af629d-39b5-4f86-bc0c-f8776444a858/",
+    "https://ll.thespacedevs.com/2.3.0/launches/c6f8b6b0-6bae-460a-99bb-c12a3d29effd/",
+    "https://ll.thespacedevs.com/2.3.0/launches/7766f3bb-674c-4c71-b986-963bd633fcfe/",
+    "https://ll.thespacedevs.com/2.3.0/launches/6b95bcc8-1f88-4539-84fe-f63630138766/",
+    "https://ll.thespacedevs.com/2.3.0/launches/9648124f-8568-46d2-86d7-4b4d6f12187f/",
+    "https://ll.thespacedevs.com/2.3.0/launches/3621085f-deae-4f89-bd54-c0f96ee44421/"
    ],
    "snippet": "{\"count\":478,\"next\":\"https://ll.thespacedevs.com/2.3.0/launches/upcoming/?limit=20&mode=list&offset=20\",\"previous\":null,\"results\":[{\"id\":\"69ebbcd2-b257-4070-9ef9-21e7d1f8a883\",\"url\":\"https://ll.thespacedevs.com/2.3.0/launches/69ebbcd2-b257-4070-9ef9-21e7d1f8a883/\",\"name\":\"H3-24 | Martian Moons eXploration (MMX)\",\"response_mode\":\"list\",\"slug\":\"h3-24-martian-moons-exploration-mmx\",\"launch_designator\":null,\"status\":{\"id\":3,\"name\":\"Launch Successful\",\"abbrev\":\"Success\",\"description\":\"The launch vehicle successfully inserted its payload(s) into the target orbit(s).\"},\"last_updated\":\"2026-10-19T23:0"
   }
