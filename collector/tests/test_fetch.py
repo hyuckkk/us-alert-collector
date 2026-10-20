@@ -112,3 +112,15 @@ def test_include_exclude_title_filter():
     src = {"id": "du", "type": "ical", "url": "https://d.com/c.ics", "include": "hockey", "exclude": r"^\[A\]"}
     r = fetch_source(src, client=_client(lambda req: httpx.Response(200, text=ics)))
     assert [e.title for e in r.entries] == ["[H] Denver Hockey vs CU"] and r.filtered == 2
+
+
+def test_timeout_is_retried_once():
+    calls = {"n": 0}
+
+    def h(req):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise httpx.ConnectTimeout("slow", request=req)
+        return httpx.Response(200, text="<rss><channel><item><title>Ok event</title><link>https://x.org/a</link></item></channel></rss>")
+    r = fetch_source({"id": "x", "type": "rss", "url": "https://x.org/f"}, client=_client(h))
+    assert r.ok and calls["n"] == 2 and r.entries[0].title == "Ok event"

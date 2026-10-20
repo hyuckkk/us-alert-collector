@@ -268,7 +268,10 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
     own = client is None
     client = client or new_client()
     try:
-        r = client.get(url)
+        try:
+            r = client.get(url)
+        except httpx.TimeoutException:
+            r = client.get(url)  # 시간 초과는 한 번만 다시 시도(같은 공식 정보원이 가끔 느림)
         body = r.content[:MAX_BYTES]
         ctype = r.headers.get("content-type", "").split(";")[0]
         res = FetchResult(r.status_code < 400, r.status_code, ctype, len(r.content))
