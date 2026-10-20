@@ -5,32 +5,33 @@
  * 봇·비밀값·저장소·DB 를 하나도 공유하지 않는다.
  *
  * 비밀값 (GitHub 비밀값에서 deploy-worker 워크플로가 Worker 비밀값으로 복사한다):
- *   BOT_TOKEN_LIFE   @ColoradoLife_bot   (성인)
- *   BOT_TOKEN_FAMILY @ColoradoFamily_bot (가족)
- *   BOT_TOKEN_KIDS   @ColoradoKids_bot   (어린이)
- *   OWNER_CHAT_ID    소유자 텔레그램 숫자 ID
- *   ADMIN_KEY        GitHub Actions → Worker 호출용. Cloudflare 토큰에서 자동 파생 (웹훅 비밀값도 여기서 파생)
- * 일반 변수(wrangler.toml [vars]): TG_API, SYSTEM_BOT, OWNER_TZ
+ *   BOT_TOKEN_LIFE / BOT_TOKEN_FAMILY / BOT_TOKEN_KIDS, OWNER_CHAT_ID,
+ *   ADMIN_KEY (Cloudflare 토큰에서 자동 파생. 웹훅 비밀값도 여기서 파생)
+ * 일반 변수(wrangler.toml [vars]): TG_API, SYSTEM_BOT, OWNER_TZ, FAMILY_AVAILABLE_FROM, DELIVERY_MODE
  *
- * 경로
- *   POST /hook/<bot>          텔레그램 웹훅 (X-Telegram-Bot-Api-Secret-Token 검사)
- *   POST /admin/setup         웹훅·명령 메뉴 등록           (Authorization: Bearer ADMIN_KEY)
- *   POST /admin/test-send     소유자 DM 으로 봇별 테스트 발송
- *   GET  /admin/clicks        최근 버튼 클릭 기록
- *   GET  /admin/status        요약 상태
- *   POST /admin/expiry        {"name","expires_on","note"} 만료일 등록
- *   POST /admin/key-check     GitHub Actions 의 API 키 점검 결과 수신
- *   GET  /health              공개 상태 (빌드명만)
- * 매일 점검(만료 임박 알림, 웹훅 주소 점검)은 GitHub Actions key-check 가 /admin/run-cron 으로 부른다
- * (Cloudflare 무료 요금제 cron 5개를 한국 Worker 가 모두 사용). scheduled() 는 유료 전환 시를 위해 남겨 둔다.
+ * 경로 (관리 경로는 Authorization: Bearer ADMIN_KEY)
+ *   POST /hook/<bot>            텔레그램 웹훅
+ *   POST /admin/setup           웹훅·명령 메뉴 등록
+ *   POST /admin/test-send       소유자 DM 테스트 발송
+ *   GET  /admin/clicks|status   점검
+ *   POST /admin/expiry|key-check|run-cron   만료일·키 점검·매일 점검
+ *   POST /admin/seen            {op: check|mark, items:[{key,hash,source_id}]}  수집기의 '이미 본 항목'
+ *   POST /admin/enqueue         {events:[...]}  판정 결과 → 사람별 대기열
+ *   POST /admin/dispatch        즉시·예고 알림 발송(정지 시간대는 미룸)
+ *   POST /admin/digest          주간 요약(각자 토요일 9시 이후)
+ *   POST /admin/run-log         실행 기록(측정 항목)
+ *   GET|POST /admin/usage       월별 AI 사용량
+ *   POST /admin/candidates      정보원 후보 → 2회 이상이면 소유자에게 승격 여부 질문
+ *   GET  /admin/sources-extra   승격된 정보원
+ *   POST /admin/report          주간 보고를 소유자 DM 으로
+ *   GET  /health
+ * 1차 검증 전에는 DELIVERY_MODE=owner-only 로 소유자 외에는 아무에게도 보내지 않는다.
  */
 
-const BUILD = "us-0.1.0";
-const BOTS = {
-  life: { label: "성인 활동", handle: "@ColoradoLife_bot", secret: "BOT_TOKEN_LIFE" },
-  family: { label: "가족 활동", handle: "@ColoradoFamily_bot", secret: "BOT_TOKEN_FAMILY" },
-  kids: { label: "어린이 활동", handle: "@ColoradoKids_bot", secret: "BOT_TOKEN_KIDS" },
-};
+import { BUILD, BOTS, botToken, isOwner, nowIso, json, tg, kvGet, kvSet, claimNotice, notifyOwner, localStamp, localDate, daysBetween, ensurePerson, getPerson, validTz, ownerOnly } from "./common.js";
+import { keyboard, rebuildKeyboard } from "./render.js";
+import * as pipeline from "./pipeline.js";
+
 // 만료 알림 시점: 남은 일수가 이 값 이하로 처음 내려갈 때 1회씩 (하루 실행을 놓쳐도 다음 날 보냄)
 const EXPIRY_STEPS = [14, 7, 3, 1, 0];
 const ACTIONS = {
@@ -41,40 +42,6 @@ const ACTIONS = {
   unmute: { state: null, tip: "↩️ 관심없음을 취소했습니다." },
   untag: { tip: "↩️ 태그 차단을 풀었습니다." },
 };
-
-// ---------------------------------------------------------------- 공통
-function botToken(env, bot) { return env[BOTS[bot].secret]; }
-function isOwner(env, id) { return !!env.OWNER_CHAT_ID && String(id) === String(env.OWNER_CHAT_ID); }
-function nowIso() { return new Date().toISOString(); }
-function json(body, status = 200) {
-  return new Response(JSON.stringify(body, null, 2), { status, headers: { "content-type": "application/json; charset=utf-8" } });
-}
-
-function localStamp(env, d = new Date()) {
-  const tz = env.OWNER_TZ || "Asia/Seoul";
-  const s = new Intl.DateTimeFormat("sv-SE", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).format(d);
-  return `${s} (${tz})`;
-}
-function localDate(env, d = new Date()) {
-  return new Intl.DateTimeFormat("sv-SE", { timeZone: env.OWNER_TZ || "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
-}
-function daysBetween(fromYmd, toYmd) {
-  return Math.round((Date.parse(toYmd + "T00:00:00Z") - Date.parse(fromYmd + "T00:00:00Z")) / 86400000);
-}
-
-async function tg(env, bot, method, payload) {
-  const tok = botToken(env, bot);
-  if (!tok) return { ok: false, description: `${BOTS[bot].secret} not set` };
-  const base = env.TG_API || "https://api.telegram.org";
-  try {
-    const r = await fetch(`${base}/bot${tok}/${method}`, {
-      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload || {}),
-    });
-    try { return await r.json(); } catch { return { ok: false, description: `HTTP ${r.status}` }; }
-  } catch (e) {
-    return { ok: false, description: String(e && e.message).slice(0, 200) };
-  }
-}
 
 async function hookSecret(env) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`us-hook:${env.ADMIN_KEY}`));
@@ -91,35 +58,6 @@ function isAdmin(env, request) {
   return !!env.ADMIN_KEY && timingSafeEqual(h, `Bearer ${env.ADMIN_KEY}`);
 }
 
-async function kvGet(env, k) {
-  const r = await env.DB.prepare("SELECT v FROM kv WHERE k = ?").bind(k).first();
-  return r ? r.v : null;
-}
-async function kvSet(env, k, v) {
-  await env.DB.prepare("INSERT INTO kv (k, v, updated_at) VALUES (?, ?, ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v, updated_at = excluded.updated_at")
-    .bind(k, typeof v === "string" ? v : JSON.stringify(v), nowIso()).run();
-}
-// 같은 key 로는 한 번만 true. 시스템 알림 중복 방지용.
-async function claimNotice(env, key) {
-  const r = await env.DB.prepare("INSERT INTO notices (key, sent_at) VALUES (?, ?) ON CONFLICT(key) DO NOTHING").bind(key, nowIso()).run();
-  return r.meta.changes === 1;
-}
-async function notifyOwner(env, text) {
-  if (!env.OWNER_CHAT_ID) return { ok: false, description: "OWNER_CHAT_ID not set" };
-  return tg(env, env.SYSTEM_BOT || "life", "sendMessage", { chat_id: env.OWNER_CHAT_ID, text, disable_web_page_preview: true });
-}
-
-// ---------------------------------------------------------------- 버튼
-function keyboard(itemKey, st) {
-  const b = (on, text, onAction, offAction) => ({ text: on ? `${text} ✓` : text, callback_data: `${on ? offAction : onAction}:${itemKey}` });
-  return {
-    inline_keyboard: [[
-      b(st.state === "ACKNOWLEDGED", "✅ 확인", "ack", "unack"),
-      b(st.state === "MUTED", "🚫 관심없음", "mute", "unmute"),
-      b(st.tagMuted, "🔕 이 태그 그만", "tag", "untag"),
-    ]],
-  };
-}
 async function itemStateFor(env, chatId, itemKey) {
   const s = await env.DB.prepare("SELECT state FROM item_state WHERE chat_id = ? AND item_key = ?").bind(String(chatId), itemKey).first();
   const item = await env.DB.prepare("SELECT tag FROM items WHERE item_key = ?").bind(itemKey).first();
@@ -130,19 +68,10 @@ async function itemStateFor(env, chatId, itemKey) {
   return { state: s ? s.state : null, tag: item ? item.tag : null, tagMuted };
 }
 
-// ---------------------------------------------------------------- 발송
-async function sendItem(env, bot, chatId, item) {
-  const st = await itemStateFor(env, chatId, item.item_key);
-  const d = await tg(env, bot, "sendMessage", { chat_id: chatId, text: item.text, disable_web_page_preview: true, reply_markup: keyboard(item.item_key, st) });
-  const msgId = d.ok && d.result ? d.result.message_id : null;
-  await env.DB.prepare("INSERT INTO deliveries (bot, chat_id, item_key, message_id, ok, error, sent_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
-    .bind(bot, String(chatId), item.item_key, msgId, d.ok ? 1 : 0, d.ok ? null : String(d.description || "").slice(0, 300), nowIso()).run();
-  return { bot, ok: !!d.ok, message_id: msgId, error: d.ok ? undefined : d.description };
-}
-
+// ---------------------------------------------------------------- 테스트 발송
 async function testSend(env, bots) {
   if (!env.OWNER_CHAT_ID) return { ok: false, error: "OWNER_CHAT_ID not set" };
-  const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 13); // 20261020T0905
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 13);
   const out = [];
   for (const bot of bots) {
     const itemKey = `test:${bot}:${stamp}`;
@@ -155,7 +84,12 @@ async function testSend(env, bots) {
     ].join("\n");
     await env.DB.prepare("INSERT INTO items (item_key, bot, title, tag, url, created_at) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(item_key) DO NOTHING")
       .bind(itemKey, bot, "테스트 행사", "test", null, nowIso()).run();
-    out.push(await sendItem(env, bot, env.OWNER_CHAT_ID, { item_key: itemKey, text }));
+    const st = await itemStateFor(env, env.OWNER_CHAT_ID, itemKey);
+    const d = await tg(env, bot, "sendMessage", { chat_id: env.OWNER_CHAT_ID, text, disable_web_page_preview: true, reply_markup: keyboard(itemKey, st) });
+    const msgId = d.ok && d.result ? d.result.message_id : null;
+    await env.DB.prepare("INSERT INTO deliveries (bot, chat_id, item_key, message_id, ok, error, sent_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind(bot, String(env.OWNER_CHAT_ID), itemKey, msgId, d.ok ? 1 : 0, d.ok ? null : String(d.description || "").slice(0, 300), nowIso()).run();
+    out.push({ bot, ok: !!d.ok, message_id: msgId, error: d.ok ? undefined : d.description });
   }
   return { ok: out.every((r) => r.ok), results: out };
 }
@@ -167,18 +101,30 @@ async function isActiveRecipient(env, bot, id) {
   return !!r && r.status === "active";
 }
 
+async function handleCandidateCallback(env, bot, cq, action, id) {
+  const from = String((cq.from && cq.from.id) || "");
+  if (!isOwner(env, from)) { await tg(env, bot, "answerCallbackQuery", { callback_query_id: cq.id, text: "권한이 없습니다." }); return; }
+  const c = await pipeline.decideCandidate(env, id, action === "cpro");
+  await tg(env, bot, "answerCallbackQuery", { callback_query_id: cq.id, text: !c ? "후보를 찾지 못했습니다." : action === "cpro" ? "감시 목록에 추가했습니다. 다음 수집부터 확인합니다." : "무시했습니다." });
+  const msg = cq.message || {};
+  if (c && msg.message_id) {
+    await tg(env, bot, "editMessageReplyMarkup", { chat_id: msg.chat.id, message_id: msg.message_id, reply_markup: { inline_keyboard: [[{ text: action === "cpro" ? "➕ 추가됨" : "무시함", callback_data: "noop:x" }]] } });
+  }
+}
+
 async function handleCallback(env, bot, cq, updateId) {
   const from = String((cq.from && cq.from.id) || "");
   const msg = cq.message || {};
   const chat = msg.chat ? String(msg.chat.id) : from;
-  if (!(await isActiveRecipient(env, bot, from))) {
-    await tg(env, bot, "answerCallbackQuery", { callback_query_id: cq.id, text: "권한이 없습니다." });
-    return;
-  }
   const data = cq.data || "";
   const sep = data.indexOf(":");
   const action = sep > 0 ? data.slice(0, sep) : "";
   const itemKey = sep > 0 ? data.slice(sep + 1) : "";
+  if (action === "cpro" || action === "cign") return handleCandidateCallback(env, bot, cq, action, itemKey);
+  if (!(await isActiveRecipient(env, bot, from))) {
+    await tg(env, bot, "answerCallbackQuery", { callback_query_id: cq.id, text: "권한이 없습니다." });
+    return;
+  }
   if (!ACTIONS[action] || !itemKey) {
     await tg(env, bot, "answerCallbackQuery", { callback_query_id: cq.id });
     return;
@@ -209,22 +155,65 @@ async function handleCallback(env, bot, cq, updateId) {
   await tg(env, bot, "answerCallbackQuery", { callback_query_id: cq.id, text: `${ACTIONS[action].tip} (D1 기록 #${ins.id})` });
   if (msg.message_id) {
     const st = await itemStateFor(env, from, itemKey);
-    await tg(env, bot, "editMessageReplyMarkup", { chat_id: chat, message_id: msg.message_id, reply_markup: keyboard(itemKey, st) });
+    await tg(env, bot, "editMessageReplyMarkup", { chat_id: chat, message_id: msg.message_id, reply_markup: rebuildKeyboard(msg.reply_markup, itemKey, st) });
   }
 }
 
+const HELP_ALL = [
+  "내 설정 명령 (나에게만 적용)",
+  "/settings — 내 설정 보기",
+  "/quiet 22 7 — 알림 정지 시간(현지 22시~7시)",
+  "/tz America/Denver — 내 시간대",
+  "/city Westminster — 이동시간 기준 도시(주소는 넣지 마세요)",
+  "/from 2027-01-01 — 이 날짜 이후 행사만 받기 (/from off 로 해제)",
+  "/myid — 내 텔레그램 ID",
+].join("\n");
 const HELP_OWNER = [
   "소유자 명령",
   "/test — 이 봇으로 테스트 알림 1건",
   "/clicks — 최근 버튼 기록 10건 (D1)",
   "/status — 요약 상태",
-  "/expiry — 만료일 목록",
-  "/expiry anthropic 2027-04-20 — 만료일 등록·수정 (이름은 자유)",
-  "/expiry del anthropic — 만료일 삭제",
-  "/pending — 승인 대기 목록",
-  "/approve <ID> — 이 봇 수신 승인",
-  "/myid — 내 텔레그램 ID",
+  "/report — 주간 보고 지금 받기",
+  "/candidates — 정보원 후보",
+  "/expiry — 만료일 목록 · /expiry anthropic 2027-04-20 — 등록 · /expiry del anthropic — 삭제",
+  "/pending — 승인 대기 · /approve <ID> — 이 봇 수신 승인",
+  "",
+  HELP_ALL,
 ].join("\n");
+
+async function personCommand(env, fromId, cmd, args) {
+  await ensurePerson(env, fromId);
+  const p = await getPerson(env, fromId);
+  const set = async (col, val) => env.DB.prepare(`UPDATE people SET ${col} = ?, updated_at = ? WHERE chat_id = ?`).bind(val, nowIso(), String(fromId)).run();
+  if (cmd === "/quiet") {
+    const [a, b] = args.map((x) => parseInt(x, 10));
+    if (!(a >= 0 && a <= 23 && b >= 0 && b <= 23)) return "형식: /quiet 22 7 (정지 시작 시, 끝 시. 같은 값이면 정지 없음)";
+    await env.DB.prepare("UPDATE people SET quiet_start = ?, quiet_end = ?, updated_at = ? WHERE chat_id = ?").bind(a, b, nowIso(), String(fromId)).run();
+    return `알림 정지: ${a}시~${b}시 (${p.tz})`;
+  }
+  if (cmd === "/tz") {
+    if (!args[0] || !validTz(args[0])) return "형식: /tz America/Denver 또는 /tz Asia/Seoul";
+    await set("tz", args[0]);
+    return `시간대: ${args[0]}`;
+  }
+  if (cmd === "/city") {
+    const c = args.join(" ").slice(0, 40);
+    if (!c || /\d{3,}/.test(c)) return "도시 이름만 넣어 주세요(번지·우편번호 없이). 예) /city Westminster";
+    await set("city", c);
+    return `기준 도시: ${c}`;
+  }
+  if (cmd === "/from") {
+    if (args[0] === "off") { await set("available_from", null); return "참가 가능 시작일 해제: 지금 열리는 행사부터 받습니다."; }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(args[0] || "")) return "형식: /from 2027-01-01 (해제: /from off)";
+    await set("available_from", args[0]);
+    return `참가 가능 시작일: ${args[0]} (그 이전 행사는 연례행사 예고로만 받습니다)`;
+  }
+  return [
+    "내 설정",
+    `시간대 ${p.tz} · 알림 정지 ${p.quiet_start}시~${p.quiet_end}시`,
+    `참가 가능 시작일 ${p.available_from || "지금"} · 기준 도시 ${p.city || "미설정"}`,
+  ].join("\n");
+}
 
 async function handleMessage(env, bot, m) {
   const from = m.from || {};
@@ -245,6 +234,7 @@ async function handleMessage(env, bot, m) {
         "ON CONFLICT(chat_id, bot) DO UPDATE SET name = excluded.name, username = excluded.username, updated_at = excluded.updated_at, " +
         "status = CASE WHEN recipients.status = 'blocked' THEN 'blocked' WHEN excluded.status = 'active' THEN 'active' ELSE recipients.status END",
       ).bind(fromId, bot, [from.first_name, from.last_name].filter(Boolean).join(" ") || null, from.username || null, owner ? "active" : "pending", at, at).run();
+      await ensurePerson(env, fromId);
     }
     if (owner) { await reply(`${BOTS[bot].label} 봇 소유자로 확인되었습니다.\n\n${HELP_OWNER}`); return; }
     if (!env.OWNER_CHAT_ID) {
@@ -253,12 +243,15 @@ async function handleMessage(env, bot, m) {
     }
     await reply(`${BOTS[bot].label} 알림 신청이 접수되었습니다. 소유자 승인 후 알림이 옵니다.\n내 텔레그램 ID: ${fromId}`);
     if (cmd === "/start" && (await claimNotice(env, `join:${bot}:${fromId}`))) {
-      await notifyOwner(env, `[${BOTS[bot].label}] 새 수신 신청: ${[from.first_name, from.last_name].filter(Boolean).join(" ")} ${from.username ? "@" + from.username : ""}\nID ${fromId}\n승인: ${BOTS[bot].handle} 에서 /approve ${fromId}`);
+      await notifyOwner(env, `[${BOTS[bot].label}] 새 수신 신청: ${[from.first_name, from.last_name].filter(Boolean).join(" ")} ${from.username ? "@" + from.username : ""}\nID ${fromId}\n승인: ${BOTS[bot].handle} 에서 /approve ${fromId}${ownerOnly(env) ? "\n(현재 소유자 전용 모드라 승인해도 1차 검증 전에는 발송되지 않습니다)" : ""}`);
     }
     return;
   }
+  const active = await isActiveRecipient(env, bot, fromId);
+  if (!active) return;
+  if (["/settings", "/quiet", "/tz", "/city", "/from"].includes(cmd)) { await reply(await personCommand(env, fromId, cmd, args)); return; }
   if (!isOwner(env, fromId)) {
-    if (await isActiveRecipient(env, bot, fromId)) await reply("알림의 [✅ 확인] [🚫 관심없음] [🔕 이 태그 그만] 버튼은 본인에게만 적용됩니다. 다시 누르면 취소됩니다.");
+    await reply("알림의 [✅ 확인] [🚫 관심없음] [🔕 이 태그 그만] 버튼은 본인에게만 적용됩니다. 다시 누르면 취소됩니다.\n\n" + HELP_ALL);
     return;
   }
 
@@ -274,6 +267,12 @@ async function handleMessage(env, bot, m) {
     return;
   }
   if (cmd === "/status") { await reply(formatStatus(await status(env))); return; }
+  if (cmd === "/report") { await pipeline.weeklyReport(env, true); return; }
+  if (cmd === "/candidates") {
+    const rows = (await env.DB.prepare("SELECT name, url, hits, status FROM candidates ORDER BY last_seen DESC LIMIT 10").all()).results;
+    await reply(rows.length ? "정보원 후보 (최근 10)\n" + rows.map((r) => `${r.status} ${r.hits}회 ${r.name || ""}\n  ${r.url}`).join("\n") : "아직 후보가 없습니다.");
+    return;
+  }
   if (cmd === "/expiry") {
     if (args[0] === "del" && args[1]) {
       await env.DB.prepare("DELETE FROM key_expiry WHERE name = ?").bind(args[1]).run();
@@ -295,7 +294,7 @@ async function handleMessage(env, bot, m) {
   }
   if (cmd === "/approve" && args[0]) {
     const r = await env.DB.prepare("UPDATE recipients SET status = 'active', updated_at = ? WHERE chat_id = ? AND bot = ?").bind(nowIso(), args[0], bot).run();
-    await reply(r.meta.changes ? `승인: ${args[0]} (${BOTS[bot].label})` : `이 봇에 /start 한 기록이 없습니다: ${args[0]}`);
+    await reply(r.meta.changes ? `승인: ${args[0]} (${BOTS[bot].label})${ownerOnly(env) ? "\n현재 소유자 전용 모드라 1차 검증 후 전환 전까지는 발송되지 않습니다." : ""}` : `이 봇에 /start 한 기록이 없습니다: ${args[0]}`);
     return;
   }
   await reply(HELP_OWNER);
@@ -372,8 +371,8 @@ async function setupWebhooks(env, origin) {
     const c = await tg(env, bot, "setMyCommands", {
       commands: [
         { command: "start", description: "알림 받기 시작" },
+        { command: "settings", description: "내 설정 보기" },
         { command: "help", description: "도움말" },
-        { command: "myid", description: "내 텔레그램 ID" },
       ],
     });
     const me = await tg(env, bot, "getMe");
@@ -406,35 +405,44 @@ async function status(env) {
   const kc = await kvGet(env, "keycheck:anthropic");
   return {
     build: BUILD,
+    delivery_mode: ownerOnly(env) ? "owner-only" : "all",
     secrets: Object.fromEntries([...Object.values(BOTS).map((b) => b.secret), "OWNER_CHAT_ID", "ADMIN_KEY"].map((k) => [k, !!env[k]])),
-    origin: await kvGet(env, "origin"),
+    origin_set: !!(await kvGet(env, "origin")),
     recipients: recips,
-    deliveries: (await one("SELECT COUNT(*) AS n, SUM(ok) AS ok FROM deliveries")),
-    clicks: (await one("SELECT COUNT(*) AS n, MAX(at) AS last FROM clicks")),
+    deliveries: await one("SELECT COUNT(*) AS n, SUM(ok) AS ok FROM deliveries"),
+    clicks: await one("SELECT COUNT(*) AS n, MAX(at) AS last FROM clicks"),
+    events: await one("SELECT COUNT(*) AS n, MAX(last_changed) AS last FROM events"),
+    outbox: (await env.DB.prepare("SELECT kind, status, COUNT(*) AS n FROM outbox GROUP BY kind, status").all()).results,
     expiries: (await env.DB.prepare("SELECT name, expires_on FROM key_expiry ORDER BY expires_on").all()).results,
     key_check: kc ? JSON.parse(kc) : null,
+    last_run: await one("SELECT run_id, started_at, finished_at FROM runs ORDER BY started_at DESC LIMIT 1"),
     last_cron: await kvGet(env, "last_cron"),
   };
 }
 function formatStatus(s) {
-  const lines = [`상태 (${s.build})`];
+  const lines = [`상태 (${s.build}, 발송 모드 ${s.delivery_mode})`];
   lines.push("비밀값: " + Object.entries(s.secrets).map(([k, v]) => `${k} ${v ? "○" : "✕"}`).join(", "));
-  lines.push(`발송 ${s.deliveries.n || 0}건 (성공 ${s.deliveries.ok || 0}), 버튼 기록 ${s.clicks.n || 0}건`);
+  lines.push(`발송 ${s.deliveries.n || 0}건 (성공 ${s.deliveries.ok || 0}), 버튼 기록 ${s.clicks.n || 0}건, 행사 ${s.events.n || 0}건`);
+  lines.push("대기열: " + (s.outbox.map((o) => `${o.kind}/${o.status} ${o.n}`).join(", ") || "없음"));
   lines.push("수신자: " + (s.recipients.map((r) => `${r.bot}/${r.status} ${r.n}`).join(", ") || "없음"));
   lines.push("만료일: " + (s.expiries.map((e) => `${e.name} ${e.expires_on}`).join(", ") || "등록 없음 → /expiry anthropic YYYY-MM-DD"));
   if (s.key_check) lines.push(`API 키 점검: ${s.key_check.ok ? "정상" : "실패 " + s.key_check.status} (${s.key_check.at.slice(0, 16)}Z)`);
+  if (s.last_run && s.last_run.run_id) lines.push(`마지막 수집: ${s.last_run.run_id} (${String(s.last_run.started_at).slice(0, 16)}Z)`);
   return lines.join("\n");
+}
+
+async function dailyCheck(env) {
+  const r = { at: nowIso() };
+  try { r.expiry = await checkExpiries(env); } catch (e) { r.expiry_error = String(e && e.message); }
+  try { r.webhooks = await ensureWebhooks(env); } catch (e) { r.webhook_error = String(e && e.message); }
+  await kvSet(env, "last_cron", r);
+  return r;
 }
 
 // ---------------------------------------------------------------- 진입점
 export default {
   async scheduled(event, env, ctx) {
-    ctx.waitUntil((async () => {
-      const r = { at: nowIso() };
-      try { r.expiry = await checkExpiries(env); } catch (e) { r.expiry_error = String(e && e.message); }
-      try { r.webhooks = await ensureWebhooks(env); } catch (e) { r.webhook_error = String(e && e.message); }
-      await kvSet(env, "last_cron", r);
-    })());
+    ctx.waitUntil(dailyCheck(env));
   },
 
   async fetch(request, env) {
@@ -454,7 +462,7 @@ export default {
         if (upd.callback_query) await handleCallback(env, hook[1], upd.callback_query, upd.update_id);
         else if (upd.message) await handleMessage(env, hook[1], upd.message);
       } catch (e) {
-        console.log("handler error", String(e && e.stack || e));
+        console.log("handler error", String((e && e.stack) || e));
       }
       return new Response("ok"); // 텔레그램이 같은 update 를 무한 재전송하지 않도록 항상 200
     }
@@ -463,22 +471,33 @@ export default {
       if (!isAdmin(env, request)) return json({ ok: false, error: "unauthorized" }, 401);
       let body = {};
       if (request.method === "POST") { try { body = await request.json(); } catch { body = {}; } }
-      if (p === "/admin/setup" && request.method === "POST") return json(await setupWebhooks(env, url.origin));
-      if (p === "/admin/test-send" && request.method === "POST") {
-        const bots = Array.isArray(body.bots) && body.bots.length ? body.bots.filter((b) => BOTS[b]) : Object.keys(BOTS);
-        return json(await testSend(env, bots));
-      }
-      if (p === "/admin/clicks") {
-        const limit = Math.min(Math.max(parseInt(url.searchParams.get("limit") || "20", 10) || 20, 1), 200);
-        return json({ ok: true, clicks: (await env.DB.prepare("SELECT * FROM clicks ORDER BY id DESC LIMIT ?").bind(limit).all()).results });
-      }
-      if (p === "/admin/status") return json({ ok: true, ...(await status(env)) });
-      if (p === "/admin/expiry" && request.method === "POST") return json(await setExpiry(env, body.name, body.expires_on, body.note || null));
-      if (p === "/admin/key-check" && request.method === "POST") return json(await keyCheckReport(env, body));
-      if (p === "/admin/run-cron" && request.method === "POST") {
-        const r = { at: nowIso(), via: "actions", expiry: await checkExpiries(env), webhooks: await ensureWebhooks(env) };
-        await kvSet(env, "last_cron", r);
-        return json({ ok: true, ...r });
+      const POST = request.method === "POST";
+      try {
+        if (p === "/admin/setup" && POST) return json(await setupWebhooks(env, url.origin));
+        if (p === "/admin/test-send" && POST) {
+          const bots = Array.isArray(body.bots) && body.bots.length ? body.bots.filter((b) => BOTS[b]) : Object.keys(BOTS);
+          return json(await testSend(env, bots));
+        }
+        if (p === "/admin/clicks") {
+          const limit = Math.min(Math.max(parseInt(url.searchParams.get("limit") || "20", 10) || 20, 1), 200);
+          return json({ ok: true, clicks: (await env.DB.prepare("SELECT * FROM clicks ORDER BY id DESC LIMIT ?").bind(limit).all()).results });
+        }
+        if (p === "/admin/status") return json({ ok: true, ...(await status(env)) });
+        if (p === "/admin/expiry" && POST) return json(await setExpiry(env, body.name, body.expires_on, body.note || null));
+        if (p === "/admin/key-check" && POST) return json(await keyCheckReport(env, body));
+        if (p === "/admin/run-cron" && POST) return json({ ok: true, ...(await dailyCheck(env)) });
+        if (p === "/admin/seen" && POST) return json(await pipeline.seen(env, body));
+        if (p === "/admin/enqueue" && POST) return json(await pipeline.enqueue(env, body));
+        if (p === "/admin/dispatch" && POST) return json(await pipeline.dispatch(env, body));
+        if (p === "/admin/digest" && POST) return json(await pipeline.digest(env, body));
+        if (p === "/admin/run-log" && POST) return json(await pipeline.runLog(env, body));
+        if (p === "/admin/usage") return json(await pipeline.usage(env, request.method, body, url));
+        if (p === "/admin/candidates" && POST) return json(await pipeline.addCandidates(env, body));
+        if (p === "/admin/sources-extra") return json(await pipeline.sourcesExtra(env));
+        if (p === "/admin/report" && POST) return json(await pipeline.weeklyReport(env, body.send !== false));
+      } catch (e) {
+        console.log("admin error", p, String((e && e.stack) || e));
+        return json({ ok: false, error: String((e && e.message) || e).slice(0, 300) }, 500);
       }
       return json({ ok: false, error: "not found" }, 404);
     }

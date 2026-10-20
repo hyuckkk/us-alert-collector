@@ -14,6 +14,8 @@ crons = []
 TG_API = "https://api.telegram.org"
 SYSTEM_BOT = "life"        # 시스템 알림(만료·키 점검)을 보낼 봇
 OWNER_TZ = "Asia/Seoul"    # 소유자 기준 날짜·시각. 입국 후 "America/Denver" 로 변경
+FAMILY_AVAILABLE_FROM = "2027-01-01"  # 우리 가족 참가 가능 시작일(설계안: 2027년 6월 말). 소유자 기본값, /from 으로 바꿀 수 있음
+DELIVERY_MODE = "owner-only"           # 1차 검증 전: 소유자에게만 발송. 지인 발송은 승인 후 "all" 로 바꿔 배포
 
 [[d1_databases]]
 binding = "DB"

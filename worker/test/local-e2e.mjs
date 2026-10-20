@@ -1,82 +1,15 @@
-// 로컬 종단 테스트: 가짜 텔레그램 서버 + wrangler dev(로컬 D1) 로 0단계 흐름 전체를 확인한다.
-// 실행: cd worker && npm test   (실제 텔레그램·Cloudflare 에는 아무것도 보내지 않는다)
-import { spawn, execFileSync } from "node:child_process";
-import http from "node:http";
-import { mkdtempSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
+// 로컬 종단 테스트(0단계): 웹훅·버튼·만료일·키 점검. 실행: cd worker && npm test
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { startEnv, stepper, HOOK, OWNER, sleep } from "./harness.mjs";
 
-const TG_PORT = 9988, W_PORT = 8799;
-const W = `http://127.0.0.1:${W_PORT}`;
-const ADMIN = "test-admin-key";
-const HOOK = createHash("sha256").update(`us-hook:${ADMIN}`).digest("hex");
-const OWNER = "111", OTHER = "222";
-const persist = mkdtempSync(join(tmpdir(), "us-d1-"));
-
-// ---- 가짜 텔레그램 API
-const calls = [];
-let nextMsgId = 500;
-const tgServer = http.createServer((req, res) => {
-  let b = "";
-  req.on("data", (c) => (b += c));
-  req.on("end", () => {
-    const m = req.url.match(/^\/bot([^/]+)\/(\w+)$/);
-    const payload = b ? JSON.parse(b) : {};
-    calls.push({ token: m[1], method: m[2], payload });
-    let result = true;
-    if (m[2] === "sendMessage") result = { message_id: nextMsgId++, chat: { id: payload.chat_id } };
-    if (m[2] === "getMe") result = { username: `fake_${m[1]}` };
-    if (m[2] === "getWebhookInfo") result = { url: "" };
-    res.setHeader("content-type", "application/json");
-    res.end(JSON.stringify({ ok: true, result }));
-  });
-});
-await new Promise((r) => tgServer.listen(TG_PORT, "127.0.0.1", r));
-
-const vars = {
-  TG_API: `http://127.0.0.1:${TG_PORT}`, BOT_TOKEN_LIFE: "tLIFE", BOT_TOKEN_FAMILY: "tFAMILY", BOT_TOKEN_KIDS: "tKIDS",
-  OWNER_CHAT_ID: OWNER, ADMIN_KEY: ADMIN, OWNER_TZ: "Asia/Seoul",
-};
-const wr = ["node_modules/.bin/wrangler"];
-execFileSync(wr[0], ["d1", "migrations", "apply", "us-alert-db", "--local", "--persist-to", persist], { stdio: "pipe", env: { ...process.env, CI: "1" } });
-const dev = spawn(wr[0], ["dev", "--port", String(W_PORT), "--ip", "127.0.0.1", "--persist-to", persist, "--test-scheduled",
-  ...Object.entries(vars).flatMap(([k, v]) => ["--var", `${k}:${v}`])], { stdio: ["ignore", "pipe", "pipe"], env: { ...process.env, CI: "1" } });
-let devLog = "";
-dev.stdout.on("data", (d) => (devLog += d));
-dev.stderr.on("data", (d) => (devLog += d));
-
-async function waitReady() {
-  for (let i = 0; i < 120; i++) {
-    try { const r = await fetch(`${W}/health`); if (r.ok) return; } catch {}
-    await new Promise((r) => setTimeout(r, 500));
-  }
-  throw new Error("wrangler dev did not start\n" + devLog);
-}
-const admin = (path, body) => fetch(`${W}${path}`, {
-  method: body === undefined ? "GET" : "POST",
-  headers: { authorization: `Bearer ${ADMIN}`, "content-type": "application/json" },
-  body: body === undefined ? undefined : JSON.stringify(body),
-}).then((r) => r.json());
-let upd = 1000;
-const hook = (bot, update, secret = HOOK) => fetch(`${W}/hook/${bot}`, {
-  method: "POST", headers: { "x-telegram-bot-api-secret-token": secret, "content-type": "application/json" },
-  body: JSON.stringify({ update_id: update.update_id ?? ++upd, ...update }),
-});
-const msg = (from, text) => ({ message: { message_id: 1, from: { id: Number(from), first_name: "T" + from }, chat: { id: Number(from), type: "private" }, text } });
-const cb = (from, data, message_id) => ({ callback_query: { id: "cq" + upd, from: { id: Number(from) }, data, message: { message_id, chat: { id: Number(from) } } } });
-const since = (n) => calls.slice(n);
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const OTHER = "222";
+const E = await startEnv({ tgPort: 9988, wPort: 8799 });
+const { W, calls, admin, hook, msg, since } = E;
+const cb = (from, data, message_id) => E.cb(from, data, message_id);
 const ymdPlus = (days) => new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul" }).format(new Date(Date.now() + days * 86400000));
-
-let failed = false;
-const step = async (name, fn) => {
-  try { await fn(); console.log("✔", name); } catch (e) { failed = true; console.log("✘", name, "\n ", e.message); }
-};
+const { step, failed } = stepper();
 
 try {
-  await waitReady();
 
   await step("관리 경로는 ADMIN_KEY 없으면 401", async () => {
     const r = await fetch(`${W}/admin/status`);
@@ -235,9 +168,7 @@ try {
     assert.equal(s.deliveries.n, 3);
   });
 } finally {
-  dev.kill("SIGTERM");
-  tgServer.close();
-  rmSync(persist, { recursive: true, force: true });
+  E.stop();
 }
-if (failed) { console.log("\n--- wrangler log (tail) ---\n" + devLog.slice(-3000)); process.exit(1); }
+if (failed()) { console.log("\n--- wrangler log (tail) ---\n" + E.log().slice(-3000)); process.exit(1); }
 console.log("\n모든 로컬 검사 통과");
