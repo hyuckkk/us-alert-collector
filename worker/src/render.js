@@ -6,7 +6,8 @@ const SIGNUP = { fcfs: "선착순", lottery: "추첨", open: "상시 접수", no
 function v(x) { return x === null || x === undefined || x === "" ? U : String(x); }
 function dateRange(d) {
   if (!d.start_date) return U;
-  return d.end_date && d.end_date !== d.start_date ? `${d.start_date}~${d.end_date}` : d.start_date;
+  const r = d.end_date && d.end_date !== d.start_date ? `${d.start_date}~${d.end_date}` : d.start_date;
+  return d.date_uncertain ? `${r}(연도 추정)` : r;
 }
 
 // kind: now | season | digest-line. change: {version, note}

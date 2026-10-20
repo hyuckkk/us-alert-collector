@@ -95,6 +95,7 @@ class Usage:
 EnglishAttr = Literal["초보 가능", "보호자 동반", "시범 중심", "반복 만남"]
 Signup = Literal["fcfs", "lottery", "open", "none", "unknown"]
 RegStatus = Literal["upcoming", "open", "closed", "soldout", "waitlist", "cancelled", "postponed", "unknown"]
+YearBasis = Literal["stated", "published", "assumed", "none"]
 Bot = Literal["life", "family", "kids"]
 
 
@@ -105,6 +106,7 @@ class ExtractedEvent(BaseModel):
     bot: Bot
     start_date: Optional[str]
     end_date: Optional[str]
+    year_basis: YearBasis
     time_text: Optional[str]
     event_tz: Optional[str]
     location: Optional[str]
@@ -152,7 +154,7 @@ Three audiences: life (adult hobbies, skills, sports, weekday classes, shows, cl
 Rules:
 - Use only facts present in the item. If a value is not stated, use null (or "unknown" for signup, [] for lists). Never guess dates, prices or ages.
 - url must be exactly one of the URLs given for that item. Never invent or edit URLs.
-- Dates as YYYY-MM-DD. If a date has month and day but no year, use the next occurrence on or after today. If there is no date at all, null.
+- Dates as YYYY-MM-DD. year_basis says where the year came from: stated (the item states the year), published (taken from the item's page date, posting date or a year heading), assumed (no year anywhere, you assumed the next occurrence after today), none (no date). Never present an assumed year as certain — set year_basis=assumed. If there is no date at all, null.
 - For a listing with several dates (e.g. weekly tours), use the earliest upcoming date as start_date and the last listed date as end_date.
 - event_tz: IANA zone of the event location (America/Denver for Colorado). time_text: local time as written, e.g. "10:00-12:00".
 - title_ko: short natural Korean title. Keep proper nouns in English in parentheses if useful.
@@ -260,29 +262,51 @@ JUDGE_RULES = """U.S. camps usually state the grade a child enters in the fall; 
 You review events a smaller model flagged as uncertain. For each, decide keep (worth sending to this family or local friends), the right audience bot, and correct age_text, status_note (Korean) and english attributes using only the source text. Drop paid jobs, events requiring U.S. citizenship, and items that are not attendable events or programs. Reason in Korean, one sentence."""
 
 
-def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> list[Verdict]:
-    """items: (event dict, source text). 큰 모델 + 서버측 대체 모델(거절 시)."""
+@dataclass
+class JudgeOutcome:
+    verdicts: dict = field(default_factory=dict)   # 입력 index → Verdict
+    missing: dict = field(default_factory=dict)    # 입력 index → 사유(판정이 없거나 실패: 보내지 않고 다음 실행에서 다시)
+    duplicates: int = 0
+
+
+def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> JudgeOutcome:
+    """items: (event dict, source text). 큰 모델 + 서버측 대체 모델(거절 시).
+    추출과 같이 입력·출력 인덱스를 대조한다(2차 재검증 D): 빠지거나 실패한 항목은 missing, 중복 인덱스는 첫 판정만."""
     c = cfg["judge"]
-    out: list[Verdict] = []
+    out = JudgeOutcome()
     for start in range(0, len(items), c["batch"]):
         chunk = items[start:start + c["batch"]]
+        idx = range(start, start + len(chunk))
         body = "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 2000)}, ensure_ascii=False) for i, (ev, txt) in enumerate(chunk))
-        resp = client.beta.messages.parse(
-            model=c["model"],
-            max_tokens=c["max_tokens"],
-            system=JUDGE_RULES + "\n\n" + household_profile(),
-            messages=[{"role": "user", "content": body}],
-            output_config={"effort": c["effort"]},
-            output_format=JudgeBatch,
-            betas=[FALLBACK_BETA],
-            fallbacks="default",
-        )
+        try:
+            resp = client.beta.messages.parse(
+                model=c["model"],
+                max_tokens=c["max_tokens"],
+                system=JUDGE_RULES + "\n\n" + household_profile(),
+                messages=[{"role": "user", "content": body}],
+                output_config={"effort": c["effort"]},
+                output_format=JudgeBatch,
+                betas=[FALLBACK_BETA],
+                fallbacks="default",
+            )
+        except (anthropic.APIError, ValueError) as e:
+            usage.error(c["model"])
+            out.missing.update({i: f"{type(e).__name__}" for i in idx})
+            continue
         usage.add(c["model"], resp.usage)
         if resp.stop_reason in ("refusal", "max_tokens") or resp.parsed_output is None:
-            raise RuntimeError(f"judge stopped: {resp.stop_reason}")
+            out.missing.update({i: f"stop_reason={resp.stop_reason}" for i in idx})
+            continue
         for v in resp.parsed_output.verdicts:
-            if 0 <= v.index < len(chunk):
-                out.append(v.model_copy(update={"index": start + v.index}))
+            if not (0 <= v.index < len(chunk)):
+                continue
+            if start + v.index in out.verdicts:
+                out.duplicates += 1
+                continue
+            out.verdicts[start + v.index] = v.model_copy(update={"index": start + v.index})
+        for j in range(len(chunk)):
+            if start + j not in out.verdicts:
+                out.missing[start + j] = "missing-verdict"
     return out
 
 

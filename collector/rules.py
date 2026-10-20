@@ -17,6 +17,7 @@ from datetime import date, datetime, timedelta, timezone
 
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 URGENT_DAYS = 7
+OLD_POST_DAYS = 120  # 연도를 추정한 날짜인데 게시일이 이보다 오래면 지난 행사 글로 본다
 
 
 def _d(s: str | None) -> date | None:
@@ -24,6 +25,22 @@ def _d(s: str | None) -> date | None:
         return None
     try:
         return date.fromisoformat(s)
+    except ValueError:
+        return None
+
+
+def published_date(s: str | None) -> date | None:
+    """RSS(RFC 822)·ISO 형식 게시일을 날짜로. 모르면 None."""
+    if not s:
+        return None
+    from email.utils import parsedate_to_datetime
+    try:
+        return parsedate_to_datetime(s).date()
+    except (TypeError, ValueError, IndexError):
+        pass
+    m = re.match(r"(\d{4})-?(\d{2})-?(\d{2})", s)
+    try:
+        return date(int(m.group(1)), int(m.group(2)), int(m.group(3))) if m else None
     except ValueError:
         return None
 
@@ -120,6 +137,14 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             if d["paid_work"]:
                 drop("paid-work")
                 continue
+            # 연도가 원문에 없어 추정한 날짜(2차 재검증 H): 오래된 게시글이면 버리고, 아니면 '연도 추정'으로 표시하고 급하게 알리지 않는다
+            if d.get("year_basis") == "assumed":
+                pub = published_date(entry.published)
+                if pub and (today - pub).days > OLD_POST_DAYS:
+                    drop("old-post")
+                    continue
+                d["date_uncertain"] = True
+                d["status_note"] = "; ".join(x for x in [d.get("status_note"), "날짜의 연도는 추정 — 원문 확인 필요"] if x)
             last = _d(d["end_date"]) or _d(d["start_date"])
             if last and last < today:
                 drop("past")
@@ -127,7 +152,7 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             if not d["start_date"] and not d["annual"] and not d.get("registration_opens") and not d.get("deadline"):
                 # 날짜가 전혀 없는 항목은 생활정보로만 주간 요약에 넣는다
                 d["tags"] = list(dict.fromkeys([*d["tags"], "info"]))[:5]
-            d["urgency"] = urgency(d, today)
+            d["urgency"] = "weekly" if d.get("date_uncertain") else urgency(d, today)
             d["year_label"] = year_label(d, today)
             d["source_id"] = entry.source_id
             d["checked_at"] = checked_at
@@ -138,9 +163,10 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
 
 
 def apply_verdicts(events: list[dict], review_idx: list[int], verdicts) -> tuple[list[dict], int]:
-    """큰 모델 판단을 반영. review_idx[i] = verdict.index i 가 가리키는 events 위치."""
+    """큰 모델 판단을 반영. review_idx[i] = verdict.index i 가 가리키는 events 위치. verdicts 는 목록 또는 {index: Verdict}.
+    판정이 없는 행사는 여기서 다루지 않는다(호출하는 쪽이 보류)."""
     remove = set()
-    for v in verdicts:
+    for v in (verdicts.values() if isinstance(verdicts, dict) else verdicts):
         if not (0 <= v.index < len(review_idx)):
             continue
         ev = events[review_idx[v.index]]
@@ -156,5 +182,5 @@ def for_worker(ev: dict) -> dict:
     """Worker 로 보내는 필드만 남긴다."""
     keep = ("event_key", "identity", "bot", "title", "title_ko", "org", "start_date", "end_date", "time_text", "event_tz", "location", "city",
             "age_text", "english", "cost_text", "signup", "registration_opens", "registration_status", "deadline", "eligibility", "status_note",
-            "url", "checked_at", "urgency", "tags", "annual", "year_label", "source_id")
+            "url", "checked_at", "urgency", "tags", "annual", "year_label", "source_id", "date_uncertain")
     return {k: ev.get(k) for k in keep}

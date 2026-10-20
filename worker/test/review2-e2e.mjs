@@ -61,6 +61,16 @@ try {
     assert.equal(n.n, n.rows, "같은 행사에 알림 중복");
   });
 
+  await step("H 연도를 추정한 날짜로는 ⏰ 알림을 만들지 않고, 본문에 '연도 추정' 표시", async () => {
+    sql("UPDATE outbox SET status = 'skipped' WHERE status IN ('pending', 'failed', 'uncertain')"); // 앞 단계의 알림 120건 정리
+    await admin("/admin/enqueue", { events: [ev("u1", { registration_opens: denverToday, date_uncertain: true, urgency: "now" })] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    const t = sql("SELECT COUNT(*) AS n FROM trigger_log WHERE event_key = 'u1'")[0].n;
+    assert.equal(t, 0);
+    const sent = E.calls.filter((c) => c.method === "sendMessage" && /행사 u1/.test(c.payload.text || ""));
+    assert.ok(sent.length >= 1 && sent.every((c) => /\(연도 추정\)/.test(c.payload.text)));
+  });
+
   await step("F 한 페이지(URL)에 두 행사가 있으면 감시 목록이 두 행사를 모두 기억한다", async () => {
     const url = "https://example.org/programs";
     await admin("/admin/enqueue", { events: [ev("pA", { url, registration_status: "upcoming", registration_opens: plus(5) }), ev("pB", { url, registration_status: "upcoming", registration_opens: plus(6) })] });

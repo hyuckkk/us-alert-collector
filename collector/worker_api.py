@@ -5,7 +5,7 @@ dry-run 이면 Worker 에 아무것도 쓰지 않는다. 대기열·행사 목�
 from __future__ import annotations
 
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import httpx
 
@@ -50,28 +50,44 @@ class WorkerAPI:
         if self.dry_run:
             now = datetime.now(timezone.utc).isoformat()
             for x in items:
-                self._mem[x["key"]] = {**x, "status": "queued", "attempts": 0, "result": None, "first_seen": now}
+                self._mem[x["key"]] = {**x, "status": "queued", "attempts": 0, "result": None, "first_seen": now, "lease_until": None}
             return len(items)
         n = 0
         for i in range(0, len(items), 25):
             n += self._post("/admin/queue", {"op": "add", "items": items[i:i + 25]}).get("written", 0)
         return n
 
-    def queue_take(self, limit: int) -> list[dict]:
+    def queue_take(self, limit: int, lease_minutes: int = 30) -> list[dict]:
+        """대기열에서 최대 limit 건을 임대해 가져온다. Worker 는 임대 중인 항목을 다시 주지 않으므로 60건씩 반복해 끝까지 받는다.
+        서버가 같은 항목을 되풀이하면(임대 미지원) 조용히 멈추지 않고 오류로 알린다(2차 재검증 A)."""
         if self.dry_run:
-            rows = [r for r in self._mem.values() if r["status"] in ("queued", "extracted")]
+            now = datetime.now(timezone.utc)
+            rows = [r for r in self._mem.values() if r["status"] in ("queued", "extracted") and not (r.get("lease_until") and r["lease_until"] > now)]
             rows.sort(key=lambda r: (r["status"] != "extracted", -r.get("priority", 0), r["first_seen"]))
-            return rows[:limit]
+            rows = rows[:limit]
+            for r in rows:
+                r["lease_until"] = now + timedelta(minutes=lease_minutes)
+            return rows
         out: list[dict] = []
+        seen: set[str] = set()
         while len(out) < limit:
-            got = self._post("/admin/queue", {"op": "take", "limit": min(60, limit - len(out))})["items"]
-            got = [g for g in got if g["key"] not in {o["key"] for o in out}]
+            got = self._post("/admin/queue", {"op": "take", "limit": min(60, limit - len(out)), "lease_minutes": lease_minutes})["items"]
             if not got:
                 break
+            dup = [g["key"] for g in got if g["key"] in seen]
+            if dup:
+                raise RuntimeError(f"queue take returned {len(dup)} items already taken — Worker must lease taken items")
+            seen.update(g["key"] for g in got)
             out += got
-            if len(got) < 60:
-                break
         return out
+
+    def queue_peek(self, limit: int) -> list[dict]:
+        """임대 없이 대기 항목 보기(검증 전 정보 안내용)."""
+        if self.dry_run:
+            rows = [r for r in self._mem.values() if r["status"] == "queued"]
+            rows.sort(key=lambda r: (-r.get("priority", 0), r["first_seen"]))
+            return rows[:limit]
+        return self._post("/admin/queue", {"op": "peek", "limit": limit})["items"]
 
     def queue_result(self, items: list[dict]) -> None:
         if self.dry_run:
@@ -79,6 +95,11 @@ class WorkerAPI:
                 r = self._mem.get(x["key"])
                 if r is None:
                     continue
+                r["lease_until"] = None
+                if x["status"] == "release":
+                    continue
+                if x.get("error"):
+                    r["last_error"] = x["error"]
                 if x["status"] == "retry":
                     r["attempts"] += 1
                     r["status"] = "stuck" if r["attempts"] >= 6 else "queued"

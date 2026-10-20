@@ -47,6 +47,8 @@ DEEP_THEMES = {            # 요일별 심층(월=0) — 설계안 유지
     6: "family travel from Denver: unusual flight deals, cruise family programs and kids-sail-free promotions, road-trip festivals",
 }
 OFFICIAL_TLD = (".gov", ".edu", ".us", ".org", ".mil")
+MIN_SOURCE_OK_RATIO = 0.5  # 정보원 조회 성공률이 이보다 낮으면 '정상 수집'으로 기록하지 않는다(2차 재검증 G)
+DETAIL_SOURCE_TYPES = ("ai-discover",)
 
 
 def load(name: str) -> dict:
@@ -88,6 +90,7 @@ class Run:
         self.entries: dict[str, Entry] = {}     # key → 이번 실행에서 모은 항목
         self.source_rows: dict[str, dict] = {}  # 정보원별 상태(Worker source_health 로)
         self.official_ids: set[str] = set()
+        self.core_due: list[tuple[str, bool]] = []
         self.ai_ok: bool | None = None
 
     # ------------------------------------------------ 단계 실행기: 한 단계의 실패가 다른 단계를 막지 않는다
@@ -118,7 +121,6 @@ class Run:
         if self.args.only:
             srcs = [s for s in srcs if s["id"] == self.args.only]
         due = [s for s in srcs if self.args.only or is_due(s, self.today)]
-        self.html_link_sources = {s["id"] for s in due if s["type"] == "html" and s.get("mode") != "page-change"}
         for s in due:
             r = fetch_source(s, secrets=os.environ)
             self.m["sources_total"] += 1
@@ -128,7 +130,12 @@ class Run:
             self.source_rows[s["id"]] = dict(row)
             if s.get("official"):
                 self.official_ids.add(s["id"])
+            if s.get("core"):
+                self.core_due.append((s["id"], r.ok))
             self.add_entries(r.entries, bool(s.get("official")), s.get("bots"))
+            if s["type"] == "html" and s.get("mode") != "page-change":
+                for e in r.entries:
+                    e.extra["needs_detail"] = True  # 목록 링크뿐이라 상세 본문 없이는 날짜·가격·자격을 알 수 없음
         if self.m["sources_total"] and self.m["sources_ok"] / self.m["sources_total"] < 0.5:
             self.alerts.append(f"정보원 조회 성공률 {self.m['sources_ok']}/{self.m['sources_total']}")
         return {"due": len(due)}
@@ -171,16 +178,19 @@ class Run:
             if u in seen_urls:
                 continue
             seen_urls.add(u)
-            self.add_entries([Entry("ai-discover", u, ev.get("title") or u, ev.get("why") or "")], False, None if bot == "deep" else [bot])
+            self.add_entries([Entry("ai-discover", u, ev.get("title") or u, ev.get("why") or "", None, {"needs_detail": True})], False, None if bot == "deep" else [bot])
         self.report["discover"] = {"sources": found_sources, "events": [e for _, e in found_events]}
         return {"calls": self.m["discover_calls"], "sources": len(found_sources), "events": len(seen_urls), "errors": errors}
 
     # ------------------------------------------------ 상세 페이지 재검사(1차 검증 1-3)
     def watch(self):
+        """변경된 페이지는 먼저 대기열에 보존하고, 보존에 성공한 경우에만 새 지문을 기록한다(2차 재검증 E).
+        한 페이지에 행사가 여럿이면 event_keys 를 모두 넘겨, 재추출 결과를 그 행사들과 대조한다(2차 재검증 F)."""
         due = self.api.watch_due(MAX_WATCH_PER_RUN)
-        updates = []
+        updates, changed = [], []
         with new_client() as hc:
             for w in due:
+                keys = w.get("event_keys") or ([w["event_key"]] if w.get("event_key") else [])
                 try:
                     status, text = page_text(hc, w["url"])
                 except Exception:  # noqa: BLE001
@@ -190,15 +200,30 @@ class Run:
                     updates.append({"url": w["url"], "ok": False})
                     continue
                 fp, basis = fingerprint(text)
-                updates.append({"url": w["url"], "ok": True, "fingerprint": fp})
                 if w.get("fingerprint") and fp != w["fingerprint"]:
                     # 행사 관련 문장이 바뀐 경우만 AI 로(메뉴·장식 변경은 지문이 같아 여기서 걸러짐)
                     self.m["watch_changed"] += 1
-                    e = Entry(w.get("source_id") or "watch", w["url"], f"[상세 변경] {w['event_key']}", basis, None,
-                              {"hint": w["event_key"], "official": True, "page_fp": fp})
-                    self.entries.setdefault(f"watch:{w['url']}:{fp}", e)
+                    e = Entry(w.get("source_id") or "watch", w["url"], f"[상세 변경] {', '.join(keys)}", basis, None,
+                              {"hint": keys, "official": True, "page_fp": fp, "detail_ok": True})
+                    changed.append((f"watch:{w['url']}:{fp}", e, {"url": w["url"], "ok": True, "fingerprint": fp}))
+                else:
+                    updates.append({"url": w["url"], "ok": True, "fingerprint": fp})
+        if changed:
+            try:
+                self.api.queue_add([self.queue_item(k, e, fp_upd["fingerprint"]) for k, e, fp_upd in changed])
+                updates += [u for _, _, u in changed]
+            except Exception as e:  # noqa: BLE001  지문을 갱신하지 않으므로 다음 재검사에서 같은 변경을 다시 발견한다
+                self.alerts.append(f"상세 변경 {len(changed)}건 대기열 보존 실패: {type(e).__name__} — 다음 재검사에서 다시 감지")
+                updates += [{"url": u["url"], "ok": False} for _, _, u in changed]
         self.api.watch_update(updates)
         return {"checked": self.m["watch_checked"], "changed": self.m["watch_changed"]}
+
+    def queue_item(self, key: str, e: Entry, hash_: str) -> dict:
+        hint = e.extra.get("hint")
+        return {"key": key, "hash": hash_, "source_id": e.source_id, "url": e.url, "title": e.title[:300],
+                "hint": ",".join(hint) if isinstance(hint, list) else hint, "priority": rules.priority(e, self.today, bool(e.extra.get("official"))),
+                "body": {"text": (e.text or "")[:4000], "published": e.published,
+                         "extra": {k2: v for k2, v in e.extra.items() if k2 in ("uid", "bots", "official", "location", "detail_error", "needs_detail", "detail_ok")}}}
 
     # ------------------------------------------------ 대기열 등록(새·바뀐 항목 전부 보존, 1차 검증 3)
     def enqueue_raw(self):
@@ -209,24 +234,18 @@ class Run:
         fresh = [k for k in keys if k in new or k in changed]
         self.m["entries_new"], self.m["entries_changed"] = len([k for k in fresh if k in new]), len([k for k in fresh if k in changed])
         # 상세 본문(토큰 0)을 붙인다. 상한을 넘는 것은 본문 없이 넣고, 대기열 처리 때 다시 조회한다.
-        need = [k for k in fresh if self.entries[k].source_id in getattr(self, "html_link_sources", set()) or self.entries[k].source_id == "ai-discover"]
-        need = [k for k in need if not self.entries[k].text]
+        need = [k for k in fresh if self.entries[k].extra.get("needs_detail") and not self.entries[k].text]
         with new_client() as hc:
             for k in need[:MAX_DETAIL_FETCH]:
                 self.m["details_total"] += 1
                 ok = fetch_detail(self.entries[k], hc)
+                self.entries[k].extra["detail_ok"] = ok
                 self.m["details_ok"] += int(ok)
                 sid = self.entries[k].source_id
                 if sid in self.source_rows:
                     self.source_rows[sid]["details_total"] = self.source_rows[sid].get("details_total", 0) + 1
                     self.source_rows[sid]["details_ok"] = self.source_rows[sid].get("details_ok", 0) + int(ok)
-        items = []
-        for k in fresh:
-            e = self.entries[k]
-            items.append({"key": k, "hash": hashes[k], "source_id": e.source_id, "url": e.url, "title": e.title[:300],
-                          "hint": e.extra.get("hint"), "priority": rules.priority(e, self.today, bool(e.extra.get("official"))),
-                          "body": {"text": (e.text or "")[:4000], "published": e.published,
-                                   "extra": {k2: v for k2, v in e.extra.items() if k2 in ("uid", "bots", "official", "location", "hint", "detail_error")}}})
+        items = [self.queue_item(k, self.entries[k], hashes[k]) for k in fresh]
         self.m["queue_added"] = self.api.queue_add(items)
         return {"fresh": len(fresh)}
 
@@ -266,20 +285,35 @@ class Run:
             b = r.get("body") or {}
             e = Entry(r["source_id"] or "?", r["url"], r.get("title") or r["url"], b.get("text") or "", b.get("published"), dict(b.get("extra") or {}))
             if r.get("hint"):
-                e.extra["hint"] = r["hint"]
+                e.extra["hint"] = [h for h in str(r["hint"]).split(",") if h]
+            if r["source_id"] and (r["source_id"] in DETAIL_SOURCE_TYPES or r["source_id"].startswith("cand-")):
+                e.extra["needs_detail"] = True
             entries.append(e)
-        # 본문이 비어 있는 html 링크는 지금 조회
+        # 상세 본문이 필요한데 없는 항목은 AI 전에 반드시 조회한다. 실패하면 AI 로 보내지 않고(추측 금지) 다시 대기(2차 재검증 B).
+        no_detail: dict[int, str] = {}
+        ready = bool(todo) and self.ai_ready()
         with new_client() as hc:
-            for e in entries:
-                if not e.text and (e.source_id in getattr(self, "html_link_sources", set()) or e.source_id == "ai-discover" or e.source_id.startswith("cand-")):
-                    fetch_detail(e, hc)
+            for i, e in enumerate(entries):
+                if ready and e.extra.get("needs_detail") and not e.text:  # AI 를 못 쓰면 조회해도 보관하지 않으므로 건너뜀
+                    self.m["details_total"] += 1
+                    if fetch_detail(e, hc):
+                        self.m["details_ok"] += 1
+                    else:
+                        no_detail[i] = f"detail-unavailable: {e.extra.get('detail_error', '?')}"
+        self.m["detail_missing"] = len(no_detail)
         if todo:
-            if not self.ai_ready():
-                # 처리하지 않은 항목은 대기열에 그대로 둔다(시도 횟수도 늘리지 않음)
+            if not ready:
+                # 처리하지 않은 항목은 임대만 풀고 대기열에 그대로 둔다(시도 횟수도 늘리지 않음)
                 self.report["ai_skipped"] = "no key / --no-ai / budget"
+                results += [{"key": r["key"], "status": "retry", "error": no_detail[i]} if i in no_detail else {"key": r["key"], "status": "release"}
+                            for i, r in enumerate(todo)]
             else:
                 import ai
-                out = ai.extract(self.client, self.models, entries, self.today.isoformat(), self.usage)
+                send = [i for i in range(len(entries)) if i not in no_detail]
+                out = ai.extract(self.client, self.models, [entries[i] for i in send], self.today.isoformat(), self.usage)
+                # 추출 결과의 index 를 원래 entries 기준으로 되돌린다
+                out.results = {send[j]: r.model_copy(update={"index": send[j]}) for j, r in out.results.items()}
+                out.failed = {**{send[j]: v for j, v in out.failed.items()}, **no_detail}
                 self.m["ai_items"] = len(out.results)
                 self.m["ai_missing"] = sum(1 for v in out.failed.values() if v == "missing-in-output")
                 self.m["ai_failed"] = len(out.failed)
@@ -293,14 +327,18 @@ class Run:
                 review_idx = [i for i, ev in enumerate(evs) if ev.get("needs_review")]
                 held: set[int] = set()
                 if review_idx:
+                    # 판정이 빠지거나 실패한 행사는 보내지 않고, 그 항목 전체를 다음 실행에서 다시(2차 재검증 D)
                     try:
-                        verdicts = ai.judge(self.client, self.models, [(rules.for_worker(evs[i]), entries[evs[i]["_entry_index"]].text or "") for i in review_idx], self.usage)
-                        evs, removed = rules.apply_verdicts(evs, review_idx, verdicts)
-                        dropped["judge-removed"] = removed
+                        jo = ai.judge(self.client, self.models, [(rules.for_worker(evs[i]), entries[evs[i]["_entry_index"]].text or "") for i in review_idx], self.usage)
                     except Exception as e:  # noqa: BLE001
-                        self.alerts.append(f"정밀 판정 오류: {type(e).__name__} — 해당 {len(review_idx)}건은 다음 실행에서 다시")
-                        held = {evs[i]["_entry_index"] for i in review_idx}
-                        evs = [ev for i, ev in enumerate(evs) if i not in set(review_idx)]
+                        jo = ai.JudgeOutcome(missing={j: type(e).__name__ for j in range(len(review_idx))})
+                    if jo.missing:
+                        self.alerts.append(f"정밀 판정 누락 {len(jo.missing)}건 — 보내지 않고 다음 실행에서 다시")
+                    self.m["judge_missing"] = len(jo.missing)
+                    held = {evs[review_idx[j]]["_entry_index"] for j in jo.missing}
+                    evs, removed = rules.apply_verdicts(evs, review_idx, jo.verdicts)
+                    dropped["judge-removed"] = removed
+                    evs = [ev for ev in evs if ev["_entry_index"] not in held]
                 # 같은 행사 판별: Worker 의 최근 행사 목록과 대조
                 try:
                     index = self.api.event_index()
@@ -312,9 +350,20 @@ class Run:
                     if hint:
                         ev["_hint"] = hint
                 self.report["identity"] = identity.assign_keys(evs, index)
-                for ev in evs:  # 상세 재검사에서 온 변경은 원래 행사 키를 유지
-                    if ev.get("_hint") and len([x for x in evs if x["_entry_index"] == ev["_entry_index"]]) == 1:
-                        ev["event_key"] = ev["_hint"]
+                # 상세 재검사에서 온 변경은 그 페이지에 연결된 기존 행사 키로 되돌린다.
+                # 행사 하나·키 하나면 그 키, 여럿이면 그 키들 중 같은 행사(제목·날짜)로 대조한 것만(다른 행사에 잘못 붙이지 않음)
+                by_key_index = {x["event_key"]: x for x in index}
+                for ev in evs:
+                    hints = ev.get("_hint") or []
+                    if not hints or ev["event_key"] in hints:
+                        continue
+                    siblings = [x for x in evs if x["_entry_index"] == ev["_entry_index"]]
+                    if len(hints) == 1 and len(siblings) == 1:
+                        ev["event_key"] = hints[0]
+                        continue
+                    cand = [by_key_index[h] for h in hints if h in by_key_index and identity.same_event(ev, by_key_index[h], strict_date=len(siblings) > 1)]
+                    if len(cand) == 1:
+                        ev["event_key"] = cand[0]["event_key"]
                 evs, dup = identity.dedupe(evs)
                 if dup:
                     self.report["dropped"]["duplicate"] = dup
@@ -340,7 +389,7 @@ class Run:
                         else:
                             results.append({"key": r["key"], "status": "done"})
         # 2) AI 결과를 먼저 'extracted' 로 저장 → Worker 등록 → 성공한 항목만 'done'
-        self.api.queue_result([x for x in results if x["status"] in ("extracted", "retry", "done")])
+        self.api.queue_result(results)
         self.pending_events = events
         self.event_owners = owners
         return {"taken": len(rows), "events": len(self.pending_events)}
@@ -349,7 +398,12 @@ class Run:
         evs = getattr(self, "pending_events", [])
         if not evs:
             return {"events": 0}
-        r = self.api.enqueue(evs)
+        try:
+            r = self.api.enqueue(evs)
+        except Exception:
+            # AI 결과는 'extracted' 로 보존돼 있다. 임대만 풀어 다음 실행이 AI 없이 바로 등록하게 한다.
+            self.api.queue_result([{"key": k, "status": "release"} for k in sorted(set(self.event_owners.values()))])
+            raise
         self.m["events_out"] = len(evs)
         self.m["outbox"] = r.get("outbox", 0)
         self.report["enqueue"] = r
@@ -372,7 +426,7 @@ class Run:
         blocked = getattr(self, "budget_blocked", False)
         if not (blocked or outage >= OUTAGE_NOTICE_HOURS):
             return {"needed": False}
-        rows = [r for r in self.api.queue_take(200) if r["status"] == "queued" and not str(r.get("source_id") or "").startswith(("gnews", "ai-discover"))]
+        rows = [r for r in self.api.queue_peek(200) if not str(r.get("source_id") or "").startswith(("gnews", "ai-discover"))]
         items = [{"title": r.get("title"), "url": r["url"], "source_id": r.get("source_id")} for r in rows[:40]]
         res = self.api.unverified(items, int(outage) if outage else 0, len(rows))
         return {"needed": True, "items": len(items), "sent": res.get("sent")}
@@ -426,7 +480,17 @@ class Run:
             self.m.update(self.usage.totals())
             self.m["usd"] = round(self.usage.usd, 4)
             self.report["usage"] = self.usage.by_model
-        completed = all(self.stages.get(s, {}).get("ok", True) for s in ("sources", "queue", "ai", "enqueue"))
+        # 프로그램이 끝까지 돈 것과 실제로 정보를 모은 것을 구분한다(2차 재검증 G)
+        stages_ok = all(self.stages.get(s, {}).get("ok", True) for s in ("sources", "queue", "ai", "enqueue"))
+        ratio = self.m["sources_ok"] / self.m["sources_total"] if self.m["sources_total"] else 0.0
+        core_ok = sum(ok for _, ok in self.core_due)
+        self.m["sources_ok_ratio"] = round(ratio, 3)
+        self.m["core_failed"] = len(self.core_due) - core_ok
+        if self.core_due and core_ok < len(self.core_due):
+            self.alerts.append("핵심 정보원 실패: " + ", ".join(i for i, ok in self.core_due if not ok))
+        collected = full and self.m["sources_total"] > 0 and ratio >= MIN_SOURCE_OK_RATIO and (not self.core_due or core_ok > 0)
+        completed = stages_ok and collected
+        self.report["collected"] = collected
         self.report.update({"metrics": self.m, "alerts": self.alerts, "stages": self.stages, "completed": completed})
         self.api.run_log({"run_id": self.run_id, "started_at": self.started.isoformat(timespec="seconds"),
                           "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "completed": completed and full,

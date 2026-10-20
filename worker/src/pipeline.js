@@ -99,12 +99,13 @@ export async function queue(env, body) {
     return { ok: true, items: rows };
   }
   if (op === "result") {
-    const items = (body.items || []).filter((x) => x && x.key && ["done", "extracted", "retry"].includes(x.status)).slice(0, 100)
+    const items = (body.items || []).filter((x) => x && x.key && ["done", "extracted", "retry", "release"].includes(x.status)).slice(0, 100)
       .map((x) => ({ key: x.key, status: x.status, result: x.result ? JSON.stringify(x.result) : null, error: x.error ? String(x.error).slice(0, 300) : null }));
     if (!items.length) return { ok: true, updated: 0 };
     await env.DB.prepare(
       "UPDATE pending SET updated_at = ?1, " +
-      "status = CASE json_extract(j.value,'$.status') WHEN 'done' THEN 'done' WHEN 'extracted' THEN 'extracted' " +
+      // release: 처리하지 못하고 돌려놓기(상태·결과·시도 횟수 그대로, 임대만 해제)
+      "status = CASE json_extract(j.value,'$.status') WHEN 'done' THEN 'done' WHEN 'extracted' THEN 'extracted' WHEN 'release' THEN pending.status " +
       "  ELSE CASE WHEN pending.attempts + 1 >= ?3 THEN 'stuck' ELSE 'queued' END END, " +
       "attempts = CASE json_extract(j.value,'$.status') WHEN 'retry' THEN pending.attempts + 1 ELSE pending.attempts END, " +
       "last_error = COALESCE(json_extract(j.value,'$.error'), pending.last_error), " +
@@ -290,6 +291,7 @@ async function timeTriggers(env) {
     const evs = await all(env.DB.prepare(
       "SELECT e.event_key, e.bot, e.version, e.data, e.registration_opens, e.deadline FROM events e " +
       "WHERE (e.registration_opens = ?1 OR e.deadline = ?2) AND NOT EXISTS (SELECT 1 FROM trigger_log t WHERE t.event_key = e.event_key AND t.day = ?1) " +
+      "AND COALESCE(json_extract(e.data, '$.date_uncertain'), 0) = 0 " + // 연도를 추정한 날짜로는 시간 알림을 걸지 않는다
       "ORDER BY e.event_key LIMIT ?3").bind(today, tomorrow, TRIGGER_PAGE));
     if (!evs.length) break;
     if (!ctx) ctx = await recipientsFor(env);

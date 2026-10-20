@@ -13,7 +13,7 @@ def U(i=1000, o=200):
 
 def ev(**over):
     base = dict(title="Kids Clay Workshop", title_ko="어린이 점토 공방", org="Butterfly Pavilion", bot="kids", start_date="2027-07-10",
-                end_date=None, time_text="10:00-12:00", event_tz="America/Denver", location="Butterfly Pavilion", city="Westminster",
+                end_date=None, year_basis="stated", time_text="10:00-12:00", event_tz="America/Denver", location="Butterfly Pavilion", city="Westminster",
                 age_text="6-10", english=["초보 가능"], cost_text="$20", signup="fcfs", registration_opens=None, registration_status="open",
                 deadline=None, eligibility=None, status_note=None, tags=["art"], annual=False, paid_work=False, needs_review=False, review_reason=None, url="https://b.org/e/1")
     base.update(over)
@@ -79,10 +79,17 @@ class FakeAPI(WorkerAPI):
         finally:
             self.dry_run = False
 
-    def queue_take(self, limit):
+    def queue_take(self, limit, lease_minutes=30):
         self.dry_run = True
         try:
-            return [dict(r) for r in super().queue_take(limit)]
+            return [dict(r) for r in super().queue_take(limit, lease_minutes)]
+        finally:
+            self.dry_run = False
+
+    def queue_peek(self, limit):
+        self.dry_run = True
+        try:
+            return [dict(r) for r in super().queue_peek(limit)]
         finally:
             self.dry_run = False
 

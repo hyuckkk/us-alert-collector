@@ -78,7 +78,7 @@ def test_judge_uses_big_model_with_server_fallback():
     c = FakeClient(beta_replies=[lambda kw: ai.JudgeBatch(verdicts=[v])])
     out = ai.judge(c, CFG, [({"title": "x"}, "src")], ai.Usage(PRICES))
     kw = c.beta.messages.calls[0]
-    assert out[0].keep is False
+    assert out.verdicts[0].keep is False and out.missing == {}
     assert kw["model"] == "claude-opus-5-5" and kw["betas"] == [ai.FALLBACK_BETA] and kw["fallbacks"] == "default"
 
 
@@ -102,3 +102,10 @@ def test_check_key_missing(monkeypatch):
 
 def test_discover_bot_names_are_normalized():
     assert ai.norm_bots(["adults", "Kids", "families", "seniors", 3]) == ["life", "kids", "family"]
+
+
+def test_judge_completeness_missing_and_duplicate_indexes():
+    v = lambda i: ai.Verdict(index=i, keep=True, reason="", bot="kids", age_text=None, status_note=None, english=[])  # noqa: E731
+    c = FakeClient(beta_replies=[lambda kw: ai.JudgeBatch(verdicts=[v(0), v(0), v(7)])])
+    out = ai.judge(c, CFG, [({"t": 1}, ""), ({"t": 2}, ""), ({"t": 3}, "")], ai.Usage(PRICES))
+    assert list(out.verdicts) == [0] and out.duplicates == 1 and out.missing == {1: "missing-verdict", 2: "missing-verdict"}
