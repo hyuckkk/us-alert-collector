@@ -128,9 +128,13 @@ def _dig(obj, path: str):
 def parse_json(data, source_id: str, base: str, mapping: dict | None) -> list[Entry]:
     if not mapping:
         return []
-    items = _dig(data, mapping["items"]) or []
+    items = _dig(data, mapping["items"]) if isinstance(data, dict) else None
+    if not isinstance(items, list):
+        raise ValueError(f"json mapping: '{mapping['items']}' is not a list")
     out = []
-    for it in items if isinstance(items, list) else []:
+    for it in items:
+        if not isinstance(it, dict):
+            continue
         title = clean_text(str(_dig(it, mapping["title"]) or ""), 300)
         url = _dig(it, mapping["url"])
         if not title or not url:
@@ -283,13 +287,16 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
         elif t == "ical":
             res.entries = parse_ical(text, sid, base)
         elif t == "json":
-            res.entries = parse_json(json.loads(text), sid, base, source.get("json"))
+            data = json.loads(text)
+            res.entries = parse_json(data, sid, base, source.get("json"))
+            if source.get("json") and not res.entries and isinstance(data, dict) and _dig(data, source["json"]["items"]):
+                res.ok, res.error = False, "json mapping matched 0 items"
         elif t == "html":
             res.entries = parse_html(text, source)
         else:
             res.ok, res.error = False, f"unknown type {t}"
         return res
-    except (httpx.HTTPError, ET.ParseError, json.JSONDecodeError, ValueError) as e:
+    except Exception as e:  # noqa: BLE001  정보원 하나의 이상한 응답이 실행 전체를 멈추지 않게
         return FetchResult(False, error=f"{type(e).__name__}: {str(e)[:200]}")
     finally:
         if own:

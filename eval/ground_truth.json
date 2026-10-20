@@ -1,0 +1,8 @@
+{
+  "_comment": "실제 발견율 평가용 기준 목록(1차 검증 10). 프로그램이 아닌 사람이 공식 페이지를 브라우저로 직접 확인해 적는다. 공개 행사 정보만(개인정보 금지). posted_at 은 공고가 처음 올라온 날(알면), verified_at 은 사람이 확인한 날. 필드가 원문에 없으면 null.",
+  "sample_plan": "Westminster 시 일정·Hyland Hills·Westminster/Anythink/덴버 도서관·학교 행사·대학 공개행사에서 2주마다 30건 내외",
+  "events": [
+    {"id": "example-delete-me", "title": "Example: Kids Clay Workshop", "org": "Butterfly Pavilion", "start_date": "2027-07-10", "location": "Butterfly Pavilion", "cost_text": "$20",
+     "url": "https://butterflies.org/event/example/", "source_page": "https://butterflies.org/events/", "posted_at": null, "verified_by": "사람 이름 대신 역할(예: owner)", "verified_at": "2026-10-20", "example": true}
+  ]
+}

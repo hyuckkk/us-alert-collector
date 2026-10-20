@@ -81,3 +81,12 @@ def test_fetch_detail_skips_menu_before_title():
     assert e.text.startswith("Kids Clay Workshop") and "Ages 6-10" in e.text and "Shop" not in e.text
     e2 = Entry("b", "https://b.org/x", "X")
     assert fetch_detail(e2, _client(lambda req: httpx.Response(404))) is False and e2.extra["detail_error"] == "HTTP 404"
+
+
+def test_unexpected_payload_shape_is_an_error_not_a_crash():
+    # JSON 의 items 가 문자열 목록인 경우(경로 매핑과 맞지 않음) — 1차 시험 조회에서 실행이 멈춘 종류의 오류
+    src = {"id": "j", "type": "json", "url": "https://x.org/j", "json": {"items": "events", "title": "event.title", "url": "event.url"}}
+    r = fetch_source(src, client=_client(lambda req: httpx.Response(200, json={"events": ["a", "b"]})))
+    assert r.ok is False and r.error == "json mapping matched 0 items"
+    r = fetch_source(src, client=_client(lambda req: httpx.Response(200, json=["not", "a", "dict"])))
+    assert r.ok is False and r.error

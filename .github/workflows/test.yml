@@ -2,11 +2,20 @@ name: test
 # 모든 push 에서 수집기(pytest)와 Worker(로컬 D1 + 가짜 텔레그램 종단 검사)를 돌린다. 외부로는 아무것도 보내지 않는다.
 on:
   push:
-    paths-ignore: ["reports/**", "ticks/**", "docs/**", "*.md"]
+    paths-ignore: ["ticks/**"]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  privacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Secret / personal data scan
+        env:
+          PRIVACY_TERMS: ${{ secrets.PRIVACY_TERMS }}
+        run: python3 scripts/privacy_scan.py
   collector:
     runs-on: ubuntu-latest
     timeout-minutes: 10

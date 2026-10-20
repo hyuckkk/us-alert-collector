@@ -117,7 +117,8 @@ export async function queueStats(env) {
 export async function eventIndex(env) {
   const rows = await all(env.DB.prepare(
     "SELECT event_key, bot, identity, url, start_date, end_date, json_extract(data,'$.title') AS title, json_extract(data,'$.title_ko') AS title_ko, " +
-    "json_extract(data,'$.org') AS org, json_extract(data,'$.city') AS city, source_id FROM events " +
+    "json_extract(data,'$.org') AS org, json_extract(data,'$.city') AS city, json_extract(data,'$.location') AS location, " +
+    "json_extract(data,'$.cost_text') AS cost_text, source_id, first_seen FROM events " +
     "WHERE COALESCE(end_date, start_date, '9999-12-31') >= date('now', '-30 days') ORDER BY last_changed DESC LIMIT 2000"));
   return { ok: true, events: rows };
 }
