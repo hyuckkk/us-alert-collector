@@ -36,14 +36,17 @@ CREATE TABLE pending (
   last_error TEXT,
   result     TEXT,                          -- AI 결과(행사 목록 JSON). Worker 등록 실패 시 AI 를 다시 부르지 않기 위함
   first_seen TEXT NOT NULL,
-  updated_at TEXT NOT NULL
+  updated_at TEXT NOT NULL,
+  lease_id   TEXT,                          -- 꺼내 간 실행의 임대 ID(동시 실행이 같은 항목을 처리하지 않게)
+  lease_until TEXT                          -- 이 시각까지 결과 보고가 없으면 다시 꺼낼 수 있음
 );
 CREATE INDEX pending_queue ON pending (status, priority DESC, first_seen);
 
--- 행사 상세 페이지 재검사 목록. fingerprint 는 날짜·가격·접수·정원·장소 관련 문장만으로 만든 해시
+-- 행사 상세 페이지 재검사 목록. fingerprint 는 날짜·가격·접수·정원·장소 관련 문장만으로 만든 해시.
+-- 한 페이지에 행사가 여럿일 수 있어 event_keys 는 목록(JSON). 재검사 주기는 그 행사들 중 가장 짧은 것.
 CREATE TABLE watch (
   url          TEXT PRIMARY KEY,
-  event_key    TEXT NOT NULL,
+  event_keys   TEXT NOT NULL DEFAULT '[]',
   source_id    TEXT,
   fingerprint  TEXT,
   reg_state    TEXT,                        -- upcoming-soon | upcoming | open | closed | unknown
@@ -67,6 +70,15 @@ CREATE TABLE source_health (
   details_ok           INTEGER NOT NULL DEFAULT 0,
   details_total        INTEGER NOT NULL DEFAULT 0,
   alt                  TEXT
+);
+
+-- 시간 알림(오늘 접수 시작·내일 마감) 처리 기록. 알림 대기열 생성과 같은 트랜잭션에서 기록해 누락·중복 없이 이어서 처리
+CREATE TABLE trigger_log (
+  event_key TEXT NOT NULL,
+  day       TEXT NOT NULL,
+  type      TEXT NOT NULL,
+  at        TEXT NOT NULL,
+  PRIMARY KEY (event_key, day)
 );
 
 -- 후보 정보원 자동 검증 결과

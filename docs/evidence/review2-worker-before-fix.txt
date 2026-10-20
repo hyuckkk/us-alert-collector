@@ -1,0 +1,13 @@
+✘ A 대기열 350건: 60건씩 반복해서 꺼내면 겹치지 않고 350건 전부 나온다 
+  같은 항목이 두 번 나옴
+✘ A 동시에 두 실행이 꺼내도 서로 다른 항목(같은 항목 중복 AI 판정 없음) 
+✘ A 처리 결과를 보고하면 임대가 풀리고, 보고 없이 임대 시간이 지나면 다시 꺼낼 수 있다 
+✘ C 같은 날 접수 시작 120건: dispatch 를 거듭하면 120건 모두 ⏰ 알림 대기열에, 중복 없음 
+  알림이 만들어진 행사 20건
+✘ F 한 페이지(URL)에 두 행사가 있으면 감시 목록이 두 행사를 모두 기억한다 
+  Expected values to be strictly deep-equal:
+  [
+  ]
+✔ F 그 페이지에서 한 행사만 바뀌면 그 행사만 새 판, 다른 행사는 그대로
+  POST http://127.0.0.1:8805/cdn-cgi/local/explorer/api/local/observability/clear - clear all captured traces and logs
+  GET http://127.0.0.1:8805/cdn-cgi/local/explorer/api - OpenAPI schema

@@ -191,13 +191,14 @@ try {
   // ------------------------------------------------ 1-3 상세 재검사
   await step("1-3 접수 예정 행사는 상세 페이지 재검사 목록에 짧은 주기로 등록, 결과 기록 후 다음 검사 예약", async () => {
     await admin("/admin/enqueue", { events: [ev("w1", { registration_status: "upcoming", registration_opens: plus(5) }), ev("w2", { source_id: "gnews:x" })] });
-    const w = sql("SELECT url, reg_state, interval_h FROM watch WHERE event_key IN ('w1','w2')");
+    const w = sql("SELECT url, reg_state, interval_h FROM watch WHERE url IN ('https://example.org/w1','https://example.org/w2')");
     assert.deepEqual(w.map((x) => [x.reg_state, x.interval_h]), [["upcoming-soon", 6]], "뉴스 출처는 감시하지 않음");
-    sql("UPDATE watch SET next_check = '2000-01-01T00:00:00Z' WHERE event_key = 'w1'");
+    sql("UPDATE watch SET next_check = '2000-01-01T00:00:00Z' WHERE url = 'https://example.org/w1'");
     const d = await admin("/admin/watch", { op: "due" });
-    assert.ok(d.items.some((x) => x.event_key === "w1"));
+    assert.ok(d.items.some((x) => x.event_keys.includes("w1")));
     await admin("/admin/watch", { op: "update", items: [{ url: "https://example.org/w1", ok: true, fingerprint: "fp1" }] });
-    const after = sql("SELECT fingerprint, next_check FROM watch WHERE event_key = 'w1'")[0];
+    const after = sql("SELECT fingerprint, next_check, interval_h FROM watch WHERE url = 'https://example.org/w1'")[0];
+    assert.equal(after.interval_h, 6, "접수 임박 행사는 6시간 주기 유지");
     assert.equal(after.fingerprint, "fp1");
     assert.ok(after.next_check > new Date().toISOString());
   });

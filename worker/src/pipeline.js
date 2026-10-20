@@ -73,17 +73,30 @@ export async function queue(env, body) {
         "json_extract(value,'$.title'), json_extract(value,'$.body'), json_extract(value,'$.hint'), json_extract(value,'$.priority'), 'queued', 0, ?1, ?1 " +
         "FROM json_each(?2) WHERE true ON CONFLICT(key) DO UPDATE SET hash = excluded.hash, url = excluded.url, title = excluded.title, body = excluded.body, " +
         "hint = COALESCE(excluded.hint, pending.hint), priority = MAX(pending.priority, excluded.priority), status = 'queued', attempts = 0, last_error = NULL, " +
-        "result = NULL, updated_at = excluded.updated_at",
+        "result = NULL, lease_id = NULL, lease_until = NULL, updated_at = excluded.updated_at",
       ).bind(now, JSON.stringify(write)).run();
     }
     return { ok: true, new: fresh, changed, written: write.length };
   }
+  // take: 꺼낸 항목에 임대를 건다(1차 재검증 A). 임대 중인 항목은 다른 실행·다음 페이지에서 나오지 않으므로
+  // 여러 번 호출해 300건이든 그 이상이든 겹치지 않게 가져갈 수 있고, 동시 실행도 서로 다른 항목을 받는다.
+  // 결과 보고(result)가 없으면 lease_minutes 뒤 다시 꺼낼 수 있다(실행이 중간에 죽은 경우).
   if (op === "take") {
     const limit = Math.min(Math.max(body.limit | 0, 1), 60);
+    const until = addMin(now, Math.min(Math.max(body.lease_minutes | 0 || 30, 5), 180));
     const rows = await all(env.DB.prepare(
-      "SELECT key, hash, source_id, url, title, body, hint, priority, status, attempts, result, first_seen FROM pending WHERE status IN ('queued', 'extracted') " +
-      "ORDER BY CASE status WHEN 'extracted' THEN 0 ELSE 1 END, priority DESC, first_seen LIMIT ?").bind(limit));
-    return { ok: true, items: rows.map((r) => ({ ...r, body: JSON.parse(r.body || "{}"), result: r.result ? JSON.parse(r.result) : null })) };
+      "UPDATE pending SET lease_id = ?1, lease_until = ?2 WHERE key IN (SELECT key FROM pending WHERE status IN ('queued', 'extracted') " +
+      "AND (lease_until IS NULL OR lease_until < ?3) ORDER BY CASE status WHEN 'extracted' THEN 0 ELSE 1 END, priority DESC, first_seen LIMIT ?4) " +
+      "RETURNING key, hash, source_id, url, title, body, hint, priority, status, attempts, result, first_seen").bind(crypto.randomUUID(), until, now, limit));
+    rows.sort((a, b) => (a.status === "extracted" ? 0 : 1) - (b.status === "extracted" ? 0 : 1) || b.priority - a.priority || (a.first_seen < b.first_seen ? -1 : 1));
+    return { ok: true, items: rows.map((r) => ({ ...r, body: JSON.parse(r.body || "{}"), result: r.result ? JSON.parse(r.result) : null })), lease_until: until };
+  }
+  // peek: 임대 없이 보기만(검증 전 정보 안내용)
+  if (op === "peek") {
+    const rows = await all(env.DB.prepare(
+      "SELECT key, source_id, url, title, priority, status, attempts, first_seen FROM pending WHERE status = 'queued' ORDER BY priority DESC, first_seen LIMIT ?")
+      .bind(Math.min(Math.max(body.limit | 0, 1), 400)));
+    return { ok: true, items: rows };
   }
   if (op === "result") {
     const items = (body.items || []).filter((x) => x && x.key && ["done", "extracted", "retry"].includes(x.status)).slice(0, 100)
@@ -96,7 +109,8 @@ export async function queue(env, body) {
       "attempts = CASE json_extract(j.value,'$.status') WHEN 'retry' THEN pending.attempts + 1 ELSE pending.attempts END, " +
       "last_error = COALESCE(json_extract(j.value,'$.error'), pending.last_error), " +
       "result = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN json_extract(j.value,'$.result') WHEN 'done' THEN NULL ELSE pending.result END, " +
-      "body = CASE json_extract(j.value,'$.status') WHEN 'done' THEN '{}' ELSE pending.body END " + // 끝난 항목은 본문을 비워 공간 절약(키·해시는 남겨 중복 방지)
+      "body = CASE json_extract(j.value,'$.status') WHEN 'done' THEN '{}' ELSE pending.body END, " + // 끝난 항목은 본문을 비워 공간 절약(키·해시는 남겨 중복 방지)
+      "lease_id = NULL, lease_until = NULL " +
       "FROM (SELECT value FROM json_each(?2)) AS j WHERE pending.key = json_extract(j.value,'$.key')",
     ).bind(now, JSON.stringify(items), QUEUE_MAX_ATTEMPTS).run();
     return { ok: true, updated: items.length };
@@ -198,7 +212,7 @@ export async function enqueue(env, body) {
     // 상세 페이지 재검사 등록(뉴스 기사·검색 결과는 제외)
     const rs = regState(e, today);
     if (rs && !String(e.source_id || "").startsWith("gnews")) {
-      watches.push({ url: e.url, event_key: e.event_key, source_id: e.source_id || null, reg_state: rs[0], interval_h: rs[1],
+      watches.push({ url: e.url, event_keys: JSON.stringify([e.event_key]), source_id: e.source_id || null, reg_state: rs[0], interval_h: rs[1],
         next_check: addMin(now, rs[1] * 60), until_date: e.end_date || e.start_date || plusDays(today, 60) });
     }
   }
@@ -225,10 +239,13 @@ export async function enqueue(env, body) {
   ];
   if (watches.length) {
     stmts.push(env.DB.prepare(
-      "INSERT INTO watch (url, event_key, source_id, reg_state, interval_h, next_check, until_date) SELECT json_extract(value,'$.url'), json_extract(value,'$.event_key'), " +
+      "INSERT INTO watch (url, event_keys, source_id, reg_state, interval_h, next_check, until_date) SELECT json_extract(value,'$.url'), json_extract(value,'$.event_keys'), " +
       "json_extract(value,'$.source_id'), json_extract(value,'$.reg_state'), json_extract(value,'$.interval_h'), json_extract(value,'$.next_check'), json_extract(value,'$.until_date') " +
-      "FROM json_each(?1) WHERE true ON CONFLICT(url) DO UPDATE SET event_key = excluded.event_key, reg_state = excluded.reg_state, interval_h = excluded.interval_h, " +
-      "until_date = excluded.until_date, next_check = MIN(watch.next_check, excluded.next_check)",
+      "FROM json_each(?1) WHERE true ON CONFLICT(url) DO UPDATE SET " +
+      // 같은 페이지의 다른 행사는 목록에 더한다(덮어쓰지 않음, 1차 재검증 F)
+      "event_keys = (SELECT json_group_array(k) FROM (SELECT value AS k FROM json_each(watch.event_keys) UNION SELECT value FROM json_each(excluded.event_keys))), " +
+      "reg_state = CASE WHEN excluded.interval_h < watch.interval_h THEN excluded.reg_state ELSE watch.reg_state END, interval_h = MIN(watch.interval_h, excluded.interval_h), " +
+      "until_date = MAX(COALESCE(watch.until_date, ''), COALESCE(excluded.until_date, '')), next_check = MIN(watch.next_check, excluded.next_check)",
     ).bind(JSON.stringify(watches)));
     stats.watch = watches.length;
   }
@@ -261,31 +278,51 @@ async function insertOutbox(env, out) {
 }
 
 // ---------------------------------------------------------------- 시간 알림: 오늘 접수 시작 / 내일 마감 (1차 검증 1-5)
+// 같은 날 수십~수백 건이 몰려도 전부 처리한다(1차 재검증 C): 아직 기록이 없는 행사만 페이지 단위로 꺼내고,
+// 판 올리기·알림 대기열·처리 기록을 한 트랜잭션(batch)으로 쓴다. 중간에 실패하면 셋 다 없던 일이 되어 다음 실행에서 다시 처리된다.
+const TRIGGER_PAGE = 40;
+const TRIGGER_PAGES_PER_CALL = 5;
 async function timeTriggers(env) {
   const today = dateIn(DENVER);
   const tomorrow = plusDays(today, 1);
-  const evs = await all(env.DB.prepare(
-    "SELECT event_key, bot, version, data, registration_opens, deadline FROM events WHERE registration_opens = ?1 OR deadline = ?2 LIMIT 20").bind(today, tomorrow));
-  if (!evs.length) return { fired: 0 };
-  const { recips, mutedTags } = await recipientsFor(env);
-  const states = new Map((await all(env.DB.prepare("SELECT chat_id, item_key, state FROM item_state WHERE item_key IN (SELECT value FROM json_each(?))")
-    .bind(JSON.stringify(evs.map((e) => e.event_key))))).map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
-  let fired = 0;
-  for (const ev of evs) {
-    const type = ev.registration_opens === today ? "open" : "deadline";
-    if (!(await claimNotice(env, `trig:${type}:${ev.event_key}:${today}`))) continue;
-    const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot: ev.bot, urgency: "now" };
-    const version = ev.version + 1;
-    const note = type === "open" ? "⏰ 오늘 접수 시작" : "⏰ 내일 신청 마감";
-    await env.DB.prepare("UPDATE events SET version = ?, change_note = ?, last_changed = ? WHERE event_key = ?").bind(version, note, nowIso(), ev.event_key).run();
-    const out = [];
-    for (const r of recips) {
-      // 접수 시작은 확인한 사람에게도(신청 시점), 마감 알림은 확인하지 않은 사람에게만
-      const [kind] = targetKind(env, r, e, states, mutedTags, { kind: "now", skipAcked: type === "deadline" });
-      if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind: kind === "season" ? "season" : "now" });
+  let fired = 0, ctx = null;
+  for (let page = 0; page < TRIGGER_PAGES_PER_CALL; page++) {
+    const evs = await all(env.DB.prepare(
+      "SELECT e.event_key, e.bot, e.version, e.data, e.registration_opens, e.deadline FROM events e " +
+      "WHERE (e.registration_opens = ?1 OR e.deadline = ?2) AND NOT EXISTS (SELECT 1 FROM trigger_log t WHERE t.event_key = e.event_key AND t.day = ?1) " +
+      "ORDER BY e.event_key LIMIT ?3").bind(today, tomorrow, TRIGGER_PAGE));
+    if (!evs.length) break;
+    if (!ctx) ctx = await recipientsFor(env);
+    const states = new Map((await all(env.DB.prepare("SELECT chat_id, item_key, state FROM item_state WHERE item_key IN (SELECT value FROM json_each(?))")
+      .bind(JSON.stringify(evs.map((e) => e.event_key))))).map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
+    const bumps = [], out = [], logs = [];
+    for (const ev of evs) {
+      const type = ev.registration_opens === today ? "open" : "deadline";
+      const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot: ev.bot, urgency: "now" };
+      const version = ev.version + 1;
+      bumps.push({ event_key: ev.event_key, version, note: type === "open" ? "⏰ 오늘 접수 시작" : "⏰ 내일 신청 마감" });
+      logs.push({ event_key: ev.event_key, type });
+      for (const r of ctx.recips) {
+        // 접수 시작은 확인한 사람에게도(신청 시점), 마감 알림은 확인하지 않은 사람에게만
+        const [kind] = targetKind(env, r, e, states, ctx.mutedTags, { kind: "now", skipAcked: type === "deadline" });
+        if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind: kind === "season" ? "season" : "now" });
+      }
     }
-    await insertOutbox(env, out);
-    fired++;
+    const now = nowIso();
+    const stmts = [
+      env.DB.prepare("UPDATE events SET version = json_extract(j.value,'$.version'), change_note = json_extract(j.value,'$.note'), last_changed = ?1 " +
+        "FROM (SELECT value FROM json_each(?2)) AS j WHERE events.event_key = json_extract(j.value,'$.event_key')").bind(now, JSON.stringify(bumps)),
+      env.DB.prepare("INSERT INTO trigger_log (event_key, day, type, at) SELECT json_extract(value,'$.event_key'), ?1, json_extract(value,'$.type'), ?2 " +
+        "FROM json_each(?3) WHERE true ON CONFLICT(event_key, day) DO NOTHING").bind(today, now, JSON.stringify(logs)),
+    ];
+    if (out.length) {
+      stmts.push(env.DB.prepare("INSERT INTO outbox (chat_id, bot, event_key, version, kind, created_at) SELECT json_extract(value,'$.chat_id'), json_extract(value,'$.bot'), " +
+        "json_extract(value,'$.event_key'), json_extract(value,'$.version'), json_extract(value,'$.kind'), ?1 FROM json_each(?2) WHERE true " +
+        "ON CONFLICT(chat_id, bot, event_key, version) DO NOTHING").bind(now, JSON.stringify(out)));
+    }
+    await env.DB.batch(stmts);
+    fired += evs.length;
+    if (evs.length < TRIGGER_PAGE) break;
   }
   return { fired };
 }
@@ -465,21 +502,33 @@ export async function digest(env, opts = {}) {
 export async function watch(env, body) {
   const now = nowIso();
   if (body.op === "due") {
-    await env.DB.prepare("DELETE FROM watch WHERE until_date IS NOT NULL AND until_date < ?").bind(plusDays(dateIn(DENVER), -1)).run();
-    const rows = await all(env.DB.prepare("SELECT url, event_key, source_id, fingerprint, reg_state, interval_h, failures FROM watch WHERE next_check <= ? ORDER BY next_check LIMIT ?")
+    await env.DB.prepare("DELETE FROM watch WHERE until_date IS NOT NULL AND until_date <> '' AND until_date < ?").bind(plusDays(dateIn(DENVER), -1)).run();
+    const rows = await all(env.DB.prepare("SELECT url, event_keys, source_id, fingerprint, reg_state, interval_h, failures FROM watch WHERE next_check <= ? ORDER BY next_check LIMIT ?")
       .bind(now, Math.min(body.limit | 0 || 60, 150)));
-    return { ok: true, items: rows };
+    return { ok: true, items: rows.map((r) => ({ ...r, event_keys: JSON.parse(r.event_keys || "[]") })) };
   }
   if (body.op === "update") {
     const items = (body.items || []).filter((x) => x && x.url).slice(0, 150);
+    if (!items.length) return { ok: true, updated: 0 };
+    // 다음 검사 주기는 그 페이지 행사들의 현재 접수 상태 중 가장 짧은 것으로 다시 계산
+    const rows = await all(env.DB.prepare("SELECT url, event_keys FROM watch WHERE url IN (SELECT value FROM json_each(?))").bind(JSON.stringify(items.map((x) => x.url))));
+    const keys = [...new Set(rows.flatMap((r) => JSON.parse(r.event_keys || "[]")))];
+    const evs = new Map((await all(env.DB.prepare("SELECT event_key, data FROM events WHERE event_key IN (SELECT value FROM json_each(?))").bind(JSON.stringify(keys))))
+      .map((e) => [e.event_key, JSON.parse(e.data)]));
+    const today = dateIn(DENVER);
+    const interval = new Map(rows.map((r) => {
+      const st = JSON.parse(r.event_keys || "[]").map((k) => evs.get(k)).filter(Boolean).map((e) => regState(e, today)).filter(Boolean);
+      return [r.url, st.length ? st.reduce((a, b) => (b[1] < a[1] ? b : a)) : ["unknown", 72]];
+    }));
+    const payload = items.map((x) => ({ ...x, ok: x.ok ? 1 : 0, reg_state: (interval.get(x.url) || ["unknown", 72])[0], interval_h: (interval.get(x.url) || ["unknown", 72])[1] }));
     await env.DB.prepare(
-      "UPDATE watch SET last_checked = ?1, " +
+      "UPDATE watch SET last_checked = ?1, reg_state = json_extract(j.value,'$.reg_state'), interval_h = json_extract(j.value,'$.interval_h'), " +
       "fingerprint = CASE WHEN json_extract(j.value,'$.ok') THEN json_extract(j.value,'$.fingerprint') ELSE watch.fingerprint END, " +
       "failures = CASE WHEN json_extract(j.value,'$.ok') THEN 0 ELSE watch.failures + 1 END, " +
-      "next_check = CASE WHEN json_extract(j.value,'$.ok') THEN strftime('%Y-%m-%dT%H:%M:%fZ', ?1, '+' || watch.interval_h || ' hours') " +
-      "  ELSE strftime('%Y-%m-%dT%H:%M:%fZ', ?1, '+' || MIN(watch.interval_h * (1 << MIN(watch.failures + 1, 4)), 168) || ' hours') END " +
+      "next_check = CASE WHEN json_extract(j.value,'$.ok') THEN strftime('%Y-%m-%dT%H:%M:%fZ', ?1, '+' || json_extract(j.value,'$.interval_h') || ' hours') " +
+      "  ELSE strftime('%Y-%m-%dT%H:%M:%fZ', ?1, '+' || MIN(json_extract(j.value,'$.interval_h') * (1 << MIN(watch.failures + 1, 4)), 168) || ' hours') END " +
       "FROM (SELECT value FROM json_each(?2)) AS j WHERE watch.url = json_extract(j.value,'$.url')",
-    ).bind(now, JSON.stringify(items)).run();
+    ).bind(now, JSON.stringify(payload)).run();
     return { ok: true, updated: items.length };
   }
   if (body.op === "stats") {

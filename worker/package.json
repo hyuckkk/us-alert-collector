@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "test": "node test/local-e2e.mjs && node test/pipeline-e2e.mjs && node test/reliability-e2e.mjs"
+    "test": "node test/local-e2e.mjs && node test/pipeline-e2e.mjs && node test/reliability-e2e.mjs && node test/review2-e2e.mjs"
   },
   "devDependencies": {
     "wrangler": "4.146.0"
