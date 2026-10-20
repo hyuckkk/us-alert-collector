@@ -1,5 +1,5 @@
 {
- "run_id": "20261020T060056Z",
+ "run_id": "20261020T060453Z",
  "today": "2026-10-20",
  "dry_run": true,
  "sources": [
@@ -26,10 +26,10 @@
   },
   {
    "id": "hyland-hills",
-   "ok": true,
-   "status": 200,
-   "items": 11,
-   "error": null
+   "ok": false,
+   "status": null,
+   "items": 0,
+   "error": "ConnectTimeout: timed out"
   },
   {
    "id": "anythink-events",
@@ -110,7 +110,8 @@
   }
  ],
  "dropped": {
-  "not-relevant": 24,
+  "not-relevant": 22,
+  "past": 1,
   "judge-removed": 0
  },
  "events": [
@@ -118,13 +119,13 @@
    "event_key": "ec780cca6d75aabc",
    "bot": "family",
    "title": "Fire Safety Booth @ West View Recreation Center",
-   "title_ko": "웨스트 뷰 레크리에이션 센터 화재 안전 부스",
+   "title_ko": "웨스트뷰 레크리에이션 센터 소방 안전 부스",
    "org": null,
    "start_date": "2026-10-28",
    "end_date": "2026-10-28",
-   "time_text": "08:00 AM - 10:00 AM",
+   "time_text": "08:00-10:00",
    "event_tz": "America/Denver",
-   "location": "West View Recreation Center, 10747 W. 108th Avenue",
+   "location": "West View Recreation Center",
    "city": "Westminster",
    "age_text": null,
    "english": [],
@@ -133,7 +134,7 @@
    "deadline": null,
    "status_note": null,
    "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1743",
-   "checked_at": "2026-10-20T06:00:56+00:00",
+   "checked_at": "2026-10-20T06:04:53+00:00",
    "urgency": "weekly",
    "tags": [
     "safety",
@@ -149,13 +150,13 @@
    "event_key": "e8a7fc18f368710a",
    "bot": "family",
    "title": "Fire Safety Booth @ Adams County Human Services",
-   "title_ko": "애덤스 카운티 인간서비스 센터 화재 안전 부스",
+   "title_ko": "애덤스 카운티 휴먼서비스 소방 안전 부스",
    "org": null,
    "start_date": "2026-10-29",
    "end_date": "2026-10-29",
-   "time_text": "12:00 PM - 03:00 PM",
+   "time_text": "12:00-15:00",
    "event_tz": "America/Denver",
-   "location": "Adams County Human Services, 11860 N. Pecos St",
+   "location": "Adams County Human Services, 11860 N. Pecos St.",
    "city": "Westminster",
    "age_text": null,
    "english": [],
@@ -164,7 +165,7 @@
    "deadline": null,
    "status_note": null,
    "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1744",
-   "checked_at": "2026-10-20T06:00:56+00:00",
+   "checked_at": "2026-10-20T06:04:53+00:00",
    "urgency": "weekly",
    "tags": [
     "safety",
@@ -177,183 +178,67 @@
    "_source_text": "Event date: October 29, 2026 Event Time: 12:00 PM - 03:00 PM Location: 11860 N. Pecos St Westminster, CO 80234"
   },
   {
-   "event_key": "e2a7ce90c26f9ea6",
-   "bot": "life",
-   "title": "Winter Coed BB Volleyball League",
-   "title_ko": "겨울 혼성 BB 배구 리그",
-   "org": "Westminster Parks and Recreation",
-   "start_date": "2027-01-06",
-   "end_date": "2027-03-10",
-   "time_text": "18:00-20:00",
-   "event_tz": "America/Denver",
-   "location": "West View Recreation Center, 10747 W 108th Ave",
-   "city": "Westminster",
-   "age_text": "18세 이상",
-   "english": [
-    "반복 만남"
-   ],
-   "cost_text": "팀 참가비 $345",
-   "signup": "unknown",
-   "deadline": null,
-   "status_note": null,
-   "url": "https://www.westminsterco.gov/adultvolleyball",
-   "checked_at": "2026-10-20T06:00:56+00:00",
-   "urgency": "weekly",
-   "tags": [
-    "volleyball",
-    "league"
-   ],
-   "annual": false,
-   "year_label": "2027년 행사",
-   "source_id": "ai-discover",
-   "registration_opens": null,
-   "_source_text": "Adult Volleyball | Westminster, CO Skip to Main Content Search Programs & Classes Libraries Golf Events Parks & Open Space Facilities Parks and Recreation /QuickLinks.aspx Home Government Departments Parks & Recreation Programs & Classes Athletics Adult Volleyball Adult Volleyball Bump, set, spike! Volleyball is a great way to get together with friends and get a great workout in. Learn more about "
-  },
-  {
-   "event_key": "e01eefdc9f8aa444",
-   "bot": "life",
-   "title": "Senior Women's Volleyball Drop-In",
-   "title_ko": "시니어 여성 배구 드롭인",
-   "org": "Westminster Parks and Recreation",
+   "event_key": "e53008bb5118ff71",
+   "bot": "family",
+   "title": "Children's Museum of Denver exhibits",
+   "title_ko": "덴버 어린이 박물관 전시 (Children's Museum of Denver)",
+   "org": "Children's Museum of Denver",
    "start_date": null,
    "end_date": null,
-   "time_text": "09:00-12:00",
+   "time_text": null,
    "event_tz": "America/Denver",
-   "location": "City Park Recreation Center",
-   "city": "Westminster",
-   "age_text": "시니어 여성 대상",
-   "english": [
-    "초보 가능",
-    "반복 만남"
-   ],
-   "cost_text": "가입비 없음, 일일 입장료 또는 이용권 필요",
+   "location": "Children's Museum of Denver",
+   "city": "Denver",
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
    "signup": "none",
    "deadline": null,
-   "status_note": "매주 월요일 오전 9시~정오 진행, 최소 10명이 모여야 경기 가능, TeamReach 앱에서 그룹 코드 westydropin1로 가입 후 출석 기록",
-   "url": "https://www.westminsterco.gov/adultvolleyball",
-   "checked_at": "2026-10-20T06:00:56+00:00",
+   "status_note": "상설 전시 (Snow Days 등 계절 전시는 별도 개장일 확인)",
+   "url": "https://www.mychildsmuseum.org/exhibits",
+   "checked_at": "2026-10-20T06:04:53+00:00",
    "urgency": "weekly",
    "tags": [
-    "volleyball",
-    "drop-in",
+    "museum",
+    "family",
     "info"
    ],
    "annual": false,
    "year_label": null,
-   "source_id": "ai-discover",
+   "source_id": "childrens-museum",
    "registration_opens": null,
-   "_source_text": "Adult Volleyball | Westminster, CO Skip to Main Content Search Programs & Classes Libraries Golf Events Parks & Open Space Facilities Parks and Recreation /QuickLinks.aspx Home Government Departments Parks & Recreation Programs & Classes Athletics Adult Volleyball Adult Volleyball Bump, set, spike! Volleyball is a great way to get together with friends and get a great workout in. Learn more about "
+   "_source_text": "Exhibits | Children's Museum of Denver Menu home exhibits visit museum guest expectations babies at the museum eat & shop accessibility group visits gift certificates parking Discounts & Coupons what's happening? camps & workshops get involved membership donate volunteer partnerships corporate membership contact join/renew educators school programs self-guided field trips about jobs what we do boa"
   }
  ],
  "discover": {
   "dropped_urls": 0,
-  "result_urls": 29,
-  "raw_text": "3/Adult-Softball\",\"name\":\"City of Westminster – Adult Softball\",\"reason\":\"Page for the city's adult softball leagues, which run by season.\",\"bots\":[\"adults\"]},{\"url\":\"https://www.westminsterco.gov/336/Nature-Outdoor\",\"name\":\"City of Westminster – Nature & Outdoor\",\"reason\":\"Nature and outdoor recreation programs run by the city.\",\"bots\":[\"adults\",\"family\"]},{\"url\":\"https://www.denverlibrary.org/library-lineup\",\"name\":\"Denver Public Library – The Library Lineup\",\"reason\":\"Adult programs held across Denver in library branches, galleries, parks and public spaces. Includes reading, discussion and creative programs.\",\"bots\":[\"adults\"]},{\"url\":\"https://www.denverlibrary.org/category/blog-categories/library-events\",\"name\":\"Denver Public Library – Library Events\",\"reason\":\"The library's ongoing events listing.\",\"bots\":[\"adults\",\"family\"]},{\"url\":\"https://www.denverlibrary.org/category/free-tagging/programs-programming-adult\",\"name\":\"Denver Public Library – Adult Programming\",\"reason\":\"Collects the library's posts about adult programs.\",\"bots\":[\"adults\"]}],\"events\":[{\"url\":\"https://www.westminsterco.gov/adultvolleyball\",\"title\":\"Westminster adult volleyball league registration\",\"why\":\"Leagues run by season. Check summer/fall 2027 registration dates soon after arriving in June.\"},{\"url\":\"https://www.westminsterco.gov/313/Adult-Softball\",\"title\":\"Westminster adult softball season registration\",\"why\":\"Fall league sign-up may open around the time the family arrives in summer 2027.\"}]}\n```",
+  "result_urls": 31,
+  "raw_text": "{\"sources\":[{\"url\":\"https://www.westminsterco.gov/292/Adult-Lifelong-Learning\",\"name\":\"City of Westminster – Adult Lifelong Learning\",\"reason\":\"The city's own page for adult classes. Topics range from arts and music to health and wellness, parenting support, genealogy and new technology like AI. It is the main place for Westminster adult hobby and skills programs.\",\"bots\":[\"adults\"]},{\"url\":\"https://jeffcolibrary.bibliocommons.com/v2/events\",\"name\":\"Jefferson County Public Library (CO) – Events calendar\",\"reason\":\"A calendar for the nearby Jeffco library system, which includes Arvada next to Westminster. You can filter it by type, such as DIY and Crafting. It lists recurring English as a Second Language classes, which are useful for adults new to the country.\",\"bots\":[\"adults\",\"kids\"]}],\"events\":[{\"url\":\"https://jeffcolibrary.bibliocommons.com/v2/events\",\"title\":\"English as a Second Language Class (Jefferson County Public Library)\",\"why\":\"A recurring free evening ESL class, listed Wednesdays 5:30–8:00pm. It could help Korean-speaking adults settling in. Check for current dates when you arrive in June 2027.\"}]}",
   "theme": "adult hobby and skills classes (crafts, cooking, tech, language exchange, sports leagues)",
   "sources": [
    {
     "url": "https://www.westminsterco.gov/292/Adult-Lifelong-Learning",
     "name": "City of Westminster – Adult Lifelong Learning",
-    "reason": "The city recreation department runs educational seminars, classes and special events for adults. Topics include arts, music, health and wellness, parenting, genealogy, and tech such as AI.",
+    "reason": "The city's own page for adult classes. Topics range from arts and music to health and wellness, parenting support, genealogy and new technology like AI. It is the main place for Westminster adult hobby and skills programs.",
     "bots": [
      "adults"
     ]
    },
    {
-    "url": "https://www.westminsterco.gov/173/Programs-Classes",
-    "name": "City of Westminster – Programs & Classes",
-    "reason": "Main page for Westminster recreation programs: adult trips, events and athletics, aquatics, and the scholarship/reduced-rate pass program for Westminster and Hyland Hills residents.",
+    "url": "https://jeffcolibrary.bibliocommons.com/v2/events",
+    "name": "Jefferson County Public Library (CO) – Events calendar",
+    "reason": "A calendar for the nearby Jeffco library system, which includes Arvada next to Westminster. You can filter it by type, such as DIY and Crafting. It lists recurring English as a Second Language classes, which are useful for adults new to the country.",
     "bots": [
      "adults",
-     "kids",
-     "family"
-    ]
-   },
-   {
-    "url": "https://www.westminsterco.gov/325/Fitness-Wellness",
-    "name": "City of Westminster – Fitness & Wellness",
-    "reason": "Lists more than 170 drop-in fitness classes a week, Active Adults programs, and flying trapeze and aerial fitness (Fly Mile High).",
-    "bots": [
-     "adults"
-    ]
-   },
-   {
-    "url": "https://www.westminsterco.gov/adultvolleyball",
-    "name": "City of Westminster – Adult Volleyball Leagues",
-    "reason": "Volleyball league information. You can register online or by calling City Park Recreation Center or the Westminster Sports Center.",
-    "bots": [
-     "adults"
-    ]
-   },
-   {
-    "url": "https://www.westminsterco.gov/312/Adult-Indoor-Soccer",
-    "name": "City of Westminster – Adult Indoor Soccer",
-    "reason": "Page for the city's adult indoor soccer league.",
-    "bots": [
-     "adults"
-    ]
-   },
-   {
-    "url": "https://www.westminsterco.gov/318/Adult-Pickleball-Tennis",
-    "name": "City of Westminster – Adult Pickleball & Tennis",
-    "reason": "Page for the city's adult pickleball and tennis programs.",
-    "bots": [
-     "adults"
-    ]
-   },
-   {
-    "url": "https://www.westminsterco.gov/313/Adult-Softball",
-    "name": "City of Westminster – Adult Softball",
-    "reason": "Page for the city's adult softball leagues, which run by season.",
-    "bots": [
-     "adults"
-    ]
-   },
-   {
-    "url": "https://www.westminsterco.gov/336/Nature-Outdoor",
-    "name": "City of Westminster – Nature & Outdoor",
-    "reason": "Nature and outdoor recreation programs run by the city.",
-    "bots": [
-     "adults",
-     "family"
-    ]
-   },
-   {
-    "url": "https://www.denverlibrary.org/library-lineup",
-    "name": "Denver Public Library – The Library Lineup",
-    "reason": "Adult programs held across Denver in library branches, galleries, parks and public spaces. Includes reading, discussion and creative programs.",
-    "bots": [
-     "adults"
-    ]
-   },
-   {
-    "url": "https://www.denverlibrary.org/category/blog-categories/library-events",
-    "name": "Denver Public Library – Library Events",
-    "reason": "The library's ongoing events listing.",
-    "bots": [
-     "adults",
-     "family"
-    ]
-   },
-   {
-    "url": "https://www.denverlibrary.org/category/free-tagging/programs-programming-adult",
-    "name": "Denver Public Library – Adult Programming",
-    "reason": "Collects the library's posts about adult programs.",
-    "bots": [
-     "adults"
+     "kids"
     ]
    }
   ],
   "events": [
    {
-    "url": "https://www.westminsterco.gov/adultvolleyball",
-    "title": "Westminster adult volleyball league registration",
-    "why": "Leagues run by season. Check summer/fall 2027 registration dates soon after arriving in June."
-   },
-   {
-    "url": "https://www.westminsterco.gov/313/Adult-Softball",
-    "title": "Westminster adult softball season registration",
-    "why": "Fall league sign-up may open around the time the family arrives in summer 2027."
+    "url": "https://jeffcolibrary.bibliocommons.com/v2/events",
+    "title": "English as a Second Language Class (Jefferson County Public Library)",
+    "why": "A recurring free evening ESL class, listed Wednesdays 5:30–8:00pm. It could help Korean-speaking adults settling in. Check for current dates when you arrive in June 2027."
    }
   ]
  },
@@ -362,7 +247,7 @@
   "changed": 0,
   "same": 0,
   "outbox": 0,
-  "accepted": 4,
+  "accepted": 3,
   "skipped": {},
   "dry_run": true
  },
@@ -371,39 +256,39 @@
  },
  "usage": {
   "claude-opus-5-5": {
-   "input_tokens": 49851,
-   "output_tokens": 2494,
-   "usd": 0.299284,
+   "input_tokens": 42527,
+   "output_tokens": 1689,
+   "usd": 0.253888,
    "calls": 2,
    "searches": 5
   },
   "claude-haiku-5-5": {
-   "input_tokens": 17117,
-   "output_tokens": 6520,
-   "usd": 0.004971700000000001,
+   "input_tokens": 15888,
+   "output_tokens": 5508,
+   "usd": 0.0043428,
    "calls": 3,
    "searches": 0
   }
  },
  "metrics": {
   "sources_total": 15,
-  "sources_ok": 10,
+  "sources_ok": 9,
   "queries": 9,
-  "entries_fetched": 472,
+  "entries_fetched": 464,
   "entries_new": 25,
   "entries_seen": 0,
-  "ai_items": 27,
-  "events_out": 4,
+  "ai_items": 26,
+  "events_out": 3,
   "outbox": 0,
-  "input_tokens": 66968,
-  "output_tokens": 9014,
-  "usd": 0.3043,
+  "input_tokens": 58415,
+  "output_tokens": 7197,
+  "usd": 0.2582,
   "searches": 5,
   "details_ok": 1,
   "details_total": 1,
   "calls": 5
  },
  "alerts": [
-  "신규 472건 중 25건만 처리(실행당 상한)"
+  "신규 464건 중 25건만 처리(실행당 상한)"
  ]
 }
