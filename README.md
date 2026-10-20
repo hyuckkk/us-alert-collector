@@ -17,18 +17,26 @@
 - 만료일 알림: `/expiry <이름> <YYYY-MM-DD>` 로 등록 → 14·7·3·1·0일 전에 @ColoradoLife_bot DM
 - API 키 점검: 매일 `key-check` 워크플로(토큰 0) → 키가 거부되면 DM. 같은 워크플로가 만료일 점검도 실행(Cloudflare 무료 cron 한도는 한국 Worker 가 사용 중)
 
-설치·비밀값 입력: [docs/SETUP-0.md](docs/SETUP-0.md)
+설치·비밀값 입력: [docs/SETUP-0.md](docs/SETUP-0.md) · 구조: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · 1차 검증 자료: [docs/REVIEW-1.md](docs/REVIEW-1.md)
+
+## 1단계 (브랜치 `stage1-review`, 운영 미반영)
+수집(A)·발굴(B)·AI 추출/판단·규칙 처리·사람별 대기열·주간 요약·측정. 지인 발송은 `DELIVERY_MODE=owner-only` 로 잠겨 있다.
 
 ## 워크플로
 | 이름 | 언제 | 하는 일 |
 |---|---|---|
 | deploy-worker | `worker/` push, 수동 | D1 생성·스키마 적용, Worker 배포, 비밀값 복사, 웹훅 등록 |
 | admin | 수동(action 선택), `ticks/admin` push | test-send / clicks / status / setup / run-cron |
+| collect | 매일 12:30 UTC(main), 브랜치는 ticks/collect-dry push 시 시험 실행 | 수집·판정·대기열·즉시 발송 |
+| dispatch | 매시 20분(main) | 미뤄진 즉시 알림, 주간 요약, 월요일 주간 보고 |
+| probe-sources | 등록부 변경 push | 정보원 시험 조회 → reports/probe.json |
+| test | 모든 push | pytest + Worker 종단 검사 |
 | key-check | 매일 00:05 UTC(09:05 한국), 수동 | Anthropic 키 점검, 만료일 알림·웹훅 점검 실행(run-cron), 30일 무활동 방지 커밋 |
 
 ## 로컬 검사
 ```bash
 cd worker && npm ci && npm test   # 가짜 텔레그램 서버 + 로컬 D1, 실제로는 아무것도 보내지 않음
+pip install -r collector/requirements.txt pytest && python -m pytest collector/tests
 ```
 
 ## 개인정보 원칙
