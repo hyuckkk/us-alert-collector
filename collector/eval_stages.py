@@ -99,6 +99,14 @@ def evaluate(gt: dict, trace: dict, today: date, owner_from: str | None) -> dict
             "notify_friend": notify(ev, today, None),
             "notify_owner": notify(ev, today, owner_from) if owner_from else "소유자 참가 가능일(비밀값) 필요",
         })
+    by_id = {t["id"]: t for t in gt["events"]}
+    for r in rows:
+        r["independent"] = bool(by_id.get(r["id"], {}).get("independent"))
+    groups = {"all": rows, "original": [r for r in rows if not r["independent"]], "independent": [r for r in rows if r["independent"]]}
+    return {"summary": summarize(rows), "by_group": {k: summarize(v) for k, v in groups.items() if v}, "rows": rows}
+
+
+def summarize(rows: list[dict]) -> dict:
     valid = [r for r in rows if r["valid"]]
     invalid = [r for r in rows if not r["valid"]]
     n = len(valid) or 1
@@ -118,8 +126,9 @@ def evaluate(gt: dict, trace: dict, today: date, owner_from: str | None) -> dict
         "cost_correct": f"{sum(1 for r in valid if r['cost'] == '일치')}/{sum(1 for r in valid if r['cost'] != '기준 미확인')}",
         "age_correct": f"{sum(1 for r in valid if r['age'] == '일치')}/{sum(1 for r in valid if r['age'] not in ('제한 없음', '기준 문구만(비교 생략)'))}",
         "excluded_wrongly_notified": f"{sum(1 for r in invalid if r['notify_friend'].startswith('대상'))}/{len(invalid)}",
+        "registration_date_errors": [r["id"] for r in valid if r["participation"] == "registration_opening" and r["date"].startswith(("불일치", "누락"))],
     }
-    return {"summary": summary, "rows": rows}
+    return summary
 
 
 def main(argv=None) -> int:

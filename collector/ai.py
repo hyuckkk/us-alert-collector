@@ -54,6 +54,10 @@ class Usage:
     prices: dict
     web_search_usd: float = 0.01
     by_model: dict = field(default_factory=dict)
+    cap: float | None = None   # 실행당 비용 상한(달러). 호출 전 '지금까지 + 그 호출의 최악 비용'이 넘으면 호출하지 않는다
+
+    def allows(self, reserve: float) -> bool:
+        return self.cap is None or self.usd + reserve <= self.cap
 
     def _m(self, model: str) -> dict:
         return self.by_model.setdefault(model, {"input_tokens": 0, "output_tokens": 0, "cache_write_tokens": 0, "cache_read_tokens": 0,
@@ -207,6 +211,8 @@ def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> Extra
     for start in range(0, len(entries), c["batch"]):
         chunk = entries[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
+        if not out.stopped and not usage.allows(c.get("reserve_usd", 0.02)):
+            out.stopped = "run-cost-cap"
         if out.stopped:
             out.failed.update({i: f"not-attempted: {out.stopped}" for i in idx})
             continue
@@ -277,6 +283,9 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
     for start in range(0, len(items), c["batch"]):
         chunk = items[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
+        if not usage.allows(c.get("reserve_usd", 0.4)):
+            out.missing.update({i: "run-cost-cap" for i in idx})
+            continue
         body = "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 2000)}, ensure_ascii=False) for i, (ev, txt) in enumerate(chunk))
         try:
             resp = client.beta.messages.parse(
@@ -352,6 +361,8 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_
     seen_urls: set[str] = set()
     text = ""
     for _ in range(3):  # pause_turn 이면 이어서 요청
+        if not usage.allows(c.get("reserve_usd", 1.2)):
+            break
         resp = client.beta.messages.create(
             model=c["model"], max_tokens=c["max_tokens"], system=DISCOVER_SYSTEM, messages=messages, tools=tools,
             output_config={"effort": c["effort"]}, betas=[FALLBACK_BETA], fallbacks="default",

@@ -161,6 +161,9 @@ class Run:
         themes = ([(b, t) for b, t in DAILY_THEMES.items()] if cfg.get("daily_per_bot", True) else []) + [("deep", DEEP_THEMES[self.today.weekday()])]
         found_sources, found_events, errors = [], [], 0
         for bot, theme in themes:
+            if not self.usage.allows(cfg.get("reserve_usd", 1.2)):
+                self.alerts.append(f"실행 비용 상한(${self.usage.cap}) — AI 발굴 '{bot}' 이후 생략")
+                break
             try:
                 d = ai.discover(self.client, self.models, theme, known, self.usage, max_searches=cfg["max_searches_deep"] if bot == "deep" else cfg["max_searches"])
                 self.m["discover_calls"] += 1
@@ -258,6 +261,7 @@ class Run:
         if self.usage is None:
             import ai
             self.usage = ai.Usage(self.models["prices"], self.models.get("web_search_usd", 0.01))
+            self.usage.cap = getattr(self.args, "usd_cap", None)
             self.client = self.client or ai.get_client()
             budget = self.models["limits"]["monthly_budget_usd"]
             self.spent = self.api.month_usd()
@@ -534,6 +538,7 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
     ap.add_argument("--only")
     ap.add_argument("--max", type=int)
     ap.add_argument("--out")
+    ap.add_argument("--usd-cap", type=float, help="이번 실행의 AI 비용 상한(달러). 각 호출의 최악 비용을 미리 더해 넘으면 호출하지 않는다")
     ap.add_argument("--trace", help="단계별 발견 측정용 기록 파일(수집 항목의 출처 단계·AI 처리 결과). collector/eval_stages.py 가 읽는다")
     args = ap.parse_args(argv)
     r = Run(args, client, api)

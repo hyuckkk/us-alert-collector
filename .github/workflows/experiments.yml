@@ -4,11 +4,11 @@ name: experiments
 #  ticks/reference push → 기준 목록 후보(공식 게시판 패널, AI 없음)               — 무료
 #  ticks/groundtruth push → 기준 목록 원문 문장 수집 + 감시 정보원 목록 대조(AI 없음) — 무료
 #  ticks/coverage    push → 정보원 보강 전후 수집 범위 + 키워드 검색 대조(AI 없음)     — 무료
-#  ticks/fullsystem  push → 전체 수집 성능(정보원·검색·AI 발굴·AI 추출·판정, 건식) + 기준 행사별 단계 평가 — 유료(약 $3–6, 승인 후에만)
+#  ticks/fullsystem  push → 전체 수집 성능(정보원·검색·AI 발굴·AI 추출·판정, 건식) + 기준 행사별 단계 평가 — 유료(상한 usd_cap 기본 $5, 승인 후에만)
 on:
   push:
     branches-ignore: [main]
-    paths: ["ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem"]
+    paths: ["ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent"]
 permissions:
   contents: write
 concurrency:
@@ -30,6 +30,7 @@ jobs:
           echo "COMPARE=$(echo "$changed" | grep -q ticks/compare && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "REFERENCE=$(echo "$changed" | grep -q ticks/reference && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "GROUNDTRUTH=$(echo "$changed" | grep -q ticks/groundtruth && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "INDEPENDENT=$(echo "$changed" | grep -q ticks/independent && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "COVERAGE=$(echo "$changed" | grep -q ticks/coverage && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "FULLSYSTEM=$(echo "$changed" | grep -q ticks/fullsystem && echo 1 || echo 0)" >> "$GITHUB_ENV"
       - name: Model comparison
@@ -46,6 +47,9 @@ jobs:
       - name: Ground truth page facts
         if: env.GROUNDTRUTH == '1'
         run: python collector/verify_ground_truth.py
+      - name: Independent sample candidates (no AI)
+        if: env.INDEPENDENT == '1'
+        run: python collector/verify_ground_truth.py --panel eval/independent_panel.json --out eval/independent_pages.json
       - name: Coverage before/after new sources
         if: env.COVERAGE == '1'
         run: python collector/coverage.py
@@ -55,16 +59,22 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           HOUSEHOLD_PROFILE: ${{ secrets.HOUSEHOLD_PROFILE }}
           NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
+          FAMILY_AVAILABLE_FROM: ${{ secrets.FAMILY_AVAILABLE_FROM }}
         run: |
-          # --dry-run: Worker·텔레그램에 쓰지 않음. 건식 실행은 Worker 의 월 사용액을 모르므로 --max 로 비용 상한을 둔다.
-          MAX=$(grep -oE '^max=[0-9]+' ticks/fullsystem | cut -d= -f2); MAX=${MAX:-1500}
-          python collector/run.py --mode full --dry-run --max "$MAX" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
-          python collector/eval_stages.py reports/fullsystem-trace.json --out eval/stages.json
+          # --dry-run: Worker·텔레그램에 쓰지 않음. 비용은 --usd-cap 이 막는다(각 AI 호출 전 '지금까지 + 그 호출의 최악 비용'이 상한을 넘으면 호출 안 함).
+          # --max 는 처리 건수 상한일 뿐 비용 상한이 아니다.
+          MAX=$(grep -oE '^max=[0-9]+' ticks/fullsystem | cut -d= -f2); MAX=${MAX:-2500}
+          CAP=$(grep -oE '^usd_cap=[0-9.]+' ticks/fullsystem | cut -d= -f2); CAP=${CAP:-5}
+          python3 -c "import sys; sys.exit(0 if float('$CAP') <= 5.5 else 1)" || { echo "::error::usd_cap $CAP > 5.5 (승인 상한 \$6)"; exit 1; }
+          python collector/run.py --mode full --dry-run --max "$MAX" --usd-cap "$CAP" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
+          python3 -c "import json;m=json.load(open('reports/fullsystem-run.json'))['metrics'];print('::notice title=fullsystem cost::usd=%s cap=$CAP calls=%s searches=%s' % (m.get('usd'), m.get('calls'), m.get('searches')))"
+          python collector/eval_stages.py reports/fullsystem-trace.json --out eval/stages.json ${FAMILY_AVAILABLE_FROM:+--owner-from "$FAMILY_AVAILABLE_FROM"}
+          python3 -c "import json;print('::notice title=fullsystem result::'+json.dumps(json.load(open('eval/stages.json'))['summary'],ensure_ascii=False))"
       - name: Commit results
         if: always()
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/stages.json reports/fullsystem-run.json reports/fullsystem-trace.json; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/stages.json reports/fullsystem-run.json reports/fullsystem-trace.json; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"

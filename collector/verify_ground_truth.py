@@ -44,7 +44,13 @@ def facts(client, url: str, title: str) -> dict:
 
 
 def main() -> int:
+    # --panel 파일을 주면 그 정보원들만(독립 표본용) 후보를 모으고 결과를 --out 에 쓴다
+    panel = sys.argv[sys.argv.index("--panel") + 1] if "--panel" in sys.argv else None
+    out_path = ROOT / (sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else "eval/ground_truth_pages.json")
+    extra, per_extra = EXTRA, PER_EXTRA
     draft = json.loads((ROOT / "eval/ground_truth_draft.json").read_text())["events"]
+    if panel:
+        extra, per_extra, draft = json.loads((ROOT / panel).read_text())["sources"], 12, []
     sources = [s for s in json.loads((ROOT / "config/sources.json").read_text())["sources"]
                if s.get("enabled", True) and s["type"] != "gnews" and not s.get("requires_secret")]
     out = {"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "monitored_sources": [], "events": [], "extra_sources": [], "extra_events": []}
@@ -61,15 +67,15 @@ def main() -> int:
             out["events"].append({"id": e["id"], "panel_source": e["panel_source"], "monitored_source": e["monitored_source"], "title": e["title"],
                                   "url": e["url"], "listed_by": listed.get(normalize_url(e["url"]), []), **f})
             print(f"{f.get('status')} {e['id']}")
-        for s in EXTRA:
+        for s in extra:
             r = fetch_source(s)
             out["extra_sources"].append({"id": s["id"], "url": s["url"], "ok": r.ok, "items": len(r.entries), "error": r.error})
-            for x in r.entries[:PER_EXTRA]:
+            for x in r.entries[:per_extra]:
                 f = facts(c, x.url, x.title)
                 out["extra_events"].append({"source": s["id"], "title": x.title, "url": x.url, "date_raw": x.published,
                                             "listed_by": listed.get(normalize_url(x.url), []), **f})
             print(f"{'OK ' if r.ok else 'ERR'} {len(r.entries):4d} extra {s['id']} {r.error or ''}")
-    (ROOT / "eval/ground_truth_pages.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
+    out_path.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
     return 0
 
 

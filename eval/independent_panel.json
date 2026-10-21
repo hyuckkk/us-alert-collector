@@ -1,0 +1,13 @@
+{
+ "_comment": "독립 표본용 공식 정보원(10차). config/sources.json·reference_panel·정보원 보강 선택에 쓰지 않은 인근 시의 공식 일정. 수집기는 이곳들을 등록 정보원으로 감시하지 않으므로, 여기서 나온 행사는 키워드 검색·AI 발굴이 찾아야 한다.",
+ "sources": [
+  {"id": "commerce-city-calendar", "type": "rss", "url": "https://www.c3gov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+  {"id": "brighton-calendar", "type": "rss", "url": "https://www.brightonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+  {"id": "louisville-calendar", "type": "rss", "url": "https://www.louisvilleco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+  {"id": "lafayette-calendar", "type": "rss", "url": "https://www.lafayetteco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+  {"id": "erie-calendar", "type": "rss", "url": "https://www.erieco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+  {"id": "superior-calendar", "type": "rss", "url": "https://www.superiorcolorado.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+  {"id": "golden-calendar", "type": "rss", "url": "https://www.cityofgolden.net/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"},
+  {"id": "littleton-calendar", "type": "rss", "url": "https://www.littletongov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml"}
+ ]
+}
