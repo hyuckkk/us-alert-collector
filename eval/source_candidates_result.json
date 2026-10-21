@@ -1977,20 +1977,20 @@
    "ok": true,
    "status": 200,
    "error": null,
-   "items": 56,
-   "eventish": 55,
+   "items": 50,
+   "eventish": 49,
    "sample": [
     "Event Calendar",
     "Ticketing Information",
-    "Monday, Sep 28, 2026 JUNGLE RIO KOSTA",
-    "Tuesday, Sep 29, 2026 Coheed and Cambria: Neverender Rocks Turnover, The Home Te",
-    "Wednesday, Sep 30, 2026 The Backseat Lovers Friko",
-    "Thursday, Oct 1, 2026 Beck: Ride Lonesome Tour Ioanna Gika, Wayne Faler"
+    "Wednesday, Oct 21, 2026 MUNA hemlocke springs",
+    "Thursday, Oct 22, 2026 Macklemore",
+    "Friday, Oct 23, 2026 Mersiv (Two Sets) Know Good, Jaenga, Phrva, Dr. Ushuu, Vyha",
+    "Saturday, Oct 24, 2026 Jade Cicada & Mickman Resonant Language, Schmoop, Petals"
    ],
    "sample_urls": [
     "https://www.redrocksonline.com/events?view=grid",
     "https://www.redrocksonline.com/ticketing-information/",
-    "https://www.redrocksonline.com/events/jungle-1371056/"
+    "https://www.redrocksonline.com/events/muna-1434014/"
    ]
   },
   {
@@ -2157,8 +2157,8 @@
     "text": "event.description_text"
    },
    "ok": false,
-   "status": 403,
-   "error": "HTTP 403",
+   "status": null,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
    "items": 0,
    "eventish": 0,
    "sample": [],
