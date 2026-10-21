@@ -16,6 +16,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   run:
+    # 강제 push(이력 재작성 등)는 GitHub 가 '모든 파일 변경'으로 보아 경로 조건이 다 걸린다 → 실행하지 않음(2026-10-21 사고 재발 방지)
+    if: github.event_name != 'push' || !github.event.forced
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
