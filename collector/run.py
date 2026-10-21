@@ -101,6 +101,7 @@ class Run:
     # ------------------------------------------------ 단계 실행기: 한 단계의 실패가 다른 단계를 막지 않는다
     def stage(self, name: str, fn):
         t0 = datetime.now(timezone.utc)
+        u0 = self.usage.usd if getattr(self, "usage", None) else 0.0
         self._progress(name, "start")
         try:
             r = fn()
@@ -110,6 +111,8 @@ class Run:
             self.alerts.append(f"{name} 단계 오류: {type(e).__name__}: {str(e)[:150]}")
             self.report.setdefault("tracebacks", {})[name] = traceback.format_exc()[-1500:]
         self.stages[name]["seconds"] = round((datetime.now(timezone.utc) - t0).total_seconds())
+        if getattr(self, "usage", None):  # 단계별 AI 사용액(운영비 추정·최적화 비교용)
+            self.stages[name]["usd"] = round(self.usage.usd - u0, 4)
         self._progress(name, "done")
 
     def _progress(self, name: str, what: str) -> None:
@@ -118,7 +121,7 @@ class Run:
         if p:
             with open(p, "a") as f:
                 f.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "stage": name, "event": what,
-                                    "seconds": self.stages.get(name, {}).get("seconds")}) + "\n")
+                                    "seconds": self.stages.get(name, {}).get("seconds"), "usd": self.stages.get(name, {}).get("usd")}) + "\n")
 
     def add_entries(self, entries: list[Entry], official: bool, bots=None):
         seen_urls = getattr(self, "_seen_urls", None)

@@ -171,7 +171,7 @@ Rules:
 - title_ko: short natural Korean title. Keep proper nouns in English in parentheses if useful.
 - english: pick only attributes the text supports — 초보 가능 (beginners welcome), 보호자 동반 (parent accompanies), 시범 중심 (demonstration-based), 반복 만남 (recurring sessions with the same group).
 - signup: fcfs = first come first served / limited spots; lottery = drawing; open = register any time; none = drop-in; unknown.
-- registration_opens: the date registration/sign-up starts, only if stated. registration_status: upcoming (not open yet), open, closed, soldout, waitlist, cancelled (event cancelled), postponed, unknown.
+- registration_opens: the date registration/sign-up starts, only if stated. registration_status: upcoming (not open yet), open, closed, soldout, waitlist, cancelled (event cancelled), postponed, unknown. "RSVP closed", "registration closed", "registration is full", "at capacity" or "no spots left" for this item → closed; "sold out" → soldout.
 - eligibility: Korean note on who may join (residents only, members only, age/grade limits, skill level) when stated; else null.
 - tags: 1-4 short lowercase English slugs (e.g. "swim", "camp", "hockey", "museum").
 - annual: true if the text says it happens every year or is the Nth annual.
