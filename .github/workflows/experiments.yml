@@ -73,14 +73,19 @@ jobs:
           # --dry-run: Worker·텔레그램에 쓰지 않음. 비용은 --usd-cap 이 막는다(각 AI 호출 전 '지금까지 + 그 호출의 최악 비용'이 상한을 넘으면 호출 안 함).
           # --max 는 처리 건수 상한일 뿐 비용 상한이 아니다.
           MAX=$(grep -oE '^max=[0-9]+' ticks/fullsystem | cut -d= -f2); MAX=${MAX:-2500}
-          CAP=$(grep -oE '^usd_cap=[0-9.]+' ticks/fullsystem | cut -d= -f2); CAP=${CAP:-5}
-          python3 -c "import sys; sys.exit(0 if float('$CAP') <= 5.5 else 1)" || { echo "::error::usd_cap $CAP > 5.5 (승인 상한 \$6)"; exit 1; }
+          WANT=$(grep -oE '^usd_cap=[0-9.]+' ticks/fullsystem | cut -d= -f2); WANT=${WANT:-5}
+          # 개발 예산(총 $40, 1회 $5): 기록된 누적 사용액으로 남은 돈을 계산해 이번 상한을 정한다. 부족하면 실행하지 않음
+          python3 scripts/dev_budget.py check --cap "$WANT" | tee budget.txt
+          CAP=$(grep -oE '^CAP=[0-9.]+' budget.txt | cut -d= -f2); [ -n "$CAP" ] || exit 1
+          echo "CAP=$CAP" >> "$GITHUB_ENV"; echo "FULLSYSTEM_STARTED=1" >> "$GITHUB_ENV"
+          export USAGE_LIVE_FILE=reports/usage-live.json
           python collector/run.py --mode full --dry-run --all-sources --max "$MAX" --usd-cap "$CAP" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
           python3 -c "import json;m=json.load(open('reports/fullsystem-run.json'))['metrics'];print('::notice title=fullsystem cost::usd=%s cap=$CAP calls=%s searches=%s' % (m.get('usd'), m.get('calls'), m.get('searches')))"
-          # 개발용 AI 비용 기록(운영비와 별도): 실행마다 한 줄
-          python3 -c "import json,os,datetime;m=json.load(open('reports/fullsystem-run.json'))['metrics'];open('eval/dev_ai_spend.jsonl','a').write(json.dumps({'at':datetime.datetime.utcnow().isoformat(timespec='seconds')+'Z','run':os.environ['GITHUB_RUN_ID'],'kind':'fullsystem','usd':m.get('usd'),'cap':float('$CAP'),'calls':m.get('calls')})+'\n')"
           python collector/eval_stages.py reports/fullsystem-trace.json --out eval/stages.json ${FAMILY_AVAILABLE_FROM:+--owner-from "$FAMILY_AVAILABLE_FROM"}
           python3 -c "import json;print('::notice title=fullsystem result::'+json.dumps(json.load(open('eval/stages.json'))['summary'],ensure_ascii=False))"
+      - name: Record dev AI spend (always, incl. failed/cancelled runs)
+        if: always() && env.FULLSYSTEM_STARTED == '1'
+        run: python3 scripts/dev_budget.py record --run "$GITHUB_RUN_ID" --kind fullsystem --cap "$CAP" --usage reports/usage-live.json --status "${{ job.status }}"
       - name: Commit results
         if: always()
         run: |

@@ -83,6 +83,10 @@ class Usage:
         m["searches"] += searches
         m["usd"] += (inp * p.get("input", 0) + cw * p.get("cache_write", 0) + cr * p.get("cache_read", 0) + out * p.get("output", 0)) / 1e6 \
             + searches * self.web_search_usd
+        live = os.environ.get("USAGE_LIVE_FILE")
+        if live:  # 실행이 중간에 끊겨도 그때까지의 사용액이 남도록 호출마다 기록(개발 비용 집계용)
+            with open(live, "w") as f:
+                json.dump({"usd": round(self.usd, 4), "calls": sum(x["calls"] for x in self.by_model.values()), "by_model": self.by_model}, f)
 
     def error(self, model: str) -> None:
         self._m(model)["errors"] += 1
