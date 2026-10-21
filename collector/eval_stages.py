@@ -85,7 +85,8 @@ def evaluate(gt: dict, trace: dict, today: date, owner_from: str | None) -> dict
             continue
         found = sorted({e["stage"] for e in trace["entries"] if same(t, e.get("url"), e.get("title"))})
         ai = [a for a in trace.get("ai", []) if same(t, a.get("url"), None)]
-        is_valid = t.get("participation") in ("open", "full", "registration_opening")
+        # 정원 마감(full)은 신청할 수 없으므로 보내지 않아야 맞다(13차: 마감·매진 차단). 제외 항목처럼 오발송 여부로 본다
+        is_valid = t.get("participation") in ("open", "registration_opening")
         by_url = [e for e in trace.get("events", []) if e.get("url") and normalize_url(e["url"]) == normalize_url(t["url"])]
         # 같은 원문 URL 의 행사를 우선(여러 개면 기준 날짜와 가까운 것). 제외 항목은 URL 로만(제목만 비슷한 다른 기관 행사를 오인하지 않게)
         evs = by_url or ([] if not is_valid else [e for e in trace.get("events", []) if same(t, e.get("url"), e.get("title"))])

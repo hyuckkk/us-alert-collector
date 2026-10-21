@@ -25,11 +25,13 @@ def check(c: dict) -> dict:
 
 
 def main() -> int:
-    cands = json.loads((ROOT / "eval/source_candidates.json").read_text())["candidates"]
+    src = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "eval/source_candidates.json"
+    out = Path(sys.argv[2]) if len(sys.argv) > 2 else ROOT / "eval/source_candidates_result.json"
+    cands = json.loads(src.read_text())["candidates"]
     with ThreadPoolExecutor(8) as ex:
         res = list(ex.map(check, cands))
     good = [r for r in res if r["ok"] and r["items"] >= 3 and r["eventish"] >= 2]
-    (ROOT / "eval/source_candidates_result.json").write_text(json.dumps({"tested": len(res), "good": len(good), "results": res}, ensure_ascii=False, indent=1) + "\n")
+    out.write_text(json.dumps({"tested": len(res), "good": len(good), "results": res}, ensure_ascii=False, indent=1) + "\n")
     for r in res:
         print(f"{'GOOD' if r in good else ('OK  ' if r['ok'] else 'ERR ')} {r['items']:4d} {r['eventish']:4d} {r['id']} {r['error'] or ''}")
     return 0
