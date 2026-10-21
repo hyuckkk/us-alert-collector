@@ -34,9 +34,13 @@ def facts(client, url: str, title: str) -> dict:
         return {"status": None, "error": type(e).__name__}
     if not text:
         return {"status": status, "error": f"HTTP {status}"}
-    i = text.lower().find(title.lower()[:30]) if title else -1
-    body = text[i if i > 0 else 0:]
-    return {"status": status, "title_found": i >= 0, "head": body[:1200], "relevant": fingerprint(body[:8000])[1][:1800]}
+    low, key = text.lower(), (title or "").lower()[:30]
+    hits = [m for m in range(len(low)) if key and low.startswith(key, m)][:5]
+    # 사이트 메뉴 뒤 본문을 잡으려고 제목이 마지막으로 나오는 곳(최대 5번째)부터 자른다
+    start = hits[-1] if hits else 0
+    body = text[start:start + 3500]
+    sents = [x for x in fingerprint(text[start:start + 12000])[1].split(" | ") if 25 < len(x) < 400]
+    return {"status": status, "title_found": bool(hits), "body": body, "facts": sents[:25]}
 
 
 def main() -> int:
