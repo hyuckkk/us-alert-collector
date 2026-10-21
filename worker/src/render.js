@@ -5,7 +5,7 @@ const SIGNUP = { fcfs: "선착순", lottery: "추첨", open: "상시 접수", no
 
 function v(x) { return x === null || x === undefined || x === "" ? U : String(x); }
 function dateRange(d) {
-  if (!d.start_date) return U;
+  if (!d.start_date) return d.registration_opens || d.deadline ? "행사일 미정(아래 접수 일정 참고)" : U;
   const r = d.end_date && d.end_date !== d.start_date ? `${d.start_date}~${d.end_date}` : d.start_date;
   return d.date_uncertain ? `${r}(연도 추정)` : r;
 }
