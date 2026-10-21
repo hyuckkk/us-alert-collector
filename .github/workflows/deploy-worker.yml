@@ -12,7 +12,19 @@ concurrency:
   group: deploy-worker
   cancel-in-progress: false
 jobs:
+  # 배포 전 필수 조건: 개인정보 검사 엄격 모드(검사어 설정 + 현재 파일·과거 이력 모두 통과). 실패하면 배포하지 않는다.
+  privacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - run: git fetch --quiet origin '+refs/heads/*:refs/remotes/origin/*'
+      - env:
+          PRIVACY_TERMS: ${{ secrets.PRIVACY_TERMS }}
+        run: python3 scripts/privacy_gate.py strict
   deploy:
+    needs: privacy
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
