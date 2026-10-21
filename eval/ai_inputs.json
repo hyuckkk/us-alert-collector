@@ -1,0 +1,208 @@
+{
+ "summary": {
+  "events": 30,
+  "registered_path": 12,
+  "date_in_input": "10/10",
+  "cost_in_input": "6/6"
+ },
+ "rows": [
+  {
+   "id": "westminster-calendar:6",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 1606,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 24, 2026 Event Time: 08:30 AM - 12:00 PM Location: 9150 Lowell Blvd Westminster, CO 80031\nCar Seat Clinic Skip to Main Content Search I Want To... Services Community Business Gover"
+  },
+  {
+   "id": "westminster-calendar:7",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 2249,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 24, 2026 Event Time: 12:00 PM - 02:00 PM Location: 8931 N Harlan Street Westminster, CO 80031\nTrunk or Treat Halloween Spooktacular in Downtown Skip to Main Content Search I Want T"
+  },
+  {
+   "id": "westminster-calendar:11",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 1056,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 27, 2026 Event Time: 10:00 AM - 12:00 PM Location: 6051 W. 95th Avenue Westminster, CO 80031\nFire Safety Booth @ Westminster Sports Center Tuesday, October 27, 2026 🔥 October is Fi"
+  },
+  {
+   "id": "westminster-calendar:4",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 1884,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Event date: October 22, 2026 Event Time: 07:30 PM - 09:00 PM Location: 14694 Orchard Pkwy Ste 100 Westminster Westminster, CO 80023\nPartner Event: A Theatrical Drink Tasting Experie Skip to Main Conte"
+  },
+  {
+   "id": "usafa-events:47",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 4500,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Homeschool Program: The Outer Solar System Fri, Oct 30 @ 10:30 a.m. Friday, October 30 @ 10:30 am - 11:45 am Free « USAFA Family Movie: The Nightmare Before Christmas on Thurs, Oct 29 @ 6 p.m. USAFA F"
+  },
+  {
+   "id": "usafa-events:49",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 2627,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "USAFA VS. UConn Saturday, October 31 @ 1:00 pm - 4:00 pm « USAFA Family Movie: Hocus Pocus on Fri, Oct 30 @ 7:45 p.m. Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ "
+  },
+  {
+   "id": "usafa-events:50",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 4500,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m. Monday, November 9 @ 10:30 am - 11:45 am Free « USAFA VS. UConn USAFA VS. San Jose State » Homeschool Progr"
+  },
+  {
+   "id": "usafa-events:51",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 2747,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "USAFA VS. San Jose State Saturday, November 14 @ 5:00 pm - 9:00 pm « Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m. Homeschool Program: Earth – Sun – Moon"
+  },
+  {
+   "id": "usafa-events:52",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 4500,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Homeschool Program: Earth – Sun – Moon System Wed, Nov 18 @ 10:45 a.m. Wednesday, November 18 @ 10:45 am - 12:00 pm Free « USAFA VS. San Jose State USAFA VS. UTEP » Homeschool Program: Earth – Sun – M"
+  },
+  {
+   "id": "usafa-events:57",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 2937,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Holly & Ivy Concert – Dec. 4 Friday, December 4 @ 7:00 pm - 10:00 pm « Bluebards Theatre Troupe: Come From Away Holly & Ivy Concert – Dec. 5 » Mark your calendar and save the date for this free event!"
+  },
+  {
+   "id": "cu-boulder-localist:70",
+   "source": "cu-boulder-localist",
+   "path": "json+detail",
+   "chars": 2526,
+   "date_in_input": null,
+   "cost_in_input": true,
+   "head": "Mornings at the Museum - University of Colorado Boulder Events Calendar Search Search Close Menu Search Sign Up Log in Sign up University of Colorado Boulder Tuesday, November 3 Mornings at the Museum"
+  },
+  {
+   "id": "cu-boulder-localist:67",
+   "source": "cu-boulder-localist",
+   "path": "json",
+   "chars": 1163,
+   "date_in_input": null,
+   "cost_in_input": null,
+   "head": "Campus Life explores the shared history of humans and more-than-human inhabitants over the 150 years of CU Boulder, documenting their evolving relationship. The works exhibited illustrate how differen"
+  },
+  {
+   "id": "thornton-youth-teen:85",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "thornton-registration",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "denver-art-museum-free-days:99",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "denver-art-museum-free-days:100",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "denver-art-museum-free-days:101",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "broomfield-programs:93",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:brighton-fafsa",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:brighton-treat-street",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:brighton-splashing-pumpkins",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-ddlm-storytime",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-star-party",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-frame-decorating",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-ddlm-closing",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-see-respond",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:erie-med-takeback",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:erie-boo-briggs",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:erie-tree-walk",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-police-academy",
+   "source": null,
+   "path": "not-registered"
+  }
+ ]
+}

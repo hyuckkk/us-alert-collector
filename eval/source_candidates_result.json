@@ -1,0 +1,2501 @@
+{
+ "tested": 113,
+ "good": 31,
+ "results": [
+  {
+   "id": "brighton-rss",
+   "type": "rss",
+   "url": "https://www.brightonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 29,
+   "eventish": 29,
+   "sample": [
+    "Cupcake Decorating with Mulberries",
+    "Beginner Pickleball Sessions Begin",
+    "After Dark Burlesque Class",
+    "District Plan Commission Meeting",
+    "Planning Commission Meeting",
+    "FAFSA Night"
+   ],
+   "sample_urls": [
+    "https://www.brightonco.gov/Calendar.aspx?EID=6707",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6770",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6785"
+   ]
+  },
+  {
+   "id": "brighton-calendar",
+   "type": "html",
+   "url": "https://www.brightonco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 15,
+   "eventish": 5,
+   "sample": [
+    "Planning Commission Meeting",
+    "Lochbuie Sewer Board",
+    "Study Session Meeting",
+    "FAFSA Night",
+    "Treat Street: Trick or Treat Event",
+    "District Plan Commission Meeting"
+   ],
+   "sample_urls": [
+    "https://www.brightonco.gov/Calendar.aspx?EID=6833&month=10&year=2026&day=21&calType=0",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6580&month=10&year=2026&day=21&calType=0",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6011&month=10&year=2026&day=21&calType=0"
+   ]
+  },
+  {
+   "id": "lafayette-rss",
+   "type": "rss",
+   "url": "https://www.lafayetteco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 22,
+   "eventish": 22,
+   "sample": [
+    "Día de los Muertos Exhibit - Arcos y Portales",
+    "Art on the Street, See & Respond Exhibit",
+    "Fall City-wide Street Sweeping",
+    "Community Police Academy",
+    "Lafayette Cultural Arts Board Meeting",
+    "Weekly Sewer Jetting"
+   ],
+   "sample_urls": [
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=12196",
+    "https://lafayetteco.gov/SeeAndRespond",
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=11812"
+   ]
+  },
+  {
+   "id": "lafayette-calendar",
+   "type": "html",
+   "url": "https://www.lafayetteco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 85,
+   "eventish": 0,
+   "sample": [
+    "More Details",
+    "More Details",
+    "More Details",
+    "More Details",
+    "More Details",
+    "More Details"
+   ],
+   "sample_urls": [
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=12196&month=10&year=2026&day=1&calType=0",
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=11560&month=10&year=2026&day=1&calType=0",
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=11876&month=10&year=2026&day=1&calType=0"
+   ]
+  },
+  {
+   "id": "erie-rss",
+   "type": "rss",
+   "url": "https://www.erieco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 15,
+   "eventish": 15,
+   "sample": [
+    "Planning Commission and Open Space and Trails Advisory Board Joint Study Session",
+    "Christina Pisano Advising Hours",
+    "Medication Take-Back",
+    "Boo! on Briggs Street",
+    "Historic Preservation Advisory Board Meeting - In Person",
+    "Town Council Meeting"
+   ],
+   "sample_urls": [
+    "https://www.erieco.gov/Calendar.aspx?EID=5218",
+    "https://www.erieco.gov/Calendar.aspx?EID=5085",
+    "https://www.erieco.gov/Calendar.aspx?EID=5390"
+   ]
+  },
+  {
+   "id": "erie-calendar",
+   "type": "html",
+   "url": "https://www.erieco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 12,
+   "eventish": 3,
+   "sample": [
+    "Event Details",
+    "Event Details",
+    "Medication Take-Back",
+    "Christina Pisano Advising Hours",
+    "Christina Pisano Advising Hours",
+    "Boo! on Briggs Street"
+   ],
+   "sample_urls": [
+    "https://www.erieco.gov/Calendar.aspx?EID=5472&month=10&year=2026&day=21&calType=0",
+    "https://www.erieco.gov/Calendar.aspx?EID=5473&month=10&year=2026&day=21&calType=0",
+    "https://www.erieco.gov/Calendar.aspx?EID=5390&month=10&year=2026&day=21&calType=0"
+   ]
+  },
+  {
+   "id": "northglenn-rss",
+   "type": "rss",
+   "url": "https://www.northglenn.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "northglenn-calendar",
+   "type": "html",
+   "url": "https://www.northglenn.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "federal-heights-rss",
+   "type": "rss",
+   "url": "https://www.fedheights.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "federal-heights-calendar",
+   "type": "html",
+   "url": "https://www.fedheights.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "commerce-city-rss",
+   "type": "rss",
+   "url": "https://www.c3gov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "commerce-city-calendar",
+   "type": "html",
+   "url": "https://www.c3gov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "louisville-rss",
+   "type": "rss",
+   "url": "https://www.louisvilleco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "louisville-calendar",
+   "type": "html",
+   "url": "https://www.louisvilleco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "superior-rss",
+   "type": "rss",
+   "url": "https://www.superiorcolorado.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "superior-calendar",
+   "type": "html",
+   "url": "https://www.superiorcolorado.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "golden-rss",
+   "type": "rss",
+   "url": "https://www.cityofgolden.net/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "golden-calendar",
+   "type": "html",
+   "url": "https://www.cityofgolden.net/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "littleton-rss",
+   "type": "rss",
+   "url": "https://www.littletongov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "littleton-calendar",
+   "type": "html",
+   "url": "https://www.littletongov.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "longmont-rss",
+   "type": "rss",
+   "url": "https://www.longmontcolorado.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "longmont-calendar",
+   "type": "html",
+   "url": "https://www.longmontcolorado.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "wheat-ridge-rss",
+   "type": "rss",
+   "url": "https://www.ci.wheatridge.co.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 5,
+   "eventish": 5,
+   "sample": [
+    "Parks & Recreation Commission Meeting",
+    "City Council Meeting",
+    "District III Meeting",
+    "City Council Study Session - CANCELED",
+    "Wheat Ridge Urban Renewal Authority dba Renewal Wheat Ridge Board Meeting"
+   ],
+   "sample_urls": [
+    "https://www.ci.wheatridge.co.us/Calendar.aspx?EID=4841",
+    "https://www.ci.wheatridge.co.us/Calendar.aspx?EID=4945",
+    "https://www.ci.wheatridge.co.us/Calendar.aspx?EID=5061"
+   ]
+  },
+  {
+   "id": "wheat-ridge-calendar",
+   "type": "html",
+   "url": "https://www.ci.wheatridge.co.us/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "englewood-rss",
+   "type": "rss",
+   "url": "https://www.englewoodco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "englewood-calendar",
+   "type": "html",
+   "url": "https://www.englewoodco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "castle-rock-rss",
+   "type": "rss",
+   "url": "https://www.crgov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 17,
+   "eventish": 17,
+   "sample": [
+    "Board of Adjustment Tour",
+    "Board of Building and Fire Appeals Tour",
+    "Parks and Recreation Commission",
+    "Ghostly Stories & Tragic Tales of Castle Rock",
+    "Planning Commission Meeting",
+    "Ghostly Stories & Tragic Tales of Castle Rock"
+   ],
+   "sample_urls": [
+    "https://www.crgov.com/Calendar.aspx?EID=11029",
+    "https://www.crgov.com/Calendar.aspx?EID=11030",
+    "https://www.crgov.com/Calendar.aspx?EID=10617"
+   ]
+  },
+  {
+   "id": "castle-rock-calendar",
+   "type": "html",
+   "url": "https://www.crgov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "lone-tree-rss",
+   "type": "rss",
+   "url": "https://cityoflonetree.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "lone-tree-calendar",
+   "type": "html",
+   "url": "https://cityoflonetree.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "centennial-rss",
+   "type": "rss",
+   "url": "https://www.centennialco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "centennial-calendar",
+   "type": "html",
+   "url": "https://www.centennialco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "greeley-rss",
+   "type": "rss",
+   "url": "https://greeleygov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "greeley-calendar",
+   "type": "html",
+   "url": "https://greeleygov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "loveland-rss",
+   "type": "rss",
+   "url": "https://www.lovgov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "loveland-calendar",
+   "type": "html",
+   "url": "https://www.lovgov.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "firestone-rss",
+   "type": "rss",
+   "url": "https://www.firestoneco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 4,
+   "eventish": 4,
+   "sample": [
+    "Board of Trustees Meeting- CANCELED",
+    "Halloween Safe Night",
+    "Drug Take Back Day",
+    "Chat with a Trustee"
+   ],
+   "sample_urls": [
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2622",
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2690",
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2755"
+   ]
+  },
+  {
+   "id": "firestone-calendar",
+   "type": "html",
+   "url": "https://www.firestoneco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 12,
+   "eventish": 0,
+   "sample": [
+    "More Details",
+    "More Details",
+    "More Details",
+    "More Details",
+    "More Details",
+    "More Details"
+   ],
+   "sample_urls": [
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2578&month=10&year=2026&day=1&calType=0",
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2758&month=10&year=2026&day=7&calType=0",
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2636&month=10&year=2026&day=7&calType=0"
+   ]
+  },
+  {
+   "id": "frederick-rss",
+   "type": "rss",
+   "url": "https://www.frederickco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 6,
+   "eventish": 6,
+   "sample": [
+    "Neighborhood Meeting - 3766 Eureka Way Car Sales Conditional Use",
+    "Board of Trustees Work Session",
+    "Frederick Urban Renewal Authority Meeting",
+    "Board of Trustees Regular Session",
+    "Board of Trustees Work Session",
+    "Board of Trustees Regular Session"
+   ],
+   "sample_urls": [
+    "https://www.frederickco.gov/Calendar.aspx?EID=4402",
+    "https://www.frederickco.gov/Calendar.aspx?EID=4338",
+    "https://www.frederickco.gov/Calendar.aspx?EID=4231"
+   ]
+  },
+  {
+   "id": "frederick-calendar",
+   "type": "html",
+   "url": "https://www.frederickco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 4,
+   "eventish": 0,
+   "sample": [
+    "Neighborhood Meeting - 3766 Eureka Way Car Sales Conditional Use",
+    "Board of Trustees Work Session",
+    "Frederick Urban Renewal Authority Meeting",
+    "Board of Trustees Regular Session"
+   ],
+   "sample_urls": [
+    "https://www.frederickco.gov/Calendar.aspx?EID=4402&month=10&year=2026&day=21&calType=0",
+    "https://www.frederickco.gov/Calendar.aspx?EID=4338&month=10&year=2026&day=21&calType=0",
+    "https://www.frederickco.gov/Calendar.aspx?EID=4231&month=10&year=2026&day=21&calType=0"
+   ]
+  },
+  {
+   "id": "dacono-rss",
+   "type": "rss",
+   "url": "https://www.cityofdacono.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 3,
+   "eventish": 3,
+   "sample": [
+    "City Council Meeting",
+    "Planning & Zoning Commission",
+    "Election Day"
+   ],
+   "sample_urls": [
+    "https://www.daconoco.gov/Calendar.aspx?EID=2098",
+    "https://www.daconoco.gov/Calendar.aspx?EID=2159",
+    "https://www.daconoco.gov/Calendar.aspx?EID=2229"
+   ]
+  },
+  {
+   "id": "dacono-calendar",
+   "type": "html",
+   "url": "https://www.cityofdacono.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "berthoud-rss",
+   "type": "rss",
+   "url": "https://www.berthoud.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 39,
+   "eventish": 39,
+   "sample": [
+    "Lap Swim: 5am-4pm",
+    "Family Swim: 9am-4pm",
+    "Lap Swim: 5am-4pm",
+    "Family Swim 9am-4:15pm",
+    "Forever Fit: 9:00 AM - 10:00 AM",
+    "Planning Commission Meeting"
+   ],
+   "sample_urls": [
+    "https://www.berthoud.org/Calendar.aspx?EID=6544",
+    "https://www.berthoud.org/Calendar.aspx?EID=6439",
+    "https://www.berthoud.org/Calendar.aspx?EID=6545"
+   ]
+  },
+  {
+   "id": "berthoud-calendar",
+   "type": "html",
+   "url": "https://www.berthoud.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 118,
+   "eventish": 116,
+   "sample": [
+    "Event Details",
+    "Pick-up Basketball: 7:00 - 8:15am",
+    "Pick-up Basketball: 7:00 - 8:15am",
+    "Family Swim: 9am-4pm",
+    "Family Swim 9am-4:15pm",
+    "Family Swim: 9am-4pm"
+   ],
+   "sample_urls": [
+    "https://www.berthoud.org/Calendar.aspx?EID=6319&month=10&year=2026&day=21&calType=0",
+    "https://www.berthoud.org/Calendar.aspx?EID=5722&month=10&year=2026&day=21&calType=0",
+    "https://www.berthoud.org/Calendar.aspx?EID=5723&month=10&year=2026&day=21&calType=0"
+   ]
+  },
+  {
+   "id": "golden-adams-rss",
+   "type": "rss",
+   "url": "https://www.adcogov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "golden-adams-calendar",
+   "type": "html",
+   "url": "https://www.adcogov.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "boulder-county-rss",
+   "type": "rss",
+   "url": "https://bouldercounty.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 405,
+   "error": "HTTP 405",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "boulder-county-calendar",
+   "type": "html",
+   "url": "https://bouldercounty.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 405,
+   "error": "HTTP 405",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "jeffco-rss",
+   "type": "rss",
+   "url": "https://www.jeffco.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 20,
+   "eventish": 20,
+   "sample": [
+    "Open for Visitors",
+    "Wedding Site Tours",
+    "Jefferson County Community Corrections Board Meeting",
+    "Open for Visitors",
+    "RMMA Blood Drive 2",
+    "Closed for Private Event"
+   ],
+   "sample_urls": [
+    "https://www.jeffco.us/Calendar.aspx?EID=16795",
+    "https://www.jeffco.us/Calendar.aspx?EID=16798",
+    "https://www.jeffco.us/Calendar.aspx?EID=16932"
+   ]
+  },
+  {
+   "id": "jeffco-calendar",
+   "type": "html",
+   "url": "https://www.jeffco.us/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 63,
+   "eventish": 19,
+   "sample": [
+    "Event Details",
+    "Event Details",
+    "Event Details",
+    "Event Details",
+    "Event Details",
+    "RMMA Blood Drive 2"
+   ],
+   "sample_urls": [
+    "https://www.jeffco.us/Calendar.aspx?EID=12087&month=10&year=2026&day=21&calType=0",
+    "https://www.jeffco.us/Calendar.aspx?EID=12088&month=10&year=2026&day=21&calType=0",
+    "https://www.jeffco.us/Calendar.aspx?EID=12089&month=10&year=2026&day=21&calType=0"
+   ]
+  },
+  {
+   "id": "arapahoe-county-rss",
+   "type": "rss",
+   "url": "https://www.arapahoegov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "arapahoe-county-calendar",
+   "type": "html",
+   "url": "https://www.arapahoegov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "douglas-county-rss",
+   "type": "rss",
+   "url": "https://www.douglas.co.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "douglas-county-calendar",
+   "type": "html",
+   "url": "https://www.douglas.co.us/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "broomfield-city-rss",
+   "type": "rss",
+   "url": "https://broomfield.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 13,
+   "eventish": 13,
+   "sample": [
+    "Neighborhood Board of Adjustments Meeting - Cancelled",
+    "City Council Special Meeting - 6 p.m.",
+    "Council Executive Session - 6 p.m.",
+    "Broomfield Opioid Regional Council Voting Member Meeting",
+    "Land Use Review Commission Meeting - 6 p.m.",
+    "Building Corporation Meeting - 5:15 p.m."
+   ],
+   "sample_urls": [
+    "https://www.broomfield.org/Calendar.aspx?EID=11190",
+    "https://www.broomfield.org/Calendar.aspx?EID=11244",
+    "https://www.broomfield.org/Calendar.aspx?EID=11249"
+   ]
+  },
+  {
+   "id": "broomfield-city-calendar",
+   "type": "html",
+   "url": "https://broomfield.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 12,
+   "eventish": 1,
+   "sample": [
+    "City Council Special Meeting - 6 p.m.",
+    "Council Executive Session - 6 p.m.",
+    "Council Meeting - 6 p.m.",
+    "City Council Special Meeting - 6 p.m.",
+    "Council Executive Session - 6 p.m.",
+    "Land Use Review Commission Meeting - 6 p.m."
+   ],
+   "sample_urls": [
+    "https://broomfield.org/Calendar.aspx?EID=11244&month=10&year=2026&day=21&calType=0",
+    "https://broomfield.org/Calendar.aspx?EID=11249&month=10&year=2026&day=21&calType=0",
+    "https://broomfield.org/Calendar.aspx?EID=11117&month=10&year=2026&day=21&calType=0"
+   ]
+  },
+  {
+   "id": "thornton-rss",
+   "type": "rss",
+   "url": "https://www.thorntonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "thornton-calendar",
+   "type": "html",
+   "url": "https://www.thorntonco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "arvada-rss",
+   "type": "rss",
+   "url": "https://arvadaco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "arvada-calendar",
+   "type": "html",
+   "url": "https://arvadaco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "boulder",
+   "type": "html",
+   "url": "https://bouldercolorado.gov/events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "lakewood",
+   "type": "html",
+   "url": "https://www.lakewood.org/Events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "aurora",
+   "type": "html",
+   "url": "https://www.auroragov.org/things_to_do/events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 30,
+   "eventish": 11,
+   "sample": [
+    "Campaign Finance",
+    "News Updates",
+    "Newsletters",
+    "Event Volunteers",
+    "Events and Programs",
+    "Exhibits at the Aurora History Museum"
+   ],
+   "sample_urls": [
+    "https://www.auroragov.org/city_hall/elections/campaign_finances",
+    "https://www.auroragov.org/city_hall/media___news_updates/news_updates",
+    "https://www.auroragov.org/city_hall/media___news_updates/newsletters"
+   ]
+  },
+  {
+   "id": "denver-parks",
+   "type": "html",
+   "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation/Events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "thornton-events",
+   "type": "html",
+   "url": "https://www.thorntonco.gov/events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "westminster-events",
+   "type": "html",
+   "url": "https://www.westminsterco.gov/Events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 15,
+   "eventish": 3,
+   "sample": [
+    "Main Calendar (14)",
+    "Fire Safety Booth @ Swim and Fitness Center",
+    "Cancelled - Special Permit and License Board Meeting",
+    "Citizens Police Academy",
+    "Car Seat Clinic",
+    "National Prescription Drug Take Back Day"
+   ],
+   "sample_urls": [
+    "https://www.westminsterco.gov/Events?CID=14",
+    "https://www.westminsterco.gov/Calendar.aspx?EID=1741&month=10&year=2026&day=21&calType=0",
+    "https://www.westminsterco.gov/Calendar.aspx?EID=1354&month=10&year=2026&day=21&calType=0"
+   ]
+  },
+  {
+   "id": "apex-prd",
+   "type": "html",
+   "url": "https://www.apexprd.org/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "foothills-prd",
+   "type": "html",
+   "url": "https://www.ifoothills.org/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 4,
+   "eventish": 2,
+   "sample": [
+    "Concerts in Clement Park",
+    "Red, White & You",
+    "News Room",
+    "Programs"
+   ],
+   "sample_urls": [
+    "https://www.ifoothills.org/events/foothills-entertainment-series/",
+    "https://www.ifoothills.org/events/red-white-and-you/",
+    "https://www.ifoothills.org/news-room/"
+   ]
+  },
+  {
+   "id": "foothills-reg-dates",
+   "type": "html",
+   "url": "https://www.ifoothills.org/online-registration-dates/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 5,
+   "eventish": 3,
+   "sample": [
+    "Events Calendar",
+    "Concerts in Clement Park",
+    "Red, White & You",
+    "News Room",
+    "Programs"
+   ],
+   "sample_urls": [
+    "https://www.ifoothills.org/events/",
+    "https://www.ifoothills.org/events/foothills-entertainment-series/",
+    "https://www.ifoothills.org/events/red-white-and-you/"
+   ]
+  },
+  {
+   "id": "south-suburban",
+   "type": "html",
+   "url": "https://www.ssprd.org/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 4,
+   "eventish": 3,
+   "sample": [
+    "Day Camps & Preschool",
+    "View gym, swim and ice schedules",
+    "News And Events",
+    "Newsletter Sign Up"
+   ],
+   "sample_urls": [
+    "https://www.ssprd.org/Programs/Catalog/Preschool-and-Pre-K",
+    "https://www.ssprd.org/Schedules",
+    "https://www.ssprd.org/News-And-Events"
+   ]
+  },
+  {
+   "id": "carbon-valley",
+   "type": "html",
+   "url": "https://www.cvrec.com/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "hyland-hills-programs",
+   "type": "html",
+   "url": "https://www.hylandhills.gov/programs/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": null,
+   "error": "ConnectTimeout: timed out",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "boulder-library",
+   "type": "html",
+   "url": "https://boulderlibrary.org/events/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "arapahoe-libraries",
+   "type": "html",
+   "url": "https://arapahoelibraries.org/events/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 2,
+   "eventish": 0,
+   "sample": [
+    "Journals, Magazines & Newspapers",
+    "In the News"
+   ],
+   "sample_urls": [
+    "https://arapahoelibraries.org/resources/newspapers-journals/",
+    "https://arapahoelibraries.org/news/arapahoe-libraries-in-the-news/"
+   ]
+  },
+  {
+   "id": "high-plains-library",
+   "type": "html",
+   "url": "https://www.mylibrary.us/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "longmont-library",
+   "type": "html",
+   "url": "https://www.longmontcolorado.gov/departments/departments-a-d/library/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "lafayette-library",
+   "type": "html",
+   "url": "https://lafayettepubliclibrary.libcal.com/calendar",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "louisville-library",
+   "type": "html",
+   "url": "https://www.louisvilleco.gov/residents/library/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "douglas-libraries",
+   "type": "html",
+   "url": "https://www.dcl.org/events/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "englewood-library",
+   "type": "html",
+   "url": "https://www.englewoodco.gov/government/city-departments/library",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "denver-zoo",
+   "type": "html",
+   "url": "https://denverzoo.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "history-colorado",
+   "type": "html",
+   "url": "https://www.historycolorado.org/events",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 6,
+   "eventish": 3,
+   "sample": [
+    "Attend Events",
+    "Archaeology & Preservation Events",
+    "Moments That Made US",
+    "Votes and Dreams",
+    "The Sand Creek Massacre: The Betrayal that Changed Cheyenne and Arapaho People F",
+    "Online Exhibits"
+   ],
+   "sample_urls": [
+    "https://www.historycolorado.org/events-experiences",
+    "https://www.historycolorado.org/events-education",
+    "https://www.historycolorado.org/exhibit/moments-made-us"
+   ]
+  },
+  {
+   "id": "clyfford-still",
+   "type": "html",
+   "url": "https://clyffordstillmuseum.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "mca-denver",
+   "type": "html",
+   "url": "https://mcadenver.org/calendar",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "arvada-center",
+   "type": "html",
+   "url": "https://arvadacenter.org/events",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 127,
+   "eventish": 15,
+   "sample": [
+    "Learn More",
+    "Learn More",
+    "Learn More",
+    "Learn More",
+    "Learn More",
+    "Learn More"
+   ],
+   "sample_urls": [
+    "https://arvadacenter.org/events/pete-the-cat",
+    "https://arvadacenter.org/events/barefoot-in-the-park",
+    "https://arvadacenter.org/events/joseph-and-the-amazing-technicolor-dreamcoat"
+   ]
+  },
+  {
+   "id": "wings-museum",
+   "type": "html",
+   "url": "https://wingsmuseum.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "chautauqua",
+   "type": "html",
+   "url": "https://www.chautauqua.com/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 36,
+   "eventish": 16,
+   "sample": [
+    "Winterfest",
+    "Experiences",
+    "Calendar",
+    "Our Festivals",
+    "Festival Del Sol",
+    "Flatiron Sounds"
+   ],
+   "sample_urls": [
+    "https://www.chautauqua.com/event/winterfest-2026/",
+    "https://www.chautauqua.com/events/category/experiences/",
+    "https://www.chautauqua.com/concerts-events/calendar-of-events/"
+   ]
+  },
+  {
+   "id": "railroad-museum",
+   "type": "html",
+   "url": "https://coloradorailroadmuseum.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 53,
+   "eventish": 12,
+   "sample": [
+    "Exhibits",
+    "What’s New",
+    "The Friday Tour",
+    "Saturday Goose Rides",
+    "Sunday Goose Rides",
+    "The Friday Tour"
+   ],
+   "sample_urls": [
+    "https://coloradorailroadmuseum.org/exhibits/",
+    "https://coloradorailroadmuseum.org/news/",
+    "https://coloradorailroadmuseum.org/event/the-friday-tour-41/"
+   ]
+  },
+  {
+   "id": "four-mile",
+   "type": "html",
+   "url": "https://www.fourmilepark.org/events",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "dcpa",
+   "type": "html",
+   "url": "https://www.denvercenter.org/tickets-events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 49,
+   "eventish": 11,
+   "sample": [
+    "Ticket Wallet FAQ",
+    "Ticket Exchange FAQ",
+    "EVENT SERVICES HOME",
+    "Weddings",
+    "Parties & Celebrations",
+    "Graduations"
+   ],
+   "sample_urls": [
+    "https://www.denvercenter.org/ticket-wallet-faq/",
+    "https://www.denvercenter.org/ticket-exchange/",
+    "https://www.denvercenter.org/event-venues/"
+   ]
+  },
+  {
+   "id": "red-rocks",
+   "type": "html",
+   "url": "https://www.redrocksonline.com/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 56,
+   "eventish": 55,
+   "sample": [
+    "Event Calendar",
+    "Ticketing Information",
+    "Monday, Sep 28, 2026 JUNGLE RIO KOSTA",
+    "Tuesday, Sep 29, 2026 Coheed and Cambria: Neverender Rocks Turnover, The Home Te",
+    "Wednesday, Sep 30, 2026 The Backseat Lovers Friko",
+    "Thursday, Oct 1, 2026 Beck: Ride Lonesome Tour Ioanna Gika, Wayne Faler"
+   ],
+   "sample_urls": [
+    "https://www.redrocksonline.com/events?view=grid",
+    "https://www.redrocksonline.com/ticketing-information/",
+    "https://www.redrocksonline.com/events/jungle-1371056/"
+   ]
+  },
+  {
+   "id": "dam-calendar",
+   "type": "html",
+   "url": "https://www.denverartmuseum.org/en/calendar",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 6,
+   "eventish": 4,
+   "sample": [
+    "Event Rental",
+    "Exhibitions",
+    "This weekend",
+    "Tours DIVA Member Tours Occurs weekly on Wednesday until January 20, 2027. Next ",
+    "Tours Public Tours Daily; various times Join specially trained docents for exhib",
+    "News Hub"
+   ],
+   "sample_urls": [
+    "https://www.denverartmuseum.org/en/event-rental",
+    "https://www.denverartmuseum.org/en/exhibitions",
+    "https://www.denverartmuseum.org/en/calendar?date_from=2026-10-24&date_to=2027-01-19"
+   ]
+  },
+  {
+   "id": "science-discovery",
+   "type": "html",
+   "url": "https://www.colorado.edu/sciencediscovery/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 2,
+   "eventish": 2,
+   "sample": [
+    "Programs",
+    "News and Events"
+   ],
+   "sample_urls": [
+    "https://www.colorado.edu/sciencediscovery/programs-0",
+    "https://www.colorado.edu/sciencediscovery/news-and-events-0"
+   ]
+  },
+  {
+   "id": "dmns-calendar",
+   "type": "html",
+   "url": "https://www.dmns.org/visit/calendar/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "mines-localist",
+   "type": "json",
+   "url": "https://events.mines.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": null,
+   "error": "JSONDecodeError: Expecting value: line 4 column 1 (char 6)",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "csu-localist",
+   "type": "json",
+   "url": "https://events.colostate.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": null,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "du-localist",
+   "type": "json",
+   "url": "https://calendar.du.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "cu-denver-localist",
+   "type": "json",
+   "url": "https://calendar.ucdenver.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "msu-denver-localist",
+   "type": "json",
+   "url": "https://events.msudenver.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": null,
+   "error": "ConnectTimeout: timed out",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "unc-localist",
+   "type": "json",
+   "url": "https://events.unco.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": null,
+   "error": "ConnectError: [Errno -2] Name or service not known",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "adams12",
+   "type": "html",
+   "url": "https://www.adams12.org/our-district/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 8,
+   "eventish": 2,
+   "sample": [
+    "Classified Job Descriptions",
+    "Programming",
+    "Acceleration",
+    "Advanced Learning Plans",
+    "Early Entrance",
+    "Newsroom"
+   ],
+   "sample_urls": [
+    "https://www.adams12.org/our-district/human-resources/job-descriptions/classified-job-descriptions",
+    "https://www.adams12.org/academics/gifted-advanced/programming",
+    "https://www.adams12.org/academics/gifted-advanced/programming/acceleration"
+   ]
+  },
+  {
+   "id": "westminster-schools",
+   "type": "html",
+   "url": "https://www.wps.org/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "bvsd",
+   "type": "html",
+   "url": "https://www.bvsd.org/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 11,
+   "eventish": 3,
+   "sample": [
+    "2026 Graduations",
+    "News Archive",
+    "Our People",
+    "Noticias",
+    "Archivo de noticias",
+    "The Spot/Al Punto Archive"
+   ],
+   "sample_urls": [
+    "https://www.bvsd.org/calendar/2026-graduations",
+    "https://www.bvsd.org/about/news/news-archive",
+    "https://www.bvsd.org/about/news/our-people"
+   ]
+  },
+  {
+   "id": "jeffco-schools",
+   "type": "html",
+   "url": "https://www.jeffcopublicschools.org/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 2,
+   "eventish": 0,
+   "sample": [
+    "Activities",
+    "Activities"
+   ],
+   "sample_urls": [
+    "https://www.jeffcopublicschools.org/services/activities",
+    "https://www.jeffcopublicschools.org/activities"
+   ]
+  },
+  {
+   "id": "stvrain",
+   "type": "html",
+   "url": "https://www.svvsd.org/calendar/",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 15,
+   "eventish": 6,
+   "sample": [
+    "Focus Programs",
+    "Alternative Options",
+    "APEX Homeschool Program",
+    "Summer Programs",
+    "Career Elevation & Technology Center",
+    "Innovation Center"
+   ],
+   "sample_urls": [
+    "https://www.svvsd.org/programs/focus-programs/",
+    "https://www.svvsd.org/programs/alternative-options/",
+    "https://www.svvsd.org/programs/apex-homeschool-program/"
+   ]
+  },
+  {
+   "id": "cpw-events",
+   "type": "html",
+   "url": "https://cpw.state.co.us/events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "rm-arsenal",
+   "type": "html",
+   "url": "https://www.fws.gov/refuge/rocky-mountain-arsenal/events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "rmnp-news-releases",
+   "type": "html",
+   "url": "https://www.nps.gov/romo/learn/news/newsreleases.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "Calendar"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/planyourvisit/calendar.htm"
+   ]
+  },
+  {
+   "id": "great-sand-dunes",
+   "type": "html",
+   "url": "https://www.nps.gov/grsa/planyourvisit/calendar.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "rmnp-calendar",
+   "type": "html",
+   "url": "https://www.nps.gov/romo/planyourvisit/calendar.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "recreation-gov-rmnp",
+   "type": "html",
+   "url": "https://www.recreation.gov/timed-entry/10086745",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 15,
+   "eventish": 15,
+   "sample": [
+    "Bridalveil Creek Campground",
+    "Bridalveil Creek Horse Campsites",
+    "Crane Flat Campground",
+    "Hodgdon Meadow Campground",
+    "Lower Pines Campground",
+    "North Pines Campground"
+   ],
+   "sample_urls": [
+    "https://www.recreation.gov/camping/campgrounds/232453",
+    "https://www.recreation.gov/camping/campgrounds/10390880",
+    "https://www.recreation.gov/camping/campgrounds/232452"
+   ]
+  },
+  {
+   "id": "boulder-osmp",
+   "type": "html",
+   "url": "https://bouldercolorado.gov/services/osmp-events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "jeffco-open-space",
+   "type": "html",
+   "url": "https://www.jeffco.us/1311/Events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  }
+ ]
+}
