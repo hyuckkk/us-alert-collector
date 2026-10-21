@@ -49,6 +49,26 @@ def measure(token: str, acct: str, now: datetime) -> dict:
     }
 
 
+USAGE_QUERY = """query($acct: String!, $d: Date!, $t0: Time!, $t1: Time!, $db: String!, $w: String!) { viewer { accounts(filter: {accountTag: $acct}) {
+  d1: d1AnalyticsAdaptiveGroups(limit: 10000, filter: {date_geq: $d, date_leq: $d, databaseId: $db}) { sum { rowsRead rowsWritten readQueries writeQueries } }
+  w: workersInvocationsAdaptive(limit: 10000, filter: {datetime_geq: $t0, datetime_lt: $t1, scriptName: $w}) { sum { requests errors subrequests } }
+} } }"""
+
+
+def usage_of(token: str, acct: str, now: datetime, db_id: str, worker: str) -> dict:
+    """이번 시험이 만든 D1 하나·Worker 하나만의 오늘 사용량(분석 반영에 몇 분 걸릴 수 있음)."""
+    d = now.strftime("%Y-%m-%d")
+    g = _call("graphql", token, {"query": USAGE_QUERY, "variables": {"acct": acct, "d": d, "t0": f"{d}T00:00:00Z",
+                                                                     "t1": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "db": db_id, "w": worker}})
+    if g.get("errors") or not (g.get("data") or {}).get("viewer"):
+        raise RuntimeError(f"analytics: {str(g.get('errors'))[:300]}")
+    a = g["data"]["viewer"]["accounts"][0]
+    tot = lambda rows, k: sum(x["sum"][k] for x in rows)  # noqa: E731
+    return {"d1_rows_read": tot(a["d1"], "rowsRead"), "d1_rows_written": tot(a["d1"], "rowsWritten"),
+            "d1_read_queries": tot(a["d1"], "readQueries"), "d1_write_queries": tot(a["d1"], "writeQueries"),
+            "worker_requests": tot(a["w"], "requests"), "worker_errors": tot(a["w"], "errors"), "worker_subrequests": tot(a["w"], "subrequests")}
+
+
 def decide(used: dict, need: dict, safety: float = 0.8) -> list[str]:
     """한도를 넘을 항목 목록(비어 있으면 안전). databases 는 개수 한도(안전선 없이 남은 칸)."""
     bad = []
@@ -66,18 +86,42 @@ def main(argv=None) -> int:
     ap.add_argument("--requests", type=int, default=1_000)
     ap.add_argument("--dbs", type=int, default=1)
     ap.add_argument("--safety", type=float, default=0.8)
+    ap.add_argument("--usage-db", help="보고 모드: 이 D1 ID 와 --usage-worker 의 사용량 + 계정 전체 사용량을 출력(점검 아님)")
+    ap.add_argument("--usage-worker")
+    ap.add_argument("--wait", type=int, default=0, help="보고 모드: 분석 값이 안정될 때까지 최대 기다릴 초")
     a = ap.parse_args(argv)
     token, acct = os.environ.get("CLOUDFLARE_API_TOKEN"), os.environ.get("CLOUDFLARE_ACCOUNT_ID")
     if not (token and acct):
         print("::error title=quota::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID 없음")
         return 2
+    if a.usage_db:
+        import time
+        prev, waited, cur = None, 0, None
+        try:
+            while True:
+                cur = usage_of(token, acct, datetime.now(timezone.utc), a.usage_db, a.usage_worker or "")
+                if prev is not None and cur == prev and cur["d1_rows_written"] > 0:
+                    break
+                if waited >= a.wait:
+                    break
+                prev = cur
+                time.sleep(60)
+                waited += 60
+            acct_used = measure(token, acct, datetime.now(timezone.utc))
+        except Exception as e:  # noqa: BLE001
+            print(f"::warning title=usage::사용량 조회 실패 {type(e).__name__}: {str(e)[:200]}")
+            return 2
+        room = {k: {"used": acct_used[k], "limit": LIMITS[k], "pct": round(100 * acct_used[k] / LIMITS[k], 1)} for k in LIMITS}
+        print(f"::notice title=usage this run (waited {waited}s, stable={cur == prev})::{json.dumps(cur)}")
+        print(f"::notice title=usage account today UTC::{json.dumps(room)}")
+        return 0
     try:
         used = measure(token, acct, datetime.now(timezone.utc))
     except Exception as e:  # noqa: BLE001
         print(f"::error title=quota::사용량을 잴 수 없어 시험을 시작하지 않습니다(계정 공유 한도 보호). 토큰에 Account Analytics 읽기 권한이 필요할 수 있습니다. {type(e).__name__}: {str(e)[:200]}")
         return 2
     need = {"requests": a.requests, "rows_read": a.reads, "rows_written": a.writes, "databases": a.dbs}
-    print("오늘(UTC) 계정 사용량:", json.dumps(used), "· 시험 예상:", json.dumps(need))
+    print(f"::notice title=quota pre-check::오늘(UTC) 계정 사용량 {json.dumps(used)} · 시험 예상 {json.dumps(need)} · 안전선 {int(a.safety * 100)}%")
     bad = decide(used, need, a.safety)
     for b in bad:
         print(f"::error title=quota::{b}")

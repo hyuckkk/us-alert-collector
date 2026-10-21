@@ -18,7 +18,7 @@ concurrency:
 jobs:
   staging:
     runs-on: ubuntu-latest
-    timeout-minutes: 40          # 단계별 제한의 합(약 30분)보다 길게 — 시간 초과로 취소돼도 정리 단계가 돌 시간을 남긴다
+    timeout-minutes: 55          # 단계별 제한의 합(정리 전 약 34분)보다 길게 — 시간 초과로 취소되기 전에 정리 단계가 끝나도록
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -61,6 +61,7 @@ jobs:
           npx wrangler d1 create "$STG_DB"
           ID=$(npx wrangler d1 list --json | python3 -c "import json,os,sys;print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']==os.environ['STG_DB']),''))")
           [ -n "$ID" ] || { echo "D1 lookup failed"; exit 1; }
+          echo "STG_DB_ID=$ID" >> "$GITHUB_ENV"
           python3 - "$ID" <<'PY'
           import os, re, sys
           s = open("wrangler.toml").read()
@@ -102,17 +103,22 @@ jobs:
                 "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$STG_WORKER")
               [ "$code" = 404 ] && break; sleep $((i * 5))
             done
-            [ "$code" = 404 ] && echo "deleted worker $STG_WORKER" || left="$left worker:$STG_WORKER"
+            [ "$code" = 404 ] && echo "::notice title=staging-cleanup::deleted worker $STG_WORKER (verified 404)" || left="$left worker:$STG_WORKER"
           fi
           if [ "${D1_ATTEMPTED:-}" = 1 ]; then
             has() { npx wrangler d1 list --json | python3 -c "import json,os,sys;sys.exit(0 if any(d['name']==os.environ['STG_DB'] for d in json.load(sys.stdin)) else 1)"; }
             for i in 1 2 3; do has || break; npx wrangler d1 delete "$STG_DB" -y >/dev/null 2>&1 || true; sleep $((i * 5)); done
-            has && left="$left d1:$STG_DB" || echo "deleted d1 $STG_DB"
+            has && left="$left d1:$STG_DB" || echo "::notice title=staging-cleanup::deleted d1 $STG_DB (verified absent from list)"
           fi
           if [ -n "$left" ]; then
             echo "::error title=staging-cleanup::정리 실패:$left — 수동 정리: npx wrangler delete --name $STG_WORKER --force / npx wrangler d1 delete $STG_DB -y"
             exit 1
           fi
+      - name: Usage of this run's resources (Cloudflare analytics, after cleanup — 분석은 ID·이름으로 조회하므로 삭제 뒤에도 가능, 정리를 늦추지 않음)
+        if: always() && env.STG_DB_ID != ''
+        timeout-minutes: 9
+        continue-on-error: true
+        run: python3 ../scripts/cf_quota.py --usage-db "$STG_DB_ID" --usage-worker "$STG_WORKER" --wait 420
       - name: Report leftovers from earlier runs (never deleted here)
         if: always()
         timeout-minutes: 2
