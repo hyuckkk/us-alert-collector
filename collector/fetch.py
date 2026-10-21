@@ -186,8 +186,10 @@ def parse_html(html: str, source: dict) -> list[Entry]:
     page_text = clean_text(" ".join(p.text), 6000)
     if source.get("mode") == "page-change":
         # 페이지 본문 해시가 바뀌면 한 건으로 넘긴다. 같은 페이지 주소 + 본문 해시가 '이미 본' 판정 단위.
-        digest = hashlib.sha1(page_text.encode()).hexdigest()[:12]
-        return [Entry(source["id"], normalize_url(base), source.get("name", source["id"]), page_text[:3000], None, {"page_hash": digest})]
+        # AI 에는 페이지 앞부분(메뉴)이 아니라 날짜·접수·비용 문장이 가장 많은 구간을 넘긴다(12차 시험: Thornton 접수 안내 누락).
+        full = clean_text(" ".join(p.text), 20000)
+        digest = hashlib.sha1(fingerprint(full)[1].encode()).hexdigest()[:12]
+        return [Entry(source["id"], normalize_url(base), source.get("name", source["id"]), best_window(full, PAGE_WINDOW), None, {"page_hash": digest})]
     host = _host(base)
     pat = re.compile(source["link_pattern"]) if source.get("link_pattern") else EVENTISH
     seen, out = set(), []
@@ -231,6 +233,18 @@ def page_text(client: httpx.Client, url: str) -> tuple[int | None, str]:
     return r.status_code, clean_text(" ".join(p.text), 20000)
 
 
+PAGE_WINDOW = 4000
+
+
+def best_window(text: str, size: int = PAGE_WINDOW) -> str:
+    """긴 페이지에서 날짜·장소·비용·신청 문장이 가장 많이 모인 size 글자 구간(메뉴·바닥글 대신 본문)."""
+    if len(text) <= size:
+        return text
+    starts = sorted({*range(0, len(text) - size + 1, 250), len(text) - size})  # 끝 구간도 후보에 넣는다
+    best = max(starts, key=lambda s: (len(RELEVANT.findall(text[s:s + size])), -s))
+    return text[best:best + size]
+
+
 def event_body_start(text: str, title: str) -> int:
     """제목은 사이트 메뉴·이동 경로에도 나오므로 첫 위치가 아니라, 제목이 나오는 곳(최대 12곳) 중
     뒤따르는 1,500자에 날짜·장소·비용·신청 문장이 가장 많은 곳을 본문 시작으로 본다(10차 시험: 메뉴부터 잘라 날짜 누락)."""
@@ -240,11 +254,13 @@ def event_body_start(text: str, title: str) -> int:
         hits.append(i)
         i = low.find(key, i + 1)
     if not hits:
-        return 0
+        # 제목이 본문에 없으면(사이트가 다른 이름을 씀) 행사 문장이 가장 많은 구간
+        w = best_window(text, 1500)
+        return max(text.find(w), 0)
     return max(hits, key=lambda h: (len(RELEVANT.findall(text[h:h + 1500])), -h))
 
 
-def fetch_detail(entry: Entry, client: httpx.Client, chars: int = 3000) -> bool:
+def fetch_detail(entry: Entry, client: httpx.Client, chars: int = 4500) -> bool:
     """html 정보원의 새 링크는 링크 글자만 있으므로, 상세 페이지 본문을 가져와 AI 가 날짜·가격·연령을 볼 수 있게 한다(토큰 0)."""
     try:
         status, text = page_text(client, entry.url)

@@ -123,7 +123,7 @@ class Run:
         self.all_sources = srcs
         if self.args.only:
             srcs = [s for s in srcs if s["id"] == self.args.only]
-        due = [s for s in srcs if self.args.only or is_due(s, self.today)]
+        due = [s for s in srcs if self.args.only or getattr(self.args, "all_sources", False) or is_due(s, self.today)]
         for s in due:
             r = fetch_source(s, secrets=os.environ)
             self.m["sources_total"] += 1
@@ -240,7 +240,7 @@ class Run:
         feed = e.text if e.extra.get("feed_short") else ""
         ok = fetch_detail(e, hc)
         if ok and feed:
-            e.text = (feed + "\n" + e.text)[:3500]
+            e.text = (feed + "\n" + e.text)[:5000]
         if not ok and feed:
             e.text = feed
         e.extra["detail_ok"] = ok
@@ -561,6 +561,7 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
     ap.add_argument("--only")
     ap.add_argument("--max", type=int)
     ap.add_argument("--out")
+    ap.add_argument("--all-sources", action="store_true", help="조회 주기와 관계없이 모든 활성 정보원을 조회(전체 시험용)")
     ap.add_argument("--usd-cap", type=float, help="이번 실행의 AI 비용 상한(달러). 각 호출의 최악 비용을 미리 더해 넘으면 호출하지 않는다")
     ap.add_argument("--trace", help="단계별 발견 측정용 기록 파일(수집 항목의 출처 단계·AI 처리 결과). collector/eval_stages.py 가 읽는다")
     args = ap.parse_args(argv)

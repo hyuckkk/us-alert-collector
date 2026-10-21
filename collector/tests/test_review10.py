@@ -91,3 +91,37 @@ def test_6_discovery_prefers_upcoming_and_drops_past():
     assert "2026-10-21" in sent and "90 days" not in sent
     for word in ("2027–2028", "early registration", "national park permits", "camp enrollment", "already over"):
         assert word in sent
+
+
+# ---------------------------------------------------------------- 12차 시험 이후 추가 수정의 회귀 테스트
+# Thornton 활동 등록 안내 실제 본문(2026-10-21 수집). 페이지 변경 감시 방식이 앞 3,000자(메뉴)만 넘겨 AI 가 '행사 없음'으로 판단했다.
+REG_BODY = ("Activity Registration Information Request an Account Online Activity Registration Activities Guide Release of Liability Waiver "
+            "Registration Dates Open all General Registration at 7 a.m. Winter/Spring Registration | Begins November 24 Swim Lessons Residents 6:30 p.m. "
+            "Nonresidents 7 a.m. Online and walk-ins only. No Phone-in registrations accepted for swim registration. Winter Swim Registration Begins "
+            "Residents November 30, 2026 Nonresidents December 1, 2026 Gymnastics Residents 7 p.m. Nonresidents 7 a.m. Winter Gymnastics Registration "
+            "Begins Residents December 2, 2026 Nonresidents December 3, 2026")
+
+
+def test_7_page_change_source_passes_registration_body_not_menu():
+    html = "<html><body><nav>" + ("<a href='/x'>Parks &amp; Recreation Programs Community Culture Government Residents Business</a> " * 90) + \
+           "</nav><main><p>" + REG_BODY + "</p></main></body></html>"
+    [e] = fetch.parse_html(html, {"id": "thornton-registration", "type": "html", "mode": "page-change",
+                                  "url": "https://www.thorntonco.gov/parks-recreation/activity-registration-information"})
+    assert "November 30, 2026" in e.text and "December 3, 2026" in e.text and "Begins November 24" in e.text
+    assert len(e.text) <= fetch.PAGE_WINDOW
+
+
+def test_8_extract_rules_session_date_reservations_and_closed_groups():
+    s = ai.extract_system()
+    assert "ONE session" in s                                      # Westminster 부스 10/27 페이지가 시리즈 첫 회차 10/21 로 추출됨
+    for w in ("reservation", "permit", "lottery", "enrollment", "Far-future"):
+        assert w in s
+    assert "closed group" in s and "military base personnel" in s   # USAFA 상주 인원 가족 영화, CU 학생·교직원 전용
+
+
+def test_9_closed_or_soldout_registration_is_not_sent():
+    full = ev(title="Homeschool Program", start_date="2026-10-30", registration_status="soldout", url="https://u.edu/h")
+    wait = ev(title="Camp", start_date="2026-11-30", registration_status="waitlist", url="https://u.edu/c")
+    out, dropped = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[full, wait])],
+                                  [Entry("usafa-events", "https://u.edu/h", "Homeschool"), ], date(2026, 10, 21))
+    assert dropped.get("closed") == 1 and [o["title"] for o in out] == ["Camp"]

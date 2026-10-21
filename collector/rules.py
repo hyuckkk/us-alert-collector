@@ -149,6 +149,9 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             if last and last < today:
                 drop("past")
                 continue
+            if d.get("registration_status") in ("closed", "soldout"):
+                drop("closed")  # 신청할 수 없는 행사는 보내지 않는다(대기자 명단 waitlist 는 보냄)
+                continue
             if not d["start_date"] and not d["end_date"] and not d["annual"] and not d.get("registration_opens") and not d.get("deadline"):
                 # 날짜·접수일이 전혀 없으면 지난 행사인지 알 수 없으므로 보내지 않는다(10차 시험: 지난 행사 3건 오발송).
                 # 같은 페이지가 바뀌면(상세 재검사·페이지 변경 감시) 다시 추출된다.

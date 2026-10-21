@@ -1,0 +1,1315 @@
+{
+ "_comment": "정보원 확충 후보(13차). 공식 기관 일정 페이지를 여러 표준 주소 형식으로 시험해 실제로 행사가 나오는 것만 config/sources.json 에 추가한다.",
+ "candidates": [
+  {
+   "id": "brighton-rss",
+   "type": "rss",
+   "url": "https://www.brightonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "brighton-calendar",
+   "type": "html",
+   "url": "https://www.brightonco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "lafayette-rss",
+   "type": "rss",
+   "url": "https://www.lafayetteco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "lafayette-calendar",
+   "type": "html",
+   "url": "https://www.lafayetteco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "erie-rss",
+   "type": "rss",
+   "url": "https://www.erieco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "erie-calendar",
+   "type": "html",
+   "url": "https://www.erieco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "northglenn-rss",
+   "type": "rss",
+   "url": "https://www.northglenn.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "northglenn-calendar",
+   "type": "html",
+   "url": "https://www.northglenn.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "federal-heights-rss",
+   "type": "rss",
+   "url": "https://www.fedheights.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "federal-heights-calendar",
+   "type": "html",
+   "url": "https://www.fedheights.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "commerce-city-rss",
+   "type": "rss",
+   "url": "https://www.c3gov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "commerce-city-calendar",
+   "type": "html",
+   "url": "https://www.c3gov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "louisville-rss",
+   "type": "rss",
+   "url": "https://www.louisvilleco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "louisville-calendar",
+   "type": "html",
+   "url": "https://www.louisvilleco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "superior-rss",
+   "type": "rss",
+   "url": "https://www.superiorcolorado.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "superior-calendar",
+   "type": "html",
+   "url": "https://www.superiorcolorado.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "golden-rss",
+   "type": "rss",
+   "url": "https://www.cityofgolden.net/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "golden-calendar",
+   "type": "html",
+   "url": "https://www.cityofgolden.net/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "littleton-rss",
+   "type": "rss",
+   "url": "https://www.littletongov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "littleton-calendar",
+   "type": "html",
+   "url": "https://www.littletongov.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "longmont-rss",
+   "type": "rss",
+   "url": "https://www.longmontcolorado.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "longmont-calendar",
+   "type": "html",
+   "url": "https://www.longmontcolorado.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "wheat-ridge-rss",
+   "type": "rss",
+   "url": "https://www.ci.wheatridge.co.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "wheat-ridge-calendar",
+   "type": "html",
+   "url": "https://www.ci.wheatridge.co.us/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "englewood-rss",
+   "type": "rss",
+   "url": "https://www.englewoodco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "englewood-calendar",
+   "type": "html",
+   "url": "https://www.englewoodco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "castle-rock-rss",
+   "type": "rss",
+   "url": "https://www.crgov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "castle-rock-calendar",
+   "type": "html",
+   "url": "https://www.crgov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "lone-tree-rss",
+   "type": "rss",
+   "url": "https://cityoflonetree.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "lone-tree-calendar",
+   "type": "html",
+   "url": "https://cityoflonetree.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "centennial-rss",
+   "type": "rss",
+   "url": "https://www.centennialco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "centennial-calendar",
+   "type": "html",
+   "url": "https://www.centennialco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "greeley-rss",
+   "type": "rss",
+   "url": "https://greeleygov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "greeley-calendar",
+   "type": "html",
+   "url": "https://greeleygov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "loveland-rss",
+   "type": "rss",
+   "url": "https://www.lovgov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "loveland-calendar",
+   "type": "html",
+   "url": "https://www.lovgov.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "firestone-rss",
+   "type": "rss",
+   "url": "https://www.firestoneco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "firestone-calendar",
+   "type": "html",
+   "url": "https://www.firestoneco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "frederick-rss",
+   "type": "rss",
+   "url": "https://www.frederickco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "frederick-calendar",
+   "type": "html",
+   "url": "https://www.frederickco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "dacono-rss",
+   "type": "rss",
+   "url": "https://www.cityofdacono.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "dacono-calendar",
+   "type": "html",
+   "url": "https://www.cityofdacono.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "berthoud-rss",
+   "type": "rss",
+   "url": "https://www.berthoud.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "berthoud-calendar",
+   "type": "html",
+   "url": "https://www.berthoud.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "golden-adams-rss",
+   "type": "rss",
+   "url": "https://www.adcogov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "golden-adams-calendar",
+   "type": "html",
+   "url": "https://www.adcogov.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "boulder-county-rss",
+   "type": "rss",
+   "url": "https://bouldercounty.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "boulder-county-calendar",
+   "type": "html",
+   "url": "https://bouldercounty.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "jeffco-rss",
+   "type": "rss",
+   "url": "https://www.jeffco.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "jeffco-calendar",
+   "type": "html",
+   "url": "https://www.jeffco.us/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "arapahoe-county-rss",
+   "type": "rss",
+   "url": "https://www.arapahoegov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "arapahoe-county-calendar",
+   "type": "html",
+   "url": "https://www.arapahoegov.com/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "douglas-county-rss",
+   "type": "rss",
+   "url": "https://www.douglas.co.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "douglas-county-calendar",
+   "type": "html",
+   "url": "https://www.douglas.co.us/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "broomfield-city-rss",
+   "type": "rss",
+   "url": "https://broomfield.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "broomfield-city-calendar",
+   "type": "html",
+   "url": "https://broomfield.org/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "thornton-rss",
+   "type": "rss",
+   "url": "https://www.thorntonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "thornton-calendar",
+   "type": "html",
+   "url": "https://www.thorntonco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "arvada-rss",
+   "type": "rss",
+   "url": "https://arvadaco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "arvada-calendar",
+   "type": "html",
+   "url": "https://arvadaco.gov/calendar.aspx",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "link_pattern": "Calendar\\.aspx\\?EID=\\d+"
+  },
+  {
+   "id": "boulder",
+   "type": "html",
+   "url": "https://bouldercolorado.gov/events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "lakewood",
+   "type": "html",
+   "url": "https://www.lakewood.org/Events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "aurora",
+   "type": "html",
+   "url": "https://www.auroragov.org/things_to_do/events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "denver-parks",
+   "type": "html",
+   "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation/Events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "thornton-events",
+   "type": "html",
+   "url": "https://www.thorntonco.gov/events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "westminster-events",
+   "type": "html",
+   "url": "https://www.westminsterco.gov/Events",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "apex-prd",
+   "type": "html",
+   "url": "https://www.apexprd.org/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "foothills-prd",
+   "type": "html",
+   "url": "https://www.ifoothills.org/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "foothills-reg-dates",
+   "type": "html",
+   "url": "https://www.ifoothills.org/online-registration-dates/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "south-suburban",
+   "type": "html",
+   "url": "https://www.ssprd.org/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "carbon-valley",
+   "type": "html",
+   "url": "https://www.cvrec.com/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "hyland-hills-programs",
+   "type": "html",
+   "url": "https://www.hylandhills.gov/programs/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "boulder-library",
+   "type": "html",
+   "url": "https://boulderlibrary.org/events/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "arapahoe-libraries",
+   "type": "html",
+   "url": "https://arapahoelibraries.org/events/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "high-plains-library",
+   "type": "html",
+   "url": "https://www.mylibrary.us/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "longmont-library",
+   "type": "html",
+   "url": "https://www.longmontcolorado.gov/departments/departments-a-d/library/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "lafayette-library",
+   "type": "html",
+   "url": "https://lafayettepubliclibrary.libcal.com/calendar",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "louisville-library",
+   "type": "html",
+   "url": "https://www.louisvilleco.gov/residents/library/events",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "douglas-libraries",
+   "type": "html",
+   "url": "https://www.dcl.org/events/",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "englewood-library",
+   "type": "html",
+   "url": "https://www.englewoodco.gov/government/city-departments/library",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family",
+    "life"
+   ]
+  },
+  {
+   "id": "denver-zoo",
+   "type": "html",
+   "url": "https://denverzoo.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "history-colorado",
+   "type": "html",
+   "url": "https://www.historycolorado.org/events",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "clyfford-still",
+   "type": "html",
+   "url": "https://clyffordstillmuseum.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "mca-denver",
+   "type": "html",
+   "url": "https://mcadenver.org/calendar",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "arvada-center",
+   "type": "html",
+   "url": "https://arvadacenter.org/events",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "wings-museum",
+   "type": "html",
+   "url": "https://wingsmuseum.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "chautauqua",
+   "type": "html",
+   "url": "https://www.chautauqua.com/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "railroad-museum",
+   "type": "html",
+   "url": "https://coloradorailroadmuseum.org/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "four-mile",
+   "type": "html",
+   "url": "https://www.fourmilepark.org/events",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "dcpa",
+   "type": "html",
+   "url": "https://www.denvercenter.org/tickets-events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "red-rocks",
+   "type": "html",
+   "url": "https://www.redrocksonline.com/events/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "dam-calendar",
+   "type": "html",
+   "url": "https://www.denverartmuseum.org/en/calendar",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "science-discovery",
+   "type": "html",
+   "url": "https://www.colorado.edu/sciencediscovery/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "dmns-calendar",
+   "type": "html",
+   "url": "https://www.dmns.org/visit/calendar/",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "mines-localist",
+   "type": "json",
+   "url": "https://events.mines.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "csu-localist",
+   "type": "json",
+   "url": "https://events.colostate.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "du-localist",
+   "type": "json",
+   "url": "https://calendar.du.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "cu-denver-localist",
+   "type": "json",
+   "url": "https://calendar.ucdenver.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "msu-denver-localist",
+   "type": "json",
+   "url": "https://events.msudenver.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "unc-localist",
+   "type": "json",
+   "url": "https://events.unco.edu/api/2/events?days=90&pp=100",
+   "region": "colleges",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "adams12",
+   "type": "html",
+   "url": "https://www.adams12.org/our-district/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ]
+  },
+  {
+   "id": "westminster-schools",
+   "type": "html",
+   "url": "https://www.wps.org/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ]
+  },
+  {
+   "id": "bvsd",
+   "type": "html",
+   "url": "https://www.bvsd.org/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ]
+  },
+  {
+   "id": "jeffco-schools",
+   "type": "html",
+   "url": "https://www.jeffcopublicschools.org/calendar",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ]
+  },
+  {
+   "id": "stvrain",
+   "type": "html",
+   "url": "https://www.svvsd.org/calendar/",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ]
+  },
+  {
+   "id": "cpw-events",
+   "type": "html",
+   "url": "https://cpw.state.co.us/events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  },
+  {
+   "id": "rm-arsenal",
+   "type": "html",
+   "url": "https://www.fws.gov/refuge/rocky-mountain-arsenal/events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  },
+  {
+   "id": "rmnp-news-releases",
+   "type": "html",
+   "url": "https://www.nps.gov/romo/learn/news/newsreleases.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  },
+  {
+   "id": "great-sand-dunes",
+   "type": "html",
+   "url": "https://www.nps.gov/grsa/planyourvisit/calendar.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  },
+  {
+   "id": "rmnp-calendar",
+   "type": "html",
+   "url": "https://www.nps.gov/romo/planyourvisit/calendar.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  },
+  {
+   "id": "recreation-gov-rmnp",
+   "type": "html",
+   "url": "https://www.recreation.gov/timed-entry/10086745",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  },
+  {
+   "id": "boulder-osmp",
+   "type": "html",
+   "url": "https://bouldercolorado.gov/services/osmp-events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  },
+  {
+   "id": "jeffco-open-space",
+   "type": "html",
+   "url": "https://www.jeffco.us/1311/Events",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "life",
+    "kids"
+   ]
+  }
+ ]
+}

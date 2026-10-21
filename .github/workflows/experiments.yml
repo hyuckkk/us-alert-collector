@@ -8,7 +8,7 @@ name: experiments
 on:
   push:
     branches-ignore: [main]
-    paths: ["ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent"]
+    paths: ["ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent", "ticks/sourceprobe"]
 permissions:
   contents: write
 concurrency:
@@ -33,6 +33,7 @@ jobs:
           echo "REFERENCE=$(echo "$changed" | grep -q ticks/reference && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "GROUNDTRUTH=$(echo "$changed" | grep -q ticks/groundtruth && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "INDEPENDENT=$(echo "$changed" | grep -q ticks/independent && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "SOURCEPROBE=$(echo "$changed" | grep -q ticks/sourceprobe && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "COVERAGE=$(echo "$changed" | grep -q ticks/coverage && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "FULLSYSTEM=$(echo "$changed" | grep -q ticks/fullsystem && echo 1 || echo 0)" >> "$GITHUB_ENV"
       - name: Model comparison
@@ -52,6 +53,11 @@ jobs:
       - name: Independent sample candidates (no AI)
         if: env.INDEPENDENT == '1'
         run: python collector/verify_ground_truth.py --panel eval/independent_panel.json --out eval/independent_pages.json
+      - name: Source candidates + AI input check (no AI)
+        if: env.SOURCEPROBE == '1'
+        run: |
+          python collector/probe_candidates.py
+          python collector/preview_inputs.py
       - name: Coverage before/after new sources
         if: env.COVERAGE == '1'
         run: python collector/coverage.py
@@ -69,7 +75,7 @@ jobs:
           MAX=$(grep -oE '^max=[0-9]+' ticks/fullsystem | cut -d= -f2); MAX=${MAX:-2500}
           CAP=$(grep -oE '^usd_cap=[0-9.]+' ticks/fullsystem | cut -d= -f2); CAP=${CAP:-5}
           python3 -c "import sys; sys.exit(0 if float('$CAP') <= 5.5 else 1)" || { echo "::error::usd_cap $CAP > 5.5 (승인 상한 \$6)"; exit 1; }
-          python collector/run.py --mode full --dry-run --max "$MAX" --usd-cap "$CAP" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
+          python collector/run.py --mode full --dry-run --all-sources --max "$MAX" --usd-cap "$CAP" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
           python3 -c "import json;m=json.load(open('reports/fullsystem-run.json'))['metrics'];print('::notice title=fullsystem cost::usd=%s cap=$CAP calls=%s searches=%s' % (m.get('usd'), m.get('calls'), m.get('searches')))"
           python collector/eval_stages.py reports/fullsystem-trace.json --out eval/stages.json ${FAMILY_AVAILABLE_FROM:+--owner-from "$FAMILY_AVAILABLE_FROM"}
           python3 -c "import json;print('::notice title=fullsystem result::'+json.dumps(json.load(open('eval/stages.json'))['summary'],ensure_ascii=False))"
@@ -78,6 +84,6 @@ jobs:
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/stages.json reports/fullsystem-run.json reports/fullsystem-trace.json; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/ai_inputs.json eval/stages.json reports/fullsystem-run.json reports/fullsystem-trace.json; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"
