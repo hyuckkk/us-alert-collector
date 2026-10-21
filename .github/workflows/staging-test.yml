@@ -80,8 +80,20 @@ jobs:
           echo "WORKER_ATTEMPTED=1" >> "$GITHUB_ENV"
           bash ../scripts/run.sh npx wrangler deploy --config "$STG_CONFIG"
           printf '%s' "$STAGING_KEY" | npx wrangler secret put ADMIN_KEY --config "$STG_CONFIG"
-          curl -sS -X POST -H "Authorization: Bearer $STAGING_KEY" -H "content-type: application/json" --data '{"hours":0}' "$STAGING_URL/admin/baseline" >/dev/null || true
-          for i in $(seq 1 30); do curl -sf "$STAGING_URL/health" >/dev/null && break; sleep 2; done
+      - name: Wait until the admin key is live
+        timeout-minutes: 3
+        # 1회차 실행(39528955958)에서 비밀값 설정 직후 첫 요청이 401 이었다(새 비밀값이 퍼지기 전). 인증 요청이 연속 5번 200 이 될 때까지 기다린다.
+        run: |
+          ok=0
+          for i in $(seq 1 60); do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $STAGING_KEY" "$STAGING_URL/admin/baseline" || echo 000)
+            if [ "$code" = 200 ]; then ok=$((ok + 1)); else ok=0; fi
+            [ "$ok" -ge 5 ] && break
+            sleep 2
+          done
+          echo "::notice title=staging-ready::admin auth stable after $i checks (last HTTP $code)"
+          [ "$ok" -ge 5 ] || { echo "::error::staging Worker admin auth not stable (last HTTP $code)"; exit 1; }
+          curl -sS -f -X POST -H "Authorization: Bearer $STAGING_KEY" -H "content-type: application/json" --data '{"hours":0}' "$STAGING_URL/admin/baseline" >/dev/null
       - name: Run remote queue test
         timeout-minutes: 15
         run: node test/remote-queue.mjs

@@ -63,7 +63,7 @@ url = next((x for x in a if x.startswith("http")), "")
 if "/workers/scripts/" in url:
     name = url.rsplit("/", 1)[1]
     sys.stdout.write("200" if name in st["workers"] else "404"); sys.exit(0)
-sys.stdout.write('{"ok":true}'); sys.exit(0)
+sys.stdout.write(("401" if os.environ.get("FAIL_AT") == "auth" else "200") if "-w" in a else '{"ok":true}'); sys.exit(0)
 '''
 
 STUB_EXIT = '#!/usr/bin/env bash\nexit $([ "${FAIL_AT:-}" = "%s" ] && echo 1 || echo 0)\n'
@@ -160,7 +160,7 @@ def test_existing_same_name_is_refused_not_reused_or_deleted(tmp_path):
     assert s["created"] == [] and s["deleted"] == []
 
 
-@pytest.mark.parametrize("fail_at", ["migrate", "deploy", "test"])
+@pytest.mark.parametrize("fail_at", ["migrate", "deploy", "auth", "test"])
 def test_failure_midway_cleans_up_what_was_created(tmp_path, fail_at):
     s = simulate(tmp_path, fail_at=fail_at)
     _assert_prod_untouched(s)
