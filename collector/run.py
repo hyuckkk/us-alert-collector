@@ -10,6 +10,7 @@ python collector/run.py [--mode full|light] [--dry-run] [--no-ai] [--only SOURCE
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 import sys
@@ -49,6 +50,7 @@ DEEP_THEMES = {            # 요일별 심층(월=0) — 설계안 유지
 OFFICIAL_TLD = (".gov", ".edu", ".us", ".org", ".mil")
 MIN_SOURCE_OK_RATIO = 0.5  # 정보원 조회 성공률이 이보다 낮으면 '정상 수집'으로 기록하지 않는다(2차 재검증 G)
 DETAIL_SOURCE_TYPES = ("ai-discover",)
+DETAIL_WORKERS = 8           # 상세 페이지 동시 조회 수(사이트별 부담은 작음: 대부분 서로 다른 기관)
 RSS_DETAIL_MIN_CHARS = 400  # 공식 피드 항목 본문이 이보다 짧으면 상세 페이지를 연다
 LEASE_EXTEND_MIN = 60       # AI 호출·Worker 등록 직전에 대기열 임대를 이만큼 연장(3차 검증 2)
 
@@ -98,6 +100,8 @@ class Run:
 
     # ------------------------------------------------ 단계 실행기: 한 단계의 실패가 다른 단계를 막지 않는다
     def stage(self, name: str, fn):
+        t0 = datetime.now(timezone.utc)
+        self._progress(name, "start")
         try:
             r = fn()
             self.stages[name] = {"ok": True, **(r if isinstance(r, dict) else {})}
@@ -105,6 +109,16 @@ class Run:
             self.stages[name] = {"ok": False, "error": f"{type(e).__name__}: {str(e)[:200]}"}
             self.alerts.append(f"{name} 단계 오류: {type(e).__name__}: {str(e)[:150]}")
             self.report.setdefault("tracebacks", {})[name] = traceback.format_exc()[-1500:]
+        self.stages[name]["seconds"] = round((datetime.now(timezone.utc) - t0).total_seconds())
+        self._progress(name, "done")
+
+    def _progress(self, name: str, what: str) -> None:
+        """단계별 진행 기록(PROGRESS_FILE). 실행이 시간 초과로 끊겨도 어느 단계에서 오래 걸렸는지 남는다."""
+        p = os.environ.get("PROGRESS_FILE")
+        if p:
+            with open(p, "a") as f:
+                f.write(json.dumps({"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "stage": name, "event": what,
+                                    "seconds": self.stages.get(name, {}).get("seconds")}) + "\n")
 
     def add_entries(self, entries: list[Entry], official: bool, bots=None):
         for e in entries:
@@ -238,7 +252,10 @@ class Run:
     def _detail(e: Entry, hc) -> bool:
         """상세 본문 조회. 짧은 피드 본문이 있으면 상세 본문 앞에 붙여 둘 다 AI 에 넘긴다."""
         feed = e.text if e.extra.get("feed_short") else ""
-        ok = fetch_detail(e, hc)
+        try:
+            ok = fetch_detail(e, hc)
+        except Exception as err:  # noqa: BLE001  동시 조회 중 한 페이지의 이상한 응답이 실행 전체를 멈추지 않게
+            e.extra["detail_error"], ok = type(err).__name__, False
         if ok and feed:
             e.text = (feed + "\n" + e.text)[:5000]
         if not ok and feed:
@@ -263,10 +280,11 @@ class Run:
         self.m["entries_new"], self.m["entries_changed"] = len([k for k in fresh if k in new]), len([k for k in fresh if k in changed])
         # 상세 본문(토큰 0)을 붙인다. 상한을 넘는 것은 본문 없이 넣고, 대기열 처리 때 다시 조회한다.
         need = [k for k in fresh if self._needs_detail(self.entries[k])]
-        with new_client() as hc:
+        with new_client() as hc, ThreadPoolExecutor(DETAIL_WORKERS) as ex:
+            oks = dict(zip(need[:MAX_DETAIL_FETCH], ex.map(lambda k: self._detail(self.entries[k], hc), need[:MAX_DETAIL_FETCH])))
             for k in need[:MAX_DETAIL_FETCH]:
                 self.m["details_total"] += 1
-                ok = self._detail(self.entries[k], hc)
+                ok = oks[k]
                 self.entries[k].extra["detail_ok"] = ok
                 self.m["details_ok"] += int(ok)
                 sid = self.entries[k].source_id
@@ -321,11 +339,13 @@ class Run:
         # 상세 본문이 필요한데 없는 항목은 AI 전에 반드시 조회한다. 실패하면 AI 로 보내지 않고(추측 금지) 다시 대기(2차 재검증 B).
         no_detail: dict[int, str] = {}
         ready = bool(todo) and self.ai_ready()
-        with new_client() as hc:
+        with new_client() as hc, ThreadPoolExecutor(DETAIL_WORKERS) as ex:
+            want = [i for i, e in enumerate(entries) if ready and self._needs_detail(e)]  # AI 를 못 쓰면 조회해도 보관하지 않으므로 건너뜀
+            oks = dict(zip(want, ex.map(lambda i: self._detail(entries[i], hc), want)))  # 상세 페이지는 동시에 여러 개 조회
             for i, e in enumerate(entries):
-                if ready and self._needs_detail(e):  # AI 를 못 쓰면 조회해도 보관하지 않으므로 건너뜀
+                if i in oks:
                     self.m["details_total"] += 1
-                    if self._detail(e, hc):
+                    if oks[i]:
                         self.m["details_ok"] += 1
                     elif not e.extra.get("feed_short"):  # 피드 본문이 있는 항목은 그 본문으로 계속 진행
                         no_detail[i] = f"detail-unavailable: {e.extra.get('detail_error', '?')}"

@@ -38,3 +38,14 @@ def test_run_passes_cap_to_usage(world, tmp_path):  # noqa: F811
     rep = run.main(["--usd-cap", "0.0001"], client=c, api=FakeAPI())
     assert c.messages.calls == []                          # 상한이 예약분보다 작으면 추출 호출 없음
     assert rep["metrics"]["usd"] == 0
+
+
+def test_parallel_extract_reserves_cap_for_whole_wave():
+    """동시 처리(parallel=4)에서도 한 번에 보내는 묶음 수만큼 최악 비용을 예약해 상한을 넘지 않는다."""
+    big = lambda kw: SimpleNamespace(parsed_output=reply_for([CLAY])(kw), stop_reason="end_turn", usage=U(50000, 10000))  # noqa: E731
+    u = ai.Usage(PRICES, cap=0.05)
+    c = FakeClient([big] * 10)
+    cfg = {**CFG, "extract": {**CFG["extract"], "parallel": 4}}
+    out = ai.extract(c, cfg, [Entry("s", f"https://x/{i}", f"t{i}") for i in range(10)], "2026-10-21", u)
+    assert u.usd <= 0.05 and out.stopped == "run-cost-cap"
+    assert len(c.messages.calls) + len([k for k, v in out.failed.items() if v.startswith("not-attempted")]) == 10

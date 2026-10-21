@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import json
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import os
 import re
@@ -212,47 +213,64 @@ class ExtractOutcome:
 
 
 def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> ExtractOutcome:
-    """묶음별로 독립 처리한다. 한 묶음이 실패해도 앞 묶음 결과는 남고, AI 가 빠뜨린 항목은 실패로 표시해 재시도한다(1차 검증 1-2)."""
+    """묶음별로 독립 처리한다. 한 묶음이 실패해도 앞 묶음 결과는 남고, AI 가 빠뜨린 항목은 실패로 표시해 재시도한다(1차 검증 1-2).
+    묶음은 parallel 개씩 동시에 보낸다(13차: 정보원 62곳·상세 본문으로 순차 처리가 58분을 넘김). 동시에 보내는 묶음 수만큼
+    최악 비용을 미리 예약해 실행당 비용 상한을 넘지 않는다. 사용량 기록과 결과 정리는 모두 이 함수(주 스레드)에서 한다."""
     c = cfg["extract"]
     out = ExtractOutcome()
-    for start in range(0, len(entries), c["batch"]):
+    reserve, width = c.get("reserve_usd", 0.02), max(int(c.get("parallel", 1)), 1)
+    starts = list(range(0, len(entries), c["batch"]))
+
+    def call(start: int):
         chunk = entries[start:start + c["batch"]]
-        idx = range(start, start + len(chunk))
-        if not out.stopped and not usage.allows(c.get("reserve_usd", 0.02)):
-            out.stopped = "run-cost-cap"
-        if out.stopped:
-            out.failed.update({i: f"not-attempted: {out.stopped}" for i in idx})
-            continue
         try:
-            resp = client.messages.parse(
-                model=c["model"],
-                max_tokens=c["max_tokens"],
-                system=extract_system(),
+            return start, chunk, client.messages.parse(
+                model=c["model"], max_tokens=c["max_tokens"], system=extract_system(),
                 messages=[{"role": "user", "content": build_extract_prompt(chunk, today, c["text_chars"])}],
-                output_config={"effort": c["effort"]},
-                output_format=ExtractBatch,
-            )
-        except STOP_ERRORS as e:
-            usage.error(c["model"])
-            out.stopped = type(e).__name__
-            out.failed.update({i: out.stopped for i in idx})
-            continue
-        except (anthropic.APIError, ValueError) as e:
-            usage.error(c["model"])
-            out.failed.update({i: f"{type(e).__name__}: {str(e)[:120]}" for i in idx})
-            continue
-        usage.add(c["model"], resp.usage)
-        if resp.stop_reason in ("refusal", "max_tokens") or resp.parsed_output is None:
-            out.failed.update({i: f"stop_reason={resp.stop_reason}" for i in idx})
-            continue
-        got = set()
-        for r in resp.parsed_output.results:
-            if 0 <= r.index < len(chunk) and r.index not in got:
-                got.add(r.index)
-                out.results[start + r.index] = r.model_copy(update={"index": start + r.index})
-        for j in range(len(chunk)):
-            if j not in got:
-                out.failed[start + j] = "missing-in-output"
+                output_config={"effort": c["effort"]}, output_format=ExtractBatch,
+            ), None
+        except Exception as e:  # noqa: BLE001  분류는 아래 주 스레드에서
+            return start, chunk, None, e
+
+    pos = 0
+    with ThreadPoolExecutor(width) as ex:
+        while pos < len(starts):
+            if not out.stopped:
+                n = width
+                while n > 0 and not usage.allows(reserve * n):
+                    n -= 1
+                if n == 0:
+                    out.stopped = "run-cost-cap"
+            if out.stopped:
+                for start in starts[pos:]:
+                    out.failed.update({i: f"not-attempted: {out.stopped}" for i in range(start, min(start + c["batch"], len(entries)))})
+                break
+            wave = starts[pos:pos + n]
+            pos += len(wave)
+            for start, chunk, resp, err in ex.map(call, wave):
+                idx = range(start, start + len(chunk))
+                if err is not None:
+                    usage.error(c["model"])
+                    if isinstance(err, STOP_ERRORS):
+                        out.stopped = type(err).__name__
+                        out.failed.update({i: out.stopped for i in idx})
+                    elif isinstance(err, (anthropic.APIError, ValueError)):
+                        out.failed.update({i: f"{type(err).__name__}: {str(err)[:120]}" for i in idx})
+                    else:
+                        raise err
+                    continue
+                usage.add(c["model"], resp.usage)
+                if resp.stop_reason in ("refusal", "max_tokens") or resp.parsed_output is None:
+                    out.failed.update({i: f"stop_reason={resp.stop_reason}" for i in idx})
+                    continue
+                got = set()
+                for r in resp.parsed_output.results:
+                    if 0 <= r.index < len(chunk) and r.index not in got:
+                        got.add(r.index)
+                        out.results[start + r.index] = r.model_copy(update={"index": start + r.index})
+                for j in range(len(chunk)):
+                    if j not in got:
+                        out.failed[start + j] = "missing-in-output"
     return out
 
 
