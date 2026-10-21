@@ -29,6 +29,7 @@
  *   GET  /admin/ai-health       AI 중단 여부 · POST /admin/unverified  AI 장기 중단 시 검증 전 정보(소유자만)
  *   GET  /admin/watchdog        수집 실행 감시 · GET /admin/source-health  정보원별 상태
  *   POST /admin/report          주간 보고를 소유자 DM 으로
+ *   GET|POST /admin/baseline    운영 첫날 기준선 {hours}: 그동안 새 행사는 조용히 등록, 곧 행동할 것만 요약
  *   GET  /health
  * 1차 검증 전에는 DELIVERY_MODE=owner-only 로 소유자 외에는 아무에게도 보내지 않는다.
  */
@@ -521,6 +522,7 @@ export default {
         if (p === "/admin/ai-health") return json(await pipeline.aiHealth(env));
         if (p === "/admin/unverified" && POST) return json(await pipeline.unverified(env, body));
         if (p === "/admin/watchdog") return json(await pipeline.watchdog(env));
+        if (p === "/admin/baseline") return json(await pipeline.baseline(env, POST ? body : {}));
         if (p === "/admin/source-health") return json(await pipeline.sourceHealth(env));
         if (p === "/admin/report" && POST) return json(await pipeline.weeklyReport(env, body.send !== false));
       } catch (e) {

@@ -65,3 +65,11 @@ dispatch(매시)      : 발송·재시도 → 일간 요약 → (월) 주간 보
 - **발송**: 선점(`sending`) → 성공/재시도(`failed`)/불명(`uncertain`)/확실한 실패(`dead`), 요약은 10건씩 여러 통.
 - **상태 기록**: 정보원별 상태(`source_health`), AI 중단(`kv.ai_health`), 마지막 수집 성공(`kv.last_collect_ok_at`), 사용량(캐시·검색·오류 포함).
 - **개인정보**: 가족 정보는 `HOUSEHOLD_PROFILE`·`FAMILY_AVAILABLE_FROM` 비밀값, CI 에서 `PRIVACY_TERMS` 로 검사.
+
+## 4단계 변경 (3차 검증 반영, 브랜치 `stage4-preop`)
+- **행사 등록 = 알림 대기열 생성(한 트랜잭션)**: `/admin/enqueue` 는 받는 사람·확인 상태를 먼저 읽고 `events`·`items`·`watch`·`outbox` 를 한 `DB.batch` 로 쓴다. 하나라도 실패하면 모두 되돌아간다.
+  `events.fanout_version` 은 알림 대기열을 만든 판. 이 값이 비었거나 현재 판보다 작으면(이전 코드의 실패 흔적) 내용이 같아도 재처리 때 빠진 사람 몫을 만든다. 이미 만든·보낸 사람 몫은 `UNIQUE(chat_id, bot, event_key, version)` 로 건너뛴다. 나중에 가입한 사람에게 지난 행사를 몰아 보내지 않는다.
+- **대기열 임대 소유권**: `take` 가 항목마다 `lease_id`·`hash` 를 준다. `result` 는 같은 임대·같은 해시·임대 유효 시간 안일 때만 반영하고 나머지는 `rejected` 로 돌려준다. `extend` 로 자기 임대만 연장. `extracted` 보고 뒤에도 임대를 유지해 같은 실행이 등록 후 `done` 을 보고한다.
+  수집기는 AI 호출·Worker 등록 직전에 임대를 연장하고, 잃은 항목은 처리·등록하지 않는다.
+- **운영 첫날 기준선**: `/admin/baseline {hours}` 동안 새 행사는 조용히 등록하고, 3주 안에 열리거나 2주 안에 접수 시작·마감인 것만 일간 요약에 넣는다(즉시 알림 없음). 조용히 등록한 행사도 나중에 중요한 내용이 바뀌면 정상 알림.
+- **light 실행**: UTC 00:40·04:40·08:40·16:40·20:40 + full 12:30 → 최대 간격 4시간 10분.

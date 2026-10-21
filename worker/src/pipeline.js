@@ -156,6 +156,28 @@ export async function eventIndex(env) {
   return { ok: true, events: rows };
 }
 
+// ---------------------------------------------------------------- 운영 첫날 기준선(3차 검증 5): 쌓인 옛 정보를 한꺼번에 보내지 않기
+// baseline_until 까지 들어온 새 행사는 조용히 등록하고(나중에 내용이 바뀌면 그때 정상 알림), 곧 행동이 필요한 것만 일간 요약에 넣는다.
+const BASELINE_START_DAYS = 21;   // 3주 안에 열리거나 진행 중인 행사
+const BASELINE_REG_DAYS = 14;     // 2주 안에 접수 시작·마감
+export function baselineRelevant(e, today) {
+  const within = (d, n) => d && d >= today && d <= plusDays(today, n);
+  if (e.registration_status === "cancelled") return false;
+  if (within(e.registration_opens, BASELINE_REG_DAYS) || within(e.deadline, BASELINE_REG_DAYS)) return true;
+  const start = e.start_date, end = e.end_date || e.start_date;
+  return !!(start && end && end >= today && start <= plusDays(today, BASELINE_START_DAYS));
+}
+export async function baseline(env, body = {}) {
+  if (body.hours !== undefined) {
+    const h = Math.min(Math.max(Number(body.hours) || 0, 0), 72);
+    await kvSet(env, "baseline_until", h ? addMin(nowIso(), h * 60) : "");
+  }
+  const until = await kvGet(env, "baseline_until");
+  const silent = await all(env.DB.prepare("SELECT COUNT(*) AS n FROM events WHERE json_extract(data,'$._baseline') = 'silent'"));
+  return { ok: true, baseline_until: until || null, active: !!(until && until > nowIso()), silent_events: silent[0].n,
+    window: { start_days: BASELINE_START_DAYS, registration_days: BASELINE_REG_DAYS } };
+}
+
 // ---------------------------------------------------------------- 판정 결과 받기 → 사람별 대기열
 function regState(e, today) {
   const st = e.registration_status;
@@ -206,6 +228,9 @@ export async function enqueue(env, body) {
     .slice(0, MAX_EVENTS_PER_CALL);
   const stats = { received: (body.events || []).length, accepted: input.length, new: 0, changed: 0, same: 0, recovered: 0, outbox: 0, watch: 0, skipped: {} };
   if (!input.length) return { ok: true, ...stats };
+  const bUntil = await kvGet(env, "baseline_until");
+  const base = body.baseline === true || !!(bUntil && bUntil > now);
+  if (base) { stats.baseline = true; stats.baseline_silent = 0; stats.baseline_digest = 0; }
 
   const keys = input.map((e) => e.event_key);
   const existing = new Map((await all(env.DB.prepare("SELECT event_key, version, content_hash, fanout_version, data FROM events WHERE event_key IN (SELECT value FROM json_each(?))")
@@ -233,7 +258,11 @@ export async function enqueue(env, body) {
     });
     // 새 행사·바뀐 행사, 그리고 저장은 됐지만 이 판의 알림 생성이 끝나지 않은 행사(이전 실패·이전 판 코드)는 알림 대기열을 만든다.
     // 이미 만든(보낸) 사람 몫은 UNIQUE(chat_id, bot, event_key, version) 로 건너뛰므로 다시 보내지 않는다.
-    if (!ex || ex.content_hash !== h) fanout.push({ e, version });
+    if (base && !ex) {
+      // 기준선 기간의 새 행사: 곧 행동할 것만 요약으로, 나머지는 조용히 등록(데이터에 표시만)
+      if (baselineRelevant(e, today)) { fanout.push({ e, version, kind: "digest" }); stats.baseline_digest++; }
+      else { rows[rows.length - 1].data = JSON.stringify({ ...e, _baseline: "silent" }); stats.baseline_silent++; }
+    } else if (!ex || ex.content_hash !== h) fanout.push({ e, version });
     else if (ex.fanout_version == null || ex.fanout_version < version) { fanout.push({ e, version }); stats.recovered++; }
     // 상세 페이지 재검사 등록(뉴스 기사·검색 결과는 제외)
     const rs = regState(e, today);
@@ -276,9 +305,10 @@ export async function enqueue(env, body) {
     stats.watch = watches.length;
   }
   const out = [];
-  for (const { e, version } of fanout) {
+  for (const { e, version, kind: force } of fanout) {
     for (const r of recips) {
-      const [kind, why] = targetKind(env, r, e, states, mutedTags);
+      let [kind, why] = targetKind(env, r, e, states, mutedTags);
+      if (kind && force && kind !== "season") kind = force;
       if (why) stats.skipped[why] = (stats.skipped[why] || 0) + 1;
       if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind });
     }

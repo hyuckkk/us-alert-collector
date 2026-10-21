@@ -1,0 +1,66 @@
+name: staging-test
+# 실제 Cloudflare D1 검사(3차 검증 5) — 승인 후에만 실행한다.
+# 운영 Worker·D1(us-alert-worker / us-alert-db)은 건드리지 않고, 시험용 us-alert-worker-staging + us-alert-db-staging 을
+# 만들어 대기열 1,200건·행사 1,020건을 처리해 본 뒤 둘 다 지운다. 봇 토큰을 넣지 않고 TG_API 를 닫힌 주소로 두어 텔레그램 발송은 불가능.
+# 실행: main 이 아닌 브랜치에서 ticks/staging-test 를 push.
+on:
+  push:
+    branches-ignore: [main]
+    paths: ["ticks/staging-test"]
+permissions:
+  contents: read
+concurrency:
+  group: staging-test
+  cancel-in-progress: false
+jobs:
+  staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm ci --no-audit --no-fund
+      - name: Account and URL
+        run: |
+          bash ../scripts/cf_env.sh
+          # 시험용 주소·관리 키(실행마다 새로 만듦, 운영 키와 무관)
+          KEY=$(openssl rand -hex 24); echo "::add-mask::$KEY"
+          echo "STAGING_KEY=$KEY" >> "$GITHUB_ENV"
+      - name: Create staging D1 and config
+        run: |
+          set -euo pipefail
+          find_id() { npx wrangler d1 list --json | python3 -c "import json,sys;print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']=='us-alert-db-staging'),''))"; }
+          ID=$(find_id); [ -n "$ID" ] || { npx wrangler d1 create us-alert-db-staging; ID=$(find_id); }
+          python3 - "$ID" <<'PY'
+          import re, sys
+          s = open("wrangler.toml").read()
+          s = s.replace('name = "us-alert-worker"', 'name = "us-alert-worker-staging"', 1)
+          s = s.replace('database_name = "us-alert-db"', 'database_name = "us-alert-db-staging"').replace("__D1_DATABASE_ID__", sys.argv[1])
+          s = re.sub(r'TG_API = "[^"]*"', 'TG_API = "http://127.0.0.1:9"', s)
+          open("wrangler.staging.toml", "w").write(s)
+          PY
+          grep -q 'us-alert-worker-staging' wrangler.staging.toml && grep -q 'us-alert-db-staging' wrangler.staging.toml
+          echo "STAGING_URL=${US_WORKER_URL/us-alert-worker./us-alert-worker-staging.}" >> "$GITHUB_ENV"
+      - name: Migrate and deploy staging
+        run: |
+          bash ../scripts/run.sh npx wrangler d1 migrations apply us-alert-db-staging --remote --config wrangler.staging.toml
+          bash ../scripts/run.sh npx wrangler deploy --config wrangler.staging.toml
+          printf '%s' "$STAGING_KEY" | npx wrangler secret put ADMIN_KEY --config wrangler.staging.toml
+          for i in $(seq 1 30); do curl -sf "$STAGING_URL/health" >/dev/null && break; sleep 2; done
+      - name: Run remote queue test
+        run: node test/remote-queue.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: remote-queue, path: worker/remote-queue.json, if-no-files-found: ignore }
+      - name: Delete staging Worker and D1
+        if: always()
+        run: |
+          npx wrangler delete --config wrangler.staging.toml --force || true
+          npx wrangler d1 delete us-alert-db-staging -y || true
