@@ -77,6 +77,8 @@ jobs:
           python3 -c "import sys; sys.exit(0 if float('$CAP') <= 5.5 else 1)" || { echo "::error::usd_cap $CAP > 5.5 (승인 상한 \$6)"; exit 1; }
           python collector/run.py --mode full --dry-run --all-sources --max "$MAX" --usd-cap "$CAP" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
           python3 -c "import json;m=json.load(open('reports/fullsystem-run.json'))['metrics'];print('::notice title=fullsystem cost::usd=%s cap=$CAP calls=%s searches=%s' % (m.get('usd'), m.get('calls'), m.get('searches')))"
+          # 개발용 AI 비용 기록(운영비와 별도): 실행마다 한 줄
+          python3 -c "import json,os,datetime;m=json.load(open('reports/fullsystem-run.json'))['metrics'];open('eval/dev_ai_spend.jsonl','a').write(json.dumps({'at':datetime.datetime.utcnow().isoformat(timespec='seconds')+'Z','run':os.environ['GITHUB_RUN_ID'],'kind':'fullsystem','usd':m.get('usd'),'cap':float('$CAP'),'calls':m.get('calls')})+'\n')"
           python collector/eval_stages.py reports/fullsystem-trace.json --out eval/stages.json ${FAMILY_AVAILABLE_FROM:+--owner-from "$FAMILY_AVAILABLE_FROM"}
           python3 -c "import json;print('::notice title=fullsystem result::'+json.dumps(json.load(open('eval/stages.json'))['summary'],ensure_ascii=False))"
       - name: Commit results
@@ -84,6 +86,6 @@ jobs:
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/ai_inputs.json eval/stages.json reports/fullsystem-run.json reports/fullsystem-trace.json; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"
