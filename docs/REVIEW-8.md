@@ -32,9 +32,8 @@
 | 이력 개인정보 검사(같은 검사어 7개) | 재작성 전 **23건** → 재작성 후 **0건** |
 | `main` | 커밋·내용 그대로(`c6d1760` 유지) |
 | 브랜치별 커밋 수 | 모두 동일(stage1-review 23, stage1-structure 20, stage2-fixes 36, stage3-fixes 47, stage4-preop 58) |
-| 바뀐 커밋 | 62개(첫 변경 지점 `[old-commit]`, `[old-commit]`) |
+| 바뀐 커밋 | 62개(커밋 번호는 비공개 기록에만) |
 | 최신 파일 | `stage4-preop` 동일, stage2·3 은 문서 1줄·테스트 1줄, stage1-* 는 해당 문장만 |
-| 리허설 브랜치 끝 커밋(참고, 실제 실행 때 달라질 수 있음) | stage1-review `[old-commit]→[old-commit]`, stage1-structure `[old-commit]→[old-commit]`, stage2-fixes `[old-commit]→[old-commit]`, stage3-fixes `[old-commit]→[old-commit]`, stage4-preop `[old-commit]→[old-commit]`(리허설 시점) |
 | 소요 | 1초 미만 |
 
 치환 규칙(종류만): 주소 일부 → 예시 주소, 가구 설명 문장 → "[redacted — HOUSEHOLD_PROFILE 비밀값으로 제공]", 체류 기간 → "[stay period redacted]", 자녀 문장 → "[redacted]", 참가 가능일 예시 → `2027-01-01`, 테스트 단언문의 우편번호 조건 삭제.
@@ -56,7 +55,7 @@
 | 10 | 백업 보관 기간 결정(예: 지원 처리 완료 + 30일 후 안전 삭제) | — |
 
 ### 1-4. 영향
-- 커밋 해시가 바뀌어 지금까지의 검증 자료(REVIEW-1~7)의 커밋 링크는 옛 해시를 가리킨다 → 재작성 후 "옛 해시 → 새 해시" 대응표(`filter-repo/commit-map`, 해시만)를 문서로 남긴다.
+- 커밋 해시가 바뀌어 지금까지의 검증 자료(REVIEW-1~7)의 커밋 링크는 옛 해시를 가리킨다. **옛↔새 대응표는 공개 저장소에 남기지 않고** 비공개 백업과 GitHub 지원 요청에만 쓴다(9차 지시).
 - GitHub Actions 실행 기록은 옛 해시에 묶여 남는다. 실행 로그에는 코드 내용이 없지만, 옛 커밋 참조를 줄이려면 옛 실행 기록 삭제를 함께 검토(별도 승인).
 - 리허설로 확인한 범위에서는 `main`·운영 Worker·D1·한국 시스템 영향 없음.
 
@@ -70,7 +69,7 @@
 > Repository: hyuckkk/us-alert-collector (public).
 > We rewrote the history of branches stage1-review, stage2-fixes, stage3-fixes, stage4-preop and deleted stage1-structure to remove personal information (home address fragment and household details). No forks, no pull requests, no tags.
 > Please (1) remove cached views of the old commits and (2) run garbage collection so the dereferenced commits are no longer reachable by SHA.
-> Affected old commits: attached list of old commit SHAs (commit-map, 62 commits; first changed: [old-commit]…, [old-commit]…; old branch tips [old-commit], [old-commit], [old-commit], [old-commit], <stage4-preop 끝>).
+> Affected old commits: see the attached private list (old commit SHAs only).
 
 첨부할 것: 옛 해시 목록(해시만, 내용 없음). 개인정보 값 자체는 지원 요청에도 쓰지 않는다.
 

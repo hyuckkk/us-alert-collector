@@ -89,6 +89,7 @@ class Run:
         self.report: dict = {"run_id": self.run_id, "mode": args.mode, "today": self.today.isoformat(), "dry_run": self.api.dry_run,
                              "sources": [], "dropped": {}, "events": []}
         self.entries: dict[str, Entry] = {}     # key → 이번 실행에서 모은 항목
+        self.trace_ai: list[dict] = []           # 단계별 발견 측정용(--trace)
         self.source_rows: dict[str, dict] = {}  # 정보원별 상태(Worker source_health 로)
         self.official_ids: set[str] = set()
         self.core_due: list[tuple[str, bool]] = []
@@ -400,6 +401,10 @@ class Run:
         # 저장이 거부된 항목(임대를 잃음)의 행사는 지금 가진 실행에 맡기고 여기서는 등록하지 않는다
         rejected = self.api.queue_result(results) or set()
         self.m["lease_rejected"] = len(rejected)
+        # 단계별 발견 측정용 기록(9차): 대기열 항목마다 AI 처리 결과(행사 수·실패 사유)
+        by_key = {r["key"]: r for r in rows}
+        self.trace_ai += [{"url": by_key[x["key"]]["url"], "source_id": by_key[x["key"]].get("source_id"), "status": x["status"],
+                           "events": len(x.get("result") or []), "error": x.get("error")} for x in results if x["key"] in by_key]
         keep = [i for i in range(len(events)) if owners.get(i) not in rejected]
         self.pending_events = [events[i] for i in keep]
         self.event_owners = {j: owners[i] for j, i in enumerate(keep) if i in owners}
@@ -529,8 +534,18 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
     ap.add_argument("--only")
     ap.add_argument("--max", type=int)
     ap.add_argument("--out")
+    ap.add_argument("--trace", help="단계별 발견 측정용 기록 파일(수집 항목의 출처 단계·AI 처리 결과). collector/eval_stages.py 가 읽는다")
     args = ap.parse_args(argv)
-    report = Run(args, client, api).run()
+    r = Run(args, client, api)
+    report = r.run()
+    if args.trace:
+        stage = lambda sid: "search" if sid.startswith("gnews") else "discover" if sid.startswith(("ai-discover", "cand-")) else "watch" if sid.startswith("watch") else "sources"  # noqa: E731
+        Path(args.trace).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.trace).write_text(json.dumps({
+            "run_id": report["run_id"],
+            "entries": [{"stage": stage(e.source_id or ""), "source_id": e.source_id, "url": e.url, "title": e.title} for e in r.entries.values()],
+            "ai": r.trace_ai, "events": report.get("events", []), "dropped": report.get("dropped"),
+        }, ensure_ascii=False, indent=1, default=str) + "\n")
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(report, ensure_ascii=False, indent=1, default=str) + "\n")

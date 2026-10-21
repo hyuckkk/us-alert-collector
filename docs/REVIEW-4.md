@@ -39,9 +39,9 @@
 
 | 노출 내용 | 들어 있는 커밋 | 이 커밋을 가진 공개 브랜치 |
 |---|---|---|
-| 집 주소 일부(번지·거리명) | `[old-commit]` 테스트 파일 | `stage1-structure` |
-| AI 지시문의 가구 정보(도시·우편번호, 체류 기간, 체류 신분 종류, 자녀 있음) | `[old-commit]` / `[old-commit]` 등 | `stage1-structure` / `stage1-review`, `stage2-fixes`, `stage3-fixes`, `stage4-preop` |
-| 가족 참가 가능 시작일 | `[old-commit]` / `[old-commit]` | `stage1-structure` / 위 4개 브랜치 |
+| 집 주소 일부(번지·거리명) | (커밋 번호 비공개) 테스트 파일 | `stage1-structure` |
+| AI 지시문의 가구 정보(도시·우편번호, 체류 기간, 체류 신분 종류, 자녀 있음) | (커밋 번호 비공개) | `stage1-structure` / `stage1-review`, `stage2-fixes`, `stage3-fixes`, `stage4-preop` |
+| 가족 참가 가능 시작일 | (커밋 번호 비공개) | `stage1-structure` / 위 4개 브랜치 |
 
 - 자녀 이름·나이·학교, 텔레그램 ID, 비밀값(토큰·키)은 어느 커밋에도 없음(형식 검사 통과).
 - `main` 은 이 커밋들을 포함하지 않음. 각 브랜치의 **현재 파일**에도 이제 없음.

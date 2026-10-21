@@ -3,10 +3,12 @@ name: experiments
 #  ticks/compare   push → AI 발굴 모델 비교(Opus vs Sonnet, 같은 주제)          — 유료(1회 약 $2)
 #  ticks/reference push → 기준 목록 후보(공식 게시판 패널, AI 없음)               — 무료
 #  ticks/groundtruth push → 기준 목록 원문 문장 수집 + 감시 정보원 목록 대조(AI 없음) — 무료
+#  ticks/coverage    push → 정보원 보강 전후 수집 범위 + 키워드 검색 대조(AI 없음)     — 무료
+#  ticks/fullsystem  push → 전체 수집 성능(정보원·검색·AI 발굴·AI 추출·판정, 건식) + 기준 행사별 단계 평가 — 유료(약 $3–6, 승인 후에만)
 on:
   push:
     branches-ignore: [main]
-    paths: ["ticks/compare", "ticks/reference", "ticks/groundtruth"]
+    paths: ["ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem"]
 permissions:
   contents: write
 concurrency:
@@ -28,6 +30,8 @@ jobs:
           echo "COMPARE=$(echo "$changed" | grep -q ticks/compare && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "REFERENCE=$(echo "$changed" | grep -q ticks/reference && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "GROUNDTRUTH=$(echo "$changed" | grep -q ticks/groundtruth && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "COVERAGE=$(echo "$changed" | grep -q ticks/coverage && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "FULLSYSTEM=$(echo "$changed" | grep -q ticks/fullsystem && echo 1 || echo 0)" >> "$GITHUB_ENV"
       - name: Model comparison
         if: env.COMPARE == '1'
         env:
@@ -42,11 +46,25 @@ jobs:
       - name: Ground truth page facts
         if: env.GROUNDTRUTH == '1'
         run: python collector/verify_ground_truth.py
+      - name: Coverage before/after new sources
+        if: env.COVERAGE == '1'
+        run: python collector/coverage.py
+      - name: Full-system dry run with stage trace (paid AI — approved runs only)
+        if: env.FULLSYSTEM == '1'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HOUSEHOLD_PROFILE: ${{ secrets.HOUSEHOLD_PROFILE }}
+          NPS_API_KEY: ${{ secrets.NPS_API_KEY }}
+        run: |
+          # --dry-run: Worker·텔레그램에 쓰지 않음. 건식 실행은 Worker 의 월 사용액을 모르므로 --max 로 비용 상한을 둔다.
+          MAX=$(grep -oE '^max=[0-9]+' ticks/fullsystem | cut -d= -f2); MAX=${MAX:-1500}
+          python collector/run.py --mode full --dry-run --max "$MAX" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
+          python collector/eval_stages.py reports/fullsystem-trace.json --out eval/stages.json
       - name: Commit results
         if: always()
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json 2>/dev/null || true
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/stages.json reports/fullsystem-run.json reports/fullsystem-trace.json; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"
