@@ -14,8 +14,8 @@
   "found_any_stage": "29/30 (97%)",
   "became_event": "26/30 (87%)",
   "notify_eligible_friend_profile": "26/30 (87%)",
-  "date_correct": "24/26",
-  "cost_correct": "10/12",
+  "date_correct": "25/26",
+  "cost_correct": "11/12",
   "age_correct": "1/3",
   "excluded_wrongly_notified": "1/13",
   "registration_date_errors": []
@@ -36,8 +36,8 @@
    "found_any_stage": "29/30 (97%)",
    "became_event": "26/30 (87%)",
    "notify_eligible_friend_profile": "26/30 (87%)",
-   "date_correct": "24/26",
-   "cost_correct": "10/12",
+   "date_correct": "25/26",
+   "cost_correct": "11/12",
    "age_correct": "1/3",
    "excluded_wrongly_notified": "1/13",
    "registration_date_errors": []
@@ -58,7 +58,7 @@
    "became_event": "15/18 (83%)",
    "notify_eligible_friend_profile": "15/18 (83%)",
    "date_correct": "14/15",
-   "cost_correct": "7/9",
+   "cost_correct": "8/9",
    "age_correct": "0/2",
    "excluded_wrongly_notified": "1/13",
    "registration_date_errors": []
@@ -78,7 +78,7 @@
    "found_any_stage": "12/12 (100%)",
    "became_event": "11/12 (92%)",
    "notify_eligible_friend_profile": "11/12 (92%)",
-   "date_correct": "10/11",
+   "date_correct": "11/11",
    "cost_correct": "3/3",
    "age_correct": "1/1",
    "excluded_wrongly_notified": "0/0",
@@ -149,7 +149,7 @@
    "event": true,
    "bot": "family",
    "date": "일치",
-   "cost": "불일치(스모크 알람 무료 제공 (재고 소진 시까지))",
+   "cost": "일치",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -340,9 +340,9 @@
    ],
    "ai": [
     {
-     "status": "done",
+     "status": "retry",
      "events": 0,
-     "error": null
+     "error": "ValidationError: 1 validation error for ExtractBatch\n  Invalid JSON: EOF while parsing a string at line 1 column 23765 [type=json_invalid"
     }
    ],
    "event": false,
@@ -392,7 +392,7 @@
     }
    ],
    "event": true,
-   "bot": "kids",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -507,7 +507,7 @@
     }
    ],
    "event": true,
-   "bot": "kids",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
@@ -524,8 +524,8 @@
    ],
    "ai": [
     {
-     "status": "extracted",
-     "events": 1,
+     "status": "done",
+     "events": 0,
      "error": null
     }
    ],
@@ -640,13 +640,13 @@
    "ai": [
     {
      "status": "extracted",
-     "events": 1,
+     "events": 2,
      "error": null
     }
    ],
    "event": true,
    "bot": "family",
-   "date": "불일치(2026-09-24)",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
@@ -861,7 +861,7 @@
     }
    ],
    "event": true,
-   "bot": "life",
+   "bot": "family",
    "date": "기준 미확인",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -878,9 +878,9 @@
    ],
    "ai": [
     {
-     "status": "done",
+     "status": "retry",
      "events": 0,
-     "error": null
+     "error": "ValidationError: 1 validation error for ExtractBatch\n  Invalid JSON: EOF while parsing a string at line 1 column 23765 [type=json_invalid"
     }
    ],
    "event": false,
@@ -916,9 +916,9 @@
    ],
    "ai": [
     {
-     "status": "done",
+     "status": "retry",
      "events": 0,
-     "error": null
+     "error": "ValidationError: 1 validation error for ExtractBatch\n  Invalid JSON: EOF while parsing a string at line 1 column 23765 [type=json_invalid"
     }
    ],
    "event": false,
@@ -1064,12 +1064,12 @@
   "new_official_domains_discovered": [
    "adams12.org",
    "adamscountyco.gov",
+   "adamscountyfair.com",
    "adamscountyhealthdepartment.org",
+   "downtowndenver.com",
    "frontrange.edu",
    "i9sports.com",
-   "tandem.co",
-   "visitdenver.com",
-   "wps.org"
+   "visitdenver.com"
   ]
  }
 }
