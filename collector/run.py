@@ -280,7 +280,7 @@ class Run:
         return {"key": key, "hash": hash_, "source_id": e.source_id, "url": e.url, "title": e.title[:300],
                 "hint": ",".join(hint) if isinstance(hint, list) else hint, "priority": rules.priority(e, self.today, bool(e.extra.get("official"))),
                 "body": {"text": (e.text or "")[:4000], "published": e.published,
-                         "extra": {k2: v for k2, v in e.extra.items() if k2 in ("uid", "bots", "official", "location", "detail_error", "needs_detail", "detail_ok", "feed_short")}}}
+                         "extra": {k2: v for k2, v in e.extra.items() if k2 in ("uid", "bots", "official", "location", "detail_error", "needs_detail", "detail_ok", "feed_short", "page_fp", "page_hash")}}}
 
     # ------------------------------------------------ 대기열 등록(새·바뀐 항목 전부 보존, 1차 검증 3)
     def enqueue_raw(self):

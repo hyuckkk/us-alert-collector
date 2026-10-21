@@ -202,3 +202,28 @@ def test_14_entities_decoded_and_old_news_posts_skipped():
 
     r = fetch.fetch_source({"id": "rmnp-news", "type": "rss", "url": "https://nps.gov/feed", "max_age_days": 60}, client=C())
     assert [e.url for e in r.entries] == ["https://nps.gov/a"]
+
+
+def test_15_closed_marker_on_single_event_page_blocks_send():
+    """시험 F·G: USAFA 홈스쿨 상세 페이지 'Currently full RSVP Closed' 인데 AI 가 registration_status=unknown → 발송됨."""
+    text = ("Homeschool Program: The Outer Solar System Friday, October 30 @ 10:30 am - 11:45 am Free ... With our limited seating, if you RSVP "
+            "and your plans change ... 120 Going Currently full RSVP Closed « USAFA Family Movie")
+    hs = ev(title="Homeschool Program", start_date="2026-10-30", registration_status="unknown", url="https://u.edu/h")
+    e = Entry("usafa-events", "https://u.edu/h", "Homeschool Program", text)
+    out, dropped = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[hs])], [e], date(2026, 10, 21))
+    assert out == [] and dropped.get("closed") == 1
+    # 대기자 명단이 있으면 보낸다, 페이지 변경 감시(여러 프로그램이 한 페이지)는 건드리지 않는다
+    w = Entry("x", "https://u.edu/h", "Camp", "Camp is currently full - join the waitlist")
+    [o], _ = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[hs])], [w], date(2026, 10, 21))
+    assert o["registration_status"] == "waitlist"
+    pc = Entry("x", "https://u.edu/h", "Programs", "Swim: sold out. Gymnastics: open", extra={"page_hash": "abc"})
+    [o2], _ = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[hs])], [pc], date(2026, 10, 21))
+    assert o2["registration_status"] == "unknown"
+
+
+def test_16_closed_status_change_of_sent_event_still_goes_to_worker():
+    """이미 보낸 행사가 재검사에서 매진·마감으로 바뀌면 버리지 않고 '변경(접수 상태)'으로 보낸다."""
+    hs = ev(title="Kids Clay Workshop", start_date="2027-07-17", registration_status="soldout", url="https://b.org/e/1")
+    e = Entry("butterfly-pavilion", "https://b.org/e/1", "[상세 변경] registration_status", "Kids Clay Workshop. Sold out.", None, {"page_fp": "f1"})
+    [o], dropped = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[hs])], [e], date(2026, 10, 21))
+    assert o["registration_status"] == "soldout" and not dropped.get("closed")

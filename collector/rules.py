@@ -114,6 +114,8 @@ def year_label(ev: dict, today: date) -> str | None:
 
 
 YEAR_CONFIRM_DAYS = 180
+CLOSED_MARK = re.compile(r"\b(?:rsvps?|registrations?|sign-?ups?|enrollment)\s+(?:is\s+|are\s+|now\s+)?closed\b|\bcurrently\s+full\b|\bsold\s+out\b|\bat\s+capacity\b", re.I)
+WAITLIST_MARK = re.compile(r"\bwait\s?-?list\b", re.I)
 
 
 def _year_in_text(ev: dict, entry, today: date) -> bool:
@@ -162,8 +164,12 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             if last and last < today:
                 drop("past")
                 continue
-            if d.get("registration_status") in ("closed", "soldout"):
-                drop("closed")  # 신청할 수 없는 행사는 보내지 않는다(대기자 명단 waitlist 는 보냄)
+            if (len(r.events) == 1 and not entry.extra.get("page_hash") and d.get("registration_status") in ("open", "unknown", None)
+                    and CLOSED_MARK.search(entry.text or "")):
+                # 단일 행사 상세 페이지에 마감 표시가 있으면 확정(시험 F·G: 'Currently full RSVP Closed' 를 AI 가 unknown 으로 둠). 대기자 명단은 보냄
+                d["registration_status"] = "waitlist" if WAITLIST_MARK.search(entry.text or "") else "closed"
+            if d.get("registration_status") in ("closed", "soldout") and "page_fp" not in entry.extra:  # 이미 보낸 행사의 재검사(상세 변경)는 '마감' 변경 알림으로 보낸다
+                drop("closed")  # 신청할 수 없는 새 행사는 보내지 않는다(대기자 명단 waitlist 는 보냄)
                 continue
             if not d["start_date"] and not d["end_date"] and not d["annual"] and not d.get("registration_opens") and not d.get("deadline"):
                 # 날짜·접수일이 전혀 없으면 지난 행사인지 알 수 없으므로 보내지 않는다(10차 시험: 지난 행사 3건 오발송).
