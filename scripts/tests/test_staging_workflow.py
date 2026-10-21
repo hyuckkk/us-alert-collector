@@ -87,6 +87,7 @@ def simulate(tmp: Path, fail_at: str = "", existing: dict | None = None, cancel_
     shutil.copy(ROOT / "worker/wrangler.toml", work / "worker/wrangler.toml")
     shutil.copy(ROOT / "scripts/run.sh", work / "scripts/run.sh")
     (work / "scripts/cf_env.sh").write_text('echo "US_WORKER_URL=https://us-alert-worker.sub.workers.dev" >> "$GITHUB_ENV"\n')
+    (work / "scripts/cf_snapshot.py").write_text("import sys\nsys.exit(0)\n")
     (work / "scripts/cf_quota.py").write_text("import os, sys\nsys.exit(1 if os.environ.get('FAIL_AT') == 'quota' else 0)\n")
     bin_ = tmp / "bin"
     bin_.mkdir()

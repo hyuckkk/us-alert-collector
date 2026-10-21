@@ -40,6 +40,9 @@ jobs:
           bash ../scripts/cf_env.sh
           KEY=$(openssl rand -hex 24); echo "::add-mask::$KEY"   # 실행마다 새 관리 키(운영 키와 무관)
           echo "STAGING_KEY=$KEY" >> "$GITHUB_ENV"
+      - name: Production resources snapshot (metadata only)
+        timeout-minutes: 2
+        run: python3 ../scripts/cf_snapshot.py save "$RUNNER_TEMP/prod-before.json"
       - name: Free-plan quota check (account-wide, fail-closed)
         timeout-minutes: 2
         # 예상: 쓴 행 약 1.8만(대기열 1,200건 투입·임대·완료 + 행사 1,020건·항목·감시, 색인 포함) → 2.5만으로 잡음
@@ -131,6 +134,11 @@ jobs:
         timeout-minutes: 9
         continue-on-error: true
         run: python3 ../scripts/cf_quota.py --usage-db "$STG_DB_ID" --usage-worker "$STG_WORKER" --wait 420
+      - name: Production resources unchanged?
+        if: always()
+        timeout-minutes: 2
+        continue-on-error: true
+        run: python3 ../scripts/cf_snapshot.py compare "$RUNNER_TEMP/prod-before.json"
       - name: Report leftovers from earlier runs (never deleted here)
         if: always()
         timeout-minutes: 2
