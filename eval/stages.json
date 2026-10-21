@@ -4,23 +4,21 @@
   "found_by_stage": {
    "sources": "29/30 (97%)",
    "search": "0/30 (0%)",
-   "discover": "1/30 (3%)"
+   "discover": "0/30 (0%)"
   },
   "found_only_by": {
-   "sources": 28,
+   "sources": 29,
    "search": 0,
    "discover": 0
   },
   "found_any_stage": "29/30 (97%)",
   "became_event": "26/30 (87%)",
   "notify_eligible_friend_profile": "26/30 (87%)",
-  "date_correct": "23/26",
-  "cost_correct": "10/17",
+  "date_correct": "24/26",
+  "cost_correct": "10/12",
   "age_correct": "1/3",
-  "excluded_wrongly_notified": "3/13",
-  "registration_date_errors": [
-   "thornton-registration"
-  ]
+  "excluded_wrongly_notified": "1/13",
+  "registration_date_errors": []
  },
  "by_group": {
   "all": {
@@ -28,46 +26,42 @@
    "found_by_stage": {
     "sources": "29/30 (97%)",
     "search": "0/30 (0%)",
-    "discover": "1/30 (3%)"
+    "discover": "0/30 (0%)"
    },
    "found_only_by": {
-    "sources": 28,
+    "sources": 29,
     "search": 0,
     "discover": 0
    },
    "found_any_stage": "29/30 (97%)",
    "became_event": "26/30 (87%)",
    "notify_eligible_friend_profile": "26/30 (87%)",
-   "date_correct": "23/26",
-   "cost_correct": "10/17",
+   "date_correct": "24/26",
+   "cost_correct": "10/12",
    "age_correct": "1/3",
-   "excluded_wrongly_notified": "3/13",
-   "registration_date_errors": [
-    "thornton-registration"
-   ]
+   "excluded_wrongly_notified": "1/13",
+   "registration_date_errors": []
   },
   "original": {
    "valid_events": 18,
    "found_by_stage": {
     "sources": "17/18 (94%)",
     "search": "0/18 (0%)",
-    "discover": "1/18 (6%)"
+    "discover": "0/18 (0%)"
    },
    "found_only_by": {
-    "sources": 16,
+    "sources": 17,
     "search": 0,
     "discover": 0
    },
    "found_any_stage": "17/18 (94%)",
    "became_event": "15/18 (83%)",
    "notify_eligible_friend_profile": "15/18 (83%)",
-   "date_correct": "12/15",
-   "cost_correct": "8/13",
+   "date_correct": "14/15",
+   "cost_correct": "7/9",
    "age_correct": "0/2",
-   "excluded_wrongly_notified": "3/13",
-   "registration_date_errors": [
-    "thornton-registration"
-   ]
+   "excluded_wrongly_notified": "1/13",
+   "registration_date_errors": []
   },
   "independent": {
    "valid_events": 12,
@@ -84,8 +78,8 @@
    "found_any_stage": "12/12 (100%)",
    "became_event": "11/12 (92%)",
    "notify_eligible_friend_profile": "11/12 (92%)",
-   "date_correct": "11/11",
-   "cost_correct": "2/4",
+   "date_correct": "10/11",
+   "cost_correct": "3/3",
    "age_correct": "1/1",
    "excluded_wrongly_notified": "0/0",
    "registration_date_errors": []
@@ -154,8 +148,8 @@
    ],
    "event": true,
    "bot": "family",
-   "date": "불일치(2026-10-21)",
-   "cost": "일치",
+   "date": "일치",
+   "cost": "불일치(스모크 알람 무료 제공 (재고 소진 시까지))",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -178,7 +172,7 @@
    "event": true,
    "bot": "life",
    "date": "불일치(2026-10-22)",
-   "cost": "누락",
+   "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -224,7 +218,7 @@
    "event": true,
    "bot": "family",
    "date": "일치",
-   "cost": "누락",
+   "cost": "기준 미확인",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -270,7 +264,7 @@
    "event": true,
    "bot": "family",
    "date": "일치",
-   "cost": "누락",
+   "cost": "기준 미확인",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -377,7 +371,7 @@
    "event": true,
    "bot": "family",
    "date": "일치",
-   "cost": "불일치(스케이트 어린이·시니어 $2, 13-59세 $3, 산타 방문 무료)",
+   "cost": "기준 미확인",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -388,24 +382,18 @@
    "valid": true,
    "participation": "registration_opening",
    "stages": [
-    "discover",
     "sources"
    ],
    "ai": [
     {
      "status": "extracted",
-     "events": 4,
-     "error": null
-    },
-    {
-     "status": "extracted",
-     "events": 4,
+     "events": 5,
      "error": null
     }
    ],
    "event": true,
    "bot": "kids",
-   "date": "불일치(2026-11-30)",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
@@ -519,9 +507,9 @@
     }
    ],
    "event": true,
-   "bot": "family",
+   "bot": "kids",
    "date": "일치",
-   "cost": "누락",
+   "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -536,8 +524,8 @@
    ],
    "ai": [
     {
-     "status": "done",
-     "events": 0,
+     "status": "extracted",
+     "events": 1,
      "error": null
     }
    ],
@@ -567,7 +555,7 @@
    "event": true,
    "bot": "family",
    "date": "일치",
-   "cost": "불일치($8 per person)",
+   "cost": "일치",
    "age": "일치",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -634,7 +622,7 @@
     }
    ],
    "event": true,
-   "bot": "kids",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -652,13 +640,13 @@
    "ai": [
     {
      "status": "extracted",
-     "events": 2,
+     "events": 1,
      "error": null
     }
    ],
    "event": true,
    "bot": "family",
-   "date": "일치",
+   "date": "불일치(2026-09-24)",
    "cost": "기준 미확인",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
@@ -680,7 +668,7 @@
     }
    ],
    "event": true,
-   "bot": "life",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -788,12 +776,12 @@
     "sources"
    ],
    "ai": [],
-   "event": true,
-   "bot": "family",
+   "event": false,
+   "bot": null,
    "date": "기준 미확인",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "대상(요약)",
+   "notify_friend": "아님(행사 없음)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -1003,12 +991,12 @@
      "error": null
     }
    ],
-   "event": true,
-   "bot": "family",
+   "event": false,
+   "bot": null,
    "date": "기준 미확인",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "대상(요약)",
+   "notify_friend": "아님(행사 없음)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -1060,7 +1048,8 @@
   }
  ],
  "new_source_discovery": {
-  "independent_source_domains": {
+  "unregistered_list_found": "0/10",
+  "unregistered_list": {
    "crgov.com": false,
    "berthoud.org": false,
    "arvadacenter.org": false,
@@ -1072,6 +1061,15 @@
    "longmontcolorado.gov": false,
    "cityofgolden.net": false
   },
-  "found": "0/10"
+  "new_official_domains_discovered": [
+   "adams12.org",
+   "adamscountyco.gov",
+   "adamscountyhealthdepartment.org",
+   "frontrange.edu",
+   "i9sports.com",
+   "tandem.co",
+   "visitdenver.com",
+   "wps.org"
+  ]
  }
 }
