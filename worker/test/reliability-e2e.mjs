@@ -176,11 +176,18 @@ try {
     assert.equal(r.written, 0, "같은 내용은 다시 넣지 않음");
     r = await admin("/admin/queue", { op: "take", limit: 2 });
     assert.deepEqual(r.items.map((x) => x.key), ["q2", "q3"]);
-    await admin("/admin/queue", { op: "result", items: [{ key: "q2", status: "extracted", result: [{ event_key: "e" }] }, { key: "q3", status: "retry", error: "missing-in-output" }] });
+    const lease = (x) => ({ lease_id: x.lease_id, hash: x.hash });
+    await admin("/admin/queue", { op: "result", items: [{ key: "q2", status: "extracted", result: [{ event_key: "e" }], ...lease(r.items[0]) }, { key: "q3", status: "retry", error: "missing-in-output", ...lease(r.items[1]) }] });
+    E.sql("UPDATE pending SET lease_until = '2000-01-01T00:00:00Z' WHERE key = 'q2'"); // 등록 전에 실행이 멈춘 경우: 임대가 끝나면 AI 결과째 다시 나온다
     r = await admin("/admin/queue", { op: "take", limit: 5 });
     assert.equal(r.items[0].key, "q2");
     assert.deepEqual(r.items[0].result, [{ event_key: "e" }]);
-    for (let i = 0; i < 6; i++) await admin("/admin/queue", { op: "result", items: [{ key: "q1", status: "retry", error: "x" }] });
+    await admin("/admin/queue", { op: "result", items: r.items.map((x) => ({ key: x.key, status: "release", ...lease(x) })) });
+    for (let i = 0; i < 6; i++) {
+      const t = (await admin("/admin/queue", { op: "take", limit: 5 })).items.find((x) => x.key === "q1");
+      await admin("/admin/queue", { op: "result", items: [{ key: "q1", status: "retry", error: "x", ...lease(t) }] });
+      E.sql("UPDATE pending SET lease_id = NULL, lease_until = NULL WHERE key <> 'q1'");
+    }
     const st = await admin("/admin/queue", { op: "stats" });
     assert.equal(st.stuck, 1);
     r = await admin("/admin/queue", { op: "add", items: [{ ...it("q1", 0), hash: "h2" }] });

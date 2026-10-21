@@ -49,6 +49,7 @@ DEEP_THEMES = {            # 요일별 심층(월=0) — 설계안 유지
 OFFICIAL_TLD = (".gov", ".edu", ".us", ".org", ".mil")
 MIN_SOURCE_OK_RATIO = 0.5  # 정보원 조회 성공률이 이보다 낮으면 '정상 수집'으로 기록하지 않는다(2차 재검증 G)
 DETAIL_SOURCE_TYPES = ("ai-discover",)
+LEASE_EXTEND_MIN = 60       # AI 호출·Worker 등록 직전에 대기열 임대를 이만큼 연장(3차 검증 2)
 
 
 def load(name: str) -> dict:
@@ -309,7 +310,12 @@ class Run:
                             for i, r in enumerate(todo)]
             else:
                 import ai
-                send = [i for i in range(len(entries)) if i not in no_detail]
+                # 상세 조회로 시간이 흘렀으니 AI 호출 전에 임대를 연장한다. 이미 잃은 항목은 다른 실행이 처리하므로 AI 를 부르지 않는다(3차 검증 2)
+                lost = self.api.queue_extend([r["key"] for r in todo], LEASE_EXTEND_MIN)
+                lost_idx = {i for i, r in enumerate(todo) if r["key"] in lost}
+                if lost_idx:
+                    self.alerts.append(f"임대를 잃은 대기 항목 {len(lost_idx)}건 — 다른 실행이 처리 중이라 건너뜀")
+                send = [i for i in range(len(entries)) if i not in no_detail and i not in lost_idx]
                 out = ai.extract(self.client, self.models, [entries[i] for i in send], self.today.isoformat(), self.usage)
                 # 추출 결과의 index 를 원래 entries 기준으로 되돌린다
                 out.results = {send[j]: r.model_copy(update={"index": send[j]}) for j, r in out.results.items()}
@@ -375,6 +381,8 @@ class Run:
                 for ev in evs:
                     by_entry.setdefault(ev["_entry_index"], []).append(ev)
                 for i, r in enumerate(todo):
+                    if i in lost_idx:
+                        continue
                     if i in out.failed:
                         results.append({"key": r["key"], "status": "retry", "error": out.failed[i]})
                     elif i in held:
@@ -389,15 +397,26 @@ class Run:
                         else:
                             results.append({"key": r["key"], "status": "done"})
         # 2) AI 결과를 먼저 'extracted' 로 저장 → Worker 등록 → 성공한 항목만 'done'
-        self.api.queue_result(results)
-        self.pending_events = events
-        self.event_owners = owners
+        # 저장이 거부된 항목(임대를 잃음)의 행사는 지금 가진 실행에 맡기고 여기서는 등록하지 않는다
+        rejected = self.api.queue_result(results) or set()
+        self.m["lease_rejected"] = len(rejected)
+        keep = [i for i in range(len(events)) if owners.get(i) not in rejected]
+        self.pending_events = [events[i] for i in keep]
+        self.event_owners = {j: owners[i] for j, i in enumerate(keep) if i in owners}
         return {"taken": len(rows), "events": len(self.pending_events)}
 
     def enqueue_events(self):
         evs = getattr(self, "pending_events", [])
         if not evs:
             return {"events": 0}
+        lost = self.api.queue_extend(sorted(set(self.event_owners.values())), LEASE_EXTEND_MIN)
+        if lost:
+            keep = [i for i in range(len(evs)) if self.event_owners.get(i) not in lost]
+            self.alerts.append(f"등록 직전 임대를 잃은 대기 항목 {len(lost)}건 — 그 행사 {len(evs) - len(keep)}건은 다른 실행이 등록")
+            evs = [evs[i] for i in keep]
+            self.event_owners = {j: self.event_owners[i] for j, i in enumerate(keep) if i in self.event_owners}
+            if not evs:
+                return {"events": 0, "lease_lost": len(lost)}
         try:
             r = self.api.enqueue(evs)
         except Exception:
@@ -409,7 +428,10 @@ class Run:
         self.report["enqueue"] = r
         self.report["events"] = evs
         done = sorted(set(self.event_owners.values()))
-        self.api.queue_result([{"key": k, "status": "done"} for k in done])
+        rejected = self.api.queue_result([{"key": k, "status": "done"} for k in done]) or set()
+        if rejected:
+            # 등록은 끝났다. 다른 실행이 같은 결과를 다시 등록해도 내용 해시·알림 대기열 UNIQUE 로 중복 발송되지 않는다.
+            self.alerts.append(f"'done' 보고가 거부된 항목 {len(rejected)}건(임대 만료) — 다음 실행이 같은 결과로 다시 등록(중복 발송 없음)")
         return {"events": len(evs), "done": len(done)}
 
     def annual(self):

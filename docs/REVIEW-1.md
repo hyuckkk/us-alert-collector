@@ -16,12 +16,12 @@
 | 모델 분할 | 추출 haiku-5-5 / 애매한 건 판단 opus-5-5 / 발굴 opus-5-5 + web_search | `ai.py`, `config/models.json` |
 | 신규 정보원 발굴(B), 요일별 심층 | 요일 주제 웹 검색 → 후보 D1 → 2회 이상이면 소유자 DM [추가][무시] → 승격 정보원 자동 수집 | `ai.discover`, `pipeline.addCandidates` |
 | 링크 환각 방지 | 추출 URL ≠ 수집 URL 이면 교체, 발굴은 검색 결과 URL 만 | `rules.finalize`, `ai.discover` |
-| 신분 필터 | 유급 활동(F-2 취업 불가) 제외, 신분·주민 메모 줄 | `rules.py`, 프롬프트 |
+| 신분 필터 | 유급 활동(취업 불가 신분 기준) 제외, 신분·주민 메모 줄 | `rules.py`, 프롬프트 |
 | 긴급도 = 마감·선착순 | 마감 7일 이내, 선착순·추첨 접수가 7일 안에 열림 → 즉시, 그 외 주간 요약 | `rules.urgency` |
 | 연도 구분, 실질 변경 재알림 | year_label, 중요 필드 해시 → 새 판 + "바뀐 점" 줄, 확인한 사람에게도 재알림 | `rules.py`, `pipeline.enqueue` |
 | 7줄 알림 | 제목·주최 / 날짜·장소 / 연령·영어 / 비용 / 신청·마감 / 신분 메모 / 링크·확인 시각 | `render.renderEvent` |
 | 개인 DM·버튼 | [확인][관심없음][이 태그 그만], 요약은 줄마다 [n ✅][n 🚫] | `render.js`, `index.handleCallback` |
-| 수신자별 참가 가능 시기 | 소유자 기본 2027-01-01, 그 전 행사는 연례면 예고, 아니면 제외. 지인은 지금부터 | `pipeline.enqueue`, `/from` |
+| 수신자별 참가 가능 시기 | 소유자 기본값은 비밀값 FAMILY_AVAILABLE_FROM, 그 전 행사는 연례면 예고, 아니면 제외. 지인은 지금부터 | `pipeline.enqueue`, `/from` |
 | 사람별 설정 | `/settings /quiet /tz /city /from`, 정지 시간대는 각자 현지 기준으로 미룸 | `index.personCommand`, `pipeline.dispatch` |
 | 주간 요약·계절 예고 | 현지 토요일 9시 이후 1통, 연간 일정표 | `pipeline.digest`, `annual.py` |
 | 측정·주간 보고 | 실행별 지표(D1 runs), 월 사용량(usage), 매주 월요일 보고 DM | `pipeline.runLog/usage/weeklyReport` |

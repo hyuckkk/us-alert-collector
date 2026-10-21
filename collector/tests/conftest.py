@@ -101,6 +101,14 @@ class FakeAPI(WorkerAPI):
         finally:
             self.dry_run = False
 
+    def queue_extend(self, keys, minutes=60):
+        self.dry_run = True
+        try:
+            self._r("queue_extend", keys)
+            return super().queue_extend(keys, minutes)
+        finally:
+            self.dry_run = False
+
     def queue_stats(self):
         self.dry_run = True
         try:

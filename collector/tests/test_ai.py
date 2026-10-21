@@ -1,5 +1,7 @@
 from types import SimpleNamespace
 
+import re
+
 import pytest
 
 import ai
@@ -68,7 +70,8 @@ def test_usage_counts_cache_and_server_search_requests():
 
 def test_household_profile_comes_from_secret_not_repo(monkeypatch):
     monkeypatch.delenv("HOUSEHOLD_PROFILE", raising=False)
-    assert "F-2" not in ai.extract_system()
+    # 기본 프롬프트에 체류 신분 코드·우편번호 같은 가구 정보가 없어야 한다(실제 값은 저장소에 쓰지 않는다)
+    assert not re.search(r"\b[A-Z]-[12]\b|\bZIP\b|\b\d{5}\b", ai.extract_system())
     monkeypatch.setenv("HOUSEHOLD_PROFILE", "PRIVATE PROFILE TEXT")
     assert ai.extract_system().endswith("PRIVATE PROFILE TEXT")
 

@@ -5,6 +5,7 @@ dry-run 이면 Worker 에 아무것도 쓰지 않는다. 대기열·행사 목�
 from __future__ import annotations
 
 import os
+import uuid
 from datetime import datetime, timedelta, timezone
 
 import httpx
@@ -18,6 +19,7 @@ class WorkerAPI:
         self.url = (url or "").rstrip("/")
         self.client = client or httpx.Client(timeout=60, headers={"authorization": f"Bearer {key}", "user-agent": UA})
         self._mem: dict[str, dict] = {}  # dry-run 대기열
+        self._leases: dict[str, dict] = {}  # 이 실행이 꺼낸 항목의 {lease_id, hash}. 결과 보고 때 함께 보내 소유권을 증명한다(3차 검증 2)
 
     @classmethod
     def from_env(cls, dry_run: bool = False) -> "WorkerAPI":
@@ -50,7 +52,9 @@ class WorkerAPI:
         if self.dry_run:
             now = datetime.now(timezone.utc).isoformat()
             for x in items:
-                self._mem[x["key"]] = {**x, "status": "queued", "attempts": 0, "result": None, "first_seen": now, "lease_until": None}
+                old = self._mem.get(x["key"], {})
+                self._mem[x["key"]] = {**x, "status": "queued", "attempts": 0, "result": None, "first_seen": old.get("first_seen", now),
+                                       "lease_until": None, "lease_id": None}
             return len(items)
         n = 0
         for i in range(0, len(items), 25):
@@ -65,8 +69,11 @@ class WorkerAPI:
             rows = [r for r in self._mem.values() if r["status"] in ("queued", "extracted") and not (r.get("lease_until") and r["lease_until"] > now)]
             rows.sort(key=lambda r: (r["status"] != "extracted", -r.get("priority", 0), r["first_seen"]))
             rows = rows[:limit]
+            lease_id = uuid.uuid4().hex
             for r in rows:
                 r["lease_until"] = now + timedelta(minutes=lease_minutes)
+                r["lease_id"] = lease_id
+                self._leases[r["key"]] = {"lease_id": lease_id, "hash": r["hash"]}
             return rows
         out: list[dict] = []
         seen: set[str] = set()
@@ -78,8 +85,29 @@ class WorkerAPI:
             if dup:
                 raise RuntimeError(f"queue take returned {len(dup)} items already taken — Worker must lease taken items")
             seen.update(g["key"] for g in got)
+            for g in got:
+                self._leases[g["key"]] = {"lease_id": g.get("lease_id"), "hash": g.get("hash")}
             out += got
         return out
+
+    def queue_extend(self, keys: list[str], minutes: int = 60) -> set[str]:
+        """처리가 길어질 때 자기 임대를 연장. 이미 잃은(만료 후 다른 실행이 가져간) 항목 key 를 돌려준다 — 그 항목은 처리하지 않는다."""
+        mine = [{"key": k, "lease_id": self._leases[k]["lease_id"]} for k in dict.fromkeys(keys) if k in self._leases]
+        lost = {k for k in keys if k not in self._leases}
+        if self.dry_run:
+            now = datetime.now(timezone.utc)
+            for x in mine:
+                r = self._mem.get(x["key"])
+                if r and r.get("lease_id") == x["lease_id"] and r.get("lease_until") and r["lease_until"] >= now:
+                    r["lease_until"] = now + timedelta(minutes=minutes)
+                else:
+                    lost.add(x["key"])
+        else:
+            for i in range(0, len(mine), 400):
+                lost.update(self._post("/admin/queue", {"op": "extend", "minutes": minutes, "items": mine[i:i + 400]}).get("lost", []))
+        for k in lost:
+            self._leases.pop(k, None)
+        return lost
 
     def queue_peek(self, limit: int) -> list[dict]:
         """임대 없이 대기 항목 보기(검증 전 정보 안내용)."""
@@ -89,13 +117,21 @@ class WorkerAPI:
             return rows[:limit]
         return self._post("/admin/queue", {"op": "peek", "limit": limit})["items"]
 
-    def queue_result(self, items: list[dict]) -> None:
+    def queue_result(self, items: list[dict]) -> set[str]:
+        """처리 결과 보고. 임대를 잃은 항목(만료 후 다른 실행이 가져감·내용 변경)은 Worker 가 거부하며, 그 key 집합을 돌려준다.
+        거부된 항목의 결과는 쓰지 않는다(지금 가진 실행의 상태를 덮어쓰지 않음)."""
+        items = [{**x, **{k: v for k, v in self._leases.get(x["key"], {}).items() if k not in x}} for x in items]
+        rejected: set[str] = set()
         if self.dry_run:
+            now = datetime.now(timezone.utc)
             for x in items:
                 r = self._mem.get(x["key"])
-                if r is None:
+                if r is None or not x.get("lease_id") or r.get("lease_id") != x.get("lease_id") or r["hash"] != x.get("hash") \
+                        or not r.get("lease_until") or r["lease_until"] < now:
+                    rejected.add(x["key"])
                     continue
-                r["lease_until"] = None
+                if x["status"] != "extracted":
+                    r["lease_until"], r["lease_id"] = None, None
                 if x["status"] == "release":
                     continue
                 if x.get("error"):
@@ -105,9 +141,13 @@ class WorkerAPI:
                     r["status"] = "stuck" if r["attempts"] >= 6 else "queued"
                 else:
                     r["status"], r["result"] = x["status"], x.get("result")
-            return
-        for i in range(0, len(items), 100):
-            self._post("/admin/queue", {"op": "result", "items": items[i:i + 100]})
+        else:
+            for i in range(0, len(items), 100):
+                rejected.update(self._post("/admin/queue", {"op": "result", "items": items[i:i + 100]}).get("rejected", []))
+        for x in items:
+            if x["key"] in rejected or x["status"] != "extracted":
+                self._leases.pop(x["key"], None)
+        return rejected
 
     def queue_stats(self) -> dict:
         if self.dry_run:

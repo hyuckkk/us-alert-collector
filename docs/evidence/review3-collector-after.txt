@@ -1,0 +1,6 @@
+tests/test_review3.py::test_late_report_from_expired_lease_is_rejected_and_does_not_corrupt_new_owner PASSED
+tests/test_review3.py::test_report_without_lease_or_after_expiry_is_rejected PASSED
+tests/test_review3.py::test_worker_client_sends_lease_and_hash_and_returns_rejected PASSED
+tests/test_review3.py::test_lease_lost_before_ai_skips_ai_call_and_enqueue PASSED
+tests/test_review3.py::test_lease_lost_during_ai_drops_results_and_keeps_new_owner_state PASSED
+============================== 5 passed in 0.50s ===============================

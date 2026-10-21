@@ -41,7 +41,7 @@ try {
   await step("A 처리 결과를 보고하면 임대가 풀리고, 보고 없이 임대 시간이 지나면 다시 꺼낼 수 있다", async () => {
     sql("UPDATE pending SET lease_until = NULL, lease_id = NULL");
     const r = await admin("/admin/queue", { op: "take", limit: 2 });
-    await admin("/admin/queue", { op: "result", items: [{ key: r.items[0].key, status: "retry", error: "x" }] });
+    await admin("/admin/queue", { op: "result", items: [{ key: r.items[0].key, status: "retry", error: "x", lease_id: r.items[0].lease_id, hash: r.items[0].hash }] });
     const again = await admin("/admin/queue", { op: "peek", limit: 400 });
     assert.ok(again.items.some((x) => x.key === r.items[0].key), "보고된 항목은 다시 대기");
     sql(`UPDATE pending SET lease_until = '2000-01-01T00:00:00Z' WHERE key = '${r.items[1].key}'`);

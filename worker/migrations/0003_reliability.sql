@@ -15,6 +15,10 @@ ALTER TABLE events ADD COLUMN registration_opens TEXT;
 ALTER TABLE events ADD COLUMN deadline TEXT;
 CREATE INDEX events_reg ON events (registration_opens);
 CREATE INDEX events_deadline ON events (deadline);
+-- 알림 대기열(outbox)을 만든 판. 행사 저장과 같은 트랜잭션에서 기록한다(3차 검증 1).
+-- version 과 다르거나 비어 있으면 '알림 생성이 끝나지 않은 행사'로 보고 다음 등록 때 빠진 사람 몫을 만든다.
+ALTER TABLE events ADD COLUMN fanout_version INTEGER;
+UPDATE events SET fanout_version = version WHERE EXISTS (SELECT 1 FROM outbox o WHERE o.event_key = events.event_key AND o.version = events.version);
 
 -- 사람별 요약 방식: daily(기본, 시험 운영) | weekly | off, 요약 받을 현지 시각
 ALTER TABLE people ADD COLUMN digest_mode TEXT NOT NULL DEFAULT 'daily';

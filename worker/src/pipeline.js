@@ -87,7 +87,7 @@ export async function queue(env, body) {
     const rows = await all(env.DB.prepare(
       "UPDATE pending SET lease_id = ?1, lease_until = ?2 WHERE key IN (SELECT key FROM pending WHERE status IN ('queued', 'extracted') " +
       "AND (lease_until IS NULL OR lease_until < ?3) ORDER BY CASE status WHEN 'extracted' THEN 0 ELSE 1 END, priority DESC, first_seen LIMIT ?4) " +
-      "RETURNING key, hash, source_id, url, title, body, hint, priority, status, attempts, result, first_seen").bind(crypto.randomUUID(), until, now, limit));
+      "RETURNING key, hash, lease_id, source_id, url, title, body, hint, priority, status, attempts, result, first_seen").bind(crypto.randomUUID(), until, now, limit));
     rows.sort((a, b) => (a.status === "extracted" ? 0 : 1) - (b.status === "extracted" ? 0 : 1) || b.priority - a.priority || (a.first_seen < b.first_seen ? -1 : 1));
     return { ok: true, items: rows.map((r) => ({ ...r, body: JSON.parse(r.body || "{}"), result: r.result ? JSON.parse(r.result) : null })), lease_until: until };
   }
@@ -98,11 +98,24 @@ export async function queue(env, body) {
       .bind(Math.min(Math.max(body.limit | 0, 1), 400)));
     return { ok: true, items: rows };
   }
+  // extend: 처리가 길어질 때 자기 임대만 연장(다른 실행이 가져가 AI 를 두 번 부르는 일을 줄임, 3차 검증 2)
+  if (op === "extend") {
+    const items = (Array.isArray(body.items) ? body.items : []).filter((x) => x && x.key && x.lease_id).slice(0, 400);
+    const until = addMin(now, Math.min(Math.max(body.minutes | 0 || 30, 5), 180));
+    const rows = items.length ? await all(env.DB.prepare(
+      "UPDATE pending SET lease_until = ?1 FROM (SELECT value FROM json_each(?2)) AS j WHERE pending.key = json_extract(j.value,'$.key') " +
+      "AND pending.lease_id = json_extract(j.value,'$.lease_id') AND pending.lease_until >= ?3 RETURNING pending.key AS key").bind(until, JSON.stringify(items), now)) : [];
+    const ok = new Set(rows.map((r) => r.key));
+    return { ok: true, extended: [...ok], lost: [...new Set(items.map((x) => x.key))].filter((k) => !ok.has(k)), lease_until: until };
+  }
+  // result: 임대 소유자만 보고할 수 있다(3차 검증 2). 꺼낼 때 받은 lease_id·hash 가 지금 값과 같고 임대가 아직 유효해야 반영하고,
+  // 아니면(임대 만료 후 다른 실행이 가져감, 처리 중 내용이 바뀌어 다시 들어옴, 임대 없이 보고) 거부해 다른 실행의 상태를 지킨다.
   if (op === "result") {
     const items = (body.items || []).filter((x) => x && x.key && ["done", "extracted", "retry", "release"].includes(x.status)).slice(0, 100)
-      .map((x) => ({ key: x.key, status: x.status, result: x.result ? JSON.stringify(x.result) : null, error: x.error ? String(x.error).slice(0, 300) : null }));
-    if (!items.length) return { ok: true, updated: 0 };
-    await env.DB.prepare(
+      .map((x) => ({ key: x.key, status: x.status, lease_id: x.lease_id || null, hash: x.hash || null,
+        result: x.result ? JSON.stringify(x.result) : null, error: x.error ? String(x.error).slice(0, 300) : null }));
+    if (!items.length) return { ok: true, updated: 0, rejected: [] };
+    const rows = await all(env.DB.prepare(
       "UPDATE pending SET updated_at = ?1, " +
       // release: 처리하지 못하고 돌려놓기(상태·결과·시도 횟수 그대로, 임대만 해제)
       "status = CASE json_extract(j.value,'$.status') WHEN 'done' THEN 'done' WHEN 'extracted' THEN 'extracted' WHEN 'release' THEN pending.status " +
@@ -111,10 +124,15 @@ export async function queue(env, body) {
       "last_error = COALESCE(json_extract(j.value,'$.error'), pending.last_error), " +
       "result = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN json_extract(j.value,'$.result') WHEN 'done' THEN NULL ELSE pending.result END, " +
       "body = CASE json_extract(j.value,'$.status') WHEN 'done' THEN '{}' ELSE pending.body END, " + // 끝난 항목은 본문을 비워 공간 절약(키·해시는 남겨 중복 방지)
-      "lease_id = NULL, lease_until = NULL " +
-      "FROM (SELECT value FROM json_each(?2)) AS j WHERE pending.key = json_extract(j.value,'$.key')",
-    ).bind(now, JSON.stringify(items), QUEUE_MAX_ATTEMPTS).run();
-    return { ok: true, updated: items.length };
+      // extracted 는 같은 실행이 Worker 등록 후 done 을 보고할 수 있게 임대를 유지한다
+      "lease_id = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN pending.lease_id ELSE NULL END, " +
+      "lease_until = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN pending.lease_until ELSE NULL END " +
+      "FROM (SELECT value FROM json_each(?2)) AS j WHERE pending.key = json_extract(j.value,'$.key') " +
+      "AND pending.lease_id = json_extract(j.value,'$.lease_id') AND pending.hash = json_extract(j.value,'$.hash') AND pending.lease_until >= ?1 " +
+      "RETURNING pending.key AS key",
+    ).bind(now, JSON.stringify(items), QUEUE_MAX_ATTEMPTS));
+    const ok = new Set(rows.map((r) => r.key));
+    return { ok: true, updated: ok.size, rejected: [...new Set(items.map((x) => x.key))].filter((k) => !ok.has(k)) };
   }
   if (op === "stats") return { ok: true, ...(await queueStats(env)) };
   return { ok: false, error: "unknown op" };
@@ -186,15 +204,19 @@ export async function enqueue(env, body) {
   const input = (Array.isArray(body.events) ? body.events : [])
     .filter((e) => e && typeof e.event_key === "string" && e.event_key.length <= 48 && BOTS[e.bot] && /^https?:\/\//.test(e.url || "") && (e.title || e.title_ko))
     .slice(0, MAX_EVENTS_PER_CALL);
-  const stats = { received: (body.events || []).length, accepted: input.length, new: 0, changed: 0, same: 0, outbox: 0, watch: 0, skipped: {} };
+  const stats = { received: (body.events || []).length, accepted: input.length, new: 0, changed: 0, same: 0, recovered: 0, outbox: 0, watch: 0, skipped: {} };
   if (!input.length) return { ok: true, ...stats };
 
   const keys = input.map((e) => e.event_key);
-  const existing = new Map((await all(env.DB.prepare("SELECT event_key, version, content_hash, data FROM events WHERE event_key IN (SELECT value FROM json_each(?))")
+  const existing = new Map((await all(env.DB.prepare("SELECT event_key, version, content_hash, fanout_version, data FROM events WHERE event_key IN (SELECT value FROM json_each(?))")
     .bind(JSON.stringify(keys)))).map((r) => [r.event_key, r]));
 
+  // 받는 사람 판정에 필요한 것은 쓰기 전에 모두 읽어 둔다. 행사·항목·감시·알림 대기열은 아래에서 한 트랜잭션(batch)으로 쓴다(3차 검증 1).
+  const { recips, mutedTags } = await recipientsFor(env);
+  const states = new Map((await all(env.DB.prepare("SELECT chat_id, item_key, state FROM item_state WHERE item_key IN (SELECT value FROM json_each(?))").bind(JSON.stringify(keys))))
+    .map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
   const rows = [];
-  const fresh = [];
+  const fanout = [];
   const watches = [];
   for (const e of input) {
     const h = await sha(JSON.stringify(importantOf(e)));
@@ -207,9 +229,12 @@ export async function enqueue(env, body) {
       event_key: e.event_key, bot: e.bot, version, content_hash: h, data: JSON.stringify(e), urgency: e.urgency === "now" ? "now" : "weekly",
       start_date: e.start_date || null, end_date: e.end_date || null, annual: e.annual ? 1 : 0, tags: JSON.stringify(e.tags || []),
       source_id: e.source_id || null, url: e.url, note, tag: (e.tags || [])[0] || null, title: e.title_ko || e.title,
-      identity: e.identity || null, registration_opens: e.registration_opens || null, deadline: e.deadline || null,
+      identity: e.identity || null, registration_opens: e.registration_opens || null, deadline: e.deadline || null, fanout_version: version,
     });
-    if (!ex || ex.content_hash !== h) fresh.push({ e, version });
+    // 새 행사·바뀐 행사, 그리고 저장은 됐지만 이 판의 알림 생성이 끝나지 않은 행사(이전 실패·이전 판 코드)는 알림 대기열을 만든다.
+    // 이미 만든(보낸) 사람 몫은 UNIQUE(chat_id, bot, event_key, version) 로 건너뛰므로 다시 보내지 않는다.
+    if (!ex || ex.content_hash !== h) fanout.push({ e, version });
+    else if (ex.fanout_version == null || ex.fanout_version < version) { fanout.push({ e, version }); stats.recovered++; }
     // 상세 페이지 재검사 등록(뉴스 기사·검색 결과는 제외)
     const rs = regState(e, today);
     if (rs && !String(e.source_id || "").startsWith("gnews")) {
@@ -221,14 +246,14 @@ export async function enqueue(env, body) {
   const payload = JSON.stringify(rows);
   const stmts = [
     env.DB.prepare(
-      "INSERT INTO events (event_key, bot, version, content_hash, data, urgency, start_date, end_date, annual, tags, source_id, url, first_seen, last_changed, change_note, identity, registration_opens, deadline) " +
+      "INSERT INTO events (event_key, bot, version, content_hash, data, urgency, start_date, end_date, annual, tags, source_id, url, first_seen, last_changed, change_note, identity, registration_opens, deadline, fanout_version) " +
       "SELECT json_extract(value,'$.event_key'), json_extract(value,'$.bot'), json_extract(value,'$.version'), json_extract(value,'$.content_hash'), json_extract(value,'$.data'), " +
       "json_extract(value,'$.urgency'), json_extract(value,'$.start_date'), json_extract(value,'$.end_date'), json_extract(value,'$.annual'), json_extract(value,'$.tags'), " +
       "json_extract(value,'$.source_id'), json_extract(value,'$.url'), ?1, ?1, json_extract(value,'$.note'), json_extract(value,'$.identity'), " +
-      "json_extract(value,'$.registration_opens'), json_extract(value,'$.deadline') FROM json_each(?2) WHERE true " +
+      "json_extract(value,'$.registration_opens'), json_extract(value,'$.deadline'), json_extract(value,'$.fanout_version') FROM json_each(?2) WHERE true " +
       "ON CONFLICT(event_key) DO UPDATE SET data = excluded.data, urgency = excluded.urgency, tags = excluded.tags, url = excluded.url, " +
       "version = excluded.version, content_hash = excluded.content_hash, start_date = excluded.start_date, end_date = excluded.end_date, " +
-      "identity = COALESCE(excluded.identity, events.identity), registration_opens = excluded.registration_opens, deadline = excluded.deadline, " +
+      "identity = COALESCE(excluded.identity, events.identity), registration_opens = excluded.registration_opens, deadline = excluded.deadline, fanout_version = excluded.fanout_version, " +
       "last_changed = CASE WHEN events.content_hash <> excluded.content_hash THEN excluded.last_changed ELSE events.last_changed END, " +
       "change_note = CASE WHEN events.content_hash <> excluded.content_hash THEN excluded.change_note ELSE events.change_note END",
     ).bind(now, payload),
@@ -250,32 +275,27 @@ export async function enqueue(env, body) {
     ).bind(JSON.stringify(watches)));
     stats.watch = watches.length;
   }
-  await env.DB.batch(stmts);
-
-  if (!fresh.length) return { ok: true, ...stats };
-  const { recips, mutedTags } = await recipientsFor(env);
-  const states = new Map((await all(env.DB.prepare("SELECT chat_id, item_key, state FROM item_state WHERE item_key IN (SELECT value FROM json_each(?))").bind(JSON.stringify(keys))))
-    .map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
   const out = [];
-  for (const { e, version } of fresh) {
+  for (const { e, version } of fanout) {
     for (const r of recips) {
       const [kind, why] = targetKind(env, r, e, states, mutedTags);
       if (why) stats.skipped[why] = (stats.skipped[why] || 0) + 1;
       if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind });
     }
   }
-  stats.outbox = await insertOutbox(env, out);
+  if (out.length) stmts.push(outboxInsert(env, out));
+  // D1 batch 는 한 트랜잭션: 하나라도 실패하면 행사 저장까지 모두 되돌아가 '행사만 있고 알림은 없는' 상태가 생기지 않는다.
+  const res = await env.DB.batch(stmts);
+  if (out.length) stats.outbox = res[res.length - 1].meta.changes;
   return { ok: true, ...stats };
 }
 
-async function insertOutbox(env, out) {
-  if (!out.length) return 0;
-  const res = await env.DB.prepare(
+function outboxInsert(env, out) {
+  return env.DB.prepare(
     "INSERT INTO outbox (chat_id, bot, event_key, version, kind, created_at) SELECT json_extract(value,'$.chat_id'), json_extract(value,'$.bot'), " +
     "json_extract(value,'$.event_key'), json_extract(value,'$.version'), json_extract(value,'$.kind'), ?1 FROM json_each(?2) WHERE true " +
     "ON CONFLICT(chat_id, bot, event_key, version) DO NOTHING",
-  ).bind(nowIso(), JSON.stringify(out)).run();
-  return res.meta.changes;
+  ).bind(nowIso(), JSON.stringify(out));
 }
 
 // ---------------------------------------------------------------- 시간 알림: 오늘 접수 시작 / 내일 마감 (1차 검증 1-5)
@@ -312,16 +332,12 @@ async function timeTriggers(env) {
     }
     const now = nowIso();
     const stmts = [
-      env.DB.prepare("UPDATE events SET version = json_extract(j.value,'$.version'), change_note = json_extract(j.value,'$.note'), last_changed = ?1 " +
+      env.DB.prepare("UPDATE events SET version = json_extract(j.value,'$.version'), fanout_version = json_extract(j.value,'$.version'), change_note = json_extract(j.value,'$.note'), last_changed = ?1 " +
         "FROM (SELECT value FROM json_each(?2)) AS j WHERE events.event_key = json_extract(j.value,'$.event_key')").bind(now, JSON.stringify(bumps)),
       env.DB.prepare("INSERT INTO trigger_log (event_key, day, type, at) SELECT json_extract(value,'$.event_key'), ?1, json_extract(value,'$.type'), ?2 " +
         "FROM json_each(?3) WHERE true ON CONFLICT(event_key, day) DO NOTHING").bind(today, now, JSON.stringify(logs)),
     ];
-    if (out.length) {
-      stmts.push(env.DB.prepare("INSERT INTO outbox (chat_id, bot, event_key, version, kind, created_at) SELECT json_extract(value,'$.chat_id'), json_extract(value,'$.bot'), " +
-        "json_extract(value,'$.event_key'), json_extract(value,'$.version'), json_extract(value,'$.kind'), ?1 FROM json_each(?2) WHERE true " +
-        "ON CONFLICT(chat_id, bot, event_key, version) DO NOTHING").bind(now, JSON.stringify(out)));
-    }
+    if (out.length) stmts.push(outboxInsert(env, out));
     await env.DB.batch(stmts);
     fired += evs.length;
     if (evs.length < TRIGGER_PAGE) break;

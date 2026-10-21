@@ -56,7 +56,7 @@ GitHub Actions (이 저장소, 공개)                         Cloudflare Worker
 ## 2단계 변경 (1차 검증 반영, 브랜치 `stage2-fixes`)
 ```
 collect full(매일)  : sources → search(34+) → discover(Kids·Family·Life + 요일 심층) → watch → queue → ai → enqueue → annual → candidates → fallback → dispatch → log
-collect light(4시간): watch → queue → ai → enqueue → fallback → dispatch → log
+collect light(4시간, UTC 00:40·04:40·08:40·16:40·20:40 — full 12:30 과 합쳐 최대 간격 4시간 10분): watch → queue → ai → enqueue → fallback → dispatch → log
 dispatch(매시)      : 발송·재시도 → 일간 요약 → (월) 주간 보고 → 수집 감시(26시간 넘으면 collect 재실행)
 ```
 - **처리 대기열**(D1 `pending`): 새·바뀐 항목은 AI 전에 모두 보존. AI 결과는 `extracted` 로 저장 후 Worker 등록이 끝나야 `done`.

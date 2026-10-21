@@ -6,7 +6,8 @@ name: collect
 on:
   schedule:
     - cron: "30 12 * * *"            # full: 06:30 덴버(서머타임) / 21:30 한국
-    - cron: "40 2,6,10,16,20 * * *"  # light
+    # light: full(12:30) 앞뒤까지 실제 4시간 간격 — 00:40, 04:40, 08:40, [12:30 full], 16:40, 20:40 UTC (3차 검증 3: 이전 10:40→16:40 6시간 공백 수정)
+    - cron: "40 0,4,8,16,20 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -53,7 +54,8 @@ jobs:
           MAX="${{ inputs.max }}"; [ -z "$MAX" ] && [ -f ticks/collect-dry ] && [ "${{ github.event_name }}" = "push" ] && MAX=$(grep -oE '^max=[0-9]+' ticks/collect-dry | cut -d= -f2)
           echo "MAX=$MAX" >> "$GITHUB_ENV"
           MODE=full
-          [ "${{ github.event.schedule }}" = "40 2,6,10,16,20 * * *" ] && MODE=light
+          # 예약 실행 중 full 이 아닌 것은 모두 light(예약 문자열을 바꿔도 판정이 어긋나지 않게)
+          [ "${{ github.event_name }}" = "schedule" ] && [ "${{ github.event.schedule }}" != "30 12 * * *" ] && MODE=light
           [ -n "${{ inputs.mode }}" ] && MODE="${{ inputs.mode }}"
           echo "MODE=$MODE" >> "$GITHUB_ENV"
           echo "mode: dry=$DRY max=${MAX:-config}"
