@@ -1,3 +1,3 @@
-dev run E (잘린 추출 묶음 분할 재시도·JSON API 다음 페이지)
+dev run F (2회차 정보원 8곳·제목 엔티티 복원·오래된 뉴스 제외)
 max=3000
 usd_cap=5

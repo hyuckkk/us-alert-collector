@@ -186,3 +186,18 @@ def test_13_json_api_reads_following_pages():
     r = fetch.fetch_source(src, client=c)
     assert r.ok and [e.title for e in r.entries] == ["a0", "a1", "a2", "b0", "b1"]
     assert len(c.calls) == 3 and "page=2" in c.calls[1] and "pp=100" in c.calls[1]
+
+
+def test_14_entities_decoded_and_old_news_posts_skipped():
+    assert fetch.clean_text("Air &#038; Space &#8211; Bingo&nbsp;Night") == "Air & Space – Bingo Night"
+    rss = ("<rss><channel>"
+           "<item><title>Timed entry reservations open Nov 1</title><link>https://nps.gov/a</link><pubDate>" + "Mon, 19 Oct 2026 10:00:00 GMT" + "</pubDate></item>"
+           "<item><title>Timed entry 2019 pilot</title><link>https://nps.gov/b</link><pubDate>Mon, 07 Oct 2019 10:00:00 GMT</pubDate></item>"
+           "</channel></rss>")
+
+    class C:
+        def get(self, url):
+            return SimpleNamespace(content=rss.encode(), status_code=200, headers={"content-type": "application/rss+xml"}, encoding="utf-8", url=url)
+
+    r = fetch.fetch_source({"id": "rmnp-news", "type": "rss", "url": "https://nps.gov/feed", "max_age_days": 60}, client=C())
+    assert [e.url for e in r.entries] == ["https://nps.gov/a"]

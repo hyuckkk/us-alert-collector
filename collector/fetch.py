@@ -4,6 +4,7 @@
 """
 from __future__ import annotations
 
+import email.utils
 import hashlib
 import html as html_lib
 import json
@@ -11,6 +12,7 @@ import re
 import urllib.parse
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
+from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 
 import httpx
@@ -56,8 +58,8 @@ def normalize_url(url: str, base: str | None = None) -> str:
 
 
 def clean_text(s: str | None, limit: int = 2000) -> str:
-    s = re.sub(r"<[^>]+>", " ", s or "")
-    s = re.sub(r"&nbsp;|&#160;", " ", s)
+    s = html_lib.unescape(re.sub(r"<[^>]+>", " ", s or ""))  # 13차: WordPress JSON 제목의 &#038; &#8211; 가 그대로 남았다
+    s = s.replace("\xa0", " ")
     s = re.sub(r"\s+", " ", s).strip()
     return s[:limit]
 
@@ -287,6 +289,19 @@ def gnews_url(query: str) -> str:
     return "https://news.google.com/rss/search?" + urllib.parse.urlencode({"q": query, "hl": "en-US", "gl": "US", "ceid": "US:en"})
 
 
+def _pub(s: str | None):
+    if not s:
+        return None
+    try:
+        return email.utils.parsedate_to_datetime(s).date()
+    except (TypeError, ValueError, IndexError):
+        m = re.match(r"(\d{4})-(\d{2})-(\d{2})", s)
+        try:
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3))).date() if m else None
+        except ValueError:
+            return None
+
+
 def set_param(url: str, key: str, value) -> str:
     u = urllib.parse.urlsplit(url)
     q = [(k, v) for k, v in urllib.parse.parse_qsl(u.query, keep_blank_values=True) if k != key] + [(key, str(value))]
@@ -353,6 +368,11 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
             before = len(res.entries)
             res.entries = [e for e in res.entries if (not inc or inc.search(e.title)) and not (exc and exc.search(e.title))]
             res.filtered = before - len(res.entries)
+        if source.get("max_age_days"):  # 오래된 글이 쌓인 뉴스 피드(예: RMNP 1,000건): 최근 게시글만. 게시일을 모르면 남긴다
+            cut = datetime.now(timezone.utc).date() - timedelta(days=int(source["max_age_days"]))
+            before = len(res.entries)
+            res.entries = [e for e in res.entries if not (_pub(e.published) and _pub(e.published) < cut)]
+            res.filtered = (res.filtered or 0) + before - len(res.entries)
         return res
     except Exception as e:  # noqa: BLE001  정보원 하나의 이상한 응답이 실행 전체를 멈추지 않게
         return FetchResult(False, error=f"{type(e).__name__}: {str(e)[:200]}")
