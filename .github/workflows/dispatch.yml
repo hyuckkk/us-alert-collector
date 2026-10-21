@@ -22,14 +22,20 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
-      - run: bash scripts/cf_env.sh
-      - run: bash scripts/run.sh bash scripts/admin_call.sh dispatch
-      - run: bash scripts/run.sh bash scripts/admin_call.sh digest
+      - run: |
+          bash scripts/cf_env.sh
+          set -a; . "$GITHUB_ENV"; set +a
+          bash scripts/worker_ready.sh
+      - if: env.READY == '1'
+        run: bash scripts/run.sh bash scripts/admin_call.sh dispatch
+      - if: env.READY == '1'
+        run: bash scripts/run.sh bash scripts/admin_call.sh digest
       - name: Weekly report (Monday 15:20 UTC)
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' && env.READY == '1'
         run: |
           if [ "$(date -u +%u%H)" = "115" ]; then bash scripts/run.sh bash scripts/admin_call.sh report; fi
       - name: Collect watchdog
+        if: env.READY == '1'
         run: |
           bash scripts/admin_call.sh watchdog || true
           stale=$(python3 -c "import json;print(json.load(open('out.json')).get('stale'))")

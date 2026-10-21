@@ -61,8 +61,12 @@ jobs:
           echo "mode: dry=$DRY max=${MAX:-config}"
       - name: Worker address
         if: env.DRY == 'false'
-        run: bash scripts/cf_env.sh
+        run: |
+          bash scripts/cf_env.sh
+          set -a; . "$GITHUB_ENV"; set +a
+          bash scripts/worker_ready.sh
       - name: Collect
+        if: env.DRY == 'true' || env.READY == '1'
         run: |
           args="--mode $MODE --out reports/run.json"
           [ "$DRY" = "true" ] && args="$args --dry-run"

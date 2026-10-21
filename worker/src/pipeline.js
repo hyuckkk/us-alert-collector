@@ -167,6 +167,13 @@ export function baselineRelevant(e, today) {
   const start = e.start_date, end = e.end_date || e.start_date;
   return !!(start && end && end >= today && start <= plusDays(today, BASELINE_START_DAYS));
 }
+// 배포 직후(마이그레이션이 'awaiting-start' 로 심어 둠)에는 운영자가 기준선을 시작·해제하기 전까지 기준선으로 본다(4차 검증 2).
+// main 병합 직후 첫 자동 수집이 기준선 설정보다 먼저 돌아도 옛 정보·즉시 알림이 나가지 않게 하기 위함.
+const BASELINE_AWAITING = "awaiting-start";
+export async function baselineActive(env, now = nowIso()) {
+  const v = await kvGet(env, "baseline_until");
+  return v === BASELINE_AWAITING || !!(v && v > now);
+}
 export async function baseline(env, body = {}) {
   if (body.hours !== undefined) {
     const h = Math.min(Math.max(Number(body.hours) || 0, 0), 72);
@@ -174,7 +181,7 @@ export async function baseline(env, body = {}) {
   }
   const until = await kvGet(env, "baseline_until");
   const silent = await all(env.DB.prepare("SELECT COUNT(*) AS n FROM events WHERE json_extract(data,'$._baseline') = 'silent'"));
-  return { ok: true, baseline_until: until || null, active: !!(until && until > nowIso()), silent_events: silent[0].n,
+  return { ok: true, baseline_until: until || null, awaiting_start: until === BASELINE_AWAITING, active: await baselineActive(env), silent_events: silent[0].n,
     window: { start_days: BASELINE_START_DAYS, registration_days: BASELINE_REG_DAYS } };
 }
 
@@ -228,8 +235,7 @@ export async function enqueue(env, body) {
     .slice(0, MAX_EVENTS_PER_CALL);
   const stats = { received: (body.events || []).length, accepted: input.length, new: 0, changed: 0, same: 0, recovered: 0, outbox: 0, watch: 0, skipped: {} };
   if (!input.length) return { ok: true, ...stats };
-  const bUntil = await kvGet(env, "baseline_until");
-  const base = body.baseline === true || !!(bUntil && bUntil > now);
+  const base = body.baseline === true || (await baselineActive(env, now));
   if (base) { stats.baseline = true; stats.baseline_silent = 0; stats.baseline_digest = 0; }
 
   const keys = input.map((e) => e.event_key);
@@ -337,6 +343,8 @@ async function timeTriggers(env) {
   const today = dateIn(DENVER);
   const tomorrow = plusDays(today, 1);
   let fired = 0, ctx = null;
+  // 기준선 중에는 시간 알림도 즉시 보내지 않고 일간 요약에 넣는다(4차 검증 2). 처리 기록은 남겨 기준선이 끝난 뒤 같은 날 중복으로 나가지 않게 한다.
+  const base = await baselineActive(env);
   for (let page = 0; page < TRIGGER_PAGES_PER_CALL; page++) {
     const evs = await all(env.DB.prepare(
       "SELECT e.event_key, e.bot, e.version, e.data, e.registration_opens, e.deadline FROM events e " +
@@ -357,7 +365,7 @@ async function timeTriggers(env) {
       for (const r of ctx.recips) {
         // 접수 시작은 확인한 사람에게도(신청 시점), 마감 알림은 확인하지 않은 사람에게만
         const [kind] = targetKind(env, r, e, states, ctx.mutedTags, { kind: "now", skipAcked: type === "deadline" });
-        if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind: kind === "season" ? "season" : "now" });
+        if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version, kind: kind === "season" ? "season" : base ? "digest" : "now" });
       }
     }
     const now = nowIso();
@@ -372,7 +380,7 @@ async function timeTriggers(env) {
     fired += evs.length;
     if (evs.length < TRIGGER_PAGE) break;
   }
-  return { fired };
+  return { fired, baseline: base };
 }
 
 // ---------------------------------------------------------------- 발송 결과 분류 (1차 검증 1-4)

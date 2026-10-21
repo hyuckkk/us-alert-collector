@@ -93,3 +93,7 @@ ALTER TABLE usage ADD COLUMN cache_write_tokens INTEGER NOT NULL DEFAULT 0;
 ALTER TABLE usage ADD COLUMN cache_read_tokens INTEGER NOT NULL DEFAULT 0;
 ALTER TABLE usage ADD COLUMN searches INTEGER NOT NULL DEFAULT 0;
 ALTER TABLE usage ADD COLUMN errors INTEGER NOT NULL DEFAULT 0;
+
+-- 운영 첫날 기준선(4차 검증 2): 배포 직후에는 '시작 대기' 상태. 운영자가 baseline-start/stop 을 실행하기 전까지
+-- 새 행사는 조용히 등록하고 곧 행동할 것·시간 알림은 일간 요약으로만 보낸다(첫 자동 수집이 먼저 돌아도 대량·즉시 발송 없음).
+INSERT INTO kv (k, v, updated_at) VALUES ('baseline_until', 'awaiting-start', datetime('now')) ON CONFLICT(k) DO NOTHING;

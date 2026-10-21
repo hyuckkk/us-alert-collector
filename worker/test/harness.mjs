@@ -26,7 +26,8 @@ function request(url, { method = "GET", headers = {}, body } = {}) {
   });
 }
 
-export async function startEnv({ tgPort, wPort, vars = {} }) {
+// fresh: true 면 배포 직후 상태 그대로(첫날 기준선 대기). 기본은 기준선을 끈 상태로 시작해 일반 동작을 시험한다.
+export async function startEnv({ tgPort, wPort, vars = {}, fresh = false }) {
   const persist = mkdtempSync(join(tmpdir(), "us-d1-"));
   const calls = [];
   let nextMsgId = 500;
@@ -98,6 +99,7 @@ export async function startEnv({ tgPort, wPort, vars = {} }) {
       { stdio: "pipe", env: { ...process.env, CI: "1" } }).toString())[0].results,
     stop: () => { dev.kill("SIGTERM"); tgServer.close(); rmSync(persist, { recursive: true, force: true }); },
   };
+  if (!fresh) await env.admin("/admin/baseline", { hours: 0 });
   return env;
 }
 

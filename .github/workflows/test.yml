@@ -32,8 +32,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install -r collector/requirements.txt pytest==8.3.4
+      - run: pip install -r collector/requirements.txt pytest==8.3.4 pyyaml==6.0.2
       - run: python -m pytest -q collector/tests
+      - run: python -m pytest -q scripts/tests   # staging-test 워크플로 안전성(가짜 Cloudflare 계정으로 단계 실행)
   worker:
     runs-on: ubuntu-latest
     timeout-minutes: 15

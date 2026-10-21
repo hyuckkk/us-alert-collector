@@ -1,7 +1,10 @@
 name: staging-test
 # 실제 Cloudflare D1 검사(3차 검증 5) — 승인 후에만 실행한다.
-# 운영 Worker·D1(us-alert-worker / us-alert-db)은 건드리지 않고, 시험용 us-alert-worker-staging + us-alert-db-staging 을
-# 만들어 대기열 1,200건·행사 1,020건을 처리해 본 뒤 둘 다 지운다. 봇 토큰을 넣지 않고 TG_API 를 닫힌 주소로 두어 텔레그램 발송은 불가능.
+# 운영 Worker·D1(us-alert-worker / us-alert-db)과 한국 Worker 는 건드리지 않는다.
+# 실행마다 이름이 다른 시험 자원(us-alert-worker-stg-<실행ID>-<시도>, us-alert-db-stg-<실행ID>-<시도>)을 새로 만들고,
+# 끝나면(실패·취소 포함) '이 실행이 만든 것'만 지운다. 같은 이름이 이미 있으면 남의 것으로 보고 시작하지 않는다(4차 검증 1).
+# 계정 공유 무료 한도(Workers 요청, D1 읽기·쓰기 행, D1 개수)를 먼저 재고, 안전선(80%)을 넘거나 잴 수 없으면 시작하지 않는다.
+# 봇 토큰을 넣지 않고 TG_API 를 닫힌 주소로 두어 텔레그램 발송은 불가능.
 # 실행: main 이 아닌 브랜치에서 ticks/staging-test 를 push.
 on:
   push:
@@ -15,10 +18,13 @@ concurrency:
 jobs:
   staging:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40          # 단계별 제한의 합(약 30분)보다 길게 — 시간 초과로 취소돼도 정리 단계가 돌 시간을 남긴다
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      STG_WORKER: us-alert-worker-stg-${{ github.run_id }}-${{ github.run_attempt }}
+      STG_DB: us-alert-db-stg-${{ github.run_id }}-${{ github.run_attempt }}
+      STG_CONFIG: wrangler.staging.toml
     defaults:
       run:
         working-directory: worker
@@ -27,40 +33,90 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: npm ci --no-audit --no-fund
-      - name: Account and URL
+        timeout-minutes: 5
+      - name: Account
+        timeout-minutes: 2
         run: |
           bash ../scripts/cf_env.sh
-          # 시험용 주소·관리 키(실행마다 새로 만듦, 운영 키와 무관)
-          KEY=$(openssl rand -hex 24); echo "::add-mask::$KEY"
+          KEY=$(openssl rand -hex 24); echo "::add-mask::$KEY"   # 실행마다 새 관리 키(운영 키와 무관)
           echo "STAGING_KEY=$KEY" >> "$GITHUB_ENV"
-      - name: Create staging D1 and config
+      - name: Free-plan quota check (account-wide, fail-closed)
+        timeout-minutes: 2
+        # 예상: 쓴 행 약 1.8만(대기열 1,200건 투입·임대·완료 + 행사 1,020건·항목·감시, 색인 포함) → 2.5만으로 잡음
+        run: python3 ../scripts/cf_quota.py --writes 25000 --reads 500000 --requests 1000 --dbs 1
+      - name: Refuse if names already exist
+        timeout-minutes: 2
         run: |
           set -euo pipefail
-          find_id() { npx wrangler d1 list --json | python3 -c "import json,sys;print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']=='us-alert-db-staging'),''))"; }
-          ID=$(find_id); [ -n "$ID" ] || { npx wrangler d1 create us-alert-db-staging; ID=$(find_id); }
-          python3 - "$ID" <<'PY'
-          import re, sys
-          s = open("wrangler.toml").read()
-          s = s.replace('name = "us-alert-worker"', 'name = "us-alert-worker-staging"', 1)
-          s = s.replace('database_name = "us-alert-db"', 'database_name = "us-alert-db-staging"').replace("__D1_DATABASE_ID__", sys.argv[1])
-          s = re.sub(r'TG_API = "[^"]*"', 'TG_API = "http://127.0.0.1:9"', s)
-          open("wrangler.staging.toml", "w").write(s)
-          PY
-          grep -q 'us-alert-worker-staging' wrangler.staging.toml && grep -q 'us-alert-db-staging' wrangler.staging.toml
-          echo "STAGING_URL=${US_WORKER_URL/us-alert-worker./us-alert-worker-staging.}" >> "$GITHUB_ENV"
-      - name: Migrate and deploy staging
+          if npx wrangler d1 list --json | python3 -c "import json,os,sys;sys.exit(0 if any(d['name']==os.environ['STG_DB'] for d in json.load(sys.stdin)) else 1)"; then
+            echo "::error::$STG_DB already exists — not ours, refusing to run"; exit 1; fi
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$STG_WORKER")
+          [ "$code" = 404 ] || { echo "::error::$STG_WORKER lookup HTTP $code (exists or unknown) — refusing to run"; exit 1; }
+      - name: Create staging D1 and config
+        timeout-minutes: 3
         run: |
-          bash ../scripts/run.sh npx wrangler d1 migrations apply us-alert-db-staging --remote --config wrangler.staging.toml
-          bash ../scripts/run.sh npx wrangler deploy --config wrangler.staging.toml
-          printf '%s' "$STAGING_KEY" | npx wrangler secret put ADMIN_KEY --config wrangler.staging.toml
+          set -euo pipefail
+          echo "D1_ATTEMPTED=1" >> "$GITHUB_ENV"     # 만들기 전에 기록: 만들다 끊겨도 정리 단계가 이 이름을 확인한다
+          npx wrangler d1 create "$STG_DB"
+          ID=$(npx wrangler d1 list --json | python3 -c "import json,os,sys;print(next((d['uuid'] for d in json.load(sys.stdin) if d['name']==os.environ['STG_DB']),''))")
+          [ -n "$ID" ] || { echo "D1 lookup failed"; exit 1; }
+          python3 - "$ID" <<'PY'
+          import os, re, sys
+          s = open("wrangler.toml").read()
+          s = s.replace('name = "us-alert-worker"', f'name = "{os.environ["STG_WORKER"]}"', 1)
+          s = s.replace('database_name = "us-alert-db"', f'database_name = "{os.environ["STG_DB"]}"').replace("__D1_DATABASE_ID__", sys.argv[1])
+          s = re.sub(r'TG_API = "[^"]*"', 'TG_API = "http://127.0.0.1:9"', s)
+          open(os.environ["STG_CONFIG"], "w").write(s)
+          PY
+          grep -q "name = \"$STG_WORKER\"" "$STG_CONFIG" && grep -q "database_name = \"$STG_DB\"" "$STG_CONFIG"
+          if grep -qE '^name = "us-alert-worker"$|database_name = "us-alert-db"$' "$STG_CONFIG"; then echo "::error::staging config still names production resources"; exit 1; fi
+          echo "STAGING_URL=${US_WORKER_URL/us-alert-worker./$STG_WORKER.}" >> "$GITHUB_ENV"
+      - name: Migrate and deploy staging
+        timeout-minutes: 5
+        run: |
+          bash ../scripts/run.sh npx wrangler d1 migrations apply "$STG_DB" --remote --config "$STG_CONFIG"
+          echo "WORKER_ATTEMPTED=1" >> "$GITHUB_ENV"
+          bash ../scripts/run.sh npx wrangler deploy --config "$STG_CONFIG"
+          printf '%s' "$STAGING_KEY" | npx wrangler secret put ADMIN_KEY --config "$STG_CONFIG"
+          curl -sS -X POST -H "Authorization: Bearer $STAGING_KEY" -H "content-type: application/json" --data '{"hours":0}' "$STAGING_URL/admin/baseline" >/dev/null || true
           for i in $(seq 1 30); do curl -sf "$STAGING_URL/health" >/dev/null && break; sleep 2; done
       - name: Run remote queue test
+        timeout-minutes: 15
         run: node test/remote-queue.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: remote-queue, path: worker/remote-queue.json, if-no-files-found: ignore }
-      - name: Delete staging Worker and D1
+      - name: Delete only what this run created
         if: always()
+        timeout-minutes: 6
         run: |
-          npx wrangler delete --config wrangler.staging.toml --force || true
-          npx wrangler d1 delete us-alert-db-staging -y || true
+          left=""
+          # 운영 Worker 를 지우는 일이 없도록: 시험 이름이 적힌 시험 설정 파일이 있을 때만, 그 파일과 이름을 함께 지정해 지운다
+          if [ "${WORKER_ATTEMPTED:-}" = 1 ] && ! grep -q "^name = \"$STG_WORKER\"$" "$STG_CONFIG" 2>/dev/null; then
+            left="$left worker:$STG_WORKER(설정 확인 실패, 자동 삭제 안 함)"
+          elif [ "${WORKER_ATTEMPTED:-}" = 1 ]; then
+            for i in 1 2 3; do
+              npx wrangler delete --config "$STG_CONFIG" --name "$STG_WORKER" --force >/dev/null 2>&1 || true
+              code=$(curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+                "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$STG_WORKER")
+              [ "$code" = 404 ] && break; sleep $((i * 5))
+            done
+            [ "$code" = 404 ] && echo "deleted worker $STG_WORKER" || left="$left worker:$STG_WORKER"
+          fi
+          if [ "${D1_ATTEMPTED:-}" = 1 ]; then
+            has() { npx wrangler d1 list --json | python3 -c "import json,os,sys;sys.exit(0 if any(d['name']==os.environ['STG_DB'] for d in json.load(sys.stdin)) else 1)"; }
+            for i in 1 2 3; do has || break; npx wrangler d1 delete "$STG_DB" -y >/dev/null 2>&1 || true; sleep $((i * 5)); done
+            has && left="$left d1:$STG_DB" || echo "deleted d1 $STG_DB"
+          fi
+          if [ -n "$left" ]; then
+            echo "::error title=staging-cleanup::정리 실패:$left — 수동 정리: npx wrangler delete --name $STG_WORKER --force / npx wrangler d1 delete $STG_DB -y"
+            exit 1
+          fi
+      - name: Report leftovers from earlier runs (never deleted here)
+        if: always()
+        timeout-minutes: 2
+        run: |
+          npx wrangler d1 list --json 2>/dev/null | python3 -c "import json,os,sys
+          xs=[d['name'] for d in json.load(sys.stdin) if d['name'].startswith('us-alert-db-stg-') and d['name']!=os.environ['STG_DB']]
+          print('::warning title=staging-leftover::이전 실행이 남긴 시험 D1: '+', '.join(xs)) if xs else print('no leftover staging D1')" || true

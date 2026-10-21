@@ -1,6 +1,6 @@
-// 실제 Cloudflare D1 검사(3차 검증 5): 시험용 Worker·D1(us-alert-*-staging)에 대기열 1,200건·행사 1,020건을 넣고 나눠 처리한다.
+// 실제 Cloudflare D1 검사(3차 검증 5): 실행마다 새로 만든 시험용 Worker·D1(us-alert-*-stg-<실행ID>)에 대기열 1,200건·행사 1,020건을 넣고 나눠 처리한다.
 // staging-test 워크플로에서만 실행. 봇 토큰이 없고 TG_API 가 닫힌 주소라 텔레그램으로는 아무것도 나가지 않는다.
-// 사용: STAGING_URL=... STAGING_KEY=... node test/remote-queue.mjs
+// 사용: STAGING_URL=... STAGING_KEY=... STG_DB=us-alert-db-stg-<실행ID>-<시도> node test/remote-queue.mjs
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
@@ -17,7 +17,9 @@ const post = async (path, body) => {
   if (!r.ok || j.ok === false) throw new Error(`${path} ${r.status} ${JSON.stringify(j).slice(0, 300)}`);
   return j;
 };
-const sql = (command) => JSON.parse(execFileSync("npx", ["wrangler", "d1", "execute", "us-alert-db-staging", "--remote", "--json", "--config", "wrangler.staging.toml", "--command", command]).toString())[0].results;
+const DB = process.env.STG_DB, CONFIG = process.env.STG_CONFIG || "wrangler.staging.toml";
+if (!DB || !/-stg-/.test(DB)) throw new Error("STG_DB must be the per-run staging database name"); // 운영 DB 이름으로는 실행하지 않음
+const sql = (command) => JSON.parse(execFileSync("npx", ["wrangler", "d1", "execute", DB, "--remote", "--json", "--config", CONFIG, "--command", command]).toString())[0].results;
 const step = async (name, fn) => {
   try { await fn(); out.steps.push({ name, ok: true }); console.log("✔", name); } catch (e) { out.steps.push({ name, ok: false, error: e.message }); console.log("✘", name, "\n ", e.message); }
 };
