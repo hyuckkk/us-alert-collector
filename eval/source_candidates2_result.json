@@ -1,0 +1,1152 @@
+{
+ "tested": 49,
+ "good": 7,
+ "results": [
+  {
+   "id": "northglenn-rss",
+   "type": "rss",
+   "url": "https://www.northglenn.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "commerce-city-rss",
+   "type": "rss",
+   "url": "https://www.c3gov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "littleton-rss",
+   "type": "rss",
+   "url": "https://www.littletongov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "englewood-rss",
+   "type": "rss",
+   "url": "https://www.englewoodco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "centennial-rss",
+   "type": "rss",
+   "url": "https://www.centennialco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "parker-rss",
+   "type": "rss",
+   "url": "https://www.parkerco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 6,
+   "eventish": 6,
+   "sample": [
+    "Planning Commission Study Session",
+    "Planning Commission Meeting",
+    "Parker Town Council Study Session",
+    "Parker Road and Mainstreet Intersection Project Open House",
+    "Centennial Airport Draft Noise Compatibility Program Open House",
+    "Parker Town Council Meeting"
+   ],
+   "sample_urls": [
+    "https://www.parkerco.gov/Calendar.aspx?EID=7172",
+    "https://www.parkerco.gov/Calendar.aspx?EID=7145",
+    "https://www.parkerco.gov/Calendar.aspx?EID=7120"
+   ]
+  },
+  {
+   "id": "lone-tree-rss",
+   "type": "rss",
+   "url": "https://www.cityoflonetree.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "greenwood-village-rss",
+   "type": "rss",
+   "url": "https://www.greenwoodvillage.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 6,
+   "eventish": 6,
+   "sample": [
+    "Board of Adjustments & Appeals Regular Meeting and Study Session",
+    "National Prescription Drug Take Back Day",
+    "Village Greens Pump Track Grand Opening",
+    "Parks, Trails, and Recreation Commission Study Session & Regular Meeting",
+    "Truck or Treat",
+    "City Council Study Session and Regular Meeting"
+   ],
+   "sample_urls": [
+    "https://greenwoodvillage.com/Calendar.aspx?EID=5487",
+    "https://greenwoodvillage.com/Calendar.aspx?EID=6278",
+    "https://greenwoodvillage.com/Calendar.aspx?EID=6333"
+   ]
+  },
+  {
+   "id": "loveland-rss",
+   "type": "rss",
+   "url": "https://www.lovgov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "greeley-rss",
+   "type": "rss",
+   "url": "https://greeleygov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "windsor-rss",
+   "type": "rss",
+   "url": "https://www.windsorgov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 18,
+   "eventish": 18,
+   "sample": [
+    "Planning Commission",
+    "Board of Adjustment/Appeals",
+    "Leaf & Branch Drop",
+    "Leaf & Branch Drop",
+    "Drug Take Back Day",
+    "Event support for Halloween Carnival"
+   ],
+   "sample_urls": [
+    "https://www.windsorco.gov/Calendar.aspx?EID=7351",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7427",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7764"
+   ]
+  },
+  {
+   "id": "mead-rss",
+   "type": "rss",
+   "url": "https://www.townofmead.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "weld-county-rss",
+   "type": "rss",
+   "url": "https://www.weld.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "boulder-county-rss",
+   "type": "rss",
+   "url": "https://bouldercounty.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 405,
+   "error": "HTTP 405",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "adams-county-rss",
+   "type": "rss",
+   "url": "https://adcogov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "federal-heights-rss2",
+   "type": "rss",
+   "url": "https://www.fedheights.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "wings-museum-api",
+   "type": "json",
+   "url": "https://wingsmuseum.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 10,
+   "eventish": 8,
+   "sample": [
+    "Scout Merit Badge Workshop",
+    "Air &#038; Space Museum Closure",
+    "Sensory Friendly Hours",
+    "Wings&#8217; Food Drive",
+    "Denver Arts Week: Free Night at the Museum",
+    "Air &#038; Space Museum Closure"
+   ],
+   "sample_urls": [
+    "https://wingsmuseum.org/events/scout-merit-badge-workshop/",
+    "https://wingsmuseum.org/events/air-space-museum-closure-54/",
+    "https://wingsmuseum.org/events/sensory-friendly-hours/"
+   ]
+  },
+  {
+   "id": "apex-prd-api",
+   "type": "json",
+   "url": "https://www.apexprd.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 27,
+   "eventish": 21,
+   "sample": [
+    "Active Adult &#8211; Friday Bingo",
+    "Apex PRD Foundation Trick or Trot",
+    "Halloween Boo Bash",
+    "Kids Cook &#8211; Halloween Special Edition",
+    "Collette Information Session &#8211; Peru and Switzerland, Austria and Bavaria",
+    "National Senior Health and Fitness Day Trek or Treat"
+   ],
+   "sample_urls": [
+    "https://apexprd.org/event/active-adult-friday-bingo-8/",
+    "https://apexprd.org/event/apex-prd-foundation-trick-or-trot/",
+    "https://apexprd.org/event/halloween-boo-bash-5/"
+   ]
+  },
+  {
+   "id": "childrens-museum-api",
+   "type": "json",
+   "url": "https://www.mychildsmuseum.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": null,
+   "error": "JSONDecodeError: Expecting value: line 1 column 2 (char 1)",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "museum-of-boulder-api",
+   "type": "json",
+   "url": "https://museumofboulder.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": null,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "mca-denver-api",
+   "type": "json",
+   "url": "https://mcadenver.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "rm-conservancy-api",
+   "type": "json",
+   "url": "https://rmconservancy.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "wild-animal-sanctuary-api",
+   "type": "json",
+   "url": "https://www.wildanimalsanctuary.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "co-music-festival-api",
+   "type": "json",
+   "url": "https://coloradomusicfest.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": null,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "boulder-phil-api",
+   "type": "json",
+   "url": "https://boulderphil.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "adams-county-fair-api",
+   "type": "json",
+   "url": "https://adamscountyfair.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "butterfly-pavilion-api",
+   "type": "json",
+   "url": "https://butterflies.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "denver-zoo-api",
+   "type": "json",
+   "url": "https://denverzoo.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "botanic-gardens-api",
+   "type": "json",
+   "url": "https://www.botanicgardens.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "broomfield-auditorium-api",
+   "type": "json",
+   "url": "https://www.broomfieldauditorium.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "broomfield",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": null,
+   "error": "ConnectError: [Errno 111] Connection refused",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "erie-chamber-api",
+   "type": "json",
+   "url": "https://www.eriechamber.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "erie",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "brighton-chamber-api",
+   "type": "json",
+   "url": "https://www.brightonchamber.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "brighton",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "lafayette-chamber-api",
+   "type": "json",
+   "url": "https://www.lafayettecolorado.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "lafayette",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "co-symphony-api",
+   "type": "json",
+   "url": "https://coloradosymphony.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": false,
+   "status": 401,
+   "error": "HTTP 401",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "du-localist",
+   "type": "json",
+   "url": "https://calendar.du.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "mines-localist",
+   "type": "json",
+   "url": "https://calendar.mines.edu/api/2/events?days=60&pp=100",
+   "region": "golden",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "csu-localist",
+   "type": "json",
+   "url": "https://calendar.colostate.edu/api/2/events?days=60&pp=100",
+   "region": "north",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "unc-localist",
+   "type": "json",
+   "url": "https://calendar.unco.edu/api/2/events?days=60&pp=100",
+   "region": "north",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "cu-denver-localist",
+   "type": "json",
+   "url": "https://calendar.ucdenver.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": null,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "msu-denver-localist",
+   "type": "json",
+   "url": "https://calendar.msudenver.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": null,
+   "error": "ConnectError: [Errno -2] Name or service not known",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "frontrange-localist",
+   "type": "json",
+   "url": "https://events.frontrange.edu/api/2/events?days=60&pp=100",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": false,
+   "status": null,
+   "error": "ConnectError: [Errno -2] Name or service not known",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "cu-anschutz-localist",
+   "type": "json",
+   "url": "https://calendar.cuanschutz.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   },
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 100,
+   "eventish": 43,
+   "sample": [
+    "Endocrinology Grand Rounds",
+    "Accessible Table Basics in Word & PowerPoint",
+    "Clean Hands Event",
+    "Food Truck Wednesday October 21st, 2026",
+    "Cancer Center Lunch & Learn: Material and Equipment Management in the Lab",
+    "CBH Speaker Series | Beyond Exposure: The Hidden Architecture of Climate Risk an"
+   ],
+   "sample_urls": [
+    "https://calendar.cuanschutz.edu/event/endocrinology-grand-rounds",
+    "https://calendar.cuanschutz.edu/event/accessible-table-basics-in-word-powerpoint",
+    "https://calendar.cuanschutz.edu/event/clean-hands-event-8189"
+   ]
+  },
+  {
+   "id": "lafayette-libcal-rss",
+   "type": "rss",
+   "url": "https://lafayettepubliclibrary.libcal.com/rss.php?cid=-1&m=month",
+   "region": "lafayette",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "boulder-libcal-rss",
+   "type": "rss",
+   "url": "https://calendar.boulderlibrary.org/rss.php?cid=-1&m=month",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "arapahoe-bibliocommons",
+   "type": "json",
+   "url": "https://gateway.bibliocommons.com/v2/libraries/arapahoelibraries/events?limit=50",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "entities.events",
+    "title": "definition.title",
+    "url": "definition.id",
+    "date": "definition.start",
+    "text": "definition.description"
+   },
+   "ok": false,
+   "status": null,
+   "error": "ValueError: json mapping: 'entities.events' is not a list",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "type": "html",
+   "mode": "page-change",
+   "url": "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "rmnp-timed-entry"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm"
+   ]
+  },
+  {
+   "id": "rmnp-alerts-news",
+   "type": "rss",
+   "url": "https://www.nps.gov/feeds/getNewsRSS.htm?id=romo",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1000,
+   "eventish": 647,
+   "sample": [
+    "Glacier Gorge Trailhead and Parking Area Closure Beginning September 28 through ",
+    "Rocky Mountain National Park to Implement Another Phase of the Poudre Headwaters",
+    "Trail Ridge Road Opens For The Season Timed Entry Reservations Required For Trai",
+    "Temporary Trail Closure Above Nymph Lake For Bridge Replacement Impacting Access",
+    "Rocky Mountain National Park Selects Six Participants for the 2026 Artist-In-Res",
+    "Rocky Mountain National Park Announces 2026 Timed Entry Reservation System"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/learn/news/glacier-gorge-trailhead-and-parking-area-closure-beginning-september-28-through-early-october.htm",
+    "https://www.nps.gov/romo/learn/news/rocky-mountain-national-park-to-implement-another-phase-of-the-poudre-headwaters-project-some-areas-in-the-kawuneeche-valley-will-be-closed-august-24-30.htm",
+    "https://www.nps.gov/romo/learn/news/trail-ridge-road-opens-for-the-season-timed-entry-reservations-required-for-trail-ridge-road-9-am-to-2-pm.htm"
+   ]
+  },
+  {
+   "id": "cpw-reservations",
+   "type": "html",
+   "mode": "page-change",
+   "url": "https://cpw.state.co.us/camping",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "cpw-reservations"
+   ],
+   "sample_urls": [
+    "https://cpw.state.co.us/camping"
+   ]
+  },
+  {
+   "id": "bvsd-rss",
+   "type": "rss",
+   "url": "https://www.bvsd.org/fs/calendar-manager/events.rss",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "ok": false,
+   "status": null,
+   "error": "ReadTimeout: The read operation timed out",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": []
+  }
+ ]
+}
