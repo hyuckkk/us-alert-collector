@@ -125,3 +125,25 @@ def test_9_closed_or_soldout_registration_is_not_sent():
     out, dropped = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[full, wait])],
                                   [Entry("usafa-events", "https://u.edu/h", "Homeschool"), ], date(2026, 10, 21))
     assert dropped.get("closed") == 1 and [o["title"] for o in out] == ["Camp"]
+
+
+# ---------------------------------------------------------------- 13차 전체 시험 C 이후 수정
+def test_10_assumed_year_confirmed_when_year_in_same_text():
+    """Thornton 'Winter/Spring Registration | Begins November 24'(연도 없음)는 같은 글에 2026 이 있어도 '연도 추정'이 되어 ⏰ 알림을 못 받았다."""
+    reg = ev(title="Winter/Spring General Registration", start_date=None, end_date=None, registration_opens="2026-11-24",
+             registration_status="upcoming", year_basis="assumed", url="https://city.gov/reg")
+    entry = Entry("thornton-registration", "https://city.gov/reg", "Activity Registration Information", REG_BODY)
+    [out], _ = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[reg])], [entry], date(2026, 10, 21))
+    assert not out.get("date_uncertain")
+    # 연도가 원문에 없거나 먼 날짜면 여전히 '추정'
+    far = ev(title="Spring Camp", start_date="2027-06-01", year_basis="assumed", url="https://city.gov/reg")
+    [o2], _ = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[far])], [entry], date(2026, 10, 21))
+    assert o2.get("date_uncertain")
+    bare = Entry("x", "https://city.gov/reg", "Swim", "Registration begins November 24")
+    [o3], _ = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[reg])], [bare], date(2026, 10, 21))
+    assert o3.get("date_uncertain")
+
+
+def test_11_until_month_rule_in_extract_prompt():
+    s = ai.extract_system()
+    assert "last day of that month" in s and "keeps its real start_date" in s

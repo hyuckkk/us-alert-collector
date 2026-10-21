@@ -113,6 +113,17 @@ def year_label(ev: dict, today: date) -> str | None:
     return None
 
 
+YEAR_CONFIRM_DAYS = 180
+
+
+def _year_in_text(ev: dict, entry, today: date) -> bool:
+    """추정 연도의 날짜가 오늘부터 180일 안이고, 그 연도가 같은 원문(제목·본문)에 적혀 있으면 True."""
+    text = f"{entry.title or ''} {entry.text or ''}"
+    keys = [_d(ev.get(k)) for k in ("registration_opens", "start_date", "deadline", "end_date")]
+    keys = [k for k in keys if k]
+    return bool(keys) and all(0 <= (k - today).days <= YEAR_CONFIRM_DAYS and re.search(rf"\b{k.year}\b", text) for k in keys)
+
+
 def finalize(extracted, entries: list, today: date, checked_at: str | None = None) -> tuple[list[dict], dict]:
     """extracted: ai.EntryResult 목록(index 는 entries 기준). 반환: (행사 목록, 버린 이유별 건수).
     행사 키는 아직 없다(identity.assign_keys 가 기존 행사 목록과 대조해 정한다)."""
@@ -138,6 +149,8 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
                 drop("paid-work")
                 continue
             # 연도가 원문에 없어 추정한 날짜(2차 재검증 H): 오래된 게시글이면 버리고, 아니면 '연도 추정'으로 표시하고 급하게 알리지 않는다
+            if d.get("year_basis") == "assumed" and _year_in_text(d, entry, today):
+                d["year_basis"] = "published"  # 13차: 같은 글에 그 연도가 적혀 있고 가까운 날짜면 연도 확정(Thornton '11/24 접수 시작' 이 ⏰ 알림을 못 받음)
             if d.get("year_basis") == "assumed":
                 pub = published_date(entry.published)
                 if pub and (today - pub).days > OLD_POST_DAYS:
