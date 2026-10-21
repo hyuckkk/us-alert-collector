@@ -121,10 +121,19 @@ class Run:
                                     "seconds": self.stages.get(name, {}).get("seconds")}) + "\n")
 
     def add_entries(self, entries: list[Entry], official: bool, bots=None):
+        seen_urls = getattr(self, "_seen_urls", None)
+        if seen_urls is None:
+            seen_urls = self._seen_urls = {}
         for e in entries:
             e.extra.setdefault("official", official)
             if bots:
                 e.extra.setdefault("bots", bots)
+            # 같은 페이지를 여러 정보원(목록·페이지 감시·검색·발굴)이 가리키면 한 번만 AI 에 넘긴다(13차: Thornton 접수 안내 중복)
+            u = normalize_url(e.url) if "#" not in e.url else None
+            if u and u in seen_urls and seen_urls[u] != e.source_id:
+                continue
+            if u:
+                seen_urls.setdefault(u, e.source_id)
             self.entries.setdefault(rules.entry_key(e), e)
 
     # ------------------------------------------------ A. 정보원 감시
@@ -403,7 +412,8 @@ class Run:
                     hint = entries[ev["_entry_index"]].extra.get("hint")
                     if hint:
                         ev["_hint"] = hint
-                self.report["identity"] = identity.assign_keys(evs, index)
+                evs, same_n = identity.collapse_same(evs)
+                self.report["identity"] = {**identity.assign_keys(evs, index), "collapsed_same": same_n}
                 # 상세 재검사에서 온 변경은 그 페이지에 연결된 기존 행사 키로 되돌린다.
                 # 행사 하나·키 하나면 그 키, 여럿이면 그 키들 중 같은 행사(제목·날짜)로 대조한 것만(다른 행사에 잘못 붙이지 않음)
                 by_key_index = {x["event_key"]: x for x in index}

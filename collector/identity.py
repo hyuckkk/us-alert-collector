@@ -157,6 +157,16 @@ def assign_keys(events: list[dict], index: list[dict]) -> dict:
     return stats
 
 
+def collapse_same(events: list[dict]) -> tuple[list[dict], int]:
+    """키를 정하기 전에 같은 행사(같은 기준 + 같은 제목 + 같은 날짜들)를 하나로. 같은 페이지의 여러 행사에 회차 번호를 매길 때
+    중복이 서로 다른 회차로 잡히는 것을 막는다."""
+    out: dict[tuple, dict] = {}
+    for ev in events:
+        k = (ev.get("_anchor"), norm(ev.get("title")), ev.get("start_date"), ev.get("registration_opens"), ev.get("deadline"))
+        out.setdefault(k, ev)
+    return list(out.values()), len(events) - len(out)
+
+
 def dedupe(events: list[dict]) -> tuple[list[dict], int]:
     """같은 키가 여러 번이면 공식 정보원 쪽 하나만 남긴다(검색 결과·발굴보다 우선)."""
     rank = lambda e: (str(e.get("source_id", "")).startswith(("gnews", "ai-discover")), e.get("_entry_index", 0))  # noqa: E731

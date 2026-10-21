@@ -45,11 +45,11 @@ def cmp_date(truth: str | None, got: str | None) -> str:
 
 
 def cmp_cost(truth: str | None, got: str | None) -> str:
-    if not truth or truth.startswith("미확인"):
+    if not truth or "미확인" in truth:
         return "기준 미확인"
     if not got:
         return "누락"
-    t_free, g_free = "무료" in truth, bool(re.search(r"free|무료|\$0\b", got, re.I))
+    t_free, g_free = truth.startswith("무료"), bool(re.search(r"^\W*(free|무료)|\$0\b", got, re.I))
     if t_free != g_free:
         return f"불일치({got[:40]})"
     t_nums, g_nums = set(re.findall(r"\$\s?(\d+)", truth)), set(re.findall(r"\$\s?(\d+)", got))
@@ -85,9 +85,13 @@ def evaluate(gt: dict, trace: dict, today: date, owner_from: str | None) -> dict
             continue
         found = sorted({e["stage"] for e in trace["entries"] if same(t, e.get("url"), e.get("title"))})
         ai = [a for a in trace.get("ai", []) if same(t, a.get("url"), None)]
-        evs = [e for e in trace.get("events", []) if same(t, e.get("url"), e.get("title"))]
-        ev = evs[0] if evs else None
         is_valid = t.get("participation") in ("open", "full", "registration_opening")
+        by_url = [e for e in trace.get("events", []) if e.get("url") and normalize_url(e["url"]) == normalize_url(t["url"])]
+        # 같은 원문 URL 의 행사를 우선(여러 개면 기준 날짜와 가까운 것). 제외 항목은 URL 로만(제목만 비슷한 다른 기관 행사를 오인하지 않게)
+        evs = by_url or ([] if not is_valid else [e for e in trace.get("events", []) if same(t, e.get("url"), e.get("title"))])
+        tdate = t.get("start_date") or ""
+        evs.sort(key=lambda e: (e.get("start_date") or e.get("registration_opens") or "") != tdate)
+        ev = evs[0] if evs else None
         truth_date = t.get("start_date") if t.get("date_confirmed") else None
         rows.append({
             "id": t["id"], "valid": is_valid, "participation": t.get("participation"),
@@ -109,8 +113,11 @@ def evaluate(gt: dict, trace: dict, today: date, owner_from: str | None) -> dict
     ind_hosts = json.loads(unreg.read_text())["domains"] if unreg.exists() else sorted({base(t["url"]) for t in gt["events"] if t.get("independent")})
     found_urls = list(trace.get("discover_sources", [])) + [e["url"] for e in trace["entries"] if e["stage"] == "discover"]
     discovery = {h: any(base(u) == h for u in found_urls if u) for h in ind_hosts}
+    registered = {base(s["url"]) for s in json.loads((ROOT / "config/sources.json").read_text())["sources"]}
+    new_domains = sorted({base(u) for u in trace.get("discover_sources", []) if u and base(u) not in registered})
     return {"summary": summarize(rows), "by_group": {k: summarize(v) for k, v in groups.items() if v}, "rows": rows,
-            "new_source_discovery": {"independent_source_domains": discovery, "found": f"{sum(discovery.values())}/{len(discovery)}"}}
+            "new_source_discovery": {"unregistered_list_found": f"{sum(discovery.values())}/{len(discovery)}", "unregistered_list": discovery,
+                                     "new_official_domains_discovered": new_domains}}
 
 
 def summarize(rows: list[dict]) -> dict:

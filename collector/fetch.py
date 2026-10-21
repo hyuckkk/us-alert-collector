@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import hashlib
+import html as html_lib
 import json
 import re
 import urllib.parse
@@ -46,9 +47,10 @@ class FetchResult:
 
 def normalize_url(url: str, base: str | None = None) -> str:
     """추적용 파라미터와 #조각을 떼어 같은 글이 다른 주소로 두 번 잡히지 않게 한다."""
+    url = html_lib.unescape(url.strip())  # 피드에 HTML 이스케이프된 주소(&amp;)가 그대로 오는 경우(13차: 경기 일정 주소 깨짐)
     if base:
         url = urllib.parse.urljoin(base, url)
-    p = urllib.parse.urlsplit(url.strip())
+    p = urllib.parse.urlsplit(url)
     q = [(k, v) for k, v in urllib.parse.parse_qsl(p.query, keep_blank_values=True) if not TRACKING.match(k)]
     return urllib.parse.urlunsplit((p.scheme.lower(), p.netloc.lower(), p.path or "/", urllib.parse.urlencode(q), ""))
 
