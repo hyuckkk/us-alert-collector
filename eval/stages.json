@@ -285,7 +285,7 @@
     }
    ],
    "event": true,
-   "bot": "family",
+   "bot": "kids",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
@@ -308,7 +308,7 @@
     }
    ],
    "event": true,
-   "bot": "life",
+   "bot": "family",
    "date": "일치",
    "cost": "일치",
    "age": "제한 없음",
@@ -354,7 +354,7 @@
     }
    ],
    "event": true,
-   "bot": "life",
+   "bot": "family",
    "date": "기준 미확인",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -372,7 +372,7 @@
    "ai": [
     {
      "status": "extracted",
-     "events": 1,
+     "events": 3,
      "error": null
     }
    ],
@@ -400,7 +400,7 @@
     }
    ],
    "event": true,
-   "bot": "kids",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -532,13 +532,13 @@
    ],
    "ai": [
     {
-     "status": "extracted",
-     "events": 1,
+     "status": "done",
+     "events": 0,
      "error": null
     }
    ],
    "event": true,
-   "bot": "kids",
+   "bot": "family",
    "date": "일치",
    "cost": "일치",
    "age": "제한 없음",
@@ -676,7 +676,7 @@
     }
    ],
    "event": true,
-   "bot": "life",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -699,7 +699,7 @@
     }
    ],
    "event": true,
-   "bot": "life",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -1064,11 +1064,11 @@
   }
  ],
  "new_source_discovery": {
-  "unregistered_list_found": "0/10",
+  "unregistered_list_found": "1/10",
   "unregistered_list": {
    "crgov.com": false,
    "berthoud.org": false,
-   "arvadacenter.org": false,
+   "arvadacenter.org": true,
    "denvercenter.org": false,
    "ci.wheatridge.co.us": false,
    "svvsd.org": false,
@@ -1080,16 +1080,14 @@
   "new_official_domains_discovered": [
    "adams12.org",
    "adamscountyco.gov",
-   "adamscountyfair.com",
    "adamscountyhealthdepartment.org",
-   "bgcmd.org",
-   "cmc.org",
-   "csuspur.org",
+   "arvadacenter.org",
+   "coloradoballet.org",
+   "denvergov.org",
    "downtowndenver.com",
+   "du.edu",
    "frontrange.edu",
-   "jccdenver.org",
-   "msudenver.edu",
-   "northglenn.org",
+   "i9sports.com",
    "teamsideline.com",
    "visitdenver.com"
   ]
