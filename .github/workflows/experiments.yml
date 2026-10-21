@@ -19,7 +19,7 @@ jobs:
     # 강제 push(이력 재작성 등)는 GitHub 가 '모든 파일 변경'으로 보아 경로 조건이 다 걸린다 → 실행하지 않음(2026-10-21 사고 재발 방지)
     if: github.event_name != 'push' || !github.event.forced
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 65          # 전체 시험 예상 35–45분 + 결과 저장. 실패해도 자동 재실행하지 않는다(재시도 설정 없음)
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 2 }
@@ -57,6 +57,7 @@ jobs:
         run: python collector/coverage.py
       - name: Full-system dry run with stage trace (paid AI — approved runs only)
         if: env.FULLSYSTEM == '1'
+        timeout-minutes: 58      # 시험 단계가 늦어져도 결과 저장 단계가 돌 시간을 남긴다
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           HOUSEHOLD_PROFILE: ${{ secrets.HOUSEHOLD_PROFILE }}

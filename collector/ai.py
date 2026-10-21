@@ -323,7 +323,7 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
 
 # ---------------------------------------------------------------- 발굴(큰 모델 + 웹 검색)
 DISCOVER_SYSTEM = """You look for NEW official sources of family, kids and adult activities near Westminster, Colorado (Denver metro) for Korean residents and their local friends.
-Search the web for the theme you are given. Only upcoming things matter: events happening, or registrations opening or closing, between today and about 90 days from today (today's date is given). Skip past seasons, archived pages and pages whose dates are all before today.
+Search the web for the theme you are given. Only future things matter (today's date is given): prioritise events happening, or registrations opening or closing, in the next few months, but ALSO report information announced far in advance whatever its date — events in 2027–2028, early registration or reservations, national park permits, lotteries and timed-entry reservations, summer camp enrollment, season passes. Exclude only things that are already over (past events, past seasons, archived pages whose dates are all before today).
 Report:
 - sources: official organization pages that list recurring events, classes or registrations (city recreation, libraries, museums, universities, parks, clubs), including nearby cities' official calendars. Prefer pages with calendars or RSS that show upcoming dates.
 - events: specific upcoming events or registration openings worth checking, each with date = its next upcoming date (YYYY-MM-DD) as stated on the page, or null if not stated.
@@ -357,7 +357,8 @@ def norm_bots(bots) -> list[str]:
 
 def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_searches: int | None = None, today: str | None = None) -> dict:
     """반환: {"sources": [...], "events": [...], "result_urls": set}. 검색 결과에 실제로 나온 URL 만 남긴다.
-    today 를 주면 앞으로의 일정만 찾게 하고, 날짜가 오늘 이전인 결과는 버린다(10차 시험: 지난 시즌 일정 위주)."""
+    today 를 주면 가까운 일정을 우선하되 미리 발표되는 먼 미래 정보(2027–2028 행사, 조기 신청, 국립공원 허가, 캠프 모집)도 찾게 하고,
+    날짜가 오늘 이전인 결과만 버린다(10차 시험: 지난 시즌 일정 위주, 12차: 기간 제한 없음)."""
     c = cfg["discover"]
     today = today or datetime.now(timezone.utc).date().isoformat()
     messages = [{"role": "user", "content": f"Today: {today}\nTheme: {theme}\nknown: {json.dumps(known[:60])}"}]

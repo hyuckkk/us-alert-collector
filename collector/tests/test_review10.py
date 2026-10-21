@@ -77,12 +77,17 @@ def test_6_discovery_prefers_upcoming_and_drops_past():
     """AI 발굴 결과 11건이 대부분 2026년 봄 일정이었다 → 오늘 날짜를 주고, 지난 날짜의 결과는 버린다."""
     text = json.dumps({"sources": [], "events": [
         {"url": "https://x.org/spring", "title": "Spring 2026 league registration", "date": "2026-03-01", "why": ""},
-        {"url": "https://x.org/winter", "title": "Winter camp registration", "date": "2026-11-20", "why": ""}]})
-    resp = SimpleNamespace(content=[SimpleNamespace(type="web_search_tool_result", content=[SimpleNamespace(url="https://x.org/spring"), SimpleNamespace(url="https://x.org/winter")]),
+        {"url": "https://x.org/winter", "title": "Winter camp registration", "date": "2026-11-20", "why": ""},
+        {"url": "https://x.org/permit", "title": "2028 national park timed-entry permit lottery", "date": "2028-01-15", "why": ""}]})
+    resp = SimpleNamespace(content=[SimpleNamespace(type="web_search_tool_result", content=[SimpleNamespace(url="https://x.org/spring"), SimpleNamespace(url="https://x.org/winter"),
+                                                                                            SimpleNamespace(url="https://x.org/permit")]),
                                     SimpleNamespace(type="text", text=text)], stop_reason="end_turn", usage=U())
     c = FakeClient(beta_replies=[resp])
     cfg = {"discover": {"model": "claude-opus-5-5", "effort": "low", "max_searches": 1, "max_tokens": 100}}
     d = ai.discover(c, cfg, "kids camps", [], ai.Usage({}), today="2026-10-21")
-    assert [e["url"] for e in d["events"]] == ["https://x.org/winter"]
+    # 지난 일정만 버리고, 가까운 일정과 미리 발표된 먼 미래 정보(2028 허가 추첨)는 모두 남긴다(12차: 기간 제한 없음)
+    assert [e["url"] for e in d["events"]] == ["https://x.org/winter", "https://x.org/permit"]
     sent = json.dumps(c.beta.messages.calls[0]["messages"]) + c.beta.messages.calls[0]["system"]
-    assert "2026-10-21" in sent and "upcoming" in sent.lower()
+    assert "2026-10-21" in sent and "90 days" not in sent
+    for word in ("2027–2028", "early registration", "national park permits", "camp enrollment", "already over"):
+        assert word in sent
