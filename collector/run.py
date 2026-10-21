@@ -49,6 +49,7 @@ DEEP_THEMES = {            # 요일별 심층(월=0) — 설계안 유지
 OFFICIAL_TLD = (".gov", ".edu", ".us", ".org", ".mil")
 MIN_SOURCE_OK_RATIO = 0.5  # 정보원 조회 성공률이 이보다 낮으면 '정상 수집'으로 기록하지 않는다(2차 재검증 G)
 DETAIL_SOURCE_TYPES = ("ai-discover",)
+RSS_DETAIL_MIN_CHARS = 400  # 공식 피드 항목 본문이 이보다 짧으면 상세 페이지를 연다
 LEASE_EXTEND_MIN = 60       # AI 호출·Worker 등록 직전에 대기열 임대를 이만큼 연장(3차 검증 2)
 
 
@@ -138,6 +139,11 @@ class Run:
             if s["type"] == "html" and s.get("mode") != "page-change":
                 for e in r.entries:
                     e.extra["needs_detail"] = True  # 목록 링크뿐이라 상세 본문 없이는 날짜·가격·자격을 알 수 없음
+            elif s["type"] in ("rss", "ical", "json") and s.get("official"):
+                # 피드 본문이 짧으면(예: 날짜 한 줄) 비용·연령·신청 조건은 상세 페이지에만 있다(10차 시험: 비용 누락)
+                for e in r.entries:
+                    if len(e.text or "") < RSS_DETAIL_MIN_CHARS and e.url.startswith("http"):
+                        e.extra["needs_detail"] = e.extra["feed_short"] = True  # 피드 본문은 그대로 둔다(변경 감지 해시 유지)
         if self.m["sources_total"] and self.m["sources_ok"] / self.m["sources_total"] < 0.5:
             self.alerts.append(f"정보원 조회 성공률 {self.m['sources_ok']}/{self.m['sources_total']}")
         return {"due": len(due)}
@@ -165,7 +171,8 @@ class Run:
                 self.alerts.append(f"실행 비용 상한(${self.usage.cap}) — AI 발굴 '{bot}' 이후 생략")
                 break
             try:
-                d = ai.discover(self.client, self.models, theme, known, self.usage, max_searches=cfg["max_searches_deep"] if bot == "deep" else cfg["max_searches"])
+                d = ai.discover(self.client, self.models, theme, known, self.usage, max_searches=cfg["max_searches_deep"] if bot == "deep" else cfg["max_searches"],
+                                today=self.today.isoformat())
                 self.m["discover_calls"] += 1
             except Exception as e:  # noqa: BLE001  분야 하나가 실패해도 나머지 분야는 계속
                 errors += 1
@@ -223,12 +230,28 @@ class Run:
         self.api.watch_update(updates)
         return {"checked": self.m["watch_checked"], "changed": self.m["watch_changed"]}
 
+    @staticmethod
+    def _needs_detail(e: Entry) -> bool:
+        return bool(e.extra.get("needs_detail")) and (not e.text or (bool(e.extra.get("feed_short")) and not e.extra.get("detail_ok")))
+
+    @staticmethod
+    def _detail(e: Entry, hc) -> bool:
+        """상세 본문 조회. 짧은 피드 본문이 있으면 상세 본문 앞에 붙여 둘 다 AI 에 넘긴다."""
+        feed = e.text if e.extra.get("feed_short") else ""
+        ok = fetch_detail(e, hc)
+        if ok and feed:
+            e.text = (feed + "\n" + e.text)[:3500]
+        if not ok and feed:
+            e.text = feed
+        e.extra["detail_ok"] = ok
+        return ok
+
     def queue_item(self, key: str, e: Entry, hash_: str) -> dict:
         hint = e.extra.get("hint")
         return {"key": key, "hash": hash_, "source_id": e.source_id, "url": e.url, "title": e.title[:300],
                 "hint": ",".join(hint) if isinstance(hint, list) else hint, "priority": rules.priority(e, self.today, bool(e.extra.get("official"))),
                 "body": {"text": (e.text or "")[:4000], "published": e.published,
-                         "extra": {k2: v for k2, v in e.extra.items() if k2 in ("uid", "bots", "official", "location", "detail_error", "needs_detail", "detail_ok")}}}
+                         "extra": {k2: v for k2, v in e.extra.items() if k2 in ("uid", "bots", "official", "location", "detail_error", "needs_detail", "detail_ok", "feed_short")}}}
 
     # ------------------------------------------------ 대기열 등록(새·바뀐 항목 전부 보존, 1차 검증 3)
     def enqueue_raw(self):
@@ -239,11 +262,11 @@ class Run:
         fresh = [k for k in keys if k in new or k in changed]
         self.m["entries_new"], self.m["entries_changed"] = len([k for k in fresh if k in new]), len([k for k in fresh if k in changed])
         # 상세 본문(토큰 0)을 붙인다. 상한을 넘는 것은 본문 없이 넣고, 대기열 처리 때 다시 조회한다.
-        need = [k for k in fresh if self.entries[k].extra.get("needs_detail") and not self.entries[k].text]
+        need = [k for k in fresh if self._needs_detail(self.entries[k])]
         with new_client() as hc:
             for k in need[:MAX_DETAIL_FETCH]:
                 self.m["details_total"] += 1
-                ok = fetch_detail(self.entries[k], hc)
+                ok = self._detail(self.entries[k], hc)
                 self.entries[k].extra["detail_ok"] = ok
                 self.m["details_ok"] += int(ok)
                 sid = self.entries[k].source_id
@@ -300,11 +323,11 @@ class Run:
         ready = bool(todo) and self.ai_ready()
         with new_client() as hc:
             for i, e in enumerate(entries):
-                if ready and e.extra.get("needs_detail") and not e.text:  # AI 를 못 쓰면 조회해도 보관하지 않으므로 건너뜀
+                if ready and self._needs_detail(e):  # AI 를 못 쓰면 조회해도 보관하지 않으므로 건너뜀
                     self.m["details_total"] += 1
-                    if fetch_detail(e, hc):
+                    if self._detail(e, hc):
                         self.m["details_ok"] += 1
-                    else:
+                    elif not e.extra.get("feed_short"):  # 피드 본문이 있는 항목은 그 본문으로 계속 진행
                         no_detail[i] = f"detail-unavailable: {e.extra.get('detail_error', '?')}"
         self.m["detail_missing"] = len(no_detail)
         if todo:
@@ -550,6 +573,7 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
             "run_id": report["run_id"],
             "entries": [{"stage": stage(e.source_id or ""), "source_id": e.source_id, "url": e.url, "title": e.title} for e in r.entries.values()],
             "ai": r.trace_ai, "events": report.get("events", []), "dropped": report.get("dropped"),
+            "discover_sources": [s.get("url") for s in (report.get("discover") or {}).get("sources", [])],
         }, ensure_ascii=False, indent=1, default=str) + "\n")
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)

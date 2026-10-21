@@ -80,6 +80,11 @@ def _host(url: str | None) -> str:
     return urllib.parse.urlsplit(url or "").netloc.lower().removeprefix("www.")
 
 
+def _norm_url(u: str) -> str:
+    p = urllib.parse.urlsplit(u.strip())
+    return f"{p.netloc.lower().removeprefix('www.')}{p.path.rstrip('/')}?{p.query}"
+
+
 def same_event(ev: dict, other: dict, strict_date: bool = False) -> bool:
     """기준이 다른 두 행사가 같은 행사인지(제목 일부 수정·주소 변경·다른 사이트 중복).
     strict_date: 같은 페이지에 회차가 여럿인 행사는 시작일까지 맞아야 같은 것으로 본다."""
@@ -94,6 +99,8 @@ def same_event(ev: dict, other: dict, strict_date: bool = False) -> bool:
     org_match = bool(oa) and bool(ob)
     d = _days(ev.get("start_date"), other.get("start_date"))
     date_match = d is not None and d <= 1
+    if d is not None and d > 1 and ev.get("url") and other.get("url") and _norm_url(ev["url"]) != _norm_url(other["url"]):
+        return False  # 다른 페이지 + 다른 날짜 = 다른 행사(10차 시험: 무료입장일 11/7·12/8 이 합쳐짐). 같은 페이지의 날짜 변경은 위 조건에 안 걸림
     host_match = _host(ev.get("url")) == _host(other.get("url"))
     if strict_date and not date_match:
         return False

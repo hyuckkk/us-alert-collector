@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 import os
 import re
 from dataclasses import dataclass, field
@@ -171,6 +172,7 @@ Rules:
 - paid_work: true if participating means paid employment (hiring instructors, paid assistants).
 - status_note: Korean note only when the item says something about residency pricing, residency requirements, citizenship, ID or background checks.
 - needs_review: true when eligibility, age fit, visa/status fit or whether it is an event at all is unclear. Put the doubt in review_reason (Korean).
+- Program registration announcements ARE relevant (relevant=true) even when the page is not a single event: e.g. "Winter swim lesson registration begins Nov 30 for residents, Dec 1 for non-residents". Output one record per program or season with registration_opens set (use the earliest date; put resident/non-resident differences in eligibility), registration_status=upcoming, start_date null unless the program dates are stated, title naming the program and season.
 - relevant=false (events=[]) for news without an attendable event or program, job postings, ads, or places outside the U.S. unless it is a travel promotion departing Denver.
 - One item may contain several distinct events (e.g. a calendar page); list each.
 Return exactly one result for EVERY item index you were given, including irrelevant ones."""
@@ -265,7 +267,7 @@ class JudgeBatch(BaseModel):
 
 
 JUDGE_RULES = """U.S. camps usually state the grade a child enters in the fall; compare with the audience's school grades when given.
-You review events a smaller model flagged as uncertain. For each, decide keep (worth sending to this family or local friends), the right audience bot, and correct age_text, status_note (Korean) and english attributes using only the source text. Drop paid jobs, events requiring U.S. citizenship, and items that are not attendable events or programs. Reason in Korean, one sentence."""
+You review events a smaller model flagged as uncertain. For each, decide keep (worth sending to this family or local friends), the right audience bot, and correct age_text, status_note (Korean) and english attributes using only the source text. Drop paid jobs, events requiring U.S. citizenship, and items that are not attendable events or programs. Keep program registration announcements (registration opening dates for classes, lessons, camps or seasons) — they are actionable even without an event date. Reason in Korean, one sentence."""
 
 
 @dataclass
@@ -321,12 +323,13 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
 
 # ---------------------------------------------------------------- 발굴(큰 모델 + 웹 검색)
 DISCOVER_SYSTEM = """You look for NEW official sources of family, kids and adult activities near Westminster, Colorado (Denver metro) for Korean residents and their local friends.
-Search the web for the theme you are given. Report:
-- sources: official organization pages that list recurring events, classes or registrations (city recreation, libraries, museums, universities, parks, clubs). Prefer pages with calendars or RSS.
-- events: specific upcoming events or registration openings worth checking.
+Search the web for the theme you are given. Only upcoming things matter: events happening, or registrations opening or closing, between today and about 90 days from today (today's date is given). Skip past seasons, archived pages and pages whose dates are all before today.
+Report:
+- sources: official organization pages that list recurring events, classes or registrations (city recreation, libraries, museums, universities, parks, clubs), including nearby cities' official calendars. Prefer pages with calendars or RSS that show upcoming dates.
+- events: specific upcoming events or registration openings worth checking, each with date = its next upcoming date (YYYY-MM-DD) as stated on the page, or null if not stated.
 Use only URLs that appeared in your search results. Skip pages already listed under "known".
 Use only these bot names: kids, family, life (life = adults).
-Answer with JSON only, no prose: {"sources":[{"url":"","name":"","reason":"","bots":["kids"]}],"events":[{"url":"","title":"","why":""}]}"""
+Answer with JSON only, no prose: {"sources":[{"url":"","name":"","reason":"","bots":["kids"]}],"events":[{"url":"","title":"","date":null,"why":""}]}"""
 
 
 def _json_from_text(text: str) -> dict:
@@ -352,10 +355,12 @@ def norm_bots(bots) -> list[str]:
     return list(dict.fromkeys(BOT_ALIASES[b.lower()] for b in (bots or []) if isinstance(b, str) and b.lower() in BOT_ALIASES))
 
 
-def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_searches: int | None = None) -> dict:
-    """반환: {"sources": [...], "events": [...], "result_urls": set}. 검색 결과에 실제로 나온 URL 만 남긴다."""
+def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_searches: int | None = None, today: str | None = None) -> dict:
+    """반환: {"sources": [...], "events": [...], "result_urls": set}. 검색 결과에 실제로 나온 URL 만 남긴다.
+    today 를 주면 앞으로의 일정만 찾게 하고, 날짜가 오늘 이전인 결과는 버린다(10차 시험: 지난 시즌 일정 위주)."""
     c = cfg["discover"]
-    messages = [{"role": "user", "content": f"Theme: {theme}\nknown: {json.dumps(known[:60])}"}]
+    today = today or datetime.now(timezone.utc).date().isoformat()
+    messages = [{"role": "user", "content": f"Today: {today}\nTheme: {theme}\nknown: {json.dumps(known[:60])}"}]
     tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": max_searches or c["max_searches"],
               "user_location": {"type": "approximate", "city": "Westminster", "region": "Colorado", "country": "US", "timezone": "America/Denver"}}]
     seen_urls: set[str] = set()
@@ -386,6 +391,7 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_
 
     raw_s, raw_e = data.get("sources") or [], data.get("events") or []
     sources = [{**s, "bots": norm_bots(s.get("bots"))} for s in raw_s if isinstance(s, dict) and ok(s.get("url"))]
-    events = [e for e in raw_e if isinstance(e, dict) and ok(e.get("url"))]
+    events = [e for e in raw_e if isinstance(e, dict) and ok(e.get("url"))
+              and not (isinstance(e.get("date"), str) and re.match(r"\d{4}-\d{2}-\d{2}$", e["date"]) and e["date"] < today)]
     return {"sources": sources, "events": events, "dropped_urls": len(raw_s) + len(raw_e) - len(sources) - len(events),
             "result_urls": len(seen_urls), "raw_text": text[-1500:]}

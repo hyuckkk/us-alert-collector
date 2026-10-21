@@ -231,6 +231,19 @@ def page_text(client: httpx.Client, url: str) -> tuple[int | None, str]:
     return r.status_code, clean_text(" ".join(p.text), 20000)
 
 
+def event_body_start(text: str, title: str) -> int:
+    """제목은 사이트 메뉴·이동 경로에도 나오므로 첫 위치가 아니라, 제목이 나오는 곳(최대 12곳) 중
+    뒤따르는 1,500자에 날짜·장소·비용·신청 문장이 가장 많은 곳을 본문 시작으로 본다(10차 시험: 메뉴부터 잘라 날짜 누락)."""
+    low, key = text.lower(), (title or "").lower()[:40]
+    hits, i = [], low.find(key) if key else -1
+    while i >= 0 and len(hits) < 12:
+        hits.append(i)
+        i = low.find(key, i + 1)
+    if not hits:
+        return 0
+    return max(hits, key=lambda h: (len(RELEVANT.findall(text[h:h + 1500])), -h))
+
+
 def fetch_detail(entry: Entry, client: httpx.Client, chars: int = 3000) -> bool:
     """html 정보원의 새 링크는 링크 글자만 있으므로, 상세 페이지 본문을 가져와 AI 가 날짜·가격·연령을 볼 수 있게 한다(토큰 0)."""
     try:
@@ -239,9 +252,8 @@ def fetch_detail(entry: Entry, client: httpx.Client, chars: int = 3000) -> bool:
             entry.extra["detail_error"] = f"HTTP {status}"
             return False
         entry.extra["fingerprint"] = fingerprint(text)[0]
-        # 페이지 앞부분의 메뉴를 건너뛰려고 제목이 처음 나오는 곳부터 자른다
-        i = text.lower().find(entry.title.lower()[:40])
-        entry.text = text[i if i > 0 else 0:][:chars]
+        start = event_body_start(text, entry.title)
+        entry.text = text[start:start + chars]
         return True
     except httpx.HTTPError as e:
         entry.extra["detail_error"] = type(e).__name__

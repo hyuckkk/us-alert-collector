@@ -149,9 +149,11 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             if last and last < today:
                 drop("past")
                 continue
-            if not d["start_date"] and not d["annual"] and not d.get("registration_opens") and not d.get("deadline"):
-                # 날짜가 전혀 없는 항목은 생활정보로만 주간 요약에 넣는다
-                d["tags"] = list(dict.fromkeys([*d["tags"], "info"]))[:5]
+            if not d["start_date"] and not d["end_date"] and not d["annual"] and not d.get("registration_opens") and not d.get("deadline"):
+                # 날짜·접수일이 전혀 없으면 지난 행사인지 알 수 없으므로 보내지 않는다(10차 시험: 지난 행사 3건 오발송).
+                # 같은 페이지가 바뀌면(상세 재검사·페이지 변경 감시) 다시 추출된다.
+                drop("no-date")
+                continue
             d["urgency"] = "weekly" if d.get("date_uncertain") else urgency(d, today)
             d["year_label"] = year_label(d, today)
             d["source_id"] = entry.source_id

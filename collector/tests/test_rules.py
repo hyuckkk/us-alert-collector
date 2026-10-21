@@ -24,9 +24,12 @@ def test_drops_past_paid_and_irrelevant():
     assert out == [] and dropped == {"past": 1, "paid-work": 1, "not-relevant": 1}
 
 
-def test_bad_date_becomes_null_and_undated_is_info():
-    out, _ = rules.finalize([res(0, ev(start_date="July 10", tags=["art"]))], E, TODAY)
-    assert out[0]["start_date"] is None and "info" in out[0]["tags"]
+def test_bad_date_becomes_null_and_undated_is_held():
+    # 10차 시험 이후: 날짜·접수일이 전혀 없으면 지난 행사인지 알 수 없어 보내지 않는다(이전: 'info' 로 주간 요약)
+    out, dropped = rules.finalize([res(0, ev(start_date="July 10", tags=["art"]))], E, TODAY)
+    assert out == [] and dropped.get("no-date") == 1
+    out, _ = rules.finalize([res(0, ev(start_date="July 10", annual=True))], E, TODAY)
+    assert out[0]["start_date"] is None                     # 연례 행사는 예고용으로 남김
 
 
 def test_urgency_rules():
