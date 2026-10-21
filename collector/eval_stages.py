@@ -105,7 +105,8 @@ def evaluate(gt: dict, trace: dict, today: date, owner_from: str | None) -> dict
     groups = {"all": rows, "original": [r for r in rows if not r["independent"]], "independent": [r for r in rows if r["independent"]]}
     # 새 정보원 발굴 능력(별도): 독립 표본이 나온 미등록 공식 정보원의 도메인을 AI 발굴이 정보원·행사로 찾았는가
     base = lambda u: ".".join(identity._host(u).split(".")[-2:])  # noqa: E731  기관 도메인 단위(하위 도메인 포함)
-    ind_hosts = sorted({base(t["url"]) for t in gt["events"] if t.get("independent")})
+    unreg = ROOT / "eval/unregistered_domains.json"
+    ind_hosts = json.loads(unreg.read_text())["domains"] if unreg.exists() else sorted({base(t["url"]) for t in gt["events"] if t.get("independent")})
     found_urls = list(trace.get("discover_sources", [])) + [e["url"] for e in trace["entries"] if e["stage"] == "discover"]
     discovery = {h: any(base(u) == h for u in found_urls if u) for h in ind_hosts}
     return {"summary": summarize(rows), "by_group": {k: summarize(v) for k, v in groups.items() if v}, "rows": rows,

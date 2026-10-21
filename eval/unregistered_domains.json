@@ -1,0 +1,15 @@
+{
+ "_comment": "새 정보원 발굴 능력 측정용(13차). 실제로 행사가 나오는 공식 기관이지만 일부러 등록하지 않는다. 전체 시험에서 AI 발굴·검색이 이 도메인을 찾는지 본다.",
+ "domains": [
+  "crgov.com",
+  "berthoud.org",
+  "arvadacenter.org",
+  "denvercenter.org",
+  "ci.wheatridge.co.us",
+  "svvsd.org",
+  "louisvilleco.gov",
+  "superiorcolorado.gov",
+  "longmontcolorado.gov",
+  "cityofgolden.net"
+ ]
+}

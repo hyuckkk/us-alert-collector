@@ -11,6 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import identity  # noqa: E402
 import run  # noqa: E402
 from fetch import Entry, fetch_detail, fetch_source, new_client, normalize_url  # noqa: E402
 
@@ -41,6 +42,10 @@ def main() -> int:
     with new_client() as hc:
         for t in gt["events"]:
             sid = (t.get("listed_by_monitored_now") or [None])[0] or t.get("panel_source")
+            if sid not in sources:  # 기준 목록 작성 뒤 추가된 정보원: 같은 도메인의 정보원(행사 주소와 같은 페이지 감시가 있으면 그것)
+                same = [s for s in sources.values() if s.get("enabled", True) and identity._host(s["url"]) == identity._host(t["url"])]
+                exact = [s for s in same if normalize_url(s["url"]) == normalize_url(t["url"])]
+                sid = (exact or same or [{"id": sid}])[0]["id"]
             src = sources.get(sid)
             if not src:
                 rows.append({"id": t["id"], "source": sid, "path": "not-registered"})
