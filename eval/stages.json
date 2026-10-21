@@ -2,22 +2,22 @@
  "summary": {
   "valid_events": 30,
   "found_by_stage": {
-   "sources": "6/30 (20%)",
+   "sources": "29/30 (97%)",
    "search": "0/30 (0%)",
-   "discover": "0/30 (0%)"
+   "discover": "1/30 (3%)"
   },
   "found_only_by": {
-   "sources": 6,
+   "sources": 28,
    "search": 0,
    "discover": 0
   },
-  "found_any_stage": "6/30 (20%)",
-  "became_event": "5/30 (17%)",
-  "notify_eligible_friend_profile": "5/30 (17%)",
-  "date_correct": "3/26",
-  "cost_correct": "3/17",
-  "age_correct": "0/3",
-  "excluded_wrongly_notified": "2/13",
+  "found_any_stage": "29/30 (97%)",
+  "became_event": "26/30 (87%)",
+  "notify_eligible_friend_profile": "26/30 (87%)",
+  "date_correct": "23/26",
+  "cost_correct": "10/17",
+  "age_correct": "1/3",
+  "excluded_wrongly_notified": "3/13",
   "registration_date_errors": [
    "thornton-registration"
   ]
@@ -26,22 +26,22 @@
   "all": {
    "valid_events": 30,
    "found_by_stage": {
-    "sources": "6/30 (20%)",
+    "sources": "29/30 (97%)",
     "search": "0/30 (0%)",
-    "discover": "0/30 (0%)"
+    "discover": "1/30 (3%)"
    },
    "found_only_by": {
-    "sources": 6,
+    "sources": 28,
     "search": 0,
     "discover": 0
    },
-   "found_any_stage": "6/30 (20%)",
-   "became_event": "5/30 (17%)",
-   "notify_eligible_friend_profile": "5/30 (17%)",
-   "date_correct": "3/26",
-   "cost_correct": "3/17",
-   "age_correct": "0/3",
-   "excluded_wrongly_notified": "2/13",
+   "found_any_stage": "29/30 (97%)",
+   "became_event": "26/30 (87%)",
+   "notify_eligible_friend_profile": "26/30 (87%)",
+   "date_correct": "23/26",
+   "cost_correct": "10/17",
+   "age_correct": "1/3",
+   "excluded_wrongly_notified": "3/13",
    "registration_date_errors": [
     "thornton-registration"
    ]
@@ -49,22 +49,22 @@
   "original": {
    "valid_events": 18,
    "found_by_stage": {
-    "sources": "6/18 (33%)",
+    "sources": "17/18 (94%)",
     "search": "0/18 (0%)",
-    "discover": "0/18 (0%)"
+    "discover": "1/18 (6%)"
    },
    "found_only_by": {
-    "sources": 6,
+    "sources": 16,
     "search": 0,
     "discover": 0
    },
-   "found_any_stage": "6/18 (33%)",
-   "became_event": "5/18 (28%)",
-   "notify_eligible_friend_profile": "5/18 (28%)",
-   "date_correct": "3/15",
-   "cost_correct": "3/13",
+   "found_any_stage": "17/18 (94%)",
+   "became_event": "15/18 (83%)",
+   "notify_eligible_friend_profile": "15/18 (83%)",
+   "date_correct": "12/15",
+   "cost_correct": "8/13",
    "age_correct": "0/2",
-   "excluded_wrongly_notified": "2/13",
+   "excluded_wrongly_notified": "3/13",
    "registration_date_errors": [
     "thornton-registration"
    ]
@@ -72,21 +72,21 @@
   "independent": {
    "valid_events": 12,
    "found_by_stage": {
-    "sources": "0/12 (0%)",
+    "sources": "12/12 (100%)",
     "search": "0/12 (0%)",
     "discover": "0/12 (0%)"
    },
    "found_only_by": {
-    "sources": 0,
+    "sources": 12,
     "search": 0,
     "discover": 0
    },
-   "found_any_stage": "0/12 (0%)",
-   "became_event": "0/12 (0%)",
-   "notify_eligible_friend_profile": "0/12 (0%)",
-   "date_correct": "0/11",
-   "cost_correct": "0/4",
-   "age_correct": "0/1",
+   "found_any_stage": "12/12 (100%)",
+   "became_event": "11/12 (92%)",
+   "notify_eligible_friend_profile": "11/12 (92%)",
+   "date_correct": "11/11",
+   "cost_correct": "2/4",
+   "age_correct": "1/1",
    "excluded_wrongly_notified": "0/0",
    "registration_date_errors": []
   }
@@ -188,14 +188,22 @@
    "id": "usafa-events:47",
    "valid": true,
    "participation": "full",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "kids",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -203,14 +211,22 @@
    "id": "usafa-events:49",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
    "cost": "누락",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -218,14 +234,22 @@
    "id": "usafa-events:50",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "kids",
+   "date": "일치",
+   "cost": "일치",
    "age": "기준 문구만(비교 생략)",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -236,9 +260,15 @@
    "stages": [
     "sources"
    ],
-   "ai": [],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
    "event": true,
-   "bot": "kids",
+   "bot": "family",
    "date": "일치",
    "cost": "누락",
    "age": "제한 없음",
@@ -250,14 +280,22 @@
    "id": "usafa-events:52",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "kids",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -265,14 +303,22 @@
    "id": "usafa-events:57",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "일치",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -295,8 +341,16 @@
    "id": "cu-boulder-localist:67",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -310,14 +364,22 @@
    "id": "thornton-youth-teen:85",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 3,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "불일치(스케이트 어린이·시니어 $2, 13-59세 $3, 산타 방문 무료)",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -325,6 +387,104 @@
    "id": "thornton-registration",
    "valid": true,
    "participation": "registration_opening",
+   "stages": [
+    "discover",
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 4,
+     "error": null
+    },
+    {
+     "status": "extracted",
+     "events": 4,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "kids",
+   "date": "불일치(2026-11-30)",
+   "cost": "기준 미확인",
+   "age": "제한 없음",
+   "notify_friend": "대상(요약)",
+   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
+   "independent": false
+  },
+  {
+   "id": "denver-art-museum-free-days:99",
+   "valid": true,
+   "participation": "open",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "일치",
+   "age": "제한 없음",
+   "notify_friend": "대상(요약)",
+   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
+   "independent": false
+  },
+  {
+   "id": "denver-art-museum-free-days:100",
+   "valid": true,
+   "participation": "open",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "일치",
+   "age": "제한 없음",
+   "notify_friend": "대상(요약)",
+   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
+   "independent": false
+  },
+  {
+   "id": "denver-art-museum-free-days:101",
+   "valid": true,
+   "participation": "open",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "일치",
+   "age": "제한 없음",
+   "notify_friend": "대상(요약)",
+   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
+   "independent": false
+  },
+  {
+   "id": "broomfield-programs:93",
+   "valid": true,
+   "participation": "open",
    "stages": [
     "sources"
    ],
@@ -335,66 +495,6 @@
      "error": null
     }
    ],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "기준 미확인",
-   "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
-   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
-   "independent": false
-  },
-  {
-   "id": "denver-art-museum-free-days:99",
-   "valid": true,
-   "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
-   "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
-   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
-   "independent": false
-  },
-  {
-   "id": "denver-art-museum-free-days:100",
-   "valid": true,
-   "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
-   "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
-   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
-   "independent": false
-  },
-  {
-   "id": "denver-art-museum-free-days:101",
-   "valid": true,
-   "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
-   "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
-   "notify_owner": "소유자 참가 가능일(비밀값) 필요",
-   "independent": false
-  },
-  {
-   "id": "broomfield-programs:93",
-   "valid": true,
-   "participation": "open",
-   "stages": [],
-   "ai": [],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -408,14 +508,22 @@
    "id": "ind:brighton-fafsa",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
    "cost": "누락",
    "age": "기준 문구만(비교 생략)",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -423,14 +531,22 @@
    "id": "ind:brighton-treat-street",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "일치",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -438,14 +554,22 @@
    "id": "ind:brighton-splashing-pumpkins",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
-   "age": "불일치( )",
-   "notify_friend": "아님(행사 없음)",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "불일치($8 per person)",
+   "age": "일치",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -453,14 +577,22 @@
    "id": "ind:lafayette-ddlm-storytime",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "kids",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -468,14 +600,22 @@
    "id": "ind:lafayette-star-party",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -483,14 +623,22 @@
    "id": "ind:lafayette-frame-decorating",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "kids",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -498,14 +646,22 @@
    "id": "ind:lafayette-ddlm-closing",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 2,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -513,14 +669,22 @@
    "id": "ind:lafayette-see-respond",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "life",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -528,14 +692,22 @@
    "id": "ind:erie-med-takeback",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -543,14 +715,22 @@
    "id": "ind:erie-boo-briggs",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
-   "cost": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
+   "cost": "일치",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -558,14 +738,22 @@
    "id": "ind:erie-tree-walk",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
-   "date": "누락",
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "family",
+   "date": "일치",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": true
   },
@@ -573,8 +761,16 @@
    "id": "ind:lafayette-police-academy",
    "valid": true,
    "participation": "open",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -620,8 +816,16 @@
    "id": "usafa-events:46",
    "valid": false,
    "participation": "restricted",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -635,8 +839,16 @@
    "id": "usafa-events:48",
    "valid": false,
    "participation": "restricted",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -650,14 +862,22 @@
    "id": "usafa-events:54",
    "valid": false,
    "participation": "unverifiable",
-   "stages": [],
-   "ai": [],
-   "event": false,
-   "bot": null,
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "extracted",
+     "events": 1,
+     "error": null
+    }
+   ],
+   "event": true,
+   "bot": "life",
    "date": "기준 미확인",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "아님(행사 없음)",
+   "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -665,8 +885,16 @@
    "id": "cu-boulder-localist:62",
    "valid": false,
    "participation": "restricted",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -695,8 +923,16 @@
    "id": "cu-boulder-localist:60",
    "valid": false,
    "participation": "unverifiable",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -710,8 +946,16 @@
    "id": "cu-boulder-localist:69",
    "valid": false,
    "participation": "unverifiable",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -725,8 +969,16 @@
    "id": "cu-boulder-localist:74",
    "valid": false,
    "participation": "not_event",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -741,9 +993,16 @@
    "valid": false,
    "participation": "past",
    "stages": [
+    "discover",
     "sources"
    ],
-   "ai": [],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": true,
    "bot": "family",
    "date": "기준 미확인",
@@ -757,8 +1016,16 @@
    "id": "thornton-youth-teen:78",
    "valid": false,
    "participation": "past",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -772,8 +1039,16 @@
    "id": "thornton-youth-teen:79",
    "valid": false,
    "participation": "past",
-   "stages": [],
-   "ai": [],
+   "stages": [
+    "sources"
+   ],
+   "ai": [
+    {
+     "status": "done",
+     "events": 0,
+     "error": null
+    }
+   ],
    "event": false,
    "bot": null,
    "date": "기준 미확인",
@@ -786,11 +1061,17 @@
  ],
  "new_source_discovery": {
   "independent_source_domains": {
-   "brightonco.gov": false,
-   "erieco.gov": false,
-   "lafayetteco.gov": false,
-   "libcal.com": false
+   "crgov.com": false,
+   "berthoud.org": false,
+   "arvadacenter.org": false,
+   "denvercenter.org": false,
+   "ci.wheatridge.co.us": false,
+   "svvsd.org": false,
+   "louisvilleco.gov": false,
+   "superiorcolorado.gov": false,
+   "longmontcolorado.gov": false,
+   "cityofgolden.net": false
   },
-  "found": "0/4"
+  "found": "0/10"
  }
 }
