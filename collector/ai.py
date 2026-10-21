@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 import os
 import re
 from dataclasses import dataclass, field
+from types import SimpleNamespace
 from typing import Literal, Optional
 
 import anthropic
@@ -219,10 +220,12 @@ def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> Extra
     c = cfg["extract"]
     out = ExtractOutcome()
     reserve, width = c.get("reserve_usd", 0.02), max(int(c.get("parallel", 1)), 1)
-    starts = list(range(0, len(entries), c["batch"]))
+    # 작업 단위 (시작 위치, 크기). 응답이 출력 한도에서 잘리면(13차 시험 D: 12건 묶음 2개) 반으로 나눠 다시 넣는다
+    work = [(s, min(c["batch"], len(entries) - s)) for s in range(0, len(entries), c["batch"])]
 
-    def call(start: int):
-        chunk = entries[start:start + c["batch"]]
+    def call(item: tuple[int, int]):
+        start, size = item
+        chunk = entries[start:start + size]
         try:
             return start, chunk, client.messages.parse(
                 model=c["model"], max_tokens=c["max_tokens"], system=extract_system(),
@@ -234,7 +237,7 @@ def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> Extra
 
     pos = 0
     with ThreadPoolExecutor(width) as ex:
-        while pos < len(starts):
+        while pos < len(work):
             if not out.stopped:
                 n = width
                 while n > 0 and not usage.allows(reserve * n):
@@ -242,13 +245,21 @@ def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> Extra
                 if n == 0:
                     out.stopped = "run-cost-cap"
             if out.stopped:
-                for start in starts[pos:]:
-                    out.failed.update({i: f"not-attempted: {out.stopped}" for i in range(start, min(start + c["batch"], len(entries)))})
+                for start, size in work[pos:]:
+                    out.failed.update({i: f"not-attempted: {out.stopped}" for i in range(start, start + size)})
                 break
-            wave = starts[pos:pos + n]
+            wave = work[pos:pos + n]
             pos += len(wave)
             for start, chunk, resp, err in ex.map(call, wave):
                 idx = range(start, start + len(chunk))
+                truncated = (err is not None and "EOF while parsing" in str(err)) or (resp is not None and resp.stop_reason == "max_tokens")
+                if truncated and len(chunk) > 1:
+                    # SDK 가 잘린 JSON 에서 예외를 내면 응답 사용량을 받을 수 없다 → 입력(글자/4)·출력(한도) 추정치로 기록(개발비 과소 집계 방지)
+                    usage.add(c["model"], resp.usage if resp is not None else SimpleNamespace(
+                        input_tokens=4000 + sum(min(len(e.text or ""), c["text_chars"]) for e in chunk) // 4, output_tokens=c["max_tokens"]))
+                    half = len(chunk) // 2
+                    work += [(start, half), (start + half, len(chunk) - half)]
+                    continue
                 if err is not None:
                     usage.error(c["model"])
                     if isinstance(err, STOP_ERRORS):

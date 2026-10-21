@@ -147,3 +147,42 @@ def test_10_assumed_year_confirmed_when_year_in_same_text():
 def test_11_until_month_rule_in_extract_prompt():
     s = ai.extract_system()
     assert "last day of that month" in s and "keeps its real start_date" in s
+
+
+def test_12_truncated_extract_batch_is_split_and_retried():
+    """시험 D: 12건 묶음 응답이 출력 한도에서 잘려(JSON EOF) 24건이 추출되지 못했다 → 반으로 나눠 바로 다시 보낸다."""
+    entries = [Entry("s", f"https://x.org/{i}", f"Event {i}", "Saturday, November 7, 2026 at the library") for i in range(4)]
+
+    def reply(kw):
+        n = kw["messages"][0]["content"].count("https://x.org/")
+        if n > 2:
+            raise ValueError("1 validation error for ExtractBatch\n  Invalid JSON: EOF while parsing a string at line 1 column 23765")
+        return ai.ExtractBatch(results=[ai.EntryResult(index=j, relevant=True, reason="", events=[]) for j in range(n)])
+
+    c = FakeClient([reply] * 3)
+    cfg = {"extract": {"model": "claude-haiku-5-5", "effort": "low", "batch": 4, "max_tokens": 16000, "text_chars": 4500}}
+    u = ai.Usage({"claude-haiku-5-5": {"input": 0.1, "output": 0.5}})
+    out = ai.extract(c, cfg, entries, "2026-10-21", u)
+    assert sorted(out.results) == [0, 1, 2, 3] and not out.failed
+    assert u.by_model["claude-haiku-5-5"]["output_tokens"] >= 16000   # 잘린 응답의 사용량도 추정 기록
+
+
+def test_13_json_api_reads_following_pages():
+    """CU 행사 API 는 60일 행사가 100건을 넘는데 첫 페이지만 읽어 'Mornings at the Museum' 등이 빠졌다."""
+    pages = {1: [f"a{i}" for i in range(3)], 2: ["b0", "b1"], 3: []}
+
+    class C:
+        calls = []
+
+        def get(self, url):
+            self.calls.append(url)
+            n = int(dict(fetch.urllib.parse.parse_qsl(fetch.urllib.parse.urlsplit(url).query)).get("page", 1))
+            body = json.dumps({"events": [{"event": {"title": t, "localist_url": f"https://c.edu/{t}", "first_date": "2026-11-01"}} for t in pages.get(n, [])]})
+            return SimpleNamespace(content=body.encode(), status_code=200, headers={"content-type": "application/json"}, encoding="utf-8", url=url)
+
+    src = {"id": "cu", "type": "json", "url": "https://c.edu/api/2/events?days=60&pp=100",
+           "json": {"items": "events", "title": "event.title", "url": "event.localist_url", "date": "event.first_date", "pages": {"param": "page", "max": 5}}}
+    c = C()
+    r = fetch.fetch_source(src, client=c)
+    assert r.ok and [e.title for e in r.entries] == ["a0", "a1", "a2", "b0", "b1"]
+    assert len(c.calls) == 3 and "page=2" in c.calls[1] and "pp=100" in c.calls[1]

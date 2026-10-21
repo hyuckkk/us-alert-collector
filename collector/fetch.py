@@ -287,6 +287,12 @@ def gnews_url(query: str) -> str:
     return "https://news.google.com/rss/search?" + urllib.parse.urlencode({"q": query, "hl": "en-US", "gl": "US", "ceid": "US:en"})
 
 
+def set_param(url: str, key: str, value) -> str:
+    u = urllib.parse.urlsplit(url)
+    q = [(k, v) for k, v in urllib.parse.parse_qsl(u.query, keep_blank_values=True) if k != key] + [(key, str(value))]
+    return urllib.parse.urlunsplit(u._replace(query=urllib.parse.urlencode(q)))
+
+
 def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.Client | None = None) -> FetchResult:
     secrets = secrets or {}
     url = gnews_url(source["query"]) if source["type"] == "gnews" else source["url"]
@@ -323,6 +329,17 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
         elif t == "json":
             data = json.loads(text)
             res.entries = parse_json(data, sid, base, source.get("json"))
+            pg = (source.get("json") or {}).get("pages")
+            if pg and res.entries:  # 13차: 첫 페이지만 읽어 CU 행사 API(60일 300건+)의 뒷부분이 빠졌다
+                for n in range(int(pg.get("start", 1)) + 1, int(pg.get("start", 1)) + int(pg.get("max", 5))):
+                    nxt = client.get(set_param(url, pg["param"], n))
+                    more = parse_json(json.loads(nxt.content[:MAX_BYTES].decode(nxt.encoding or "utf-8", errors="replace")), sid, base,
+                                      source["json"]) if nxt.status_code < 400 else []
+                    seen = {e.url for e in res.entries}
+                    more = [e for e in more if e.url not in seen]
+                    if not more:
+                        break
+                    res.entries += more
             if source.get("json") and not res.entries and isinstance(data, dict) and _dig(data, source["json"]["items"]):
                 res.ok, res.error = False, "json mapping matched 0 items"
         elif t == "html":
