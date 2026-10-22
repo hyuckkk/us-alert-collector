@@ -600,7 +600,10 @@ export async function digest(env, opts = {}) {
     "FROM outbox o LEFT JOIN people p ON p.chat_id = o.chat_id WHERE o.kind = 'digest' AND o.status IN ('pending', 'failed', 'uncertain') GROUP BY o.chat_id, o.bot").bind(now));
   const r = { messages: 0, items: 0, waiting: 0, skipped: 0, expired: 0, failed: 0 };
   let calls = 0;
+  // 한 번 실행의 발송 수를 사람·봇마다 나눠 쓴다(한 사람의 많은 요약이 다른 사람 몫을 다 쓰지 않게). 남은 것은 다음 매시 실행에서
+  const perGroup = Math.max(3, Math.floor(DIGEST_CALLS / Math.max(groups.length, 1)));
   for (const g of groups) {
+    const groupStart = calls;
     const p = { ...defaultPerson(env, g.chat_id), ...(g.tz ? { tz: g.tz, quiet_start: g.quiet_start, quiet_end: g.quiet_end, digest_mode: g.digest_mode, digest_hour: g.digest_hour } : {}) };
     if ((ownerOnly(env) && !isOwner(env, g.chat_id)) || p.digest_mode === "off") {
       await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = ? WHERE kind = 'digest' AND status IN ('pending', 'failed', 'uncertain') AND chat_id = ? AND bot = ?")
@@ -639,7 +642,7 @@ export async function digest(env, opts = {}) {
     const singles = live.slice(0, DIGEST_SINGLES), rest = live.slice(DIGEST_SINGLES);
     let sentNow = 0;
     for (const x of singles) {
-      if (calls >= DIGEST_CALLS) break;
+      if (calls >= DIGEST_CALLS || calls - groupStart >= perGroup) break;
       const claimed = await claimRows(env, [x.id]);
       if (!claimed.has(x.id)) continue;
       const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest" }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });

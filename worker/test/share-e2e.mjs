@@ -48,7 +48,7 @@ try {
     const m = E.calls.length;
     await admin("/admin/digest", { force: true });
     const got = to(m, FRIEND);
-    assert.equal(got.length, 4, "주요 행사는 한 건씩");
+    assert.equal(got.length, 4, `주요 행사는 한 건씩: ${got.map((c) => c.payload.text.split("\n")[0]).join(" | ")}`);
     assert.ok(["dead0", "reg0", "reg1", "reg2"].every((k) => has(got, k)) && !has(got, "old0"));
   });
 
