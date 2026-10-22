@@ -38,6 +38,7 @@ import { BUILD, BOTS, botToken, isOwner, nowIso, json, tg, kvGet, kvSet, claimNo
 import { keyboard, rebuildKeyboard } from "./render.js";
 import * as pipeline from "./pipeline.js";
 import { Heartbeat, ensureHeartbeat, beatNow } from "./heartbeat.js";
+import { normCity, CITIES } from "./geo.js";
 
 export { Heartbeat };
 
@@ -173,10 +174,11 @@ const HELP_ALL = [
   "/settings — 내 설정 보기",
   "/quiet 22 7 — 알림 정지 시간(현지 22시~7시)",
   "/tz America/Denver — 내 시간대",
-  "/city Westminster — 이동시간 기준 도시(주소는 넣지 마세요)",
+  "/city Westminster 40 — 이 도시에서 40마일(약 65km) 넘는 일반 행사는 받지 않기. 국립공원 허가·추첨·예약·연례 행사는 거리와 상관없이 받음 (/city off 로 해제, 주소는 넣지 마세요)",
   "/from 2027-07-01 — 이 날짜 이후 행사만 받기 (/from off 로 해제)",
   "/digest daily|weekly|off — 요약 방식 · /digest 8 — 요약 받을 시각(현지)",
   "/myid — 내 텔레그램 ID",
+  "/stop — 이 봇 알림 그만 받기 (다시 받으려면 /start)",
 ].join("\n");
 const HELP_OWNER = [
   "소유자 명령",
@@ -207,10 +209,21 @@ async function personCommand(env, fromId, cmd, args) {
     return `시간대: ${args[0]}`;
   }
   if (cmd === "/city") {
-    const c = args.join(" ").slice(0, 40);
-    if (!c || /\d{3,}/.test(c)) return "도시 이름만 넣어 주세요(번지·우편번호 없이). 예) /city Westminster";
-    await set("city", c);
-    return `기준 도시: ${c}`;
+    if ((args[0] || "").toLowerCase() === "off") {
+      await env.DB.prepare("UPDATE people SET city = NULL, radius_mi = NULL, updated_at = ? WHERE chat_id = ?").bind(nowIso(), String(fromId)).run();
+      return "기준 도시 해제: 거리와 상관없이 모든 행사를 받습니다.";
+    }
+    const last = args[args.length - 1];
+    const radius = /^\d{1,3}$/.test(last || "") ? parseInt(last, 10) : 40;
+    const name = (/^\d{1,3}$/.test(last || "") ? args.slice(0, -1) : args).join(" ").slice(0, 40);
+    if (!name || /\d{3,}/.test(name)) return "도시 이름만 넣어 주세요(번지·우편번호 없이). 예) /city Westminster 40";
+    const c = normCity(name);
+    if (!c) {
+      return `'${name}' 은(는) 목록에 없는 도시라 거리 판정을 할 수 없습니다. 가까운 도시로 넣어 주세요.\n예) ${Object.keys(CITIES).slice(0, 24).map((k) => k.replace(/\b\w/g, (x) => x.toUpperCase())).join(", ")} …`;
+    }
+    if (radius < 5 || radius > 400) return "거리는 5~400마일 사이로 넣어 주세요. 예) /city Westminster 40";
+    await env.DB.prepare("UPDATE people SET city = ?, radius_mi = ?, updated_at = ? WHERE chat_id = ?").bind(c, radius, nowIso(), String(fromId)).run();
+    return `기준 도시: ${c.replace(/\b\w/g, (x) => x.toUpperCase())}, ${radius}마일(약 ${Math.round(radius * 1.609)}km) 안의 일반 행사만 받습니다.\n국립공원 허가·추첨·예약·연례 행사는 거리와 상관없이 보냅니다. 행사 위치를 알 수 없으면 거르지 않고 보냅니다.`;
   }
   if (cmd === "/digest") {
     const a = (args[0] || "").toLowerCase();
@@ -228,7 +241,7 @@ async function personCommand(env, fromId, cmd, args) {
   return [
     "내 설정",
     `시간대 ${p.tz} · 알림 정지 ${p.quiet_start}시~${p.quiet_end}시`,
-    `참가 가능 시작일 ${p.available_from || "지금"} · 기준 도시 ${p.city || "미설정"}`,
+    `참가 가능 시작일 ${p.available_from || "지금"} · 기준 도시 ${p.city ? `${p.city} ${p.radius_mi || "?"}마일 안` : "미설정(거리로 거르지 않음)"}`,
     `요약 ${p.digest_mode === "weekly" ? "매주 토요일" : p.digest_mode === "off" ? "받지 않음" : "매일"} ${p.digest_hour ?? 8}시 이후`,
   ].join("\n");
 }
@@ -246,6 +259,15 @@ async function handleMessage(env, bot, m) {
   if (cmd === "/start" || cmd === "/myid") {
     const owner = isOwner(env, fromId);
     const at = nowIso();
+    const prev = await env.DB.prepare("SELECT status FROM recipients WHERE chat_id = ? AND bot = ?").bind(fromId, bot).first();
+    if (cmd === "/start" && prev && prev.status === "stopped") {
+      // 본인이 /stop 했던 승인된 지인: 다시 승인받지 않고 바로 재개, 쌓인 행사 대신 2주 안 접수 정보만 한 번
+      await env.DB.prepare("UPDATE recipients SET status = 'active', updated_at = ? WHERE chat_id = ? AND bot = ?").bind(at, fromId, bot).run();
+      const w = await pipeline.welcomeQueue(env, fromId, bot);
+      await reply(`${BOTS[bot].label} 알림을 다시 받습니다.${w.queued ? ` 2주 안에 접수가 열리거나 마감되는 ${w.queued}건을 다음 요약으로 보내 드립니다.` : ""}`);
+      await notifyOwner(env, `[${BOTS[bot].label}] 수신 재개: ${[from.first_name, from.last_name].filter(Boolean).join(" ")} (ID ${fromId})`);
+      return;
+    }
     if (cmd === "/start") {
       await env.DB.prepare(
         "INSERT INTO recipients (chat_id, bot, name, username, status, joined_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) " +
@@ -263,6 +285,15 @@ async function handleMessage(env, bot, m) {
     if (cmd === "/start" && (await claimNotice(env, `join:${bot}:${fromId}`))) {
       await notifyOwner(env, `[${BOTS[bot].label}] 새 수신 신청: ${[from.first_name, from.last_name].filter(Boolean).join(" ")} ${from.username ? "@" + from.username : ""}\nID ${fromId}\n승인: ${BOTS[bot].handle} 에서 /approve ${fromId}${ownerOnly(env) ? "\n(현재 소유자 전용 모드라 승인해도 1차 검증 전에는 발송되지 않습니다)" : ""}`);
     }
+    return;
+  }
+  if (cmd === "/stop") {
+    const r = await env.DB.prepare("UPDATE recipients SET status = 'stopped', updated_at = ? WHERE chat_id = ? AND bot = ? AND status IN ('active', 'pending')").bind(nowIso(), fromId, bot).run();
+    if (r.meta.changes) {
+      await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = 'stopped' WHERE chat_id = ? AND bot = ? AND status IN ('pending', 'failed', 'uncertain')").bind(fromId, bot).run();
+      await reply(`${BOTS[bot].label} 알림을 더 보내지 않습니다. 다시 받으려면 /start 를 보내 주세요.`);
+      if (!isOwner(env, fromId)) await notifyOwner(env, `[${BOTS[bot].label}] 수신 중단: ${[from.first_name, from.last_name].filter(Boolean).join(" ")} (ID ${fromId})`);
+    } else await reply("이 봇 알림을 받고 있지 않습니다. 받으려면 /start 를 보내 주세요.");
     return;
   }
   const active = await isActiveRecipient(env, bot, fromId);
@@ -312,8 +343,11 @@ async function handleMessage(env, bot, m) {
     return;
   }
   if (cmd === "/approve" && args[0]) {
-    const r = await env.DB.prepare("UPDATE recipients SET status = 'active', updated_at = ? WHERE chat_id = ? AND bot = ?").bind(nowIso(), args[0], bot).run();
-    await reply(r.meta.changes ? `승인: ${args[0]} (${BOTS[bot].label})${ownerOnly(env) ? "\n현재 소유자 전용 모드라 1차 검증 후 전환 전까지는 발송되지 않습니다." : ""}` : `이 봇에 /start 한 기록이 없습니다: ${args[0]}`);
+    const r = await env.DB.prepare("UPDATE recipients SET status = 'active', updated_at = ? WHERE chat_id = ? AND bot = ? AND status <> 'active'").bind(nowIso(), args[0], bot).run();
+    if (!r.meta.changes) { await reply(`이 봇에 /start 한 기록이 없거나 이미 승인된 사람입니다: ${args[0]}`); return; }
+    const w = await pipeline.welcomeQueue(env, args[0], bot);
+    await reply(`승인: ${args[0]} (${BOTS[bot].label}) · 첫 요약 ${w.queued}건(2주 안 접수 시작·마감만)${ownerOnly(env) ? "\n현재 소유자 전용 모드라 지인 발송을 켜기 전까지는 발송되지 않습니다." : ""}`);
+    if (!ownerOnly(env)) await tg(env, bot, "sendMessage", { chat_id: args[0], text: `${BOTS[bot].label} 알림 신청이 승인되었습니다.\n\n${HELP_ALL}`, disable_web_page_preview: true });
     return;
   }
   await reply(HELP_OWNER);
@@ -392,6 +426,7 @@ async function setupWebhooks(env, origin) {
         { command: "start", description: "알림 받기 시작" },
         { command: "settings", description: "내 설정 보기" },
         { command: "help", description: "도움말" },
+        { command: "stop", description: "이 봇 알림 그만 받기" },
       ],
     });
     const me = await tg(env, bot, "getMe");

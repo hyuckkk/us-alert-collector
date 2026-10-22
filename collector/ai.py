@@ -174,7 +174,8 @@ Rules:
 - signup: fcfs = first come first served / limited spots; lottery = drawing; open = register any time; none = drop-in; unknown.
 - registration_opens: the date registration/sign-up starts, only if stated. registration_status: upcoming (not open yet), open, closed, soldout, waitlist, cancelled (event cancelled), postponed, unknown. "RSVP closed", "registration closed", "registration is full", "at capacity" or "no spots left" for this item → closed; "sold out" → soldout.
 - eligibility: Korean note on who may join (residents only, members only, age/grade limits, skill level) when stated; else null.
-- tags: 1-4 short lowercase English slugs (e.g. "swim", "camp", "hockey", "museum").
+- tags: 1-4 short lowercase English slugs (e.g. "swim", "camp", "hockey", "museum"). Always include these when they apply, because they keep far-away items for people who filter by distance: "permit", "lottery", "reservation", "timed-entry", "national-park", "state-park", "camping", "festival", "rare" (once-a-year or unusual experience).
+- city: the city or town where the event happens (e.g. "Westminster", "Estes Park"), from the address or venue; null if unknown or online.
 - annual: true if the text says it happens every year or is the Nth annual.
 - paid_work: true if participating means paid employment (hiring instructors, paid assistants).
 - status_note: Korean note only when the item says something about residency pricing, residency requirements, citizenship, ID or background checks.
