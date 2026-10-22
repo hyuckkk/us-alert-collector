@@ -8,7 +8,7 @@ on:
       action:
         description: "실행할 작업"
         type: choice
-        options: [test-send, clicks, status, setup, run-cron, dispatch, digest, report, baseline, baseline-start, baseline-stop]
+        options: [test-send, clicks, status, usage, setup, run-cron, dispatch, digest, report, baseline, baseline-start, baseline-stop]
         default: test-send
   push:
     branches: [main]
