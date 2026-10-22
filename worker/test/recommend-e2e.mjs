@@ -79,6 +79,16 @@ try {
     assert.equal(JSON.parse(sql("SELECT data FROM events WHERE event_key = 'council'")[0].data).title_ko, "시의회 회의");
   });
 
+  await step("대기열에 들어간 뒤 재평가로 '일반 제외'가 되면 보내기 직전에 걸러진다(요약·즉시 모두)", async () => {
+    await admin("/admin/enqueue", { events: [ev("late1", { rec_level: "push", category: "class", start_date: plus(5) }), ev("late2", { urgency: "now", rec_level: "push", category: "class", start_date: plus(6) })] });
+    sql("UPDATE outbox SET status = 'skipped' WHERE event_key LIKE 'many%' OR event_key = 'permit'");
+    await admin("/admin/recommend-update", { items: [{ event_key: "late1", rec_level: "none", category: "civic" }, { event_key: "late2", rec_level: "none", category: "civic" }] });
+    const n = E.calls.length;
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    await admin("/admin/digest", { force: true });
+    assert.ok(!has(to(n), "late1") && !has(to(n), "late2"), "재평가로 제외된 행사가 발송됨");
+  });
+
   await step("소유자 시험 발송(/admin/preview): 실제 저장된 '적극 알림' 행사를 실제 형식으로, 버튼이 그 행사에 연결", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/preview", { bot: "life", n: 3 });
