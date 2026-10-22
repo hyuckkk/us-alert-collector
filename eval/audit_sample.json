@@ -1,0 +1,1714 @@
+{
+ "summary": {
+  "audit_date": "2026-10-22",
+  "sampled": 40,
+  "audited": 22,
+  "skipped": 18,
+  "errors": 0,
+  "wrong_page": 2,
+  "not_public": 0,
+  "already_over": 0,
+  "by_field": {
+   "start_date": {
+    "match": 16,
+    "mismatch": 0,
+    "not_in_source": 6,
+    "missing_in_extract": 0
+   },
+   "end_date": {
+    "match": 7,
+    "mismatch": 0,
+    "not_in_source": 14,
+    "missing_in_extract": 1
+   },
+   "time_text": {
+    "match": 15,
+    "mismatch": 0,
+    "not_in_source": 5,
+    "missing_in_extract": 2
+   },
+   "cost_text": {
+    "match": 4,
+    "mismatch": 0,
+    "not_in_source": 16,
+    "missing_in_extract": 2
+   },
+   "age_text": {
+    "match": 7,
+    "mismatch": 2,
+    "not_in_source": 13,
+    "missing_in_extract": 0
+   },
+   "registration_opens": {
+    "match": 2,
+    "mismatch": 0,
+    "not_in_source": 20,
+    "missing_in_extract": 0
+   },
+   "deadline": {
+    "match": 1,
+    "mismatch": 0,
+    "not_in_source": 21,
+    "missing_in_extract": 0
+   },
+   "registration_status": {
+    "match": 3,
+    "mismatch": 1,
+    "not_in_source": 17,
+    "missing_in_extract": 1
+   }
+  },
+  "events_with_any_mismatch": 3,
+  "usd": 0.4897
+ },
+ "rows": [
+  {
+   "event_key": "e2b116ab4451903a",
+   "url": "https://apexprd.org/event/active-adult-friday-bingo-10/",
+   "source_id": "apex-prd-api",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "ef9758283b90ec60",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?page=5",
+   "source_id": "jeffco-library",
+   "title": "함께 춤추기 (Golden Library)",
+   "extracted": {
+    "start_date": "2026-10-26",
+    "end_date": null,
+    "time_text": "오전 10:15–10:45",
+    "cost_text": "무료",
+    "age_text": "유아·가족",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-26",
+     "evidence": "Monday, October 26 on October 26, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "10:15am – 10:45am",
+     "evidence": "10:15am – 10:45am"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "match",
+     "source_value": "Families; Babies, Toddlers, Preschoolers",
+     "evidence": "Families welcome. ... Babies ... Preschoolers ... Toddlers"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "mismatch",
+     "source_value": "Registration required, open (2 spots remaining)",
+     "evidence": "Registration required (2 spots remaining) Register for event"
+    }
+   ],
+   "note": "The page is a listing that includes Let's Dance at Golden Library on 2026-10-26. Registration is required and open, with 2 spots remaining. No cost is stated on the page."
+  },
+  {
+   "event_key": "e9f0b127dfda5047",
+   "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27390&sport_id=17",
+   "source_id": "afa-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e299a5a6a596ea09",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16014&sport_id=4",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e16ef4142c834357",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5472",
+   "source_id": "erie-rss",
+   "title": "개인 안전과 상황 인식 교육 (Erie 경찰서)",
+   "extracted": {
+    "start_date": "2026-11-04",
+    "end_date": null,
+    "time_text": "13:00-14:00",
+    "cost_text": "Free",
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": "2026-10-28",
+    "registration_status": "open"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-11-04",
+     "evidence": "Date: November 4, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "1:00 PM - 2:00 PM",
+     "evidence": "Time: 1:00 PM - 2:00 PM"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "match",
+     "source_value": "Free",
+     "evidence": "Cost: Free"
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "match",
+     "source_value": "2026-10-28",
+     "evidence": "Registration is required to reserve your spot, by October 28."
+    },
+    {
+     "field": "registration_status",
+     "verdict": "match",
+     "source_value": "Registration required by October 28",
+     "evidence": "Link: Register by October 28"
+    }
+   ],
+   "note": "Registration status 'open' is inferred from the register link and the deadline not having passed as of the audit date."
+  },
+  {
+   "event_key": "e4e64235803e85de",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16240&sport_id=10",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e5f48d66d24d8c08",
+   "url": "https://www.ifoothills.org/online-registration-dates/",
+   "source_id": "foothills-reg-dates",
+   "title": "청소년 축구 및 야구 겨울/봄 등록",
+   "extracted": {
+    "start_date": null,
+    "end_date": null,
+    "time_text": "12:00",
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": "2026-12-09",
+    "deadline": null,
+    "registration_status": "upcoming"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "Season dates are April – June 2027 (no exact day)"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "Season dates are April – June 2027 (no exact day)"
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "12 pm",
+     "evidence": "December 9, 2026 : Spring 2027 League – registration opens online at 12 pm"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "match",
+     "source_value": "2026-12-09",
+     "evidence": "December 9, 2026 : Spring 2027 League – registration opens online at 12 pm"
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "match",
+     "source_value": "upcoming",
+     "evidence": "December 9, 2026 : Spring 2027 League – registration opens"
+    }
+   ],
+   "note": "Page lists Spring 2027 League (not 'Winter/Spring') for soccer and baseball; registration opens Dec 9, 2026 at 12 pm."
+  },
+  {
+   "event_key": "e5d6e3bb6ea273e1",
+   "url": "https://butterflies.org/event/rainforest-yoga-callie-phelps-oct-25/",
+   "source_id": "butterfly-pavilion",
+   "title": "레인포레스트 요가(Kelsey Mueller)",
+   "extracted": {
+    "start_date": "2027-07-08",
+    "end_date": null,
+    "time_text": "18:45-19:45",
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "The page gives no date."
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "The page only says \"This hour-long class\"; it gives no clock time."
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "The page says \"Members enjoy discounted pricing\" but states no price."
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "missing_in_extract",
+     "source_value": "open",
+     "evidence": "Register online today to secure your spot... Register now!"
+    }
+   ],
+   "note": "This is a general program page for Rainforest Yoga with no specific date or time. The extracted 2027-07-08 date and 18:45-19:45 time are not supported by the page text."
+  },
+  {
+   "event_key": "e22255775672f1c2",
+   "url": "https://butterflies.org/event/family-flashlight-tours-escape-the-pavilion/",
+   "source_id": "butterfly-pavilion",
+   "title": "가족 야간 탐험: 세계 일주",
+   "extracted": {
+    "start_date": "2027-06-08",
+    "end_date": null,
+    "time_text": "17:30-19:00",
+    "cost_text": "비회원 성인 $10, 비회원 어린이 $5, 회원 성인 $8, 회원 어린이 $4",
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "JUN 8 (no year stated)",
+     "evidence": "JUN 8 Family Program 5:30 PM – 7:00 PM Family Night Adventure 06/08"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "5:30 PM – 7:00 PM",
+     "evidence": "JUN 8 Family Program 5:30 PM – 7:00 PM"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "match",
+     "source_value": "Non-member adults $10, kids $5; Member adults $8, kids $4",
+     "evidence": "Fee: Non-member adults: $10.00 Non-member kids: $5.00 Member adults: $8.00 Member kids: $4.00"
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "The page mainly covers a different October tour; this event appears only in the 'More Events' list. No year is given. The list may be stale from June 2026, which would already be over. The 2027 date is inferred from the audit date."
+  },
+  {
+   "event_key": "e318eca94622b467",
+   "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27180&sport_id=17",
+   "source_id": "afa-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e790db72217fa9b0",
+   "url": "https://apexprd.org/event/puzzle-hustle-team-relay-4/",
+   "source_id": "apex-prd-api",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e7407eeba61ab0f8",
+   "url": "https://lafayetteco.gov/SeeAndRespond",
+   "source_id": "lafayette-rss",
+   "title": "아트 온 더 스트리트 See & Respond 전시",
+   "extracted": {
+    "start_date": "2026-10-02",
+    "end_date": "2026-11-01",
+    "time_text": "10:00-17:00",
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-02",
+     "evidence": "on display at the Lafayette Public Library on the main floor, Oct. 2 - Nov. 1"
+    },
+    {
+     "field": "end_date",
+     "verdict": "match",
+     "source_value": "2026-11-01",
+     "evidence": "Oct. 2 - Nov. 1"
+    },
+    {
+     "field": "time_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "The page does not state any hours. The extracted time of 10:00-17:00 is unsupported."
+  },
+  {
+   "event_key": "ed58a3beb2707cf3",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6766",
+   "source_id": "brighton-rss",
+   "title": "여성 웨이트 입문 1단계 (4주)",
+   "extracted": {
+    "start_date": "2026-10-30",
+    "end_date": null,
+    "time_text": null,
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-30",
+     "evidence": "Date: October 30, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "missing_in_extract",
+     "source_value": "2026-11-20",
+     "evidence": "Fridays 12 - 1 p.m. Oct. 30 - Nov. 20"
+    },
+    {
+     "field": "time_text",
+     "verdict": "missing_in_extract",
+     "source_value": "Fridays 12 - 1 p.m.",
+     "evidence": "Time Details: Fridays 12 - 1 p.m."
+    },
+    {
+     "field": "cost_text",
+     "verdict": "missing_in_extract",
+     "source_value": "$40",
+     "evidence": "Cost: $40"
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "Weekly series on Fridays Oct 30 - Nov 20, 2026 at Brighton Recreation Center; extract omits end date, time and cost."
+  },
+  {
+   "event_key": "e1c17b9dcff2781f",
+   "url": "https://minesathletics.com/calendar.aspx?game_id=27098&sport_id=27",
+   "source_id": "mines-athletics-ics",
+   "title": "콜로라도 광산대 클럽 아이스하키 vs 공군사관학교",
+   "extracted": {
+    "start_date": "2026-10-30",
+    "end_date": null,
+    "time_text": null,
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": false,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "Calendar page shows no event listings; no game vs Air Force or date found."
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "The page is an empty composite calendar or navigation shell with no event entries. The Club Ice Hockey vs Air Force game cannot be found, so none of the extracted values can be verified."
+  },
+  {
+   "event_key": "e7cbc9a1a8e1139f",
+   "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27174&sport_id=17",
+   "source_id": "afa-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e110ff6affa9bc8f",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?types=6aa9cc928cf597003f9420e7",
+   "source_id": "jeffco-library",
+   "title": "회고록 쓰기 입문",
+   "extracted": {
+    "start_date": "2026-11-08",
+    "end_date": null,
+    "time_text": "오후 1시–3시",
+    "cost_text": null,
+    "age_text": "60세 이상",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-11-08",
+     "evidence": "Sunday, November 08 on November 8, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "1:00pm – 3:00pm",
+     "evidence": "1:00pm to 3:00pm"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "mismatch",
+     "source_value": "60+, Adults",
+     "evidence": "60+ Find more events in: 60+ Adults Find more events in: Adults"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "Page is a library event listing; first item is Intro to Memoir Writing at Columbine Library. Audience tags include both 60+ and Adults, so limiting to 60+ is too narrow. No cost or registration info given."
+  },
+  {
+   "event_key": "e107d185ee4b57df",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16245&sport_id=10",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e48dbf2356bab494",
+   "url": "https://lafayettepubliclibrary.libcal.com/calendar/main/CollectiveDayoftheDeadPopUpOct2026",
+   "source_id": "lafayette-rss",
+   "title": "더 컬렉티브 팝업 망자의 날 동화 시간",
+   "extracted": {
+    "start_date": "2026-10-23",
+    "end_date": "2026-10-23",
+    "time_text": "10:30-11:30",
+    "cost_text": null,
+    "age_text": "18세 미만",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-23",
+     "evidence": "Date: Friday, October 23, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "match",
+     "source_value": "2026-10-23",
+     "evidence": "Date: Friday, October 23, 2026"
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "10:30AM - 11:30AM",
+     "evidence": "Time: 10:30AM - 11:30AM"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "match",
+     "source_value": "Under 18",
+     "evidence": "Audience: Under 18"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": null
+  },
+  {
+   "event_key": "ec1944ac6024e775",
+   "url": "https://apexprd.org/event/stardust-sessions/",
+   "source_id": "apex-prd-api",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "ef657ca9caaa70d9",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5248",
+   "source_id": "erie-rss",
+   "title": "예술 강연 시리즈: Art Between the Lines (Erie)",
+   "extracted": {
+    "start_date": "2026-11-04",
+    "end_date": null,
+    "time_text": "18:00-19:00",
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-11-04",
+     "evidence": "Date: November 4, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "6:00 PM - 7:00 PM",
+     "evidence": "Time: 6:00 PM - 7:00 PM"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "missing_in_extract",
+     "source_value": "Free",
+     "evidence": "Cost: Free!"
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "Cost is stated as Free on the page but missing from the extract."
+  },
+  {
+   "event_key": "e984576bd9c8bf43",
+   "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24318&sport_id=4",
+   "source_id": "afa-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e6e33f68cc97abd2",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?audiences=5982266b3006ded52b40938d",
+   "source_id": "jeffco-library",
+   "title": "토들러 타임 (Edgewater 도서관)",
+   "extracted": {
+    "start_date": "2026-10-22",
+    "end_date": null,
+    "time_text": "오전 10시 15분–10시 45분",
+    "cost_text": null,
+    "age_text": "유아 (토들러)",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-22",
+     "evidence": "Toddler Time Thursday, October 22 on October 22, 2026 ... Edgewater Library"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "10:15am – 10:45am",
+     "evidence": "10:15am to 10:45am ... Toddler Time Edgewater Library"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "match",
+     "source_value": "Toddlers",
+     "evidence": "Find more events in: Toddlers"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "The page is a listing of library events. The Edgewater Library Toddler Time entry is on October 22, 2026, from 10:15–10:45am. That is the audit date, so the event is not counted as over."
+  },
+  {
+   "event_key": "ec10a28b551c4619",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?types=6aa9cc928cf597003f9420e7",
+   "source_id": "jeffco-library",
+   "title": "소설 쓰기: 씨앗에서 이야기까지",
+   "extracted": {
+    "start_date": "2026-11-08",
+    "end_date": null,
+    "time_text": "오후 2시–4시",
+    "cost_text": null,
+    "age_text": "성인",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-11-08",
+     "evidence": "Sunday, November 08 on November 8, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "2:00pm – 4:00pm",
+     "evidence": "2:00pm – 4:00pm"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "match",
+     "source_value": "60+, Adults",
+     "evidence": "60+ Find more events in: 60+ Adults"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "Page is a list; the event appears first on Nov 8 and recurs on Nov 15 ('View all dates')."
+  },
+  {
+   "event_key": "e1fecc96de91dd8c",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16258&sport_id=2",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e1bc5f3285b3c246",
+   "url": "https://apexprd.org/event/active-adult-friday-bingo-9/",
+   "source_id": "apex-prd-api",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e1f7975d60877ffe",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?audiences=5982266b3006ded52b409393",
+   "source_id": "jeffco-library",
+   "title": "인터캄비오 스페인어 회화 모임",
+   "extracted": {
+    "start_date": "2026-11-03",
+    "end_date": null,
+    "time_text": "오후 6시–7시",
+    "cost_text": "무료",
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "The Intercambio entry's date is cut off. 'Nov 3 ... 6:00pm – 7:00pm' belongs to the next listing, Novel November Writing Challenge."
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "The 6:00pm – 7:00pm time belongs to 'Novel November Writing Challenge', not Intercambio."
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "No cost is stated for Intercambio."
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "The page is a list of library events. The Intercambio entry (at Edgewater Neighborhood Church, an off-site event of Edgewater Library) appears truncated at the top, without its date or time. The extracted Nov 3, 6–7pm details appear to come from the adjacent Novel November Writing Challenge listing at Standley Lake Library."
+  },
+  {
+   "event_key": "e6f09d7f6f753c1e",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16283&sport_id=10",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e3075c8ea909079c",
+   "url": "https://www.westminsterco.gov/Calendar.aspx?EID=1291",
+   "source_id": "westminster-calendar",
+   "title": "시의회 회의 및 회의 후 모임",
+   "extracted": {
+    "start_date": "2026-10-26",
+    "end_date": "2026-10-26",
+    "time_text": "6:30 PM - 10:00 PM",
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-26",
+     "evidence": "Date: October 26, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "match",
+     "source_value": "2026-10-26",
+     "evidence": "Date: October 26, 2026"
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "6:30 PM - 10:00 PM",
+     "evidence": "Time: 6:30 PM - 10:00 PM"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "Public city council meeting; community encouraged to attend in person or listen online."
+  },
+  {
+   "event_key": "ed8a77df17cbb91c",
+   "url": "https://www.chautauqua.com/event/winterfest-2026/",
+   "source_id": "chautauqua",
+   "title": "Jeff & Paige 자연·홀리데이 어린이 콘서트 및 트리 점등",
+   "extracted": {
+    "start_date": "2026-12-11",
+    "end_date": "2026-12-11",
+    "time_text": "오후 4시",
+    "cost_text": "$39.75 (회원 $36.75)",
+    "age_text": "3세 이상",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-12-11",
+     "evidence": "Friday, December 11 | 4:00 PM"
+    },
+    {
+     "field": "end_date",
+     "verdict": "match",
+     "source_value": "2026-12-11",
+     "evidence": "Friday, December 11 | 4:00 PM"
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "4:00 PM",
+     "evidence": "Friday, December 11 | 4:00 PM"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "match",
+     "source_value": "Regular (ages 3+): $39.75 | Member: $36.75",
+     "evidence": "Pricing: Regular (ages 3+): $39.75 | Member: $36.75"
+    },
+    {
+     "field": "age_text",
+     "verdict": "match",
+     "source_value": "ages 3+",
+     "evidence": "Regular (ages 3+): $39.75"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "Page links 'Jeff & Paige Tickets' but states no explicit status"
+    }
+   ],
+   "note": "Ticketed event on the Chautauqua Winterfest page; year inferred as 2026 (Dec 11, 2026 is a Friday; lodging code WFEST26)."
+  },
+  {
+   "event_key": "ea9bbc1b1cce6747",
+   "url": "https://greenwoodvillage.com/Calendar.aspx?EID=6333",
+   "source_id": "greenwood-village-rss",
+   "title": "빌리지 그린스 펌프 트랙 개장 행사",
+   "extracted": {
+    "start_date": "2026-10-27",
+    "end_date": "2026-10-27",
+    "time_text": "18:00",
+    "cost_text": "무료 다과 제공",
+    "age_text": null,
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-27",
+     "evidence": "Date: October 27, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "match",
+     "source_value": "2026-10-27",
+     "evidence": "Tuesday, October 27, 2026"
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "6:00 PM",
+     "evidence": "Time: 6:00 PM"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "match",
+     "source_value": "complimentary refreshments",
+     "evidence": "Enjoy complimentary refreshments"
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "Only general description: 'riders of all ages and abilities' refers to the track, not an event age requirement"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "No registration information on page"
+    }
+   ],
+   "note": "Public grand opening event at Village Greens Park on 2026-10-27 at 6 PM, after the audit date. The page mentions complimentary refreshments but does not explicitly state an admission cost."
+  },
+  {
+   "event_key": "e2939729c4eecb4b",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?types=69badee467801235ed72e57d",
+   "source_id": "jeffco-library",
+   "title": "가족 계보 찾기 상담 (Mountain Genealogists Society)",
+   "extracted": {
+    "start_date": "2026-10-30",
+    "end_date": "2026-10-30",
+    "time_text": "오후 12:30–3:00",
+    "cost_text": null,
+    "age_text": "성인",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-30",
+     "evidence": "Friday, October 30 on October 30, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "match",
+     "source_value": "2026-10-30",
+     "evidence": "on October 30, 2026 , 12:30pm – 3:00pm"
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "12:30pm – 3:00pm",
+     "evidence": "12:30pm to 3:00pm"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "mismatch",
+     "source_value": "60+",
+     "evidence": "60+ Find more events in: 60+"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "Page lists the event under the visible category '60+' (one more category is hidden); 'Adults' is not visibly stated. Event is open: 'Members and the public meet informally'."
+  },
+  {
+   "event_key": "e79cdd361ce2b7c2",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16244&sport_id=10",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "ed42166175716b48",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?types=69badee467801235ed72e57d",
+   "source_id": "jeffco-library",
+   "title": "생애 말기 계획 패널 토론",
+   "extracted": {
+    "start_date": "2026-10-23",
+    "end_date": "2026-10-23",
+    "time_text": "오후 1:00–2:00",
+    "cost_text": null,
+    "age_text": "성인",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-10-23",
+     "evidence": "Friday, October 23 on October 23, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "match",
+     "source_value": "2026-10-23",
+     "evidence": "on October 23, 2026 , 1:00pm – 2:00pm"
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "1:00pm – 2:00pm",
+     "evidence": "1:00pm to 2:00pm"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "match",
+     "source_value": "60+, Adults",
+     "evidence": "60+ Find more events in: 60+ Adults Find more events in: Adults"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "Event is first entry on a library events list page; categories list both 60+ and Adults."
+  },
+  {
+   "event_key": "ef4b6628b8b7557c",
+   "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27062&sport_id=17",
+   "source_id": "afa-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "eb0870b877248c57",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events?audiences=5982266b3006ded52b409393",
+   "source_id": "jeffco-library",
+   "title": "스크래블 소셜",
+   "extracted": {
+    "start_date": "2026-11-05",
+    "end_date": null,
+    "time_text": "오전 10시–낮 12시",
+    "cost_text": "무료",
+    "age_text": "60세 이상",
+    "registration_opens": null,
+    "deadline": null,
+    "registration_status": "unknown"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "match",
+     "source_value": "2026-11-05",
+     "evidence": "Thursday, November 05 on November 5, 2026"
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "match",
+     "source_value": "10:00am – 12:00pm",
+     "evidence": "10:00am to 12:00pm"
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "Page does not mention cost or that the event is free"
+    },
+    {
+     "field": "age_text",
+     "verdict": "match",
+     "source_value": "60+",
+     "evidence": "60+ Find more events in: 60+"
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "No registration information on page"
+    }
+   ],
+   "note": "Event at Conifer Library (Jefferson County Public Library). The page tags it as both 60+ and Adults. It does not state the cost."
+  },
+  {
+   "event_key": "e59e408c5a7620a9",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16260&sport_id=2",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "eb2dd96153b3f8f8",
+   "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27176&sport_id=17",
+   "source_id": "afa-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e73f48a69ab1546f",
+   "url": "https://www.thorntonco.gov/parks-recreation/activity-registration-information",
+   "source_id": "thornton-registration",
+   "title": "액티브 어덜트 하이킹 3~4월 등록",
+   "extracted": {
+    "start_date": null,
+    "end_date": null,
+    "time_text": null,
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": "2027-02-02",
+    "deadline": null,
+    "registration_status": "upcoming"
+   },
+   "page_is_this_event": true,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "missing_in_extract",
+     "source_value": "Residents 8:30 a.m. / Nonresidents 9:30 a.m.",
+     "evidence": "Active Adult Hikes Residents 8:30 a.m./Nonresidents 9:30 a.m."
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "match",
+     "source_value": "2027-02-02",
+     "evidence": "March and April Hike Registration Tuesday, February 2, 2027"
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "match",
+     "source_value": "upcoming",
+     "evidence": "March and April Hike Registration Tuesday, February 2, 2027"
+    }
+   ],
+   "note": "The registration opening time is split by residency: residents at 8:30 a.m. and nonresidents at 9:30 a.m. The page does not state hike dates, cost or a deadline."
+  },
+  {
+   "event_key": "e730f4a6c9638222",
+   "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16289&sport_id=10",
+   "source_id": "du-athletics-ics",
+   "skipped": "page-unavailable"
+  },
+  {
+   "event_key": "e525a9ce1b3e4b25",
+   "url": "https://www.ifoothills.org/online-registration-dates/",
+   "source_id": "foothills-reg-dates",
+   "title": "겨울방학 캠프 등록",
+   "extracted": {
+    "start_date": null,
+    "end_date": null,
+    "time_text": "08:00",
+    "cost_text": null,
+    "age_text": null,
+    "registration_opens": "2026-11-04",
+    "deadline": null,
+    "registration_status": "upcoming"
+   },
+   "page_is_this_event": false,
+   "attendable_public": true,
+   "already_over": false,
+   "checks": [
+    {
+     "field": "start_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "end_date",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "time_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "Only '8 am' appears for Before & After School Care (July 14, 2027), not Winter Break Camp."
+    },
+    {
+     "field": "cost_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "age_text",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_opens",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": "No November 4 date or Winter Break Camp entry in the visible text."
+    },
+    {
+     "field": "deadline",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    },
+    {
+     "field": "registration_status",
+     "verdict": "not_in_source",
+     "source_value": null,
+     "evidence": null
+    }
+   ],
+   "note": "The page text is truncated. It is a registration-dates list (preschool, before/after school care, youth sports) and does not mention a Winter Break Camp. None of the extracted values can be verified."
+  }
+ ]
+}
