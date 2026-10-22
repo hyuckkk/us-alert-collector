@@ -168,3 +168,25 @@ class FakeAPI(WorkerAPI):
 
     def run_log(self, body):
         self._r("run_log", body)
+
+
+import pytest  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def default_recommendation(request, monkeypatch):
+    """추천 판정(큰 모델)은 따로 시험한다(test_recommend.py). 다른 시험에서는 모든 후보를 '적극 알림'으로 판정한 것으로 둔다."""
+    if request.node.get_closest_marker("real_recommend"):
+        return
+
+    def fake(client, cfg, items, today, usage):
+        out = ai.RecommendOutcome()
+        for i, (e, _) in enumerate(items):
+            out.recs[i] = ai.Recommendation(index=i, level="push", bot=e.get("bot") or "family", category="other", score=50,
+                                            title_ko=e.get("title_ko") or e.get("title") or "", summary_ko="", highlights=[], reason="")
+        return out
+    monkeypatch.setattr(ai, "recommend", fake)
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "real_recommend: 추천 판정 단계를 가짜로 바꾸지 않고 시험")

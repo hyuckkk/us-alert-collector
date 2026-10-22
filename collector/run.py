@@ -456,6 +456,22 @@ class Run:
                 evs, dup = identity.dedupe(evs)
                 if dup:
                     self.report["dropped"]["duplicate"] = dup
+                # 추천 판정(큰 모델): 모든 발송 후보에 적용. 판정이 빠지거나 실패한 항목은 보내지 않고 다음 실행에서 다시
+                if evs:
+                    try:
+                        ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in evs],
+                                          self.today.isoformat(), self.usage)
+                    except Exception as e:  # noqa: BLE001
+                        ro = ai.RecommendOutcome(missing={j: type(e).__name__ for j in range(len(evs))})
+                    if ro.missing:
+                        self.alerts.append(f"추천 판정 누락 {len(ro.missing)}건 — 보내지 않고 다음 실행에서 다시")
+                    self.m["recommend_missing"] = len(ro.missing)
+                    held |= {evs[j]["_entry_index"] for j in ro.missing}
+                    for j, r in ro.recs.items():
+                        ai.apply_recommendation(evs[j], r)
+                    evs = [ev for ev in evs if ev["_entry_index"] not in held]
+                    for lv in ("push", "interest", "none"):
+                        self.m[f"rec_{lv}"] = self.m.get(f"rec_{lv}", 0) + sum(1 for ev in evs if ev.get("rec_level") == lv)
                 for ev in evs:
                     sid = ev.get("source_id")
                     if sid in self.source_rows:
@@ -469,7 +485,7 @@ class Run:
                     if i in out.failed:
                         results.append({"key": r["key"], "status": "retry", "error": out.failed[i]})
                     elif i in held:
-                        results.append({"key": r["key"], "status": "retry", "error": "judge-failed"})
+                        results.append({"key": r["key"], "status": "retry", "error": "judge-or-recommend-failed"})
                     else:
                         mine = [rules.for_worker(ev) for ev in by_entry.get(i, [])]
                         if mine:

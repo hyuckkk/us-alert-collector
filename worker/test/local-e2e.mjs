@@ -62,7 +62,7 @@ try {
     assert.deepEqual(sends.map((s) => s.token).sort(), ["tFAMILY", "tKIDS", "tLIFE"]);
     for (const s of sends) {
       assert.equal(String(s.payload.chat_id), OWNER);
-      assert.equal(s.payload.reply_markup.inline_keyboard[0].length, 3);
+      assert.deepEqual(s.payload.reply_markup.inline_keyboard[0].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]); // '이런 종류 그만'은 관심없음 뒤에만
     }
     sent = r.results.map((x, i) => ({ ...x, data: sends[i].payload.reply_markup.inline_keyboard[0] }));
   });
@@ -76,7 +76,7 @@ try {
     const ans = since(n).find((c) => c.method === "answerCallbackQuery");
     assert.match(ans.payload.text, /D1 기록 #1/);
     const edit = since(n).find((c) => c.method === "editMessageReplyMarkup");
-    assert.equal(edit.payload.reply_markup.inline_keyboard[0][0].text, "✅ 확인 ✓");
+    assert.equal(edit.payload.reply_markup.inline_keyboard[0][0].text, "✅ 확인함");
     assert.match(edit.payload.reply_markup.inline_keyboard[0][0].callback_data, /^unack:/);
   });
 
@@ -95,15 +95,17 @@ try {
     const row = edit.payload.reply_markup.inline_keyboard[0];
     assert.equal(row[0].text, "✅ 확인");
     assert.equal(row[1].text, "🚫 관심없음 ✓");
+    assert.equal(row[2].text, "🔕 이런 종류 그만", "관심없음을 누른 뒤에만 '이런 종류 그만'이 나타남");
+    life().data = row;
   });
 
-  await step("[🔕 이 태그 그만] → 같은 태그의 다른 봇 메시지에도 반영", async () => {
+  await step("[🔕 이런 종류 그만] → 같은 종류의 다른 봇 메시지에도 반영", async () => {
     await hook("life", cb(OWNER, life().data[2].callback_data, life().message_id));
     const kids = sent.find((s) => s.bot === "kids");
     const n = calls.length;
     await hook("kids", cb(OWNER, kids.data[0].callback_data, kids.message_id));
     const edit = since(n).find((c) => c.method === "editMessageReplyMarkup");
-    assert.equal(edit.payload.reply_markup.inline_keyboard[0][2].text, "🔕 이 태그 그만 ✓");
+    assert.equal(edit.payload.reply_markup.inline_keyboard[0][2].text, "🔕 이런 종류 그만 ✓");
   });
 
   await step("승인 안 된 사람의 버튼 → 거부, 기록 없음", async () => {

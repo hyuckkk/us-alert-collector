@@ -9,7 +9,7 @@ const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Test Org", start_date: "2027-07-10", end_date: null,
   time_text: "10:00", location: "Westminster Library", city: "Westminster", age_text: "6-10세", english: ["초보 가능"], cost_text: "$20",
   price_level: "보통", signup: "fcfs", deadline: null, status_note: null, url: `https://example.org/${key}`, checked_at: "2026-10-20T00:00:00Z",
-  urgency: "weekly", tags: ["art"], annual: false, source_id: "test", ...over,
+  urgency: "weekly", tags: ["art"], annual: false, source_id: "test", rec_level: "push", ...over,
 });
 
 // ---------------------------------------------------------------- A. 모든 사람에게 보내는 모드(DELIVERY_MODE=all)
@@ -61,10 +61,11 @@ try {
     assert.equal(r.sent, 3, JSON.stringify(r));
     const s = sends(n);
     const friendE1 = s.find((x) => String(x.payload.chat_id) === FRIEND);
-    // 읽기 쉬운 형식: 제목 굵게, 날짜는 한국식, 비어 있는 항목은 줄째로 빼고, 긴 원문 주소는 '바로가기' 글자에 숨김
-    assert.equal(friendE1.payload.text, '🆕 <b>행사 e1</b>\nTest Org\n\n📅 11월 10일(화) 10:00\n📍 Westminster Library\n💲 $20   👤 6-10세\n📝 선착순\n🗣 초보 가능\n\n<a href="https://example.org/e1">🔗 바로가기</a>');
+    // 행사 1건 = 1통: 제목 굵게, 특징(선착순), 한국식 날짜, 확인된 항목만, 본문에 주소 없음 → [🔗 공식 안내] 버튼
+    assert.equal(friendE1.payload.text, '🆕 <b>행사 e1</b>\n🏃 선착순\n\n📅 11월 10일(화) 10:00\n📍 Westminster Library · Test Org\n💲 $20   👤 6-10세');
+    assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[0], [{ text: "🔗 공식 안내", url: "https://example.org/e1" }]);
     assert.equal(friendE1.payload.parse_mode, "HTML");
-    assert.equal(friendE1.payload.reply_markup.inline_keyboard[0].length, 3);
+    assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[1].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
     assert.ok(s.some((x) => String(x.payload.chat_id) === OWNER && /^📆 예고 <b>행사 e2<\/b>/.test(x.payload.text)));
     assert.ok(s.some((x) => x.token === "tLIFE" && /행사 e4/.test(x.payload.text)));
   });
@@ -91,26 +92,32 @@ try {
     assert.match(s[0].payload.text, /바뀐 점: 비용 \$20 → \$25/);
   });
 
-  await step("요약(force): 주요 행사는 한 건씩(버튼 3개), 원문 주소는 바로가기에 숨김", async () => {
+  await step("요약(force): 행사마다 한 통, 본문에 주소 없음, [🔗 공식 안내] + [✅ 확인][🚫 관심없음]", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
     const f = sends(n, FRIEND);
     assert.equal(f.length, 2, JSON.stringify(r));
     for (const m of f) {
       assert.match(m.payload.text, /^🆕 <b>행사 e[23]<\/b>/);
-      assert.match(m.payload.text, /<a href="https:\/\/example.org\/e[23]">🔗 바로가기<\/a>$/);
-      assert.ok(!/\n\s*https?:\/\//.test(m.payload.text), "주소가 본문에 그대로 보임");
-      assert.deepEqual(m.payload.reply_markup.inline_keyboard.map((row) => row.length), [3]);
+      assert.ok(!/https?:\/\//.test(m.payload.text), "본문에 주소가 보임");
+      const kb = m.payload.reply_markup.inline_keyboard;
+      assert.match(kb[0][0].url, /^https:\/\/example.org\/e[23]$/);
+      const key = kb[0][0].url.split("/").pop(); // 시험 행사는 주소 끝이 행사 키와 같다
+      assert.ok(m.payload.text.includes(`행사 ${key}`), "공식 안내 버튼이 다른 행사로 연결됨");
+      assert.deepEqual(kb[1].map((b) => b.callback_data), [`ack:${key}`, `mute:${key}`], "확인 버튼이 다른 행사로 연결됨");
+      assert.deepEqual(kb[1].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
     }
     E.digestMarkup = f[1].payload.reply_markup;
   });
 
-  await step("요약 행사의 ✅ → 그 메시지의 버튼만 바뀜", async () => {
-    const key = E.digestMarkup.inline_keyboard[0][0].callback_data.split(":")[1];
+  await step("요약 행사의 ✅ → 그 메시지의 버튼만 바뀌고 공식 안내 버튼은 그대로", async () => {
+    const key = E.digestMarkup.inline_keyboard[1][0].callback_data.split(":")[1];
     const n = E.calls.length;
     await hook("kids", E.cb(FRIEND, `ack:${key}`, 777, E.digestMarkup));
     const edit = since(n).find((c) => c.method === "editMessageReplyMarkup");
-    assert.deepEqual(edit.payload.reply_markup.inline_keyboard.map((row) => row.map((b) => b.text)), [["✅ 확인 ✓", "🚫 관심없음", "🔕 이 태그 그만"]]);
+    const kb = edit.payload.reply_markup.inline_keyboard;
+    assert.equal(kb[0][0].text, "🔗 공식 안내");
+    assert.deepEqual(kb[1].map((b) => b.text), ["✅ 확인함", "🚫 관심없음"]);
   });
 
   await step("정지 시간대: 지금 시각이 정지 구간이면 미뤘다가, 풀리면 발송", async () => {

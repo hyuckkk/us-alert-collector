@@ -1,18 +1,14 @@
-// 알림 본문과 버튼. 텔레그램 HTML 모드로 보낸다(제목 굵게, 긴 원문 주소는 '바로가기' 글자에 숨김).
+// 알림 본문과 버튼. 텔레그램 HTML 모드(제목 굵게). 원문 주소는 본문에 쓰지 않고 [🔗 공식 안내] 버튼으로 연결한다.
 
 const U = "미확인";
 const SIGNUP = { fcfs: "선착순", lottery: "추첨", open: "상시 접수", none: "신청 불필요", unknown: null };
 const REG = { upcoming: "접수 예정", open: "접수 중", closed: "접수 마감", soldout: "매진", waitlist: "대기자 접수", cancelled: "행사 취소", postponed: "연기" };
 const WD = ["일", "월", "화", "수", "목", "금", "토"];
-// 텔레그램 한 통 최대 4,096자. 태그·여유를 빼고 이 길이를 넘지 않게 나눈다(일간 요약이 잘려 뒷부분 행사가 사라지던 문제)
-export const MAX_TEXT = 3500;
 
 // 텔레그램 HTML 모드: 본문의 & < > 는 반드시 바꿔야 한다
 export function esc(x) { return String(x ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 // 항목 하나가 아무리 길어도 한 통(4,096자)을 넘지 않게 자른다(HTML 태그 중간이 잘리면 발송 자체가 거부됨)
 function cut(x, n) { const t = String(x ?? ""); return t.length > n ? t.slice(0, n - 1) + "…" : t; }
-function attr(x) { return esc(x).replace(/"/g, "&quot;"); }
-function link(url, text) { return /^https?:\/\//.test(url || "") ? `<a href="${attr(url)}">${esc(text)}</a>` : esc(text); }
 
 // 2026-10-27 → 10월 27일(화). 올해가 아니면 연도를 붙인다
 export function krDate(ymd, thisYear = new Date().getUTCFullYear()) {
@@ -29,86 +25,83 @@ function dateRange(d) {
 function regLine(d) {
   return [d.registration_opens ? `접수 시작 ${krDate(d.registration_opens)}` : null, d.deadline ? `마감 ${krDate(d.deadline)}` : null,
     REG[d.registration_status] && !(d.registration_opens && d.registration_status === "upcoming") ? REG[d.registration_status] : null,
-    SIGNUP[d.signup] || null].filter(Boolean).join(" · ");
+    d.signup === "fcfs" || d.signup === "lottery" ? null : SIGNUP[d.signup] || null].filter(Boolean).join(" · "); // 선착순·추첨은 특징 표시에 이미 나옴
 }
 
-// 한 건짜리 알림(즉시·변경·예고·요약의 주요 행사). 비어 있는 항목은 줄째로 뺀다. 원문 주소는 '바로가기' 글자에 숨긴다.
-// kind: now | season | digest. opts: {version, note}
+// 특징 표시(눈에 띄게 제목 아래). 추천 판정이 고른 것 + 데이터에서 확실히 알 수 있는 것
+const HL_ICON = { "선착순": "🏃", "무료": "🆓", "예약 필요": "📌", "추첨": "🎲", "접수 예정": "🗓", "마감 임박": "⏳", "특별 체험": "✨", "허가 필요": "🎫", "연례 행사": "🎉" };
+export function badges(d, today = new Date().toISOString().slice(0, 10)) {
+  const set = new Set(Array.isArray(d.highlights) ? d.highlights : []);
+  if (d.signup === "fcfs") set.add("선착순");
+  if (d.signup === "lottery") set.add("추첨");
+  if (/^\s*(free|무료)/i.test(d.cost_text || "")) set.add("무료");
+  if (d.registration_opens && d.registration_opens > today) set.add("접수 예정");
+  if (d.deadline && d.deadline >= today && Date.parse(d.deadline) - Date.parse(today) <= 3 * 86400000) set.add("마감 임박");
+  if (d.annual) set.add("연례 행사");
+  const order = ["마감 임박", "선착순", "추첨", "접수 예정", "예약 필요", "허가 필요", "무료", "특별 체험", "연례 행사"];
+  return order.filter((x) => set.has(x)).slice(0, 4).map((x) => `${HL_ICON[x]} ${x}`).join("  ");
+}
+
+// 한 건짜리 알림. 본문에는 원문 주소를 넣지 않는다(메시지 아래 [🔗 공식 안내] 버튼으로 연결).
+// 확인된 정보만 짧게: 특징 → 한두 줄 설명 → 날짜·시간 → 장소 → 비용·대상 → 신청. 없는 항목은 줄째로 뺀다.
+// kind: now | season | digest | more. opts: {version, note}
 export function renderEvent(d, opts = {}) {
   const note = opts.note || "";
   const head = d.registration_status === "cancelled" ? "❌ 취소" : note.startsWith("⏰") ? "⏰" : opts.version > 1 ? "🔄 변경" : opts.kind === "season" ? "📆 예고" : "🆕";
-  const when = [dateRange(d), d.time_text].filter(Boolean).join(" ");
-  const money = [d.cost_text ? `💲 ${esc(cut(d.cost_text, 200))}` : null, d.age_text ? `👤 ${esc(cut(d.age_text, 100))}` : null].filter(Boolean).join("   ");
-  const lines = [`${head} <b>${esc(cut(d.title_ko || d.title, 200))}</b>`];
+  const lines = [`${head} <b>${esc(cut(d.title_ko || d.title, 120))}</b>`];
   if (note.startsWith("⏰")) lines.push(`<b>${esc(cut(note.slice(2).trim(), 200))}</b>`);
-  else if (opts.version > 1 && note) lines.push(`바뀐 점: ${esc(cut(note, 400))}`);
+  else if (opts.version > 1 && note) lines.push(`바뀐 점: ${esc(cut(note, 300))}`);
   if (opts.kind === "season" && d.year_label) lines.push(esc(d.year_label));
-  if (d.org) lines.push(esc(cut(d.org, 150)));
+  const b = badges(d);
+  if (b) lines.push(b);
+  if (d.summary_ko) lines.push(esc(cut(d.summary_ko, 240)));
   lines.push("");
-  if (when) lines.push(`📅 ${esc(cut(when, 200))}`);
-  if (d.location) lines.push(`📍 ${esc(cut(d.location, 200))}`);
+  const when = [dateRange(d), d.time_text].filter(Boolean).join(" ");
+  if (when) lines.push(`📅 ${esc(cut(when, 160))}`);
+  const where = [d.location, d.org && !String(d.location || "").includes(d.org) ? d.org : null].filter(Boolean).join(" · ");
+  if (where) lines.push(`📍 ${esc(cut(where, 160))}`);
+  const money = [d.cost_text ? `💲 ${esc(cut(d.cost_text, 120))}` : null, d.age_text ? `👤 ${esc(cut(d.age_text, 80))}` : null].filter(Boolean).join("   ");
   if (money) lines.push(money);
   const reg = regLine(d);
-  if (reg) lines.push(`📝 ${esc(reg)}`);
+  if (reg) lines.push(`📝 ${esc(cut(reg, 200))}`);
   const cond = [d.eligibility, d.status_note].filter(Boolean).join(" · ");
-  if (cond) lines.push(`🛂 ${esc(cut(cond, 500))}`);
-  if (Array.isArray(d.english) && d.english.length) lines.push(`🗣 ${esc(d.english.join(" · "))}`);
-  lines.push("");
-  lines.push(`${link(cut(d.url, 1500), "🔗 바로가기")}`);
+  if (cond) lines.push(`🛂 ${esc(cut(cond, 300))}`);
+  while (lines[lines.length - 1] === "") lines.pop();
   return lines.join("\n");
 }
 
-// 요약의 나머지 행사: 제목(누르면 원문)·날짜·비용·접수만 한 줄씩. 버튼 없음.
-// 글자 수 기준으로 여러 통으로 나누고, 각 통에 실제로 들어간 행사 목록을 함께 돌려준다(그 행사만 발송 완료로 기록).
-export function renderList(botLabel, rows, o = {}) {
-  const { mode = "daily", shownBefore = 0 } = o;
-  const items = rows.map((r) => {
-    const d = r.data;
-    const title = String(d.title_ko || d.title || "").slice(0, 120);
-    const meta = [dateRange(d), d.cost_text ? String(d.cost_text).slice(0, 60) : null,
-      d.registration_opens ? `접수 시작 ${krDate(d.registration_opens)}` : null].filter(Boolean).join(" · ");
-    return { row: r, text: `• ${link(cut(d.url, 1500), title)}${meta ? `\n   ${esc(meta)}` : ""}` };
-  });
-  const pages = [];
-  let cur = [], len = 0;
-  for (const it of items) {
-    if (cur.length && len + it.text.length + 1 > MAX_TEXT - 200) { pages.push(cur); cur = []; len = 0; }
-    cur.push(it); len += it.text.length + 1;
-  }
-  if (cur.length) pages.push(cur);
-  const kind = mode === "weekly" ? "이번 주" : "오늘";
-  return pages.map((pg, i) => {
-    const head = `🗓 ${esc(botLabel)} · ${kind}의 다른 새 소식 ${pages.length > 1 ? `(${i + 1}/${pages.length}) ` : ""}${rows.length}건` +
-      (shownBefore ? `\n위의 ${shownBefore}건 말고, 제목을 누르면 원문이 열립니다.` : "\n제목을 누르면 원문이 열립니다.");
-    return { text: [head, "", ...pg.map((x) => x.text)].join("\n"), rows: pg.map((x) => x.row) };
-  });
+// 요약은 목록이 아니라 짧은 개수 안내 한 통(버튼·주소 없음). 상세는 각각의 메시지 또는 /more
+export function renderCount(botLabel, o) {
+  const { total, sent, held } = o;
+  const lines = [`🗓 오늘 새로 찾은 ${esc(botLabel)} 소식 ${total}건`];
+  if (sent) lines.push(`중요한 ${sent}건을 따로 보냈습니다.`);
+  if (held) lines.push(`나머지 ${held}건은 /more 를 보내면 중요한 순서로 5건씩 보여 드립니다.`);
+  return lines.join("\n");
 }
 
 // ---------------------------------------------------------------- 버튼
-// 한 건짜리 알림: [확인][관심없음][이 태그 그만]. 요약(여러 건): 줄마다 [n ✅][n 🚫].
-export function fullRow(itemKey, st) {
-  const b = (on, text, onAction, offAction) => ({ text: on ? `${text} ✓` : text, callback_data: `${on ? offAction : onAction}:${itemKey}` });
-  return [
-    b(st.state === "ACKNOWLEDGED", "✅ 확인", "ack", "unack"),
-    b(st.state === "MUTED", "🚫 관심없음", "mute", "unmute"),
-    b(st.tagMuted, "🔕 이 태그 그만", "tag", "untag"),
-  ];
-}
-export function compactRow(itemKey, st, label) {
+// [🔗 공식 안내](원문으로 바로 열림) / [✅ 확인] [🚫 관심없음]. '이런 종류 그만'은 관심없음을 누른 뒤에만 나타난다(버튼 배치를 단순하게).
+export function actionRow(itemKey, st) {
   const ack = st.state === "ACKNOWLEDGED", mute = st.state === "MUTED";
-  return [
-    { text: `${label} ✅${ack ? "✓" : ""}`, callback_data: `${ack ? "unack" : "ack"}:${itemKey}` },
-    { text: `${label} 🚫${mute ? "✓" : ""}`, callback_data: `${mute ? "unmute" : "mute"}:${itemKey}` },
+  const row = [
+    { text: ack ? "✅ 확인함" : "✅ 확인", callback_data: `${ack ? "unack" : "ack"}:${itemKey}` },
+    { text: mute ? "🚫 관심없음 ✓" : "🚫 관심없음", callback_data: `${mute ? "unmute" : "mute"}:${itemKey}` },
   ];
+  if (mute || st.tagMuted) row.push({ text: st.tagMuted ? "🔕 이런 종류 그만 ✓" : "🔕 이런 종류 그만", callback_data: `${st.tagMuted ? "untag" : "tag"}:${itemKey}` });
+  return row;
 }
-export function keyboard(itemKey, st) { return { inline_keyboard: [fullRow(itemKey, st)] }; }
+export function keyboard(itemKey, st, url) {
+  const rows = [];
+  if (/^https?:\/\//.test(url || "") && url.length <= 2000) rows.push([{ text: "🔗 공식 안내", url }]);
+  rows.push(actionRow(itemKey, st));
+  return { inline_keyboard: rows };
+}
 
-// 눌린 버튼이 있는 줄만 새 상태로 바꾼다
+// 눌린 행사의 버튼 줄만 새 상태로 바꾸고, 공식 안내(주소) 버튼 줄은 그대로 둔다
 export function rebuildKeyboard(markup, itemKey, st) {
   const rows = ((markup || {}).inline_keyboard || []).map((r) => r.slice());
   const idx = rows.findIndex((row) => row.some((b) => (b.callback_data || "").endsWith(`:${itemKey}`)));
-  if (idx < 0) return { inline_keyboard: [fullRow(itemKey, st)] };
-  const m = /^(\d+) /.exec(rows[idx][0].text || "");
-  rows[idx] = m ? compactRow(itemKey, st, m[1]) : fullRow(itemKey, st);
+  if (idx < 0) return { inline_keyboard: [...rows.filter((r) => r.some((b) => b.url)), actionRow(itemKey, st)] };
+  rows[idx] = actionRow(itemKey, st);
   return { inline_keyboard: rows };
 }

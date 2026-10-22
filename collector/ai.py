@@ -359,6 +359,100 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
     return out
 
 
+# ---------------------------------------------------------------- 추천 판정(큰 모델): 수집한 행사 중 사람에게 알릴 가치가 있는 것을 고른다
+# 추출(무슨 행사인가)과 추천(알릴 만한가)은 다른 판단이다. 소유자 피드백(2026-10-22): 일상 봇 60건에 시의회·위원회 회의, 약물 반납,
+# 영유아 동화 시간, 시니어 프로그램이 성인 취미·체험 알림으로 섞였다 → 모든 발송 후보에 이 판정을 적용하고, 판정이 없으면 보내지 않는다.
+Category = Literal["performance", "festival", "sports", "outdoors", "class", "museum", "camp", "university", "kids-activity", "family-outing",
+                   "food-market", "toddler", "senior", "library-regular", "civic", "public-service", "support-group", "other"]
+Highlight = Literal["선착순", "무료", "예약 필요", "추첨", "접수 예정", "마감 임박", "특별 체험", "허가 필요", "연례 행사"]
+
+
+class Recommendation(BaseModel):
+    index: int
+    level: Literal["push", "interest", "none"]
+    bot: Bot
+    category: Category
+    score: int
+    title_ko: str
+    summary_ko: str
+    highlights: list[Highlight]
+    reason: str
+
+
+class RecommendBatch(BaseModel):
+    items: list[Recommendation]
+
+
+RECOMMEND_RULES = """You are the editor of three Telegram alert channels for people living in the Denver metro (Westminster, Colorado):
+- life: adults' hobbies, culture, sports, classes, outings, experiences (not family-with-kids focused)
+- family: things a whole family (parents with children) would do together
+- kids: activities, classes, camps and programs for school-age children (roughly 5–17)
+The system collects every public notice it can find; your job is to decide what is worth ALERTING people about. Judge each item by its purpose and the experience of taking part, not by keywords.
+
+For each item decide:
+- level:
+  push = worth an alert for anyone in this channel: performances, festivals, sports (watching or joining), hands-on experiences, hobby/skill classes, university events open to the public, special venues, national/state park permits and reservations, camp or program enrollment, first-come or lottery opportunities, rare or once-a-year experiences. Special experiences are worth more even if they are far away or cost money.
+  interest = only for people who chose this category: e.g. toddler/baby programs, senior-only programs, routine weekly library meetups, support groups, niche professional talks.
+  none = not an activity people go to for the experience: city council, board, commission and committee meetings, public hearings, drug take-back or disposal, utility/permit/administrative services, staff/members/students-only items, items whose audience does not match any channel, meaningless repetitive low-value listings.
+- bot: the channel whose audience fits best (move it if the current one is wrong; toddler-only items are kids only with level=interest; senior-only items are life with level=interest).
+- category: the best fit from the list.
+- score 0–100: how strongly to recommend within its level (special, time-limited, rare, first-come, registration opening soon → higher; ordinary recurring → lower).
+- title_ko: concise natural Korean title (max ~30 characters; keep a proper noun in English only if needed).
+- summary_ko: one or two short Korean sentences saying what you actually do or get there (the special benefit, what is included). No dates, prices or addresses here; those are shown separately.
+- highlights: only those the item actually supports: 선착순, 무료, 예약 필요, 추첨, 접수 예정, 마감 임박, 특별 체험, 허가 필요, 연례 행사.
+- reason: one short Korean sentence explaining the level.
+Use general participation value for the channel audience, not one person's taste; personal interests are applied later by each user's settings."""
+
+
+@dataclass
+class RecommendOutcome:
+    recs: dict = field(default_factory=dict)      # 입력 index → Recommendation
+    missing: dict = field(default_factory=dict)   # 입력 index → 사유(판정이 없으면 보내지 않고 다음 실행에서 다시)
+
+
+def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usage: Usage) -> RecommendOutcome:
+    """items: (event dict, source text). 모든 발송 후보에 적용한다(애매한 것만이 아니라)."""
+    c = cfg["recommend"]
+    out = RecommendOutcome()
+    for start in range(0, len(items), c["batch"]):
+        chunk = items[start:start + c["batch"]]
+        idx = range(start, start + len(chunk))
+        if not usage.allows(c.get("reserve_usd", 0.5)):
+            out.missing.update({i: "run-cost-cap" for i in idx})
+            continue
+        body = f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500)}, ensure_ascii=False)
+                                                 for i, (ev, txt) in enumerate(chunk))
+        try:
+            resp = client.beta.messages.parse(
+                model=c["model"], max_tokens=c["max_tokens"], system=RECOMMEND_RULES,
+                messages=[{"role": "user", "content": body}], output_config={"effort": c["effort"]},
+                output_format=RecommendBatch, betas=[FALLBACK_BETA], fallbacks="default",
+            )
+        except (anthropic.APIError, ValueError) as e:
+            usage.error(c["model"])
+            out.missing.update({i: f"{type(e).__name__}" for i in idx})
+            continue
+        usage.add(c["model"], resp.usage)
+        if resp.stop_reason in ("refusal", "max_tokens") or resp.parsed_output is None:
+            out.missing.update({i: f"stop_reason={resp.stop_reason}" for i in idx})
+            continue
+        for r in resp.parsed_output.items:
+            if 0 <= r.index < len(chunk) and start + r.index not in out.recs:
+                out.recs[start + r.index] = r.model_copy(update={"index": start + r.index, "score": max(0, min(100, r.score))})
+        for j in range(len(chunk)):
+            if start + j not in out.recs:
+                out.missing[start + j] = "missing-recommendation"
+    return out
+
+
+def apply_recommendation(ev: dict, r: Recommendation) -> dict:
+    ev.update({"rec_level": r.level, "bot": r.bot, "category": r.category, "rec_score": r.score, "summary_ko": r.summary_ko.strip()[:240],
+               "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200]})
+    if r.title_ko.strip():
+        ev["title_ko"] = r.title_ko.strip()[:60]
+    return ev
+
+
 # ---------------------------------------------------------------- 발굴(큰 모델 + 웹 검색)
 DISCOVER_SYSTEM = """You look for NEW official sources of family, kids and adult activities near Westminster, Colorado (Denver metro) for Korean residents and their local friends.
 Search the web for the theme you are given. Only future things matter (today's date is given): prioritise events happening, or registrations opening or closing, in the next few months, but ALSO report information announced far in advance whatever its date — events in 2027–2028, early registration or reservations, national park permits, lotteries and timed-entry reservations, summer camp enrollment, season passes. Exclude only things that are already over (past events, past seasons, archived pages whose dates are all before today).

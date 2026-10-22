@@ -206,5 +206,6 @@ def for_worker(ev: dict) -> dict:
     """Worker 로 보내는 필드만 남긴다."""
     keep = ("event_key", "identity", "bot", "title", "title_ko", "org", "start_date", "end_date", "time_text", "event_tz", "location", "city",
             "age_text", "english", "cost_text", "signup", "registration_opens", "registration_status", "deadline", "eligibility", "status_note",
-            "url", "checked_at", "urgency", "tags", "annual", "year_label", "source_id", "date_uncertain")
+            "url", "checked_at", "urgency", "tags", "annual", "year_label", "source_id", "date_uncertain",
+            "rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason")
     return {k: ev.get(k) for k in keep}
