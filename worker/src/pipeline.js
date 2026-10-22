@@ -633,6 +633,14 @@ export async function runLog(env, body) {
   // 재시도 한도를 넘긴 대기열 항목
   const qs = await queueStats(env);
   if (qs.stuck && (await claimNotice(env, `stuck:${qs.stuck}:${localDate(env)}`))) alerts.push(`처리하지 못한 항목 ${qs.stuck}건이 재시도 한도를 넘어 보류 중입니다(삭제하지 않음).`);
+  // 같은 경고(예: 접속이 계속 안 되는 핵심 정보원)는 하루 한 번만 알린다. 문구에서 실행 번호·숫자는 빼고 비교
+  const fresh = [];
+  for (const a of alerts) {
+    const sig = String(a).replace(/\d+/g, "#").slice(0, 200);
+    if (await claimNotice(env, `alert:${localDate(env)}:${sig}`)) fresh.push(a);
+  }
+  alerts.length = 0;
+  alerts.push(...fresh);
   let notified = false;
   if (alerts.length && (await claimNotice(env, `run-alert:${body.run_id}`))) {
     await notifyOwner(env, `⚠️ 수집 실행 ${body.run_id}\n` + alerts.map((a) => `- ${String(a).slice(0, 300)}`).join("\n"));

@@ -142,6 +142,13 @@ try {
     await admin("/admin/run-log", { run_id: "r1", started_at: new Date().toISOString(), metrics: { entries_new: 3 }, alerts: ["월 예산 80% 도달"] });
     await admin("/admin/run-log", { run_id: "r1", started_at: new Date().toISOString(), metrics: { entries_new: 3 }, alerts: ["월 예산 80% 도달"] });
     assert.equal(sends(n, OWNER).filter((s) => /예산/.test(s.payload.text)).length, 1);
+    // 같은 경고가 다른 실행에서 반복돼도 하루 한 번만(접속 안 되는 핵심 정보원이 매 실행 알림을 보내던 문제)
+    const m = E.calls.length;
+    for (const id of ["r2", "r3", "r4"]) await admin("/admin/run-log", { run_id: id, metrics: {}, alerts: ["핵심 정보원 실패: hyland-hills-events-api"] });
+    assert.equal(sends(m, OWNER).filter((s) => /hyland/.test(s.payload.text)).length, 1);
+    await admin("/admin/run-log", { run_id: "r5", metrics: {}, alerts: ["핵심 정보원 실패: hyland-hills-events-api", "새 문제"] });
+    const last = sends(m, OWNER).filter((s) => /r5/.test(s.payload.text));
+    assert.equal(last.length, 1); assert.ok(!/hyland/.test(last[0].payload.text) && /새 문제/.test(last[0].payload.text));
   });
 
   await step("정보원 후보: 2회 발견 → 자동 검증 결과를 붙여 소유자에게 질문 → 추가 누르면 sources-extra 에 등록", async () => {
