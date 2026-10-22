@@ -37,6 +37,9 @@
 import { BUILD, BOTS, botToken, isOwner, nowIso, json, tg, kvGet, kvSet, claimNotice, notifyOwner, localStamp, localDate, daysBetween, ensurePerson, getPerson, validTz, ownerOnly } from "./common.js";
 import { keyboard, rebuildKeyboard } from "./render.js";
 import * as pipeline from "./pipeline.js";
+import { Heartbeat, ensureHeartbeat, beatNow } from "./heartbeat.js";
+
+export { Heartbeat };
 
 // 만료 알림 시점: 남은 일수가 이 값 이하로 처음 내려갈 때 1회씩 (하루 실행을 놓쳐도 다음 날 보냄)
 const EXPIRY_STEPS = [14, 7, 3, 1, 0];
@@ -436,6 +439,7 @@ async function status(env) {
     ai: (await pipeline.aiHealth(env)),
     watchdog: await pipeline.watchdog(env),
     last_cron: await kvGet(env, "last_cron"),
+    last_heartbeat: await kvGet(env, "last_heartbeat"),
   };
 }
 function formatStatus(s) {
@@ -495,7 +499,8 @@ export default {
       if (request.method === "POST") { try { body = await request.json(); } catch { body = {}; } }
       const POST = request.method === "POST";
       try {
-        if (p === "/admin/setup" && POST) return json(await setupWebhooks(env, url.origin));
+        if (p === "/admin/setup" && POST) return json({ ...(await setupWebhooks(env, url.origin)), heartbeat: await ensureHeartbeat(env) });
+        if (p === "/admin/heartbeat" && POST) return json(await beatNow(env));
         if (p === "/admin/test-send" && POST) {
           const bots = Array.isArray(body.bots) && body.bots.length ? body.bots.filter((b) => BOTS[b]) : Object.keys(BOTS);
           return json(await testSend(env, bots));
@@ -510,7 +515,10 @@ export default {
         if (p === "/admin/run-cron" && POST) return json({ ok: true, ...(await dailyCheck(env)) });
         if (p === "/admin/seen" && POST) return json(await pipeline.seen(env, body));
         if (p === "/admin/enqueue" && POST) return json(await pipeline.enqueue(env, body));
-        if (p === "/admin/dispatch" && POST) return json(await pipeline.dispatch(env, body));
+        if (p === "/admin/dispatch" && POST) {
+          try { await ensureHeartbeat(env); } catch (e) { console.log("heartbeat ensure", String(e)); }
+          return json(await pipeline.dispatch(env, body));
+        }
         if (p === "/admin/digest" && POST) return json(await pipeline.digest(env, body));
         if (p === "/admin/run-log" && POST) return json(await pipeline.runLog(env, body));
         if (p === "/admin/usage") return json(await pipeline.usage(env, request.method, body, url));

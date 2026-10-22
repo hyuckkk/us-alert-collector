@@ -36,8 +36,13 @@ export async function startEnv({ tgPort, wPort, vars = {}, fresh = false }) {
     let b = "";
     req.on("data", (c) => (b += c));
     req.on("end", () => {
-      const m = req.url.match(/^\/bot([^/]+)\/(\w+)$/);
       const payload = b ? JSON.parse(b) : {};
+      // 같은 가짜 서버가 GitHub API 도 흉내 낸다(매시 감시의 수집 실행 요청)
+      if (req.url.startsWith("/repos/")) {
+        calls.push({ method: "github", url: req.url, payload, auth: req.headers.authorization || "" });
+        res.statusCode = 204; res.end(); return;
+      }
+      const m = req.url.match(/^\/bot([^/]+)\/(\w+)$/);
       if (m[2] === "sendMessage" && failQueue.length) {
         const f = failQueue.shift();
         calls.push({ token: m[1], method: m[2], payload, failed: f });
