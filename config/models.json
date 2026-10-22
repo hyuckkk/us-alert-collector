@@ -4,7 +4,7 @@
   "judge": {"model": "claude-opus-5-5", "effort": "medium", "batch": 8, "max_tokens": 16000, "reserve_usd": 0.4},
   "recommend": {"model": "claude-opus-5-5", "effort": "high", "batch": 8, "max_tokens": 16000, "reserve_usd": 0.5},
   "discover": {"enabled": true, "daily_per_bot": true, "model": "claude-opus-5-5", "effort": "medium", "max_searches": 4, "max_searches_deep": 5, "max_tokens": 16000, "reserve_usd": 1.2},
-  "limits": {"max_ai_items_per_run": 300, "monthly_budget_usd": 20, "warn_ratio": 0.8},
+  "limits": {"max_ai_items_per_run": 300, "monthly_budget_usd": 150, "warn_ratio": 0.8},
   "prices": {
     "claude-haiku-5-5": {"input": 0.10, "output": 0.50, "cache_write": 0.125, "cache_read": 0.01},
     "claude-opus-5-5": {"input": 4.0, "output": 20.0, "cache_write": 5.0, "cache_read": 0.20},

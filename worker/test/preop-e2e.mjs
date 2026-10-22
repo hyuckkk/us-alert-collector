@@ -169,8 +169,8 @@ try {
     assert.equal(sendCount() - before, 0, "기준선 중 즉시 알림 발송");
     await admin("/admin/digest", { force: true });
     const msgs = E.calls.slice(before).filter((c) => c.method === "sendMessage");
-    // 사람마다 10건: 가장 중요한(2주 안 접수) 5건은 한 건씩 + 짧은 개수 안내 1통 = 6통, 나머지는 보관, 먼 행사(old)는 없음
-    assert.equal(msgs.length, 12, `요약 ${msgs.length}통`);
+    // 사람마다 10건 모두 한 통씩(하루 건수 제한 없음), 먼 행사(old)는 없음
+    assert.equal(msgs.length, 20, `요약 ${msgs.length}통`);
     assert.ok(msgs.some((m) => /reg0/.test(m.payload.text)) && msgs.every((m) => !/old\d/.test(m.payload.text)));
     await admin("/admin/baseline", { hours: 0 });
     const b2 = sendCount();

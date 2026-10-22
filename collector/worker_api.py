@@ -209,6 +209,21 @@ class WorkerAPI:
         for model, m in by_model.items():
             self._post("/admin/usage", {"model": model, "budget": budget, **{k: m.get(k, 0) for k in keys}})
 
+    def queries_extra(self) -> list[dict]:
+        if self.dry_run:
+            return []
+        return self._get("/admin/queries-extra").get("queries", [])
+
+    def queue_find(self, urls: list[str]) -> list[dict]:
+        if self.dry_run or not urls:
+            return []
+        return self._post("/admin/queue-find", {"urls": urls}).get("items", [])
+
+    def gaps(self, gaps: list[dict], sources: list[dict], queries: list[dict]) -> dict:
+        if self.dry_run:
+            return {"ok": True, "dry_run": True}
+        return self._post("/admin/gaps", {"gaps": gaps, "sources": sources, "queries": queries})
+
     def sources_extra(self) -> list[dict]:
         return [] if self.dry_run else self._get("/admin/sources-extra").get("sources", [])
 

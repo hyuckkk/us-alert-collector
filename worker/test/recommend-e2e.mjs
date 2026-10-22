@@ -52,7 +52,7 @@ try {
     assert.ok(has(to(n), "storytime2") && !has(to(n), "council2"));
   });
 
-  await step("하루 상한으로 알림 수를 줄여도 접수 시작 ⏰ 은 빠지지 않는다", async () => {
+  await step("추천된 행사는 모두 한 통씩, 접수 시작 ⏰ 도 따로 빠짐없이", async () => {
     await admin("/admin/enqueue", { events: [
       ...Array.from({ length: 12 }, (_, i) => ev(`many${i}`, { rec_level: "push", category: "class", rec_score: 30, start_date: plus(30 + i) })),
       ev("permit", { rec_level: "push", category: "outdoors", rec_score: 95, start_date: plus(60), registration_opens: denverToday, registration_status: "upcoming", highlights: ["허가 필요", "선착순"] }),
@@ -63,8 +63,7 @@ try {
     const got = to(n);
     assert.ok(got.some((c) => /^⏰/.test(c.payload.text) && /행사 permit/.test(c.payload.text)), "접수 시작 ⏰ 누락");
     const singles = got.filter((c) => c.payload.reply_markup && /행사 many/.test(c.payload.text));
-    assert.ok(singles.length <= 5, `하루 개별 알림 ${singles.length}통`);
-    assert.ok(got.some((c) => /나머지 \d+건은 \/more/.test(c.payload.text)));
+    assert.equal(singles.length, 12, `추천된 행사 개별 알림 ${singles.length}통(하루 건수 제한 없음)`);
   });
 
   await step("재평가(/admin/recommend-update): 판·변경 알림 없이 추천 결과만 바뀌고, 이후 발송에 반영", async () => {

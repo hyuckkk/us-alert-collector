@@ -199,6 +199,11 @@ class Run:
     # ------------------------------------------------ 키워드 검색(토큰 0)
     def search(self):
         qs = queries_for(load("queries.json"), self.today)
+        # 외부 검색 대조로 놓친 행사를 찾을 수 있게 자동으로 더한 검색어(매일)
+        try:
+            qs += [(q.get("bot") or "any", q["query"]) for q in self.api.queries_extra() if q.get("query")]
+        except Exception as e:  # noqa: BLE001
+            self.alerts.append(f"추가 검색어 조회 실패: {type(e).__name__}")
         for bot, query in qs:
             r = fetch_source({"id": "gnews:" + query[:40], "type": "gnews", "query": query})
             self.m["queries"] += 1

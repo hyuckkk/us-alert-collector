@@ -445,6 +445,50 @@ def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usag
     return out
 
 
+# ---------------------------------------------------------------- 놓친 검색 분석: 외부 검색이 찾은 행사를 우리 수집이 왜 못 찾았나, 다음부터 찾으려면
+class GapFix(BaseModel):
+    index: int
+    cause_ko: str
+    monitor_url: Optional[str]
+    monitor_type: Literal["html", "rss", "ical", "json"]
+    monitor_mode: Literal["list", "page-change"]
+    monitor_name: Optional[str]
+    queries: list[str]
+    query_bot: Literal["family", "kids", "life", "any"]
+
+
+class GapBatch(BaseModel):
+    items: list[GapFix]
+
+
+GAP_RULES = """An alert system collects Colorado (Denver metro) events from registered official sources, daily news-style keyword searches and an AI web search.
+Another search found the events below that our system did NOT find (or only found but had not processed). For each, explain the most likely structural cause in one Korean sentence
+(e.g. "Botanic Gardens 일반 행사 목록에는 특별 행사(Blossoms of Light)가 따로 있어 감시하지 않음", "이 기관 사이트가 정보원에 없음", "축제 이름으로만 공지되어 키워드 검색에 안 걸림"),
+and propose a fix that would catch this event AND similar future ones:
+- monitor_url: one official https page that lists such events or announces them (an events/calendar/special-events/registration page of the organization; prefer a list or calendar page over a single-event page; use the event page itself only for a recurring annual event with its own page). Must be on the organization's own site, not a ticket reseller or news site. null if none fits.
+- monitor_type: html for normal pages (rss/ical/json only if the URL clearly is a feed). monitor_mode: list (a page with links to many events) or page-change (a single page whose text changes, e.g. registration dates).
+- queries: 1–3 short English search phrases (as people would search news/listings) that would surface this and similar events, e.g. "holiday light show Denver tickets".
+Registered source hosts are given; if the host is already registered, the fix is usually a more specific list page on that site."""
+
+
+def gap_analysis(client, cfg: dict, items: list[dict], registered_hosts: list[str], usage: Usage) -> dict:
+    """items: {index, title, url, found, start_date, description}. 반환: index → GapFix. 큰 모델(추천 판정과 같은 설정)."""
+    c = cfg["recommend"]
+    if not items or not usage.allows(c.get("reserve_usd", 0.5)):
+        return {}
+    body = json.dumps({"registered_hosts": registered_hosts[:200], "events": items}, ensure_ascii=False)
+    try:
+        resp = client.beta.messages.parse(model=c["model"], max_tokens=c["max_tokens"], system=GAP_RULES, messages=[{"role": "user", "content": body}],
+                                          output_config={"effort": c["effort"]}, output_format=GapBatch, betas=[FALLBACK_BETA], fallbacks="default")
+    except (anthropic.APIError, ValueError):
+        usage.error(c["model"])
+        return {}
+    usage.add(c["model"], resp.usage)
+    if resp.parsed_output is None:
+        return {}
+    return {g.index: g for g in resp.parsed_output.items}
+
+
 def apply_recommendation(ev: dict, r: Recommendation) -> dict:
     ev.update({"rec_level": r.level, "bot": r.bot, "category": r.category, "rec_score": r.score, "summary_ko": r.summary_ko.strip()[:240],
                "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200]})

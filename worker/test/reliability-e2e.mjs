@@ -142,51 +142,37 @@ try {
   });
 
   // ------------------------------------------------ 7 요약
-  await step("7 요약 23건 → 중요한 5건만 한 건씩 + 짧은 개수 안내 1통, 나머지 18건은 보관 → /more 로 5건씩 모두 볼 수 있고 중복 없음", async () => {
+  await step("7 요약 23건 → 하루 건수 제한 없이 모두 한 통씩(묶음 목록·개수 안내 없음), 같은 행사 두 번 없음", async () => {
     sql("UPDATE outbox SET status = 'skipped' WHERE kind = 'digest'");
     await admin("/admin/enqueue", { events: Array.from({ length: 23 }, (_, i) => ev(`d${i}`, { urgency: "weekly", tags: ["dg"], start_date: plus(40 + i) })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
-    assert.deepEqual([r.items, r.held, r.messages], [5, 18, 6], JSON.stringify(r));
-    const msgs = sends(n).map((c) => c.payload);
-    const count = msgs.filter((m) => /오늘 새로 찾은/.test(m.text));
-    assert.equal(count.length, 1);
-    assert.match(count[0].text, /23건[\s\S]*중요한 5건[\s\S]*나머지 18건은 \/more/);
-    assert.ok(!count[0].reply_markup && !/https?:/.test(count[0].text), "개수 안내에 버튼·주소");
-    const got = new Set();
-    for (const m of msgs.filter((x) => x.reply_markup)) got.add(/행사 (d\d+)/.exec(m.text)[1]);
-    for (let k = 0; k < 4; k++) {
-      const b = E.calls.length;
-      await hook("kids", msg(OWNER, "/more"));
-      for (const m of sends(b)) {
-        const k2 = /행사 (d\d+)/.exec(m.payload.text);
-        assert.ok(k2, `보관 행사 대신 다른 메시지: ${m.payload.text.split("\n")[0]}`);
-        assert.ok(!got.has(k2[1]), `${k2[1]} 두 번`); got.add(k2[1]);
-      }
-    }
-    assert.equal(got.size, 23, "보관한 행사 중 /more 로 볼 수 없는 것이 있음");
-    const b = E.calls.length;
-    await hook("kids", msg(OWNER, "/more"));
-    assert.ok(sends(b).every((m) => !/행사 d\d+/.test(m.payload.text)), "다 본 뒤에도 같은 행사");
+    assert.deepEqual([r.items, r.messages, r.held || 0], [23, 23, 0], JSON.stringify(r));
+    const keys = sends(n).map((c) => /행사 (d\d+)/.exec(c.payload.text)[1]);
+    assert.equal(new Set(keys).size, 23);
+    assert.ok(sends(n).every((c) => c.payload.reply_markup && !/https?:/.test(c.payload.text)));
   });
 
-  await step("7 아주 긴 행사도 한 통 4,096자 이하, 각 메시지의 버튼은 그 행사에 연결, 잘린 행사가 발송 완료로 기록되지 않음", async () => {
+  await step("7 아주 긴 행사 30건: 한 통 4,096자 이하, 버튼은 그 행사에 연결, 한 번에 못 보낸 것은 다음 실행에서 이어 보내 모두 발송", async () => {
     const long = "아주 긴 행사 설명 ".repeat(40);
     await admin("/admin/enqueue", { events: Array.from({ length: 30 }, (_, i) => ev(`L${i}`, { urgency: "weekly", tags: ["dgL"], start_date: plus(120 + i),
       title_ko: `행사 L${i} ${long}`, cost_text: long, summary_ko: long, url: `https://example.org/${"x".repeat(300)}/L${i}` })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     const n = E.calls.length;
-    const r = await admin("/admin/digest", { force: true });
-    assert.deepEqual([r.items, r.held], [5, 25], JSON.stringify(r));
-    for (const c of sends(n).filter((x) => x.payload.reply_markup)) {
+    let r = await admin("/admin/digest", { force: true });
+    assert.equal(r.items, 25, JSON.stringify(r));   // 한 번 실행의 발송 수(텔레그램 호출 한도)
+    sql("UPDATE outbox SET next_attempt_at = '2000-01-01T00:00:00Z' WHERE event_key LIKE 'L%' AND status = 'failed'");
+    r = await admin("/admin/digest", {});
+    assert.equal(r.items, 5, JSON.stringify(r));
+    for (const c of sends(n)) {
       assert.ok(c.payload.text.length <= 4096);
       const key = c.payload.reply_markup.inline_keyboard[0][0].url.split("/").pop();
       assert.ok(c.payload.text.includes(`행사 ${key} `), "공식 안내 버튼이 다른 행사");
       assert.equal(c.payload.reply_markup.inline_keyboard[1][0].callback_data, `ack:${key}`);
     }
     const st = sql("SELECT status, COUNT(*) AS n FROM outbox WHERE event_key LIKE 'L%' AND status <> 'skipped' GROUP BY status ORDER BY status");
-    assert.deepEqual(st, [{ status: "held", n: 25 }, { status: "sent", n: 5 }], JSON.stringify(st));
+    assert.deepEqual(st, [{ status: "sent", n: 30 }], JSON.stringify(st));
   });
 
   await step("7 한 통이 실패하면 그 행사만 남았다가 다음 실행에서 시간 조건 없이 보냄(폭주·중복 없음)", async () => {
@@ -194,7 +180,7 @@ try {
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     E.failNext(500);
     let r = await admin("/admin/digest", { force: true });
-    assert.deepEqual([r.failed, r.items, r.held], [1, 4, 1], JSON.stringify(r));
+    assert.deepEqual([r.failed, r.items], [1, 5], JSON.stringify(r));
     sql("UPDATE outbox SET next_attempt_at = '2000-01-01T00:00:00Z' WHERE kind = 'digest' AND status = 'failed'");
     const n = E.calls.length;
     r = await admin("/admin/digest", {}); // force 없이
