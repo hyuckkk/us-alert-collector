@@ -1,0 +1,176 @@
+{
+ "tested": 6,
+ "good": 4,
+ "results": [
+  {
+   "id": "hh-api",
+   "type": "json",
+   "url": "https://www.hylandhills.gov/wp-json/tribe/events/v1/events?per_page=20",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   },
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 20,
+   "eventish": 9,
+   "sample": [
+    "Clases de Empoderamiento y Education para Personas con Diabetes",
+    "Pumpkin Carving",
+    "Sound Bath",
+    "Clases de Empoderamiento y Education para Personas con Diabetes",
+    "Halloween Spooktacular",
+    "Small Group Personal Training Starts"
+   ],
+   "sample_urls": [
+    "https://www.hylandhills.gov/event/clases-de-empoderamiento-y-education-para-personas-con-diabetes-4/",
+    "https://www.hylandhills.gov/event/pumpkin-carving-2/",
+    "https://www.hylandhills.gov/event/sound-bath-19/"
+   ]
+  },
+  {
+   "id": "hh-home",
+   "type": "html",
+   "url": "https://www.hylandhills.gov/",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 11,
+   "eventish": 6,
+   "sample": [
+    "Activities Guide",
+    "Youth & Adult Sports",
+    "Registration Policies",
+    "Activity Guide",
+    "View More News Items",
+    "Oct 24 Pumpkin Carving 11:00am - 12:00pm"
+   ],
+   "sample_urls": [
+    "https://www.hylandhills.gov/programs/activities-guide/",
+    "https://www.hylandhills.gov/programs/youth-adult-sports/",
+    "https://www.hylandhills.gov/programs/program-class-registration/"
+   ]
+  },
+  {
+   "id": "hh-ical",
+   "type": "ical",
+   "url": "https://www.hylandhills.gov/events/?ical=1",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 30,
+   "eventish": 17,
+   "sample": [
+    "Pumpkin Carving",
+    "Sound Bath",
+    "Clases de Empoderamiento y Education para Personas con Diabetes",
+    "Halloween Spooktacular",
+    "Small Group Personal Training Starts",
+    "Sensory Sprouts Starts"
+   ],
+   "sample_urls": [
+    "https://www.hylandhills.gov/event/pumpkin-carving-2/",
+    "https://www.hylandhills.gov/event/sound-bath-19/",
+    "https://www.hylandhills.gov/event/clases-de-empoderamiento-y-education-para-personas-con-diabetes-3/"
+   ]
+  },
+  {
+   "id": "hh-nowww",
+   "type": "html",
+   "url": "https://hylandhills.gov/",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 11,
+   "eventish": 6,
+   "sample": [
+    "Activities Guide",
+    "Youth & Adult Sports",
+    "Registration Policies",
+    "Activity Guide",
+    "View More News Items",
+    "Oct 24 Pumpkin Carving 11:00am - 12:00pm"
+   ],
+   "sample_urls": [
+    "https://www.hylandhills.gov/programs/activities-guide/",
+    "https://www.hylandhills.gov/programs/youth-adult-sports/",
+    "https://www.hylandhills.gov/programs/program-class-registration/"
+   ]
+  },
+  {
+   "id": "hh-sports",
+   "type": "html",
+   "url": "https://hylandhillssports.com/home",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 2,
+   "eventish": 0,
+   "sample": [
+    "Game Schedules",
+    "TSRA coed"
+   ],
+   "sample_urls": [
+    "https://hylandhillssports.com/Org/Schedules.aspx?d=lq2B3aLV5arZhpLNCU9N34yMczK%2BIDzVpZPkE9NgDfc%3D",
+    "https://hylandhillssports.com/sites/hylandhills/schedule/740075/TSRA-coed"
+   ]
+  },
+  {
+   "id": "hh-reg",
+   "type": "html",
+   "mode": "page-change",
+   "url": "https://www.hylandhills.gov/programs/program-class-registration/",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "hh-reg"
+   ],
+   "sample_urls": [
+    "https://www.hylandhills.gov/programs/program-class-registration/"
+   ]
+  }
+ ]
+}
