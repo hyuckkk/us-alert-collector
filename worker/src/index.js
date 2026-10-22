@@ -561,6 +561,13 @@ export default {
         if (p === "/admin/sources-extra") return json(await pipeline.sourcesExtra(env));
         if (p === "/admin/queue" && POST) return json(await pipeline.queue(env, body));
         if (p === "/admin/event-index") return json(await pipeline.eventIndex(env));
+        if (p === "/admin/events-sample") {
+          // 원문 대조 점검용 무작위 표본(행사 정보만, 수신자 정보 없음). 아직 끝나지 않은 행사·접수 안내 중에서
+          const n = Math.min(Math.max(parseInt(url.searchParams.get("n") || "40", 10) || 40, 1), 100);
+          const rows = (await env.DB.prepare("SELECT event_key, source_id, url, data FROM events WHERE COALESCE(end_date, start_date, registration_opens, '9999-12-31') >= date('now') ORDER BY random() LIMIT ?").bind(n).all()).results;
+          const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Denver" }).format(new Date());
+          return json({ ok: true, events: rows.map((r) => ({ ...JSON.parse(r.data), event_key: r.event_key, source_id: r.source_id, url: r.url, today })) });
+        }
         if (p === "/admin/watch" && POST) return json(await pipeline.watch(env, body));
         if (p === "/admin/ai-health") return json(await pipeline.aiHealth(env));
         if (p === "/admin/unverified" && POST) return json(await pipeline.unverified(env, body));

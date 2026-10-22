@@ -55,10 +55,10 @@
    "id": "usafa-events:49",
    "source": "usafa-events",
    "path": "html-detail",
-   "chars": 2627,
+   "chars": 2523,
    "date_in_input": true,
    "cost_in_input": null,
-   "head": "USAFA VS. UConn Saturday, October 31 @ 1:00 pm - 4:00 pm « USAFA Family Movie: Hocus Pocus on Fri, Oct 30 @ 7:45 p.m. Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ "
+   "head": "USAFA VS. UConn Saturday, October 31 @ 1:00 pm - 4:00 pm « USAFA Family Movie: Hocus Pocus on Fri, Oct 30 @ 7:45 p.m. Armed Services Blood Program Blood Drive » Watch the Air Force Falcons as they tak"
   },
   {
    "id": "usafa-events:50",
@@ -67,7 +67,7 @@
    "chars": 4500,
    "date_in_input": true,
    "cost_in_input": true,
-   "head": "Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m. Monday, November 9 @ 10:30 am - 11:45 am Free « USAFA VS. UConn USAFA VS. San Jose State » Homeschool Progr"
+   "head": "Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m. Monday, November 9 @ 10:30 am - 11:45 am Free « Armed Services Blood Program Blood Drive USAFA VS. San Jose"
   },
   {
    "id": "usafa-events:51",
@@ -263,10 +263,10 @@
    "id": "ind:lafayette-police-academy",
    "source": "lafayette-rss",
    "path": "rss+detail",
-   "chars": 2440,
+   "chars": 2332,
    "date_in_input": null,
    "cost_in_input": null,
-   "head": "Event date: October 21, 2026 Event Time: 06:00 PM - 09:00 PM Location: 451 N. 111th St. Lafayette, CO 80026\nCommunity Police Academy Skip to Main Content Search Community Services Business Government "
+   "head": "Community Police Academy Skip to Main Content Search Community Services Business Government How Do I? Home Calendar Featured Events Día de los Muertos Exhibit - Arcos y Portales Details Calendar View "
   }
  ]
 }
