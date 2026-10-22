@@ -12,12 +12,12 @@
    "discover": 0
   },
   "found_any_stage": "29/29 (100%)",
-  "became_event": "26/29 (90%)",
-  "notify_eligible_friend_profile": "26/29 (90%)",
-  "date_correct": "24/25",
-  "cost_correct": "11/12",
+  "became_event": "23/29 (79%)",
+  "notify_eligible_friend_profile": "23/29 (79%)",
+  "date_correct": "20/25",
+  "cost_correct": "9/12",
   "age_correct": "1/3",
-  "excluded_wrongly_notified": "2/14",
+  "excluded_wrongly_notified": "1/14",
   "registration_date_errors": []
  },
  "by_group": {
@@ -34,12 +34,12 @@
     "discover": 0
    },
    "found_any_stage": "29/29 (100%)",
-   "became_event": "26/29 (90%)",
-   "notify_eligible_friend_profile": "26/29 (90%)",
-   "date_correct": "24/25",
-   "cost_correct": "11/12",
+   "became_event": "23/29 (79%)",
+   "notify_eligible_friend_profile": "23/29 (79%)",
+   "date_correct": "20/25",
+   "cost_correct": "9/12",
    "age_correct": "1/3",
-   "excluded_wrongly_notified": "2/14",
+   "excluded_wrongly_notified": "1/14",
    "registration_date_errors": []
   },
   "original": {
@@ -55,12 +55,12 @@
     "discover": 0
    },
    "found_any_stage": "17/17 (100%)",
-   "became_event": "15/17 (88%)",
-   "notify_eligible_friend_profile": "15/17 (88%)",
-   "date_correct": "13/14",
-   "cost_correct": "8/9",
+   "became_event": "12/17 (71%)",
+   "notify_eligible_friend_profile": "12/17 (71%)",
+   "date_correct": "10/14",
+   "cost_correct": "6/9",
    "age_correct": "0/2",
-   "excluded_wrongly_notified": "2/14",
+   "excluded_wrongly_notified": "1/14",
    "registration_date_errors": []
   },
   "independent": {
@@ -78,7 +78,7 @@
    "found_any_stage": "12/12 (100%)",
    "became_event": "11/12 (92%)",
    "notify_eligible_friend_profile": "11/12 (92%)",
-   "date_correct": "11/11",
+   "date_correct": "10/11",
    "cost_correct": "3/3",
    "age_correct": "1/1",
    "excluded_wrongly_notified": "0/0",
@@ -187,17 +187,17 @@
    ],
    "ai": [
     {
-     "status": "extracted",
-     "events": 1,
+     "status": "done",
+     "events": 0,
      "error": null
     }
    ],
-   "event": true,
-   "bot": "kids",
-   "date": "일치",
+   "event": false,
+   "bot": null,
+   "date": "누락",
    "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
-   "notify_friend": "대상(요약)",
+   "notify_friend": "아님(행사 없음)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -210,17 +210,17 @@
    ],
    "ai": [
     {
-     "status": "extracted",
-     "events": 1,
+     "status": "done",
+     "events": 0,
      "error": null
     }
    ],
-   "event": true,
-   "bot": "family",
-   "date": "일치",
+   "event": false,
+   "bot": null,
+   "date": "누락",
    "cost": "기준 미확인",
    "age": "제한 없음",
-   "notify_friend": "대상(요약)",
+   "notify_friend": "아님(행사 없음)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -233,17 +233,17 @@
    ],
    "ai": [
     {
-     "status": "extracted",
-     "events": 1,
+     "status": "done",
+     "events": 0,
      "error": null
     }
    ],
-   "event": true,
-   "bot": "kids",
-   "date": "일치",
-   "cost": "일치",
+   "event": false,
+   "bot": null,
+   "date": "누락",
+   "cost": "누락",
    "age": "기준 문구만(비교 생략)",
-   "notify_friend": "대상(요약)",
+   "notify_friend": "아님(행사 없음)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -279,17 +279,17 @@
    ],
    "ai": [
     {
-     "status": "extracted",
-     "events": 1,
+     "status": "done",
+     "events": 0,
      "error": null
     }
    ],
-   "event": true,
-   "bot": "kids",
-   "date": "일치",
+   "event": false,
+   "bot": null,
+   "date": "누락",
    "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
-   "notify_friend": "대상(요약)",
+   "notify_friend": "아님(행사 없음)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
    "independent": false
   },
@@ -372,7 +372,7 @@
    "ai": [
     {
      "status": "extracted",
-     "events": 3,
+     "events": 1,
      "error": null
     }
    ],
@@ -395,7 +395,7 @@
    "ai": [
     {
      "status": "extracted",
-     "events": 5,
+     "events": 6,
      "error": null
     }
    ],
@@ -471,7 +471,7 @@
    "event": true,
    "bot": "family",
    "date": "일치",
-   "cost": "일치",
+   "cost": "불일치(일반 입장 무료)",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
    "notify_owner": "소유자 참가 가능일(비밀값) 필요",
@@ -515,7 +515,7 @@
     }
    ],
    "event": true,
-   "bot": "kids",
+   "bot": "family",
    "date": "일치",
    "cost": "기준 미확인",
    "age": "기준 문구만(비교 생략)",
@@ -532,8 +532,8 @@
    ],
    "ai": [
     {
-     "status": "done",
-     "events": 0,
+     "status": "extracted",
+     "events": 1,
      "error": null
     }
    ],
@@ -648,13 +648,13 @@
    "ai": [
     {
      "status": "extracted",
-     "events": 2,
+     "events": 1,
      "error": null
     }
    ],
    "event": true,
    "bot": "family",
-   "date": "일치",
+   "date": "불일치(2026-09-24)",
    "cost": "기준 미확인",
    "age": "제한 없음",
    "notify_friend": "대상(요약)",
@@ -780,9 +780,7 @@
    "id": "westminster-calendar:0",
    "valid": false,
    "participation": "past",
-   "stages": [
-    "sources"
-   ],
+   "stages": [],
    "ai": [],
    "event": false,
    "bot": null,
@@ -869,7 +867,7 @@
     }
    ],
    "event": true,
-   "bot": "life",
+   "bot": "family",
    "date": "기준 미확인",
    "cost": "기준 미확인",
    "age": "제한 없음",
@@ -997,7 +995,6 @@
    "valid": false,
    "participation": "past",
    "stages": [
-    "discover",
     "sources"
    ],
    "ai": [
@@ -1064,11 +1061,11 @@
   }
  ],
  "new_source_discovery": {
-  "unregistered_list_found": "1/10",
+  "unregistered_list_found": "0/10",
   "unregistered_list": {
    "crgov.com": false,
    "berthoud.org": false,
-   "arvadacenter.org": true,
+   "arvadacenter.org": false,
    "denvercenter.org": false,
    "ci.wheatridge.co.us": false,
    "svvsd.org": false,
@@ -1078,18 +1075,7 @@
    "cityofgolden.net": false
   },
   "new_official_domains_discovered": [
-   "adams12.org",
-   "adamscountyco.gov",
-   "adamscountyhealthdepartment.org",
-   "arvadacenter.org",
-   "coloradoballet.org",
-   "denvergov.org",
-   "downtowndenver.com",
-   "du.edu",
-   "frontrange.edu",
-   "i9sports.com",
-   "teamsideline.com",
-   "visitdenver.com"
+   "wps.org"
   ]
  }
 }
