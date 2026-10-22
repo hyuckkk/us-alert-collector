@@ -118,6 +118,7 @@ def test_8_extract_rules_session_date_reservations_and_closed_groups():
         assert w in s
     assert "closed group" in s and "military base personnel" in s   # USAFA 상주 인원 가족 영화, CU 학생·교직원 전용
     assert "RSVP closed" in s                                       # 시험 F: USAFA 홈스쿨(RSVP 마감)이 알림 대상이 됨
+    assert "cost_text in Korean" in s and "age_text in Korean" in s and "Korean, e.g. \"오전 10시" in s   # 알림은 한국어(장소·기관명은 지도 검색용 영어 유지)
 
 
 def test_9_closed_or_soldout_registration_is_not_sent():
