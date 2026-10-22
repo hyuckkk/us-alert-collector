@@ -13,6 +13,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor
 import json
 import os
+import re
 import sys
 import traceback
 import zlib
@@ -52,6 +53,7 @@ MIN_SOURCE_OK_RATIO = 0.5  # 정보원 조회 성공률이 이보다 낮으면 '
 DETAIL_SOURCE_TYPES = ("ai-discover",)
 DETAIL_WORKERS = 8           # 상세 페이지 동시 조회 수(사이트별 부담은 작음: 대부분 서로 다른 기관)
 RSS_DETAIL_MIN_CHARS = 400  # 공식 피드 항목 본문이 이보다 짧으면 상세 페이지를 연다
+FEED_HAS_COST = re.compile(r"\$\s?\d|\bfree\b|\bcost\b|\bfees?\b|\badmission\b|\bprice\b|no charge", re.I)  # 길어도 비용 정보가 없으면 상세 페이지를 연다
 LEASE_EXTEND_MIN = 60       # AI 호출·Worker 등록 직전에 대기열 임대를 이만큼 연장(3차 검증 2)
 
 
@@ -186,7 +188,9 @@ class Run:
             elif s["type"] in ("rss", "ical", "json") and s.get("official"):
                 # 피드 본문이 짧으면(예: 날짜 한 줄) 비용·연령·신청 조건은 상세 페이지에만 있다(10차 시험: 비용 누락)
                 for e in r.entries:
-                    if len(e.text or "") < RSS_DETAIL_MIN_CHARS and e.url.startswith("http"):
+                    # 피드 본문이 길어도 비용·시간 정보가 없으면 상세 페이지를 연다(실제 행사 원문 대조: Brighton '$40'·Erie 'Free' 누락)
+                    short = len(e.text or "") < RSS_DETAIL_MIN_CHARS or not FEED_HAS_COST.search(e.text or "")
+                    if short and e.url.startswith("http"):
                         e.extra["needs_detail"] = e.extra["feed_short"] = True  # 피드 본문은 그대로 둔다(변경 감지 해시 유지)
         if self.m["sources_total"] and self.m["sources_ok"] / self.m["sources_total"] < 0.5:
             self.alerts.append(f"정보원 조회 성공률 {self.m['sources_ok']}/{self.m['sources_total']}")
