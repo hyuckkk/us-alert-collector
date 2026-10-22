@@ -80,6 +80,11 @@ class Run:
         self.today = datetime.now(DENVER).date()
         self.checked_at = self.started.isoformat(timespec="seconds")
         self.models = load("models.json")
+        # 비교 시험 전용(운영 설정 파일은 그대로): MODEL_OVERRIDE="discover=claude-sonnet-5-5,judge=claude-sonnet-5-5"
+        for pair in filter(None, os.environ.get("MODEL_OVERRIDE", "").split(",")):
+            stage, model = pair.split("=", 1)
+            if stage.strip() in self.models and model.strip() in self.models.get("prices", {}):
+                self.models[stage.strip()] = {**self.models[stage.strip()], "model": model.strip()}
         self.api = api or WorkerAPI.from_env(args.dry_run)
         self.client = client
         self.usage = None

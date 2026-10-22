@@ -80,6 +80,8 @@ jobs:
           CAP=$(grep -oE '^CAP=[0-9.]+' budget.txt | cut -d= -f2); [ -n "$CAP" ] || exit 1
           echo "CAP=$CAP" >> "$GITHUB_ENV"; echo "FULLSYSTEM_STARTED=1" >> "$GITHUB_ENV"
           export USAGE_LIVE_FILE=reports/usage-live.json PROGRESS_FILE=reports/fullsystem-progress.jsonl
+          export MODEL_OVERRIDE=$(grep -oE '^models=[a-z0-9=,.-]+' ticks/fullsystem | cut -d= -f2-)
+          [ -n "$MODEL_OVERRIDE" ] && echo "::notice title=model override::$MODEL_OVERRIDE"
           python collector/run.py --mode full --dry-run --all-sources --max "$MAX" --usd-cap "$CAP" --out reports/fullsystem-run.json --trace reports/fullsystem-trace.json
           python3 -c "import json;m=json.load(open('reports/fullsystem-run.json'))['metrics'];print('::notice title=fullsystem cost::usd=%s cap=$CAP calls=%s searches=%s' % (m.get('usd'), m.get('calls'), m.get('searches')))"
           python collector/eval_stages.py reports/fullsystem-trace.json --out eval/stages.json ${FAMILY_AVAILABLE_FROM:+--owner-from "$FAMILY_AVAILABLE_FROM"}

@@ -1,3 +1,4 @@
-dev run G (RSVP 마감 차단·단계별 사용액 측정)
+dev run S1 (발굴·판정 Sonnet 5.5 비교, 추출 Haiku 유지)
 max=3000
 usd_cap=5
+models=discover=claude-sonnet-5-5,judge=claude-sonnet-5-5
