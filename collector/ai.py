@@ -172,7 +172,9 @@ Rules:
 - title_ko: short natural Korean title. Keep proper nouns in English in parentheses if useful.
 - english: pick only attributes the text supports — 초보 가능 (beginners welcome), 보호자 동반 (parent accompanies), 시범 중심 (demonstration-based), 반복 만남 (recurring sessions with the same group).
 - signup: fcfs = first come first served / limited spots; lottery = drawing; open = register any time; none = drop-in; unknown.
-- registration_opens: the date registration/sign-up starts, only if stated. registration_status: upcoming (not open yet), open, closed, soldout, waitlist, cancelled (event cancelled), postponed, unknown. "RSVP closed", "registration closed", "registration is full", "at capacity" or "no spots left" for this item → closed; "sold out" → soldout.
+- registration_opens: the date registration/sign-up starts, only if stated. registration_status: upcoming (not open yet), open, closed, soldout, waitlist, cancelled (event cancelled), postponed, unknown. "RSVP closed", "registration closed", "registration is full", "at capacity" or "no spots left" for this item → closed; "sold out" → soldout. "Register now", a registration/RSVP button or "N spots remaining" for this item → open (and signup=fcfs when spots are limited).
+- For registration announcements, put the opening time in time_text (e.g. "주민 오전 8:30 / 비주민 오전 9:30").
+- age_text: copy every audience the page lists for this item (e.g. "60세 이상 · 성인"); do not replace a stated age with a broader word.
 - eligibility: Korean note on who may join (residents only, members only, age/grade limits, skill level) when stated; else null.
 - tags: 1-4 short lowercase English slugs (e.g. "swim", "camp", "hockey", "museum"). Always include these when they apply, because they keep far-away items for people who filter by distance: "permit", "lottery", "reservation", "timed-entry", "national-park", "state-park", "camping", "festival", "rare" (once-a-year or unusual experience).
 - city: the city or town where the event happens (e.g. "Westminster", "Estes Park"), from the address or venue; null if unknown or online.

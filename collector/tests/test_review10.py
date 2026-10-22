@@ -257,3 +257,20 @@ def test_18_backup_route_when_primary_source_fails(monkeypatch):
     rep = run.main(["--no-ai", "--dry-run"], client=FakeClient([]), api=FakeAPI())
     row = [x for x in rep["sources"] if x["id"] == "hyland-hills-events-api"][0]
     assert row["ok"] and row["items"] == 1 and "예비 경로" in row["error"]
+
+
+def test_19_long_feed_item_without_cost_opens_detail_page(monkeypatch):
+    """원문 대조: Brighton RSS 항목은 본문이 길었지만 비용이 없어 상세 페이지를 열지 않았고 '$40' 이 빠졌다."""
+    long_no_cost = "Event date: October 30, 2026 Event Time: 12:00 PM - 01:00 PM Location: Brighton Recreation Center " + "Women's weightlifting basics. " * 20
+    with_cost = long_no_cost + " Cost: $40"
+    items = [Entry("brighton-rss", "https://www.brightonco.gov/Calendar.aspx?EID=1", "Women's Weightlifting", long_no_cost),
+             Entry("brighton-rss", "https://www.brightonco.gov/Calendar.aspx?EID=2", "Yoga", with_cost)]
+    monkeypatch.setattr(run, "fetch_source", lambda s, secrets=None, **k: FetchResult(True, 200, entries=items) if s["id"] == "brighton-rss" else FetchResult(True, 200, entries=[]))
+    monkeypatch.setattr(run, "is_due", lambda s, today: s["id"] == "brighton-rss")
+    opened = []
+    monkeypatch.setattr(run, "fetch_detail", lambda e, c, chars=3000: opened.append(e.url) or True)
+    real = run.load
+    monkeypatch.setattr(run, "load", lambda n: {**real(n), "discover": {**real(n)["discover"], "enabled": False}} if n == "models.json"
+                        else ({"daily": {}, "weekday": {}} if n == "queries.json" else real(n)))
+    run.main(["--no-ai"], client=FakeClient([]), api=FakeAPI())
+    assert opened == ["https://www.brightonco.gov/Calendar.aspx?EID=1"]
