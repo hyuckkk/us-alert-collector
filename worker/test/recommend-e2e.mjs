@@ -89,6 +89,19 @@ try {
     assert.ok(!has(to(n), "late1") && !has(to(n), "late2"), "재평가로 제외된 행사가 발송됨");
   });
 
+  await step("같은 행사를 표현만 다르게 다시 받으면 '변경'이 아니다(외부 검색 재입력), 실제로 바뀐 값은 변경 알림", async () => {
+    await admin("/admin/enqueue", { events: [ev("blossoms", { urgency: "now", rec_level: "push", category: "festival", start_date: plus(30), time_text: "오후 4:30–9시", location: "Denver Botanic Gardens, York St.", cost_text: "$25" })] });
+    const n = E.calls.length;
+    let r = await admin("/admin/enqueue", { events: [ev("blossoms", { urgency: "now", rec_level: "push", category: "festival", start_date: plus(30), time_text: "4:30-9 p.m.", location: "Denver Botanic Gardens (York Street)", cost_text: "$25 per person" })] });
+    assert.deepEqual([r.changed, r.same, r.outbox], [0, 1, 0], JSON.stringify(r));
+    r = await admin("/admin/enqueue", { events: [ev("blossoms", { urgency: "now", rec_level: "push", category: "festival", start_date: plus(30), time_text: "4:30-9 p.m.", location: "Denver Botanic Gardens (York Street)", cost_text: "$30" })] });
+    assert.equal(r.changed, 1, JSON.stringify(r));
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    const ch = to(n).filter((c) => /🔄 변경/.test(c.payload.text) && /행사 blossoms/.test(c.payload.text));
+    assert.equal(ch.length, 1);
+    assert.match(ch[0].payload.text, /비용 \$25 per person → \$30/);
+  });
+
   await step("소유자 시험 발송(/admin/preview): 실제 저장된 '적극 알림' 행사를 실제 형식으로, 버튼이 그 행사에 연결", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/preview", { bot: "life", n: 3 });

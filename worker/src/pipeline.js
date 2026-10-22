@@ -26,9 +26,21 @@ async function sha(text) {
   return [...new Uint8Array(buf)].slice(0, 8).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 function importantOf(d) { return Object.fromEntries(IMPORTANT.map((k) => [k, d[k] ?? null])); }
+// 같은 내용을 AI 가 다르게 적은 것(예: "오후 4:30–9시" ↔ "4:30-9 p.m.", "York St." ↔ "York Street")은 바뀐 것이 아니다.
+// 글로 된 필드는 숫자·핵심 표시만 비교하고, 날짜·접수 상태 같은 정해진 값은 그대로 비교한다(외부 검색 재입력 시험: 같은 행사가 '변경'으로 잡힘).
+const TEXTY = new Set(["time_text", "location", "cost_text", "eligibility", "age_text", "status_note"]);
+function canon(k, v) {
+  if (v === null || v === undefined || v === "") return null;
+  if (!TEXTY.has(k)) return String(v);
+  const t = String(v).toLowerCase();
+  const nums = (t.match(/\d+(?:[.:]\d+)?/g) || []).map((x) => x.replace(/^0+(?=\d)/, "")).join(" ");
+  if (k === "cost_text") return `${/free|무료|\$0\b/.test(t) ? "free " : ""}${nums}`;
+  if (k === "location") return t.replace(/[^a-z0-9가-힣]+/g, "").slice(0, 12);
+  return nums || t.replace(/[^a-z0-9가-힣]+/g, "").slice(0, 20);
+}
+function materialDiff(oldD, newD) { return IMPORTANT.filter((k) => canon(k, oldD[k]) !== canon(k, newD[k])); }
 function diffNote(oldD, newD) {
-  return IMPORTANT.filter((k) => (oldD[k] ?? null) !== (newD[k] ?? null))
-    .map((k) => `${FIELD_KO[k]} ${oldD[k] ?? "미확인"} → ${newD[k] ?? "미확인"}`).join(", ");
+  return materialDiff(oldD, newD).map((k) => `${FIELD_KO[k]} ${oldD[k] ?? "미확인"} → ${newD[k] ?? "미확인"}`).join(", ");
 }
 const all = async (stmt) => (await stmt.all()).results;
 const addMin = (iso, min) => new Date(Date.parse(iso) + min * 60000).toISOString();
@@ -271,8 +283,11 @@ export async function enqueue(env, body) {
     const ex = existing.get(e.event_key);
     let version = 1, note = null;
     if (!ex) stats.new++;
-    else if (ex.content_hash !== h) { version = ex.version + 1; note = diffNote(JSON.parse(ex.data), e); stats.changed++; }
-    else { version = ex.version; stats.same++; }
+    let changed = false;
+    if (ex && ex.content_hash !== h) {
+      if (materialDiff(JSON.parse(ex.data), e).length) { changed = true; version = ex.version + 1; note = diffNote(JSON.parse(ex.data), e); stats.changed++; }
+      else { version = ex.version; stats.same++; stats.reworded = (stats.reworded || 0) + 1; } // 표현만 다름: 내용 갱신, 알림 없음
+    } else if (ex) { version = ex.version; stats.same++; }
     rows.push({
       event_key: e.event_key, bot: e.bot, version, content_hash: h, data: JSON.stringify(e), urgency: e.urgency === "now" ? "now" : "weekly",
       start_date: e.start_date || null, end_date: e.end_date || null, annual: e.annual ? 1 : 0, tags: JSON.stringify(e.tags || []),
@@ -285,7 +300,7 @@ export async function enqueue(env, body) {
       // 기준선 기간의 새 행사: 곧 행동할 것만 요약으로, 나머지는 조용히 등록(데이터에 표시만)
       if (baselineRelevant(e, today)) { fanout.push({ e, version, kind: "digest" }); stats.baseline_digest++; }
       else { rows[rows.length - 1].data = JSON.stringify({ ...e, _baseline: "silent" }); stats.baseline_silent++; }
-    } else if (!ex || ex.content_hash !== h) fanout.push({ e, version });
+    } else if (!ex || changed) fanout.push({ e, version });
     else if (ex.fanout_version == null || ex.fanout_version < version) { fanout.push({ e, version }); stats.recovered++; }
     // 상세 페이지 재검사 등록(뉴스 기사·검색 결과는 제외)
     const rs = regState(e, today);
