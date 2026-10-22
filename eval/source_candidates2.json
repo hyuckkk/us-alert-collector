@@ -1,0 +1,723 @@
+{
+ "_comment": "13차 2회차 후보: 플랫폼 공통 피드·API 경로(CivicPlus RSS, WordPress Events Calendar, Localist, LibCal, Bibliocommons). 측정용 미등록 도메인(eval/unregistered_domains.json)은 넣지 않는다.",
+ "candidates": [
+  {
+   "id": "northglenn-rss",
+   "type": "rss",
+   "url": "https://www.northglenn.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "commerce-city-rss",
+   "type": "rss",
+   "url": "https://www.c3gov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "littleton-rss",
+   "type": "rss",
+   "url": "https://www.littletongov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "englewood-rss",
+   "type": "rss",
+   "url": "https://www.englewoodco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "centennial-rss",
+   "type": "rss",
+   "url": "https://www.centennialco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "parker-rss",
+   "type": "rss",
+   "url": "https://www.parkerco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "lone-tree-rss",
+   "type": "rss",
+   "url": "https://www.cityoflonetree.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "greenwood-village-rss",
+   "type": "rss",
+   "url": "https://www.greenwoodvillage.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "loveland-rss",
+   "type": "rss",
+   "url": "https://www.lovgov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "greeley-rss",
+   "type": "rss",
+   "url": "https://greeleygov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "windsor-rss",
+   "type": "rss",
+   "url": "https://www.windsorgov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "mead-rss",
+   "type": "rss",
+   "url": "https://www.townofmead.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "weld-county-rss",
+   "type": "rss",
+   "url": "https://www.weld.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "north",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "boulder-county-rss",
+   "type": "rss",
+   "url": "https://bouldercounty.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "adams-county-rss",
+   "type": "rss",
+   "url": "https://adcogov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "federal-heights-rss2",
+   "type": "rss",
+   "url": "https://www.fedheights.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "wings-museum-api",
+   "type": "json",
+   "url": "https://wingsmuseum.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "apex-prd-api",
+   "type": "json",
+   "url": "https://www.apexprd.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "childrens-museum-api",
+   "type": "json",
+   "url": "https://www.mychildsmuseum.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "museum-of-boulder-api",
+   "type": "json",
+   "url": "https://museumofboulder.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "mca-denver-api",
+   "type": "json",
+   "url": "https://mcadenver.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "rm-conservancy-api",
+   "type": "json",
+   "url": "https://rmconservancy.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "wild-animal-sanctuary-api",
+   "type": "json",
+   "url": "https://www.wildanimalsanctuary.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "co-music-festival-api",
+   "type": "json",
+   "url": "https://coloradomusicfest.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "boulder-phil-api",
+   "type": "json",
+   "url": "https://boulderphil.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "adams-county-fair-api",
+   "type": "json",
+   "url": "https://adamscountyfair.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "butterfly-pavilion-api",
+   "type": "json",
+   "url": "https://butterflies.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "nearby",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "denver-zoo-api",
+   "type": "json",
+   "url": "https://denverzoo.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "kids",
+    "family"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "botanic-gardens-api",
+   "type": "json",
+   "url": "https://www.botanicgardens.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "broomfield-auditorium-api",
+   "type": "json",
+   "url": "https://www.broomfieldauditorium.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "broomfield",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "erie-chamber-api",
+   "type": "json",
+   "url": "https://www.eriechamber.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "erie",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "brighton-chamber-api",
+   "type": "json",
+   "url": "https://www.brightonchamber.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "brighton",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "lafayette-chamber-api",
+   "type": "json",
+   "url": "https://www.lafayettecolorado.com/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "lafayette",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "co-symphony-api",
+   "type": "json",
+   "url": "https://coloradosymphony.org/wp-json/tribe/events/v1/events?per_page=50",
+   "region": "denver",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "du-localist",
+   "type": "json",
+   "url": "https://calendar.du.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "mines-localist",
+   "type": "json",
+   "url": "https://calendar.mines.edu/api/2/events?days=60&pp=100",
+   "region": "golden",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "csu-localist",
+   "type": "json",
+   "url": "https://calendar.colostate.edu/api/2/events?days=60&pp=100",
+   "region": "north",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "unc-localist",
+   "type": "json",
+   "url": "https://calendar.unco.edu/api/2/events?days=60&pp=100",
+   "region": "north",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "cu-denver-localist",
+   "type": "json",
+   "url": "https://calendar.ucdenver.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "msu-denver-localist",
+   "type": "json",
+   "url": "https://calendar.msudenver.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "frontrange-localist",
+   "type": "json",
+   "url": "https://events.frontrange.edu/api/2/events?days=60&pp=100",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "cu-anschutz-localist",
+   "type": "json",
+   "url": "https://calendar.cuanschutz.edu/api/2/events?days=60&pp=100",
+   "region": "denver",
+   "bots": [
+    "family",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "event.title",
+    "url": "event.localist_url",
+    "date": "event.first_date",
+    "text": "event.description_text"
+   }
+  },
+  {
+   "id": "lafayette-libcal-rss",
+   "type": "rss",
+   "url": "https://lafayettepubliclibrary.libcal.com/rss.php?cid=-1&m=month",
+   "region": "lafayette",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "boulder-libcal-rss",
+   "type": "rss",
+   "url": "https://calendar.boulderlibrary.org/rss.php?cid=-1&m=month",
+   "region": "boulder",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "arapahoe-bibliocommons",
+   "type": "json",
+   "url": "https://gateway.bibliocommons.com/v2/libraries/arapahoelibraries/events?limit=50",
+   "region": "nearby",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "entities.events",
+    "title": "definition.title",
+    "url": "definition.id",
+    "date": "definition.start",
+    "text": "definition.description"
+   }
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "type": "html",
+   "mode": "page-change",
+   "url": "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "rmnp-alerts-news",
+   "type": "rss",
+   "url": "https://www.nps.gov/feeds/getNewsRSS.htm?id=romo",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "cpw-reservations",
+   "type": "html",
+   "mode": "page-change",
+   "url": "https://cpw.state.co.us/camping",
+   "region": "outdoors",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "bvsd-rss",
+   "type": "rss",
+   "url": "https://www.bvsd.org/fs/calendar-manager/events.rss",
+   "region": "schools",
+   "bots": [
+    "kids",
+    "family"
+   ]
+  }
+ ]
+}

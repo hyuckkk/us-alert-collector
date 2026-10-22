@@ -1,0 +1,473 @@
+{
+ "at": "2026-10-21T04:34:50+00:00",
+ "summary": {
+  "events": 18,
+  "sources_before": 12,
+  "sources_after": 18,
+  "keyword_search": 0,
+  "sources_before_or_search": 12,
+  "sources_after_or_search": 18,
+  "listing_items_before": 980,
+  "listing_items_after": 1009,
+  "sources_ok_before": "24/26",
+  "sources_ok_after": "28/30",
+  "queries": 57,
+  "news_items": 773,
+  "not_measured": "AI 신규 발굴·AI 추출·판정·알림 대상(유료) — 건식 실행으로 별도 측정"
+ },
+ "rows": [
+  {
+   "id": "westminster-calendar:6",
+   "title": "Car Seat Clinic",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [
+    "westminster-calendar"
+   ],
+   "sources_after": [
+    "westminster-calendar"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "westminster-calendar:7",
+   "title": "Trunk or Treat Halloween Spooktacular in Downtown Westminster",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [
+    "westminster-calendar"
+   ],
+   "sources_after": [
+    "westminster-calendar"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "westminster-calendar:11",
+   "title": "Fire Safety Booth @ Westminster Sports Center",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [
+    "westminster-calendar"
+   ],
+   "sources_after": [
+    "westminster-calendar"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "westminster-calendar:4",
+   "title": "Partner Event: A Theatrical Drink Tasting Experience with a Twist: SIP",
+   "participation": "open",
+   "age_limit": "성인(주류 시음)",
+   "sources_before": [
+    "westminster-calendar"
+   ],
+   "sources_after": [
+    "westminster-calendar"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "usafa-events:47",
+   "title": "Homeschool Program: The Outer Solar System Fri, Oct 30 @ 10:30 a.m.",
+   "participation": "full",
+   "age_limit": "홈스쿨 가정(학년 무관)",
+   "sources_before": [
+    "usafa-events"
+   ],
+   "sources_after": [
+    "usafa-events"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "usafa-events:49",
+   "title": "USAFA VS. UConn",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [
+    "usafa-events"
+   ],
+   "sources_after": [
+    "usafa-events"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "usafa-events:50",
+   "title": "Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m.",
+   "participation": "open",
+   "age_limit": "홈스쿨 가정(학년 무관)",
+   "sources_before": [
+    "usafa-events"
+   ],
+   "sources_after": [
+    "usafa-events"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "usafa-events:51",
+   "title": "USAFA VS. San Jose State",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [
+    "usafa-events"
+   ],
+   "sources_after": [
+    "usafa-events"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "usafa-events:52",
+   "title": "Homeschool Program: Earth – Sun – Moon System Wed, Nov 18 @ 10:30 a.m.",
+   "participation": "open",
+   "age_limit": "홈스쿨 가정(학년 무관)",
+   "sources_before": [
+    "usafa-events"
+   ],
+   "sources_after": [
+    "usafa-events"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "usafa-events:57",
+   "title": "Holly & Ivy Concert – Dec. 4",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [
+    "usafa-events"
+   ],
+   "sources_after": [
+    "usafa-events"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "cu-boulder-localist:70",
+   "title": "Mornings at the Museum",
+   "participation": "open",
+   "age_limit": "2–5세 + 보호자",
+   "sources_before": [
+    "cu-boulder-localist"
+   ],
+   "sources_after": [
+    "cu-boulder-localist"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "cu-boulder-localist:67",
+   "title": "Campus Life: 150 Years of Human and More-Than-Human Relationships at CU Boulder Exhibition",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [
+    "cu-boulder-localist"
+   ],
+   "sources_after": [
+    "cu-boulder-localist"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "thornton-youth-teen:85",
+   "title": "Thornton WinterFest",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [],
+   "sources_after": [
+    "thornton-festivals"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "thornton-registration",
+   "title": "Activity Registration Information (Winter/Spring)",
+   "participation": "registration_opening",
+   "age_limit": null,
+   "sources_before": [],
+   "sources_after": [
+    "thornton-festivals",
+    "thornton-registration"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "denver-art-museum-free-days:99",
+   "title": "Nov 7, 2026 SCFD Free Day & Night at the Museums Enjoy free general admission at the DAM thanks to the residents who support SCFD.",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [],
+   "sources_after": [
+    "dam-free-days"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "denver-art-museum-free-days:100",
+   "title": "Dec 8, 2026 SCFD Free Day Enjoy free general admission at the DAM thanks to the residents who support SCFD.",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [],
+   "sources_after": [
+    "dam-free-days"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "denver-art-museum-free-days:101",
+   "title": "Apr 25, 2027 Día del Niño Join us for our annual Día del Niño (Children's Day) festivities, a day to celebrate children across the globe.",
+   "participation": "open",
+   "age_limit": null,
+   "sources_before": [],
+   "sources_after": [
+    "dam-free-days"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  },
+  {
+   "id": "broomfield-programs:93",
+   "title": "Camp Explorer",
+   "participation": "open",
+   "age_limit": "5–14세",
+   "sources_before": [],
+   "sources_after": [
+    "broomfield-camp-explorer"
+   ],
+   "keyword_search_hits": 0,
+   "keyword_search_example": null
+  }
+ ],
+ "sources": [
+  {
+   "id": "westminster-calendar",
+   "new": false,
+   "ok": true,
+   "items": 17,
+   "error": null
+  },
+  {
+   "id": "westminster-news",
+   "new": false,
+   "ok": true,
+   "items": 4,
+   "error": null
+  },
+  {
+   "id": "westminster-camps",
+   "new": false,
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "hyland-hills-sports",
+   "new": false,
+   "ok": false,
+   "items": 0,
+   "error": "ConnectTimeout: timed out"
+  },
+  {
+   "id": "butterfly-pavilion",
+   "new": false,
+   "ok": true,
+   "items": 62,
+   "error": null
+  },
+  {
+   "id": "childrens-museum",
+   "new": false,
+   "ok": true,
+   "items": 2,
+   "error": null
+  },
+  {
+   "id": "rmnp-news",
+   "new": false,
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "new": false,
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "usafa-events",
+   "new": false,
+   "ok": true,
+   "items": 18,
+   "error": null
+  },
+  {
+   "id": "du-athletics-ics",
+   "new": false,
+   "ok": true,
+   "items": 133,
+   "error": null
+  },
+  {
+   "id": "space-launches",
+   "new": false,
+   "ok": true,
+   "items": 20,
+   "error": null
+  },
+  {
+   "id": "hyland-hills-events-api",
+   "new": false,
+   "ok": false,
+   "items": 0,
+   "error": "ConnectTimeout: timed out"
+  },
+  {
+   "id": "usopm-events-api",
+   "new": false,
+   "ok": true,
+   "items": 50,
+   "error": null
+  },
+  {
+   "id": "westminster-programs",
+   "new": false,
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "anythink-communico",
+   "new": false,
+   "ok": true,
+   "items": 15,
+   "error": null
+  },
+  {
+   "id": "jeffco-library",
+   "new": false,
+   "ok": true,
+   "items": 69,
+   "error": null
+  },
+  {
+   "id": "denver-library-html",
+   "new": false,
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "cu-boulder-localist",
+   "new": false,
+   "ok": true,
+   "items": 100,
+   "error": null
+  },
+  {
+   "id": "broomfield-calendar",
+   "new": false,
+   "ok": true,
+   "items": 14,
+   "error": null
+  },
+  {
+   "id": "arvada-calendar",
+   "new": false,
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "cu-athletics-ics",
+   "new": false,
+   "ok": true,
+   "items": 94,
+   "error": null
+  },
+  {
+   "id": "csu-athletics-ics",
+   "new": false,
+   "ok": true,
+   "items": 93,
+   "error": null
+  },
+  {
+   "id": "mines-athletics-ics",
+   "new": false,
+   "ok": true,
+   "items": 122,
+   "error": null
+  },
+  {
+   "id": "afa-athletics-ics",
+   "new": false,
+   "ok": true,
+   "items": 137,
+   "error": null
+  },
+  {
+   "id": "botanic-gardens",
+   "new": false,
+   "ok": true,
+   "items": 8,
+   "error": null
+  },
+  {
+   "id": "dmns-programs",
+   "new": false,
+   "ok": true,
+   "items": 16,
+   "error": null
+  },
+  {
+   "id": "thornton-festivals",
+   "new": true,
+   "ok": true,
+   "items": 24,
+   "error": null
+  },
+  {
+   "id": "thornton-registration",
+   "new": true,
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "dam-free-days",
+   "new": true,
+   "ok": true,
+   "items": 3,
+   "error": null
+  },
+  {
+   "id": "broomfield-camp-explorer",
+   "new": true,
+   "ok": true,
+   "items": 1,
+   "error": null
+  }
+ ]
+}

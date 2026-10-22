@@ -1,0 +1,48 @@
+name: test
+# 모든 push 와 main 으로의 PR 에서 수집기(pytest)·Worker(로컬 D1 + 가짜 텔레그램 종단 검사)·개인정보 검사를 돌린다. 외부로는 아무것도 보내지 않는다.
+on:
+  push:
+    paths-ignore: ["ticks/**"]
+  pull_request:
+    branches: [main]          # main 병합 전 관문(개인정보 검사 엄격 모드)
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  privacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Fetch all branches (history scan)
+        run: git fetch --quiet origin '+refs/heads/*:refs/remotes/origin/*'
+      # 개발 브랜치: 현재 코드의 실제 노출만 실패, 검사어 미설정·과거 이력은 경고 + '병합·배포 불가' 요약(숨기지 않음).
+      # main 으로의 PR·main push: 모두 통과해야 함(엄격). 배포(deploy-worker)도 같은 엄격 검사를 먼저 통과해야 한다.
+      - name: Privacy gate
+        env:
+          PRIVACY_TERMS: ${{ secrets.PRIVACY_TERMS }}
+          MODE: ${{ (github.event_name == 'pull_request' || github.ref == 'refs/heads/main') && 'strict' || 'dev' }}
+        run: python3 scripts/privacy_gate.py "$MODE"
+  collector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt pytest==8.3.4 pyyaml==6.0.2
+      - run: python -m pytest -q collector/tests
+      - run: python -m pytest -q scripts/tests   # staging-test 워크플로 안전성(가짜 Cloudflare 계정으로 단계 실행)
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm ci --no-audit --no-fund
+      - run: npm test

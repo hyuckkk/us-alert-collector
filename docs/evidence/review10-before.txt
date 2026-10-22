@@ -1,0 +1,7 @@
+FAILED collector/tests/test_review10.py::test_1_detail_text_starts_at_event_body_not_menu
+FAILED collector/tests/test_review10.py::test_2_short_rss_items_get_detail_page
+FAILED collector/tests/test_review10.py::test_3_registration_announcements_are_kept
+FAILED collector/tests/test_review10.py::test_4_undated_items_are_not_sent - ...
+FAILED collector/tests/test_review10.py::test_5_same_title_different_dates_and_pages_are_not_merged
+FAILED collector/tests/test_review10.py::test_6_discovery_prefers_upcoming_and_drops_past
+6 failed in 0.46s

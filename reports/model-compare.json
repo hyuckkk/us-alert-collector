@@ -1,0 +1,457 @@
+{
+ "themes": [
+  "kids and teens near Westminster/Denver: after-school programs, classes, camps (incl. registration openings), youth sports leagues, library and museum kids programs",
+  "family outings near Denver: festivals, free days, school/university games and performances, nature and park programs, special experiences, notable family travel deals from Denver",
+  "adults near Westminster/Denver: hobby and skills classes, community college noncredit courses, rec-center adult sports leagues, clubs, talks, performances",
+  "kids after-school programs, camps, youth sports and arts/science classes"
+ ],
+ "models": {
+  "claude-opus-5-5": {
+   "sources": 19,
+   "events": 9,
+   "unique_urls": 21,
+   "duplicate_mentions": 7,
+   "fetchable": 17,
+   "official_domain": 17,
+   "sources_with_event_links": 12,
+   "already_known_host": 5,
+   "usd": 1.3103,
+   "usage": {
+    "claude-opus-5-5": {
+     "input_tokens": 245072,
+     "output_tokens": 7999,
+     "cache_write_tokens": 0,
+     "cache_read_tokens": 0,
+     "usd": 1.310268,
+     "calls": 4,
+     "searches": 17,
+     "errors": 0
+    }
+   },
+   "seconds": 183,
+   "errors": [],
+   "source_list": [
+    {
+     "url": "https://apexprd.org/activities/toddler-through-teens/camps/",
+     "name": "Apex Park and Recreation District – Camps",
+     "reason": "Apex runs three full-day, state-licensed camp sites, a Teen Adventure program and a Leadership in Training program for ages 5–15. Camps run during the Jeffco Public Schools spring, summer, fall and winter breaks. Apex serves Arvada and the area next to Westminster.",
+     "bots": [
+      "kids",
+      "family"
+     ],
+     "theme": "kids"
+    },
+    {
+     "url": "https://arvadacenter.org/education",
+     "name": "Arvada Center – Arts Education (class catalog)",
+     "reason": "Lists recurring arts classes for children, teens and adults, including ceramics from beginner to advanced. The page links to the full class catalog.",
+     "bots": [
+      "kids",
+      "family",
+      "life"
+     ],
+     "theme": "kids"
+    },
+    {
+     "url": "https://arvadacenter.org/education/summer-camps",
+     "name": "Arvada Center – Summer Camps",
+     "reason": "Arts summer camps with full-day and half-day options. Camps fill up quickly, so it's worth checking when registration opens.",
+     "bots": [
+      "kids"
+     ],
+     "theme": "kids"
+    },
+    {
+     "url": "https://arvadacenter.org/education/spring-break-camps",
+     "name": "Arvada Center – Spring Break Camps",
+     "reason": "Arts camps that run during spring break.",
+     "bots": [
+      "kids"
+     ],
+     "theme": "kids"
+    },
+    {
+     "url": "https://arvadacenter.org/education/dance",
+     "name": "Arvada Center – Dance Classes",
+     "reason": "Ballet, tap and modern dance classes in four sessions a year. Scholarship applications are accepted before each session.",
+     "bots": [
+      "kids"
+     ],
+     "theme": "kids"
+    },
+    {
+     "url": "https://www.arvadaco.gov/1112/Camps",
+     "name": "City of Arvada – Single Day Camps (Majestic View Nature Center)",
+     "reason": "Single-day nature camps with hands-on activities, games, crafts and exploration at Majestic View Nature Center, 7030 Garrison St, Arvada.",
+     "bots": [
+      "kids",
+      "family"
+     ],
+     "theme": "kids"
+    },
+    {
+     "url": "https://www.jeffco.us/calendar.aspx?CID=26",
+     "name": "Jefferson County Parks & Open Space – Open Space Master Calendar",
+     "reason": "The official county calendar for nature programs. It lists nature journal clubs, walks with native plant experts, full moon night hikes and volunteer days at Jeffco parks a short drive from Westminster. It is a CivicPlus calendar, so an RSS feed is likely available.",
+     "bots": [
+      "family",
+      "life"
+     ],
+     "theme": "family"
+    },
+    {
+     "url": "https://www.jeffco.us/1541/Event-Calendar",
+     "name": "Jeffco Open Space Education Programs – Event Calendar",
+     "reason": "Sign-up page for Jeffco Open Space education programs, including Preschool Nature Nuts (for kids ages 3–5 with a parent) and Night at the Observatory.",
+     "bots": [
+      "kids",
+      "family"
+     ],
+     "theme": "family"
+    },
+    {
+     "url": "https://www.jeffco.us/1281/Lookout-Mountain-Preserve-and-Nature-Cen",
+     "name": "Lookout Mountain Nature Center & Preserve (Jeffco Parks)",
+     "reason": "A nature center run by the county on a 110-acre preserve that offers nature programs. A good family outing in the foothills.",
+     "bots": [
+      "kids",
+      "family"
+     ],
+     "theme": "family"
+    },
+    {
+     "url": "https://www.fws.gov/refuge/rocky-mountain-arsenal/visit-us/activities",
+     "name": "Rocky Mountain Arsenal National Wildlife Refuge – Activities",
+     "reason": "A 15,000-acre wildlife refuge in Commerce City, about 20 minutes from Westminster. It has a wildlife drive, bison viewing and environmental education programs for youth groups and families.",
+     "bots": [
+      "kids",
+      "family",
+      "life"
+     ],
+     "theme": "family"
+    },
+    {
+     "url": "https://content.govdelivery.com/accounts/USDOIFWS6/bulletins/26632bf",
+     "name": "Rocky Mountain Arsenal NWR Nature Programs bulletin (USFWS GovDelivery)",
+     "reason": "An official USFWS email bulletin that lists free nature programs at the refuge that need reservations. This copy is an old schedule (Nov–Dec 2019), but it shows the bulletin series to subscribe to for current schedules.",
+     "bots": [
+      "family",
+      "life"
+     ],
+     "theme": "family"
+    },
+    {
+     "url": "https://arvadacenter.org/events",
+     "name": "Arvada Center – View All Events",
+     "reason": "A nearby performing arts center in Arvada. Its calendar includes kids' theatre such as Pete the Cat (with a sensory-friendly show), music events for kids, musicals, jazz concerts, gallery exhibits and the annual holiday pottery sale.",
+     "bots": [
+      "kids",
+      "family",
+      "life"
+     ],
+     "theme": "family"
+    },
+    {
+     "url": "https://www.uncovercolorado.com/wp-content/uploads/2025/04/Colorado-Free-Days.pdf",
+     "name": "Colorado Free Days list (Uncover Colorado)",
+     "reason": "A list of free days by month at the Denver Museum of Nature & Science, Denver Zoo, Denver Botanic Gardens and other places. Use it to check free days against each venue's own page. This is not an official site.",
+     "bots": [
+      "family"
+     ],
+     "theme": "family"
+    },
+    {
+     "url": "https://continuingeducation.frontrange.edu/frontrange/course/course.aspx?catid=17",
+     "name": "Front Range Community College Continuing Education",
+     "reason": "Front Range Community College's main campus is in Westminster. This is its noncredit catalog for lifelong learning: workshops, certifications and personal-enrichment courses for adults. It has course listings you can register for.",
+     "bots": [
+      "life"
+     ],
+     "theme": "life"
+    },
+    {
+     "url": "https://www.westminsterco.gov/AdultSports",
+     "name": "City of Westminster Adult Athletics",
+     "reason": "The city's main page for adult sports leagues, including basketball, volleyball, softball and indoor soccer. Registration is seasonal, so it's worth checking regularly.",
+     "bots": [
+      "life"
+     ],
+     "theme": "life"
+    },
+    {
+     "url": "https://www.teamsideline.com/sites/westminster/content/7675/Adult-Indoor-Soccer",
+     "name": "Westminster Sports Center league site (TeamSideline)",
+     "reason": "The city's league site for Westminster adult leagues. It has schedules, standings and registration, and the Sports Center is at 6051 W. 95th Ave.",
+     "bots": [
+      "life"
+     ],
+     "theme": "life"
+    },
+    {
+     "url": "https://www.westminsterco.gov/adultvolleyball",
+     "name": "Westminster Adult Volleyball Leagues",
+     "reason": "Volleyball leagues split into skill divisions (BB, B and more), so they work well for mixed groups of friends. You can register online or by phone at City Park Rec Center or the Sports Center.",
+     "bots": [
+      "life"
+     ],
+     "theme": "life"
+    },
+    {
+     "url": "https://www.westminsterco.gov/312/Adult-Indoor-Soccer",
+     "name": "Westminster Adult Indoor Soccer",
+     "reason": "Indoor soccer leagues with Gold, Silver and Bronze divisions at the Westminster Sports Center. Teams can be friends, family or coworkers.",
+     "bots": [
+      "life"
+     ],
+     "theme": "life"
+    },
+    {
+     "url": "https://www.westminsterco.gov/311/Adult-Basketball",
+     "name": "Westminster Adult Basketball",
+     "reason": "Men's basketball leagues run by the City of Westminster, with info and registration on this page.",
+     "bots": [
+      "life"
+     ],
+     "theme": "life"
+    }
+   ],
+   "event_list": [
+    {
+     "url": "https://arvadacenter.org/education/summer-camps",
+     "title": "Arvada Center summer camp registration",
+     "why": "Popular summer arts camps fill up quickly. Check when registration opens and sign up early.",
+     "theme": "kids"
+    },
+    {
+     "url": "https://apexprd.org/activities/toddler-through-teens/camps/",
+     "title": "Apex PRD break camps (spring, summer, fall and winter) for ages 5–15",
+     "why": "Licensed full-day childcare camps timed to Jeffco school breaks. This is useful for working parents. The camp page was updated recently.",
+     "theme": "kids"
+    },
+    {
+     "url": "https://arvadacenter.org/education/dance",
+     "title": "Arvada Center dance session sign-ups and scholarship deadline",
+     "why": "Classes run in four sessions a year, and scholarship applications are due before each session.",
+     "theme": "kids"
+    },
+    {
+     "url": "https://www.denvergazette.com/2025/10/23/heres-how-you-can-visit-20-denver-museums-for-free-one-night-only/",
+     "title": "Night at the Museums: 20 Denver museums free, 5–10 p.m. (yearly in November)",
+     "why": "Free evening entry to the Denver Art Museum, Museum of Nature & Science, History Colorado, the Children's Museum, Clyfford Still Museum and more. The article covers Nov. 8, 2025, which may have passed, but the event happens every year, so watch for the next date.",
+     "theme": "family"
+    },
+    {
+     "url": "https://arvadacenter.org/events",
+     "title": "Arvada Center: Pete the Cat (Jan 26 – May 7, 2027), sensory-friendly show Feb 12, 2027; Animal Farm music for kids Nov 14, 2026; Joseph and the Amazing Technicolor Dreamcoat (Nov 20, 2026 – Jan 3, 2027)",
+     "why": "Family theatre near Westminster, including a sensory-friendly show. Holiday musical tickets usually sell out early.",
+     "theme": "family"
+    },
+    {
+     "url": "https://www.jeffco.us/1541/Event-Calendar",
+     "title": "Jeffco Open Space: Preschool Nature Nuts (Oct 10, 2026) and Night at the Observatory (Oct 17, 2026)",
+     "why": "Kids' nature classes and stargazing that need online registration and have limited spots.",
+     "theme": "family"
+    },
+    {
+     "url": "https://www.jeffco.us/calendar.aspx?CID=26",
+     "title": "Jeffco Open Space: Full Moon Night Hike at Elk Meadow Park and National Public Lands Day volunteer cleanup (Sep 26, 2026)",
+     "why": "A family night hike and a volunteer day for community service hours, good for adults and teens.",
+     "theme": "family"
+    },
+    {
+     "url": "https://www.westminsterco.gov/313/Adult-Softball",
+     "title": "Westminster Spring Softball 2026 registration (deadline March 15, 2026)",
+     "why": "Registration opened January 5, 2026. The fee is $275 with a $175 deposit. A mandatory captains meeting is on March 15, 2-3 pm, at City Park Recreation Center (10455 Sheridan Blvd), and games start the week of March 23, 2026.",
+     "theme": "life"
+    },
+    {
+     "url": "https://www.westminsterco.gov/312/Adult-Indoor-Soccer",
+     "title": "Westminster Adult Indoor Soccer league team registration",
+     "why": "Teams register by phone at 303-658-2393. The team fee is $650, which can be split into a $325 deposit and $325 due before the first game.",
+     "theme": "life"
+    }
+   ]
+  },
+  "claude-sonnet-5-5": {
+   "sources": 0,
+   "events": 0,
+   "unique_urls": 0,
+   "duplicate_mentions": 0,
+   "fetchable": 0,
+   "official_domain": 0,
+   "sources_with_event_links": 0,
+   "already_known_host": 0,
+   "usd": 0.3998,
+   "usage": {
+    "claude-sonnet-5-5": {
+     "input_tokens": 107008,
+     "output_tokens": 1582,
+     "cache_write_tokens": 0,
+     "cache_read_tokens": 0,
+     "usd": 0.39983599999999997,
+     "calls": 4,
+     "searches": 17,
+     "errors": 0
+    }
+   },
+   "seconds": 72,
+   "errors": [],
+   "source_list": [],
+   "event_list": []
+  }
+ },
+ "overlap": {
+  "both": 0,
+  "only_claude-opus-5-5": 21,
+  "only_claude-sonnet-5-5": 0
+ },
+ "url_checks": {
+  "https://apexprd.org/activities/toddler-through-teens/camps/": {
+   "ok": false,
+   "status": 403,
+   "event_links": 0,
+   "official": true,
+   "error": "HTTP 403"
+  },
+  "https://arvadacenter.org/education": {
+   "ok": true,
+   "status": 200,
+   "event_links": 125,
+   "official": true,
+   "error": null
+  },
+  "https://arvadacenter.org/education/summer-camps": {
+   "ok": true,
+   "status": 200,
+   "event_links": 125,
+   "official": true,
+   "error": null
+  },
+  "https://arvadacenter.org/education/spring-break-camps": {
+   "ok": true,
+   "status": 200,
+   "event_links": 125,
+   "official": true,
+   "error": null
+  },
+  "https://arvadacenter.org/education/dance": {
+   "ok": true,
+   "status": 200,
+   "event_links": 125,
+   "official": true,
+   "error": null
+  },
+  "https://www.arvadaco.gov/1112/Camps": {
+   "ok": false,
+   "status": 403,
+   "event_links": 0,
+   "official": true,
+   "error": "HTTP 403"
+  },
+  "https://www.jeffco.us/calendar.aspx?CID=26": {
+   "ok": true,
+   "status": 200,
+   "event_links": 12,
+   "official": true,
+   "error": null
+  },
+  "https://www.jeffco.us/1541/Event-Calendar": {
+   "ok": true,
+   "status": 200,
+   "event_links": 8,
+   "official": true,
+   "error": null
+  },
+  "https://www.jeffco.us/1281/Lookout-Mountain-Preserve-and-Nature-Cen": {
+   "ok": true,
+   "status": 200,
+   "event_links": 19,
+   "official": true,
+   "error": null
+  },
+  "https://www.fws.gov/refuge/rocky-mountain-arsenal/visit-us/activities": {
+   "ok": false,
+   "status": 404,
+   "event_links": 0,
+   "official": true,
+   "error": "HTTP 404"
+  },
+  "https://content.govdelivery.com/accounts/USDOIFWS6/bulletins/26632bf": {
+   "ok": true,
+   "status": 200,
+   "event_links": 0,
+   "official": false,
+   "error": null
+  },
+  "https://arvadacenter.org/events": {
+   "ok": true,
+   "status": 200,
+   "event_links": 124,
+   "official": true,
+   "error": null
+  },
+  "https://www.uncovercolorado.com/wp-content/uploads/2025/04/Colorado-Free-Days.pdf": {
+   "ok": true,
+   "status": 200,
+   "event_links": 0,
+   "official": false,
+   "error": null
+  },
+  "https://continuingeducation.frontrange.edu/frontrange/course/course.aspx?catid=17": {
+   "ok": true,
+   "status": 200,
+   "event_links": 0,
+   "official": true,
+   "error": null
+  },
+  "https://www.westminsterco.gov/AdultSports": {
+   "ok": true,
+   "status": 200,
+   "event_links": 3,
+   "official": true,
+   "error": null
+  },
+  "https://www.teamsideline.com/sites/westminster/content/7675/Adult-Indoor-Soccer": {
+   "ok": false,
+   "status": 403,
+   "event_links": 0,
+   "official": false,
+   "error": "HTTP 403"
+  },
+  "https://www.westminsterco.gov/adultvolleyball": {
+   "ok": true,
+   "status": 200,
+   "event_links": 3,
+   "official": true,
+   "error": null
+  },
+  "https://www.westminsterco.gov/312/Adult-Indoor-Soccer": {
+   "ok": true,
+   "status": 200,
+   "event_links": 3,
+   "official": true,
+   "error": null
+  },
+  "https://www.westminsterco.gov/311/Adult-Basketball": {
+   "ok": true,
+   "status": 200,
+   "event_links": 3,
+   "official": true,
+   "error": null
+  },
+  "https://www.denvergazette.com/2025/10/23/heres-how-you-can-visit-20-denver-museums-for-free-one-night-only/": {
+   "ok": true,
+   "status": 200,
+   "event_links": 9,
+   "official": false,
+   "error": null
+  },
+  "https://www.westminsterco.gov/313/Adult-Softball": {
+   "ok": true,
+   "status": 200,
+   "event_links": 3,
+   "official": true,
+   "error": null
+  }
+ }
+}

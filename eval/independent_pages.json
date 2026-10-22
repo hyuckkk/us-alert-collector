@@ -1,0 +1,739 @@
+{
+ "at": "2026-10-21T05:08:04+00:00",
+ "monitored_sources": [
+  {
+   "id": "westminster-calendar",
+   "ok": true,
+   "items": 17,
+   "error": null
+  },
+  {
+   "id": "westminster-news",
+   "ok": true,
+   "items": 4,
+   "error": null
+  },
+  {
+   "id": "westminster-camps",
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "hyland-hills-sports",
+   "ok": true,
+   "items": 4,
+   "error": null
+  },
+  {
+   "id": "butterfly-pavilion",
+   "ok": true,
+   "items": 62,
+   "error": null
+  },
+  {
+   "id": "childrens-museum",
+   "ok": true,
+   "items": 2,
+   "error": null
+  },
+  {
+   "id": "rmnp-news",
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "usafa-events",
+   "ok": true,
+   "items": 18,
+   "error": null
+  },
+  {
+   "id": "du-athletics-ics",
+   "ok": true,
+   "items": 133,
+   "error": null
+  },
+  {
+   "id": "space-launches",
+   "ok": true,
+   "items": 20,
+   "error": null
+  },
+  {
+   "id": "hyland-hills-events-api",
+   "ok": true,
+   "items": 41,
+   "error": null
+  },
+  {
+   "id": "usopm-events-api",
+   "ok": true,
+   "items": 50,
+   "error": null
+  },
+  {
+   "id": "westminster-programs",
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "anythink-communico",
+   "ok": true,
+   "items": 15,
+   "error": null
+  },
+  {
+   "id": "jeffco-library",
+   "ok": true,
+   "items": 69,
+   "error": null
+  },
+  {
+   "id": "denver-library-html",
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "cu-boulder-localist",
+   "ok": true,
+   "items": 100,
+   "error": null
+  },
+  {
+   "id": "broomfield-calendar",
+   "ok": true,
+   "items": 14,
+   "error": null
+  },
+  {
+   "id": "arvada-calendar",
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "cu-athletics-ics",
+   "ok": true,
+   "items": 94,
+   "error": null
+  },
+  {
+   "id": "csu-athletics-ics",
+   "ok": true,
+   "items": 93,
+   "error": null
+  },
+  {
+   "id": "mines-athletics-ics",
+   "ok": true,
+   "items": 122,
+   "error": null
+  },
+  {
+   "id": "afa-athletics-ics",
+   "ok": true,
+   "items": 137,
+   "error": null
+  },
+  {
+   "id": "botanic-gardens",
+   "ok": true,
+   "items": 8,
+   "error": null
+  },
+  {
+   "id": "dmns-programs",
+   "ok": true,
+   "items": 16,
+   "error": null
+  },
+  {
+   "id": "thornton-festivals",
+   "ok": true,
+   "items": 24,
+   "error": null
+  },
+  {
+   "id": "thornton-registration",
+   "ok": true,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "dam-free-days",
+   "ok": true,
+   "items": 3,
+   "error": null
+  },
+  {
+   "id": "broomfield-camp-explorer",
+   "ok": true,
+   "items": 1,
+   "error": null
+  }
+ ],
+ "events": [],
+ "extra_sources": [
+  {
+   "id": "commerce-city-calendar",
+   "url": "https://www.c3gov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": false,
+   "items": 0,
+   "error": "HTTP 404"
+  },
+  {
+   "id": "brighton-calendar",
+   "url": "https://www.brightonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "items": 28,
+   "error": null
+  },
+  {
+   "id": "louisville-calendar",
+   "url": "https://www.louisvilleco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": false,
+   "items": 0,
+   "error": "HTTP 404"
+  },
+  {
+   "id": "lafayette-calendar",
+   "url": "https://www.lafayetteco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "items": 20,
+   "error": null
+  },
+  {
+   "id": "erie-calendar",
+   "url": "https://www.erieco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "items": 12,
+   "error": null
+  },
+  {
+   "id": "superior-calendar",
+   "url": "https://www.superiorcolorado.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": false,
+   "items": 0,
+   "error": "HTTP 404"
+  },
+  {
+   "id": "golden-calendar",
+   "url": "https://www.cityofgolden.net/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": false,
+   "items": 0,
+   "error": "HTTP 404"
+  },
+  {
+   "id": "littleton-calendar",
+   "url": "https://www.littletongov.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": false,
+   "items": 0,
+   "error": "HTTP 404"
+  }
+ ],
+ "extra_events": [
+  {
+   "source": "brighton-calendar",
+   "title": "Senior Weightroom Orientation Series Begins",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6790",
+   "date_raw": "Tue, 18 Aug 2026 14:03:59 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Senior Weightroom Orientation Series Begins Tuesday, September 15, 2026 Build confidence and learn the essentials in this supportive six-week strength series for senior adults. Designed for those new to weight training, participants will learn proper machine setup, safe lifting technique, and how to track progress in a welcoming, small-group environment. Each week builds on foundational movement patterns, posture, and gradual progression under the guidance of a Certified Personal Trainer. Leave feeling comfortable, capable, and ready to use the fitness center independently.",
+   "facts": [
+    "senior weightroom orientation series begins tuesday, september 15, 2026 build confidence and learn the essentials in this supportive six-week strength series for senior adults.",
+    "leave feeling comfortable, capable, and ready to use the fitness center independently."
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Watercolor Painting Class",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6742",
+   "date_raw": "Tue, 18 Aug 2026 11:42:00 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Watercolor Painting Class Tuesday, October 20, 2026 Curious about watercolor but not sure where to begin? This relaxed, beginner-friendly workshop is the perfect introduction to painting with watercolors. Kristi will guide you step-by-step through the entire process as you create a spring flowers painting, making it approachable and fun, even if you’ve never painted before. This is a fully instructor-led class designed for beginners. All watercolor materials are provided, so you can simply show up ready to learn, experiment, and enjoy the creative process. By the end of class, you’ll leave with a finished painting and a better understanding of how watercolor works.",
+   "facts": [
+    "watercolor painting class tuesday, october 20, 2026 curious about watercolor but not sure where to begin?"
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Cupcake Decorating with Mulberries",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6707",
+   "date_raw": "Tue, 18 Aug 2026 10:57:38 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Cupcake Decorating with Mulberries Wednesday, October 21, 2026 Mulberries Cupcake Decorating Workshop is here! Please register to join us for an hour after school.",
+   "facts": [
+    "cupcake decorating with mulberries wednesday, october 21, 2026 mulberries cupcake decorating workshop is here!",
+    "please register to join us for an hour after school."
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Beginner Pickleball Sessions Begin",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6770",
+   "date_raw": "Tue, 18 Aug 2026 13:44:10 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Beginner Pickleball Sessions Begin Wednesday, October 21, 2026 Learn the foundations of Pickleball in this fun, friendly, and welcoming series! This 90-minute class meets twice weekly for 4 weeks. The first part of class will outline a skills focus for the day, then we’ll hit the court for some hands-on practice! Get ready to join the fun!",
+   "facts": [
+    "beginner pickleball sessions begin wednesday, october 21, 2026 learn the foundations of pickleball in this fun, friendly, and welcoming series!"
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "After Dark Burlesque Class",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6785",
+   "date_raw": "Tue, 18 Aug 2026 13:56:41 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "After Dark Burlesque Class Wednesday, October 21, 2026 Experience a playful introduction to burlesque through easy-to-learn choreography that celebrates confidence and individuality. Whether you're new to dance or simply looking for a fun night out, this class is all about moving, expressing yourself, and having a great time.",
+   "facts": [
+    "after dark burlesque class wednesday, october 21, 2026 experience a playful introduction to burlesque through easy-to-learn choreography that celebrates confidence and individuality."
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "District Plan Commission Meeting",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6834",
+   "date_raw": "Fri, 16 Oct 2026 09:59:16 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "District Plan Commission Meeting Thursday, October 22, 2026",
+   "facts": [
+    "district plan commission meeting thursday, october 22, 2026"
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Planning Commission Meeting",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6833",
+   "date_raw": "Fri, 16 Oct 2026 09:49:27 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Planning Commission Meeting Thursday, October 22, 2026 https://www.brightonco.gov/AgendaCenter/ViewFile/Agenda/_10222026-2151",
+   "facts": [
+    "planning commission meeting thursday, october 22, 2026 https://www.brightonco.gov/agendacenter/viewfile/agenda/_10222026-2151"
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "FAFSA Night",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6823",
+   "date_raw": "Thu, 17 Sep 2026 15:21:20 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "FAFSA Night Thursday, October 22, 2026 Students and their families are invited to attend the following nights to get one-on-one help in filling out the FAFSA/CASFA application. Students need not have to be from that school to attend. 2026-2027 FAFSA/CAFSA dates: Oct. 20, 5:30 - 7:30p.m. Riverdale Ridge High School,13380 Yosemite St., Thornton Oct. 22, 6:00 - 7:30 p.m. Brighton High School,270 S. 8th Ave., Brighton Nov. 12, 5:30 - 7:00 p.m. Eagle Ridge Academy,3551 Southern St., Brighton Dec. 10, 5:30 - 7:00 p.m. Prairie View High School,12909 E. 120th Ave., Henderson Jan. 12, 6:00 - 7:30 p.m. Brighton Anythink Library,327 E. Bridge St., Brighton If you have questions, contact Tawnya Russell, Manager of Youth Services, at trussell@brightonco.gov or 303-655-2123.",
+   "facts": [
+    "fafsa night thursday, october 22, 2026 students and their families are invited to attend the following nights to get one-on-one help in filling out the fafsa/casfa application."
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Lochbuie Sewer Board",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6580",
+   "date_raw": "Thu, 16 Apr 2026 20:58:32 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Lochbuie Sewer Board Thursday, October 22, 2026",
+   "facts": [
+    "lochbuie sewer board thursday, october 22, 2026"
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Creative Movement",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6693",
+   "date_raw": "Tue, 18 Aug 2026 10:34:03 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Creative Movement is a fusion class that integrates kids' yoga, sound, and creativity to inspire fun and well-being! Incorporating storytelling with various poses and breathwork to stretch and connect with not only others, but ourselves. Along with yoga, we'll create music with gongs, drums, other percussion instruments, and even some singing.",
+   "facts": [
+    "creative movement is a fusion class that integrates kids' yoga, sound, and creativity to inspire fun and well-being! incorporating storytelling with various poses and breathwork to stretch and connect with not only others, but ourselves. along with yoga, we'll create music with gongs, drums, other percussion instruments, and even some singing."
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Treat Street: Trick or Treating Event",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6717",
+   "date_raw": "Tue, 18 Aug 2026 11:07:11 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Treat Street: Trick or Treating Event Saturday, October 24, 2026 Treat Street is a family-friendly Halloween event where kids can dress up and trick-or-treat in a safe, fun environment! Local businesses and community partners will be handing out goodies and spreading spooky cheer. Join us for costumes, candy, and community fun!",
+   "facts": [
+    "treat street: trick or treating event saturday, october 24, 2026 treat street is a family-friendly halloween event where kids can dress up and trick-or-treat in a safe, fun environment!",
+    "join us for costumes, candy, and community fun!"
+   ]
+  },
+  {
+   "source": "brighton-calendar",
+   "title": "Splashing Pumpkins",
+   "url": "https://www.brightonco.gov/1124/Splashing-Pumpkins",
+   "date_raw": "Tue, 18 Aug 2026 11:56:50 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Splashing Pumpkins Looking for something different this spooky season? Come make a splash at our 4th annual floating pumpkin patch! From 1:30 to 4:15 PM, you can dive in and take home a pumpkin of your choice for only $8! All are welcome! Families, couples, singles and the young at heart. Capacity is limited to 45 pumpkin pickers at a time, register below for a time block to avoid disappointment! Chaperones must be 16 years of age or older and are welcome to get in the water. Please remember that non swimmers and children aged 6 and under must be within arms reach at all times! THE HOT TUB AND POOL WILL BE CLOSED TO THE PUBLIC. Sauna and steam room will remain open. Date: October 24 Event Time: 1:30 - 4:15 p.m. Where: Brighton Recreation Center Pool (555 N. 11th Ave. Brighton, CO 80601) Price: $8 per person | Chaperones: *Free Sessions Time Session A (recommended for younger ages) 1:30 - 2:15 p.m. Session B ( all ages welcome ) 2:30- 3:15 p.m. Session C ( all ages welcome ) 3:30 - 4:15 p.m. Registration or call 303-655-2200 Be sure to come to our FREE Treat Street Trick-or-Treating event afterwards at Brighton Park! Contact Us Nicole Chapman Recreation Supervisor - Aquatics Email Nicole Phone: 303-655-2212 More Information Taylor Krolopp Aquatics Coordinator Email Taylor Phone: 303-655-2211 Lauren Speer Assistant Aquatics Coordinator Email Lauren Phone: 303-655-2213 Contact Us 500 S 4th Avenue Brighton, CO 80601 Phone: 303-655-2000 Hours: Monday - Thursday: 8 a.m. - 5 p.m. Friday: 8 a.m. - Noon Quick Links City Council Emergency Notifications Police Department Recreation Center Permits /QuickLinks.aspx Site Links Home Sign In Staff Intranet Site Map Staff Directory /QuickLinks.aspx Government Websites by CivicPlus® Loading Loading Do Not Show Again Close []",
+   "facts": [
+    "from 1:30 to 4:15 pm, you can dive in and take home a pumpkin of your choice for only $8!",
+    "capacity is limited to 45 pumpkin pickers at a time, register below for a time block to avoid disappointment!",
+    "chaperones must be 16 years of age or older and are welcome to get in the water.",
+    "date: october 24 event time: 1:30 - 4:15 p.m.",
+    "brighton, co 80601) price: $8 per person",
+    "chaperones: *free sessions time session a (recommended for younger ages) 1:30 - 2:15 p.m.",
+    "session b ( all ages welcome ) 2:30- 3:15 p.m.",
+    "session c ( all ages welcome ) 3:30 - 4:15 p.m.",
+    "registration or call 303-655-2200 be sure to come to our free treat street trick-or-treating event afterwards at brighton park!"
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Día de los Muertos Exhibit - Arcos y Portales",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=12196",
+   "date_raw": "Thu, 01 Oct 2026 14:08:10 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Día de los Muertos Exhibit - Arcos y Portales Thursday, September 24, 2026 Join the City of Lafayette Arts and Cultural Resources Department at The Collective Community Arts Center for the Annual Día de los Muertos Exhibit. Look forward to local art by Arlette Lucero, Jesus Sales, Michelle Sepulveda, Lida Penkova, Justice High School Students, and Centaurus High School Students, and more representing and celebrating this Mexican tradition. Add to the community ofrendas honoring our ancestors and those we have lost. Lafayetteco.gov/Collective Join us: Friday, Oct. 9, 4:30-6:30pm - Paper Catrina Workshop. Join local crafter Martha Ramírez to make a paper Día de los Muertos elegant woman called a Catrina. Cut, fold, and glue simple materials to create a standing Catrina to take with you and help welcome your ancestors home for Día de los Muertos. Martha will instruct step by step. This workshop will be predominantly presented in Spanish. Request language interpretation by email at arts@lafayetteco.gov . Saturday and Sunday, Oct. 24 and 25 - Picture Frame Decorating Drop In. Decorate and take home a picture frame to begin your own ofrenda at home. Add a picture of a loved one who has passed. While supplies last. Friday, Oct. 30, 3-7pm - Exhibit Closing Celebration. Lets welcome our ancestors home with facepainting, music, and community. Light mexican food and refreshments provided. 3-5pm - Facepainting 5-7pm - Music and Light Appetizers Visit The Collective Community Arts Center at 201 N Public Road in Lafayette and find more details at lafayetteco.gov/Collective",
+   "facts": [
+    "día de los muertos exhibit - arcos y portales thursday, september 24, 2026 join the city of lafayette arts and cultural resources department at the collective community arts center for the annual día de los muertos exhibit.",
+    "9, 4:30-6:30pm - paper catrina workshop.",
+    "30, 3-7pm - exhibit closing celebration.",
+    "3-5pm - facepainting 5-7pm - music and light appetizers visit the collective community arts center at 201 n public road in lafayette and find more details at lafayetteco.gov/collective"
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Art on the Street, See & Respond Exhibit",
+   "url": "https://lafayetteco.gov/SeeAndRespond",
+   "date_raw": "Thu, 01 Oct 2026 15:16:05 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Art on the Street, See & Respond 2026 See & Respond Exhibition The See & Respond exhibit is on display at the Lafayette Public Library on the main floor, Oct. 2 - Nov. 1. This year there are 70 works in the exhibit. 2026 Winners Art on the Street Jean Mellblom Award: Mountain Sentinel by Alicia Jones See & Respond Most Inspiring Award: Moon Rising by Fred Lunger Art on the Street People's Choice Award: The Loner by Vanny Channal View all of our See & Respond Winners (PDF) Community Engagement Every year community members of all ages are invited to See and Respond to the Art on the Street sculptures by creating 2D art, photography, and/or poetry. See & Respond is a creative tradition in Lafayette. Artists of all ages and abilities are invited to create work inspired by another artwork - a public sculpture. Sculptors and viewers alike delight in seeing and reading the results. 1 People looking at art on the walls 2 People at tables of food in front of art on walls 3 People looking at art 4 El Rice playing cello at art reception 5 People looking at art on the walls Art Night Out Picnic on the Plaza See & Respond Black Heritage Hispanic Heritage Dogs and Pets at Public Events Contact & Connect Pay Online Building & Permits Recreation Library Lafayette Listens Contact Us City of Lafayette 1290 S. Public Road Lafayette, CO 80026 Contact Staff City Hall Hours Phone: 303-665-5588 Quick Links Job Opportunities Online Payments Agendas & Minutes Notification Sign-Up City Newsletters Licenses and Permits /QuickLinks.aspx Site Links Accessibility Site Map Report a Concern Code Compliance Boulder County Emergency Alerts /QuickLinks.aspx Government Websites by CivicPlus® Loading Loading Do Not Show Again Close []",
+   "facts": [
+    "artists of all ages and abilities are invited to create work inspired by another artwork - a public sculpture."
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Fall City-wide Street Sweeping",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=11812",
+   "date_raw": "Wed, 04 Feb 2026 10:12:19 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Fall City-wide Street Sweeping Monday, October 19, 2026",
+   "facts": [
+    "fall city-wide street sweeping monday, october 19, 2026"
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Lafayette Cultural Arts Board Meeting",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=12067",
+   "date_raw": "Thu, 01 Oct 2026 15:04:39 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Lafayette Cultural Arts Board (LCAB) promotes, nurtures, and celebrates the visual, performing, and language arts by providing opportunities for the public to appreciate and enjoy art in its various forms; connecting artists, educators, and community members with resources; building partnerships to sustain and further the arts; and embracing and supporting the diversity of the community we serve. LCAB works closely with the Arts and Cultural Resources Department to plan and implement programs for the community.",
+   "facts": []
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Community Police Academy",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=12152",
+   "date_raw": "Mon, 22 Jun 2026 15:12:52 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Community Police Academy meets once a week for 10 weeks and each block provides participants first-had information by officers and includes hands-on and interactive opportunities. If you have ever wondered why police do what they do to keep you safe, apply to attend the 2026 fall academy! Applications and background checks are required. Applications available online and at the police department. Seating is limited, so apply early! Upon successful completion of the academy, students will be honored at a graduation ceremony!",
+   "facts": []
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Weekly Sewer Jetting",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=11857",
+   "date_raw": "Wed, 04 Feb 2026 10:28:55 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Weekly Sewer Jetting Thursday, October 22, 2026",
+   "facts": [
+    "weekly sewer jetting thursday, october 22, 2026"
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Pop-up Day of the Dead Storytime at the Collective",
+   "url": "https://lafayettepubliclibrary.libcal.com/calendar/main/CollectiveDayoftheDeadPopUpOct2026",
+   "date_raw": "Tue, 15 Sep 2026 10:47:58 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Pop-up Day of the Dead Storytime at The Collective Families - join Library staff at The Collective Community Arts Center for a special Día de los Muertos cuentacuentos (Day of the Dead Storytime). We will read stories, sing songs, and learn about Day of the Dead. At 11am, Collective staff will lead a hands-on art activity. Location: 201 N. Public Road, Lafayette Date: Friday, October 23, 2026 Time: 10:30AM - 11:30AM Location: Collective Campus: Offsite Audience: Under 18 Categories: *Storytime Kids Footer Questions? Contact the Programs team online (lafayetteco.gov/ContactLibrary) or call us at 303-661-1163. Powered by Springshare . All rights reserved. Report a tech support issue. Login to LibApps català Cymraeg English español français Irish 日本語 Nihongo Nederlands slovenski jezik Tiếng Việt 中文 Zhōngwén",
+   "facts": [
+    "at 11am, collective staff will lead a hands-on art activity.",
+    "public road, lafayette date: friday, october 23, 2026 time: 10:30am - 11:30am location: collective campus: offsite audience: under 18 categories: *storytime kids footer questions?"
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Pop-up Day of the Dead Storytime at The Collective",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=12217",
+   "date_raw": "Thu, 01 Oct 2026 15:53:03 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Pop-up Day of the Dead Storytime at The Collective Friday, Oct. 23, 10:30-11:30am Families - join Library staff at The Collective Community Arts Center for a special Día de los Muertos cuentacuentos (Day of the Dead Storytime). We will read stories, sing songs, and learn about Day of the Dead. At 11am, Collective staff will lead a hands-on art activity.",
+   "facts": [
+    "23, 10:30-11:30am families - join library staff at the collective community arts center for a special día de los muertos cuentacuentos (day of the dead storytime).",
+    "at 11am, collective staff will lead a hands-on art activity."
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Lafayette After Dark: Star Party with Standley Lake Stargazing",
+   "url": "https://engage.lafayetteco.gov/ActivityRegistration/4600f21e-850c-42a4-8e49-67470c390c1d",
+   "date_raw": "Thu, 23 Jul 2026 10:01:08 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Lafayette after Dark: Star Party 10/23/2026 | 06:00 PM - 08:00 PM Flagg Park Trailhead | Registration Required Education Program Join us for a stellar evening with Standley Lake Stargazing, where we'll have the opportunity to take a closer look at the moon, explore deep-sky wonders, and learn about how our animals neighbors navigate at night. Minimum Participants: 1 Maximum Participants: 25 Registration is required for this activity. Click \"register\" to reserve your spot. General Info Contact: Shani Horvath (720) 818-2791 Registration Info Please correct the following errors: Login to Register Waitlist Please correct the following errors: There are people in my party. Join Waitlist Activity Contact Shani Horvath (720) 818-2791 Loading... City of Lafayette LafayetteCO.gov 1290 S Public Road Lafayette, CO 80026 303.665.5588 Resources Help Contact & Connect Volunteer Management by Offero © City of Lafayette 2026 | Privacy Policy | Accessibility Statement | Sitemap | version 14.4.5 × Help Look for the throughout the system, help tips are provided by clicking on them. Also hover over anything with an underline , additional information will be provided. Activity Registration View details about the activity. Sign up for updates, register or remove yourself from activity participation. Click on the activity contact name to send an email to the contact for the activity. Guided Help Available for this screen Close more help show page help tips",
+   "facts": [
+    "lafayette after dark: star party 10/23/2026",
+    "06:00 pm - 08:00 pm flagg park trailhead",
+    "registration required education program join us for a stellar evening with standley lake stargazing, where we'll have the opportunity to take a closer look at the moon, explore deep-sky wonders, and learn about how our animals neighbors navigate at night.",
+    "minimum participants: 1 maximum participants: 25 registration is required for this activity.",
+    "click \"register\" to reserve your spot.",
+    "general info contact: shani horvath (720) 818-2791 registration info please correct the following errors: login to register waitlist please correct the following errors: there are people in my party.",
+    "join waitlist activity contact shani horvath (720) 818-2791 loading...",
+    "activity registration view details about the activity.",
+    "sign up for updates, register or remove yourself from activity participation."
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Drop In - Frame Decorating",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=12198",
+   "date_raw": "Wed, 02 Sep 2026 13:09:28 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Drop In - Frame Decorating Saturday, October 24, 2026 Decorate and take home a picture frame to begin your own ofrenda at home. Add a picture of a loved one who has passed. While supplies last.",
+   "facts": [
+    "drop in - frame decorating saturday, october 24, 2026 decorate and take home a picture frame to begin your own ofrenda at home."
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "Municipal Court Docket",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=11928",
+   "date_raw": "Thu, 12 Feb 2026 12:30:09 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Municipal Court Docket Tuesday, October 27, 2026 Morning Docket/Schedule 8:15AM Cases involving Spanish-speaking participants who require interpretation services Casos que involucran a participantes hispanohablantes que requieren servicios de interpretación. 8:30AM Traffic 9:30AM Traffic 10:30AM Adult criminal, code & animal control arraignments 11:00AM Boulder Jail In Custody via Zoom Afternoon Docket/Schedule 1:00PM Show cause hearings and adult returns 1:30PM Adult revocation hearings and Zoom appearances 2:00PM Juvenile arraignments, reviews, and show cause hearings 2:30PM Animal control, sentencings, pretrials, and restitution hearings 3:00PM Court trials",
+   "facts": [
+    "municipal court docket tuesday, october 27, 2026 morning docket/schedule 8:15am cases involving spanish-speaking participants who require interpretation services casos que involucran a participantes hispanohablantes que requieren servicios de interpretación."
+   ]
+  },
+  {
+   "source": "lafayette-calendar",
+   "title": "City Council Workshop",
+   "url": "https://www.lafayetteco.gov/Calendar.aspx?EID=11713",
+   "date_raw": "Wed, 07 Jan 2026 15:02:52 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "City Council Workshop Tuesday, October 27, 2026",
+   "facts": [
+    "city council workshop tuesday, october 27, 2026"
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Town Council Special Meeting",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5477",
+   "date_raw": "Thu, 15 Oct 2026 17:00:38 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Town Council Special Meeting Tuesday, October 20, 2026",
+   "facts": [
+    "town council special meeting tuesday, october 20, 2026"
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Planning Commission and Open Space and Trails Advisory Board Joint Study Session",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5218",
+   "date_raw": "Tue, 13 Oct 2026 11:15:01 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Planning Commission and Open Space and Trails Advisory Board Joint Study Session Wednesday, October 21, 2026",
+   "facts": [
+    "planning commission and open space and trails advisory board joint study session wednesday, october 21, 2026"
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Christina Pisano Advising Hours",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5085",
+   "date_raw": "Mon, 09 Mar 2026 11:54:39 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Christina Pisano Advising Hours Thursday, October 22, 2026 Christina Pisano has over 30 years of experience doing strategic market research for companies like MTV Networks, NBC Universal and Amazon, an MBA in Communications & Management, and is also a National Board Certified Health & Wellness Coach. Since leaving the corporate world in 2011, she has founded or co-founded four companies, The Research Boutique, The Peaceful Elephant, iGame4, and 20 Every Day. She loves a challenge and is somewhat of an expert in the ins and outs of running a business – good and bad! Please register to receive free confidential business advice from Christina.",
+   "facts": [
+    "christina pisano advising hours thursday, october 22, 2026 christina pisano has over 30 years of experience doing strategic market research for companies like mtv networks, nbc universal and amazon, an mba in communications & management, and is also a national board certified health & wellness coach.",
+    "please register to receive free confidential business advice from christina."
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Medication Take-Back",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5390",
+   "date_raw": "Fri, 09 Oct 2026 09:53:04 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Medication Take-Back Saturday, October 24, 2026 Join us for Drug Take Back Day at the police department. This event offers a secure, no-questions-asked way to dispose of unwanted or expired prescription medications, helping keep them out of the wrong hands and protecting our waterways. Simply drop them off—our team will handle the rest. It’s a small step that makes a big difference in keeping our community safe. Details Saturday, Oct. 24, 2026 10 a.m. - 2 p.m. Erie Police Department 1000 Telleen Avenue, Erie",
+   "facts": [
+    "medication take-back saturday, october 24, 2026 join us for drug take back day at the police department."
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Boo! on Briggs Street",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5033",
+   "date_raw": "Wed, 12 Aug 2026 11:46:59 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Boo! on Briggs Street Saturday, October 24, 2026 Ghouls, ghosts, and witches! Oh my! Enjoy a spook-tacular time with the entire family at our downtown trick-or-treat event. Enter the family costume contest, enjoy music, face painting, and all the fa-boo-lous festivities. There will be plenty of candy to go around. This is a FREE event for all ages. Erie Uplink will be hosting a food drive during the event, collecting donations to support their Tiger Packs program. Every contribution makes a difference for local students in need!",
+   "facts": [
+    "on briggs street saturday, october 24, 2026 ghouls, ghosts, and witches!",
+    "enter the family costume contest, enjoy music, face painting, and all the fa-boo-lous festivities.",
+    "this is a free event for all ages."
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Historic Preservation Advisory Board Meeting - In Person",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5363",
+   "date_raw": "Mon, 13 Jul 2026 10:33:59 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Historic Preservation Advisory Board Meeting - In Person Monday, October 26, 2026",
+   "facts": [
+    "historic preservation advisory board meeting - in person monday, october 26, 2026"
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Town Council Meeting",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5285",
+   "date_raw": "Mon, 13 Jul 2026 10:11:44 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Town Council Meeting Tuesday, October 27, 2026",
+   "facts": [
+    "town council meeting tuesday, october 27, 2026"
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Urban Renewal Authority- In Person",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=4889",
+   "date_raw": "Mon, 13 Apr 2026 13:44:32 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Urban Renewal Authority- In Person Tuesday, October 27, 2026",
+   "facts": [
+    "urban renewal authority- in person tuesday, october 27, 2026"
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Christina Pisano Advising Hours",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5086",
+   "date_raw": "Mon, 09 Mar 2026 11:54:39 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Christina Pisano Advising Hours Thursday, October 29, 2026 Christina Pisano has over 30 years of experience doing strategic market research for companies like MTV Networks, NBC Universal and Amazon, an MBA in Communications & Management, and is also a National Board Certified Health & Wellness Coach. Since leaving the corporate world in 2011, she has founded or co-founded four companies, The Research Boutique, The Peaceful Elephant, iGame4, and 20 Every Day. She loves a challenge and is somewhat of an expert in the ins and outs of running a business – good and bad! Please register to receive free confidential business advice from Christina.",
+   "facts": [
+    "christina pisano advising hours thursday, october 29, 2026 christina pisano has over 30 years of experience doing strategic market research for companies like mtv networks, nbc universal and amazon, an mba in communications & management, and is also a national board certified health & wellness coach.",
+    "please register to receive free confidential business advice from christina."
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Tree Diversity Walk with Town Forester",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5482",
+   "date_raw": "Fri, 11 Sep 2026 07:00:06 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Tree Diversity Walk with Town Forester Friday, October 30, 2026 Join Tom Read, Town Forester, and members of the Erie Tree Board for the final tree walk of the year. Enjoy the fall colors, discover which tree species thrive in our community, and learn about what makes Erie's urban forest so unique. Halloween costumes encouraged!",
+   "facts": [
+    "tree diversity walk with town forester friday, october 30, 2026 join tom read, town forester, and members of the erie tree board for the final tree walk of the year.",
+    "halloween costumes encouraged!"
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Eerie Erie",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5449",
+   "date_raw": "Wed, 19 Aug 2026 08:52:02 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Eerie Erie is an official BOULDERBoulder Qualifier event.",
+   "facts": [
+    "eerie erie is an official boulderboulder qualifier event."
+   ]
+  },
+  {
+   "source": "erie-calendar",
+   "title": "Town Council Study Session Meeting",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5435",
+   "date_raw": "Wed, 05 Aug 2026 17:36:58 -0700",
+   "listed_by": [],
+   "status": 200,
+   "title_found": true,
+   "body": "Town Council Study Session Meeting Tuesday, November 3, 2026",
+   "facts": [
+    "town council study session meeting tuesday, november 3, 2026"
+   ]
+  }
+ ]
+}

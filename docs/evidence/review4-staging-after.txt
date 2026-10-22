@@ -1,0 +1,13 @@
+scripts/tests/test_staging_workflow.py::test_names_are_unique_per_run PASSED
+scripts/tests/test_staging_workflow.py::test_success_creates_and_deletes_only_own PASSED
+scripts/tests/test_staging_workflow.py::test_existing_same_name_is_refused_not_reused_or_deleted PASSED
+scripts/tests/test_staging_workflow.py::test_failure_midway_cleans_up_what_was_created[migrate] PASSED
+scripts/tests/test_staging_workflow.py::test_failure_midway_cleans_up_what_was_created[deploy] PASSED
+scripts/tests/test_staging_workflow.py::test_failure_midway_cleans_up_what_was_created[test] PASSED
+scripts/tests/test_staging_workflow.py::test_cancel_during_test_still_cleans_up PASSED
+scripts/tests/test_staging_workflow.py::test_failure_before_creation_deletes_nothing[quota] PASSED
+scripts/tests/test_staging_workflow.py::test_failure_before_creation_deletes_nothing[d1create] PASSED
+scripts/tests/test_staging_workflow.py::test_quota_check_runs_before_any_creation PASSED
+scripts/tests/test_staging_workflow.py::test_quota_decision_logic PASSED
+scripts/tests/test_staging_workflow.py::test_remote_test_refuses_non_staging_db PASSED
+============================== 12 passed in 3.25s ==============================

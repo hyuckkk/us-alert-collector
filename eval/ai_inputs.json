@@ -1,0 +1,272 @@
+{
+ "summary": {
+  "events": 30,
+  "registered_path": 28,
+  "date_in_input": "24/24",
+  "cost_in_input": "12/14"
+ },
+ "rows": [
+  {
+   "id": "westminster-calendar:6",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 1606,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 24, 2026 Event Time: 08:30 AM - 12:00 PM Location: 9150 Lowell Blvd Westminster, CO 80031\nCar Seat Clinic Skip to Main Content Search I Want To... Services Community Business Gover"
+  },
+  {
+   "id": "westminster-calendar:7",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 2249,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 24, 2026 Event Time: 12:00 PM - 02:00 PM Location: 8931 N Harlan Street Westminster, CO 80031\nTrunk or Treat Halloween Spooktacular in Downtown Skip to Main Content Search I Want T"
+  },
+  {
+   "id": "westminster-calendar:11",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 1056,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 27, 2026 Event Time: 10:00 AM - 12:00 PM Location: 6051 W. 95th Avenue Westminster, CO 80031\nFire Safety Booth @ Westminster Sports Center Tuesday, October 27, 2026 🔥 October is Fi"
+  },
+  {
+   "id": "westminster-calendar:4",
+   "source": "westminster-calendar",
+   "path": "rss+detail",
+   "chars": 1884,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Event date: October 22, 2026 Event Time: 07:30 PM - 09:00 PM Location: 14694 Orchard Pkwy Ste 100 Westminster Westminster, CO 80023\nPartner Event: A Theatrical Drink Tasting Experie Skip to Main Conte"
+  },
+  {
+   "id": "usafa-events:47",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 4500,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Homeschool Program: The Outer Solar System Fri, Oct 30 @ 10:30 a.m. Friday, October 30 @ 10:30 am - 11:45 am Free « USAFA Family Movie: The Nightmare Before Christmas on Thurs, Oct 29 @ 6 p.m. USAFA F"
+  },
+  {
+   "id": "usafa-events:49",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 2627,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "USAFA VS. UConn Saturday, October 31 @ 1:00 pm - 4:00 pm « USAFA Family Movie: Hocus Pocus on Fri, Oct 30 @ 7:45 p.m. Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ "
+  },
+  {
+   "id": "usafa-events:50",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 4500,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m. Monday, November 9 @ 10:30 am - 11:45 am Free « USAFA VS. UConn USAFA VS. San Jose State » Homeschool Progr"
+  },
+  {
+   "id": "usafa-events:51",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 2747,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "USAFA VS. San Jose State Saturday, November 14 @ 5:00 pm - 9:00 pm « Homeschool Program: 3rd Rock – Earth from the Core to Climate Change Mon, Nov 9 @ 10:30 a.m. Homeschool Program: Earth – Sun – Moon"
+  },
+  {
+   "id": "usafa-events:52",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 4500,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Homeschool Program: Earth – Sun – Moon System Wed, Nov 18 @ 10:45 a.m. Wednesday, November 18 @ 10:45 am - 12:00 pm Free « USAFA VS. San Jose State USAFA VS. UTEP » Homeschool Program: Earth – Sun – M"
+  },
+  {
+   "id": "usafa-events:57",
+   "source": "usafa-events",
+   "path": "html-detail",
+   "chars": 2937,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Holly & Ivy Concert – Dec. 4 Friday, December 4 @ 7:00 pm - 10:00 pm « Bluebards Theatre Troupe: Come From Away Holly & Ivy Concert – Dec. 5 » Mark your calendar and save the date for this free event!"
+  },
+  {
+   "id": "cu-boulder-localist:70",
+   "source": "cu-boulder-localist",
+   "path": "json",
+   "chars": 763,
+   "date_in_input": null,
+   "cost_in_input": true,
+   "head": "Bring your favorite preschooler from 9:30 AM–11 AM on specific Tuesdays, for a hands-on introduction to the wonderful world of science and nature! Have fun learning together as you examine real museum"
+  },
+  {
+   "id": "cu-boulder-localist:67",
+   "source": "cu-boulder-localist",
+   "path": "json",
+   "chars": 1163,
+   "date_in_input": null,
+   "cost_in_input": null,
+   "head": "Campus Life explores the shared history of humans and more-than-human inhabitants over the 150 years of CU Boulder, documenting their evolving relationship. The works exhibited illustrate how differen"
+  },
+  {
+   "id": "thornton-youth-teen:85",
+   "source": "thornton-festivals",
+   "path": "html-detail",
+   "chars": 4500,
+   "date_in_input": true,
+   "cost_in_input": false,
+   "head": "Thornton WinterFest Location, Date & Time Carpenter Park Fields 11000 Colorado Blvd, Thornton, CO 80233 Fri, Dec 11 2026, 6:30 - 9pm Sat, Dec 12 2026, 10am - 9pm Sun, Dec 13 2026, 5 - 9pm Event Detail"
+  },
+  {
+   "id": "thornton-registration",
+   "source": "thornton-registration",
+   "path": "page-change",
+   "chars": 4000,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Recreation Activity Registration Information Share Facebook Twitter Activity Registration Information Request an Account Online Activity Registration Activities Guide Release of Liability Waiver Regis"
+  },
+  {
+   "id": "denver-art-museum-free-days:99",
+   "source": "dam-free-days",
+   "path": "html-detail",
+   "chars": 2784,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Free Day | Nov 7, 2026 | Denver Art Museum Skip to main content Main navigation Visit Plan Your Visit Events Calendar Group Tours Accessibility Dining Event Rental Art Exhibitions Collections Search t"
+  },
+  {
+   "id": "denver-art-museum-free-days:100",
+   "source": "dam-free-days",
+   "path": "html-detail",
+   "chars": 2650,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Free Day | Dec 8, 2026 | Denver Art Museum Skip to main content Main navigation Visit Plan Your Visit Events Calendar Group Tours Accessibility Dining Event Rental Art Exhibitions Collections Search t"
+  },
+  {
+   "id": "denver-art-museum-free-days:101",
+   "source": "dam-free-days",
+   "path": "html-detail",
+   "chars": 2427,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "ions and NAGPRA Publications Programs Adults Families Artists Educators Creative Aging Untitled: Artist Takeover Shop Buy Tickets Membership Donate Search Search the Collections Search Text English Es"
+  },
+  {
+   "id": "broomfield-programs:93",
+   "source": "broomfield-camp-explorer",
+   "path": "page-change",
+   "chars": 2513,
+   "date_in_input": null,
+   "cost_in_input": null,
+   "head": "Camp Explorer | City and County of Broomfield - Official Website Skip to Main Content Drought Restrictions Broomfield is Under a Drought Watch Read On... Live Work Explore Engage Search Home Live Depa"
+  },
+  {
+   "id": "ind:brighton-fafsa",
+   "source": "brighton-rss",
+   "path": "rss+detail",
+   "chars": 2218,
+   "date_in_input": true,
+   "cost_in_input": false,
+   "head": "Event date: October 22, 2026 Event Time: 06:00 PM - 07:30 PM Location: Brighton High School 270 S. 8th Ave. Brighton, CO 80601\nFAFSA Night Skip to Main Content Government Services Business Community I"
+  },
+  {
+   "id": "ind:brighton-treat-street",
+   "source": "brighton-rss",
+   "path": "rss+detail",
+   "chars": 2108,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 24, 2026 Event Time: 12:00 AM - 11:59 PM Location: 555 North 11th Avenue Brighton, CO 80601 Description: Treat Street is a family-friendly Halloween event where kids can dress up a"
+  },
+  {
+   "id": "ind:brighton-splashing-pumpkins",
+   "source": "brighton-rss",
+   "path": "rss+detail",
+   "chars": 2153,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 24, 2026 Event Time: 12:00 AM - 11:59 PM Location: 555 N.11th Avenue Brighton, CO 80601\nSplashing Pumpkins Turkey Trot 5k Run/Walk Race Treat Street: Trick Or Treat Event Annual Se"
+  },
+  {
+   "id": "ind:lafayette-ddlm-storytime",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-star-party",
+   "source": null,
+   "path": "not-registered"
+  },
+  {
+   "id": "ind:lafayette-frame-decorating",
+   "source": "lafayette-rss",
+   "path": "rss+detail",
+   "chars": 1354,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Event dates: October 24, 2026 - October 25, 2026 Event Time: 12:00 PM - 04:30 PM Location: 201 N. Public Road Lafayette, CO 80026\nDrop In - Frame Decorating Skip to Main Content Search Community Servi"
+  },
+  {
+   "id": "ind:lafayette-ddlm-closing",
+   "source": "lafayette-rss",
+   "path": "rss+detail",
+   "chars": 2616,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Event dates: September 24, 2026 - November 8, 2026 Event Time: 10:00 AM - 05:00 PM Location: 201 N. Public Road Lafayette, CO 80026\nDía de los Muertos Exhibit - Arcos y Portales Details Calendar View "
+  },
+  {
+   "id": "ind:lafayette-see-respond",
+   "source": "lafayette-rss",
+   "path": "rss+detail",
+   "chars": 1844,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Event dates: October 2, 2026 - November 1, 2026 Event Time: 10:00 AM - 05:00 PM Location: 775 W. Baseline Road Lafayette, CO 80026\neet, See & Respond 2026 See & Respond Exhibition The See & Respond ex"
+  },
+  {
+   "id": "ind:erie-med-takeback",
+   "source": "erie-rss",
+   "path": "rss+detail",
+   "chars": 1725,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Event date: October 24, 2026 Event Time: 10:00 AM - 02:00 PM Location: 1000 Telleen Avenue Erie, CO 80516\nMedication Take-Back Skip to Main Content Search I Want To ... Community Business Government S"
+  },
+  {
+   "id": "ind:erie-boo-briggs",
+   "source": "erie-rss",
+   "path": "rss",
+   "chars": 584,
+   "date_in_input": true,
+   "cost_in_input": true,
+   "head": "Event date: October 24, 2026 Event Time: 03:00 PM - 06:00 PM Location: Erie, CO 80516 Description: Ghouls, ghosts, and witches! Oh my! Enjoy a spook-tacular time with the entire family at our downtown"
+  },
+  {
+   "id": "ind:erie-tree-walk",
+   "source": "erie-rss",
+   "path": "rss+detail",
+   "chars": 1875,
+   "date_in_input": true,
+   "cost_in_input": null,
+   "head": "Event date: October 30, 2026 Event Time: 12:00 PM - 01:00 PM Location: 520 Colliers Blvd. Erie, CO 80516 Description: Join Tom Read, Town Forester, and members of the Erie Tree Board for the final tre"
+  },
+  {
+   "id": "ind:lafayette-police-academy",
+   "source": "lafayette-rss",
+   "path": "rss+detail",
+   "chars": 2440,
+   "date_in_input": null,
+   "cost_in_input": null,
+   "head": "Event date: October 21, 2026 Event Time: 06:00 PM - 09:00 PM Location: 451 N. 111th St. Lafayette, CO 80026\nCommunity Police Academy Skip to Main Content Search Community Services Business Government "
+  }
+ ]
+}

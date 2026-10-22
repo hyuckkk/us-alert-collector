@@ -1,0 +1,4 @@
+E       AssertionError: 시험 자원 이름에 실행 ID 없음
+E       AssertionError: 남의(이전) 시험 DB 를 지움
+E       AssertionError: ['worker:us-alert-worker-staging', 'd1:us-alert-db-staging']
+E       AssertionError: 할당량 점검이 없거나 자원 생성 뒤에 있음

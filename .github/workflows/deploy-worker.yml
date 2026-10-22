@@ -12,7 +12,19 @@ concurrency:
   group: deploy-worker
   cancel-in-progress: false
 jobs:
+  # 배포 전 필수 조건: 개인정보 검사 엄격 모드(검사어 설정 + 현재 파일·과거 이력 모두 통과). 실패하면 배포하지 않는다.
+  privacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - run: git fetch --quiet origin '+refs/heads/*:refs/remotes/origin/*'
+      - env:
+          PRIVACY_TERMS: ${{ secrets.PRIVACY_TERMS }}
+        run: python3 scripts/privacy_gate.py strict
   deploy:
+    needs: privacy
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -45,11 +57,12 @@ jobs:
           BOT_TOKEN_FAMILY: ${{ secrets.BOT_TOKEN_FAMILY }}
           BOT_TOKEN_KIDS: ${{ secrets.BOT_TOKEN_KIDS }}
           OWNER_CHAT_ID: ${{ secrets.OWNER_CHAT_ID }}
+          FAMILY_AVAILABLE_FROM: ${{ secrets.FAMILY_AVAILABLE_FROM }}
         run: |
           umask 077
           python3 - > "$RUNNER_TEMP/secrets.json" <<'PY'
           import json, os
-          keys = ["BOT_TOKEN_LIFE", "BOT_TOKEN_FAMILY", "BOT_TOKEN_KIDS", "OWNER_CHAT_ID"]
+          keys = ["BOT_TOKEN_LIFE", "BOT_TOKEN_FAMILY", "BOT_TOKEN_KIDS", "OWNER_CHAT_ID", "FAMILY_AVAILABLE_FROM"]
           out = {k: os.environ[k] for k in keys if os.environ.get(k)}
           out["ADMIN_KEY"] = os.environ["US_ADMIN_KEY"]
           print(json.dumps(out))

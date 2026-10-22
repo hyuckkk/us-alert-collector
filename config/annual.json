@@ -1,0 +1,9 @@
+{
+  "_comment": "연간 고정 일정표(토큰 0). 매년 반복되는 오픈일·추첨·등록기를 미리 알린다. verified=false 는 예년 기준 추정이라 알림에 '공식 발표 확인 필요'를 붙인다. month/day 는 예년 기준, lead_days 전부터 알림.",
+  "items": [
+    {"id": "rmnp-timed-entry-open", "bot": "family", "title": "Rocky Mountain NP timed entry reservations open", "title_ko": "로키산 국립공원 시간지정 입장 예약 오픈(여름 시즌)", "month": 5, "day": 1, "lead_days": 14, "url": "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm", "tags": ["national-park", "reservation"], "verified": false},
+    {"id": "half-dome-lottery", "bot": "family", "title": "Yosemite Half Dome preseason permit lottery", "title_ko": "요세미티 하프돔 사전 추첨 신청(3월)", "month": 3, "day": 1, "lead_days": 14, "url": "https://www.nps.gov/yose/planyourvisit/hdpermits.htm", "tags": ["national-park", "lottery"], "verified": false},
+    {"id": "summer-camp-registration", "bot": "kids", "title": "Front Range summer camp registration season", "title_ko": "여름 캠프 등록 시즌 시작(시·박물관·대학 캠프, 1~3월)", "month": 1, "day": 10, "lead_days": 10, "url": "https://www.cityofwestminster.us/", "tags": ["camp", "registration"], "verified": false},
+    {"id": "national-western-stock-show", "bot": "family", "title": "National Western Stock Show (January)", "title_ko": "덴버 가축쇼·로데오(1월)", "month": 1, "day": 10, "lead_days": 30, "url": "https://nationalwestern.com/", "tags": ["rodeo", "festival"], "verified": false}
+  ]
+}

@@ -1,0 +1,1684 @@
+{
+ "at": "2026-10-21T11:01:30+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; us-alert-collector/1.0; +https://github.com/hyuckkk/us-alert-collector)",
+ "sources": [
+  {
+   "id": "westminster-calendar",
+   "type": "rss",
+   "url": "https://www.westminsterco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": false,
+   "status": 500,
+   "content_type": "text/html",
+   "bytes": 1789,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 500",
+   "seconds": 9.8,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Runtime Error body {font-family:\"Verdana\";font-weight:normal;font-size: .7em;color:black;} p {font-family:\"Verdana\";font-weight:normal;color:black;margin-top: -5px} b {font-family:\"Verdana\";font-weight:bold;color:black;margin-top: -5px} H1 { font-family:\"Verdana\";font-weight:normal;font-size:18pt;color:red } H2 { font-family:\"Verdana\";font-weight:normal;font-size:14pt;color:maroon } pre {font-family:\"Consolas\",\"Lucida Console\",Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt} .marker {font-weight: bold; color: black;text-decoration: none;} .version {color: gray;} .error {margin"
+  },
+  {
+   "id": "westminster-news",
+   "type": "rss",
+   "url": "https://www.westminsterco.gov/RSSFeed.aspx?ModID=1&CID=All-newsflash.xml",
+   "ok": false,
+   "status": null,
+   "content_type": "",
+   "bytes": 0,
+   "items": 0,
+   "filtered": 0,
+   "error": "ParseError: not well-formed (invalid token): line 10, column 46",
+   "seconds": 4.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": ""
+  },
+  {
+   "id": "westminster-camps",
+   "type": "html",
+   "url": "https://www.westminsterco.gov/376/Camps",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 98797,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 6.8,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "City of Westminster youth camps"
+   ],
+   "sample_urls": [
+    "https://www.westminsterco.gov/376/Camps"
+   ],
+   "snippet": "(function(w,d,s,l,i){w.GAMeasurementID='G-TPFNLTHNVT';w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','cpDataLayerGA4','GTM-K73C5PS'); var enableTelemetry = 'false' var aiConfig = { instrumentationKey: '1cde048e-3185-4906-aa46-c92a7312b60f' } var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c"
+  },
+  {
+   "id": "hyland-hills-sports",
+   "type": "html",
+   "url": "https://www.hylandhills.gov/programs/youth-adult-sports/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 158852,
+   "items": 4,
+   "filtered": 0,
+   "error": null,
+   "seconds": 1.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Activities Guide",
+    "Registration Policies",
+    "Find current practice and game schedules here."
+   ],
+   "sample_urls": [
+    "https://www.hylandhills.gov/programs/activities-guide/",
+    "https://www.hylandhills.gov/programs/program-class-registration/",
+    "https://www.hylandhills.gov/programs/youth-adult-sports/www.hylandhillssports.com",
+    "https://www.hylandhills.gov/activities-guide/"
+   ],
+   "snippet": "Youth & Adult Sports - Hyland Hills Park & Recreation District {\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/www.hylandhills.gov\\/programs\\/youth-adult-sports\\/\",\"url\":\"https:\\/\\/www.hylandhills.gov\\/programs\\/youth-adult-sports\\/\",\"name\":\"Youth & Adult Sports - Hyland Hills Park & Recreation District\",\"isPartOf\":{\"@id\":\"https:\\/\\/www.hylandhills.gov\\/#website\"},\"primaryImageOfPage\":{\"@id\":\"https:\\/\\/www.hylandhills.gov\\/programs\\/youth-adult-sports\\/#primaryimage\"},\"image\":{\"@id\":\"https:\\/\\/www.hylandhills.gov\\/programs\\/youth-adult-sports\\/#primaryimage\"},\""
+  },
+  {
+   "id": "butterfly-pavilion",
+   "type": "html",
+   "url": "https://butterflies.org/events/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 154322,
+   "items": 62,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Exhibits & Animals",
+    "Newsroom",
+    "Learn More"
+   ],
+   "sample_urls": [
+    "https://butterflies.org/exhibits-and-animals/",
+    "https://butterflies.org/newsroom/",
+    "https://butterflies.org/event/toxic-terrors/",
+    "https://butterflies.org/event/spider-zone/",
+    "https://butterflies.org/event/sensory-friendly-afternoon-10-21/",
+    "https://butterflies.org/event/mikes-camera-workshop/",
+    "https://butterflies.org/event/rainforest-yoga-kelsey-mueller-3/",
+    "https://butterflies.org/event/toxic-terrors-after-dark-an-exclusive-tour-with-entomologist-cori-brant/"
+   ],
+   "snippet": "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-5HBNVMW'); (function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, \"clarity\", \"script"
+  },
+  {
+   "id": "anythink-events",
+   "type": "html",
+   "url": "https://www.anythinklibraries.org/events",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 560,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.0,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "403 - Forbidden 403 Forbidden The page could not be loaded properly."
+  },
+  {
+   "id": "boulder-library",
+   "type": "html",
+   "url": "https://boulderlibrary.org/events/",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 5653,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.1,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'UC2njlkUl4VviQkwEpJvXxTxxCN7bCXYJzWZDW"
+  },
+  {
+   "id": "adams-county-events",
+   "type": "html",
+   "url": "https://adcogov.org/events",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 5692,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.1,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'mwxUoEgH2TStjmhR_PdA6oZ0pARKkEMgfk6G4f"
+  },
+  {
+   "id": "denver-zoo-events",
+   "type": "html",
+   "url": "https://denverzoo.org/events/",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 5648,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.3,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'wXcldmhjo1oZvh1kZOrmQZWSMtYYqTcDG72piz"
+  },
+  {
+   "id": "childrens-museum",
+   "type": "html",
+   "url": "https://www.mychildsmuseum.org/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 24231,
+   "items": 3,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.9,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "exhibits",
+    "camps & workshops",
+    "Wednesdays at the Museum"
+   ],
+   "sample_urls": [
+    "https://www.mychildsmuseum.org/exhibits",
+    "https://www.mychildsmuseum.org/whats-happening/camps-workshops",
+    "https://www.mychildsmuseum.org/events/EventDetail/wednesdays-at-the-museum-2/"
+   ],
+   "snippet": "Events .gradient { filter: none; } .ie-msg { display: block;width:100%;height:100%;top: 0; z-index: 9999;background-color:white; margin:0 auto;margin-top:40px; width:60%;} .ie-content{ margin: 0 auto} .outer-container{display:none;} h3{color:#007d85;margin-top:30px; margin-bottom:5px; font-weight:400;} h2{font-size:28px;color:#595d5f;text-transform:lowercase;font-weight:normal;} p{margin-bottom:10px;#595d5f;font-weight:400;} (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElements"
+  },
+  {
+   "id": "cpw-events",
+   "type": "html",
+   "url": "https://cpw.state.co.us/events",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 5626,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.2,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: '7oV3C9bZVT.pF3.9mKGROjLKMfDO53q5Qp6zJl"
+  },
+  {
+   "id": "rmnp-news",
+   "type": "html",
+   "url": "https://www.nps.gov/romo/learn/news/newsreleases.htm",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 40627,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.1,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Calendar"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/planyourvisit/calendar.htm"
+   ],
+   "snippet": "News Releases - Rocky Mountain National Park (U.S. National Park Service) var jsDlgLoader = '/romo/learn/news/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; var jsDlgLoader = '/romo/learn/news/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; --> table#cs_idLayout2, table#cs_idLayout2 > tbody, table#cs_idLayout2 > tbody > tr, table#cs_idLayout2 > tbody > tr > td { display: block; border-collapse:separate; } An official website of"
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "type": "html",
+   "url": "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 110821,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.2,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Rocky Mountain NP timed entry page"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm"
+   ],
+   "snippet": "Timed Entry Permit System - Rocky Mountain National Park (U.S. National Park Service) var jsDlgLoader = '/romo/planyourvisit/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; var jsDlgLoader = '/romo/planyourvisit/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; --> table#cs_idLayout2, table#cs_idLayout2 > tbody, table#cs_idLayout2 > tbody > tr, table#cs_idLayout2 > tbody > tr > td { display: block; border-collapse:separate; } An o"
+  },
+  {
+   "id": "nps-events",
+   "type": "json",
+   "url": "https://developer.nps.gov/api/v1/events?parkCode=romo,grsa,meve,blca,arch,cany&pageSize=50",
+   "ok": true,
+   "status": 200,
+   "content_type": "application/json",
+   "bytes": 16026,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 1.0,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Horseshoe Canyon Guided Walk"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/cany/planyourvisit/upload/HorseshoeCanyon-web.pdf"
+   ],
+   "snippet": "{\"pagesize\":\"50\",\"pagenumber\":\"1\",\"total\":\"7\",\"errors\":[],\"data\":[{\"categoryid\":\"1\",\"category\":\"Regular Event\",\"eventid\":\"141990\",\"date\":\"2026-10-24\",\"datestart\":\"2026-08-25\",\"dateend\":\"2026-08-25\",\"recurrencedatestart\":\"2026-08-25\",\"recurrencedateend\":\"2026-10-31\",\"latitude\":\"37.733075\",\"longitude\":\"-105.512372\",\"isrecurring\":\"true\",\"isallday\":\"false\",\"isregresrequired\":\"false\",\"isfree\":\"true\",\"regresurl\":\"\",\"regresinfo\":\"\",\"infourl\":\"\",\"feeinfo\":\"Program free, regular entrance fees apply\",\"timeinfo\":\"Program subject to staff availability.\",\"title\":\"PM Visitor Center Ranger Talk\",\"contactname"
+  },
+  {
+   "id": "usafa-events",
+   "type": "html",
+   "url": "https://www.usafa.edu/events/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 191948,
+   "items": 18,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.7,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Apply Today",
+    "USAFA Family Movie: The Nightmare Before Christmas on Thurs, Oct 29 @ 6 p.m.",
+    "Homeschool Program: The Outer Solar System Fri, Oct 30 @ 10:30 a.m."
+   ],
+   "sample_urls": [
+    "https://www.usafa.edu/admissions/register/pre-candidate-questionnaire/",
+    "https://www.usafa.edu/event-single/nightmare-before/",
+    "https://www.usafa.edu/event-single/homeschool-oct-30/",
+    "https://www.usafa.edu/event-single/hocus-pocus/",
+    "https://www.usafa.edu/event-single/usafa-vs-uconn/",
+    "https://www.usafa.edu/event-single/homeschool-nov-9/",
+    "https://www.usafa.edu/event-single/usafa-vs-san-jose-state/",
+    "https://www.usafa.edu/event-single/homeschool-nov-18/"
+   ],
+   "snippet": "Events from Thursday, October 29 – Sunday, December 6 • United States Air Force Academy (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-M8JHPHR'); var tag = document.createElement('script'); tag.src = \"https://www.youtube.com/iframe_api\"; var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTa"
+  },
+  {
+   "id": "usopm-events",
+   "type": "html",
+   "url": "https://usopm.org/events/",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 5644,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.2,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'JnwSMDvnR_BB8UL0E8WdedAR46kMyD1btM2qxg"
+  },
+  {
+   "id": "ncar-visit",
+   "type": "html",
+   "url": "https://scied.ucar.edu/visit",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 560,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.1,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "403 - Forbidden 403 Forbidden The page could not be loaded properly."
+  },
+  {
+   "id": "national-western",
+   "type": "html",
+   "url": "https://nationalwestern.com/",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 5633,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.1,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Just a moment... *{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width Enable JavaScript and cookies to continue (function(){window._cf_chl_opt = {cFPWv: 'b',cH: 'zGi7NtRTs3syoDAnLSdsFtpoJ2OKiJ6GJKENf."
+  },
+  {
+   "id": "du-athletics-ics",
+   "type": "ical",
+   "url": "https://denverpioneers.com/calendar.ashx/calendar.ics",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/calendar",
+   "bytes": 140837,
+   "items": 72,
+   "filtered": 210,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "[W] University of Denver Volleyball vs Pacific",
+    "[L] University of Denver Volleyball vs Saint Mary's",
+    "[L] University of Denver Volleyball vs Pepperdine"
+   ],
+   "sample_urls": [
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16078&sport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16079&sport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16081&sport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16082&sport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16045&sport_id=4",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=15975&sport_id=4",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=15976&sport_id=4",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=15977&sport_id=4"
+   ],
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:University of Denver Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_16185-admin.denverpioneers.com DTSTAMP:20261021T110157Z DTSTART;VALUE=DATE:20260921 DTEND;VALUE=DATE:20260922 LOCATION:Wolcott\\, Colo. SUMMARY:[N] University of Denver Women's Golf vs Round 1 DESCRIPTION:[N] University of Denver Women's Golf vs Round 1\\n 6/20\\n URL:https://admin.denverpioneers.com/calendar.aspx?game_id=16185&sport_id=11 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_16142-admin.denverpioneers.com DTSTAMP:20261021T110157"
+  },
+  {
+   "id": "space-launches",
+   "type": "json",
+   "url": "https://ll.thespacedevs.com/2.3.0/launches/upcoming/?limit=20&mode=list",
+   "ok": true,
+   "status": 200,
+   "content_type": "application/json",
+   "bytes": 22977,
+   "items": 20,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.1,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Falcon 9 Block 5 | Bandwagon 5 (Dedicated Mid-Inclination Rideshare)",
+    "Ceres-1S | Xiguang-4 01",
+    "Falcon 9 Block 5 | Starlink Group 15-15"
+   ],
+   "sample_urls": [
+    "https://ll.thespacedevs.com/2.3.0/launches/3b430f81-0ff1-4d85-8a1a-cef0de326198/",
+    "https://ll.thespacedevs.com/2.3.0/launches/c6f8b6b0-6bae-460a-99bb-c12a3d29effd/",
+    "https://ll.thespacedevs.com/2.3.0/launches/f6af629d-39b5-4f86-bc0c-f8776444a858/",
+    "https://ll.thespacedevs.com/2.3.0/launches/7766f3bb-674c-4c71-b986-963bd633fcfe/",
+    "https://ll.thespacedevs.com/2.3.0/launches/9648124f-8568-46d2-86d7-4b4d6f12187f/",
+    "https://ll.thespacedevs.com/2.3.0/launches/3621085f-deae-4f89-bd54-c0f96ee44421/",
+    "https://ll.thespacedevs.com/2.3.0/launches/e2886a96-5ce9-4f45-872f-4e25a00be837/",
+    "https://ll.thespacedevs.com/2.3.0/launches/6b95bcc8-1f88-4539-84fe-f63630138766/"
+   ],
+   "snippet": "{\"count\":478,\"next\":\"https://ll.thespacedevs.com/2.3.0/launches/upcoming/?limit=20&mode=list&offset=20\",\"previous\":null,\"results\":[{\"id\":\"3b430f81-0ff1-4d85-8a1a-cef0de326198\",\"url\":\"https://ll.thespacedevs.com/2.3.0/launches/3b430f81-0ff1-4d85-8a1a-cef0de326198/\",\"name\":\"Falcon 9 Block 5 | Bandwagon 5 (Dedicated Mid-Inclination Rideshare)\",\"response_mode\":\"list\",\"slug\":\"falcon-9-block-5-bandwagon-5-dedicated-mid-inclina\",\"launch_designator\":null,\"status\":{\"id\":3,\"name\":\"Launch Successful\",\"abbrev\":\"Success\",\"description\":\"The launch vehicle successfully inserted its payload(s) into the target"
+  },
+  {
+   "id": "hyland-hills-events-api",
+   "type": "json",
+   "url": "https://www.hylandhills.gov/wp-json/tribe/events/v1/events?per_page=50",
+   "ok": true,
+   "status": 200,
+   "content_type": "application/json",
+   "bytes": 145155,
+   "items": 41,
+   "filtered": 0,
+   "error": null,
+   "seconds": 1.7,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Clases de Empoderamiento y Education para Personas con Diabetes",
+    "Pumpkin Carving",
+    "Sound Bath"
+   ],
+   "sample_urls": [
+    "https://www.hylandhills.gov/event/clases-de-empoderamiento-y-education-para-personas-con-diabetes-4/",
+    "https://www.hylandhills.gov/event/pumpkin-carving-2/",
+    "https://www.hylandhills.gov/event/sound-bath-19/",
+    "https://www.hylandhills.gov/event/clases-de-empoderamiento-y-education-para-personas-con-diabetes-3/",
+    "https://www.hylandhills.gov/event/halloween-spooktacular-5/",
+    "https://www.hylandhills.gov/event/small-group-personal-training-starts-2/",
+    "https://www.hylandhills.gov/event/sensory-sprouts-starts-3/",
+    "https://www.hylandhills.gov/event/womens-small-group-personal-training-starts-2/"
+   ],
+   "snippet": "{\"events\":[{\"id\":19492,\"global_id\":\"www.hylandhills.gov?id=19492\",\"global_id_lineage\":[\"www.hylandhills.gov?id=19492\"],\"author\":\"4\",\"status\":\"publish\",\"date\":\"2026-08-07 12:59:35\",\"date_utc\":\"2026-08-07 18:59:35\",\"modified\":\"2026-08-07 12:59:35\",\"modified_utc\":\"2026-08-07 18:59:35\",\"url\":\"https:\\/\\/www.hylandhills.gov\\/event\\/clases-de-empoderamiento-y-education-para-personas-con-diabetes-4\\/\",\"rest_url\":\"https:\\/\\/www.hylandhills.gov\\/wp-json\\/tribe\\/events\\/v1\\/events\\/19492\",\"title\":\"Clases de Empoderamiento y Education para Personas con Diabetes\",\"description\":\" \\n \\n \\n Acomp\\u00e1\\u00f1e"
+  },
+  {
+   "id": "usopm-events-api",
+   "type": "json",
+   "url": "https://usopm.org/wp-json/tribe/events/v1/events?per_page=50",
+   "ok": true,
+   "status": 200,
+   "content_type": "application/json",
+   "bytes": 195812,
+   "items": 250,
+   "filtered": 0,
+   "error": null,
+   "seconds": 6.7,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Museum Closed",
+    "Museum Closed",
+    "Flagship Tour"
+   ],
+   "sample_urls": [
+    "https://usopm.org/event/museum-closed-3/2026-10-20/",
+    "https://usopm.org/event/museum-closed-3/2026-10-21/",
+    "https://usopm.org/event/flagship-tour-3/2026-10-22/",
+    "https://usopm.org/event/family-tour-2/2026-10-22/",
+    "https://usopm.org/event/paralympics-specialty-tour/2026-10-22/",
+    "https://usopm.org/event/flagship-tour-4/2026-10-22/",
+    "https://usopm.org/event/premium-tour-2/2026-10-22/",
+    "https://usopm.org/event/flagship-tour-3/2026-10-23/"
+   ],
+   "snippet": "{\"events\":[{\"id\":10005082,\"global_id\":\"usopm.org?id=10005082\",\"global_id_lineage\":[\"usopm.org?id=10005082\"],\"author\":\"162098\",\"status\":\"publish\",\"date\":\"2026-08-25 11:02:52\",\"date_utc\":\"2026-08-25 17:02:52\",\"modified\":\"2026-08-25 11:19:17\",\"modified_utc\":\"2026-08-25 17:19:17\",\"url\":\"https:\\/\\/usopm.org\\/event\\/museum-closed-3\\/2026-10-20\\/\",\"rest_url\":\"https:\\/\\/usopm.org\\/wp-json\\/tribe\\/events\\/v1\\/events\\/10005082\",\"title\":\"Museum Closed\",\"description\":\" The Museum is closed Tuesdays and Wednesdays for the Fall\\/Winter season. We will be open 7 days a week starting May 31, 2027. \",\"excerpt\""
+  },
+  {
+   "id": "westminster-library-calendar",
+   "type": "html",
+   "url": "https://westminsterco.librarycalendar.com/events/list",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 560,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.1,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "403 - Forbidden 403 Forbidden The page could not be loaded properly."
+  },
+  {
+   "id": "westminster-programs",
+   "type": "html",
+   "url": "https://www.westminsterco.gov/173/Programs-Classes",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 136553,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Westminster programs & classes page"
+   ],
+   "sample_urls": [
+    "https://www.westminsterco.gov/173/Programs-Classes"
+   ],
+   "snippet": "(function(w,d,s,l,i){w.GAMeasurementID='G-TPFNLTHNVT';w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','cpDataLayerGA4','GTM-K73C5PS'); var enableTelemetry = 'false' var aiConfig = { instrumentationKey: '1cde048e-3185-4906-aa46-c92a7312b60f' } var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c"
+  },
+  {
+   "id": "anythink-communico",
+   "type": "html",
+   "url": "https://events.anythinklibraries.org/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 111746,
+   "items": 15,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Babies and Toddlers",
+    "Children",
+    "Families"
+   ],
+   "sample_urls": [
+    "https://events.anythinklibraries.org/events?a=Babies%2CToddlers&r=thismonth",
+    "https://events.anythinklibraries.org/events?a=Children%2CElementary&r=thismonth",
+    "https://events.anythinklibraries.org/events?a=Families&r=thismonth",
+    "https://events.anythinklibraries.org/events?l=Anythink+Bennett&r=thismonth",
+    "https://events.anythinklibraries.org/events?l=Anythink+in+Motion%2FBookmobile&r=thismonth",
+    "https://events.anythinklibraries.org/events?l=Anythink+Brighton&r=thismonth",
+    "https://events.anythinklibraries.org/events?l=Anythink+Commerce+City&r=thismonth",
+    "https://events.anythinklibraries.org/events?l=Anythink+Huron+Street&r=thismonth"
+   ],
+   "snippet": "Events - Anythink Libraries \" /> \" /> * { margin: 0; padding: 0; box-sizing: border-box; } #htmlheader header { display: none; } body #htmlheader header { display: block; } .logo-container.hidden { display: block !important; padding: 40px 20px 10px; } .logo-container.hidden img { display: block; margin: 0 auto; max-width: 400px; } body .logo-container.hidden { display: none !important; } html { font-size: 1rem !important; /* Sets the base font size for rem units to 16px */ } body { font-family: 'Gantari', sans-serif !important; font-size: 1rem; } #idtvR3F .amev-event-list { height: 650px; } /*"
+  },
+  {
+   "id": "boulder-libcal",
+   "type": "html",
+   "url": "https://calendar.boulderlibrary.org/calendar",
+   "ok": false,
+   "status": 404,
+   "content_type": "text/html",
+   "bytes": 9,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 404",
+   "seconds": 0.4,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Not Found"
+  },
+  {
+   "id": "jeffco-library",
+   "type": "html",
+   "url": "https://jeffcolibrary.bibliocommons.com/v2/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 1008651,
+   "items": 69,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.9,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "My Events",
+    "Kids & Families",
+    "En Español"
+   ],
+   "sample_urls": [
+    "http://jeffcolibrary.bibliocommons.com/v2/events/account",
+    "https://jeffcolibrary.bibliocommons.com/v2/events?audiences=5982266b3006ded52b40938c%2C5982266b3006ded52b40938e%2C5982266b3006ded52b40938f%2C5982266b3006ded52b40938d%2C5982266b3006ded52b409390",
+    "https://jeffcolibrary.bibliocommons.com/v2/events?types=59b2c74aebd6cb35005d1131",
+    "https://jeffcolibrary.bibliocommons.com/events/search/fq=types:(5997336ba45bca3f000450ff)",
+    "https://jeffcolibrary.bibliocommons.com/v2/events?audiences=5982266b3006ded52b409392&types=59b2c709ad847025008863be",
+    "https://jeffcolibrary.bibliocommons.com/v2/events?types=692f49a00886c55300572bbd",
+    "https://jeffcolibrary.bibliocommons.com/events/search/index",
+    "https://jeffcolibrary.bibliocommons.com/v2/events/69f40e595c04bc0fc0640e98"
+   ],
+   "snippet": "dataLayer = [{\"bc.localBranch\":null,\"bc.product\":\"core\",\"bc.gaCrossDomainEnabled\":true,\"bc.cmsEnabled\":true,\"bc.language\":\"en-US\",\"bc.externalEventsGAId\":null,\"bc.libraryId\":132,\"bc.ga4MeasurementId\":\"G-TLER9C9ELE\",\"bc.version\":\"nerf02 Version 9.38.3@35270678 Last updated 2026/10/19 13:08 Built 2026/10/19 17:03\",\"bc.gaCrossDomainNames\":[],\"bc.externalCoreGAId\":\"UA-104075346-2\",\"bc.externalGaId\":\"UA-104075346-2\",\"bc.siteId\":\"CO-JEFFERSON\",\"context\":{},\"bc.domain\":\"jeffcolibrary\",\"bc.cmsUrl\":\"https://jeffcolibrary.org\",\"bc.longName\":\"Jefferson County Public Library\",\"bc.allowGoogleAdFeatures\":fa"
+  },
+  {
+   "id": "denver-library-html",
+   "type": "html",
+   "url": "https://www.denverlibrary.org/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 102250,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.8,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Newsletters"
+   ],
+   "sample_urls": [
+    "https://www.denverlibrary.org/newsletters"
+   ],
+   "snippet": "springSpace.dateFormat = \"dddd, MMMM D, YYYY\"; springSpace.dateShortFormat = \"ddd MMM Do YYYY\"; springSpace.timeFormat = \"h:mm a\"; springSpace.timezone = 'America/Denver'; springSpace.currency = \"USD\"; springSpace.language = 'en'; // en springSpace.locale = 'en-US'; // en-US springSpace.phpTimeFormat = 'g:i a'; springSpace.bootstrapAsset = 'https://static-assets-us.libcal.com/bootstrap_23/bootstrap3_16.min.css'; springSpace.publicCssAsset = 'https://static-assets-us.libcal.com/css_165/LibCal_public.min.css'; springSpace.adminCssAsset = 'https://static-assets-us.libcal.com/css_165/LibCal_admin."
+  },
+  {
+   "id": "cu-boulder-localist",
+   "type": "json",
+   "url": "https://calendar.colorado.edu/api/2/events?days=60&pp=100",
+   "ok": true,
+   "status": 200,
+   "content_type": "application/json",
+   "bytes": 436886,
+   "items": 368,
+   "filtered": 0,
+   "error": null,
+   "seconds": 6.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Design/HEALth Exhibition",
+    "Fall 2026 Last Day to Withdraw from the Semester with Financial Aid Adjustment (11:59 p.m.)",
+    "Staff Council Coat Drive"
+   ],
+   "sample_urls": [
+    "https://calendar.colorado.edu/event/designhealth-exhibition",
+    "https://calendar.colorado.edu/event/fall-2026-last-day-to-withdraw-from-the-semester-with-financial-aid-adjustment-1159-pm",
+    "https://calendar.colorado.edu/event/copy-of-staff-council-hosts-fall-coat-drive-1021-1121",
+    "https://calendar.colorado.edu/event/wellness-wednesdays-yoga-arise-energize",
+    "https://calendar.colorado.edu/event/what-a-queer-creature-horror-lgbtq-community",
+    "https://calendar.colorado.edu/event/colorado-impact-hackathon-google-280",
+    "https://calendar.colorado.edu/event/colorado-impact-hackathon-google",
+    "https://calendar.colorado.edu/event/opening-reception-and-tree-walk-campus-life-exhibition"
+   ],
+   "snippet": "{\"events\":[{\"event\":{\"id\":53481283356773,\"title\":\"Design/HEALth Exhibition\",\"url\":\"https://architectureandplanning.ucdenver.edu/design-health\",\"updated_at\":\"2026-10-20T05:25:31-06:00\",\"created_at\":\"2026-07-20T15:15:57-06:00\",\"facebook_id\":null,\"first_date\":\"2026-08-05\",\"last_date\":\"2026-11-05\",\"hashtag\":\"\",\"urlname\":\"designhealth-exhibition\",\"user_id\":51198204396106,\"directions\":\"\",\"allows_reviews\":true,\"allows_attendance\":true,\"location\":\"Fulginiti Gallery\",\"room_number\":\"\",\"location_name\":\"Fulginiti Gallery\",\"status\":\"live\",\"experience\":\"inperson\",\"stream_url\":null,\"stream_info\":null,\"stream"
+  },
+  {
+   "id": "broomfield-calendar",
+   "type": "rss",
+   "url": "https://www.broomfield.org/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 10827,
+   "items": 13,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.7,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Neighborhood Board of Adjustments Meeting - Cancelled",
+    "City Council Special Meeting - 6 p.m.",
+    "Council Executive Session - 6 p.m."
+   ],
+   "sample_urls": [
+    "https://www.broomfield.org/Calendar.aspx?EID=11190",
+    "https://www.broomfield.org/Calendar.aspx?EID=11244",
+    "https://www.broomfield.org/Calendar.aspx?EID=11249",
+    "https://www.broomfield.org/Calendar.aspx?EID=11358",
+    "https://www.broomfield.org/Calendar.aspx?EID=11171",
+    "https://www.broomfield.org/Calendar.aspx?EID=11359",
+    "https://www.broomfield.org/Calendar.aspx?EID=11117",
+    "https://www.broomfield.org/Calendar.aspx?EID=11356"
+   ],
+   "snippet": "City and County of Broomfield, CO - Calendar https://www.broomfield.org/Calendar.aspx Wed, 21 Oct 2026 05:02:15 -0700 City and County of Broomfield, CO - Get the latest events en-us Neighborhood Board of Adjustments Meeting - Cancelled https://www.broomfield.org/Calendar.aspx?EID=11190 Tue, 29 Sep 2026 09:21:46 -0700 <strong>Event date:</strong> October 21, 2026 <br><strong>Event Time: </strong>06:00 PM - 08:00 PM<br><strong>Location:</strong> <br>One Descombes Dr<br>Broomfield, CO 80020 October 21, 2026 06:00 PM - 08:00 PM One Descombes DrBroomfield, CO 80020 https://www.broomfield.org/Calend"
+  },
+  {
+   "id": "arvada-calendar",
+   "type": "rss",
+   "url": "https://www.arvadaco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 1162,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Forest Immersion (Shinrin-Yoku) Workshop"
+   ],
+   "sample_urls": [
+    "https://www.arvadaco.gov/Calendar.aspx?EID=3845"
+   ],
+   "snippet": "Arvada, CO - Calendar https://www.arvadaco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:16 -0700 Arvada, CO - Get the latest events en-us Forest Immersion (Shinrin-Yoku) Workshop https://www.arvadaco.gov/Calendar.aspx?EID=3845 Thu, 08 Oct 2026 13:06:52 -0700 <strong>Event date:</strong> October 24, 2026 <br><strong>Event Time: </strong>02:00 PM - 04:00 PM<br><strong>Description:</strong><br>Ages 16+ October 24, 2026 02:00 PM - 04:00 PM https://www.arvadaco.gov/Calendar.aspx?EID=3845/639270688120000000"
+  },
+  {
+   "id": "thornton-calendar",
+   "type": "rss",
+   "url": "https://www.thorntonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": false,
+   "status": 404,
+   "content_type": "text/html",
+   "bytes": 101459,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 404",
+   "seconds": 0.8,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "form.antibot * :not(.antibot-message) { display: none !important; } window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag(\"js\", new Date());gtag(\"set\", \"developer_id.dMDhkMT\", true);gtag(\"config\", \"G-K5PEEGQG3B\", {\"groups\":\"default\",\"page_location\":\"/404.html?page=\" + document.location.pathname + document.location.search + \"&from=\" + document.referrer}); Page not found | City of Thornton !function(f,b,e,v,n,t,s) {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)}; if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0"
+  },
+  {
+   "id": "cu-athletics-ics",
+   "type": "ical",
+   "url": "https://cubuffs.com/calendar.ashx/calendar.ics",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/calendar",
+   "bytes": 106786,
+   "items": 59,
+   "filtered": 222,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "[L] Colorado Volleyball vs Utah",
+    "[W] Colorado Volleyball vs Arizona",
+    "[L] Colorado Football vs Texas Tech"
+   ],
+   "sample_urls": [
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18011&sport_id=20",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18012&sport_id=20",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=17945&sport_id=2",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18016&sport_id=20",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=17946&sport_id=2",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18323&sport_id=5",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18233&sport_id=12",
+    "https://admin.cubuffs.com/calendar.aspx?game_id=18021&sport_id=20"
+   ],
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_18099-admin.cubuffs.com DTSTAMP:20261021T110217Z DTSTART;VALUE=DATE:20260921 DTEND;VALUE=DATE:20260922 LOCATION:USAFA\\, Colo. SUMMARY:[N] Colorado Men's Golf vs Third Round DESCRIPTION:[N] Colorado Men's Golf vs Third Round\\n 1st/18\\n URL:https://admin.cubuffs.com/calendar.aspx?game_id=18099&sport_id=7 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vcal_18057-admin.cubuffs.com DTSTAMP:20261021T110217Z DTSTART:20260921T140000Z DTEND:20260921T170000Z LOCA"
+  },
+  {
+   "id": "csu-athletics-ics",
+   "type": "ical",
+   "url": "https://csurams.com/calendar.ashx/calendar.ics",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/calendar",
+   "bytes": 87097,
+   "items": 58,
+   "filtered": 127,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "[W] Colorado State University Volleyball vs San Diego State",
+    "Colorado State University Men's Basketball vs Homecoming Scrimmage",
+    "[L] Colorado State University Football vs Oregon State - Homecoming & Family Weekend"
+   ],
+   "sample_urls": [
+    "https://admin.csurams.com/calendar.aspx?game_id=22086&sport_id=14",
+    "https://admin.csurams.com/calendar.aspx?game_id=22246&sport_id=3",
+    "https://admin.csurams.com/calendar.aspx?game_id=21973&sport_id=1",
+    "https://admin.csurams.com/calendar.aspx?game_id=22090&sport_id=14",
+    "https://admin.csurams.com/calendar.aspx?game_id=22091&sport_id=14",
+    "https://admin.csurams.com/calendar.aspx?game_id=22092&sport_id=14",
+    "https://admin.csurams.com/calendar.aspx?game_id=21974&sport_id=1",
+    "https://admin.csurams.com/calendar.aspx?game_id=22230&sport_id=7"
+   ],
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado State University Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_22127-admin.csurams.com DTSTAMP:20261021T110217Z DTSTART;VALUE=DATE:20260921 DTEND;VALUE=DATE:20260922 LOCATION:Fort Collins\\, CO / Ptarmigan CC SUMMARY:[N] Colorado State University Women's Golf Ben Connell Ram Classic DESCRIPTION:[N] Colorado State University Women's Golf Ben Connell Ram Classic\\n 288-290-299 | 877\\n URL:https://admin.csurams.com/calendar.aspx?game_id=22127&sport_id=9 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vca"
+  },
+  {
+   "id": "mines-athletics-ics",
+   "type": "ical",
+   "url": "https://minesathletics.com/calendar.ashx/calendar.ics",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/calendar",
+   "bytes": 214184,
+   "items": 69,
+   "filtered": 401,
+   "error": null,
+   "seconds": 0.4,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "[W] Colorado School of Mines Club Ice Hockey vs Colorado State University",
+    "[W] Colorado School of Mines Women's Volleyball vs MSU Denver - RMAC Regional Pod",
+    "[W] Colorado School of Mines Women's Volleyball vs Colorado Christian - Homecoming Weekend | Mines Volleyball Alumni Weekend!"
+   ],
+   "sample_urls": [
+    "https://minesathletics.com/calendar.aspx?game_id=27077&sport_id=27",
+    "https://minesathletics.com/calendar.aspx?game_id=26889&sport_id=16",
+    "https://minesathletics.com/calendar.aspx?game_id=26890&sport_id=16",
+    "https://minesathletics.com/calendar.aspx?game_id=27162&sport_id=41",
+    "https://minesathletics.com/calendar.aspx?game_id=27322&sport_id=41",
+    "https://minesathletics.com/calendar.aspx?game_id=27323&sport_id=41",
+    "https://minesathletics.com/calendar.aspx?game_id=27321&sport_id=41",
+    "https://minesathletics.com/calendar.aspx?game_id=27337&sport_id=41"
+   ],
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Colorado School of Mines Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_27007-minesathletics.com DTSTAMP:20261021T110218Z DTSTART;VALUE=DATE:20260921 DTEND;VALUE=DATE:20260922 LOCATION:hosted by Fort Lewis and Colorado Mesa (The Bridges GC - Montrose\\, Colo.) SUMMARY:[N] Colorado School of Mines Men's Golf at San Juan Intercollegiate DESCRIPTION:[N] Colorado School of Mines Men's Golf at San Juan Intercollegiate\\n t4th\\n URL:https://minesathletics.com/calendar.aspx?game_id=27007&sport_id=6 PRIORITY:3"
+  },
+  {
+   "id": "afa-athletics-ics",
+   "type": "ical",
+   "url": "https://goairforcefalcons.com/calendar.ashx/calendar.ics",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/calendar",
+   "bytes": 211025,
+   "items": 79,
+   "filtered": 385,
+   "error": null,
+   "seconds": 0.4,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "[W] Air Force Academy Women's Volleyball vs San Jose State - White Out",
+    "[W] Air Force Academy Women's Volleyball vs San Jose State - Bruno Mars Pre-Show Match",
+    "[L] Air Force Academy Men's Ice Hockey vs Omaha (exh.)"
+   ],
+   "sample_urls": [
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26487&sport_id=22",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26488&sport_id=22",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24329&sport_id=9",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24311&sport_id=4",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26492&sport_id=22",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26493&sport_id=22",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24334&sport_id=9",
+    "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26494&sport_id=22"
+   ],
+   "snippet": "BEGIN:VCALENDAR VERSION:2.0 PRODID:-//SIDEARM Sports//NONSGML SIDEARM//EN X-WR-CALNAME:Air Force Academy Athletics X-PUBLISHED-TTL:PT120M BEGIN:VEVENT UID:vcal_27005-admin.goairforcefalcons.com DTSTAMP:20261021T110218Z DTSTART:20260921T140000Z DTEND:20260921T170000Z LOCATION:Eisenhower/USAFA\\, Colo. SUMMARY:[N] Air Force Academy Men's Golf vs Gene Miranda Falcon Invitational DESCRIPTION:[N] Air Force Academy Men's Golf vs Gene Miranda Falcon Invitational\\n 8th (864, Even)\\n URL:https://admin.goairforcefalcons.com/calendar.aspx?game_id=27005&sport_id=7 PRIORITY:3 END:VEVENT BEGIN:VEVENT UID:vca"
+  },
+  {
+   "id": "botanic-gardens",
+   "type": "html",
+   "url": "https://www.botanicgardens.org/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 89093,
+   "items": 8,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.4,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Calendar",
+    "Get Tickets & Member Login",
+    "Public Events"
+   ],
+   "sample_urls": [
+    "https://www.botanicgardens.org/calendar",
+    "https://www.botanicgardens.org/tickets-log",
+    "https://www.botanicgardens.org/events/public-events",
+    "https://www.botanicgardens.org/events/private-events-and-weddings",
+    "https://www.botanicgardens.org/events/free-days",
+    "https://www.botanicgardens.org/events/member-events",
+    "https://www.botanicgardens.org/events/plant-society-shows",
+    "https://www.botanicgardens.org/calendar/film-schedule"
+   ],
+   "snippet": "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-RHHN4CDFWB'); @font-face{font-family:\"sofia-pro\";src:url(fonts/sofia-pro/fonts/sofia-pro-light.woff2) format(\"woff2\"),url(fonts/sofia-pro/fonts/sofia-pro-light.woff) format(\"woff\");font-weight:300;font-style:normal;font-display:swap}@font-face{font-family:\"sofia-pro\";src:url(fonts/sofia-pro/fonts/sofia-pro-light-italic.woff2) format(\"woff2\"),url(fonts/sofia-pro/fonts/sofia-pro-light-italic.woff) format(\"woff\");font-weight:300;font-style:italic;font-display:swap}@font"
+  },
+  {
+   "id": "dmns-programs",
+   "type": "html",
+   "url": "https://www.dmns.org/programs-and-events/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 124548,
+   "items": 16,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.4,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Exhibitions",
+    "Temporary Exhibitions",
+    "Permanent Exhibitions"
+   ],
+   "sample_urls": [
+    "https://www.dmns.org/exhibitions/",
+    "https://www.dmns.org/exhibitions/temporary-exhibitions/",
+    "https://www.dmns.org/exhibitions/permanent-exhibitions/",
+    "https://www.dmns.org/exhibitions/temporary-exhibitions/changing-landscapes-inside-venice-mesa-verde-and-rapa-nui/",
+    "https://www.dmns.org/purchase/tickets/?category=sturm-theater",
+    "https://www.dmns.org/purchase/tickets/?category=planetarium",
+    "https://www.dmns.org/purchase/tickets/?category=laser-shows",
+    "https://www.dmns.org/programs-and-events/host-an-event/"
+   ],
+   "snippet": "Denver Museum of Nature & Science: Programs & Events (function(w,d,s,l,i){ var allowed = ['www.dmns.org']; //console.log(\"Google Tag Location: \" + w.location.hostname + \" Allowed URI is: \" + allowed); if (allowed.indexOf(w.location.hostname) === -1) return; w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-N4RDNZ9'); and tags on every pag"
+  },
+  {
+   "id": "ncar-visit-page",
+   "type": "html",
+   "url": "https://scied.ucar.edu/visit/ncar",
+   "ok": false,
+   "status": 403,
+   "content_type": "text/html",
+   "bytes": 560,
+   "items": 0,
+   "filtered": 0,
+   "error": "HTTP 403",
+   "seconds": 0.0,
+   "enabled": false,
+   "retest": true,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "403 - Forbidden 403 Forbidden The page could not be loaded properly."
+  },
+  {
+   "id": "thornton-festivals",
+   "type": "html",
+   "url": "https://www.thorntonco.gov/community-culture/festivals-events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 154041,
+   "items": 24,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Activity Registration Information",
+    "Rhythms & Reels",
+    "Eggcessible Eggstravaganza"
+   ],
+   "sample_urls": [
+    "https://www.thorntonco.gov/parks-recreation/activity-registration-information",
+    "https://www.thorntonco.gov/community-culture/festivals-events/rhythms-reels",
+    "https://www.thorntonco.gov/community-culture/festivals-events/eggcessible-eggstravaganza",
+    "https://www.thorntonco.gov/community-culture/festivals-events/fourth-july-celebration",
+    "https://www.thorntonco.gov/community-culture/festivals-events/lions-club-relays",
+    "https://www.thorntonco.gov/community-culture/festivals-events/paws-dip",
+    "https://www.thorntonco.gov/community-culture/festivals-events/thornton-barrel-beer-festival",
+    "https://www.thorntonco.gov/community-culture/festivals-events/thorntonfest"
+   ],
+   "snippet": "form.antibot * :not(.antibot-message) { display: none !important; } window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag(\"js\", new Date());gtag(\"set\", \"developer_id.dMDhkMT\", true);gtag(\"config\", \"G-K5PEEGQG3B\", {\"groups\":\"default\",\"page_placeholder\":\"PLACEHOLDER_page_location\"}); Festivals & Events Calendar | City of Thornton !function(f,b,e,v,n,t,s) {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)}; if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; n.queue=[];t=b.createElement(e);t.async=!0;"
+  },
+  {
+   "id": "thornton-registration",
+   "type": "html",
+   "url": "https://www.thorntonco.gov/parks-recreation/activity-registration-information",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 130232,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "City of Thornton activity registration dates"
+   ],
+   "sample_urls": [
+    "https://www.thorntonco.gov/parks-recreation/activity-registration-information"
+   ],
+   "snippet": "form.antibot * :not(.antibot-message) { display: none !important; } window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag(\"js\", new Date());gtag(\"set\", \"developer_id.dMDhkMT\", true);gtag(\"config\", \"G-K5PEEGQG3B\", {\"groups\":\"default\",\"page_placeholder\":\"PLACEHOLDER_page_location\"}); Activity Registration Information | City of Thornton !function(f,b,e,v,n,t,s) {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)}; if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; n.queue=[];t=b.createElement(e);t.asy"
+  },
+  {
+   "id": "dam-free-days",
+   "type": "html",
+   "url": "https://www.denverartmuseum.org/en/free-days-dam",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 43351,
+   "items": 3,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Nov 7, 2026 SCFD Free Day & Night at the Museums Enjoy free general admission at the DAM thanks to the residents who support SCFD.",
+    "Dec 8, 2026 SCFD Free Day Enjoy free general admission at the DAM thanks to the residents who support SCFD.",
+    "Apr 25, 2027 Día del Niño Join us for our annual Día del Niño (Children's Day) festivities, a day to celebrate children across the globe."
+   ],
+   "sample_urls": [
+    "https://www.denverartmuseum.org/en/calendar/free-day-nov-7-2026",
+    "https://www.denverartmuseum.org/en/calendar/free-day-dec-8-2026",
+    "https://www.denverartmuseum.org/en/calendar/dia-del-nino"
+   ],
+   "snippet": "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-NJTTH3S'); window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'DC-3396736'); Free Days at the DAM | Denver Art Museum Skip to main content Main navigation Visit Plan Your Visit Events Calendar G"
+  },
+  {
+   "id": "broomfield-camp-explorer",
+   "type": "html",
+   "url": "https://broomfield.org/3070/Camp-Explorer",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 99218,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 1.0,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Broomfield Camp Explorer (summer camp)"
+   ],
+   "sample_urls": [
+    "https://broomfield.org/3070/Camp-Explorer"
+   ],
+   "snippet": "(function(w,d,s,l,i){w.GAMeasurementID='G-ZDZZHV2EXP';w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','cpDataLayerGA4','GTM-K73C5PS'); var enableTelemetry = 'false' var aiConfig = { instrumentationKey: '1cde048e-3185-4906-aa46-c92a7312b60f' } var appInsights = window.appInsights || function (a) { function b(a) { c[a] = function () { var b = arguments; c"
+  },
+  {
+   "id": "brighton-rss",
+   "type": "rss",
+   "url": "https://www.brightonco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 31665,
+   "items": 17,
+   "filtered": 12,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Cupcake Decorating with Mulberries",
+    "Beginner Pickleball Sessions Begin",
+    "After Dark Burlesque Class"
+   ],
+   "sample_urls": [
+    "https://www.brightonco.gov/Calendar.aspx?EID=6707",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6770",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6785",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6823",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6693",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6717",
+    "https://www.brightonco.gov/1124/Splashing-Pumpkins",
+    "https://www.brightonco.gov/Calendar.aspx?EID=6827"
+   ],
+   "snippet": "Brighton, CO - Calendar https://www.brightonco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:21 -0700 Brighton, CO - Get the latest events en-us Cupcake Decorating with Mulberries https://www.brightonco.gov/Calendar.aspx?EID=6707 Tue, 18 Aug 2026 10:57:38 -0700 <strong>Event date:</strong> October 21, 2026 <br><strong>Event Time: </strong>12:00 AM - 11:59 PM<br><strong>Location:</strong> <br>555 N.11th Avenue<br>Brighton, CO 80601<br><strong>Description:</strong><br>Mulberries Cupcake Decorating Workshop is here! Please register to join us for an hour after school. October 21, 2026 12:00 AM - 11:59"
+  },
+  {
+   "id": "lafayette-rss",
+   "type": "rss",
+   "url": "https://www.lafayetteco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 19313,
+   "items": 10,
+   "filtered": 12,
+   "error": null,
+   "seconds": 0.6,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Día de los Muertos Exhibit - Arcos y Portales",
+    "Art on the Street, See & Respond Exhibit",
+    "Community Police Academy"
+   ],
+   "sample_urls": [
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=12196",
+    "https://lafayetteco.gov/SeeAndRespond",
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=12152",
+    "https://lafayettepubliclibrary.libcal.com/calendar/main/CollectiveDayoftheDeadPopUpOct2026",
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=12217",
+    "https://engage.lafayetteco.gov/ActivityRegistration/4600f21e-850c-42a4-8e49-67470c390c1d",
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=12198",
+    "https://www.lafayetteco.gov/Calendar.aspx?EID=12153"
+   ],
+   "snippet": "Lafayette, CO - Calendar https://www.lafayetteco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:22 -0700 Lafayette, CO - Get the latest events en-us Día de los Muertos Exhibit - Arcos y Portales https://www.lafayetteco.gov/Calendar.aspx?EID=12196 Thu, 01 Oct 2026 14:08:10 -0700 <strong>Event dates:</strong> September 24, 2026 - November 8, 2026<br><strong>Event Time: </strong>10:00 AM - 05:00 PM<br><strong>Location:</strong> <br>201 N. Public Road<br>Lafayette, CO 80026 September 24, 2026 - November 8, 2026 10:00 AM - 05:00 PM 201 N. Public RoadLafayette, CO 80026 https://www.lafayetteco.gov/Calenda"
+  },
+  {
+   "id": "erie-rss",
+   "type": "rss",
+   "url": "https://www.erieco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 14548,
+   "items": 6,
+   "filtered": 9,
+   "error": null,
+   "seconds": 0.8,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Medication Take-Back",
+    "Boo! on Briggs Street",
+    "Tree Diversity Walk with Town Forester"
+   ],
+   "sample_urls": [
+    "https://www.erieco.gov/Calendar.aspx?EID=5390",
+    "https://www.erieco.gov/Calendar.aspx?EID=5033",
+    "https://www.erieco.gov/Calendar.aspx?EID=5482",
+    "https://www.erieco.gov/Calendar.aspx?EID=5449",
+    "https://www.erieco.gov/Calendar.aspx?EID=5472",
+    "https://www.erieco.gov/Calendar.aspx?EID=5248"
+   ],
+   "snippet": "Erie, CO - Calendar https://www.erieco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:23 -0700 Erie, CO - Get the latest events en-us Planning Commission and Open Space and Trails Advisory Board Joint Study Session https://www.erieco.gov/Calendar.aspx?EID=5218 Tue, 13 Oct 2026 11:15:01 -0700 <strong>Event date:</strong> October 21, 2026 <br><strong>Event Time: </strong>06:30 PM - 11:59 PM<br><strong>Location:</strong> <br>Council Chambers<br>645 Holbrook Street<br>Erie, CO 80516 October 21, 2026 06:30 PM - 11:59 PM Council Chambers<br>645 Holbrook StreetErie, CO 80516 https://www.erieco.gov/Calendar"
+  },
+  {
+   "id": "firestone-rss",
+   "type": "rss",
+   "url": "https://www.firestoneco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 3736,
+   "items": 3,
+   "filtered": 1,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Halloween Safe Night",
+    "Drug Take Back Day",
+    "Chat with a Trustee"
+   ],
+   "sample_urls": [
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2690",
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2755",
+    "https://www.firestoneco.gov/Calendar.aspx?EID=2637"
+   ],
+   "snippet": "Firestone, CO - Calendar https://www.firestoneco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:23 -0700 Firestone, CO - Get the latest events en-us Board of Trustees Meeting- CANCELED https://www.firestoneco.gov/Calendar.aspx?EID=2622 Fri, 16 Oct 2026 09:36:10 -0700 <strong>Event date:</strong> October 21, 2026 <br><strong>Event Time: </strong>06:00 PM - 07:00 PM October 21, 2026 06:00 PM - 07:00 PM https://www.firestoneco.gov/Calendar.aspx?EID=2622/639277473700000000 Halloween Safe Night https://www.firestoneco.gov/Calendar.aspx?EID=2690 Tue, 10 Feb 2026 13:01:56 -0700 <strong>Event date:</strong>"
+  },
+  {
+   "id": "frederick-rss",
+   "type": "rss",
+   "url": "https://www.frederickco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 4096,
+   "items": 0,
+   "filtered": 6,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "Frederick, CO - Calendar https://www.frederickco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:24 -0700 Frederick, CO - Get the latest events en-us Neighborhood Meeting - 3766 Eureka Way Car Sales Conditional Use https://www.frederickco.gov/Calendar.aspx?EID=4402 Tue, 06 Oct 2026 13:14:27 -0700 <strong>Event date:</strong> October 21, 2026 <br><strong>Event Time: </strong>05:00 PM - 06:00 PM October 21, 2026 05:00 PM - 06:00 PM https://www.frederickco.gov/Calendar.aspx?EID=4402/639268964670000000 Board of Trustees Work Session https://www.frederickco.gov/Calendar.aspx?EID=4338 Fri, 03 Apr 2026 14:0"
+  },
+  {
+   "id": "dacono-rss",
+   "type": "rss",
+   "url": "https://www.cityofdacono.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 2725,
+   "items": 0,
+   "filtered": 3,
+   "error": null,
+   "seconds": 0.8,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "City of Dacono - Calendar https://www.daconoco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:25 -0700 City of Dacono - Get the latest events en-us City Council Meeting https://www.daconoco.gov/Calendar.aspx?EID=2098 Wed, 11 Dec 2024 08:55:53 -0700 <strong>Event date:</strong> October 26, 2026 <br><strong>Event Time: </strong>06:00 PM - 08:00 PM<br><strong>Location:</strong> <br>512 Cherry Ave<br>Building C<br>Dacono, CO 80514 October 26, 2026 06:00 PM - 08:00 PM 512 Cherry Ave<br>Building CDacono, CO 80514 https://www.daconoco.gov/Calendar.aspx?EID=2098/638695077530000000 Planning & Zoning Commissi"
+  },
+  {
+   "id": "jeffco-rss",
+   "type": "rss",
+   "url": "https://www.jeffco.us/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 18134,
+   "items": 17,
+   "filtered": 3,
+   "error": null,
+   "seconds": 0.6,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Open for Visitors",
+    "Wedding Site Tours",
+    "Open for Visitors"
+   ],
+   "sample_urls": [
+    "https://www.jeffco.us/Calendar.aspx?EID=16795",
+    "https://www.jeffco.us/Calendar.aspx?EID=16798",
+    "https://www.jeffco.us/Calendar.aspx?EID=16796",
+    "https://www.jeffco.us/Calendar.aspx?EID=16906",
+    "https://www.jeffco.us/Calendar.aspx?EID=16797",
+    "https://www.jeffco.us/Calendar.aspx?EID=16799",
+    "https://www.jeffco.us/Calendar.aspx?EID=16800",
+    "https://www.jeffco.us/Calendar.aspx?EID=16846"
+   ],
+   "snippet": "Jefferson County, CO - Calendar https://www.jeffco.us/Calendar.aspx Wed, 21 Oct 2026 05:02:25 -0700 Jefferson County, CO - Get the latest events en-us Open for Visitors https://www.jeffco.us/Calendar.aspx?EID=16795 Tue, 15 Sep 2026 06:12:33 -0700 <strong>Event date:</strong> October 21, 2026 <br><strong>Event Time: </strong>08:00 AM - 04:00 PM<br><strong>Location:</strong> <br>Jefferson County, CO 80419<br><strong>Description:</strong><br>8:00 a.m. - 4:00 p.m. | Open for visitors and self-guided tours October 21, 2026 08:00 AM - 04:00 PM Jefferson County, CO 80419 https://www.jeffco.us/Calenda"
+  },
+  {
+   "id": "foothills-prd",
+   "type": "html",
+   "url": "https://www.ifoothills.org/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 287364,
+   "items": 4,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.4,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Concerts in Clement Park",
+    "Red, White & You",
+    "News Room"
+   ],
+   "sample_urls": [
+    "https://www.ifoothills.org/events/foothills-entertainment-series/",
+    "https://www.ifoothills.org/events/red-white-and-you/",
+    "https://www.ifoothills.org/news-room/",
+    "https://www.ifoothills.org/programs-landing-mobile/"
+   ],
+   "snippet": "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-TEDMRJNQQZ'); Events - Foothills Park & Recreation District img:is([sizes=\"auto\" i], [sizes^=\"auto,\" i]) { contain-intrinsic-size: 3000px 1500px } {\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebSite\",\"@id\":\"https://www.ifoothills.org/#/schema/WebSite\",\"url\":\"https://www.ifoothills.org/\",\"name\":\"Foothills Park & Recreation District\",\"description\":\"Foothills Park & Recreation District\",\"inLanguage\":\"en-US\",\"potentialAction\":{\"@type\":\"SearchAction\",\"target\":{\"@"
+  },
+  {
+   "id": "foothills-reg-dates",
+   "type": "html",
+   "url": "https://www.ifoothills.org/online-registration-dates/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 267808,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Foothills Park & Recreation registration dates"
+   ],
+   "sample_urls": [
+    "https://www.ifoothills.org/online-registration-dates/"
+   ],
+   "snippet": "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-TEDMRJNQQZ'); Online Registration Dates - Foothills Park & Recreation District img:is([sizes=\"auto\" i], [sizes^=\"auto,\" i]) { contain-intrinsic-size: 3000px 1500px } {\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebSite\",\"@id\":\"https://www.ifoothills.org/#/schema/WebSite\",\"url\":\"https://www.ifoothills.org/\",\"name\":\"Foothills Park & Recreation District\",\"description\":\"Foothills Park & Recreation District\",\"inLanguage\":\"en-US\",\"potentialAction\":{\"@type\":\"SearchA"
+  },
+  {
+   "id": "south-suburban",
+   "type": "html",
+   "url": "https://www.ssprd.org/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 124416,
+   "items": 4,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.8,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Day Camps & Preschool",
+    "View gym, swim and ice schedules",
+    "News And Events"
+   ],
+   "sample_urls": [
+    "https://www.ssprd.org/Programs/Catalog/Preschool-and-Pre-K",
+    "https://www.ssprd.org/Schedules",
+    "https://www.ssprd.org/News-And-Events",
+    "https://www.ssprd.org/Newsletter-Signup"
+   ],
+   "snippet": "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-W77MZ7'); window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-64FBFXMLGK'); gtag('config', 'UA-462182-1'); !function(f,b,e,v,n,t,s) {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMeth"
+  },
+  {
+   "id": "history-colorado",
+   "type": "html",
+   "url": "https://www.historycolorado.org/events",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 133175,
+   "items": 6,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.6,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Attend Events",
+    "Archaeology & Preservation Events",
+    "Moments That Made US"
+   ],
+   "sample_urls": [
+    "https://www.historycolorado.org/events-experiences",
+    "https://www.historycolorado.org/events-education",
+    "https://www.historycolorado.org/exhibit/moments-made-us",
+    "https://www.historycolorado.org/exhibit/votes-and-dreams",
+    "https://www.historycolorado.org/exhibit/sand-creek-massacre-betrayal-changed-cheyenne-and-arapaho-people-forever",
+    "https://www.historycolorado.org/education/exhibit"
+   ],
+   "snippet": "div#sliding-popup, div#sliding-popup .eu-cookie-withdraw-banner, .eu-cookie-withdraw-tab {background: #ffffff} div#sliding-popup.eu-cookie-withdraw-wrapper { background: transparent; } #sliding-popup h1, #sliding-popup h2, #sliding-popup h3, #sliding-popup p, #sliding-popup label, #sliding-popup div, .eu-cookie-compliance-more-button, .eu-cookie-compliance-secondary-button, .eu-cookie-withdraw-tab { color: #333333;} .eu-cookie-withdraw-tab { border-color: #333333;} Events | History Colorado try { Typekit.load({ async: true }); } catch (e) { } and tags on every page of your site. --> window.dat"
+  },
+  {
+   "id": "chautauqua",
+   "type": "html",
+   "url": "https://www.chautauqua.com/events/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 504998,
+   "items": 36,
+   "filtered": 0,
+   "error": null,
+   "seconds": 2.7,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Winterfest",
+    "Experiences",
+    "Calendar"
+   ],
+   "sample_urls": [
+    "https://www.chautauqua.com/event/winterfest-2026/",
+    "https://www.chautauqua.com/events/category/experiences/",
+    "https://www.chautauqua.com/concerts-events/calendar-of-events/",
+    "https://www.chautauqua.com/events/category/community-events/",
+    "https://www.chautauqua.com/event/festival-del-sol-2026/",
+    "https://www.chautauqua.com/event/flatiron-sounds/",
+    "https://www.chautauqua.com/dining/event-catering/",
+    "https://www.chautauqua.com/newsletter/"
+   ],
+   "snippet": "document.documentElement.className = 'js'; /* CUSTOM CSS FOR SPECIAL EVENTS */ .event-category-special-event.et-db #et-boc .et-l div.et_pb_section.et_pb_section_2_tb_body,body.event-category-special-event .diec_event_page_0_tb_body,body.event-category-special-event .diec_event_page_1_tb_body,body.event-category-special-event .et_pb_column_2_tb_body,body.event-category-special-event .et_pb_post_title{display:none!important;visibility:hidden!important}body.event-category-special-event .et_pb_column_1_tb_body{width:100%!important;border:none!important;padding:0!important;margin:0!important}body.e"
+  },
+  {
+   "id": "railroad-museum",
+   "type": "html",
+   "url": "https://coloradorailroadmuseum.org/events/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 325799,
+   "items": 53,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.2,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Exhibits",
+    "What’s New",
+    "The Friday Tour"
+   ],
+   "sample_urls": [
+    "https://coloradorailroadmuseum.org/exhibits/",
+    "https://coloradorailroadmuseum.org/news/",
+    "https://coloradorailroadmuseum.org/event/the-friday-tour-41/",
+    "https://coloradorailroadmuseum.org/event/saturday-train-rides-22/",
+    "https://coloradorailroadmuseum.org/event/sunday-goose-rides-18/",
+    "https://coloradorailroadmuseum.org/event/the-friday-tour-47/",
+    "https://coloradorailroadmuseum.org/event/the-friday-tour-14/",
+    "https://coloradorailroadmuseum.org/event/the-polar-express-train-ride/"
+   ],
+   "snippet": "document.documentElement.className = 'js'; let jqueryParams=[],jQuery=function(r){return jqueryParams=[...jqueryParams,r],jQuery},$=function(r){return jqueryParams=[...jqueryParams,r],$};window.jQuery=jQuery,window.$=jQuery;let customHeadScripts=!1;jQuery.fn=jQuery.prototype={},$.fn=jQuery.prototype={},jQuery.noConflict=function(r){if(window.jQuery)return jQuery=window.jQuery,$=window.jQuery,customHeadScripts=!0,jQuery.noConflict},jQuery.ready=function(r){jqueryParams=[...jqueryParams,r]},$.ready=function(r){jqueryParams=[...jqueryParams,r]},jQuery.load=function(r){jqueryParams=[...jqueryParam"
+  },
+  {
+   "id": "red-rocks",
+   "type": "html",
+   "url": "https://www.redrocksonline.com/events/",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 246180,
+   "items": 50,
+   "filtered": 0,
+   "error": null,
+   "seconds": 1.0,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Event Calendar",
+    "Ticketing Information",
+    "Wednesday, Oct 21, 2026 MUNA hemlocke springs"
+   ],
+   "sample_urls": [
+    "https://www.redrocksonline.com/events?view=grid",
+    "https://www.redrocksonline.com/ticketing-information/",
+    "https://www.redrocksonline.com/events/muna-1434014/",
+    "https://www.redrocksonline.com/events/macklemore-1336380/",
+    "https://www.redrocksonline.com/events/mersiv-1247239/",
+    "https://www.redrocksonline.com/events/jade-cicada-mickman-1371058/",
+    "https://www.redrocksonline.com/events/stardew-valley-symphony-of-seasons-1341018/",
+    "https://www.redrocksonline.com/events/evanescence-1240978/"
+   ],
+   "snippet": "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-MHQ3RV5'); window.bk_async = function() {bk_addPageCtx('pctx', 'Red_Rocks_HomePage');BKTAG.doTag(81485, 10); }; (function() { var scripts = document.getElementsByTagName('script')[0]; var s = document.createElement('script'); s.async = true; s.src = \"https://tags.bkrtx"
+  },
+  {
+   "id": "dam-calendar",
+   "type": "html",
+   "url": "https://www.denverartmuseum.org/en/calendar",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 31951,
+   "items": 2,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.3,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Tours DIVA Member Tours Occurs weekly on Wednesday until January 20, 2027. Next is October 21, 2026 - 10:30 am – 11:30 am Members are invited to an enjoy exclusive access to one-hour docent-led tours of DIVA.",
+    "Tours Public Tours Daily; various times Join specially trained docents for exhibitions, architecture, and 3 in 30 guided tours."
+   ],
+   "sample_urls": [
+    "https://www.denverartmuseum.org/en/calendar/diva-member-tours-wednesdays",
+    "https://www.denverartmuseum.org/en/calendar/tours"
+   ],
+   "snippet": "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-NJTTH3S'); window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'DC-3396736'); Events at Denver Art Museum | Tours, Classes & More Skip to main content Main navigation Visit Plan Your Visit Events"
+  },
+  {
+   "id": "parker-rss",
+   "type": "rss",
+   "url": "https://www.parkerco.gov/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 6610,
+   "items": 2,
+   "filtered": 4,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Parker Road and Mainstreet Intersection Project Open House",
+    "Centennial Airport Draft Noise Compatibility Program Open House"
+   ],
+   "sample_urls": [
+    "https://www.parkerco.gov/Calendar.aspx?EID=7162",
+    "https://www.parkerco.gov/Calendar.aspx?EID=7171"
+   ],
+   "snippet": "Town of Parker - Calendar https://www.parkerco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:32 -0700 Town of Parker - Get the latest events en-us Planning Commission Study Session https://www.parkerco.gov/Calendar.aspx?EID=7172 Tue, 20 Oct 2026 14:05:59 -0700 <strong>Event date:</strong> October 22, 2026 <br><strong>Event Time: </strong>05:30 PM - 11:59 PM<br><strong>Location:</strong> <br>20120 E. Mainstreet<br>Parker, CO 80138<br><strong>Description:</strong><br>Planning Commission meetings are held the second and fourth Thursday of each month at 7 p.m., excluding holidays. October 22, 2026 05:3"
+  },
+  {
+   "id": "greenwood-village-rss",
+   "type": "rss",
+   "url": "https://www.greenwoodvillage.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 6371,
+   "items": 3,
+   "filtered": 3,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "National Prescription Drug Take Back Day",
+    "Village Greens Pump Track Grand Opening",
+    "Truck or Treat"
+   ],
+   "sample_urls": [
+    "https://greenwoodvillage.com/Calendar.aspx?EID=6278",
+    "https://greenwoodvillage.com/Calendar.aspx?EID=6333",
+    "https://greenwoodvillage.com/Calendar.aspx?EID=6334"
+   ],
+   "snippet": "Greenwood Village - Calendar https://greenwoodvillage.com/Calendar.aspx Wed, 21 Oct 2026 05:02:33 -0700 Greenwood Village - Get the latest events en-us Board of Adjustments & Appeals Regular Meeting and Study Session https://greenwoodvillage.com/Calendar.aspx?EID=5487 Fri, 02 Oct 2026 13:43:17 -0700 <strong>Event date:</strong> October 22, 2026 <br><strong>Event Time: </strong>06:00 PM - 09:00 PM<br><strong>Location:</strong> <br>6060 South Quebec Street<br>Greenwood Village, CO 80111 October 22, 2026 06:00 PM - 09:00 PM 6060 South Quebec StreetGreenwood Village, CO 80111 https://greenwoodvill"
+  },
+  {
+   "id": "windsor-rss",
+   "type": "rss",
+   "url": "https://www.windsorgov.com/RSSFeed.aspx?ModID=58&CID=All-calendar.xml",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 15966,
+   "items": 10,
+   "filtered": 8,
+   "error": null,
+   "seconds": 0.8,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Leaf & Branch Drop",
+    "Leaf & Branch Drop",
+    "Drug Take Back Day"
+   ],
+   "sample_urls": [
+    "https://www.windsorco.gov/Calendar.aspx?EID=7764",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7765",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7778",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7752",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7754",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7766",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7767",
+    "https://www.windsorco.gov/Calendar.aspx?EID=7768"
+   ],
+   "snippet": "Town of Windsor - Calendar https://www.windsorco.gov/Calendar.aspx Wed, 21 Oct 2026 05:02:33 -0700 Town of Windsor - Get the latest events en-us Planning Commission https://www.windsorco.gov/Calendar.aspx?EID=7351 Wed, 15 Oct 2025 10:35:17 -0700 <strong>Event date:</strong> October 21, 2026 <br><strong>Event Time: </strong>07:00 PM - 08:00 PM October 21, 2026 07:00 PM - 08:00 PM https://www.windsorco.gov/Calendar.aspx?EID=7351/638961213170000000 Board of Adjustment/Appeals https://www.windsorco.gov/Calendar.aspx?EID=7427 Wed, 15 Oct 2025 11:04:48 -0700 <strong>Event date:</strong> October 22, "
+  },
+  {
+   "id": "wings-museum-api",
+   "type": "json",
+   "url": "https://wingsmuseum.org/wp-json/tribe/events/v1/events?per_page=50",
+   "ok": true,
+   "status": 200,
+   "content_type": "application/json",
+   "bytes": 88960,
+   "items": 10,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.9,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Scout Merit Badge Workshop",
+    "Air & Space Museum Closure",
+    "Sensory Friendly Hours"
+   ],
+   "sample_urls": [
+    "https://wingsmuseum.org/events/scout-merit-badge-workshop/",
+    "https://wingsmuseum.org/events/air-space-museum-closure-54/",
+    "https://wingsmuseum.org/events/sensory-friendly-hours/",
+    "https://wingsmuseum.org/events/wings-food-drive/",
+    "https://wingsmuseum.org/events/denver-arts-week-free-night-at-the-museum/",
+    "https://wingsmuseum.org/events/air-space-museum-closure-19/",
+    "https://wingsmuseum.org/events/breakfast-fly-in-food-drive/",
+    "https://wingsmuseum.org/events/scout-merit-badge-workshop-nov26/"
+   ],
+   "snippet": "{\"events\":[{\"id\":6793,\"global_id\":\"wingsmuseum.org?id=6793\",\"global_id_lineage\":[\"wingsmuseum.org?id=6793\"],\"author\":\"17\",\"status\":\"publish\",\"date\":\"2026-09-08 15:02:21\",\"date_utc\":\"2026-09-08 21:02:21\",\"modified\":\"2026-09-30 15:58:03\",\"modified_utc\":\"2026-09-30 21:58:03\",\"url\":\"https:\\/\\/wingsmuseum.org\\/events\\/scout-merit-badge-workshop\\/\",\"rest_url\":\"https:\\/\\/wingsmuseum.org\\/wp-json\\/tribe\\/events\\/v1\\/events\\/6793\",\"title\":\"Scout Merit Badge Workshop\",\"description\":\" Earn your Aviation Merit Badge! \\n Join us as you learn about aerospace basics, pilot your course or flying adventure wit"
+  },
+  {
+   "id": "apex-prd-api",
+   "type": "json",
+   "url": "https://www.apexprd.org/wp-json/tribe/events/v1/events?per_page=50",
+   "ok": true,
+   "status": 200,
+   "content_type": "application/json",
+   "bytes": 90162,
+   "items": 27,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.6,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Active Adult – Friday Bingo",
+    "Apex PRD Foundation Trick or Trot",
+    "Halloween Boo Bash"
+   ],
+   "sample_urls": [
+    "https://apexprd.org/event/active-adult-friday-bingo-8/",
+    "https://apexprd.org/event/apex-prd-foundation-trick-or-trot/",
+    "https://apexprd.org/event/halloween-boo-bash-5/",
+    "https://apexprd.org/event/kids-cook-halloween-special-edition/",
+    "https://apexprd.org/event/collette-information-session-peru-and-switzerland-austria-and-bavaria/",
+    "https://apexprd.org/event/national-senior-health-and-fitness-day-trek-or-treat-3/",
+    "https://apexprd.org/event/bunco-bash-30/",
+    "https://apexprd.org/event/guided-acrylic-painting-booked-for-fall/"
+   ],
+   "snippet": "{\"events\":[{\"id\":113823,\"global_id\":\"apexprd.org?id=113823\",\"global_id_lineage\":[\"apexprd.org?id=113823\"],\"author\":\"5\",\"status\":\"publish\",\"date\":\"2026-07-13 12:48:11\",\"date_utc\":\"2026-07-13 18:48:11\",\"modified\":\"2026-07-13 12:48:11\",\"modified_utc\":\"2026-07-13 18:48:11\",\"url\":\"https:\\/\\/apexprd.org\\/event\\/active-adult-friday-bingo-8\\/\",\"rest_url\":\"https:\\/\\/apexprd.org\\/wp-json\\/tribe\\/events\\/v1\\/events\\/113823\",\"title\":\"Active Adult – Friday Bingo\",\"description\":\" Play a variety of bingo patterns and win fun prizes. Each month sponsored by one of the Apex Annual Active Adult sponsors. Free, "
+  },
+  {
+   "id": "rmnp-news",
+   "type": "rss",
+   "url": "https://www.nps.gov/feeds/getNewsRSS.htm?id=romo",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/xml",
+   "bytes": 642297,
+   "items": 0,
+   "filtered": 1000,
+   "error": null,
+   "seconds": 0.1,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [],
+   "sample_urls": [],
+   "snippet": "nps.gov - Rocky Mountain National Park - News Releases https://www.nps.gov/romo News releases from Rocky Mountain National Park. en-us Glacier Gorge Trailhead and Parking Area Closure Beginning September 28 through Early October https://www.nps.gov/romo/learn/news/glacier-gorge-trailhead-and-parking-area-closure-beginning-september-28-through-early-october.htm Wed, 09 Sep 2026 12:14:00 EST Beginning Monday, Sept. 28 through Thursday, Oct. 1, and then again Monday, Oct. 5 through Thursday, Oct. 8, the Glacier Gorge Parking area and Glacier Gorge Trailhead will be closed to all uses including ve"
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "type": "html",
+   "url": "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 110821,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.2,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "RMNP timed entry permit system"
+   ],
+   "sample_urls": [
+    "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm"
+   ],
+   "snippet": "Timed Entry Permit System - Rocky Mountain National Park (U.S. National Park Service) var jsDlgLoader = '/romo/planyourvisit/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; var jsDlgLoader = '/romo/planyourvisit/loader.cfm'; var jsSiteResourceLoader = '/cs-resources.cfm?r='; var jsSiteResourceSettings = {canCombine: false, canMinify: false}; --> table#cs_idLayout2, table#cs_idLayout2 > tbody, table#cs_idLayout2 > tbody > tr, table#cs_idLayout2 > tbody > tr > td { display: block; border-collapse:separate; } An o"
+  },
+  {
+   "id": "cpw-camping",
+   "type": "html",
+   "url": "https://cpw.state.co.us/camping",
+   "ok": true,
+   "status": 200,
+   "content_type": "text/html",
+   "bytes": 391152,
+   "items": 1,
+   "filtered": 0,
+   "error": null,
+   "seconds": 0.5,
+   "enabled": true,
+   "retest": false,
+   "sample_titles": [
+    "Colorado Parks & Wildlife camping reservations"
+   ],
+   "sample_urls": [
+    "https://cpw.state.co.us/camping"
+   ],
+   "snippet": "form.antibot > * { display: none !important; } form.antibot noscript { display: block !important; } { \"@context\": \"https://schema.org\", \"@graph\": [ { \"@type\": \"Article\", \"@id\": \"https://cpw.state.co.us/camping\", \"name\": \"Camping\", \"headline\": \"Camping\", \"description\": \"Make more of your state park visit by staying overnight.\", \"datePublished\": \"2024-06-07T14:47:08-0600\", \"dateModified\": \"2026-10-14T11:34:26-0600\", \"isAccessibleForFree\": \"True\" } ] } window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={}; Camping | Colorado Parks and Wildl"
+  }
+ ],
+ "gnews": {
+  "ok": true,
+  "status": 200,
+  "items": 78,
+  "error": null,
+  "sample_titles": [
+   "Free Things to Do This Week: October 14–21 - Colorado Parent",
+   "22 Amazing Things To Do With Your Kids In Colorado - Uncover Colorado",
+   "Changing with the times: Colorado school gives kids new avenue for education & sports - CBS News"
+  ]
+ }
+}

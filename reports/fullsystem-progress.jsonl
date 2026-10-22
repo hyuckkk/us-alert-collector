@@ -1,0 +1,154 @@
+{"at": "2026-10-21T09:03:16+00:00", "stage": "sources", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:05:31+00:00", "stage": "sources", "event": "done", "seconds": 135}
+{"at": "2026-10-21T09:05:31+00:00", "stage": "search", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:05:46+00:00", "stage": "search", "event": "done", "seconds": 16}
+{"at": "2026-10-21T09:05:46+00:00", "stage": "discover", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:08:43+00:00", "stage": "discover", "event": "done", "seconds": 177}
+{"at": "2026-10-21T09:08:43+00:00", "stage": "watch", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:08:43+00:00", "stage": "watch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:08:43+00:00", "stage": "queue", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:08:49+00:00", "stage": "queue", "event": "done", "seconds": 6}
+{"at": "2026-10-21T09:08:49+00:00", "stage": "ai", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "ai", "event": "done", "seconds": 1248}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "enqueue", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "enqueue", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "annual", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "annual", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "candidates", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "candidates", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "fallback", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "fallback", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "dispatch", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:29:36+00:00", "stage": "dispatch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:33:43+00:00", "stage": "sources", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:36:04+00:00", "stage": "sources", "event": "done", "seconds": 141}
+{"at": "2026-10-21T09:36:04+00:00", "stage": "search", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:36:19+00:00", "stage": "search", "event": "done", "seconds": 15}
+{"at": "2026-10-21T09:36:19+00:00", "stage": "discover", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:40:45+00:00", "stage": "discover", "event": "done", "seconds": 266}
+{"at": "2026-10-21T09:40:45+00:00", "stage": "watch", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:40:45+00:00", "stage": "watch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:40:45+00:00", "stage": "queue", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:40:52+00:00", "stage": "queue", "event": "done", "seconds": 7}
+{"at": "2026-10-21T09:40:52+00:00", "stage": "ai", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "ai", "event": "done", "seconds": 1012}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "enqueue", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "enqueue", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "annual", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "annual", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "candidates", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "candidates", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "fallback", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "fallback", "event": "done", "seconds": 0}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "dispatch", "event": "start", "seconds": null}
+{"at": "2026-10-21T09:57:44+00:00", "stage": "dispatch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:01:54+00:00", "stage": "sources", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:02:33+00:00", "stage": "sources", "event": "done", "seconds": 39}
+{"at": "2026-10-21T10:02:33+00:00", "stage": "search", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:02:46+00:00", "stage": "search", "event": "done", "seconds": 13}
+{"at": "2026-10-21T10:02:46+00:00", "stage": "discover", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:05:30+00:00", "stage": "discover", "event": "done", "seconds": 164}
+{"at": "2026-10-21T10:05:30+00:00", "stage": "watch", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:05:30+00:00", "stage": "watch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:05:30+00:00", "stage": "queue", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:05:35+00:00", "stage": "queue", "event": "done", "seconds": 6}
+{"at": "2026-10-21T10:05:35+00:00", "stage": "ai", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "ai", "event": "done", "seconds": 1060}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "enqueue", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "enqueue", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "annual", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "annual", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "candidates", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "candidates", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "fallback", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "fallback", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "dispatch", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:23:16+00:00", "stage": "dispatch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:26:38+00:00", "stage": "sources", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:27:32+00:00", "stage": "sources", "event": "done", "seconds": 54}
+{"at": "2026-10-21T10:27:32+00:00", "stage": "search", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:27:49+00:00", "stage": "search", "event": "done", "seconds": 17}
+{"at": "2026-10-21T10:27:49+00:00", "stage": "discover", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:30:42+00:00", "stage": "discover", "event": "done", "seconds": 173}
+{"at": "2026-10-21T10:30:42+00:00", "stage": "watch", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:30:42+00:00", "stage": "watch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:30:42+00:00", "stage": "queue", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:30:48+00:00", "stage": "queue", "event": "done", "seconds": 6}
+{"at": "2026-10-21T10:30:48+00:00", "stage": "ai", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "ai", "event": "done", "seconds": 1448}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "enqueue", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "enqueue", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "annual", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "annual", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "candidates", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "candidates", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "fallback", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "fallback", "event": "done", "seconds": 0}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "dispatch", "event": "start", "seconds": null}
+{"at": "2026-10-21T10:54:56+00:00", "stage": "dispatch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T11:01:29+00:00", "stage": "sources", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:02:36+00:00", "stage": "sources", "event": "done", "seconds": 67}
+{"at": "2026-10-21T11:02:36+00:00", "stage": "search", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:02:53+00:00", "stage": "search", "event": "done", "seconds": 17}
+{"at": "2026-10-21T11:02:53+00:00", "stage": "discover", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:05:47+00:00", "stage": "discover", "event": "done", "seconds": 173}
+{"at": "2026-10-21T11:05:47+00:00", "stage": "watch", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:05:47+00:00", "stage": "watch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T11:05:47+00:00", "stage": "queue", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:05:53+00:00", "stage": "queue", "event": "done", "seconds": 6}
+{"at": "2026-10-21T11:05:53+00:00", "stage": "ai", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "ai", "event": "done", "seconds": 1529}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "enqueue", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "enqueue", "event": "done", "seconds": 0}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "annual", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "annual", "event": "done", "seconds": 0}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "candidates", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "candidates", "event": "done", "seconds": 0}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "fallback", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "fallback", "event": "done", "seconds": 0}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "dispatch", "event": "start", "seconds": null}
+{"at": "2026-10-21T11:31:22+00:00", "stage": "dispatch", "event": "done", "seconds": 0}
+{"at": "2026-10-21T11:33:25+00:00", "stage": "sources", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T11:35:56+00:00", "stage": "sources", "event": "done", "seconds": 152, "usd": null}
+{"at": "2026-10-21T11:35:56+00:00", "stage": "search", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T11:36:10+00:00", "stage": "search", "event": "done", "seconds": 13, "usd": null}
+{"at": "2026-10-21T11:36:10+00:00", "stage": "discover", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T11:39:29+00:00", "stage": "discover", "event": "done", "seconds": 199, "usd": 1.6278}
+{"at": "2026-10-21T11:39:29+00:00", "stage": "watch", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T11:39:29+00:00", "stage": "watch", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-21T11:39:29+00:00", "stage": "queue", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T11:39:34+00:00", "stage": "queue", "event": "done", "seconds": 6, "usd": 0.0}
+{"at": "2026-10-21T11:39:34+00:00", "stage": "ai", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "ai", "event": "done", "seconds": 1634, "usd": 2.3012}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "enqueue", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "enqueue", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "annual", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "annual", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "candidates", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "candidates", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "fallback", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "fallback", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "dispatch", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-21T12:06:48+00:00", "stage": "dispatch", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-22T00:43:00+00:00", "stage": "sources", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T00:45:51+00:00", "stage": "sources", "event": "done", "seconds": 171, "usd": null}
+{"at": "2026-10-22T00:45:51+00:00", "stage": "search", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T00:46:06+00:00", "stage": "search", "event": "done", "seconds": 15, "usd": null}
+{"at": "2026-10-22T00:46:06+00:00", "stage": "discover", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T00:47:15+00:00", "stage": "discover", "event": "done", "seconds": 68, "usd": 0.4105}
+{"at": "2026-10-22T00:47:15+00:00", "stage": "watch", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T00:47:15+00:00", "stage": "watch", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-22T00:47:15+00:00", "stage": "queue", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T00:47:24+00:00", "stage": "queue", "event": "done", "seconds": 9, "usd": 0.0}
+{"at": "2026-10-22T00:47:24+00:00", "stage": "ai", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "ai", "event": "done", "seconds": 1368, "usd": 1.3285}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "enqueue", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "enqueue", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "annual", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "annual", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "candidates", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "candidates", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "fallback", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "fallback", "event": "done", "seconds": 0, "usd": 0.0}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "dispatch", "event": "start", "seconds": null, "usd": null}
+{"at": "2026-10-22T01:10:12+00:00", "stage": "dispatch", "event": "done", "seconds": 0, "usd": 0.0}

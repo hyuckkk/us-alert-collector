@@ -1,0 +1,1044 @@
+{
+ "run_id": "20261021T051338Z",
+ "mode": "full",
+ "today": "2026-10-20",
+ "dry_run": true,
+ "sources": [
+  {
+   "id": "westminster-calendar",
+   "ok": true,
+   "status": 200,
+   "items": 17,
+   "error": null
+  },
+  {
+   "id": "westminster-news",
+   "ok": true,
+   "status": 200,
+   "items": 4,
+   "error": null
+  },
+  {
+   "id": "westminster-camps",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "childrens-museum",
+   "ok": true,
+   "status": 200,
+   "items": 2,
+   "error": null
+  },
+  {
+   "id": "rmnp-news",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "rmnp-timed-entry",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "nps-events",
+   "ok": false,
+   "status": null,
+   "items": 0,
+   "error": "skipped: NPS_API_KEY not set"
+  },
+  {
+   "id": "usafa-events",
+   "ok": true,
+   "status": 200,
+   "items": 18,
+   "error": null
+  },
+  {
+   "id": "du-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 133,
+   "error": null
+  },
+  {
+   "id": "space-launches",
+   "ok": true,
+   "status": 200,
+   "items": 20,
+   "error": null
+  },
+  {
+   "id": "hyland-hills-events-api",
+   "ok": false,
+   "status": null,
+   "items": 0,
+   "error": "ConnectTimeout: timed out"
+  },
+  {
+   "id": "usopm-events-api",
+   "ok": true,
+   "status": 200,
+   "items": 50,
+   "error": null
+  },
+  {
+   "id": "westminster-programs",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "anythink-communico",
+   "ok": true,
+   "status": 200,
+   "items": 15,
+   "error": null
+  },
+  {
+   "id": "denver-library-html",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "cu-boulder-localist",
+   "ok": true,
+   "status": 200,
+   "items": 100,
+   "error": null
+  },
+  {
+   "id": "broomfield-calendar",
+   "ok": true,
+   "status": 200,
+   "items": 14,
+   "error": null
+  },
+  {
+   "id": "arvada-calendar",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "cu-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 94,
+   "error": null
+  },
+  {
+   "id": "csu-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 93,
+   "error": null
+  },
+  {
+   "id": "dmns-programs",
+   "ok": true,
+   "status": 200,
+   "items": 16,
+   "error": null
+  },
+  {
+   "id": "thornton-festivals",
+   "ok": true,
+   "status": 200,
+   "items": 24,
+   "error": null
+  },
+  {
+   "id": "thornton-registration",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "dam-free-days",
+   "ok": true,
+   "status": 200,
+   "items": 3,
+   "error": null
+  },
+  {
+   "id": "broomfield-camp-explorer",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  }
+ ],
+ "dropped": {
+  "not-relevant": 38,
+  "past": 1,
+  "judge-removed": 4,
+  "duplicate": 4
+ },
+ "events": [
+  {
+   "event_key": "e636e2a57cf54924",
+   "identity": "url:usafa.edu/event-single/homeschool-oct-30|2026|",
+   "bot": "kids",
+   "title": "Homeschool Program: The Outer Solar System",
+   "title_ko": "홈스쿨 프로그램: 외행성 태양계",
+   "org": "United States Air Force Academy",
+   "start_date": "2026-10-30",
+   "end_date": "2026-10-30",
+   "time_text": "10:30-11:45",
+   "event_tz": "America/Denver",
+   "location": "United States Air Force Academy",
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": "무료",
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": "홈스쿨 가정 대상으로 보임",
+   "status_note": "세부 내용과 출입 조건은 원문에 없음 — 확인 필요; 날짜의 연도는 추정",
+   "url": "https://www.usafa.edu/event-single/homeschool-oct-30/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "space",
+    "homeschool",
+    "science"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "usafa-events",
+   "date_uncertain": true
+  },
+  {
+   "event_key": "e3ee08830c5ad0b6",
+   "identity": "url:usafa.edu/event-single/usafa-vs-uconn|2026|",
+   "bot": "family",
+   "title": "USAFA vs. UConn",
+   "title_ko": "USAFA 대 UConn 미식축구 경기",
+   "org": "United States Air Force Academy",
+   "start_date": "2026-10-31",
+   "end_date": "2026-10-31",
+   "time_text": "13:00-16:00",
+   "event_tz": "America/Denver",
+   "location": "United States Air Force Academy",
+   "city": null,
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": "시간·티켓 정보가 원문에 없음 — 원문 확인 필요",
+   "url": "https://www.usafa.edu/event-single/usafa-vs-uconn/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "football",
+    "sports"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "usafa-events",
+   "date_uncertain": true
+  },
+  {
+   "event_key": "eea2e8c2b865cc4a",
+   "identity": "url:dmns.org/exhibitions/temporary-exhibitions|any|1",
+   "bot": "family",
+   "title": "Changing Landscapes: Inside Venice, Mesa Verde, and Rapa Nui",
+   "title_ko": "기후 변화 속 세계유산 전시 (Changing Landscapes)",
+   "org": "Denver Museum of Nature & Science",
+   "start_date": null,
+   "end_date": "2027-01-03",
+   "time_text": null,
+   "event_tz": "America/Denver",
+   "location": "Denver Museum of Nature & Science, 2001 Colorado Blvd.",
+   "city": "Denver",
+   "age_text": null,
+   "english": [],
+   "cost_text": "입장권 포함 무료 (Free with Museum Admission)",
+   "signup": "none",
+   "registration_opens": null,
+   "registration_status": "open",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": null,
+   "url": "https://www.dmns.org/exhibitions/temporary-exhibitions/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "museum",
+    "exhibit",
+    "climate",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "dmns-programs",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "e2b829f5e57d3007",
+   "identity": "url:dmns.org/exhibitions/temporary-exhibitions|any|2",
+   "bot": "family",
+   "title": "Mythic Creatures: Dragons, Unicorns & Mermaids",
+   "title_ko": "신화 속 생물 전시: 용, 유니콘, 인어",
+   "org": "Denver Museum of Nature & Science",
+   "start_date": null,
+   "end_date": "2027-04-04",
+   "time_text": null,
+   "event_tz": "America/Denver",
+   "location": "Denver Museum of Nature & Science, 2001 Colorado Blvd.",
+   "city": "Denver",
+   "age_text": null,
+   "english": [],
+   "cost_text": "일반 입장권 필요 (General Admission)",
+   "signup": "none",
+   "registration_opens": null,
+   "registration_status": "open",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": null,
+   "url": "https://www.dmns.org/exhibitions/temporary-exhibitions/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "museum",
+    "exhibit",
+    "mythology",
+    "info"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "dmns-programs",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "ea5e96add9d460ba",
+   "identity": "url:dmns.org/exhibitions/temporary-exhibitions|2027|",
+   "bot": "family",
+   "title": "Pokémon Fossil Museum",
+   "title_ko": "포켓몬 화석 박물관 전시",
+   "org": "Denver Museum of Nature & Science",
+   "start_date": "2027-05-28",
+   "end_date": null,
+   "time_text": null,
+   "event_tz": "America/Denver",
+   "location": "Denver Museum of Nature & Science, 2001 Colorado Blvd.",
+   "city": "Denver",
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "none",
+   "registration_opens": null,
+   "registration_status": "upcoming",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": null,
+   "url": "https://www.dmns.org/exhibitions/temporary-exhibitions/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "museum",
+    "fossil",
+    "exhibit"
+   ],
+   "annual": false,
+   "year_label": "2027년 행사",
+   "source_id": "dmns-programs",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "ee0d9aa5bfa1d772",
+   "identity": "url:dmns.org/programs-and-events/freedays|2026|",
+   "bot": "family",
+   "title": "SCFD Free Night at the Museum (Night at the Museum)",
+   "title_ko": "SCFD 무료 저녁 개방 (11월 7일 토요일)",
+   "org": "Denver Museum of Nature & Science",
+   "start_date": "2026-11-07",
+   "end_date": "2026-11-07",
+   "time_text": null,
+   "event_tz": "America/Denver",
+   "location": "Denver Museum of Nature & Science, 2001 Colorado Blvd.",
+   "city": "Denver",
+   "age_text": null,
+   "english": [],
+   "cost_text": "일반 입장 무료 (별도 표 없이 입장, 극장/플라네타리움/특별전 제외)",
+   "signup": "none",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": "일반 입장은 표 없이 무료, 극장·플라네타리움·특별전은 별도 표 필요; 구체적 날짜·시간은 원문 목록에서 확인 필요",
+   "url": "https://www.dmns.org/programs-and-events/freedays/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "museum",
+    "free"
+   ],
+   "annual": true,
+   "year_label": "연례행사 — 내년에도 열릴 가능성",
+   "source_id": "dmns-programs",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "e4a7ae70dc9bdf8d",
+   "identity": "url:dmns.org/programs-and-events/science-camps|2027|",
+   "bot": "kids",
+   "title": "DMNS Summer Science Camp 2027",
+   "title_ko": "자연과학박물관 여름 과학캠프 2027",
+   "org": "Denver Museum of Nature & Science",
+   "start_date": "2027-06-01",
+   "end_date": "2027-08-06",
+   "time_text": null,
+   "event_tz": "America/Denver",
+   "location": "Denver Museum of Nature & Science, 2001 Colorado Blvd.",
+   "city": "Denver",
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "upcoming",
+   "deadline": null,
+   "eligibility": "유치원~5학년 대상 (K-1, 2-3, 4-5학년 그룹)",
+   "status_note": null,
+   "url": "https://www.dmns.org/programs-and-events/science-camps/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "camp",
+    "science",
+    "museum"
+   ],
+   "annual": false,
+   "year_label": "2027년 행사",
+   "source_id": "dmns-programs",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "e34d31ac29b35a39",
+   "identity": "url:mychildsmuseum.org/exhibits|2026|",
+   "bot": "family",
+   "title": "Snow Days at Joy Park",
+   "title_ko": "스노우 데이 (Joy Park, 11월 18일 오픈)",
+   "org": "Children's Museum of Denver",
+   "start_date": "2026-11-18",
+   "end_date": null,
+   "time_text": null,
+   "event_tz": "America/Denver",
+   "location": "Children's Museum of Denver, 2121 Children's Museum Drive",
+   "city": "Denver",
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "none",
+   "registration_opens": null,
+   "registration_status": "upcoming",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": "날짜의 연도는 추정 — 원문 확인 필요",
+   "url": "https://www.mychildsmuseum.org/exhibits",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "museum",
+    "snow",
+    "play"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "childrens-museum",
+   "date_uncertain": true
+  },
+  {
+   "event_key": "ea6fe62d5e14f3f5",
+   "identity": "url:usafa.edu/event-single/homeschool-nov-9|2026|",
+   "bot": "kids",
+   "title": "Homeschool Program: 3rd Rock – Earth from the Core to Climate Change",
+   "title_ko": "홈스쿨 프로그램: 지구의 중심부에서 기후변화까지 (USAFA 플라네타리움)",
+   "org": "United States Air Force Academy",
+   "start_date": "2026-11-09",
+   "end_date": "2026-11-09",
+   "time_text": "10:30-11:45",
+   "event_tz": "America/Denver",
+   "location": "USAFA Planetarium, 2120 Cadet Dr",
+   "city": "Colorado Springs",
+   "age_text": null,
+   "english": [],
+   "cost_text": "무료",
+   "signup": "fcfs",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": "RSVP 필요(좌석 제한); 방문자는 유효한 DoW ID가 있거나 최소 24시간 전 기지 출입증을 신청해야 함",
+   "url": "https://www.usafa.edu/event-single/homeschool-nov-9/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "planetarium",
+    "science"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "usafa-events",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "ed0e6c5a34a2f6bf",
+   "identity": "url:usafa.edu/event-single/usafa-vs-san-jose-state|2026|",
+   "bot": "family",
+   "title": "USAFA vs. San Jose State Football",
+   "title_ko": "USAFA 대 샌호세주립대 미식축구 경기",
+   "org": "United States Air Force Academy",
+   "start_date": "2026-11-14",
+   "end_date": "2026-11-14",
+   "time_text": "17:00-21:00",
+   "event_tz": "America/Denver",
+   "location": "Air Force Academy Falcon Stadium",
+   "city": "Colorado Springs",
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": null,
+   "url": "https://www.usafa.edu/event-single/usafa-vs-san-jose-state/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "football",
+    "sports"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "usafa-events",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "eaa722fe629c5b04",
+   "identity": "url:usafa.edu/event-single/homeschool-nov-18|2026|",
+   "bot": "kids",
+   "title": "Homeschool Program: Earth – Sun – Moon System",
+   "title_ko": "홈스쿨 프로그램: 지구-달-태양 시스템 (USAFA 플라네타리움)",
+   "org": "United States Air Force Academy",
+   "start_date": "2026-11-18",
+   "end_date": "2026-11-18",
+   "time_text": "10:45-12:00",
+   "event_tz": "America/Denver",
+   "location": "USAFA Planetarium, 2120 Cadet Dr",
+   "city": "Colorado Springs",
+   "age_text": null,
+   "english": [],
+   "cost_text": "무료",
+   "signup": "fcfs",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": "RSVP 필요(좌석 제한); 방문자는 유효한 DoW ID가 있거나 최소 24시간 전 기지 출입증을 신청해야 함",
+   "url": "https://www.usafa.edu/event-single/homeschool-nov-18/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "planetarium",
+    "science"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "usafa-events",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "e6f4c7ed5534ecda",
+   "identity": "url:usafa.edu/event-single/usafa-vs-utep|2026|",
+   "bot": "family",
+   "title": "USAFA vs. UTEP Football",
+   "title_ko": "USAFA 대 UTEP 미식축구 경기",
+   "org": "United States Air Force Academy",
+   "start_date": "2026-11-20",
+   "end_date": "2026-11-20",
+   "time_text": "18:00-22:00",
+   "event_tz": "America/Denver",
+   "location": "Air Force Academy Falcon Stadium",
+   "city": "Colorado Springs",
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": null,
+   "url": "https://www.usafa.edu/event-single/usafa-vs-utep/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "football",
+    "sports"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "usafa-events",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "eb705b3799dd47a0",
+   "identity": "url:usafa.edu/event-single/bluebards-theatre-troupe-come-from-away|2026|",
+   "bot": "family",
+   "title": "Bluebards Theatre Troupe: Come From Away",
+   "title_ko": "블루바즈 극단 뮤지컬 공연: Come From Away",
+   "org": "United States Air Force Academy",
+   "start_date": "2026-11-21",
+   "end_date": "2026-11-21",
+   "time_text": "13:30-15:30",
+   "event_tz": "America/Denver",
+   "location": "United States Air Force Academy",
+   "city": "Colorado Springs",
+   "age_text": null,
+   "english": [],
+   "cost_text": null,
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": null,
+   "url": "https://www.usafa.edu/event-single/bluebards-theatre-troupe-come-from-away/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "theatre",
+    "musical"
+   ],
+   "annual": false,
+   "year_label": null,
+   "source_id": "usafa-events",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "ea9df85200cfae82",
+   "identity": "url:usafa.edu/event-single/holly-ivy-concert|2026|",
+   "bot": "family",
+   "title": "Holly & Ivy Concert – Dec. 4",
+   "title_ko": "홀리 앤 아이비 겨울 콘서트 (12월 4일)",
+   "org": "United States Air Force Academy Band",
+   "start_date": "2026-12-04",
+   "end_date": "2026-12-04",
+   "time_text": "19:00-22:00",
+   "event_tz": "America/Denver",
+   "location": "Arnold Hall Theater, 2308 Cadet Dr",
+   "city": "Colorado Springs",
+   "age_text": "모든 연령",
+   "english": [],
+   "cost_text": "무료",
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": "티켓 및 기지 출입 안내는 추후 공지; 공연 1시간 전 입장, 일찍 도착 권장",
+   "url": "https://www.usafa.edu/event-single/holly-ivy-concert/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "concert",
+    "holiday"
+   ],
+   "annual": true,
+   "year_label": "연례행사 — 내년에도 열릴 가능성",
+   "source_id": "usafa-events",
+   "date_uncertain": null
+  },
+  {
+   "event_key": "e92ded9651e49d12",
+   "identity": "url:usafa.edu/event-single/holly-ivy-concert-3|2026|",
+   "bot": "family",
+   "title": "Holly & Ivy Concert – Dec. 6",
+   "title_ko": "홀리 & 아이비 콘서트 (미 공군사관학교 밴드)",
+   "org": "U.S. Air Force Academy Band",
+   "start_date": "2026-12-06",
+   "end_date": null,
+   "time_text": "15:00-18:00",
+   "event_tz": "America/Denver",
+   "location": "Arnold Hall Theater, U.S. Air Force Academy",
+   "city": "Colorado Springs",
+   "age_text": "전 연령",
+   "english": [],
+   "cost_text": "무료",
+   "signup": "unknown",
+   "registration_opens": null,
+   "registration_status": "unknown",
+   "deadline": null,
+   "eligibility": null,
+   "status_note": "티켓 및 기지 출입 안내는 추후 공지 예정이며, 공연 1시간 전 입장 시작으로 일찍 도착을 권장합니다.",
+   "url": "https://www.usafa.edu/event-single/holly-ivy-concert-3/",
+   "checked_at": "2026-10-21T05:13:38+00:00",
+   "urgency": "weekly",
+   "tags": [
+    "concert",
+    "holiday",
+    "music"
+   ],
+   "annual": true,
+   "year_label": "연례행사 — 내년에도 열릴 가능성",
+   "source_id": "usafa-events",
+   "date_uncertain": true
+  }
+ ],
+ "discover": {
+  "sources": [
+   {
+    "url": "https://apexprd.org/activities/toddler-through-teens/camps/",
+    "name": "Apex Park and Recreation District – Camps",
+    "reason": "Apex runs three full-day, state-licensed camp sites for ages 5 to 15, plus Teen Adventure and a Leadership in Training program. Camps follow the Jeffco Public Schools spring, summer and winter breaks. The district serves Arvada, right next to Westminster.",
+    "bots": [
+     "kids",
+     "family"
+    ]
+   },
+   {
+    "url": "https://teamsideline.com/sites/apex/current-programs",
+    "name": "Apex PRD youth & adult sports leagues (TeamSideline)",
+    "reason": "Lists current youth and adult sports leagues with registration status, registration dates and season dates. Examples include CARA Youth Track and Field and summer basketball leagues.",
+    "bots": [
+     "kids",
+     "life"
+    ]
+   },
+   {
+    "url": "https://apexprd.org/activities/gymnastics/",
+    "name": "Apex PRD Gymnastics",
+    "reason": "Gymnastics classes that step up by level, from parent-child classes starting at age 1 through a team program.",
+    "bots": [
+     "kids",
+     "family"
+    ]
+   },
+   {
+    "url": "https://denverzoo.org/safari-camps/",
+    "name": "Denver Zoo Safari Camps",
+    "reason": "Full-day zoo camps for kids in kindergarten through grade 4, with sessions during fall, winter, spring and summer school breaks.",
+    "bots": [
+     "kids"
+    ]
+   },
+   {
+    "url": "https://denverzoo.org/summer-safari-schedule/",
+    "name": "Denver Zoo Summer Safari Camp Schedules",
+    "reason": "Shows the dates and grade-band schedule for summer camp weeks.",
+    "bots": [
+     "kids"
+    ]
+   },
+   {
+    "url": "https://www.mychildsmuseum.org/whats-happening/camps-workshops",
+    "name": "Children's Museum of Denver – Camps & Workshops",
+    "reason": "Day camps and hands-on workshops tied to museum exhibits, with registration. This is a separate page from the museum's events listing.",
+    "bots": [
+     "kids",
+     "family"
+    ]
+   },
+   {
+    "url": "https://www.dmns.org/programs-and-events/science-camps/",
+    "name": "Denver Museum of Nature & Science – School Break Camps",
+    "reason": "Science camps during fall, winter and spring breaks.",
+    "bots": [
+     "kids"
+    ]
+   },
+   {
+    "url": "https://www.dmns.org/programs-and-events/science-camps/summer-science-camp/",
+    "name": "DMNS Summer Science Camps",
+    "reason": "Full-day summer camps for kids going into grades K–6.",
+    "bots": [
+     "kids"
+    ]
+   },
+   {
+    "url": "https://wingsmuseum.org/education/camp/",
+    "name": "Wings Over the Rockies – Air & Space Summer Camp",
+    "reason": "Week-long aerospace and STEAM camps for ages 8–12, held at both Denver museum locations.",
+    "bots": [
+     "kids"
+    ]
+   },
+   {
+    "url": "https://wingsmuseum.org/education/",
+    "name": "Wings Over the Rockies – Education",
+    "reason": "Main education page linking to camps, flight training, scholarships and flight simulators. Useful for teens and adults.",
+    "bots": [
+     "kids",
+     "life"
+    ]
+   },
+   {
+    "url": "https://www.denverartmuseum.org/en/family-programs",
+    "name": "Denver Art Museum – Family Programs",
+    "reason": "Recurring family programs, including Create & Play for children ages 0–5 and their families.",
+    "bots": [
+     "family",
+     "kids"
+    ]
+   },
+   {
+    "url": "https://museo.org/programs-1/summer-camps/",
+    "name": "Museo de las Americas – Summer Art & Culture Camps",
+    "reason": "Summer art and culture camps for kids in Denver, a good fit for multicultural families.",
+    "bots": [
+     "kids"
+    ]
+   },
+   {
+    "url": "https://continuingeducation.frontrange.edu/frontrange/course/course.aspx?catid=17",
+    "name": "Front Range Community College – Continuing Education (noncredit)",
+    "reason": "FRCC's official noncredit course catalog for lifelong learning: affordable professional development and personal enrichment classes. Many are online, so they work for Westminster residents. FRCC also has a Westminster campus.",
+    "bots": [
+     "life"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/312/Adult-Indoor-Soccer",
+    "name": "City of Westminster – Adult Indoor Soccer Leagues (Westminster Sports Center)",
+    "reason": "Official city page for recurring adult indoor soccer league seasons, with registration through the Westminster Sports Center. A good way for adults to meet local friends through rec sports.",
+    "bots": [
+     "life"
+    ]
+   },
+   {
+    "url": "https://arvadacenter.org/education/classes-for-adults",
+    "name": "Arvada Center – Classes for Adults",
+    "reason": "Official listing of the Arvada Center's recurring adult arts classes, including a large ceramics studio that serves more than 700 adults and children a year. It is next to Westminster, and the center also runs performances and exhibitions.",
+    "bots": [
+     "life"
+    ]
+   },
+   {
+    "url": "https://www.westminsterco.gov/194/Adult-Pottery",
+    "name": "City of Westminster – Adult Pottery classes",
+    "reason": "This is Westminster's official page for its recurring adult pottery classes, covering both hand-building and wheel-throwing. The fee includes 25 lb of clay, glazes and two firings. It's a good fit for adults looking for craft classes and new friends.",
+    "bots": [
+     "life"
+    ]
+   },
+   {
+    "url": "https://www.thorntonco.gov/parks-recreation/recreation-programs/sports",
+    "name": "City of Thornton – Recreation Sports",
+    "reason": "Thornton's official page for its city-run sports programs. Adult options include softball and basketball leagues, eSports leagues and tournaments, archery and Taekwon-Do, and there are youth sports camps and academies too.",
+    "bots": [
+     "life",
+     "kids"
+    ]
+   },
+   {
+    "url": "https://www.quickscores.com/thorntonrecreation",
+    "name": "City of Thornton Recreation Division – QuickScores league portal",
+    "reason": "The official scheduling and sign-up portal for Thornton's adult leagues, with league schedules, standings and announcements.",
+    "bots": [
+     "life"
+    ]
+   }
+  ],
+  "events": [
+   {
+    "url": "https://wingsmuseum.org/events/little-wings-plane-spotting/",
+    "title": "Little Wings: Plane Spotting – Sat Sep 19, 2026, 10:30–11:30 AM",
+    "why": "A short program for young kids about planes at Wings Over the Rockies, good for families."
+   },
+   {
+    "url": "https://wingsmuseum.org/wp-content/uploads/2026-Summer-Camp-Parent-Manual-Revised.pdf",
+    "title": "Wings Over the Rockies 2026 Air & Space Summer Camp parent manual",
+    "why": "The 2026 summer camp parent manual is posted, so families can check the camp rules before signing up."
+   },
+   {
+    "url": "https://denverzoo.org/wp-content/uploads/2025/11/Safari-Camps-Important-Info.pdf",
+    "title": "Denver Zoo Safari Camps – registration steps (fall/winter/spring/summer)",
+    "why": "Step-by-step instructions for buying a camp by date and grade range. Useful when the school-break sessions open."
+   },
+   {
+    "url": "https://teamsideline.com/sites/apex/current-programs",
+    "title": "Apex PRD CARA Youth Track and Field – Summer 2026",
+    "why": "A youth sports league for summer 2026 in Arvada, near Westminster. Check its registration window on this page."
+   },
+   {
+    "url": "https://www.westminsterco.gov/312/Adult-Indoor-Soccer",
+    "title": "Westminster adult indoor soccer league registration",
+    "why": "League registration runs by season through the Westminster Sports Center. Search results did not show the next season's dates, so check this page or call to find out when the next team sign-up opens."
+   },
+   {
+    "url": "https://www.quickscores.com/Orgs/ExtraMsg.php?OrgDir=thorntonrecreation&ExtraMsgID=2106",
+    "title": "City of Thornton Adult Softball League – registration info",
+    "why": "Thornton's announcement page for adult softball league sign-ups. It's an easy way for Korean residents and local friends to join a team together. Check here for the next season's dates and team registration."
+   },
+   {
+    "url": "https://www.westminsterco.gov/194/Adult-Pottery",
+    "title": "Westminster Adult Pottery – upcoming class sessions",
+    "why": "Check the class list and session dates for the next round of adult pottery classes in Westminster before spots fill up."
+   }
+  ]
+ },
+ "queue_taken": 60,
+ "identity": {
+  "exact": 0,
+  "matched": 0,
+  "new": 19,
+  "occurrence": 0,
+  "merged_in_run": 4
+ },
+ "enqueue": {
+  "new": 0,
+  "changed": 0,
+  "same": 0,
+  "outbox": 0,
+  "accepted": 15,
+  "watch": 0,
+  "skipped": {},
+  "dry_run": true
+ },
+ "queue": {
+  "queued": 1019,
+  "extracted": 0,
+  "stuck": 0,
+  "oldest_queued_hours": 0
+ },
+ "usage": {
+  "claude-opus-5-5": {
+   "input_tokens": 219060,
+   "output_tokens": 9932,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "usd": 1.24488,
+   "calls": 6,
+   "searches": 17,
+   "errors": 0
+  },
+  "claude-haiku-5-5": {
+   "input_tokens": 69350,
+   "output_tokens": 22597,
+   "cache_write_tokens": 0,
+   "cache_read_tokens": 0,
+   "usd": 0.018233500000000003,
+   "calls": 5,
+   "searches": 0,
+   "errors": 0
+  }
+ },
+ "collected": true,
+ "metrics": {
+  "sources_total": 25,
+  "sources_ok": 23,
+  "queries": 37,
+  "discover_calls": 4,
+  "entries_fetched": 1079,
+  "entries_new": 1079,
+  "entries_changed": 0,
+  "details_ok": 80,
+  "details_total": 80,
+  "watch_checked": 0,
+  "watch_changed": 0,
+  "queue_added": 1079,
+  "ai_items": 60,
+  "ai_missing": 0,
+  "ai_failed": 0,
+  "events_out": 15,
+  "outbox": 0,
+  "input_tokens": 288410,
+  "output_tokens": 32529,
+  "searches": 17,
+  "queue_queued": 1019,
+  "queue_oldest_hours": 0,
+  "usd": 1.2631,
+  "detail_missing": 0,
+  "judge_missing": 0,
+  "lease_rejected": 0,
+  "cache_write_tokens": 0,
+  "cache_read_tokens": 0,
+  "calls": 11,
+  "errors": 0,
+  "sources_ok_ratio": 0.92,
+  "core_failed": 1
+ },
+ "alerts": [
+  "핵심 정보원 실패: hyland-hills-events-api"
+ ],
+ "stages": {
+  "sources": {
+   "ok": true,
+   "due": 25
+  },
+  "search": {
+   "ok": true,
+   "queries": 37
+  },
+  "discover": {
+   "ok": true,
+   "calls": 4,
+   "sources": 18,
+   "events": 7,
+   "errors": 0
+  },
+  "watch": {
+   "ok": true,
+   "checked": 0,
+   "changed": 0
+  },
+  "queue": {
+   "ok": true,
+   "fresh": 1079
+  },
+  "ai": {
+   "ok": true,
+   "taken": 60,
+   "events": 15
+  },
+  "enqueue": {
+   "ok": true,
+   "events": 15,
+   "done": 13
+  },
+  "annual": {
+   "ok": true,
+   "events": 0
+  },
+  "candidates": {
+   "ok": true,
+   "verified": 0
+  },
+  "fallback": {
+   "ok": true,
+   "needed": false
+  },
+  "dispatch": {
+   "ok": true,
+   "dispatch": {
+    "dry_run": true
+   },
+   "digest": {
+    "dry_run": true
+   }
+  }
+ },
+ "completed": true
+}

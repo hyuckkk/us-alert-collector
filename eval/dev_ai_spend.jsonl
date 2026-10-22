@@ -1,0 +1,11 @@
+{"at": "2026-10-21T05:13:38Z", "run": "39548338576", "kind": "collect-dry (강제 push 로 의도치 않은 실행)", "usd": 1.2631}
+{"at": "2026-10-21T05:50:39Z", "run": "39549077703", "kind": "fullsystem", "usd": 2.4685, "cap": 4.7}
+{"at": "2026-10-21T07:09:40Z", "run": "39556544905", "kind": "fullsystem", "usd": 2.2606, "cap": 4.0}
+{"at": "2026-10-21T09:00:36+00:00", "run": "39566256760", "kind": "fullsystem", "status": "failure", "usd": 2.9619, "cap": 5.0, "calls": 166, "usage_recorded": true}
+{"at": "2026-10-21T09:29:41+00:00", "run": "39573933024", "kind": "fullsystem", "status": "success", "usd": 3.2754, "cap": 5.0, "calls": 171, "usage_recorded": true}
+{"at": "2026-10-21T09:57:48+00:00", "run": "39577890828", "kind": "fullsystem", "status": "success", "usd": 2.9699, "cap": 5.0, "calls": 142, "usage_recorded": true}
+{"at": "2026-10-21T10:23:19+00:00", "run": "39581507812", "kind": "fullsystem", "status": "success", "usd": 2.6329, "cap": 5.0, "calls": 141, "usage_recorded": true}
+{"at": "2026-10-21T10:55:01+00:00", "run": "39584594153", "kind": "fullsystem", "status": "success", "usd": 3.6144, "cap": 5.0, "calls": 193, "usage_recorded": true}
+{"at": "2026-10-21T11:31:25+00:00", "run": "39588846809", "kind": "fullsystem", "status": "success", "usd": 3.5826, "cap": 5.0, "calls": 200, "usage_recorded": true}
+{"at": "2026-10-21T12:06:52+00:00", "run": "39592795277", "kind": "fullsystem", "status": "success", "usd": 3.9289, "cap": 5.0, "calls": 200, "usage_recorded": true}
+{"at": "2026-10-22T01:10:18+00:00", "run": "39701327890", "kind": "fullsystem", "status": "success", "usd": 1.739, "cap": 5.0, "calls": 200, "usage_recorded": true}

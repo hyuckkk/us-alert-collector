@@ -1,0 +1,79 @@
+{
+ "themes": [
+  "kids and teens near Westminster/Denver: after-school programs, classes, camps (incl. registration openings), youth sports leagues, library and museum kids programs",
+  "family outings near Denver: festivals, free days, school/university games and performances, nature and park programs, special experiences, notable family travel deals from Denver",
+  "adults near Westminster/Denver: hobby and skills classes, community college noncredit courses, rec-center adult sports leagues, clubs, talks, performances",
+  "kids after-school programs, camps, youth sports and arts/science classes"
+ ],
+ "models": {
+  "claude-sonnet-5-5": {
+   "sources": 1,
+   "events": 0,
+   "unique_urls": 1,
+   "duplicate_mentions": 0,
+   "fetchable": 0,
+   "official_domain": 0,
+   "sources_with_event_links": 0,
+   "already_known_host": 0,
+   "usd": 0.4497,
+   "usage": {
+    "claude-sonnet-5-5": {
+     "input_tokens": 128423,
+     "output_tokens": 2287,
+     "cache_write_tokens": 0,
+     "cache_read_tokens": 0,
+     "usd": 0.449716,
+     "calls": 4,
+     "searches": 17,
+     "errors": 0
+    }
+   },
+   "seconds": 85,
+   "errors": [],
+   "source_list": [
+    {
+     "url": "https://www.eventbrite.com/d/co--denver/free-kids/",
+     "name": "Eventbrite: Free kids events in Denver",
+     "reason": "Aggregated listing of free kids events in Denver, such as free music classes and family events. It's a third-party aggregator, not an official source, so treat it as a discovery page only.",
+     "bots": [
+      "kids",
+      "family"
+     ],
+     "theme": "family"
+    }
+   ],
+   "event_list": [],
+   "raw": {
+    "kids": {
+     "text_tail": "{\"sources\":[],\"events\":[]}",
+     "dropped_urls": 0,
+     "result_urls": 39
+    },
+    "family": {
+     "text_tail": "Results are dicts inside a string? Handle.{\"sources\":[{\"url\":\"https://www.eventbrite.com/d/co--denver/free-kids/\",\"name\":\"Eventbrite: Free kids events in Denver\",\"reason\":\"Aggregated listing of free kids events in Denver, such as free music classes and family events. It's a third-party aggregator, not an official source, so treat it as a discovery page only.\",\"bots\":[\"kids\",\"family\"]}],\"events\":[]}",
+     "dropped_urls": 0,
+     "result_urls": 35
+    },
+    "life": {
+     "text_tail": "I couldn't run any searches because the search tool returned a \"server tool use limit exceeded\" error. I have no URLs from search results, so I'm not listing any sources or events. Adding unverified URLs would break your rule to use only URLs that appeared in results.\n\n{\"sources\":[],\"events\":[]}",
+     "dropped_urls": 0,
+     "result_urls": 39
+    },
+    "deep": {
+     "text_tail": "{\"sources\":[],\"events\":[]}",
+     "dropped_urls": 0,
+     "result_urls": 49
+    }
+   }
+  }
+ },
+ "url_checks": {
+  "https://www.eventbrite.com/d/co--denver/free-kids/": {
+   "ok": false,
+   "status": 405,
+   "event_links": 0,
+   "official": false,
+   "error": "HTTP 405"
+  }
+ }
+}
