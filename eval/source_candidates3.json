@@ -1,0 +1,79 @@
+{
+ "_comment": "Hyland Hills 접속 확인(GitHub 서버에서)",
+ "candidates": [
+  {
+   "id": "hh-api",
+   "type": "json",
+   "url": "https://www.hylandhills.gov/wp-json/tribe/events/v1/events?per_page=20",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ],
+   "json": {
+    "items": "events",
+    "title": "title",
+    "url": "url",
+    "date": "start_date",
+    "text": "description"
+   }
+  },
+  {
+   "id": "hh-home",
+   "type": "html",
+   "url": "https://www.hylandhills.gov/",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "hh-ical",
+   "type": "ical",
+   "url": "https://www.hylandhills.gov/events/?ical=1",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "hh-nowww",
+   "type": "html",
+   "url": "https://hylandhills.gov/",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "hh-sports",
+   "type": "html",
+   "url": "https://hylandhillssports.com/home",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  },
+  {
+   "id": "hh-reg",
+   "type": "html",
+   "mode": "page-change",
+   "url": "https://www.hylandhills.gov/programs/program-class-registration/",
+   "region": "westminster",
+   "bots": [
+    "family",
+    "kids",
+    "life"
+   ]
+  }
+ ]
+}
