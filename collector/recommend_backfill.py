@@ -105,7 +105,8 @@ def main(argv=None) -> int:
           "| # | 행사(새 제목) | 판정 | 대상 봇 | 분야 | 이유 |", "|---|---|---|---|---|---|"]
     for i, r in enumerate(sorted(life_rows, key=lambda r: (order[r["rec_level"]], -r["rec_score"])), 1):
         md.append(f"| {i} | {r['title_ko']} | {LEVEL_KO[r['rec_level']]} | {r['bot']} | {r['category']} | {r['rec_reason']} |".replace("\n", " "))
-    (ROOT / "eval/life_sent_review.md").write_text("\n".join(md) + "\n")
+    if life_rows:  # 이번 실행에서 실제 발송분을 판정한 경우에만(다른 봇만 판정한 실행이 표를 비우지 않게)
+        (ROOT / "eval/life_sent_review.md").write_text("\n".join(md) + "\n")
     live = os.environ.get("USAGE_LIVE_FILE")
     if live:
         Path(live).write_text(json.dumps({"usd": round(usage.usd, 4), "calls": sum(m["calls"] for m in usage.by_model.values()), "by_model": usage.by_model}))

@@ -1,0 +1,1704 @@
+{
+ "summary": {
+  "events_total": 101,
+  "judged": 101,
+  "missing": 0,
+  "usd": 0.7992,
+  "by_level": {
+   "push": 40,
+   "interest": 48,
+   "none": 13
+  },
+  "by_bot": {
+   "life": 94,
+   "kids": 6,
+   "family": 1
+  },
+  "by_category": {
+   "sports": 5,
+   "support-group": 6,
+   "senior": 15,
+   "toddler": 6,
+   "class": 22,
+   "outdoors": 6,
+   "library-regular": 13,
+   "civic": 5,
+   "other": 7,
+   "museum": 3,
+   "public-service": 4,
+   "performance": 8,
+   "festival": 1
+  },
+  "moved_bot": 7,
+  "life_sent": {
+   "total": 60,
+   "judged": 60,
+   "by_level": {
+    "push": 20,
+    "interest": 33,
+    "none": 7
+   }
+  }
+ },
+ "rows": [
+  {
+   "event_key": "e0045e9faaf648d6",
+   "was_bot": "life",
+   "was_title": "잭오랜턴 피클볼 토너먼트",
+   "source_id": "brighton-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "sports",
+   "rec_score": 72,
+   "summary_ko": "개인으로 신청하면 매 경기 다른 파트너와 짝을 이루는 방식의 가을 피클볼 대회입니다. 11점제로 최소 4경기가 보장됩니다.",
+   "highlights": [
+    "마감 임박",
+    "예약 필요"
+   ],
+   "rec_reason": "직접 참가하는 시즌 스포츠 대회이며 신청 마감이 임박했습니다.",
+   "title_ko": "잭오랜턴 피클볼 토너먼트"
+  },
+  {
+   "event_key": "e02650c19d396206",
+   "was_bot": "life",
+   "was_title": "콜로라도 광산대 클럽 아이스하키 vs 그랜드캐니언대",
+   "source_id": "mines-athletics-ics",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "sports",
+   "rec_score": 55,
+   "summary_ko": "콜로라도 광산대 클럽 아이스하키팀이 그랜드캐니언대와 맞붙는 홈 경기를 관람할 수 있습니다.",
+   "highlights": [],
+   "rec_reason": "일반인이 관람할 수 있는 대학 스포츠 경기입니다.",
+   "title_ko": "Mines 클럽 아이스하키 vs 그랜드캐니언대"
+  },
+  {
+   "event_key": "e09612f7b5e89c56",
+   "was_bot": "life",
+   "was_title": "힘든 시기 글쓰기 워크숍",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "support-group",
+   "rec_score": 35,
+   "summary_ko": "자신의 이야기를 글로 쓰며 삶의 경험을 정리하는 안전하고 지지적인 주간 글쓰기 모임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "매주 열리는 치유 목적의 지지 모임 성격의 도서관 프로그램입니다.",
+   "title_ko": "힘든 시기 글쓰기 워크숍"
+  },
+  {
+   "event_key": "e0a1acd2c3be1a26",
+   "was_bot": "life",
+   "was_title": "계절 향신료 쿠킹 클럽",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 30,
+   "summary_ko": "계절마다 새로운 향신료와 레시피가 담긴 집에서 쓰는 키트를 받아 요리해 볼 수 있습니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "60세 이상 대상의 키트 배포형 시니어 프로그램입니다.",
+   "title_ko": "계절 향신료 쿠킹 클럽 (60세+)"
+  },
+  {
+   "event_key": "e123876b948a755d",
+   "was_bot": "life",
+   "was_title": "토들러 타임 시리즈 (레이크우드 도서관)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "kids",
+   "category": "toddler",
+   "rec_score": 20,
+   "summary_ko": "노래, 라임, 춤, 이야기로 걸음마기 아이의 읽기 준비를 돕는 스토리타임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "걸음마기 유아 대상의 정기 도서관 스토리타임입니다.",
+   "title_ko": "토들러 타임 (레이크우드 도서관)"
+  },
+  {
+   "event_key": "e16ef4142c834357",
+   "was_bot": "life",
+   "was_title": "개인 안전과 상황 인식 교육 (Erie 경찰서)",
+   "source_id": "erie-rss",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 40,
+   "summary_ko": "Erie 경찰에게서 범죄 예방과 자기 보호를 위한 실용적인 팁과 전략을 배우는 강연입니다.",
+   "highlights": [
+    "무료",
+    "예약 필요"
+   ],
+   "rec_reason": "실용적이지만 체험 가치가 크지 않은 안전 교육 강연입니다.",
+   "title_ko": "개인 안전·상황 인식 교육"
+  },
+  {
+   "event_key": "e1b779b1e8c65bcc",
+   "was_bot": "life",
+   "was_title": "액티브 어덜트 금요일 빙고",
+   "source_id": "apex-prd-api",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 20,
+   "summary_ko": "Apex 센터에서 시니어들이 함께 빙고 게임을 즐기는 정기 모임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "시니어 대상의 정기 반복 프로그램입니다.",
+   "title_ko": "액티브 어덜트 금요일 빙고"
+  },
+  {
+   "event_key": "e1b8af7455acfd8d",
+   "was_bot": "life",
+   "was_title": "온라인 힘든 시기 글쓰기 워크숍",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "support-group",
+   "rec_score": 30,
+   "summary_ko": "Zoom으로 참여해 자신의 이야기를 글로 쓰며 경험을 정리하는 지지적인 주간 글쓰기 모임입니다.",
+   "highlights": [
+    "무료",
+    "예약 필요"
+   ],
+   "rec_reason": "매주 열리는 온라인 지지 모임 성격의 프로그램입니다.",
+   "title_ko": "온라인 힘든 시기 글쓰기 워크숍"
+  },
+  {
+   "event_key": "e1c17b9dcff2781f",
+   "was_bot": "life",
+   "was_title": "콜로라도 광산대 클럽 아이스하키 vs 공군사관학교",
+   "source_id": "mines-athletics-ics",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "sports",
+   "rec_score": 62,
+   "summary_ko": "콜로라도 광산대 클럽 아이스하키팀이 공군사관학교와 맞붙는 경기를 관람합니다. 대학 라이벌전의 생생한 하키 열기를 즐길 수 있습니다.",
+   "highlights": [],
+   "rec_reason": "일반인이 관람할 수 있는 대학 스포츠 경기라 알림 가치가 있습니다.",
+   "title_ko": "Mines 클럽 아이스하키 vs 공군사관학교"
+  },
+  {
+   "event_key": "e1cebac52413202f",
+   "was_bot": "life",
+   "was_title": "Enchanted Mesa 그룹 하이크",
+   "source_id": "chautauqua",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "outdoors",
+   "rec_score": 55,
+   "summary_ko": "볼더 Chautauqua에서 가이드와 함께 Enchanted Mesa 트레일을 걷는 무료 그룹 하이킹입니다. 플랫아이언 산 풍경을 즐길 수 있습니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "누구나 참여할 수 있는 무료 가이드 하이킹이라 야외 체험으로 가치가 있습니다.",
+   "title_ko": "Enchanted Mesa 그룹 하이킹"
+  },
+  {
+   "event_key": "e1ddc5df4f455c7f",
+   "was_bot": "life",
+   "was_title": "어르신 의자 요가",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 35,
+   "summary_ko": "호흡, 부드러운 동작, 명상과 소리를 결합해 몸의 긴장을 풀어주는 60세 이상 대상 의자 요가입니다.",
+   "highlights": [],
+   "rec_reason": "60세 이상 대상 프로그램이라 관심 설정자에게만 적합합니다.",
+   "title_ko": "어르신 의자 요가"
+  },
+  {
+   "event_key": "e1f7975d60877ffe",
+   "was_bot": "life",
+   "was_title": "인터캄비오 스페인어 회화 모임",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 35,
+   "summary_ko": "다른 학습자들과 진행자의 도움을 받아 스페인어로 대화하며 실력을 늘리는 모임입니다. 모든 수준 환영합니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "정기적으로 열리는 도서관 회화 모임이라 관심자 대상입니다.",
+   "title_ko": "스페인어 회화 모임 Intercambio"
+  },
+  {
+   "event_key": "e200e08e96365518",
+   "was_bot": "life",
+   "was_title": "토들러 타임 (Standley Lake 도서관)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "kids",
+   "category": "toddler",
+   "rec_score": 25,
+   "summary_ko": "노래, 라임, 춤, 이야기로 유아의 읽기 준비를 돕는 도서관 스토리 타임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "유아 대상 정기 스토리타임이라 관심 설정자에게만 적합합니다.",
+   "title_ko": "토들러 타임 (Standley Lake 도서관)"
+  },
+  {
+   "event_key": "e276217f2fb641bc",
+   "was_bot": "life",
+   "was_title": "11월 소설 쓰기 챌린지",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 40,
+   "summary_ko": "11월 한 달간 소설 쓰기에 도전하는 사람들을 위한 오픈 스튜디오로, 집필 시간과 진행 관리 도구를 제공합니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "반복되는 도서관 글쓰기 모임으로 관심 있는 사람에게 적합합니다.",
+   "title_ko": "11월 소설 쓰기 챌린지"
+  },
+  {
+   "event_key": "e2819fde18c9cd25",
+   "was_bot": "life",
+   "was_title": "Colorado Chautauqua 역사 투어",
+   "source_id": "chautauqua",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "outdoors",
+   "rec_score": 50,
+   "summary_ko": "국가 사적지인 볼더 Chautauqua의 역사와 건축물을 가이드와 함께 둘러보는 무료 투어입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "누구나 참여 가능한 특별 장소의 무료 가이드 투어라 체험 가치가 있습니다.",
+   "title_ko": "Colorado Chautauqua 역사 투어"
+  },
+  {
+   "event_key": "e2939729c4eecb4b",
+   "was_bot": "life",
+   "was_title": "가족 계보 찾기 상담 (Mountain Genealogists Society)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 25,
+   "summary_ko": "Mountain Genealogists Society 회원들이 족보·가족사 조사 방법을 알려주는 비공식 모임입니다.",
+   "highlights": [],
+   "rec_reason": "정기적인 틈새 취미 모임이라 관심자에게만 적합합니다.",
+   "title_ko": "가족 계보 찾기 상담"
+  },
+  {
+   "event_key": "e2da752395b68322",
+   "was_bot": "life",
+   "was_title": "시니어 웨이트룸 오리엔테이션 (6주)",
+   "source_id": "brighton-rss",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 45,
+   "summary_ko": "시니어를 위한 6주 웨이트룸 입문 과정으로, 기구 사용법과 안전한 근력 운동을 배웁니다. 웨이트 초보도 참여할 수 있습니다.",
+   "highlights": [],
+   "rec_reason": "시니어 전용 프로그램이라 관심 설정자에게만 알립니다.",
+   "title_ko": "시니어 웨이트룸 오리엔테이션 (6주)"
+  },
+  {
+   "event_key": "e3075c8ea909079c",
+   "was_bot": "life",
+   "was_title": "시의회 회의 및 회의 후 모임",
+   "source_id": "westminster-calendar",
+   "sent_life": true,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "civic",
+   "rec_score": 0,
+   "summary_ko": "시의회 정기 회의로 현장 참석 또는 온라인 시청이 가능합니다.",
+   "highlights": [],
+   "rec_reason": "시의회 회의는 체험형 활동이 아니라 알림 대상이 아닙니다.",
+   "title_ko": "웨스트민스터 시의회 회의"
+  },
+  {
+   "event_key": "e312e9a6400a1241",
+   "was_bot": "life",
+   "was_title": "켄 캐릴 목장 패밀리 타임",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "family",
+   "category": "library-regular",
+   "rec_score": 30,
+   "summary_ko": "온 가족이 함께 동화 듣기, 노래, 율동, 라임 놀이를 즐기는 도서관 출장 스토리타임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "영유아 중심의 정기 도서관 스토리타임이라 관심 설정자용입니다.",
+   "title_ko": "켄 캐릴 목장 패밀리 스토리타임"
+  },
+  {
+   "event_key": "e35d0bfab2a512e6",
+   "was_bot": "life",
+   "was_title": "베이비 타임 (휘트리지 도서관)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "kids",
+   "category": "toddler",
+   "rec_score": 25,
+   "summary_ko": "아기와 함께 바운스, 노래, 라임, 책 읽기로 초기 발달을 돕는 영아 프로그램입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "영아 대상 정기 프로그램이라 관심 설정자에게만 알립니다.",
+   "title_ko": "베이비 타임 (휘트리지 도서관)"
+  },
+  {
+   "event_key": "e3650edf45dd4422",
+   "was_bot": "life",
+   "was_title": "토들러 타임 (Belmar 도서관)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "kids",
+   "category": "toddler",
+   "rec_score": 25,
+   "summary_ko": "걸음마 아이와 노래, 율동, 이야기로 읽기 준비를 돕는 유아 스토리타임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "유아 대상 정기 스토리타임이라 관심 설정자용입니다.",
+   "title_ko": "토들러 타임 (Belmar 도서관)"
+  },
+  {
+   "event_key": "e3a3742c1e4c479b",
+   "was_bot": "life",
+   "was_title": "나록손(Narcan) 사용 교육",
+   "source_id": "brighton-rss",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 40,
+   "summary_ko": "약물 과다복용 응급 상황에서 나록손을 사용하는 방법을 배우는 무료 교육입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "유용한 안전 교육이지만 취미·체험보다는 특정 관심층용입니다.",
+   "title_ko": "나록손(Narcan) 사용법 교육"
+  },
+  {
+   "event_key": "e40b29fe98ac161f",
+   "was_bot": "life",
+   "was_title": "북클럽 – 『The Frozen River』 (Ariel Lawhon)",
+   "source_id": "apex-prd-api",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 30,
+   "summary_ko": "Ariel Lawhon의 역사 미스터리 소설을 함께 읽고 이야기 나누는 북클럽 모임입니다.",
+   "highlights": [],
+   "rec_reason": "정기 독서 모임이라 관심 설정자에게만 알립니다.",
+   "title_ko": "북클럽 – 『The Frozen River』"
+  },
+  {
+   "event_key": "e4697913beeb3976",
+   "was_bot": "life",
+   "was_title": "Collette 여행 설명회 (페루 / 스위스·오스트리아·바이에른)",
+   "source_id": "apex-prd-api",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "other",
+   "rec_score": 20,
+   "summary_ko": "여행사 Collette의 페루, 스위스·오스트리아·바이에른 단체 투어 일정과 상품을 소개하는 설명회입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "여행 상품 홍보성 설명회로 여행에 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "Collette 여행 설명회 (페루·알프스)"
+  },
+  {
+   "event_key": "e46ced654a7cbdfd",
+   "was_bot": "life",
+   "was_title": "콜로라도 광산대 클럽 아이스하키 vs 콜로라도 칼리지",
+   "source_id": "mines-athletics-ics",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "sports",
+   "rec_score": 62,
+   "summary_ko": "콜로라도 광산대 클럽 아이스하키팀이 콜로라도 칼리지와 맞붙는 대학 하키 경기를 링크에서 직접 관람할 수 있습니다.",
+   "highlights": [],
+   "rec_reason": "가까운 아르바다에서 열리는 대학 아이스하키 경기로 관람 가치가 있습니다.",
+   "title_ko": "Mines 클럽 아이스하키 vs 콜로라도 칼리지"
+  },
+  {
+   "event_key": "e4f1ac5243eb5387",
+   "was_bot": "life",
+   "was_title": "번코 배시",
+   "source_id": "apex-prd-api",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "other",
+   "rec_score": 35,
+   "summary_ko": "주사위 게임 번코를 함께 즐기며 이웃과 어울리는 친목 모임입니다.",
+   "highlights": [],
+   "rec_reason": "반복적으로 열리는 소규모 친목 게임 모임이라 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "Apex 센터 번코 게임 모임"
+  },
+  {
+   "event_key": "e51a6120a5a13ff3",
+   "was_bot": "life",
+   "was_title": "시니어 소셜 클럽",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 30,
+   "summary_ko": "60세 이상을 위한 친목 모임으로 초청 강연, 외출, 창작 활동을 함께합니다.",
+   "highlights": [],
+   "rec_reason": "60세 이상 대상의 정기 시니어 프로그램입니다.",
+   "title_ko": "시니어 소셜 클럽 (Belmar 도서관)"
+  },
+  {
+   "event_key": "e5830da189ee50d9",
+   "was_bot": "life",
+   "was_title": "초보 피클볼 수업",
+   "source_id": "brighton-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 40,
+   "summary_ko": "주 2회 피클볼 기초 규칙과 기술을 배우는 성인 초보자용 강습 과정입니다.",
+   "highlights": [
+    "예약 필요"
+   ],
+   "rec_reason": "스포츠 기술 강습이지만 이미 과정이 시작되어 점수를 낮췄습니다.",
+   "title_ko": "초보자 피클볼 강습"
+  },
+  {
+   "event_key": "e5cd637d03f061ec",
+   "was_bot": "life",
+   "was_title": "환경자문위원회 회의",
+   "source_id": "westminster-calendar",
+   "sent_life": true,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "civic",
+   "rec_score": 0,
+   "summary_ko": "시의회에 환경·재활용 정책을 자문하는 위원회 정기 회의입니다.",
+   "highlights": [],
+   "rec_reason": "시 위원회 행정 회의로 체험형 활동이 아닙니다.",
+   "title_ko": "환경자문위원회 회의"
+  },
+  {
+   "event_key": "e6877e4f81f93f0f",
+   "was_bot": "life",
+   "was_title": "장애 성인을 위한 도서관 프로그램 (Library for All)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "support-group",
+   "rec_score": 25,
+   "summary_ko": "장애가 있는 성인과 보호자가 함께 공예, 미술, 게임, 음악을 즐기며 도서관을 탐방합니다.",
+   "highlights": [],
+   "rec_reason": "특정 대상(장애 성인과 보호자)을 위한 정기 프로그램입니다.",
+   "title_ko": "장애 성인을 위한 도서관 프로그램"
+  },
+  {
+   "event_key": "e6884c42901e8dea",
+   "was_bot": "life",
+   "was_title": "역사 랜드마크 위원회 회의",
+   "source_id": "westminster-calendar",
+   "sent_life": true,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "civic",
+   "rec_score": 0,
+   "summary_ko": "역사 랜드마크 관련 안건을 다루는 시 위원회 정기 회의입니다.",
+   "highlights": [],
+   "rec_reason": "시 위원회 행정 회의로 체험형 활동이 아닙니다.",
+   "title_ko": "역사 랜드마크 위원회 회의"
+  },
+  {
+   "event_key": "e7407eeba61ab0f8",
+   "was_bot": "life",
+   "was_title": "아트 온 더 스트리트 See & Respond 전시",
+   "source_id": "lafayette-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "museum",
+   "rec_score": 45,
+   "summary_ko": "거리 조각 작품에서 영감을 받은 회화·사진·시 등 70점의 지역 작품과 수상작을 감상할 수 있습니다.",
+   "highlights": [
+    "무료",
+    "연례 행사"
+   ],
+   "rec_reason": "매년 열리는 지역 미술 전시로 곧 종료되어 관람 가치가 있습니다.",
+   "title_ko": "라파예트 See & Respond 미술 전시"
+  },
+  {
+   "event_key": "e75bee62e5d6c8b7",
+   "was_bot": "life",
+   "was_title": "전국 처방약 회수의 날 (Greenwood Village 경찰서)",
+   "source_id": "greenwood-village-rss",
+   "sent_life": true,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "public-service",
+   "rec_score": 5,
+   "summary_ko": "불필요한 처방약을 경찰서에 안전하게 반납·폐기하는 행사입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "약품 폐기 행정 서비스로 체험형 활동이 아닙니다.",
+   "title_ko": "처방약 회수의 날 (Greenwood Village)"
+  },
+  {
+   "event_key": "e75c37dc5abe2f01",
+   "was_bot": "life",
+   "was_title": "쿡북 클럽",
+   "source_id": "brighton-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 55,
+   "summary_ko": "함께 고른 요리책의 레시피를 직접 만들어 와서 맛보고 이야기를 나누는 모임입니다.",
+   "highlights": [],
+   "rec_reason": "요리와 독서를 결합한 성인 취미 참여 활동입니다.",
+   "title_ko": "쿡북 클럽 (Brighton)"
+  },
+  {
+   "event_key": "e75df9f2f3fab49a",
+   "was_bot": "life",
+   "was_title": "계획위원회 회의",
+   "source_id": "westminster-calendar",
+   "sent_life": true,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "civic",
+   "rec_score": 3,
+   "summary_ko": "토지 이용 계획과 개발·용도지역 변경 안건을 심의하는 시 위원회 회의입니다.",
+   "highlights": [],
+   "rec_reason": "시 위원회 회의로 알림 대상이 아닙니다.",
+   "title_ko": "Westminster 계획위원회 회의"
+  },
+  {
+   "event_key": "e7b9534b8fab4696",
+   "was_bot": "life",
+   "was_title": "골든 무음 독서모임 (Golden Library)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 30,
+   "summary_ko": "각자 가져온 책을 한 시간 동안 조용히 읽고, 이후 30분간 자유롭게 대화를 나눕니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "정기적으로 열리는 도서관 독서 모임입니다.",
+   "title_ko": "골든 무음 독서모임"
+  },
+  {
+   "event_key": "e7c97cb49bebbeae",
+   "was_bot": "life",
+   "was_title": "뜨개질 모임 Yarn n Stitch",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 30,
+   "summary_ko": "뜨개질, 코바늘, 자수 등 각자의 섬유공예 작품을 가져와 함께 작업하며 교류합니다.",
+   "highlights": [],
+   "rec_reason": "정기적으로 열리는 도서관 공예 모임입니다.",
+   "title_ko": "뜨개질·바느질 모임 (Evergreen)"
+  },
+  {
+   "event_key": "e8b152e514f990e4",
+   "was_bot": "life",
+   "was_title": "애프터 다크 댄스 피트니스 클래스",
+   "source_id": "brighton-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 55,
+   "summary_ko": "저녁 시간에 춤을 추며 자신감과 협응력을 기르는 성인 댄스 피트니스 수업입니다.",
+   "highlights": [],
+   "rec_reason": "성인 대상 취미 운동 클래스입니다.",
+   "title_ko": "애프터 다크 댄스 피트니스"
+  },
+  {
+   "event_key": "e8da483b0453631e",
+   "was_bot": "life",
+   "was_title": "숲 목욕(신린요쿠) 워크숍",
+   "source_id": "arvada-calendar",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "outdoors",
+   "rec_score": 60,
+   "summary_ko": "가이드와 함께 자연 속을 천천히 걸으며 오감으로 숲을 느끼는 명상형 체험입니다.",
+   "highlights": [
+    "특별 체험"
+   ],
+   "rec_reason": "성인 대상 자연 체험 워크숍입니다.",
+   "title_ko": "숲 치유(신린요쿠) 워크숍"
+  },
+  {
+   "event_key": "e91ab2ddedfb2556",
+   "was_bot": "life",
+   "was_title": "온라인 중간 아침 명상 (전화 참여 가능)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "support-group",
+   "rec_score": 20,
+   "summary_ko": "정신건강센터 진행자의 안내에 따라 전화로 참여하는 30분 명상으로 스트레스를 덜어냅니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "매주 반복되는 온라인 웰니스 프로그램입니다.",
+   "title_ko": "전화·온라인 아침 명상"
+  },
+  {
+   "event_key": "e91cf6a0d0f96817",
+   "was_bot": "life",
+   "was_title": "라파예트 새 관찰 (초보자용)",
+   "source_id": "lafayette-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "outdoors",
+   "rec_score": 62,
+   "summary_ko": "그린리 야생동물 보호구역에서 숙련된 탐조가들과 함께 새를 관찰합니다. 예약 없이 자유롭게 참여할 수 있습니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "초보자도 쉽게 참여할 수 있는 야외 자연 체험 프로그램입니다.",
+   "title_ko": "라파예트 초보자 새 관찰"
+  },
+  {
+   "event_key": "e959fc2e1699c6b1",
+   "was_bot": "life",
+   "was_title": "토들러 타임 시리즈 (에지워터 도서관)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "kids",
+   "category": "toddler",
+   "rec_score": 20,
+   "summary_ko": "걸음마기 아이와 함께 노래, 율동, 이야기로 읽기 준비를 돕는 스토리타임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "걸음마기 유아 대상의 정기 도서관 프로그램이라 관심 사용자에게만 적합합니다.",
+   "title_ko": "에지워터 도서관 토들러 타임"
+  },
+  {
+   "event_key": "e95d97a03a3613dc",
+   "was_bot": "life",
+   "was_title": "화요일 오후 북그룹: 해적 공화국",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 25,
+   "summary_ko": "60세 이상 성인이 함께 '해적 공화국'을 읽고 토론하는 월례 북클럽입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "시니어 대상의 정기 북클럽이라 관심 사용자에게만 알립니다.",
+   "title_ko": "북그룹: 해적 공화국"
+  },
+  {
+   "event_key": "ea379c04cb1f6b02",
+   "was_bot": "life",
+   "was_title": "나무 다양성 산책 (타운 산림관리관 안내)",
+   "source_id": "erie-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "outdoors",
+   "rec_score": 55,
+   "summary_ko": "이리 타운 산림관리관과 함께 가을 단풍 속에서 지역 나무 종을 알아보는 올해 마지막 나무 산책입니다. 핼러윈 코스튬 환영.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "올해 마지막으로 열리는 무료 가이드 자연 산책 체험입니다.",
+   "title_ko": "산림관리관과 가을 나무 산책"
+  },
+  {
+   "event_key": "eaabf04e8bddeebc",
+   "was_bot": "life",
+   "was_title": "가이드 아크릴화 수업 (가을)",
+   "source_id": "apex-prd-api",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 40,
+   "summary_ko": "강사의 안내에 따라 아크릴 물감으로 그림 한 점을 완성하는 취미 미술 수업입니다.",
+   "highlights": [],
+   "rec_reason": "성인이 참여할 수 있는 취미 미술 수업이지만 세부 정보가 부족합니다.",
+   "title_ko": "가이드 아크릴화 수업"
+  },
+  {
+   "event_key": "eacc5b097a441cb3",
+   "was_bot": "life",
+   "was_title": "약물 반납 행사 (Drug Take Back Day)",
+   "source_id": "erie-rss",
+   "sent_life": true,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "public-service",
+   "rec_score": 5,
+   "summary_ko": "불필요하거나 기한이 지난 처방약을 익명으로 안전하게 폐기할 수 있습니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "약물 폐기 행정 서비스로 체험형 활동이 아닙니다.",
+   "title_ko": "이리 경찰서 약물 반납의 날"
+  },
+  {
+   "event_key": "eadc155f26d5cc0d",
+   "was_bot": "life",
+   "was_title": "버그 앤 브루: 독성 공포 (21세 이상)",
+   "source_id": "butterfly-pavilion",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "museum",
+   "rec_score": 78,
+   "summary_ko": "21세 이상만 입장하는 야간 행사로, 독을 가진 생물을 가까이서 보고 음료와 체험 활동, 코스튬 대회, 스파이더 존 특별 입장을 즐깁니다.",
+   "highlights": [
+    "특별 체험",
+    "예약 필요"
+   ],
+   "rec_reason": "하룻밤만 열리는 성인 전용 핼러윈 시즌 특별 야간 체험입니다.",
+   "title_ko": "버그 앤 브루: 독성 공포의 밤"
+  },
+  {
+   "event_key": "eb0870b877248c57",
+   "was_bot": "life",
+   "was_title": "스크래블 소셜",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 20,
+   "summary_ko": "60세 이상 성인이 함께 스크래블 게임을 즐기는 친목 모임으로, 게임과 타이머가 제공됩니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "시니어 대상의 정기 도서관 게임 모임입니다.",
+   "title_ko": "스크래블 소셜 모임"
+  },
+  {
+   "event_key": "eb0f828bd896dad9",
+   "was_bot": "life",
+   "was_title": "힘든 시기 글쓰기 워크숍",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "support-group",
+   "rec_score": 35,
+   "summary_ko": "자신의 이야기를 글로 풀어내며 삶의 경험을 정리하는 안전하고 지지적인 주간 글쓰기 모임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "매주 열리는 치유 성격의 글쓰기 모임이라 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "힘든 시기 글쓰기 워크숍"
+  },
+  {
+   "event_key": "eb5ae0356528782b",
+   "was_bot": "life",
+   "was_title": "스페인어 동화 시간",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "kids",
+   "category": "toddler",
+   "rec_score": 25,
+   "summary_ko": "영유아와 가족이 스페인어로 동화, 동요, 미술 활동을 함께 즐깁니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "영유아 대상의 정기 도서관 스토리타임입니다.",
+   "title_ko": "스페인어 동화 시간"
+  },
+  {
+   "event_key": "ebe5db74ec1ba741",
+   "was_bot": "life",
+   "was_title": "지질 투어",
+   "source_id": "chautauqua",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "outdoors",
+   "rec_score": 60,
+   "summary_ko": "볼더 Chautauqua에서 플랫아이언 일대의 지형과 암석 형성 과정을 해설과 함께 걸으며 배웁니다.",
+   "highlights": [
+    "무료",
+    "특별 체험"
+   ],
+   "rec_reason": "명소에서 진행되는 무료 해설 투어로 성인에게 좋은 야외 체험입니다.",
+   "title_ko": "Chautauqua 지질 투어"
+  },
+  {
+   "event_key": "ec33808df1098e66",
+   "was_bot": "life",
+   "was_title": "온라인 미드모닝 명상",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "other",
+   "rec_score": 20,
+   "summary_ko": "전화나 온라인으로 참여해 정신건강 전문기관의 안내로 30분간 명상하며 스트레스를 줄입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "매주 반복되는 짧은 온라인 웰니스 모임입니다.",
+   "title_ko": "온라인 아침 명상"
+  },
+  {
+   "event_key": "ed42166175716b48",
+   "was_bot": "life",
+   "was_title": "생애 말기 계획 패널 토론",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 30,
+   "summary_ko": "전문가 패널이 사전 의료지시서, 유산 정리 등 생애 말기 준비 방법을 안내합니다.",
+   "highlights": [],
+   "rec_reason": "주로 시니어 대상의 정보성 강연입니다.",
+   "title_ko": "생애 말기 준비 전문가 패널"
+  },
+  {
+   "event_key": "ed58a3beb2707cf3",
+   "was_bot": "life",
+   "was_title": "여성 웨이트 입문 1단계 (4주)",
+   "source_id": "brighton-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 55,
+   "summary_ko": "운동 경험 없는 여성도 지지적인 분위기에서 웨이트 트레이닝 기초를 4주간 배웁니다.",
+   "highlights": [
+    "예약 필요"
+   ],
+   "rec_reason": "성인 대상의 기간제 운동 기술 클래스로 참여 가치가 있습니다.",
+   "title_ko": "여성 웨이트 입문 클래스 (4주)"
+  },
+  {
+   "event_key": "eda3b84b9e1078af",
+   "was_bot": "life",
+   "was_title": "전국 시니어 건강 및 피트니스 데이 걷기 행사",
+   "source_id": "apex-prd-api",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 40,
+   "summary_ko": "시니어 건강·피트니스의 날을 맞아 할로윈 분위기 속에서 함께 걷고 간식을 받는 행사입니다.",
+   "highlights": [
+    "무료",
+    "연례 행사"
+   ],
+   "rec_reason": "시니어 대상 행사라 해당 관심층에게만 적합합니다.",
+   "title_ko": "시니어 건강의 날 할로윈 걷기"
+  },
+  {
+   "event_key": "edb77d7777a99bdf",
+   "was_bot": "life",
+   "was_title": "장애 성인을 위한 도서관 프로그램 (Library for All)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 30,
+   "summary_ko": "장애가 있는 성인과 보호자가 공예, 미술, 게임, 음악을 즐기며 도서관을 탐색합니다.",
+   "highlights": [],
+   "rec_reason": "특정 대상을 위한 정기 도서관 프로그램입니다.",
+   "title_ko": "장애 성인을 위한 도서관 프로그램"
+  },
+  {
+   "event_key": "eea13e72b67d105b",
+   "was_bot": "life",
+   "was_title": "YUJA 다큐멘터리 상영회",
+   "source_id": "chautauqua",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 60,
+   "summary_ko": "Chautauqua 커뮤니티 하우스에서 다큐멘터리 영화 'YUJA'를 함께 관람하는 상영회입니다.",
+   "highlights": [],
+   "rec_reason": "역사적인 공연장에서 열리는 일회성 영화 상영 행사로 성인 문화 채널에 적합합니다.",
+   "title_ko": "YUJA 다큐멘터리 상영회"
+  },
+  {
+   "event_key": "eecb0438ece368d7",
+   "was_bot": "life",
+   "was_title": "연극형 음료 시음 체험 SIP",
+   "source_id": "westminster-calendar",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 72,
+   "summary_ko": "70분간 향과 맛, 이야기를 따라가며 주류·무알코올 음료를 시음하는 몰입형 연극 공연입니다. 전국 투어 전 지역에서 먼저 만나볼 수 있습니다.",
+   "highlights": [
+    "특별 체험",
+    "예약 필요",
+    "마감 임박"
+   ],
+   "rec_reason": "전국 투어 전 한정 기간에만 열리는 독특한 몰입형 공연으로 이번 주말 종료됩니다.",
+   "title_ko": "몰입형 연극 시음 체험 SIP"
+  },
+  {
+   "event_key": "ef657ca9caaa70d9",
+   "was_bot": "life",
+   "was_title": "예술 강연 시리즈: Art Between the Lines (Erie)",
+   "source_id": "erie-rss",
+   "sent_life": true,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 48,
+   "summary_ko": "서점에서 시각·공연 예술가들이 작품 뒤의 이야기와 창작 과정을 들려주는 아늑한 강연입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "누구나 무료로 참여할 수 있는 예술 강연으로 문화 관심 성인에게 알릴 만합니다.",
+   "title_ko": "예술 강연 시리즈 Art Between the Lines"
+  },
+  {
+   "event_key": "efa92e95193ad506",
+   "was_bot": "life",
+   "was_title": "무료 법률 자문 클리닉 (이혼·양육권·가족법)",
+   "source_id": "jeffco-library",
+   "sent_life": true,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "public-service",
+   "rec_score": 15,
+   "summary_ko": "변호사와 15분간 1:1로 이혼·양육권 등 가족법 관련 질문을 상담하고 서류 작성 도움을 받습니다.",
+   "highlights": [
+    "무료",
+    "예약 필요"
+   ],
+   "rec_reason": "체험형 활동이 아닌 법률 행정 서비스라 알림 대상이 아닙니다.",
+   "title_ko": "무료 법률 자문 클리닉 (가족법)"
+  },
+  {
+   "event_key": "e7e1fdfc6444b92f",
+   "was_bot": "life",
+   "was_title": "논픽션 북클럽: Rivermouth",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 5,
+   "summary_ko": "매달 논픽션 책 한 권을 두고 이야기를 나누는 도서관 정기 모임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "이미 지난 일정의 정기 도서관 모임입니다.",
+   "title_ko": "논픽션 북클럽: Rivermouth"
+  },
+  {
+   "event_key": "eb10b206c5cdd8f2",
+   "was_bot": "life",
+   "was_title": "애프터 다크 버레스크 수업",
+   "source_id": "brighton-rss",
+   "sent_life": false,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 5,
+   "summary_ko": "버레스크 댄스의 기본 동작을 즐겁게 배워보는 입문 수업입니다.",
+   "highlights": [],
+   "rec_reason": "이미 지난 일정이라 알림 가치가 없습니다.",
+   "title_ko": "애프터 다크 버레스크 수업"
+  },
+  {
+   "event_key": "ebf19414c32e01ad",
+   "was_bot": "life",
+   "was_title": "Freedom Street Social 북클럽",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 5,
+   "summary_ko": "매달 한 권의 책을 정해 편안한 분위기에서 가볍게 토론하는 도서관 외부 북클럽입니다.",
+   "highlights": [],
+   "rec_reason": "이미 지난 일정의 정기 모임입니다.",
+   "title_ko": "Freedom Street Social 북클럽"
+  },
+  {
+   "event_key": "efa5abf5734d84ee",
+   "was_bot": "life",
+   "was_title": "자전거 수리 클리닉 (Bikes Together)",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 5,
+   "summary_ko": "지역 자전거 가게가 10분 무료 점검을 해주며 기본 정비 방법을 알려줍니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "이미 지난 일정이라 알림 가치가 없습니다.",
+   "title_ko": "자전거 수리 클리닉"
+  },
+  {
+   "event_key": "efbb282247d46daa",
+   "was_bot": "life",
+   "was_title": "Bikes Together 자전거 수리 클리닉",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 5,
+   "summary_ko": "자원봉사 정비사의 도움을 받아 자신의 자전거를 직접 점검하고 수리하는 방법을 배우는 클리닉입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "행사일(10월 21일)이 이미 지나 알릴 필요가 없습니다.",
+   "title_ko": "Bikes Together 자전거 수리 클리닉"
+  },
+  {
+   "event_key": "ee91523d892fd24d",
+   "was_bot": "life",
+   "was_title": "2027년 1~5월 강좌 등록",
+   "source_id": "foothills-reg-dates",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 70,
+   "summary_ko": "Foothills Park & Recreation의 겨울·봄 시즌 각종 취미·운동 강좌 온라인 등록이 열립니다. 인기 강좌는 빨리 마감되니 오픈 시간에 맞춰 신청하는 것이 좋습니다.",
+   "highlights": [
+    "접수 예정",
+    "선착순"
+   ],
+   "rec_reason": "곧 열리는 시즌 강좌 등록으로 선착순 신청 기회라 알릴 가치가 있습니다.",
+   "title_ko": "Foothills 2027년 1~5월 강좌 등록 시작"
+  },
+  {
+   "event_key": "ef8457b33d9b5a43",
+   "was_bot": "life",
+   "was_title": "성인 클레이 아트 및 수영 강좌 등록",
+   "source_id": "foothills-reg-dates",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 72,
+   "summary_ko": "성인 대상 클레이 아트(도예)와 수영 강좌의 겨울 시즌 온라인 등록이 시작됩니다. 정원이 한정된 인기 강좌라 오픈 직후 신청이 유리합니다.",
+   "highlights": [
+    "접수 예정",
+    "선착순"
+   ],
+   "rec_reason": "인기 성인 취미 강좌 등록이 곧 열려 선착순 신청 알림 가치가 높습니다.",
+   "title_ko": "성인 도예·수영 겨울 강좌 등록 오픈"
+  },
+  {
+   "event_key": "e51540f6ff813716",
+   "was_bot": "life",
+   "was_title": "시의회 스터디 세션 (취소됨)",
+   "source_id": "westminster-calendar",
+   "sent_life": false,
+   "rec_level": "none",
+   "bot": "life",
+   "category": "civic",
+   "rec_score": 0,
+   "summary_ko": "11월 시의회 스터디 세션이 취소되었습니다.",
+   "highlights": [],
+   "rec_reason": "취소된 시의회 회의로 체험 활동이 아닙니다.",
+   "title_ko": "웨스트민스터 시의회 스터디 세션 (취소)"
+  },
+  {
+   "event_key": "e110ff6affa9bc8f",
+   "was_bot": "life",
+   "was_title": "회고록 쓰기 입문",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 60,
+   "summary_ko": "Lighthouse Writers Workshop 강사와 함께 개인의 경험을 보편적 주제를 담은 이야기로 풀어내는 회고록 쓰기 기초를 배웁니다.",
+   "highlights": [],
+   "rec_reason": "전문 글쓰기 단체가 진행하는 성인 대상 취미 글쓰기 워크숍입니다.",
+   "title_ko": "회고록 쓰기 입문 워크숍"
+  },
+  {
+   "event_key": "e54a25314ab8fd10",
+   "was_bot": "life",
+   "was_title": "콜로라도 광산대 남자 클럽배구 vs 미정",
+   "source_id": "mines-athletics-ics",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "sports",
+   "rec_score": 30,
+   "summary_ko": "콜로라도 광산대 남자 클럽 배구팀의 홈 경기를 Lockridge Arena에서 관람할 수 있습니다.",
+   "highlights": [],
+   "rec_reason": "상대팀 미정인 대학 클럽 경기로 배구 팬에게만 관심 있을 만합니다.",
+   "title_ko": "Mines 남자 클럽 배구 경기"
+  },
+  {
+   "event_key": "ec10a28b551c4619",
+   "was_bot": "life",
+   "was_title": "소설 쓰기: 씨앗에서 이야기까지",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 62,
+   "summary_ko": "데뷔 소설가 Nancy Viera가 자신의 작품을 예로 들어 인물, 다세대 서사, 배경 구성 등을 직접 써보며 익히는 창작 워크숍입니다.",
+   "highlights": [],
+   "rec_reason": "현역 작가가 이끄는 실습형 창작 워크숍으로 성인 취미 수강 가치가 있습니다.",
+   "title_ko": "소설 쓰기: 아이디어에서 이야기로"
+  },
+  {
+   "event_key": "e13bd94935713aa6",
+   "was_bot": "life",
+   "was_title": "알츠하이머·치매 간병인 지원 모임",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "support-group",
+   "rec_score": 40,
+   "summary_ko": "알츠하이머협회와 도서관이 함께 운영하는 모임으로, 치매 가족을 돌보는 사람들이 경험을 나누고 정보와 지지를 얻습니다.",
+   "highlights": [],
+   "rec_reason": "치매 간병인 대상의 정기 지원 모임이라 해당자에게만 유용합니다.",
+   "title_ko": "알츠하이머·치매 간병인 지원 모임"
+  },
+  {
+   "event_key": "e2229bd3b1bb0ae2",
+   "was_bot": "life",
+   "was_title": "장애 성인을 위한 도서관 프로그램 (Library for All)",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 30,
+   "summary_ko": "장애가 있는 성인과 보호자가 함께 공예, 미술, 게임, 음악을 즐기며 도서관을 둘러보는 프로그램입니다.",
+   "highlights": [],
+   "rec_reason": "특정 대상(장애 성인과 보호자)을 위한 정기 도서관 프로그램이라 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "장애 성인을 위한 도서관 체험 프로그램"
+  },
+  {
+   "event_key": "ec4397b386dd4461",
+   "was_bot": "life",
+   "was_title": "의료 이용자 권리 안내 (영어·스페인어)",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "public-service",
+   "rec_score": 25,
+   "summary_ko": "콜로라도에서 보험 유형이나 체류 신분에 관계없이 의료를 이용하는 방법과 청구서 대응 등 환자 권리를 배웁니다.",
+   "highlights": [],
+   "rec_reason": "실용적인 정보 강연이지만 체험형 활동이 아니라 관심 있는 사람에게만 해당합니다.",
+   "title_ko": "의료 이용자 권리 안내 (영어·스페인어)"
+  },
+  {
+   "event_key": "ef7cc2eb83ab8040",
+   "was_bot": "life",
+   "was_title": "온라인 중간 아침 명상 (전화 참여 가능)",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 20,
+   "summary_ko": "Jefferson Center for Mental Health가 진행하는 30분 가이드 명상에 온라인이나 전화로 참여해 스트레스를 줄일 수 있습니다.",
+   "highlights": [],
+   "rec_reason": "매주 반복되는 짧은 온라인 웰니스 모임이라 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "온라인·전화 아침 명상"
+  },
+  {
+   "event_key": "ed7e1f1f6c129e09",
+   "was_bot": "life",
+   "was_title": "Sheela Bringi & Elden Kelly 공연",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 65,
+   "summary_ko": "Boulder Chautauqua의 아담한 Community House에서 하프·보컬과 기타가 어우러진 월드 뮤직 라이브 공연을 감상합니다.",
+   "highlights": [],
+   "rec_reason": "역사적인 공연장에서 열리는 라이브 콘서트로 성인 문화 채널에 알릴 가치가 있습니다.",
+   "title_ko": "Sheela Bringi & Elden Kelly 공연"
+  },
+  {
+   "event_key": "e70f0be65d0fe8ce",
+   "was_bot": "life",
+   "was_title": "Caleb Schwing & the Holy Smokes 공연",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 63,
+   "summary_ko": "Chautauqua Community House에서 Alex Dunn과 함께하는 아메리카나·루츠 밴드의 라이브 공연을 즐깁니다.",
+   "highlights": [],
+   "rec_reason": "분위기 있는 공연장에서의 라이브 음악 공연으로 알림 가치가 있습니다.",
+   "title_ko": "Caleb Schwing & the Holy Smokes 공연"
+  },
+  {
+   "event_key": "e8b4c27717b431ce",
+   "was_bot": "life",
+   "was_title": "퍼즐 허슬 대회",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "other",
+   "rec_score": 62,
+   "summary_ko": "2~4인 팀을 이뤄 제한 시간 안에 직소 퍼즐을 맞추며 다른 팀과 겨루는 대회입니다.",
+   "highlights": [
+    "선착순"
+   ],
+   "rec_reason": "참가 팀 수가 제한된 체험형 대회로 친구나 가족과 참여하기 좋습니다.",
+   "title_ko": "퍼즐 허슬 팀 대회"
+  },
+  {
+   "event_key": "eda5a69e3344faf8",
+   "was_bot": "life",
+   "was_title": "필라테스 & 펌프킨 스파이스 오픈하우스",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 48,
+   "summary_ko": "Apex Center 필라테스 스튜디오를 둘러보고 수업과 기구를 체험하며 가을 분위기의 간식을 즐기는 오픈하우스입니다.",
+   "highlights": [],
+   "rec_reason": "새로운 운동 취미를 직접 체험해 볼 수 있는 행사라 알림 가치가 있습니다.",
+   "title_ko": "필라테스 & 펌프킨 스파이스 오픈하우스"
+  },
+  {
+   "event_key": "ea7021ad6c263ea7",
+   "was_bot": "life",
+   "was_title": "논픽션 북클럽 시리즈 (벨마 도서관)",
+   "source_id": "jeffco-library",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 28,
+   "summary_ko": "매달 선정된 논픽션 책을 읽고 함께 이야기를 나누는 성인 독서 모임입니다.",
+   "highlights": [],
+   "rec_reason": "월례 정기 도서관 독서 모임이라 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "논픽션 북클럽 (Belmar 도서관)"
+  },
+  {
+   "event_key": "e1bc5f3285b3c246",
+   "was_bot": "life",
+   "was_title": "액티브 어덜트 금요 빙고",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 25,
+   "summary_ko": "액티브 어덜트(시니어) 대상의 친목 빙고 모임으로, 함께 게임하며 교류합니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "시니어 대상의 정기적인 친목 프로그램이라 관심 선택자에게만 적합합니다.",
+   "title_ko": "액티브 어덜트 금요 빙고"
+  },
+  {
+   "event_key": "e62ac508580f3410",
+   "was_bot": "life",
+   "was_title": "추수감사절 아침 커뮤니티 수련",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 55,
+   "summary_ko": "볼더 Chautauqua에서 추수감사절 아침을 여는 커뮤니티 요가 수련에 참여합니다. 명절 아침을 몸과 마음을 가다듬으며 시작할 수 있습니다.",
+   "highlights": [
+    "특별 체험"
+   ],
+   "rec_reason": "명절에 한정된 특별 운동 클래스로 성인 누구에게나 추천할 만합니다.",
+   "title_ko": "추수감사절 아침 요가 수련"
+  },
+  {
+   "event_key": "e18d2fa6fd0561d2",
+   "was_bot": "life",
+   "was_title": "필라테스 리포머 겨울 강좌 등록",
+   "source_id": "foothills-reg-dates",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 50,
+   "summary_ko": "Foothills 레크리에이션의 겨울 시즌 리포머 필라테스 강좌 등록이 열립니다. 기구 필라테스를 정기적으로 배울 수 있는 기회입니다.",
+   "highlights": [
+    "접수 예정"
+   ],
+   "rec_reason": "인기 취미 운동 강좌의 등록 시작 알림으로 성인 채널에 유용합니다.",
+   "title_ko": "필라테스 리포머 겨울 강좌 등록"
+  },
+  {
+   "event_key": "e37e28ac98b9855c",
+   "was_bot": "life",
+   "was_title": "액티브 어덜트 하이킹 1~2월 등록",
+   "source_id": "thornton-registration",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 50,
+   "summary_ko": "Thornton 액티브 어덜트 대상 겨울 단체 하이킹 프로그램 등록이 시작됩니다. 거주자가 먼저, 비거주자는 한 시간 뒤부터 신청할 수 있습니다.",
+   "highlights": [
+    "선착순",
+    "접수 예정"
+   ],
+   "rec_reason": "시니어 대상 프로그램이라 관심 선택자에게 알리는 것이 적합합니다.",
+   "title_ko": "액티브 어덜트 1~2월 하이킹 등록"
+  },
+  {
+   "event_key": "e1707dc9b9b8c0a5",
+   "was_bot": "life",
+   "was_title": "노부모 돌봄 가이드 세미나",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "other",
+   "rec_score": 35,
+   "summary_ko": "연로한 부모를 돌보는 성인 자녀를 위해 돌봄 방법과 지원 정보를 안내하는 세미나입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "특정 상황에 놓인 사람에게만 유용한 정보성 강연입니다.",
+   "title_ko": "노부모 돌봄 가이드 세미나"
+  },
+  {
+   "event_key": "e77162a31c8b8493",
+   "was_bot": "life",
+   "was_title": "북클럽: 『Raising Hare』 (Chloe Dalton)",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "library-regular",
+   "rec_score": 30,
+   "summary_ko": "Chloe Dalton의 『Raising Hare』를 함께 읽고 이야기를 나누는 북클럽 모임입니다.",
+   "highlights": [],
+   "rec_reason": "정기적인 독서 모임으로 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "북클럽: 『Raising Hare』"
+  },
+  {
+   "event_key": "e7bb9ceb8f9ff79e",
+   "was_bot": "life",
+   "was_title": "액티브 어덜트 징글 밍글 (홀리데이 모임)",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 40,
+   "summary_ko": "액티브 어덜트(시니어)들이 모여 연말 분위기를 즐기며 교류하는 홀리데이 친목 모임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "시니어 대상 친목 행사라 관심 선택자에게만 알립니다.",
+   "title_ko": "액티브 어덜트 징글 밍글"
+  },
+  {
+   "event_key": "e290b76022a718c1",
+   "was_bot": "life",
+   "was_title": "LAPOMPE 재즈 홀리데이 공연",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 72,
+   "summary_ko": "LAPOMPE가 클래식 캐럴과 홀리데이 음악을 스윙·핫클럽 집시 재즈로 재해석해 들려주는 공연입니다. Chautauqua Winterfest의 일환으로 열립니다.",
+   "highlights": [
+    "특별 체험"
+   ],
+   "rec_reason": "연말 시즌 한정 라이브 재즈 공연으로 성인 누구에게나 추천할 만합니다.",
+   "title_ko": "LAPOMPE 집시 재즈 홀리데이 공연"
+  },
+  {
+   "event_key": "e978728a58fa1323",
+   "was_bot": "life",
+   "was_title": "선물 포장 & 쇼핑 나이트",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "other",
+   "rec_score": 55,
+   "summary_ko": "음료를 즐기며 연말 선물을 포장하고 쇼핑하는 여성 대상 소셜 나이트입니다. 음료 티켓이 포함됩니다.",
+   "highlights": [
+    "선착순"
+   ],
+   "rec_reason": "성인 대상 연말 소셜 체험 행사로 참여 가치가 있습니다.",
+   "title_ko": "선물 포장 & 쇼핑 레이디스 나이트"
+  },
+  {
+   "event_key": "e2b116ab4451903a",
+   "was_bot": "life",
+   "was_title": "액티브 어덜트 금요 빙고",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 25,
+   "summary_ko": "시니어(액티브 어덜트)들이 모여 빙고 게임을 즐기는 정기 친목 모임입니다.",
+   "highlights": [
+    "무료"
+   ],
+   "rec_reason": "시니어 대상 정기 프로그램이라 관심 선택자에게만 알립니다.",
+   "title_ko": "액티브 어덜트 금요 빙고"
+  },
+  {
+   "event_key": "e790db72217fa9b0",
+   "was_bot": "life",
+   "was_title": "퍼즐 허슬 팀 릴레이",
+   "source_id": "apex-prd-api",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "other",
+   "rec_score": 60,
+   "summary_ko": "4인 팀이 직소 퍼즐을 릴레이로 맞추며 속도를 겨루는 대회입니다. 12세 이상 참가 가능해 가족·친구 팀도 좋습니다.",
+   "highlights": [
+    "선착순"
+   ],
+   "rec_reason": "팀으로 참가하는 이색 경쟁 체험으로 알림 가치가 있습니다.",
+   "title_ko": "퍼즐 허슬 팀 릴레이 대회"
+  },
+  {
+   "event_key": "e0eea2a9f6d12263",
+   "was_bot": "life",
+   "was_title": "기공·요가로 새해 시작",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 60,
+   "summary_ko": "볼더 Chautauqua에서 기공과 요가로 새해 첫 아침을 여는 특별 클래스입니다.",
+   "highlights": [
+    "특별 체험"
+   ],
+   "rec_reason": "새해 첫날 한정 웰니스 체험 클래스입니다.",
+   "title_ko": "새해 첫날 기공·요가 클래스"
+  },
+  {
+   "event_key": "e73f48a69ab1546f",
+   "was_bot": "life",
+   "was_title": "액티브 어덜트 하이킹 3~4월 등록",
+   "source_id": "thornton-registration",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "senior",
+   "rec_score": 45,
+   "summary_ko": "Thornton 액티브 어덜트 대상 3~4월 단체 하이킹 프로그램 등록이 열립니다. 거주자가 먼저 등록할 수 있습니다.",
+   "highlights": [
+    "접수 예정",
+    "선착순"
+   ],
+   "rec_reason": "시니어 대상 프로그램 등록이라 관심 선택자에게만 알립니다.",
+   "title_ko": "Thornton 시니어 하이킹 3~4월 등록"
+  },
+  {
+   "event_key": "eacac89ce542504e",
+   "was_bot": "life",
+   "was_title": "스완 레이크 리이매진드 (발레 공연)",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 72,
+   "summary_ko": "고전 발레 백조의 호수를 새롭게 재해석한 무대를 Chautauqua 강당에서 관람합니다.",
+   "highlights": [
+    "예약 필요"
+   ],
+   "rec_reason": "역사적인 공연장에서 열리는 발레 공연입니다.",
+   "title_ko": "Swan Lake Reimagined 발레 공연"
+  },
+  {
+   "event_key": "e6f8cea7fa0e3ae7",
+   "was_bot": "life",
+   "was_title": "블루버드 뮤직 페스티벌 (볼더)",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "festival",
+   "rec_score": 78,
+   "summary_ko": "Chautauqua 강당에서 이틀간 여러 뮤지션의 어쿠스틱·포크 공연이 이어지는 음악 축제입니다.",
+   "highlights": [
+    "예약 필요"
+   ],
+   "rec_reason": "이틀간 열리는 음악 페스티벌로 특별한 경험입니다.",
+   "title_ko": "블루버드 뮤직 페스티벌 (볼더)"
+  },
+  {
+   "event_key": "e4b0562b903bd8a1",
+   "was_bot": "life",
+   "was_title": "Rising Appalachia 공연",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 70,
+   "summary_ko": "포크·월드뮤직 듀오 Rising Appalachia의 Trade My Troubles 투어 공연을 Chautauqua에서 관람합니다.",
+   "highlights": [
+    "예약 필요"
+   ],
+   "rec_reason": "인기 아티스트의 투어 콘서트입니다.",
+   "title_ko": "Rising Appalachia 콘서트"
+  },
+  {
+   "event_key": "edc0b8ec89850065",
+   "was_bot": "life",
+   "was_title": "Rising Appalachia & The Little Mercies 공연",
+   "source_id": "chautauqua",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "performance",
+   "rec_score": 72,
+   "summary_ko": "포크·월드 뮤직 듀오 Rising Appalachia가 The Little Mercies와 함께 Trade My Troubles 투어 무대를 펼칩니다. 볼더 차토콰의 역사적인 공연장에서 즐기는 라이브 공연입니다.",
+   "highlights": [],
+   "rec_reason": "인기 아티스트의 라이브 콘서트로 성인 채널에 알릴 가치가 있는 공연입니다.",
+   "title_ko": "Rising Appalachia 콘서트"
+  },
+  {
+   "event_key": "e8c66bbcb45d101d",
+   "was_bot": "life",
+   "was_title": "성인 전용 야간 관람(18세 이상)",
+   "source_id": "butterfly-pavilion",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "museum",
+   "rec_score": 65,
+   "summary_ko": "아이 없이 조용한 분위기에서 나비가 날아다니는 열대 전시관과 무척추동물 서식지를 둘러봅니다. 교육 담당자에게 깊이 있는 질문도 할 수 있습니다.",
+   "highlights": [
+    "예약 필요",
+    "특별 체험"
+   ],
+   "rec_reason": "성인만을 위한 특별 야간 관람으로 독특한 경험을 제공합니다.",
+   "title_ko": "버터플라이 파빌리온 성인 전용 야간 관람"
+  },
+  {
+   "event_key": "e21280dbbf26cc76",
+   "was_bot": "life",
+   "was_title": "레인포레스트 요가",
+   "source_id": "butterfly-pavilion",
+   "sent_life": false,
+   "rec_level": "push",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 52,
+   "summary_ko": "열대 식물과 나비가 가득한 열대관에서 한 시간 동안 요가 수업을 받습니다. 수준과 관계없이 참여할 수 있으며 매트는 직접 가져가야 합니다.",
+   "highlights": [
+    "예약 필요",
+    "특별 체험"
+   ],
+   "rec_reason": "독특한 장소에서 즐기는 취미 수업이라 성인 채널에 알릴 만합니다.",
+   "title_ko": "나비 열대관 레인포레스트 요가"
+  },
+  {
+   "event_key": "e77019a67683b911",
+   "was_bot": "life",
+   "was_title": "레인포레스트 요가(Callie Phelps)",
+   "source_id": "butterfly-pavilion",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 35,
+   "summary_ko": "나비가 날아다니는 열대관에서 Callie Phelps 강사와 함께하는 한 시간 요가 수업입니다. 사전 등록이 필요하며 매트를 지참해야 합니다.",
+   "highlights": [
+    "예약 필요"
+   ],
+   "rec_reason": "정기적으로 반복되는 같은 요가 수업의 개별 회차라 관심 있는 사람에게만 적합합니다.",
+   "title_ko": "레인포레스트 요가 (Callie Phelps)"
+  },
+  {
+   "event_key": "e5d6e3bb6ea273e1",
+   "was_bot": "life",
+   "was_title": "레인포레스트 요가(Kelsey Mueller)",
+   "source_id": "butterfly-pavilion",
+   "sent_life": false,
+   "rec_level": "interest",
+   "bot": "life",
+   "category": "class",
+   "rec_score": 33,
+   "summary_ko": "열대 식물과 나비에 둘러싸여 Kelsey Mueller 강사와 저녁 요가를 즐깁니다. 사전 등록이 필요합니다.",
+   "highlights": [
+    "예약 필요"
+   ],
+   "rec_reason": "반복되는 정기 요가 수업의 한 회차로 관심자 대상 알림이 적절합니다.",
+   "title_ko": "레인포레스트 요가 (Kelsey Mueller)"
+  }
+ ]
+}
