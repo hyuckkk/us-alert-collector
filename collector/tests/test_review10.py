@@ -239,3 +239,21 @@ def test_17_schedule_delay_minutes():
     assert run.schedule_delay_min("40 0,4,8,16,20 * * *", at("2026-10-22T00:10:00")) == 210   # 전날 20:40 기준
     assert run.schedule_delay_min("20 * * * *", at("2026-10-22T06:25:00")) == 5
     assert run.schedule_delay_min("bad", at("2026-10-22T06:25:00")) is None
+
+
+def test_18_backup_route_when_primary_source_fails(monkeypatch):
+    """Hyland Hills 일정 API 가 접속 시간 초과(10/21~22) → 같은 사이트의 예비 경로(iCal)로 이어 받는다."""
+    def fake(s, secrets=None, **k):
+        if s["id"] == "hyland-hills-events-api":
+            return FetchResult(False, None, error="ConnectTimeout: timed out")
+        if s["id"] == "hyland-hills-ical":
+            return FetchResult(True, 200, entries=[Entry("hyland-hills-ical", "https://www.hylandhills.gov/event/pumpkin-carving/", "Pumpkin Carving", "Oct 24")])
+        return FetchResult(True, 200, entries=[])
+    monkeypatch.setattr(run, "fetch_source", fake)
+    monkeypatch.setattr(run, "is_due", lambda s, today: s["id"] == "hyland-hills-events-api")
+    real = run.load
+    monkeypatch.setattr(run, "load", lambda n: {**real(n), "discover": {**real(n)["discover"], "enabled": False}} if n == "models.json"
+                        else ({"daily": {}, "weekday": {}} if n == "queries.json" else real(n)))
+    rep = run.main(["--no-ai", "--dry-run"], client=FakeClient([]), api=FakeAPI())
+    row = [x for x in rep["sources"] if x["id"] == "hyland-hills-events-api"][0]
+    assert row["ok"] and row["items"] == 1 and "예비 경로" in row["error"]

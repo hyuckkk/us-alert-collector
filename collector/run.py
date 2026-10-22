@@ -158,8 +158,18 @@ class Run:
         if self.args.only:
             srcs = [s for s in srcs if s["id"] == self.args.only]
         due = [s for s in srcs if self.args.only or getattr(self.args, "all_sources", False) or is_due(s, self.today)]
+        everything = {x["id"]: x for x in load("sources.json")["sources"]}
         for s in due:
             r = fetch_source(s, secrets=os.environ)
+            if not r.ok and s.get("backup") in everything:
+                # 주 경로가 안 되면 같은 기관의 예비 공식 경로로(예: Hyland Hills 일정 API 접속 시간 초과 → 같은 사이트의 iCal).
+                # 항목은 주 정보원 이름으로 남겨 경로가 바뀌어도 같은 항목으로 본다.
+                b = fetch_source(everything[s["backup"]], secrets=os.environ)
+                if b.ok:
+                    for e in b.entries:
+                        e.source_id = s["id"]
+                    b.error = f"주 경로 실패({r.error}) → 예비 경로 {s['backup']}"
+                    r = b
             self.m["sources_total"] += 1
             self.m["sources_ok"] += int(r.ok)
             row = {"id": s["id"], "ok": r.ok, "status": r.status, "items": len(r.entries), "error": r.error}
