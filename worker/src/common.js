@@ -75,6 +75,18 @@ export async function kvSet(env, k, v) {
     .bind(k, typeof v === "string" ? v : JSON.stringify(v), nowIso()).run();
 }
 // 같은 key 로는 한 번만 true. 시스템 알림 중복 방지용.
+// HTML 모드로 보내고, 텔레그램이 서식을 거부하면(엔티티 해석 실패) 태그를 뺀 일반 글로 한 번 더 보낸다
+export function htmlToText(html) {
+  return String(html || "").replace(/<a href="([^"]*)">([^<]*)<\/a>/g, (m, u, t) => `${t} ${u.replace(/&amp;/g, "&").replace(/&quot;/g, '"')}`)
+    .replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+}
+export async function sendHtml(env, bot, payload) {
+  const d = await tg(env, bot, "sendMessage", { ...payload, parse_mode: "HTML", disable_web_page_preview: true });
+  if (!d.ok && d.error_code === 400 && /parse entities|can't parse|unsupported start tag/i.test(d.description || "")) {
+    return tg(env, bot, "sendMessage", { ...payload, text: htmlToText(payload.text), disable_web_page_preview: true });
+  }
+  return d;
+}
 export async function claimNotice(env, key) {
   const r = await env.DB.prepare("INSERT INTO notices (key, sent_at) VALUES (?, ?) ON CONFLICT(key) DO NOTHING").bind(key, nowIso()).run();
   return r.meta.changes === 1;
