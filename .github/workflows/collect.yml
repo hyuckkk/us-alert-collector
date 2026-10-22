@@ -74,6 +74,19 @@ jobs:
           [ "$DRY" = "true" ] && args="$args --dry-run"
           [ -n "$MAX" ] && args="$args --max $MAX"
           python collector/run.py $args
+      - name: Run summary (counts only)
+        if: always() && (env.DRY == 'true' || env.READY == '1')
+        run: |
+          [ -f reports/run.json ] || exit 0
+          python3 - <<'PY'
+          import json
+          r = json.load(open("reports/run.json")); m = r.get("metrics", {})
+          keys = ("usd", "calls", "sources_ok", "sources_total", "entries_fetched", "entries_new", "ai_items", "ai_failed", "events_out", "outbox", "queue_queued", "watch_checked", "watch_changed")
+          s = {k: m.get(k) for k in keys}
+          s["dropped"] = r.get("dropped"); s["stages_usd"] = {k: v.get("usd") for k, v in (r.get("stages") or {}).items() if v.get("usd")}
+          s["alerts"] = [a[:120] for a in (r.get("alerts") or [])][:6]
+          print("::notice title=collect summary::" + json.dumps(s, ensure_ascii=False, separators=(",", ":"))[:3800])
+          PY
       - name: Commit dry-run report (branch only)
         if: always() && env.DRY == 'true' && github.ref_name != 'main'
         run: |
