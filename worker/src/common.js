@@ -2,7 +2,7 @@
 
 export const BUILD = "us-0.3.0";
 export const BOTS = {
-  life: { label: "성인 활동", handle: "@ColoradoLife_bot", secret: "BOT_TOKEN_LIFE" },
+  life: { label: "일상", handle: "@ColoradoLife_bot", secret: "BOT_TOKEN_LIFE" },
   family: { label: "가족 활동", handle: "@ColoradoFamily_bot", secret: "BOT_TOKEN_FAMILY" },
   kids: { label: "어린이 활동", handle: "@ColoradoKids_bot", secret: "BOT_TOKEN_KIDS" },
 };
