@@ -132,8 +132,8 @@ try {
     await hook("kids", E.cb(OWNER, "ack:dl", 1));
     const n = E.calls.length;
     await admin("/admin/dispatch", {});
-    const opens = sends(n, /^⏰ 행사 opens/).map((c) => String(c.payload.chat_id)).sort();
-    const dl = sends(n, /^⏰ 행사 dl/).map((c) => String(c.payload.chat_id));
+    const opens = sends(n, /^⏰ <b>행사 opens/).map((c) => String(c.payload.chat_id)).sort();
+    const dl = sends(n, /^⏰ <b>행사 dl/).map((c) => String(c.payload.chat_id));
     assert.deepEqual(opens, [FRIEND, OWNER].sort());
     assert.deepEqual(dl, [FRIEND]);
     const n2 = E.calls.length;
@@ -142,29 +142,48 @@ try {
   });
 
   // ------------------------------------------------ 7 요약
-  await step("7 요약 23건 → 10·10·3 세 통, 번호 이어짐, 누락 없음", async () => {
+  await step("7 요약 23건 → 주요 5건은 한 건씩, 나머지 18건은 제목 목록, 누락 없음", async () => {
     sql("UPDATE outbox SET status = 'skipped' WHERE kind = 'digest'");
     await admin("/admin/enqueue", { events: Array.from({ length: 23 }, (_, i) => ev(`d${i}`, { urgency: "weekly", tags: ["dg"], start_date: plus(40 + i) })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
-    assert.equal(r.messages, 3, JSON.stringify(r));
-    assert.equal(r.items, 23);
-    const t = sends(n, /오늘의 새 정보/).map((c) => c.payload.text);
-    assert.match(t[0], /\(1\/3, 총 23건\)/);
-    assert.match(t[2], /^23\. 행사 d22/m);
+    assert.equal(r.items, 23, JSON.stringify(r));
+    assert.equal(r.messages, 6);
+    const list = sends(n, /다른 새 소식/).map((c) => c.payload.text);
+    assert.equal(list.length, 1);
+    for (let i = 5; i < 23; i++) assert.ok(list[0].includes(`>행사 d${i}</a>`), `d${i} 누락`);
   });
 
-  await step("7 요약 한 통이 실패하면 그 묶음만 남았다가 다음 실행에서 시간 조건 없이 이어 보냄", async () => {
+  await step("7 요약 잘림 방지: 아주 긴 행사 30건도 글자 수로 나눠 모두 보내고, 한 통이 4,096자를 넘지 않음", async () => {
+    const long = "아주 긴 행사 설명 ".repeat(40);
+    await admin("/admin/enqueue", { events: Array.from({ length: 30 }, (_, i) => ev(`L${i}`, { urgency: "weekly", tags: ["dgL"], start_date: plus(120 + i),
+      title_ko: `행사 L${i} ${long}`, cost_text: long, url: `https://example.org/${"x".repeat(300)}/${i}` })) });
+    sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
+    const n = E.calls.length;
+    const r = await admin("/admin/digest", { force: true });
+    assert.equal(r.items, 30, JSON.stringify(r));
+    const msgs = sends(n).map((c) => c.payload.text);
+    assert.ok(msgs.every((t) => t.length <= 4096), "4,096자 초과");
+    const all = msgs.join("\n");
+    for (let i = 0; i < 30; i++) assert.ok(all.includes(`행사 L${i} `), `L${i} 누락`);
+    const st = sql("SELECT status, COUNT(*) AS n FROM outbox WHERE event_key LIKE 'L%' AND status <> 'skipped' GROUP BY status"); // 지인 몫은 위에서 일부러 건너뜀
+    assert.deepEqual(st, [{ status: "sent", n: 30 }], JSON.stringify(st));
+  });
+
+  await step("7 요약 한 통이 실패하면 그 통에 든 행사만 남았다가 다음 실행에서 시간 조건 없이 이어 보냄", async () => {
     await admin("/admin/enqueue", { events: Array.from({ length: 12 }, (_, i) => ev(`f${i}`, { urgency: "weekly", tags: ["dg2"], start_date: plus(80 + i) })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     E.failNext(500);
     let r = await admin("/admin/digest", { force: true });
-    assert.equal(r.messages, 1);
-    assert.equal(r.failed, 1);
+    assert.equal(r.failed, 1, JSON.stringify(r));
+    assert.equal(r.items, 11);
+    const left = sql("SELECT event_key FROM outbox WHERE kind = 'digest' AND status = 'failed'").map((x) => x.event_key);
+    assert.equal(left.length, 1);
     sql("UPDATE outbox SET next_attempt_at = '2000-01-01T00:00:00Z' WHERE kind = 'digest' AND status = 'failed'");
     r = await admin("/admin/digest", {}); // force 없이
-    assert.equal(r.items, 10, JSON.stringify(r));
+    assert.equal(r.items, 1, JSON.stringify(r));
+    assert.equal(sql("SELECT COUNT(*) AS n FROM outbox WHERE event_key LIKE 'f%' AND status = 'sent'")[0].n, 12);
   });
 
   // ------------------------------------------------ 3 대기열

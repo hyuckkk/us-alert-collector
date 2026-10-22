@@ -2,8 +2,8 @@
 // 원칙: 수집한 정보는 처리 전까지 대기열(pending)에 보존하고, 발송은 선점(claim) 후 보내며 결과를 확실/불명/실패로 나눠 기록한다.
 // D1 무료 요금제의 호출당 쿼리 수 제한 때문에 여러 건은 json_each 로 한 번에 처리한다.
 
-import { BOTS, isOwner, nowIso, ownerOnly, tg, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, ensurePerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
-import { renderEvent, renderDigest, keyboard, compactRow } from "./render.js";
+import { BOTS, isOwner, nowIso, ownerOnly, tg, sendHtml, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, ensurePerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
+import { renderEvent, renderList, keyboard } from "./render.js";
 
 // 다시 알려야 하는 '참여 기회에 영향을 주는' 필드 (1차 검증 1-5)
 const IMPORTANT = ["start_date", "end_date", "time_text", "location", "cost_text", "signup", "registration_opens", "registration_status",
@@ -12,7 +12,8 @@ const FIELD_KO = { start_date: "시작일", end_date: "종료일", time_text: "�
   registration_opens: "접수 시작", registration_status: "접수 상태", deadline: "마감", eligibility: "참가 자격", age_text: "대상 연령", status_note: "신분·주민 메모" };
 const MAX_EVENTS_PER_CALL = 30;
 const SEND_LIMIT = 20;            // 무료 요금제 하위 요청 50개 한도 안에서 여유
-const DIGEST_CHUNK = 10;          // 요약 1통에 담는 건수(넘으면 여러 통으로 나눠 모두 보냄)
+const DIGEST_SINGLES = 5;         // 요약에서 한 건씩 따로 보내는 주요 행사 수(봇마다). 나머지는 제목 목록 한 통(글자 수 기준으로 나눔)
+const DIGEST_CALLS = 25;          // 한 번 실행에서 보내는 요약 메시지 최대 수(넘으면 다음 매시 실행에서 이어 보냄)
 const MAX_SEND_ATTEMPTS = 6;
 const BACKOFF_MIN = [5, 30, 120, 360, 720];
 const STALE_SENDING_MIN = 10;     // 'sending' 으로 이 시간 넘게 남으면 결과 불명으로 본다
@@ -512,7 +513,7 @@ export async function dispatch(env, opts = {}) {
     const note = row.version === row.cur_version ? row.change_note : null;
     let text = renderEvent(row.data, { kind: row.kind, version: row.version, note });
     if (row.resend) text = "🔁 재전송 (이전 전송의 성공 여부를 확인하지 못했습니다)\n" + text;
-    const d = await tg(env, row.bot, "sendMessage", { chat_id: row.chat_id, text, disable_web_page_preview: true, reply_markup: keyboard(row.event_key, { state: row.state }) });
+    const d = await sendHtml(env, row.bot, { chat_id: row.chat_id, text, reply_markup: keyboard(row.event_key, { state: row.state }) });
     const c = classify(d, { attempts: row.attempts + 1 }, now2);
     done.push({ id: row.id, ...c, attempted: 1, bot: row.bot, chat_id: row.chat_id, event_key: row.event_key });
     if (c.status === "sent") r.sent++; else if (c.status === "uncertain") r.uncertain++; else r.failed++;
@@ -520,6 +521,17 @@ export async function dispatch(env, opts = {}) {
   await finish(env, done);
   const left = await env.DB.prepare("SELECT COUNT(*) AS n FROM outbox WHERE status IN ('pending', 'failed', 'uncertain', 'sending') AND kind IN ('now', 'season')").first();
   return { ok: true, ...r, owner_recipients: owner, pending: left.n };
+}
+
+function firstDate(d) {
+  return [d.registration_opens, d.deadline, d.start_date].filter(Boolean).sort()[0] || "9999";
+}
+// 0: 2주 안 접수 시작·마감, 1: 1주 안에 열리는 행사, 2: 나머지
+export function digestRank(d, today) {
+  const within = (x, n) => x && x >= today && x <= plusDays(today, n);
+  if (within(d.registration_opens, 14) || within(d.deadline, 14)) return 0;
+  if (d.start_date && d.start_date <= plusDays(today, 7) && (d.end_date || d.start_date) >= today) return 1;
+  return 2;
 }
 
 // ---------------------------------------------------------------- 요약 (기본: 매일 각자 현지 digest_hour 이후 1회, 여러 통으로 나눠 누락 없음)
@@ -548,7 +560,7 @@ export async function digest(env, opts = {}) {
       "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
       "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? " +
       "AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?))) " +
-      "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 60").bind(g.chat_id, g.bot, now));
+      "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 300").bind(g.chat_id, g.bot, now));
     const done = [];
     const latest = new Map();
     for (const x of rows) latest.set(x.event_key, Math.max(latest.get(x.event_key) || 0, x.version));
@@ -562,20 +574,28 @@ export async function digest(env, opts = {}) {
       seenKey.add(x.event_key);
       live.push({ ...x, data });
     }
-    const parts = Math.ceil(live.length / DIGEST_CHUNK);
-    for (let i = 0; i < parts; i++) {
-      if (calls >= 15) break; // 남은 묶음은 다음 매시 실행에서 retry 로 이어감
-      const chunk = live.slice(i * DIGEST_CHUNK, (i + 1) * DIGEST_CHUNK);
-      const claimed = await claimRows(env, chunk.map((x) => x.id));
-      const mine = chunk.filter((x) => claimed.has(x.id));
-      if (!mine.length) continue;
-      const kb = { inline_keyboard: mine.map((x, j) => compactRow(x.event_key, { state: x.state }, String(i * DIGEST_CHUNK + j + 1))) };
-      const text = renderDigest(BOTS[g.bot].label, mine, { part: i + 1, parts, total: live.length, offset: i * DIGEST_CHUNK, mode: p.digest_mode });
-      const d = await tg(env, g.bot, "sendMessage", { chat_id: g.chat_id, text, disable_web_page_preview: true, reply_markup: kb });
+    // 중요한 것부터: 2주 안 접수 시작·마감 → 1주 안 행사 → 나머지(날짜순). 앞의 몇 건은 한 건씩, 나머지는 제목 목록
+    const today = dateIn(DENVER);
+    live.sort((a, b) => digestRank(a.data, today) - digestRank(b.data, today) || String(firstDate(a.data)).localeCompare(String(firstDate(b.data))));
+    const singles = live.slice(0, DIGEST_SINGLES), rest = live.slice(DIGEST_SINGLES);
+    const send = async (rows, payload) => {
+      const claimed = await claimRows(env, rows.map((x) => x.id));
+      const mine = rows.filter((x) => claimed.has(x.id));
+      if (!mine.length) return;
+      const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, ...payload });
       calls++;
       const c = classify(d, { attempts: Math.max(...mine.map((x) => x.attempts + 1)) }, nowIso());
       for (const x of mine) done.push({ id: x.id, ...c, attempted: 1, bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
       if (c.status === "sent") { r.messages++; r.items += mine.length; } else r.failed++;
+    };
+    for (const x of singles) {
+      if (calls >= DIGEST_CALLS) break;
+      await send([x], { text: renderEvent(x.data, { kind: "digest" }), reply_markup: keyboard(x.event_key, { state: x.state }) });
+    }
+    // 목록은 글자 수로 나눈 각 통에 실제로 들어간 행사만 그 통의 결과로 기록한다(잘려서 빠진 행사가 '발송 완료'가 되지 않음)
+    for (const page of renderList(BOTS[g.bot].label, rest, { mode: p.digest_mode, shownBefore: singles.length })) {
+      if (calls >= DIGEST_CALLS) break;
+      await send(page.rows, { text: page.text });
     }
     // 아직 보내지 못한 묶음은 다음 실행에서 시간 조건 없이 보내도록 retry 상태로 둔다
     const sentIds = new Set(done.map((u) => u.id));

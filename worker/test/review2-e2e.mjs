@@ -68,7 +68,7 @@ try {
     const t = sql("SELECT COUNT(*) AS n FROM trigger_log WHERE event_key = 'u1'")[0].n;
     assert.equal(t, 0);
     const sent = E.calls.filter((c) => c.method === "sendMessage" && /행사 u1/.test(c.payload.text || ""));
-    assert.ok(sent.length >= 1 && sent.every((c) => /\(연도 추정\)/.test(c.payload.text)));
+    assert.ok(sent.length >= 1 && sent.every((c) => /연도 추정/.test(c.payload.text)));
   });
 
   await step("F 한 페이지(URL)에 두 행사가 있으면 감시 목록이 두 행사를 모두 기억한다", async () => {

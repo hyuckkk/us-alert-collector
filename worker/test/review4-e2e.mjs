@@ -66,8 +66,10 @@ try {
     const pend = sql("SELECT event_key, kind, version FROM outbox WHERE event_key IN ('open1','dead1') AND status = 'pending' ORDER BY event_key, version");
     assert.ok(pend.length >= 2 && pend.every((x) => x.kind === "digest"), JSON.stringify(pend));
     await admin("/admin/digest", { force: true });
-    const dg = sends(b).filter((c) => /행사 open1/.test(c.payload.text || "") && /행사 dead1/.test(c.payload.text || ""));
-    assert.equal(dg.length, 1, "두 접수 기회가 요약 1통에 남아야 함");
+    // 새 요약 형식: 접수 기회는 우선순위가 높아 각각 한 건씩 따로 간다
+    const dg = sends(b);
+    assert.equal(has(dg, "open1"), 1, "접수 시작 행사가 요약에 한 번");
+    assert.equal(has(dg, "dead1"), 1, "마감 행사가 요약에 한 번");
   });
 
   await step("기준선이 끝난 같은 날 다시 돌려도 같은 시간 알림이 즉시 중복으로 나가지 않는다", async () => {

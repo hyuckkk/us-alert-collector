@@ -61,9 +61,11 @@ try {
     assert.equal(r.sent, 3, JSON.stringify(r));
     const s = sends(n);
     const friendE1 = s.find((x) => String(x.payload.chat_id) === FRIEND);
-    assert.match(friendE1.payload.text, /^🆕 행사 e1 · Test Org\n📅 2026-11-10 10:00 · 📍 Westminster Library\n👤 6-10세 · 영어: 초보 가능\n💲 \$20 \(보통\)\n📝 선착순\n🛂 미확인\n🔗 https:\/\/example.org\/e1 · 확인 2026-10-20$/);
+    // 읽기 쉬운 형식: 제목 굵게, 날짜는 한국식, 비어 있는 항목은 줄째로 빼고, 긴 원문 주소는 '바로가기' 글자에 숨김
+    assert.equal(friendE1.payload.text, '🆕 <b>행사 e1</b>\nTest Org\n\n📅 11월 10일(화) 10:00\n📍 Westminster Library\n💲 $20   👤 6-10세\n📝 선착순\n🗣 초보 가능\n\n<a href="https://example.org/e1">🔗 바로가기</a>');
+    assert.equal(friendE1.payload.parse_mode, "HTML");
     assert.equal(friendE1.payload.reply_markup.inline_keyboard[0].length, 3);
-    assert.ok(s.some((x) => String(x.payload.chat_id) === OWNER && /^📆 예고 행사 e2/.test(x.payload.text)));
+    assert.ok(s.some((x) => String(x.payload.chat_id) === OWNER && /^📆 예고 <b>행사 e2<\/b>/.test(x.payload.text)));
     assert.ok(s.some((x) => x.token === "tLIFE" && /행사 e4/.test(x.payload.text)));
   });
 
@@ -85,26 +87,30 @@ try {
     await admin("/admin/dispatch", {});
     const s = sends(n);
     assert.equal(s.length, 1);
-    assert.match(s[0].payload.text, /^🔄 변경 행사 e1/);
+    assert.match(s[0].payload.text, /^🔄 변경 <b>행사 e1<\/b>/);
     assert.match(s[0].payload.text, /바뀐 점: 비용 \$20 → \$25/);
   });
 
-  await step("요약(force): 사람·봇별 1통, 줄마다 번호 버튼", async () => {
+  await step("요약(force): 주요 행사는 한 건씩(버튼 3개), 원문 주소는 바로가기에 숨김", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
-    assert.equal(r.messages, 2, JSON.stringify(r));
-    const f = sends(n, FRIEND)[0];
-    assert.match(f.payload.text, /오늘의 새 정보 \(2건\)/);
-    assert.deepEqual(f.payload.reply_markup.inline_keyboard.map((row) => row.map((b) => b.text)), [["1 ✅", "1 🚫"], ["2 ✅", "2 🚫"]]);
-    E.digestMarkup = f.payload.reply_markup;
+    const f = sends(n, FRIEND);
+    assert.equal(f.length, 2, JSON.stringify(r));
+    for (const m of f) {
+      assert.match(m.payload.text, /^🆕 <b>행사 e[23]<\/b>/);
+      assert.match(m.payload.text, /<a href="https:\/\/example.org\/e[23]">🔗 바로가기<\/a>$/);
+      assert.ok(!/\n\s*https?:\/\//.test(m.payload.text), "주소가 본문에 그대로 보임");
+      assert.deepEqual(m.payload.reply_markup.inline_keyboard.map((row) => row.length), [3]);
+    }
+    E.digestMarkup = f[1].payload.reply_markup;
   });
 
-  await step("요약 메시지의 2번 ✅ → 그 줄만 바뀜", async () => {
-    const key = E.digestMarkup.inline_keyboard[1][0].callback_data.split(":")[1];
+  await step("요약 행사의 ✅ → 그 메시지의 버튼만 바뀜", async () => {
+    const key = E.digestMarkup.inline_keyboard[0][0].callback_data.split(":")[1];
     const n = E.calls.length;
     await hook("kids", E.cb(FRIEND, `ack:${key}`, 777, E.digestMarkup));
     const edit = since(n).find((c) => c.method === "editMessageReplyMarkup");
-    assert.deepEqual(edit.payload.reply_markup.inline_keyboard.map((row) => row.map((b) => b.text)), [["1 ✅", "1 🚫"], ["2 ✅✓", "2 🚫"]]);
+    assert.deepEqual(edit.payload.reply_markup.inline_keyboard.map((row) => row.map((b) => b.text)), [["✅ 확인 ✓", "🚫 관심없음", "🔕 이 태그 그만"]]);
   });
 
   await step("정지 시간대: 지금 시각이 정지 구간이면 미뤘다가, 풀리면 발송", async () => {
