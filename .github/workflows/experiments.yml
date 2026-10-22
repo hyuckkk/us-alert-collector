@@ -129,7 +129,8 @@ jobs:
           echo "REC_CAP=$CAP" >> "$GITHUB_ENV"; echo "REC_STARTED=1" >> "$GITHUB_ENV"
           export USAGE_LIVE_FILE=reports/usage-recommend.json
           python collector/recommend_backfill.py --usd-cap "$CAP" $ARGS
-          python3 -c "import json;print('::notice title=recommend backfill::'+json.dumps(json.load(open('eval/recommend_backfill.json'))['summary'],ensure_ascii=False))"
+          OUT=$(echo "$ARGS" | grep -oE -- '--out [^ ]+' | cut -d' ' -f2); OUT=${OUT:-eval/recommend_backfill.json}
+          python3 -c "import json,sys;print('::notice title=recommend backfill::'+json.dumps(json.load(open(sys.argv[1]))['summary'],ensure_ascii=False))" "$OUT"
       - name: Record recommendation AI spend
         if: always() && env.REC_STARTED == '1'
         run: python3 scripts/dev_budget.py record --run "$GITHUB_RUN_ID" --kind recommend --cap "$REC_CAP" --usage reports/usage-recommend.json --status "${{ job.status }}"
@@ -138,6 +139,6 @@ jobs:
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/audit_sample.json eval/recommend_backfill.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/audit_sample.json eval/recommend_backfill*.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"

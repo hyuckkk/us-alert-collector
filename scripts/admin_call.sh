@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Worker 관리 경로 호출: admin_call.sh <setup|test-send|clicks|status|usage|run-cron|dispatch|digest|report|watchdog|source-health|baseline|baseline-start|baseline-stop>
+# Worker 관리 경로 호출: admin_call.sh <preview-life|preview-family|preview-kids|setup|test-send|clicks|status|usage|run-cron|dispatch|digest|report|watchdog|source-health|baseline|baseline-start|baseline-stop>
 set -euo pipefail
 : "${US_WORKER_URL:?}"; : "${US_ADMIN_KEY:?run scripts/cf_env.sh first}"
 args=(-sS -o out.json -w "%{http_code}" -H "Authorization: Bearer $US_ADMIN_KEY")
@@ -8,6 +8,7 @@ case "$1" in
   baseline-start) args+=(-X POST -H "content-type: application/json" --data "{\"hours\": ${BASELINE_HOURS:-36}}"); set -- baseline ;;
   baseline-stop) args+=(-X POST -H "content-type: application/json" --data '{"hours": 0}'); set -- baseline ;;
   setup|test-send|run-cron|dispatch|digest|report|heartbeat) args+=(-X POST -H "content-type: application/json" --data "{}") ;;
+  preview-life|preview-family|preview-kids) args+=(-X POST -H "content-type: application/json" --data "{\"bot\": \"${1#preview-}\", \"n\": ${PREVIEW_N:-4}}"); set -- preview ;;
   *) echo "unknown action $1"; exit 2 ;;
 esac
 code=$(curl "${args[@]}" "$US_WORKER_URL/admin/$1")
