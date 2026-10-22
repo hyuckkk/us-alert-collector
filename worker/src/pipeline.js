@@ -278,9 +278,11 @@ export async function enqueue(env, body) {
   const rows = [];
   const fanout = [];
   const watches = [];
-  for (const e of input) {
+  for (const e0 of input) {
+    const ex = existing.get(e0.event_key);
+    // 새 추출에 값이 비어 있으면(그 페이지·입력에 그 정보가 이번엔 안 보였을 뿐) 기존 값을 지우지 않는다 → 정보가 사라진 것을 '변경'으로 알리지 않음
+    const e = ex ? { ...e0, ...Object.fromEntries(IMPORTANT.filter((k) => (e0[k] ?? "") === "" && (JSON.parse(ex.data)[k] ?? "") !== "").map((k) => [k, JSON.parse(ex.data)[k]])) } : e0;
     const h = await sha(JSON.stringify(importantOf(e)));
-    const ex = existing.get(e.event_key);
     let version = 1, note = null;
     if (!ex) stats.new++;
     let changed = false;
