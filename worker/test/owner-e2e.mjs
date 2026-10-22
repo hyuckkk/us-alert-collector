@@ -8,7 +8,7 @@ const denverToday = new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Denver
 const plus = (n) => new Date(Date.parse(denverToday + "T12:00:00Z") + n * 86400000).toISOString().slice(0, 10);
 const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(60), url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", rec_level: "push", ...over,
 });
 
 const E = await startEnv({ tgPort: 9996, wPort: 8806, fresh: true, vars: { FAMILY_AVAILABLE_FROM: "2026-01-01" } });

@@ -1,0 +1,36 @@
+name: external-events
+# 외부 검색(다른 AI 의 예약 검색 등)이 찾은 콜로라도 행사를 받아 기존 파이프라인(추출·판정·추천·같은 행사 판별)을 거쳐 미국 Worker 에 등록한다.
+# 호출: POST /repos/{owner}/{repo}/dispatches  {"event_type": "external-events", "client_payload": {"events": [...], "test": false}}
+#  - 호출하는 쪽에는 이 저장소의 repository_dispatch 권한이 있는 GitHub 토큰만 필요하다. Worker 관리 키는 여기서만(비밀값에서) 만들고 출력하지 않는다.
+#  - 한국 알림 시스템과 무관(미국 Worker us-alert-worker 만 호출). 지인 발송 여부는 Worker 의 DELIVERY_MODE 를 따른다(현재 소유자 전용).
+on:
+  repository_dispatch:
+    types: [external-events]
+permissions:
+  contents: read
+concurrency:
+  group: external-events
+  cancel-in-progress: false
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      # 받은 내용은 실행 명령에 끼워 넣지 않고 환경 변수로만 넘긴다(명령 주입 방지)
+      EXTERNAL_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt
+      - name: Worker address
+        run: |
+          bash scripts/cf_env.sh
+          set -a; . "$GITHUB_ENV"; set +a
+          bash scripts/worker_ready.sh
+      - name: Ingest
+        if: env.READY == '1'
+        run: python collector/external_ingest.py --payload-env EXTERNAL_PAYLOAD

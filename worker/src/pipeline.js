@@ -3,7 +3,7 @@
 // D1 무료 요금제의 호출당 쿼리 수 제한 때문에 여러 건은 json_each 로 한 번에 처리한다.
 
 import { BOTS, isOwner, nowIso, ownerOnly, tg, sendHtml, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, ensurePerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
-import { renderEvent, renderList, keyboard } from "./render.js";
+import { renderEvent, renderCount, keyboard } from "./render.js";
 import { tooFar } from "./geo.js";
 
 // 다시 알려야 하는 '참여 기회에 영향을 주는' 필드 (1차 검증 1-5)
@@ -13,7 +13,7 @@ const FIELD_KO = { start_date: "시작일", end_date: "종료일", time_text: "�
   registration_opens: "접수 시작", registration_status: "접수 상태", deadline: "마감", eligibility: "참가 자격", age_text: "대상 연령", status_note: "신분·주민 메모" };
 const MAX_EVENTS_PER_CALL = 30;
 const SEND_LIMIT = 20;            // 무료 요금제 하위 요청 50개 한도 안에서 여유
-const DIGEST_SINGLES = 5;         // 요약에서 한 건씩 따로 보내는 주요 행사 수(봇마다). 나머지는 제목 목록 한 통(글자 수 기준으로 나눔)
+const DIGEST_SINGLES = 5;         // 하루 요약에서 한 건씩 보내는 주요 행사 수(사람·봇마다). 나머지는 보관('held') → 짧은 개수 안내 + /more
 const DIGEST_CALLS = 25;          // 한 번 실행에서 보내는 요약 메시지 최대 수(넘으면 다음 매시 실행에서 이어 보냄)
 const MAX_SEND_ATTEMPTS = 6;
 const BACKOFF_MIN = [5, 30, 120, 360, 720];
@@ -201,13 +201,23 @@ function regState(e, today) {
 
 async function recipientsFor(env) {
   const recips = await all(env.DB.prepare(
-    "SELECT r.chat_id, r.bot, p.available_from AS available_from, p.city AS city, p.radius_mi AS radius_mi FROM recipients r LEFT JOIN people p ON p.chat_id = r.chat_id WHERE r.status = 'active'"));
+    "SELECT r.chat_id, r.bot, p.available_from AS available_from, p.city AS city, p.radius_mi AS radius_mi, p.interests AS interests FROM recipients r LEFT JOIN people p ON p.chat_id = r.chat_id WHERE r.status = 'active'"));
   const mutedTags = new Map();
   for (const r of await all(env.DB.prepare("SELECT chat_id, tag FROM muted_tags"))) {
     if (!mutedTags.has(r.chat_id)) mutedTags.set(r.chat_id, new Set());
     mutedTags.get(r.chat_id).add(r.tag);
   }
   return { recips, mutedTags };
+}
+
+// 추천 수준에 따른 발송 여부(사람별 관심 분야 반영). 보내면 null, 아니면 사유
+export function parseInterests(x) { try { const v = JSON.parse(x || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } }
+export function recLevel(e, r) {
+  const lv = e.rec_level;
+  if (lv === "push") return null;
+  if (!lv) return "not-recommended-yet";
+  if (e.category && parseInterests(r.interests).includes(e.category)) return null;
+  return lv === "interest" ? "interest-only" : "not-recommended";
 }
 
 // 사람별 대상 판정. 반환: kind 또는 null(+사유)
@@ -218,7 +228,10 @@ function targetKind(env, r, e, states, mutedTags, opts = {}) {
   if (st === "MUTED") return [null, "muted"];
   if (opts.skipAcked && st === "ACKNOWLEDGED") return [null, "acknowledged"];
   const mt = mutedTags.get(String(r.chat_id));
-  if (mt && (e.tags || []).some((t) => mt.has(t))) return [null, "muted-tag"];
+  if (mt && [e.category, ...(e.tags || [])].some((t) => t && mt.has(t))) return [null, "muted-tag"];
+  // 추천 판정: '적극 알림'만 기본 발송. '관심 설정 시'·'일반 제외'는 그 분야를 직접 고른 사람에게만. 판정이 없는 옛 행사는 보내지 않음(저장만)
+  const lv = recLevel(e, r);
+  if (lv) return [null, lv];
   const far = tooFar(r, e); // /city 기준 도시·반경(허가·추첨·연례 등은 예외)
   if (far) return [null, far];
   const from = r.available_from ?? defaultPerson(env, r.chat_id).available_from;
@@ -263,7 +276,7 @@ export async function enqueue(env, body) {
     rows.push({
       event_key: e.event_key, bot: e.bot, version, content_hash: h, data: JSON.stringify(e), urgency: e.urgency === "now" ? "now" : "weekly",
       start_date: e.start_date || null, end_date: e.end_date || null, annual: e.annual ? 1 : 0, tags: JSON.stringify(e.tags || []),
-      source_id: e.source_id || null, url: e.url, note, tag: (e.tags || [])[0] || null, title: e.title_ko || e.title,
+      source_id: e.source_id || null, url: e.url, note, tag: e.category || (e.tags || [])[0] || null, title: e.title_ko || e.title,
       identity: e.identity || null, registration_opens: e.registration_opens || null, deadline: e.deadline || null, fanout_version: version,
     });
     // 새 행사·바뀐 행사, 그리고 저장은 됐지만 이 판의 알림 생성이 끝나지 않은 행사(이전 실패·이전 판 코드)는 알림 대기열을 만든다.
@@ -435,13 +448,15 @@ async function recoverStale(env) {
 }
 
 // 같은 행을 두 실행이 동시에 보내지 못하게, 아직 보낼 수 있는 상태인 행만 'sending' 으로 바꾸고 바뀐 행만 보낸다
-async function claimRows(env, ids) {
+// held: 하루 상한으로 보관한 행사(/more 로 사용자가 요청할 때만 꺼냄)
+async function claimRows(env, ids, held = false) {
   if (!ids.length) return new Set();
   const now = nowIso();
   const claim = crypto.randomUUID();
   const rows = await all(env.DB.prepare(
     "UPDATE outbox SET status = 'sending', claim = ?1, claimed_at = ?2, attempts = attempts + 1 WHERE id IN (SELECT value FROM json_each(?3)) " +
-    "AND (status = 'pending' OR (status IN ('failed', 'uncertain') AND (next_attempt_at IS NULL OR next_attempt_at <= ?2))) RETURNING id").bind(claim, now, JSON.stringify(ids)));
+    "AND (status = 'pending' OR (?4 = 1 AND status = 'held') OR (status IN ('failed', 'uncertain') AND (next_attempt_at IS NULL OR next_attempt_at <= ?2))) RETURNING id")
+    .bind(claim, now, JSON.stringify(ids), held ? 1 : 0));
   return new Set(rows.map((r) => r.id));
 }
 
@@ -538,7 +553,7 @@ export async function dispatch(env, opts = {}) {
     const note = row.version === row.cur_version ? row.change_note : null;
     let text = renderEvent(row.data, { kind: row.kind, version: row.version, note });
     if (row.resend) text = "🔁 재전송 (이전 전송의 성공 여부를 확인하지 못했습니다)\n" + text;
-    const d = await sendHtml(env, row.bot, { chat_id: row.chat_id, text, reply_markup: keyboard(row.event_key, { state: row.state }) });
+    const d = await sendHtml(env, row.bot, { chat_id: row.chat_id, text, reply_markup: keyboard(row.event_key, { state: row.state }, row.data.url) });
     const c = classify(d, { attempts: row.attempts + 1 }, now2);
     done.push({ id: row.id, ...c, attempted: 1, bot: row.bot, chat_id: row.chat_id, event_key: row.event_key });
     if (c.status === "sent") r.sent++; else if (c.status === "uncertain") r.uncertain++; else r.failed++;
@@ -599,28 +614,29 @@ export async function digest(env, opts = {}) {
       seenKey.add(x.event_key);
       live.push({ ...x, data });
     }
-    // 중요한 것부터: 2주 안 접수 시작·마감 → 1주 안 행사 → 나머지(날짜순). 앞의 몇 건은 한 건씩, 나머지는 제목 목록
+    // 중요한 것부터: 2주 안 접수 시작·마감 → 1주 안 행사 → 추천 점수. 앞의 몇 건만 한 건씩 보내고 나머지는 보관(/more 로 조회)
     const today = dateIn(DENVER);
-    live.sort((a, b) => digestRank(a.data, today) - digestRank(b.data, today) || String(firstDate(a.data)).localeCompare(String(firstDate(b.data))));
+    live.sort((a, b) => digestRank(a.data, today) - digestRank(b.data, today) || (Number(b.data.rec_score) || 0) - (Number(a.data.rec_score) || 0)
+      || String(firstDate(a.data)).localeCompare(String(firstDate(b.data))));
     const singles = live.slice(0, DIGEST_SINGLES), rest = live.slice(DIGEST_SINGLES);
-    const send = async (rows, payload) => {
-      const claimed = await claimRows(env, rows.map((x) => x.id));
-      const mine = rows.filter((x) => claimed.has(x.id));
-      if (!mine.length) return;
-      const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, ...payload });
-      calls++;
-      const c = classify(d, { attempts: Math.max(...mine.map((x) => x.attempts + 1)) }, nowIso());
-      for (const x of mine) done.push({ id: x.id, ...c, attempted: 1, bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
-      if (c.status === "sent") { r.messages++; r.items += mine.length; } else r.failed++;
-    };
+    let sentNow = 0;
     for (const x of singles) {
       if (calls >= DIGEST_CALLS) break;
-      await send([x], { text: renderEvent(x.data, { kind: "digest" }), reply_markup: keyboard(x.event_key, { state: x.state }) });
+      const claimed = await claimRows(env, [x.id]);
+      if (!claimed.has(x.id)) continue;
+      const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest" }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
+      calls++;
+      const c = classify(d, { attempts: x.attempts + 1 }, nowIso());
+      done.push({ id: x.id, ...c, attempted: 1, bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
+      if (c.status === "sent") { r.messages++; r.items++; sentNow++; } else r.failed++;
     }
-    // 목록은 글자 수로 나눈 각 통에 실제로 들어간 행사만 그 통의 결과로 기록한다(잘려서 빠진 행사가 '발송 완료'가 되지 않음)
-    for (const page of renderList(BOTS[g.bot].label, rest, { mode: p.digest_mode, shownBefore: singles.length })) {
-      if (calls >= DIGEST_CALLS) break;
-      await send(page.rows, { text: page.text });
+    // 나머지는 보내지 않고 보관. 하루 한 번 짧은 개수 안내(버튼·주소 없음)만
+    for (const x of rest) done.push({ id: x.id, status: "held", reason: "하루 알림 수 상한 — /more 로 조회" });
+    r.held = (r.held || 0) + rest.length;
+    if (rest.length && calls < DIGEST_CALLS && (await claimNotice(env, `count:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`))) {
+      await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderCount(BOTS[g.bot].label, { total: live.length, sent: sentNow, held: rest.length }) });
+      calls++;
+      r.messages++;
     }
     // 아직 보내지 못한 묶음은 다음 실행에서 시간 조건 없이 보내도록 retry 상태로 둔다
     const sentIds = new Set(done.map((u) => u.id));
@@ -628,6 +644,95 @@ export async function digest(env, opts = {}) {
     await finish(env, done);
   }
   return { ok: true, ...r };
+}
+
+// ---------------------------------------------------------------- 사용자가 원할 때 더 보기(/more)
+// 1) 하루 상한으로 보관된 행사(held)를 중요한 순서로, 2) 없으면 저장만 된 행사 중 이 사람에게 아직 안 보낸 것(추천 점수 순).
+// 한 번에 5건까지, 각각 한 통씩. 이미 받은 행사·관심없음·끝난 행사는 빼고, 같은 행사는 다시 보내지 않는다.
+export async function more(env, chatId, bot, n = 5) {
+  const chat = String(chatId);
+  const today = dateIn(DENVER);
+  const held = await all(env.DB.prepare(
+    "SELECT o.id, o.event_key, o.version, o.attempts, e.data, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+    "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.chat_id = ? AND o.bot = ? AND o.status = 'held' LIMIT 200").bind(chat, bot));
+  let pick = held.map((x) => ({ ...x, data: JSON.parse(x.data) })).filter((x) => x.state !== "MUTED" && !isExpired(x.data, "America/Denver"));
+  pick.sort((a, b) => digestRank(a.data, today) - digestRank(b.data, today) || (Number(b.data.rec_score) || 0) - (Number(a.data.rec_score) || 0));
+  pick = pick.slice(0, n);
+  let from = "held";
+  if (!pick.length) {
+    from = "stored";
+    const evs = await all(env.DB.prepare(
+      "SELECT e.event_key, e.version, e.data FROM events e WHERE e.bot = ?1 AND COALESCE(e.end_date, e.start_date, e.registration_opens, '9999-12-31') >= ?2 " +
+      "AND NOT EXISTS (SELECT 1 FROM outbox o WHERE o.chat_id = ?3 AND o.event_key = e.event_key AND o.status IN ('sent', 'sending', 'pending', 'held')) " +
+      "AND NOT EXISTS (SELECT 1 FROM item_state s WHERE s.chat_id = ?3 AND s.item_key = e.event_key AND s.state = 'MUTED') " +
+      "ORDER BY CAST(COALESCE(json_extract(e.data, '$.rec_score'), 0) AS INTEGER) DESC, COALESCE(e.start_date, '9999') LIMIT ?4").bind(bot, today, chat, n));
+    if (evs.length) await outboxInsert(env, evs.map((e) => ({ chat_id: chat, bot, event_key: e.event_key, version: e.version, kind: "more" }))).run();
+    const ids = await all(env.DB.prepare("SELECT o.id, o.event_key, o.version, o.attempts, e.data FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+      "WHERE o.chat_id = ? AND o.bot = ? AND o.kind = 'more' AND o.status = 'pending'").bind(chat, bot));
+    pick = ids.map((x) => ({ ...x, data: JSON.parse(x.data) }));
+  }
+  if (!pick.length) return { sent: 0, from };
+  const claimed = await claimRows(env, pick.map((x) => x.id), true);
+  const done = [];
+  let sent = 0;
+  for (const x of pick) {
+    if (!claimed.has(x.id)) continue;
+    const d = await sendHtml(env, bot, { chat_id: chat, text: renderEvent(x.data, { kind: "more" }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
+    const c = classify(d, { attempts: (x.attempts || 0) + 1 }, nowIso());
+    done.push({ id: x.id, ...c, attempted: 1, bot, chat_id: chat, event_key: x.event_key });
+    if (c.status === "sent") sent++;
+  }
+  await finish(env, done);
+  return { sent, from };
+}
+
+// ---------------------------------------------------------------- 소유자 시험 발송: 실제 DB 의 대표 행사(추천 '적극 알림', 아직 안 끝난 것)를 실제 형식으로
+// keys 를 주면 그 행사만(외부 연결 시험 등). 소유자에게만 보낸다
+export async function preview(env, bot, n = 4, keys = null) {
+  const owner = String(env.OWNER_CHAT_ID || "");
+  if (!owner || !BOTS[bot]) return { ok: false, error: "owner or bot missing" };
+  const today = dateIn(DENVER);
+  const evs = Array.isArray(keys) && keys.length
+    ? await all(env.DB.prepare("SELECT event_key, version, data FROM events WHERE event_key IN (SELECT value FROM json_each(?1)) LIMIT ?2").bind(JSON.stringify(keys.slice(0, 8)), n))
+    : await all(env.DB.prepare(
+      "SELECT event_key, version, data FROM events WHERE bot = ?1 AND json_extract(data, '$.rec_level') = 'push' " +
+      "AND COALESCE(end_date, start_date, registration_opens, '9999-12-31') >= ?2 ORDER BY CAST(json_extract(data, '$.rec_score') AS INTEGER) DESC LIMIT ?3").bind(bot, today, n));
+  const out = [];
+  for (const ev of evs) {
+    const data = JSON.parse(ev.data);
+    const d = await sendHtml(env, BOTS[data.bot] ? data.bot : bot, { chat_id: owner, text: renderEvent(data, { kind: "digest" }), reply_markup: keyboard(ev.event_key, {}, data.url) });
+    out.push({ event_key: ev.event_key, ok: !!d.ok, title: data.title_ko || data.title, error: d.ok ? undefined : d.description });
+  }
+  return { ok: out.every((x) => x.ok), sent: out.filter((x) => x.ok).length, items: out };
+}
+
+// ---------------------------------------------------------------- 추천 판정 결과만 갱신(재평가). 판·변경 알림·대기열은 건드리지 않는다
+const REC_FIELDS = ["rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason", "title_ko"];
+export async function recommendUpdate(env, body) {
+  const items = (body.items || []).filter((x) => x && x.event_key && ["push", "interest", "none"].includes(x.rec_level)).slice(0, 300);
+  if (!items.length) return { ok: true, updated: 0 };
+  const stmts = [];
+  for (const x of items) {
+    const patch = Object.fromEntries(REC_FIELDS.filter((k) => x[k] !== undefined).map((k) => [k, x[k]]));
+    stmts.push(env.DB.prepare("UPDATE events SET data = json_patch(data, ?1), bot = CASE WHEN ?2 IN ('life','family','kids') THEN ?2 ELSE bot END WHERE event_key = ?3")
+      .bind(JSON.stringify(patch), x.bot || "", x.event_key));
+    stmts.push(env.DB.prepare("UPDATE items SET title = COALESCE(?1, title), tag = COALESCE(?2, tag), bot = CASE WHEN ?3 IN ('life','family','kids') THEN ?3 ELSE bot END WHERE item_key = ?4")
+      .bind(x.title_ko || null, x.category || null, x.bot || "", x.event_key));
+  }
+  for (let i = 0; i < stmts.length; i += 100) await env.DB.batch(stmts.slice(i, i + 100));
+  return { ok: true, updated: items.length };
+}
+
+// 재평가용: 행사 목록(행사 정보만). bot·sent(소유자에게 실제로 보낸 것만) 조건
+export async function eventsDump(env, url) {
+  const bot = url.searchParams.get("bot");
+  const sent = url.searchParams.get("sent") === "1";
+  const offset = Math.max(parseInt(url.searchParams.get("offset") || "0", 10) || 0, 0);
+  const q = sent
+    ? "SELECT DISTINCT e.event_key, e.source_id, e.url, e.data, e.bot FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.status = 'sent' AND (?1 = '' OR o.bot = ?1) ORDER BY e.event_key LIMIT 300 OFFSET ?2"
+    : "SELECT event_key, source_id, url, data, bot FROM events WHERE (?1 = '' OR bot = ?1) ORDER BY event_key LIMIT 300 OFFSET ?2";
+  const rows = await all(env.DB.prepare(q).bind(bot || "", offset));
+  return { ok: true, events: rows.map((r) => ({ ...JSON.parse(r.data), event_key: r.event_key, source_id: r.source_id, url: r.url, bot: r.bot })) };
 }
 
 // ---------------------------------------------------------------- 상세 페이지 재검사 목록 (1차 검증 1-3)

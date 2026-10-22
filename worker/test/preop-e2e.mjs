@@ -9,7 +9,7 @@ const denverToday = new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Denver
 const plus = (n) => new Date(Date.parse(denverToday + "T12:00:00Z") + n * 86400000).toISOString().slice(0, 10);
 const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(30), url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", rec_level: "push", ...over,
 });
 const N = 1200;
 
@@ -169,9 +169,9 @@ try {
     assert.equal(sendCount() - before, 0, "기준선 중 즉시 알림 발송");
     await admin("/admin/digest", { force: true });
     const msgs = E.calls.slice(before).filter((c) => c.method === "sendMessage");
-    // 사람마다 10건: 주요 5건은 한 건씩 + 나머지 5건은 제목 목록 1통 = 6통, 먼 행사(old)는 없음
+    // 사람마다 10건: 가장 중요한(2주 안 접수) 5건은 한 건씩 + 짧은 개수 안내 1통 = 6통, 나머지는 보관, 먼 행사(old)는 없음
     assert.equal(msgs.length, 12, `요약 ${msgs.length}통`);
-    assert.ok(msgs.some((m) => /soon0/.test(m.payload.text)) && msgs.every((m) => !/old\d/.test(m.payload.text)));
+    assert.ok(msgs.some((m) => /reg0/.test(m.payload.text)) && msgs.every((m) => !/old\d/.test(m.payload.text)));
     await admin("/admin/baseline", { hours: 0 });
     const b2 = sendCount();
     await admin("/admin/enqueue", { events: [ev("old3", { start_date: plus(63), urgency: "now", cost_text: "$10 → 무료" })] });

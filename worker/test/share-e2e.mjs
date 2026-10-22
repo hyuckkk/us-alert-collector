@@ -9,7 +9,7 @@ const denverToday = new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Denver
 const plus = (n) => new Date(Date.parse(denverToday + "T12:00:00Z") + n * 86400000).toISOString().slice(0, 10);
 const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(30), url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", rec_level: "push", ...over,
 });
 
 const E = await startEnv({ tgPort: 9999, wPort: 8809, vars: { DELIVERY_MODE: "all" } });
@@ -76,7 +76,7 @@ try {
 
   await step("지인이 버튼 ✅ 확인 → 기록되고 그 메시지 버튼이 바뀜", async () => {
     const m = to(0, FRIEND).find((c) => /행사 near1/.test(c.payload.text));
-    const key = m.payload.reply_markup.inline_keyboard[0][0].callback_data.split(":")[1];
+    const key = m.payload.reply_markup.inline_keyboard[1][0].callback_data.split(":")[1];
     const n = E.calls.length;
     await hook("kids", E.cb(FRIEND, `ack:${key}`, 901, m.payload.reply_markup));
     assert.equal(sql(`SELECT COUNT(*) AS n FROM clicks WHERE chat_id = '${FRIEND}' AND item_key = '${key}' AND action = 'ack'`)[0].n, 1);

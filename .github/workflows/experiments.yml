@@ -8,7 +8,7 @@ name: experiments
 on:
   push:
     branches-ignore: [main]
-    paths: ["ticks/audit", "ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent", "ticks/sourceprobe"]
+    paths: ["ticks/recommend", "ticks/audit", "ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent", "ticks/sourceprobe"]
 permissions:
   contents: write
 concurrency:
@@ -37,6 +37,7 @@ jobs:
           echo "COVERAGE=$(echo "$changed" | grep -q ticks/coverage && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "FULLSYSTEM=$(echo "$changed" | grep -q ticks/fullsystem && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "AUDIT=$(echo "$changed" | grep -q ticks/audit && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "RECOMMEND=$(echo "$changed" | grep -q ticks/recommend && echo 1 || echo 0)" >> "$GITHUB_ENV"
       - name: Model comparison
         if: env.COMPARE == '1'
         env:
@@ -111,11 +112,32 @@ jobs:
       - name: Record audit AI spend
         if: always() && env.AUDIT_STARTED == '1'
         run: python3 scripts/dev_budget.py record --run "$GITHUB_RUN_ID" --kind audit --cap "$AUDIT_CAP" --usage reports/usage-audit.json --status "${{ job.status }}"
+      - name: Recommendation backfill on live DB (paid AI — dev budget)
+        if: env.RECOMMEND == '1'
+        timeout-minutes: 45
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          bash scripts/cf_env.sh
+          set -a; . "$GITHUB_ENV"; set +a
+          WANT=$(grep -oE '^usd_cap=[0-9.]+' ticks/recommend | cut -d= -f2); WANT=${WANT:-5}
+          ARGS=$(grep -oE '^args=.*' ticks/recommend | cut -d= -f2-)
+          python3 scripts/dev_budget.py check --cap "$WANT" | tee budget.txt
+          CAP=$(grep -oE '^CAP=[0-9.]+' budget.txt | cut -d= -f2); [ -n "$CAP" ] || exit 1
+          echo "REC_CAP=$CAP" >> "$GITHUB_ENV"; echo "REC_STARTED=1" >> "$GITHUB_ENV"
+          export USAGE_LIVE_FILE=reports/usage-recommend.json
+          python collector/recommend_backfill.py --usd-cap "$CAP" $ARGS
+          python3 -c "import json;print('::notice title=recommend backfill::'+json.dumps(json.load(open('eval/recommend_backfill.json'))['summary'],ensure_ascii=False))"
+      - name: Record recommendation AI spend
+        if: always() && env.REC_STARTED == '1'
+        run: python3 scripts/dev_budget.py record --run "$GITHUB_RUN_ID" --kind recommend --cap "$REC_CAP" --usage reports/usage-recommend.json --status "${{ job.status }}"
       - name: Commit results
         if: always()
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/audit_sample.json eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/audit_sample.json eval/recommend_backfill.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"

@@ -178,6 +178,8 @@ const HELP_ALL = [
   "/from 2027-07-01 — 이 날짜 이후 행사만 받기 (/from off 로 해제)",
   "/digest daily|weekly|off — 요약 방식 · /digest 8 — 요약 받을 시각(현지)",
   "/myid — 내 텔레그램 ID",
+  "/more — 알림으로 보내지 않고 보관한 행사 5건 더 보기",
+  "/interests — 기본 알림에서 빠지는 분야(영유아·시니어·회의 등)를 골라 받기",
   "/stop — 이 봇 알림 그만 받기 (다시 받으려면 /start)",
 ].join("\n");
 const HELP_OWNER = [
@@ -192,6 +194,28 @@ const HELP_OWNER = [
   "",
   HELP_ALL,
 ].join("\n");
+
+// 기본 알림에서 빠지는 분야를 사람마다 골라 받을 수 있다(추천 판정의 category)
+const INTERESTS = { toddler: "영유아 프로그램", senior: "시니어 프로그램", "library-regular": "도서관 정기 모임", "support-group": "상담·지원 모임",
+  civic: "시의회·위원회 회의", "public-service": "주민 서비스·민원 행사", other: "기타" };
+async function interestsCommand(env, fromId, args) {
+  await ensurePerson(env, fromId);
+  const p = await env.DB.prepare("SELECT interests FROM people WHERE chat_id = ?").bind(String(fromId)).first();
+  let cur = pipeline.parseInterests(p && p.interests);
+  const [op, ...names] = args;
+  if (op === "add" || op === "del") {
+    const bad = names.filter((n) => !INTERESTS[n]);
+    if (!names.length || bad.length) return `분야 이름을 확인해 주세요: ${bad.join(", ") || "(없음)"}\n${Object.entries(INTERESTS).map(([k, v]) => `${k} — ${v}`).join("\n")}`;
+    cur = op === "add" ? [...new Set([...cur, ...names])] : cur.filter((x) => !names.includes(x));
+    await env.DB.prepare("UPDATE people SET interests = ?, updated_at = ? WHERE chat_id = ?").bind(JSON.stringify(cur), nowIso(), String(fromId)).run();
+  }
+  return [
+    "기본 알림은 많은 사람이 참여할 가치가 있는 행사만 보냅니다. 아래 분야는 직접 고른 경우에만 받습니다.",
+    ...Object.entries(INTERESTS).map(([k, v]) => `${cur.includes(k) ? "✅" : "▫️"} ${k} — ${v}`),
+    "",
+    "받기: /interests add toddler · 그만: /interests del toddler",
+  ].join("\n");
+}
 
 async function personCommand(env, fromId, cmd, args) {
   await ensurePerson(env, fromId);
@@ -300,6 +324,13 @@ async function handleMessage(env, bot, m) {
   if (!active) return;
   if (isOwner(env, fromId)) await pipeline.watchdog(env); // GitHub Actions 가 통째로 멈춰도 소유자가 봇을 쓰면 감지
   if (["/settings", "/quiet", "/tz", "/city", "/from", "/digest"].includes(cmd)) { await reply(await personCommand(env, fromId, cmd, args)); return; }
+  if (cmd === "/interests") { await reply(await interestsCommand(env, fromId, args)); return; }
+  if (cmd === "/more") {
+    if (ownerOnly(env) && !isOwner(env, fromId)) { await reply("지금은 소유자 시험 기간이라 보내 드릴 수 없습니다."); return; }
+    const r = await pipeline.more(env, fromId, bot, 5);
+    if (!r.sent) await reply("지금 더 보여 드릴 새 행사가 없습니다.");
+    return;
+  }
   if (!isOwner(env, fromId)) {
     await reply("알림의 [✅ 확인] [🚫 관심없음] [🔕 이 태그 그만] 버튼은 본인에게만 적용됩니다. 다시 누르면 취소됩니다.\n\n" + HELP_ALL);
     return;
@@ -425,6 +456,8 @@ async function setupWebhooks(env, origin) {
       commands: [
         { command: "start", description: "알림 받기 시작" },
         { command: "settings", description: "내 설정 보기" },
+        { command: "more", description: "보관한 행사 더 보기" },
+        { command: "interests", description: "관심 분야 고르기" },
         { command: "help", description: "도움말" },
         { command: "stop", description: "이 봇 알림 그만 받기" },
       ],
@@ -561,6 +594,9 @@ export default {
         if (p === "/admin/sources-extra") return json(await pipeline.sourcesExtra(env));
         if (p === "/admin/queue" && POST) return json(await pipeline.queue(env, body));
         if (p === "/admin/event-index") return json(await pipeline.eventIndex(env));
+        if (p === "/admin/preview" && POST) return json(await pipeline.preview(env, body.bot, Math.min(Math.max(body.n | 0 || 4, 1), 8), body.keys));
+        if (p === "/admin/recommend-update" && POST) return json(await pipeline.recommendUpdate(env, body));
+        if (p === "/admin/events-dump") return json(await pipeline.eventsDump(env, url));
         if (p === "/admin/events-sample") {
           // 원문 대조 점검용 무작위 표본(행사 정보만, 수신자 정보 없음). 아직 끝나지 않은 행사·접수 안내 중에서
           const n = Math.min(Math.max(parseInt(url.searchParams.get("n") || "40", 10) || 40, 1), 100);

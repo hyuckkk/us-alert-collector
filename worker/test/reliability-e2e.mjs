@@ -11,7 +11,7 @@ const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(30), end_date: null, time_text: "10:00",
   location: "Library", city: "Westminster", age_text: "6-10", english: [], cost_text: "$10", signup: "fcfs", registration_opens: null,
   registration_status: "open", deadline: null, eligibility: null, status_note: null, url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: [key], annual: false, source_id: "test", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: [key], annual: false, source_id: "test", rec_level: "push", ...over,
 });
 
 const E = await startEnv({ tgPort: 9993, wPort: 8803, vars: { DELIVERY_MODE: "all", FAMILY_AVAILABLE_FROM: "2026-01-01" } });
@@ -142,48 +142,66 @@ try {
   });
 
   // ------------------------------------------------ 7 요약
-  await step("7 요약 23건 → 주요 5건은 한 건씩, 나머지 18건은 제목 목록, 누락 없음", async () => {
+  await step("7 요약 23건 → 중요한 5건만 한 건씩 + 짧은 개수 안내 1통, 나머지 18건은 보관 → /more 로 5건씩 모두 볼 수 있고 중복 없음", async () => {
     sql("UPDATE outbox SET status = 'skipped' WHERE kind = 'digest'");
     await admin("/admin/enqueue", { events: Array.from({ length: 23 }, (_, i) => ev(`d${i}`, { urgency: "weekly", tags: ["dg"], start_date: plus(40 + i) })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
-    assert.equal(r.items, 23, JSON.stringify(r));
-    assert.equal(r.messages, 6);
-    const list = sends(n, /다른 새 소식/).map((c) => c.payload.text);
-    assert.equal(list.length, 1);
-    for (let i = 5; i < 23; i++) assert.ok(list[0].includes(`>행사 d${i}</a>`), `d${i} 누락`);
+    assert.deepEqual([r.items, r.held, r.messages], [5, 18, 6], JSON.stringify(r));
+    const msgs = sends(n).map((c) => c.payload);
+    const count = msgs.filter((m) => /오늘 새로 찾은/.test(m.text));
+    assert.equal(count.length, 1);
+    assert.match(count[0].text, /23건[\s\S]*중요한 5건[\s\S]*나머지 18건은 \/more/);
+    assert.ok(!count[0].reply_markup && !/https?:/.test(count[0].text), "개수 안내에 버튼·주소");
+    const got = new Set();
+    for (const m of msgs.filter((x) => x.reply_markup)) got.add(/행사 (d\d+)/.exec(m.text)[1]);
+    for (let k = 0; k < 4; k++) {
+      const b = E.calls.length;
+      await hook("kids", msg(OWNER, "/more"));
+      for (const m of sends(b)) {
+        const k2 = /행사 (d\d+)/.exec(m.payload.text);
+        assert.ok(k2, `보관 행사 대신 다른 메시지: ${m.payload.text.split("\n")[0]}`);
+        assert.ok(!got.has(k2[1]), `${k2[1]} 두 번`); got.add(k2[1]);
+      }
+    }
+    assert.equal(got.size, 23, "보관한 행사 중 /more 로 볼 수 없는 것이 있음");
+    const b = E.calls.length;
+    await hook("kids", msg(OWNER, "/more"));
+    assert.ok(sends(b).every((m) => !/행사 d\d+/.test(m.payload.text)), "다 본 뒤에도 같은 행사");
   });
 
-  await step("7 요약 잘림 방지: 아주 긴 행사 30건도 글자 수로 나눠 모두 보내고, 한 통이 4,096자를 넘지 않음", async () => {
+  await step("7 아주 긴 행사도 한 통 4,096자 이하, 각 메시지의 버튼은 그 행사에 연결, 잘린 행사가 발송 완료로 기록되지 않음", async () => {
     const long = "아주 긴 행사 설명 ".repeat(40);
     await admin("/admin/enqueue", { events: Array.from({ length: 30 }, (_, i) => ev(`L${i}`, { urgency: "weekly", tags: ["dgL"], start_date: plus(120 + i),
-      title_ko: `행사 L${i} ${long}`, cost_text: long, url: `https://example.org/${"x".repeat(300)}/${i}` })) });
+      title_ko: `행사 L${i} ${long}`, cost_text: long, summary_ko: long, url: `https://example.org/${"x".repeat(300)}/L${i}` })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
-    assert.equal(r.items, 30, JSON.stringify(r));
-    const msgs = sends(n).map((c) => c.payload.text);
-    assert.ok(msgs.every((t) => t.length <= 4096), "4,096자 초과");
-    const all = msgs.join("\n");
-    for (let i = 0; i < 30; i++) assert.ok(all.includes(`행사 L${i} `), `L${i} 누락`);
-    const st = sql("SELECT status, COUNT(*) AS n FROM outbox WHERE event_key LIKE 'L%' AND status <> 'skipped' GROUP BY status"); // 지인 몫은 위에서 일부러 건너뜀
-    assert.deepEqual(st, [{ status: "sent", n: 30 }], JSON.stringify(st));
+    assert.deepEqual([r.items, r.held], [5, 25], JSON.stringify(r));
+    for (const c of sends(n).filter((x) => x.payload.reply_markup)) {
+      assert.ok(c.payload.text.length <= 4096);
+      const key = c.payload.reply_markup.inline_keyboard[0][0].url.split("/").pop();
+      assert.ok(c.payload.text.includes(`행사 ${key} `), "공식 안내 버튼이 다른 행사");
+      assert.equal(c.payload.reply_markup.inline_keyboard[1][0].callback_data, `ack:${key}`);
+    }
+    const st = sql("SELECT status, COUNT(*) AS n FROM outbox WHERE event_key LIKE 'L%' AND status <> 'skipped' GROUP BY status ORDER BY status");
+    assert.deepEqual(st, [{ status: "held", n: 25 }, { status: "sent", n: 5 }], JSON.stringify(st));
   });
 
-  await step("7 요약 한 통이 실패하면 그 통에 든 행사만 남았다가 다음 실행에서 시간 조건 없이 이어 보냄", async () => {
-    await admin("/admin/enqueue", { events: Array.from({ length: 12 }, (_, i) => ev(`f${i}`, { urgency: "weekly", tags: ["dg2"], start_date: plus(80 + i) })) });
+  await step("7 한 통이 실패하면 그 행사만 남았다가 다음 실행에서 시간 조건 없이 보냄(폭주·중복 없음)", async () => {
+    await admin("/admin/enqueue", { events: Array.from({ length: 6 }, (_, i) => ev(`f${i}`, { urgency: "weekly", tags: ["dg2"], start_date: plus(80 + i) })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     E.failNext(500);
     let r = await admin("/admin/digest", { force: true });
-    assert.equal(r.failed, 1, JSON.stringify(r));
-    assert.equal(r.items, 11);
-    const left = sql("SELECT event_key FROM outbox WHERE kind = 'digest' AND status = 'failed'").map((x) => x.event_key);
-    assert.equal(left.length, 1);
+    assert.deepEqual([r.failed, r.items, r.held], [1, 4, 1], JSON.stringify(r));
     sql("UPDATE outbox SET next_attempt_at = '2000-01-01T00:00:00Z' WHERE kind = 'digest' AND status = 'failed'");
+    const n = E.calls.length;
     r = await admin("/admin/digest", {}); // force 없이
     assert.equal(r.items, 1, JSON.stringify(r));
-    assert.equal(sql("SELECT COUNT(*) AS n FROM outbox WHERE event_key LIKE 'f%' AND status = 'sent'")[0].n, 12);
+    assert.equal(sends(n).filter((c) => /행사 f\d/.test(c.payload.text)).length, 1, "재시도 때 다른 행사까지 다시 보냄");
+    r = await admin("/admin/digest", {});
+    assert.equal(r.items, 0);
   });
 
   // ------------------------------------------------ 3 대기열
