@@ -2,7 +2,7 @@
 // 원칙: 수집한 정보는 처리 전까지 대기열(pending)에 보존하고, 발송은 선점(claim) 후 보내며 결과를 확실/불명/실패로 나눠 기록한다.
 // D1 무료 요금제의 호출당 쿼리 수 제한 때문에 여러 건은 json_each 로 한 번에 처리한다.
 
-import { BOTS, isOwner, nowIso, ownerOnly, tg, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
+import { BOTS, isOwner, nowIso, ownerOnly, tg, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, ensurePerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
 import { renderEvent, renderDigest, keyboard, compactRow } from "./render.js";
 
 // 다시 알려야 하는 '참여 기회에 영향을 주는' 필드 (1차 검증 1-5)
@@ -447,8 +447,39 @@ function isExpired(data, tz) {
 }
 
 // ---------------------------------------------------------------- 즉시·예고 알림 발송 (정지 시간대는 미룸)
+// 소유자는 /start 를 누르지 않아도 봇 3개의 수신자로 등록한다(운영 첫날: /start 에 응답이 없던 때라 수신자 0명 → 알림 0건).
+// 처음 등록되는 봇에는 이미 저장된 행사 중 곧 행동할 것(3주 안 행사·2주 안 접수)을 일간 요약으로 한 번 넣는다. 나머지는 쏟아내지 않는다.
+export async function ensureOwnerRecipients(env) {
+  if (!env.OWNER_CHAT_ID) return { added: 0, queued: 0 };
+  const owner = String(env.OWNER_CHAT_ID);
+  const at = nowIso();
+  const today = dateIn(DENVER);
+  let added = 0, queued = 0;
+  for (const bot of Object.keys(BOTS)) {
+    const r = await env.DB.prepare("INSERT INTO recipients (chat_id, bot, status, joined_at, updated_at) VALUES (?, ?, 'active', ?, ?) ON CONFLICT(chat_id, bot) DO NOTHING")
+      .bind(owner, bot, at, at).run();
+    if (r.meta.changes !== 1) continue;
+    added++;
+    await ensurePerson(env, owner);
+    const person = await env.DB.prepare("SELECT available_from FROM people WHERE chat_id = ?").bind(owner).first();
+    const recip = { chat_id: owner, bot, available_from: person ? person.available_from : null };
+    const evs = await all(env.DB.prepare("SELECT event_key, version, data FROM events WHERE bot = ?").bind(bot));
+    const out = [];
+    for (const ev of evs) {
+      const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot };
+      if (e.registration_status === "cancelled" || !baselineRelevant(e, today)) continue;
+      const [kind] = targetKind(env, recip, e, new Map(), new Map(), { kind: "digest" });
+      if (kind) out.push({ chat_id: owner, bot, event_key: ev.event_key, version: ev.version, kind: kind === "season" ? "season" : "digest" });
+    }
+    for (let i = 0; i < out.length; i += 200) await outboxInsert(env, out.slice(i, i + 200)).run();
+    queued += out.length;
+  }
+  return { added, queued };
+}
+
 export async function dispatch(env, opts = {}) {
   const limit = Math.min(opts.limit || SEND_LIMIT, SEND_LIMIT);
+  const owner = await ensureOwnerRecipients(env);
   const trig = await timeTriggers(env);
   const stale = await recoverStale(env);
   const now = nowIso();
@@ -488,7 +519,7 @@ export async function dispatch(env, opts = {}) {
   }
   await finish(env, done);
   const left = await env.DB.prepare("SELECT COUNT(*) AS n FROM outbox WHERE status IN ('pending', 'failed', 'uncertain', 'sending') AND kind IN ('now', 'season')").first();
-  return { ok: true, ...r, pending: left.n };
+  return { ok: true, ...r, owner_recipients: owner, pending: left.n };
 }
 
 // ---------------------------------------------------------------- 요약 (기본: 매일 각자 현지 digest_hour 이후 1회, 여러 통으로 나눠 누락 없음)
