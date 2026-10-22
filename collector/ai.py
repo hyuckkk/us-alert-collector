@@ -167,7 +167,8 @@ Rules:
 - url must be exactly one of the URLs given for that item. Never invent or edit URLs.
 - Dates as YYYY-MM-DD. year_basis says where the year came from: stated (the item states the year), published (taken from the item's page date, posting date or a year heading), assumed (no year anywhere, you assumed the next occurrence after today), none (no date). Never present an assumed year as certain — set year_basis=assumed. If there is no date at all, null.
 - Which date: if the item is about ONE session (its title or the first date right after the title names one date or one location), use that session's date even when the page also lists other sessions of a series. For a continuous run (e.g. "October 2-25", "on view until December"), use the stated first and last dates even if the start is already past; "until/through <month> [year]" without a day means end_date = the last day of that month, and a run that started before today keeps its real start_date (never replace it with a single performance or today). Only when the item itself covers several separate dates (e.g. weekly tours) use the earliest upcoming date as start_date and the last listed date as end_date.
-- event_tz: IANA zone of the event location (America/Denver for Colorado). time_text: local time as written, e.g. "10:00-12:00".
+- event_tz: IANA zone of the event location (America/Denver for Colorado). time_text: local time in Korean, e.g. "오전 10시–낮 12시", "매주 토 오후 2시".
+- Korean for people: cost_text in Korean (e.g. "무료", "$25 (주민 $20)", "입장료 별도"), age_text in Korean (e.g. "6–10세", "성인", "초등 3–5학년", "보호자 동반 시 전 연령"). Keep amounts, dates and numbers exactly as stated. Keep location, org and proper nouns in their original English so they can be searched on a map.
 - title_ko: short natural Korean title. Keep proper nouns in English in parentheses if useful.
 - english: pick only attributes the text supports — 초보 가능 (beginners welcome), 보호자 동반 (parent accompanies), 시범 중심 (demonstration-based), 반복 만남 (recurring sessions with the same group).
 - signup: fcfs = first come first served / limited spots; lottery = drawing; open = register any time; none = drop-in; unknown.
@@ -301,7 +302,7 @@ class JudgeBatch(BaseModel):
 
 
 JUDGE_RULES = """U.S. camps usually state the grade a child enters in the fall; compare with the audience's school grades when given.
-You review events a smaller model flagged as uncertain. For each, decide keep (worth sending to this family or local friends), the right audience bot, and correct age_text, status_note (Korean) and english attributes using only the source text. Drop paid jobs, events requiring U.S. citizenship, and items that are not attendable events or programs. Keep program registration announcements (registration opening dates for classes, lessons, camps or seasons) — they are actionable even without an event date. Reason in Korean, one sentence."""
+You review events a smaller model flagged as uncertain. For each, decide keep (worth sending to this family or local friends), the right audience bot, and correct age_text (Korean, e.g. "6–10세"), status_note (Korean) and english attributes using only the source text. Drop paid jobs, events requiring U.S. citizenship, and items that are not attendable events or programs. Keep program registration announcements (registration opening dates for classes, lessons, camps or seasons) — they are actionable even without an event date. Reason in Korean, one sentence."""
 
 
 @dataclass
