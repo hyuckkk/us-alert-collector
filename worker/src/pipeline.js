@@ -13,7 +13,7 @@ const FIELD_KO = { start_date: "시작일", end_date: "종료일", time_text: "�
   registration_opens: "접수 시작", registration_status: "접수 상태", deadline: "마감", eligibility: "참가 자격", age_text: "대상 연령", status_note: "신분·주민 메모" };
 const MAX_EVENTS_PER_CALL = 30;
 const SEND_LIMIT = 20;            // 무료 요금제 하위 요청 50개 한도 안에서 여유
-const DIGEST_SINGLES = 5;         // 하루 요약에서 한 건씩 보내는 주요 행사 수(사람·봇마다). 나머지는 보관('held') → 짧은 개수 안내 + /more
+const DIGEST_SINGLES = Infinity;  // 소유자 지시(2026-10-22): 하루 건수 제한 없이 추천된 행사는 모두 한 통씩. 한 번 실행에서 못 다 보낸 것은 다음 매시 실행에서 이어 보냄
 const DIGEST_CALLS = 25;          // 한 번 실행에서 보내는 요약 메시지 최대 수(넘으면 다음 매시 실행에서 이어 보냄)
 const MAX_SEND_ATTEMPTS = 6;
 const BACKOFF_MIN = [5, 30, 120, 360, 720];
@@ -600,7 +600,10 @@ export async function digest(env, opts = {}) {
     "FROM outbox o LEFT JOIN people p ON p.chat_id = o.chat_id WHERE o.kind = 'digest' AND o.status IN ('pending', 'failed', 'uncertain') GROUP BY o.chat_id, o.bot").bind(now));
   const r = { messages: 0, items: 0, waiting: 0, skipped: 0, expired: 0, failed: 0 };
   let calls = 0;
+  // 한 번 실행의 발송 수를 사람·봇마다 나눠 쓴다(한 사람의 많은 요약이 다른 사람 몫을 다 쓰지 않게). 남은 것은 다음 매시 실행에서
+  const perGroup = Math.max(3, Math.floor(DIGEST_CALLS / Math.max(groups.length, 1)));
   for (const g of groups) {
+    const groupStart = calls;
     const p = { ...defaultPerson(env, g.chat_id), ...(g.tz ? { tz: g.tz, quiet_start: g.quiet_start, quiet_end: g.quiet_end, digest_mode: g.digest_mode, digest_hour: g.digest_hour } : {}) };
     if ((ownerOnly(env) && !isOwner(env, g.chat_id)) || p.digest_mode === "off") {
       await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = ? WHERE kind = 'digest' AND status IN ('pending', 'failed', 'uncertain') AND chat_id = ? AND bot = ?")
@@ -632,14 +635,14 @@ export async function digest(env, opts = {}) {
       seenKey.add(x.event_key);
       live.push({ ...x, data });
     }
-    // 중요한 것부터: 2주 안 접수 시작·마감 → 1주 안 행사 → 추천 점수. 앞의 몇 건만 한 건씩 보내고 나머지는 보관(/more 로 조회)
+    // 중요한 것부터: 2주 안 접수 시작·마감 → 1주 안 행사 → 추천 점수 순으로 한 통씩(실행당 발송 수를 넘으면 다음 실행에서 이어서)
     const today = dateIn(DENVER);
     live.sort((a, b) => digestRank(a.data, today) - digestRank(b.data, today) || (Number(b.data.rec_score) || 0) - (Number(a.data.rec_score) || 0)
       || String(firstDate(a.data)).localeCompare(String(firstDate(b.data))));
     const singles = live.slice(0, DIGEST_SINGLES), rest = live.slice(DIGEST_SINGLES);
     let sentNow = 0;
     for (const x of singles) {
-      if (calls >= DIGEST_CALLS) break;
+      if (calls >= DIGEST_CALLS || calls - groupStart >= perGroup) break;
       const claimed = await claimRows(env, [x.id]);
       if (!claimed.has(x.id)) continue;
       const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest" }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
@@ -967,8 +970,45 @@ export async function decideCandidate(env, id, promote) {
 }
 
 export async function sourcesExtra(env) {
-  const rows = await all(env.DB.prepare("SELECT id, url, name, type, bots FROM sources_extra ORDER BY added_at"));
-  return { ok: true, sources: rows.map((r) => ({ ...r, bots: JSON.parse(r.bots || "[]"), every_days: 1, official: false, promoted: true })) };
+  const rows = await all(env.DB.prepare("SELECT id, url, name, type, bots, mode, reason FROM sources_extra ORDER BY added_at"));
+  return { ok: true, sources: rows.map((r) => ({ id: r.id, url: r.url, name: r.name, type: r.type, bots: JSON.parse(r.bots || "[]"), every_days: 1,
+    official: /\.(gov|edu|us|org)(\/|$)/i.test(new URL(r.url).hostname + "/"), promoted: true, ...(r.mode ? { mode: r.mode } : {}) })) };
+}
+
+// ---------------------------------------------------------------- 놓친 검색 보완(외부 검색 대조)
+// 외부 검색이 찾은 행사를 우리 수집이 놓쳤으면 원인을 기록하고, 그 행사를 다음부터 스스로 찾도록 정보원·검색어를 자동으로 더한다.
+export async function gaps(env, method, body) {
+  if (method === "POST") {
+    const now = nowIso();
+    const g = (body.gaps || []).filter((x) => x && x.event_key && x.url).slice(0, 30);
+    const stmts = g.map((x) => env.DB.prepare("INSERT INTO ext_gaps (event_key, url, title, host, found, cause, action, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+      "ON CONFLICT(event_key) DO UPDATE SET found = excluded.found, cause = excluded.cause, action = excluded.action, at = excluded.at")
+      .bind(x.event_key, x.url, x.title || null, x.host || null, x.found, x.cause || null, x.action || null, now));
+    for (const src of (body.sources || []).filter((x) => x && /^https:\/\//.test(x.url || "")).slice(0, 10)) {
+      stmts.push(env.DB.prepare("INSERT INTO sources_extra (id, url, name, type, bots, added_at, mode, reason) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id) DO NOTHING")
+        .bind(`gap-${(await sha(src.url.toLowerCase())).slice(0, 10)}`, src.url, src.name || null, ["html", "rss", "ical", "json"].includes(src.type) ? src.type : "html",
+          JSON.stringify(src.bots || ["family", "kids", "life"]), now, src.mode === "page-change" ? "page-change" : null, String(src.reason || "").slice(0, 200)));
+    }
+    for (const q of (body.queries || []).filter((x) => x && x.query && x.query.length <= 120).slice(0, 10)) {
+      stmts.push(env.DB.prepare("INSERT INTO queries_extra (query, bot, reason, added_at) VALUES (?, ?, ?, ?) ON CONFLICT(query) DO NOTHING")
+        .bind(q.query.trim(), ["family", "kids", "life"].includes(q.bot) ? q.bot : "any", String(q.reason || "").slice(0, 200), now));
+    }
+    if (stmts.length) await env.DB.batch(stmts);
+    return { ok: true, gaps: g.length };
+  }
+  const rows = await all(env.DB.prepare("SELECT * FROM ext_gaps ORDER BY at DESC LIMIT 200"));
+  const by = {};
+  for (const r of rows) by[r.found] = (by[r.found] || 0) + 1;
+  return { ok: true, summary: by, gaps: rows };
+}
+export async function queriesExtra(env) {
+  return { ok: true, queries: await all(env.DB.prepare("SELECT query, bot FROM queries_extra ORDER BY added_at DESC LIMIT 80")) };
+}
+// 수집 대기열에 그 주소가 이미 있는지(수집은 했지만 아직 AI 처리 전인지)
+export async function queueFind(env, urls) {
+  const list = (urls || []).filter((u) => typeof u === "string").slice(0, 30);
+  if (!list.length) return { ok: true, items: [] };
+  return { ok: true, items: await all(env.DB.prepare("SELECT url, status, source_id FROM pending WHERE url IN (SELECT value FROM json_each(?))").bind(JSON.stringify(list))) };
 }
 
 export async function sourceHealth(env) {
@@ -988,7 +1028,9 @@ export async function weeklyReport(env, send = true) {
   const failing = await all(env.DB.prepare("SELECT id, consecutive_failures, last_status FROM source_health WHERE consecutive_failures >= 3 ORDER BY consecutive_failures DESC LIMIT 8"));
   const qs = await queueStats(env);
   const ob = await all(env.DB.prepare("SELECT status, COUNT(*) AS n FROM outbox WHERE created_at >= ? GROUP BY status").bind(since));
-  const report = { since: since.slice(0, 10), runs: runs.length, totals: sum, month_usd: Number(u.usd.toFixed(4)), deliveries: del, clicks, failing, queue: qs, outbox: ob };
+  const gapRows = await all(env.DB.prepare("SELECT found, COUNT(*) AS n FROM ext_gaps WHERE at >= ? GROUP BY found").bind(since));
+  const report = { since: since.slice(0, 10), runs: runs.length, totals: sum, month_usd: Number(u.usd.toFixed(4)), deliveries: del, clicks, failing, queue: qs, outbox: ob,
+    external_gaps: Object.fromEntries(gapRows.map((x) => [x.found, x.n])) };
   if (send) {
     const t = (k) => sum[k] || 0;
     const lines = [
@@ -1000,6 +1042,9 @@ export async function weeklyReport(env, send = true) {
       `AI 입력 ${t("input_tokens")} / 출력 ${t("output_tokens")} 토큰 · 검색 ${t("searches")}회 · 이번 달 $${report.month_usd}`,
       `발송 ${del.n || 0}건 (성공 ${del.ok || 0}) · 버튼 ${clicks.map((c) => `${c.action} ${c.n}`).join(", ") || "없음"}`,
       failing.length ? `연속 실패 정보원: ${failing.map((f) => `${f.id}(${f.consecutive_failures})`).join(", ")}` : "연속 실패 정보원 없음",
+      Object.keys(report.external_gaps).length
+        ? `외부 검색 대조: ${Object.entries(report.external_gaps).map(([k, n]) => `${{ found: "우리도 찾음", queued: "수집 후 처리 대기", "registered-missed": "등록 정보원인데 놓침", unregistered: "정보원 없음" }[k] || k} ${n}`).join(" · ")} (놓친 것은 정보원·검색어 자동 보완)`
+        : "외부 검색 대조: 이번 주 없음",
     ];
     await notifyOwner(env, lines.join("\n"));
   }

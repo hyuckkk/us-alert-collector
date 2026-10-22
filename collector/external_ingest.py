@@ -27,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ai  # noqa: E402
 import identity  # noqa: E402
 import rules  # noqa: E402
-from fetch import Entry, fetch_detail, new_client, normalize_url  # noqa: E402
+from fetch import Entry, fetch_detail, fetch_source, new_client, normalize_url  # noqa: E402
 from worker_api import WorkerAPI  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -71,6 +71,75 @@ def to_entry(x: dict) -> Entry:
     return Entry(SOURCE_ID, normalize_url(x["url"]), x["title"], text, None, {"official": False, "external": True})
 
 
+def registered_hosts(api: WorkerAPI) -> set[str]:
+    srcs = json.loads((ROOT / "config/sources.json").read_text())["sources"]
+    try:
+        srcs += api.sources_extra()
+    except Exception:  # noqa: BLE001
+        pass
+    return {identity._host(x["url"]) for x in srcs if x.get("url")}
+
+
+def check_gaps(evs: list[dict], items: list[dict], by_key: dict, api: WorkerAPI, client, models: dict, usage) -> dict:
+    """외부가 찾은 행사마다: found(우리 정보원·검색이 이미 등록) / queued(수집했지만 AI 처리 전) / registered-missed(등록 정보원 사이트인데 못 찾음)
+    / unregistered(정보원 없음). 놓친 것은 큰 모델이 원인과 보완(감시할 공식 페이지·검색어)을 정하고, 공식 페이지는 실제로 조회되는지 확인 뒤 정보원에 추가한다."""
+    hosts = registered_hosts(api)
+    queued = {normalize_url(x["url"]) for x in api.queue_find([ev["url"] for ev in evs])}
+    rows, todo = [], []
+    for ev in evs:
+        prev = by_key.get(ev["event_key"])
+        host = identity._host(ev["url"])
+        if prev and prev.get("source_id") and prev["source_id"] != SOURCE_ID:
+            found = "found"
+        elif normalize_url(ev["url"]) in queued:
+            found = "queued"
+        elif host in hosts or any(host.endswith("." + h) or h.endswith("." + host) for h in hosts):
+            found = "registered-missed"
+        else:
+            found = "unregistered"
+        row = {"event_key": ev["event_key"], "url": ev["url"], "title": ev.get("title_ko") or ev.get("title"), "host": host, "found": found}
+        rows.append(row)
+        if found in ("registered-missed", "unregistered"):
+            x = items[ev["_entry_index"]]
+            todo.append({"index": len(todo), "title": ev.get("title"), "url": ev["url"], "found": found, "start_date": ev.get("start_date"),
+                         "org": ev.get("org"), "description": x.get("description", "")[:400]})
+    sources, queries = [], []
+    fixes = ai.gap_analysis(client, models, todo, sorted(hosts), usage) if todo else {}
+    with new_client() as hc:
+        for t in todo:
+            row = next(r for r in rows if r["url"] == t["url"])
+            g = fixes.get(t["index"])
+            if not g:
+                row["cause"] = "원인 분석 실패(다음 입력 때 다시)"
+                continue
+            row["cause"] = g.cause_ko.strip()[:200]
+            acts = []
+            if g.monitor_url and g.monitor_url.startswith("https://") and identity._host(g.monitor_url) not in ("", None):
+                src = {"id": "gap-check", "type": g.monitor_type, "url": g.monitor_url}
+                if g.monitor_mode == "page-change":
+                    src["mode"] = "page-change"
+                r = fetch_source(src, client=hc)
+                if r.ok and (r.entries or g.monitor_mode == "page-change"):
+                    sources.append({"url": g.monitor_url, "name": (g.monitor_name or row["title"] or "")[:80], "type": g.monitor_type,
+                                    "mode": "page-change" if g.monitor_mode == "page-change" else None, "reason": row["cause"],
+                                    "bots": [ev_bot(evs, t["url"])]})
+                    acts.append(f"정보원 추가: {g.monitor_url}")
+                else:
+                    acts.append(f"정보원 후보 조회 실패({r.error or '항목 없음'}): {g.monitor_url}")
+            for q in g.queries[:3]:
+                if q.strip():
+                    queries.append({"query": q.strip()[:120], "bot": g.query_bot, "reason": row["cause"]})
+                    acts.append(f"검색어 추가: {q.strip()[:60]}")
+            row["action"] = " / ".join(acts)[:500] or "보완 제안 없음"
+    api.gaps(rows, sources, queries)
+    return {"checked": len(rows), "by_found": {k: sum(1 for r in rows if r["found"] == k) for k in ("found", "queued", "registered-missed", "unregistered")},
+            "sources_added": len(sources), "queries_added": len(queries), "rows": [{k: r.get(k) for k in ("title", "found", "cause", "action")} for r in rows]}
+
+
+def ev_bot(evs: list[dict], url: str) -> str:
+    return next((e.get("bot") for e in evs if e["url"] == url), "family")
+
+
 def ingest(raw: dict, api: WorkerAPI, client, models: dict, today: str) -> dict:
     items, bad = validate(raw)
     report = {"received": len(raw.get("events") or []) if isinstance(raw, dict) else 0, "valid": len(items), "rejected": bad}
@@ -107,10 +176,17 @@ def ingest(raw: dict, api: WorkerAPI, client, models: dict, today: str) -> dict:
         ai.apply_recommendation(evs[j], r)
     evs = [ev for j, ev in enumerate(evs) if j in ro.recs]
     evs, _ = identity.collapse_same(evs)
-    report["identity"] = identity.assign_keys(evs, api.event_index())
+    index = api.event_index()
+    by_key = {x["event_key"]: x for x in index}
+    report["identity"] = identity.assign_keys(evs, index)
     evs, dup = identity.dedupe(evs)
     payload = [rules.for_worker(ev) for ev in evs]
     res = api.enqueue(payload) if payload else {}
+    # 우리 수집이 이 행사를 이미 찾았는지 대조하고, 놓쳤으면 원인 분석 → 정보원·검색어 자동 보완
+    try:
+        report["gaps"] = check_gaps(evs, items, by_key, api, client, models, usage)
+    except Exception as e:  # noqa: BLE001  대조가 실패해도 등록·발송은 그대로
+        report["gaps_error"] = f"{type(e).__name__}: {str(e)[:120]}"
     api.add_usage(usage.by_model, float(models.get("limits", {}).get("monthly_budget_usd", 20)))
     report.update({"extracted_events": len(extracted), "dropped": dropped, "recommend_missing": len(ro.missing), "duplicates": dup,
                    "enqueued": len(payload), "worker": {k: res.get(k) for k in ("new", "changed", "same", "outbox")} if res else {},

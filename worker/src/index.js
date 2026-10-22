@@ -604,6 +604,9 @@ export default {
           return json({ ok: true, skipped: r.meta.changes });
         }
         if (p === "/admin/events-dump") return json(await pipeline.eventsDump(env, url));
+        if (p === "/admin/gaps") return json(await pipeline.gaps(env, request.method, body));
+        if (p === "/admin/queries-extra") return json(await pipeline.queriesExtra(env));
+        if (p === "/admin/queue-find" && POST) return json(await pipeline.queueFind(env, body.urls));
         if (p === "/admin/events-sample") {
           // 원문 대조 점검용 무작위 표본(행사 정보만, 수신자 정보 없음). 아직 끝나지 않은 행사·접수 안내 중에서
           const n = Math.min(Math.max(parseInt(url.searchParams.get("n") || "40", 10) || 40, 1), 100);
