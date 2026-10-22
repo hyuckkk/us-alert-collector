@@ -526,7 +526,7 @@ export async function dispatch(env, opts = {}) {
   const now = nowIso();
   const rows = await all(env.DB.prepare(
     "SELECT o.id, o.chat_id, o.bot, o.event_key, o.version, o.kind, o.attempts, o.resend, e.data, e.change_note, e.version AS cur_version, " +
-    "p.tz, p.quiet_start, p.quiet_end, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key LEFT JOIN people p ON p.chat_id = o.chat_id " +
+    "p.tz, p.quiet_start, p.quiet_end, p.interests, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key LEFT JOIN people p ON p.chat_id = o.chat_id " +
     "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key " +
     "WHERE o.kind IN ('now', 'season') AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1))) " +
     "ORDER BY o.id LIMIT 100").bind(now));
@@ -540,6 +540,8 @@ export async function dispatch(env, opts = {}) {
     const p = { ...defaultPerson(env, row.chat_id), ...(row.tz ? { tz: row.tz, quiet_start: row.quiet_start, quiet_end: row.quiet_end } : {}) };
     if (ownerOnly(env) && !isOwner(env, row.chat_id)) { done.push({ id: row.id, status: "skipped", reason: "owner-only" }); r.skipped++; continue; }
     if (row.state === "MUTED") { done.push({ id: row.id, status: "skipped", reason: "muted" }); r.skipped++; continue; }
+    // 보내기 직전 추천 판정 재확인: 대기열에 들어간 뒤 재평가로 '일반 제외'가 됐거나 판정 전에 쌓인 행사는 보내지 않는다(⏰·변경 알림 포함)
+    { const why = recLevel(data, { interests: row.interests }); if (why) { done.push({ id: row.id, status: "skipped", reason: why }); r.skipped++; continue; } }
     if (row.version < latest.get(`${row.chat_id}|${row.event_key}`)) { done.push({ id: row.id, status: "superseded", reason: "새 판이 대신 감" }); r.superseded++; continue; }
     if (isExpired(data, p.tz)) { done.push({ id: row.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
     if (!opts.ignoreQuiet && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.deferred++; continue; }
@@ -578,7 +580,7 @@ export function digestRank(d, today) {
 export async function digest(env, opts = {}) {
   const now = nowIso();
   const groups = await all(env.DB.prepare(
-    "SELECT o.chat_id, o.bot, p.tz, p.quiet_start, p.quiet_end, p.digest_mode, p.digest_hour, " +
+    "SELECT o.chat_id, o.bot, p.tz, p.quiet_start, p.quiet_end, p.digest_mode, p.digest_hour, p.interests, " +
     "SUM(o.status = 'pending') AS fresh, SUM(o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1)) AS retry " +
     "FROM outbox o LEFT JOIN people p ON p.chat_id = o.chat_id WHERE o.kind = 'digest' AND o.status IN ('pending', 'failed', 'uncertain') GROUP BY o.chat_id, o.bot").bind(now));
   const r = { messages: 0, items: 0, waiting: 0, skipped: 0, expired: 0, failed: 0 };
@@ -609,6 +611,7 @@ export async function digest(env, opts = {}) {
     for (const x of rows) {
       const data = JSON.parse(x.data);
       if (x.state === "MUTED") { done.push({ id: x.id, status: "skipped", reason: "muted" }); continue; }
+      { const why = recLevel(data, { interests: g.interests }); if (why) { done.push({ id: x.id, status: "skipped", reason: why }); continue; } }
       if (x.version < latest.get(x.event_key) || seenKey.has(x.event_key)) { done.push({ id: x.id, status: "superseded", reason: "같은 행사 중복" }); continue; }
       if (isExpired(data, p.tz)) { done.push({ id: x.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
       seenKey.add(x.event_key);
