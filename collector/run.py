@@ -16,7 +16,7 @@ import os
 import sys
 import traceback
 import zlib
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -91,6 +91,9 @@ class Run:
         self.m: dict = {k: 0 for k in ("sources_total", "sources_ok", "queries", "discover_calls", "entries_fetched", "entries_new", "entries_changed",
                                        "details_ok", "details_total", "watch_checked", "watch_changed", "queue_added", "ai_items", "ai_missing",
                                        "ai_failed", "events_out", "outbox", "input_tokens", "output_tokens", "searches", "queue_queued", "queue_oldest_hours")}
+        # GitHub 예약 실행이 얼마나 늦게 시작됐는지(운영 첫날 4.5시간 지연) — 실행 기록에 남겨 감시·보고에 쓴다
+        if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and os.environ.get("SCHEDULE_CRON"):
+            self.m["schedule_delay_min"] = schedule_delay_min(os.environ["SCHEDULE_CRON"], self.started)
         self.m["usd"] = 0.0
         self.stages: dict = {}
         self.alerts: list[str] = []
@@ -589,6 +592,27 @@ class Run:
                           "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "ai": {"ok": self.ai_ok} if self.ai_ok is not None else None,
                           "sources": list(self.source_rows.values())})
         return self.report
+
+
+def schedule_delay_min(cron: str, now: datetime) -> int | None:
+    """GitHub 예약 실행의 지연(분): 이 cron 이 정한 시각 중 지금 직전 시각과 실제 시작 시각의 차이.
+    분·시 필드만 쓰는 예약('30 12 * * *', '40 0,4,8,16,20 * * *', '20 * * * *')을 다룬다. 모르는 형식이면 None."""
+    try:
+        minute, hour = cron.split()[:2]
+        mins = [int(x) for x in minute.split(",")]
+        hours = list(range(24)) if hour == "*" else [int(x) for x in hour.split(",")]
+    except (ValueError, AttributeError):
+        return None
+    now = now.astimezone(timezone.utc)
+    best = None
+    for day in (0, 1):
+        base = (now - timedelta(days=day)).replace(second=0, microsecond=0)
+        for h in hours:
+            for m in mins:
+                t = base.replace(hour=h, minute=m)
+                if t <= now and (best is None or t > best):
+                    best = t
+    return None if best is None else int((now - best).total_seconds() // 60)
 
 
 def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:

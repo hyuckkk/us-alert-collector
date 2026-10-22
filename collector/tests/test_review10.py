@@ -228,3 +228,14 @@ def test_16_closed_status_change_of_sent_event_still_goes_to_worker():
     e = Entry("butterfly-pavilion", "https://b.org/e/1", "[상세 변경] registration_status", "Kids Clay Workshop. Sold out.", None, {"page_fp": "f1"})
     [o], dropped = rules.finalize([ai.EntryResult(index=0, relevant=True, reason="", events=[hs])], [e], date(2026, 10, 21))
     assert o["registration_status"] == "soldout" and not dropped.get("closed")
+
+
+def test_17_schedule_delay_minutes():
+    """운영 첫날: 00:05 예약 작업이 04:31 에 시작(266분 지연). 예약 시각 대비 실제 시작 지연을 기록한다."""
+    from datetime import datetime, timezone
+    at = lambda s: datetime.fromisoformat(s).replace(tzinfo=timezone.utc)  # noqa: E731
+    assert run.schedule_delay_min("5 0 * * *", at("2026-10-22T04:31:00")) == 266
+    assert run.schedule_delay_min("40 0,4,8,16,20 * * *", at("2026-10-22T09:10:00")) == 30
+    assert run.schedule_delay_min("40 0,4,8,16,20 * * *", at("2026-10-22T00:10:00")) == 210   # 전날 20:40 기준
+    assert run.schedule_delay_min("20 * * * *", at("2026-10-22T06:25:00")) == 5
+    assert run.schedule_delay_min("bad", at("2026-10-22T06:25:00")) is None

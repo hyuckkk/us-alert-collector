@@ -15,6 +15,7 @@ TG_API = "https://api.telegram.org"
 SYSTEM_BOT = "life"        # 시스템 알림(만료·키 점검)을 보낼 봇
 OWNER_TZ = "Asia/Seoul"    # 소유자 기준 날짜·시각. 입국 후 "America/Denver" 로 변경
 # 소유자(가족)의 참가 가능 시작일은 개인 일정이라 여기 두지 않는다 → GitHub 비밀값 FAMILY_AVAILABLE_FROM 을 배포 때 복사. 봇에서 /from 으로도 설정
+GH_REPO = "hyuckkk/us-alert-collector"   # 수집이 늦을 때 매시 감시가 수집 실행을 요청할 저장소(토큰은 비밀값 GH_DISPATCH_TOKEN)
 DELIVERY_MODE = "owner-only"           # 1차 검증 전: 소유자에게만 발송. 지인 발송은 승인 후 "all" 로 바꿔 배포
 
 [[d1_databases]]
@@ -26,3 +27,12 @@ migrations_dir = "migrations"
 
 [observability]
 enabled = true
+
+# GitHub 예약 실행과 독립된 매시 실행(발송·요약·수집 지연 감시). Cloudflare 예약 실행(cron) 슬롯을 쓰지 않는 Durable Object 알람.
+[[durable_objects.bindings]]
+name = "HEARTBEAT"
+class_name = "Heartbeat"
+
+[[migrations]]
+tag = "v1-heartbeat"
+new_sqlite_classes = ["Heartbeat"]
