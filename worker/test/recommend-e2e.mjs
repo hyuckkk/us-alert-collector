@@ -93,6 +93,10 @@ try {
     const n = E.calls.length;
     let r = await admin("/admin/enqueue", { events: [ev("blossoms", { urgency: "now", rec_level: "push", category: "festival", start_date: plus(30), time_text: "4:30-9 p.m.", location: "Denver Botanic Gardens (York Street)", cost_text: "$25 per person" })] });
     assert.deepEqual([r.changed, r.same, r.outbox], [0, 1, 0], JSON.stringify(r));
+    // 이번 입력에 비용 정보가 없을 뿐이면 기존 값을 지우지 않고 변경도 아니다
+    r = await admin("/admin/enqueue", { events: [ev("blossoms", { urgency: "now", rec_level: "push", category: "festival", start_date: plus(30), time_text: "4:30-9 p.m.", location: "Denver Botanic Gardens (York Street)", cost_text: null })] });
+    assert.deepEqual([r.changed, r.outbox], [0, 0], JSON.stringify(r));
+    assert.equal(JSON.parse(sql("SELECT data FROM events WHERE event_key = 'blossoms'")[0].data).cost_text, "$25 per person");
     r = await admin("/admin/enqueue", { events: [ev("blossoms", { urgency: "now", rec_level: "push", category: "festival", start_date: plus(30), time_text: "4:30-9 p.m.", location: "Denver Botanic Gardens (York Street)", cost_text: "$30" })] });
     assert.equal(r.changed, 1, JSON.stringify(r));
     await admin("/admin/dispatch", { ignoreQuiet: true });
