@@ -8,8 +8,14 @@ on:
       action:
         description: "실행할 작업"
         type: choice
-        options: [test-send, dump-life, dump-family, dump-kids, preview-life, preview-family, preview-kids, clicks, status, usage, heartbeat, setup, run-cron, dispatch, digest, report, baseline, baseline-start, baseline-stop]
+        options: [test-send, outbox-skip, dump-life, dump-family, dump-kids, preview-life, preview-family, preview-kids, clicks, status, usage, heartbeat, setup, run-cron, dispatch, digest, report, baseline, baseline-start, baseline-stop]
         default: test-send
+      key:
+        description: "outbox-skip: 행사 키(e…)"
+        required: false
+      version:
+        description: "outbox-skip: 판 번호(비우면 아직 안 보낸 모든 판)"
+        required: false
   push:
     branches: [main]
     paths: ["ticks/admin"]
@@ -26,6 +32,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: bash scripts/cf_env.sh
       - name: Run
+        env:
+          SKIP_KEY: ${{ inputs.key }}
+          SKIP_VERSION: ${{ inputs.version }}
         run: |
           ACTION="${{ inputs.action }}"
           [ -n "$ACTION" ] || ACTION=$(head -n1 ticks/admin | tr -d '[:space:]')

@@ -596,6 +596,13 @@ export default {
         if (p === "/admin/event-index") return json(await pipeline.eventIndex(env));
         if (p === "/admin/preview" && POST) return json(await pipeline.preview(env, body.bot, Math.min(Math.max(body.n | 0 || 4, 1), 8), body.keys));
         if (p === "/admin/recommend-update" && POST) return json(await pipeline.recommendUpdate(env, body));
+        if (p === "/admin/outbox-skip" && POST) {
+          // 운영 정정: 잘못 만들어진 알림 대기열(아직 안 보낸 것)을 보내지 않게 표시. 행사 키와 판을 지정해야 한다
+          if (!body.event_key) return json({ ok: false, error: "event_key required" }, 400);
+          const r = await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = ? WHERE event_key = ? AND (? IS NULL OR version = ?) AND status IN ('pending', 'failed', 'uncertain', 'held')")
+            .bind(String(body.reason || "운영 정정").slice(0, 100), body.event_key, body.version ?? null, body.version ?? null).run();
+          return json({ ok: true, skipped: r.meta.changes });
+        }
         if (p === "/admin/events-dump") return json(await pipeline.eventsDump(env, url));
         if (p === "/admin/events-sample") {
           // 원문 대조 점검용 무작위 표본(행사 정보만, 수신자 정보 없음). 아직 끝나지 않은 행사·접수 안내 중에서

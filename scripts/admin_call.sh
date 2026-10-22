@@ -9,6 +9,7 @@ case "$1" in
   baseline-start) args+=(-X POST -H "content-type: application/json" --data "{\"hours\": ${BASELINE_HOURS:-36}}"); set -- baseline ;;
   baseline-stop) args+=(-X POST -H "content-type: application/json" --data '{"hours": 0}'); set -- baseline ;;
   setup|test-send|run-cron|dispatch|digest|report|heartbeat) args+=(-X POST -H "content-type: application/json" --data "{}") ;;
+  outbox-skip) args+=(-X POST -H "content-type: application/json" --data "{\"event_key\": \"${SKIP_KEY:?}\", \"version\": ${SKIP_VERSION:-null}, \"reason\": \"외부 재입력 시험의 표현 차이(변경 아님)\"}") ;;
   preview-life|preview-family|preview-kids) args+=(-X POST -H "content-type: application/json" --data "{\"bot\": \"${1#preview-}\", \"n\": ${PREVIEW_N:-4}}"); set -- preview ;;
   *) echo "unknown action $1"; exit 2 ;;
 esac
