@@ -4,6 +4,7 @@
 
 import { BOTS, isOwner, nowIso, ownerOnly, tg, sendHtml, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, ensurePerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
 import { renderEvent, renderList, keyboard } from "./render.js";
+import { tooFar } from "./geo.js";
 
 // 다시 알려야 하는 '참여 기회에 영향을 주는' 필드 (1차 검증 1-5)
 const IMPORTANT = ["start_date", "end_date", "time_text", "location", "cost_text", "signup", "registration_opens", "registration_status",
@@ -200,7 +201,7 @@ function regState(e, today) {
 
 async function recipientsFor(env) {
   const recips = await all(env.DB.prepare(
-    "SELECT r.chat_id, r.bot, p.available_from AS available_from FROM recipients r LEFT JOIN people p ON p.chat_id = r.chat_id WHERE r.status = 'active'"));
+    "SELECT r.chat_id, r.bot, p.available_from AS available_from, p.city AS city, p.radius_mi AS radius_mi FROM recipients r LEFT JOIN people p ON p.chat_id = r.chat_id WHERE r.status = 'active'"));
   const mutedTags = new Map();
   for (const r of await all(env.DB.prepare("SELECT chat_id, tag FROM muted_tags"))) {
     if (!mutedTags.has(r.chat_id)) mutedTags.set(r.chat_id, new Set());
@@ -218,6 +219,8 @@ function targetKind(env, r, e, states, mutedTags, opts = {}) {
   if (opts.skipAcked && st === "ACKNOWLEDGED") return [null, "acknowledged"];
   const mt = mutedTags.get(String(r.chat_id));
   if (mt && (e.tags || []).some((t) => mt.has(t))) return [null, "muted-tag"];
+  const far = tooFar(r, e); // /city 기준 도시·반경(허가·추첨·연례 등은 예외)
+  if (far) return [null, far];
   const from = r.available_from ?? defaultPerson(env, r.chat_id).available_from;
   const ref = e.end_date || e.start_date;
   let kind = opts.kind || (e.urgency === "now" ? "now" : "digest");
@@ -476,6 +479,28 @@ export async function ensureOwnerRecipients(env) {
     queued += out.length;
   }
   return { added, queued };
+}
+
+// 새로 승인되었거나 /stop 뒤 다시 시작한 지인에게: 쌓인 행사 수백 건을 보내지 않고, 2주 안에 접수가 열리거나 마감되는 것만(최대 15건) 요약으로 한 번.
+// 그보다 먼 접수 시작일은 그날 ⏰ 알림이 따로 간다(시간 알림은 그 시점의 수신자에게 나감).
+export async function welcomeQueue(env, chatId, bot) {
+  const today = dateIn(DENVER);
+  const until = plusDays(today, 14);
+  const p = await env.DB.prepare("SELECT available_from, city, radius_mi FROM people WHERE chat_id = ?").bind(String(chatId)).first();
+  const recip = { chat_id: String(chatId), bot, available_from: p ? p.available_from : null, city: p ? p.city : null, radius_mi: p ? p.radius_mi : null };
+  const evs = await all(env.DB.prepare(
+    "SELECT event_key, version, data FROM events WHERE bot = ?1 AND ((registration_opens >= ?2 AND registration_opens <= ?3) OR (deadline >= ?2 AND deadline <= ?3)) " +
+    "ORDER BY MIN(COALESCE(registration_opens, '9999'), COALESCE(deadline, '9999')) LIMIT 40").bind(bot, today, until));
+  const out = [];
+  for (const ev of evs) {
+    const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot };
+    if (e.registration_status === "cancelled" || e.registration_status === "closed" || e.registration_status === "soldout") continue;
+    const [kind] = targetKind(env, recip, e, new Map(), new Map(), { kind: "digest" });
+    if (kind) out.push({ chat_id: String(chatId), bot, event_key: ev.event_key, version: ev.version, kind: "digest" });
+    if (out.length >= 15) break;
+  }
+  if (out.length) await outboxInsert(env, out).run();
+  return { queued: out.length };
 }
 
 export async function dispatch(env, opts = {}) {

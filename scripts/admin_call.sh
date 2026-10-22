@@ -7,7 +7,7 @@ case "$1" in
   clicks|status|watchdog|source-health|baseline|usage) ;;
   baseline-start) args+=(-X POST -H "content-type: application/json" --data "{\"hours\": ${BASELINE_HOURS:-36}}"); set -- baseline ;;
   baseline-stop) args+=(-X POST -H "content-type: application/json" --data '{"hours": 0}'); set -- baseline ;;
-  setup|test-send|run-cron|dispatch|digest|report) args+=(-X POST -H "content-type: application/json" --data "{}") ;;
+  setup|test-send|run-cron|dispatch|digest|report|heartbeat) args+=(-X POST -H "content-type: application/json" --data "{}") ;;
   *) echo "unknown action $1"; exit 2 ;;
 esac
 code=$(curl "${args[@]}" "$US_WORKER_URL/admin/$1")
