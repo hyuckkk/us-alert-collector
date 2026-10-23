@@ -4,6 +4,7 @@
 
 import { BOTS, isOwner, nowIso, ownerOnly, tg, sendHtml, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, ensurePerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
 import { renderEvent, renderCount, keyboard } from "./render.js";
+import { isRoutineSportsMatch } from "./sports.js";
 import { tooFar } from "./geo.js";
 
 // 다시 알려야 하는 '참여 기회에 영향을 주는' 필드 (1차 검증 1-5)
@@ -225,6 +226,8 @@ async function recipientsFor(env) {
 // 추천 수준에 따른 발송 여부(사람별 관심 분야 반영). 보내면 null, 아니면 사유
 export function parseInterests(x) { try { const v = JSON.parse(x || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } }
 export function recLevel(e, r) {
+  // 평범한 학교/클럽/대학 정기경기는 달력·주간 링크로만 제공하고 건별 Telegram 알림 금지.
+  if (isRoutineSportsMatch(e)) return "sports-calendar-only";
   const lv = e.rec_level;
   // 적극 알림은 '왜 특별한지' 근거가 있어야 보낸다(소유자 기준: 정가·상시 공연·일상 세미나는 보내지 않음)
   if (lv === "push") return String(e.special_reason || "").trim() ? null : "no-special-reason";
