@@ -629,7 +629,9 @@ export default {
         if (p === "/admin/workload") return json(await pipeline.workload(env, request.method, body, url));
         if (p === "/admin/inbox" && POST) return json(await pipeline.inbox(env, body));
         if (p === "/admin/compare") return json(await pipeline.compare(env, url));
-        if (p === "/admin/catchup" && POST) return json(await pipeline.catchup(env, body));
+        if (p === "/admin/catchup" && POST) {
+          try { return json(await pipeline.catchup(env, body)); } catch (e) { return json({ ok: false, error: String(e && e.stack || e).slice(0, 1500) }, 500); }
+        }
         if (p === "/admin/export") return json(await pipeline.exportAll(env, url));
         if (p === "/admin/queries-extra") return json(await pipeline.queriesExtra(env));
         if (p === "/admin/queue-find" && POST) return json(await pipeline.queueFind(env, body.urls));

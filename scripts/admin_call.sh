@@ -21,7 +21,10 @@ echo "HTTP $code"
 # 공개 저장소의 실행 요약·주석에 텔레그램 ID 가 남지 않게 가린다(chat_id·from_id 값, 7자리 이상 숫자)
 python3 - "$US_WORKER_URL" > shown.json <<'PY'
 import json, re, sys
-d = json.load(open("out.json"))
+try:
+    d = json.load(open("out.json"))
+except ValueError:  # Worker 가 JSON 이 아닌 오류(예외 페이지)를 돌려준 경우: 원문 앞부분을 남겨 원인을 볼 수 있게
+    d = {"ok": False, "non_json_body": open("out.json", errors="replace").read()[:1500]}
 def red(x, k=None):
     if isinstance(x, dict):
         return {kk: red(v, kk) for kk, v in x.items()}
