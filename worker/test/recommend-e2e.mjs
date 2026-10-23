@@ -126,10 +126,10 @@ try {
     assert.equal(r.sent, 3, JSON.stringify(r));
     for (const c of to(n)) {
       const kb = c.payload.reply_markup.inline_keyboard;
-      const key = kb[0][0].url.split("/").pop();
+      const key = kb[0][0].callback_data.split(":")[1];
       assert.ok(c.payload.text.includes(`행사 ${key}`));
-      assert.deepEqual(kb[1].map((b) => b.callback_data), [`ack:${key}`, `mute:${key}`]);
-      assert.ok(!/https?:/.test(c.payload.text.replace(/<a href="https:\/\/www\.google\.com\/maps\/[^"]*">/g, "")));
+      assert.deepEqual(kb[0].map((b) => b.callback_data), [`ack:${key}`, `mute:${key}`]);
+      assert.ok(!/https?:/.test(c.payload.text.replace(/<a href="[^"]*">/g, "")));
     }
   });
 } finally {

@@ -59,13 +59,16 @@ export function badges(d, today = new Date().toISOString().slice(0, 10)) {
   return order.filter((x) => set.has(x)).slice(0, 4).map((x) => `${HL_ICON[x]} ${x}`).join("  ");
 }
 
-// 한 건짜리 알림. 본문에는 원문 주소를 넣지 않는다(메시지 아래 [🔗 공식 안내] 버튼으로 연결).
+// 한 건짜리 알림. 본문에 원문 주소를 글자로 넣지 않는다(제목에 링크로 연결).
 // 확인된 정보만 짧게: 특징 → 한두 줄 설명 → 날짜·시간 → 장소 → 비용·대상 → 신청. 없는 항목은 줄째로 뺀다.
 // kind: now | season | digest | more. opts: {version, note}
 export function renderEvent(d, opts = {}) {
   const note = opts.note || "";
   const head = d.registration_status === "cancelled" ? "❌ 취소" : note.startsWith("⏰") ? "⏰" : opts.version > 1 ? "🔄 변경" : opts.kind === "season" ? "📆 예고" : "🆕";
-  const lines = [`${head} <b>${esc(cut(d.title_ko || d.title, 120))}</b>`];
+  // 제목을 누르면 공식 안내(원문)가 열린다(별도 '공식 안내' 버튼 줄 없음)
+  const title = esc(cut(d.title_ko || d.title, 120));
+  const link = /^https?:\/\//.test(d.url || "") && d.url.length <= 2000 ? d.url : null;
+  const lines = [`${head} <b>${link ? `<a href="${esc(link)}">${title}</a>` : title}</b>`];
   if (note.startsWith("⏰")) lines.push(`<b>${esc(cut(note.slice(2).trim(), 200))}</b>`);
   else if (opts.version > 1 && note) lines.push(`바뀐 점: ${esc(cut(note, 300))}`);
   if (opts.kind === "season" && d.year_label) lines.push(esc(d.year_label));
@@ -109,11 +112,9 @@ export function actionRow(itemKey, st) {
   if (mute || st.tagMuted) row.push({ text: st.tagMuted ? "🔕 이런 종류 그만 ✓" : "🔕 이런 종류 그만", callback_data: `${st.tagMuted ? "untag" : "tag"}:${itemKey}` });
   return row;
 }
-export function keyboard(itemKey, st, url) {
-  const rows = [];
-  if (/^https?:\/\//.test(url || "") && url.length <= 2000) rows.push([{ text: "🔗 공식 안내", url }]);
-  rows.push(actionRow(itemKey, st));
-  return { inline_keyboard: rows };
+// 버튼은 한 줄([✅][🚫])만. 공식 안내는 제목 링크로 연다. url 인자는 예전 호출과의 호환용(쓰지 않음)
+export function keyboard(itemKey, st, url) { // eslint-disable-line no-unused-vars
+  return { inline_keyboard: [actionRow(itemKey, st)] };
 }
 
 // 눌린 행사의 버튼 줄만 새 상태로 바꾸고, 공식 안내(주소) 버튼 줄은 그대로 둔다

@@ -566,6 +566,24 @@ export async function welcomeQueue(env, chatId, bot) {
   return { queued: out.length };
 }
 
+// ---------------------------------------------------------------- 알릴 때(소유자 지시 2026-10-23: 내년 5월 접수를 지금 보내지 않는다)
+// 날짜가 하나도 없는 행사는 보내지 않는다(언제 행동할지 모름). 접수가 나중에 열리면 7일 전, 행사가 90일(NOTIFY_FAR_DAYS)보다 멀면 30일 전에 보낸다.
+// 접수 시작 당일·마감 전날은 따로 ⏰ 시간 알림이 간다. 보류한 알림은 그날까지 대기열에 남는다(next_attempt_at).
+export function notifyFrom(d, today, farDays = 90) {
+  const reg = d.registration_opens, start = d.start_date, dl = d.deadline;
+  if (!reg && !start && !dl) return { hold: "no-date" };
+  if (reg && reg > today) return { at: plusDays(reg, -7) };
+  if (dl && dl >= today) return { at: today };   // 마감이 남은 접수는 지금(마감 전에 알아야 함)
+  if (start && start > plusDays(today, farDays)) return { at: plusDays(start, -30) };
+  return { at: today };
+}
+function timing(d, today, env) {
+  const n = notifyFrom(d, today, Number(env && env.NOTIFY_FAR_DAYS) || 90);
+  if (n.hold) return { skip: n.hold };
+  if (n.at > today) return { defer: `${n.at}T15:00:00.000Z` };  // 덴버 오전 9시 무렵
+  return {};
+}
+
 // ---------------------------------------------------------------- 같은 회차 묶음은 한 번만
 // 같은 정보원·같은 원제목인데 날짜만 다른 행사(매주 금요일 투어, 시즌 열차의 여러 날짜 등)는 사람마다 한 번만 보낸다.
 // 같은 행사의 '변경'(같은 event_key 의 새 판)은 막지 않는다. 연례 행사가 내년에 다시 열리면 보낼 수 있게 180일 안만 본다.
@@ -606,7 +624,7 @@ export async function dispatch(env, opts = {}) {
     "SELECT o.id, o.chat_id, o.bot, o.event_key, o.version, o.kind, o.attempts, o.resend, e.data, e.change_note, e.version AS cur_version, e.source_id, " +
     "p.tz, p.quiet_start, p.quiet_end, p.interests, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key LEFT JOIN people p ON p.chat_id = o.chat_id " +
     "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key " +
-    "WHERE o.kind IN ('now', 'season') AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1))) " +
+    "WHERE o.kind IN ('now', 'season') AND o.status IN ('pending', 'failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1) " +
     "ORDER BY o.id LIMIT 100").bind(now));
   const r = { sent: 0, deferred: 0, skipped: 0, failed: 0, uncertain: 0, expired: 0, superseded: 0, triggers: trig.fired, recovered: stale };
   const done = [];
@@ -623,6 +641,11 @@ export async function dispatch(env, opts = {}) {
     { const why = recLevel(data, { interests: row.interests }); if (why) { done.push({ id: row.id, status: "skipped", reason: why }); r.skipped++; continue; } }
     if (row.version < latest.get(`${row.chat_id}|${row.event_key}`)) { done.push({ id: row.id, status: "superseded", reason: "새 판이 대신 감" }); r.superseded++; continue; }
     if (isExpired(data, p.tz)) { done.push({ id: row.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
+    if (row.kind !== "season" && !/^⏰/.test(row.version === row.cur_version ? row.change_note || "" : "")) {
+      const tm = timing(data, dateIn(DENVER), env);
+      if (tm.skip) { done.push({ id: row.id, status: "skipped", reason: tm.skip }); r.skipped++; continue; }
+      if (tm.defer) { done.push({ id: row.id, status: "pending", reason: "scheduled", next_attempt_at: tm.defer }); r.deferred++; continue; }
+    }
     if (sameSeriesSeen(series, row.chat_id, row.source_id, data, row.event_key)) { done.push({ id: row.id, status: "skipped", reason: "same-series" }); r.skipped++; continue; }
     if (!opts.ignoreQuiet && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.deferred++; continue; }
     sendable.push({ ...row, data });
@@ -661,7 +684,8 @@ export async function digest(env, opts = {}) {
   const now = nowIso();
   const groups = await all(env.DB.prepare(
     "SELECT o.chat_id, o.bot, p.tz, p.quiet_start, p.quiet_end, p.digest_mode, p.digest_hour, p.interests, " +
-    "SUM(o.status = 'pending') AS fresh, SUM(o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1)) AS retry, " +
+    "SUM(o.status = 'pending' AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1)) AS fresh, " +
+    "SUM(o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1)) AS retry, " +
     "SUM(o.status = 'pending' AND o.reason = 'catchup') AS catchup " +
     "FROM outbox o LEFT JOIN people p ON p.chat_id = o.chat_id WHERE o.kind = 'digest' AND o.status IN ('pending', 'failed', 'uncertain') GROUP BY o.chat_id, o.bot").bind(now));
   const r = { messages: 0, items: 0, waiting: 0, skipped: 0, expired: 0, failed: 0 };
@@ -685,7 +709,7 @@ export async function digest(env, opts = {}) {
     const rows = await all(env.DB.prepare(
       "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
       "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? " +
-      "AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?))) " +
+      "AND o.status IN ('pending', 'failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?) " +
       "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 300").bind(g.chat_id, g.bot, now));
     const done = [];
     const latest = new Map();
@@ -700,6 +724,9 @@ export async function digest(env, opts = {}) {
       { const why = recLevel(data, { interests: g.interests }); if (why) { done.push({ id: x.id, status: "skipped", reason: why }); continue; } }
       if (x.version < latest.get(x.event_key) || seenKey.has(x.event_key)) { done.push({ id: x.id, status: "superseded", reason: "같은 행사 중복" }); continue; }
       if (isExpired(data, p.tz)) { done.push({ id: x.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
+      { const tm = timing(data, dateIn(DENVER), env);
+        if (tm.skip) { done.push({ id: x.id, status: "skipped", reason: tm.skip }); continue; }
+        if (tm.defer) { done.push({ id: x.id, status: "pending", reason: "scheduled", next_attempt_at: tm.defer }); continue; } }
       if (sameSeriesSeen(series, g.chat_id, x.source_id, data, x.event_key)) { done.push({ id: x.id, status: "skipped", reason: "same-series" }); continue; }
       seenKey.add(x.event_key);
       live.push({ ...x, data });
@@ -1235,6 +1262,7 @@ export async function outboxPreview(env) {
     const d = JSON.parse(r.data);
     let why = r.state === "MUTED" ? "muted" : recLevel(d, { interests: r.interests });
     if (!why && isExpired(d, "America/Denver")) why = "expired";
+    if (!why) { const tm = timing(d, dateIn(DENVER), env); if (tm.skip) why = tm.skip; else if (tm.defer) why = "scheduled"; }
     if (!why && sameSeriesSeen(series, r.chat_id, r.source_id, d, r.event_key)) why = "same-series";
     if (why) { const k = String(why).split(":")[0] + (String(why).includes(":") ? ":" + String(why).split(":")[1].split(",")[0] : ""); out.skipped[k] = (out.skipped[k] || 0) + 1; }
     else out.would_send.push({ owner: isOwner(env, r.chat_id), kind: r.kind, title: d.title_ko || d.title, special_reason: d.special_reason });
