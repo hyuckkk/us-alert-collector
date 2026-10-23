@@ -714,9 +714,19 @@ export async function catchup(env, body = {}) {
     .map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
   const out = [], why = {};
   const heldIds = [];
+  // 같은 정보원·같은 원제목(날짜만 다른 회차, 예: 시즌 열차의 여러 날짜)은 한 번만: 이미 받았거나 받을 예정이면 건너뛴다
+  const series = (sid, d) => `${sid || ""}|${String(d.title || d.title_ko || "").toLowerCase().replace(/\s+/g, " ").trim()}`;
+  const seen = new Set((await all(env.DB.prepare(
+    "SELECT DISTINCT e.source_id, e.data FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id = ? AND o.status IN ('sent', 'sending', 'pending', 'uncertain')")
+    .bind(owner))).map((r) => series(r.source_id, JSON.parse(r.data))));
+  const srcOf = new Map((await all(env.DB.prepare("SELECT event_key, source_id FROM events WHERE event_key IN (SELECT value FROM json_each(?))")
+    .bind(JSON.stringify(cand.map((c) => c.event_key))))).map((r) => [r.event_key, r.source_id]));
   for (const ev of cand) {
     const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot: ev.bot };
     if (isExpired(e, "America/Denver")) { why.expired = (why.expired || 0) + 1; continue; }
+    const sk = series(srcOf.get(ev.event_key), e);
+    if (seen.has(sk)) { why["same-series"] = (why["same-series"] || 0) + 1; continue; }
+    seen.add(sk);
     for (const r of owners) {
       const [kind, w] = targetKind(env, r, e, states, mutedTags, { skipAcked: true, kind: "digest" });
       if (w) why[w] = (why[w] || 0) + 1;
