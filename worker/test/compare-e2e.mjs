@@ -102,6 +102,15 @@ try {
     assert.ok(!got.some((c) => /행사 past/.test(c.payload.text)), "끝난 행사는 보내지 않음");
     const again = await admin("/admin/catchup", {});
     assert.equal(again.queued, 0, "이미 보낸 행사는 다시 보충하지 않음");
+    // 같은 정보원·같은 원제목의 다른 날짜 회차(시즌 열차 등)는 이미 받았으면 보충하지 않고, 아직 안 받았으면 한 번만
+    await admin("/admin/enqueue", { events: [
+      ev("train1", { title: "Holiday Train", source_id: "museum", start_date: plus(30), urgency: "weekly", rec_level: undefined }),
+      ev("train2", { title: "Holiday Train", source_id: "museum", start_date: plus(31), urgency: "weekly", rec_level: undefined }),
+      ev("late2", { title: "Event late", source_id: "test", start_date: plus(32), urgency: "weekly", rec_level: undefined })] });
+    await admin("/admin/recommend-update", { items: ["train1", "train2", "late2"].map((k) => ({ event_key: k, rec_level: "push", special_reason: "시즌 한정", bot: "family" })) });
+    const s2 = await admin("/admin/catchup", { dry: true });
+    assert.deepEqual(s2.events, ["train1"], JSON.stringify(s2));
+    assert.equal(s2.skipped["same-series"], 2, "train2 와, 이미 받은 'Event late' 의 다른 날짜(late2)");
   });
 
   await step("사용액 경고는 경고만(멈춘다는 말·예산 승인 요청 없음), 카드·충전 안 함 명시", async () => {
