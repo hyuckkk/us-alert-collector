@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "run_phase": "completed_with_schedule_blocker",
+  "recorded_at_utc": "2026-10-23T01:17:33.680Z",
+  "scope": "independent Colorado event search and verified external-inbox delivery",
+  "web_search_queries_count": 17,
+  "search_queries": [
+    "site:colorado.gov October 2026 special event free public open house aviation Colorado registration",
+    "site:coloradosprings.gov 2026 October public free special experience October 24 2026",
+    "site:westminsterco.gov events October 2026 special free family October 24 2026",
+    "site:broomfield.org October November 2026 free family one time event registration",
+    "Colorado 2027 outdoor special event reservations permits 2027 lottery application open October 2026",
+    "Colorado October November 2026 military aviation open house public tour free",
+    "Colorado 2026 October high school college community free public sports tournament Westminster Broomfield",
+    "\"KBJC Fall Carnival\" \"2026\" Rocky Mountain airport aircraft tours Oct 24 registration",
+    "\"KAPA Paint a Plane\" \"October 24 2026\" cost tickets age",
+    "site:explorationofflight.org \"Paint a Plane\" October 24 2026",
+    "site:wingsmuseum.org \"Paint a Plane\" October 24 2026",
+    "Colorado Front Range October 31 2026 free airport special public hangar open house kids",
+    "2027 Colorado free day festivals permit opens October 2026 children Westminster",
+    "site:wingsmuseum.org \"Paint a Plane: A Mural Workshop\" 2026 admission \"$\"",
+    "site:wingsmuseum.org/events Paint a Plane October 24 price ticket",
+    "site:wingsmuseum.org October 24 2026 Paint a Plane advance tickets pricing",
+    "site:wingsmuseum.org \"Denver Arts Week: Free Night at the Museum\" November 7 2026 cockpit"
+  ],
+  "web_page_open_attempts": 4,
+  "verified_official_detail_pages": "at_least_3",
+  "candidate_events_total": "unknown",
+  "candidate_events_min": 3,
+  "qualified_events": 3,
+  "submitted_events": 3,
+  "github_confirmed_event_ingested": 3,
+  "github_recommended_push": 3,
+  "github_existing_crawler_overlap": "1 queued; 1 registered-source-missed; 1 unregistered-source",
+  "github_added_sources": 2,
+  "github_added_queries": 6,
+  "gitHub_accepted_worker_outbox_records": 9,
+  "per_event_telegram_delivery": "unverified",
+  "worker_dispatch": "sent=0 immediate; no pending immediate",
+  "worker_digest": "17 messages / 17 items, failed=0, includes other earlier events; no per-event receipts",
+  "anthropic_api_cost_usd": 0.048,
+  "evidence": [
+    "https://github.com/hyuckkk/us-alert-collector/actions/runs/39882552290",
+    "https://github.com/hyuckkk/us-alert-collector/actions/runs/39882784752"
+  ],
+  "submitted_official_event_urls": [
+    "https://www.jeffco.us/5240/2026-Fall-Carnival",
+    "https://www.westminsterchamber.biz/events/details/trunk-or-treat-halloween-spooktacular-free-community-event-23804?calendarMonth=2026-10-01",
+    "https://wingsmuseum.org/events/denver-arts-week-free-night-at-the-museum/"
+  ],
+  "scheduled_search_status": "not_enabled; 15 active task quota reached",
+  "chatgpt_subscription_remaining": "unknown",
+  "notes": [
+    "Actual official event contents were re-read by existing external_ingest; event identity, recommendation, Worker outbox were verified from Actions logs.",
+    "Run statistics where uninstrumented are labeled unknown rather than fabricated; 17 reflects query lines sent in search requests."
+  ]
+}
