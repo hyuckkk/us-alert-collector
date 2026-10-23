@@ -97,6 +97,9 @@ class Run:
         if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and os.environ.get("SCHEDULE_CRON"):
             self.m["schedule_delay_min"] = schedule_delay_min(os.environ["SCHEDULE_CRON"], self.started)
         self.m["usd"] = 0.0
+        # 작업량 기록(이슈 #20): 실제 검색어·URL 시도·후보 흐름·단계별 비용. 모르는 값은 "unknown" 으로 남긴다.
+        self.work: dict = {"search_queries": [], "discover_queries": [], "discover_result_urls": 0,
+                           "cost_usd": {"discover": 0.0, "extract": 0.0, "judge": 0.0, "recommend": 0.0}, "failure_usd": 0.0}
         self.stages: dict = {}
         self.alerts: list[str] = []
         self.report: dict = {"run_id": self.run_id, "mode": args.mode, "today": self.today.isoformat(), "dry_run": self.api.dry_run,
@@ -207,6 +210,7 @@ class Run:
         for bot, query in qs:
             r = fetch_source({"id": "gnews:" + query[:40], "type": "gnews", "query": query})
             self.m["queries"] += 1
+            self.work["search_queries"].append(query)
             self.add_entries(r.entries[:15], False, None if bot in ("any", "deep") else [bot])
         return {"queries": len(qs)}
 
@@ -223,11 +227,19 @@ class Run:
             if not self.usage.allows(cfg.get("reserve_usd", 1.2)):
                 self.alerts.append(f"실행 비용 상한(${self.usage.cap}) — AI 발굴 '{bot}' 이후 생략")
                 break
+            if ai.CREDIT["out"]:
+                break
+            u0 = self.usage.usd
             try:
                 d = ai.discover(self.client, self.models, theme, known, self.usage, max_searches=cfg["max_searches_deep"] if bot == "deep" else cfg["max_searches"],
                                 today=self.today.isoformat())
                 self.m["discover_calls"] += 1
+                self.work["discover_queries"] += d.get("queries", [])
+                self.work["discover_result_urls"] += d.get("result_urls", 0)
+                self.work["cost_usd"]["discover"] += self.usage.usd - u0
             except Exception as e:  # noqa: BLE001  분야 하나가 실패해도 나머지 분야는 계속
+                self.work["cost_usd"]["discover"] += self.usage.usd - u0
+                self.work["failure_usd"] += self.usage.usd - u0
                 errors += 1
                 self.alerts.append(f"AI 발굴({bot}) 오류: {type(e).__name__}")
                 continue
@@ -343,12 +355,11 @@ class Run:
             self.usage = ai.Usage(self.models["prices"], self.models.get("web_search_usd", 0.01))
             self.usage.cap = getattr(self.args, "usd_cap", None)
             self.client = self.client or ai.get_client()
-            budget = self.models["limits"]["monthly_budget_usd"]
+            # 이슈 #20: 프로그램 자체 월 예산 상한(근거 없는 $150)으로 AI 를 멈추지 않는다. 실제 한계는 API 선불 크레딧 잔액이며,
+            # 소진되면 API 가 거부하고(카드·자동 충전 없으면 추가 과금 없음) 그 실행의 AI 단계만 멈춘다(ai.CREDIT).
             self.spent = self.api.month_usd()
-            self.budget_blocked = self.spent >= budget
-            if self.budget_blocked:
-                self.alerts.append(f"이번 달 AI 사용액 ${self.spent:.2f} ≥ 예산 ${budget} — AI 단계를 멈추고 수집 항목은 대기열에 보존(예산 상향은 승인 필요)")
-        return not self.budget_blocked
+        import ai
+        return not ai.CREDIT["out"]
 
     def process_queue(self):
         cap = self.args.max or self.models["limits"]["max_ai_items_per_run"]
@@ -403,7 +414,11 @@ class Run:
                 if lost_idx:
                     self.alerts.append(f"임대를 잃은 대기 항목 {len(lost_idx)}건 — 다른 실행이 처리 중이라 건너뜀")
                 send = [i for i in range(len(entries)) if i not in no_detail and i not in lost_idx]
+                u0 = self.usage.usd
                 out = ai.extract(self.client, self.models, [entries[i] for i in send], self.today.isoformat(), self.usage)
+                self.work["cost_usd"]["extract"] += self.usage.usd - u0
+                if out.failed and not out.results:  # 결과 없이 쓴 비용 = 실패 비용
+                    self.work["failure_usd"] += self.usage.usd - u0
                 # 추출 결과의 index 를 원래 entries 기준으로 되돌린다
                 out.results = {send[j]: r.model_copy(update={"index": send[j]}) for j, r in out.results.items()}
                 out.failed = {**{send[j]: v for j, v in out.failed.items()}, **no_detail}
@@ -421,10 +436,14 @@ class Run:
                 held: set[int] = set()
                 if review_idx:
                     # 판정이 빠지거나 실패한 행사는 보내지 않고, 그 항목 전체를 다음 실행에서 다시(2차 재검증 D)
+                    u0 = self.usage.usd
                     try:
                         jo = ai.judge(self.client, self.models, [(rules.for_worker(evs[i]), entries[evs[i]["_entry_index"]].text or "") for i in review_idx], self.usage)
                     except Exception as e:  # noqa: BLE001
                         jo = ai.JudgeOutcome(missing={j: type(e).__name__ for j in range(len(review_idx))})
+                    self.work["cost_usd"]["judge"] += self.usage.usd - u0
+                    if jo.missing and not jo.verdicts:
+                        self.work["failure_usd"] += self.usage.usd - u0
                     if jo.missing:
                         self.alerts.append(f"정밀 판정 누락 {len(jo.missing)}건 — 보내지 않고 다음 실행에서 다시")
                     self.m["judge_missing"] = len(jo.missing)
@@ -463,11 +482,15 @@ class Run:
                     self.report["dropped"]["duplicate"] = dup
                 # 추천 판정(큰 모델): 모든 발송 후보에 적용. 판정이 빠지거나 실패한 항목은 보내지 않고 다음 실행에서 다시
                 if evs:
+                    u0 = self.usage.usd
                     try:
                         ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in evs],
                                           self.today.isoformat(), self.usage)
                     except Exception as e:  # noqa: BLE001
                         ro = ai.RecommendOutcome(missing={j: type(e).__name__ for j in range(len(evs))})
+                    self.work["cost_usd"]["recommend"] += self.usage.usd - u0
+                    if ro.missing and not ro.recs:
+                        self.work["failure_usd"] += self.usage.usd - u0
                     if ro.missing:
                         self.alerts.append(f"추천 판정 누락 {len(ro.missing)}건 — 보내지 않고 다음 실행에서 다시")
                     self.m["recommend_missing"] = len(ro.missing)
@@ -553,7 +576,8 @@ class Run:
         h = self.api.ai_health()
         since = h.get("failing_since")
         outage = (datetime.now(timezone.utc) - datetime.fromisoformat(since.replace("Z", "+00:00"))).total_seconds() / 3600 if since else 0
-        blocked = getattr(self, "budget_blocked", False)
+        import ai
+        blocked = ai.CREDIT["out"]
         if not (blocked or outage >= OUTAGE_NOTICE_HOURS):
             return {"needed": False}
         rows = [r for r in self.api.queue_peek(200) if not str(r.get("source_id") or "").startswith(("gnews", "ai-discover"))]
@@ -578,6 +602,38 @@ class Run:
 
     def dispatch(self):
         return {"dispatch": self.api.dispatch(), "digest": self.api.digest()}
+
+    def workload(self) -> dict:
+        """실행 하나의 작업량·비용 기록(이슈 #20). 경로는 github_collector. 이 실행에서 알 수 없는 값은 "unknown"."""
+        m, w = self.m, self.work
+        dropped = self.report.get("dropped") or {}
+        by_model = self.usage.by_model if self.usage else {}
+        disp = (self.stages.get("dispatch") or {}).get("dispatch") or {}
+        return {
+            "path": "github_collector", "run_id": self.run_id, "mode": self.args.mode,
+            "started_at": self.started.isoformat(timespec="seconds"), "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "schedule_delay_min": _unknown(m.get("schedule_delay_min")),
+            "search_requests": m["queries"] + sum(x.get("searches", 0) for x in by_model.values()),
+            "news_search_queries": w["search_queries"], "web_search_queries": w["discover_queries"],
+            "web_search_requests": sum(x.get("searches", 0) for x in by_model.values()),
+            "web_search_result_urls": w["discover_result_urls"],
+            "source_urls_attempted": m["sources_total"], "source_urls_ok": m["sources_ok"],
+            "official_pages_checked": m["details_total"] + m["watch_checked"], "official_pages_ok": m["details_ok"],
+            "candidates_total": len(self.entries), "candidates_new": m["entries_new"], "candidates_changed": m["entries_changed"],
+            "queued": m["queue_added"], "ai_processed": m["ai_items"], "ai_failed_retry": m["ai_failed"],
+            "dropped": {k: (len(v) if isinstance(v, (list, dict)) else v) for k, v in dropped.items()},
+            "held_for_retry": m.get("judge_missing", 0) + m.get("recommend_missing", 0),
+            "recommended": {lv: m.get(f"rec_{lv}", 0) for lv in ("push", "interest", "none")},
+            "submitted": m["events_out"], "outbox_new": m["outbox"],
+            "sent_now": _unknown(disp.get("sent") if isinstance(disp, dict) else None),
+            "already_found_or_missed": "unknown",  # 다른 경로와의 대조는 Worker event_finds 에서 계산
+            "cost_usd": {k: round(v, 4) for k, v in w["cost_usd"].items()},
+            "web_search_usd": round(sum(x.get("searches", 0) for x in by_model.values()) * (self.usage.web_search_usd if self.usage else 0.01), 4),
+            "total_usd": round(self.usage.usd, 4) if self.usage else 0.0,
+            "failure_usd": round(w["failure_usd"], 4),
+            "billing": "anthropic_api_prepaid_credit",
+            "credit_exhausted": ai_credit_out(),
+        }
 
     # ------------------------------------------------ 전체
     def run(self) -> dict:
@@ -604,12 +660,17 @@ class Run:
             pass
         if self.usage:
             try:
-                self.api.add_usage(self.usage.by_model, self.models["limits"]["monthly_budget_usd"])
+                self.api.add_usage(self.usage.by_model, self.models["limits"].get("credit_reference_usd", 0))
             except Exception as e:  # noqa: BLE001
                 self.alerts.append(f"사용량 기록 실패: {type(e).__name__}")
             self.m.update(self.usage.totals())
             self.m["usd"] = round(self.usage.usd, 4)
             self.report["usage"] = self.usage.by_model
+        import ai
+        if ai.CREDIT["out"]:
+            self.alerts.append("API 크레딧 소진 — AI 분석(발굴·추출·판정·추천)만 멈춤. 공식 정보원 수집과 기존 알림 발송은 계속하고, "
+                               "AI 대기 항목은 보존합니다. 카드 등록·충전·자동 충전은 소유자 승인 없이 하지 않습니다.")
+        self.report["workload"] = self.workload()
         # 프로그램이 끝까지 돈 것과 실제로 정보를 모은 것을 구분한다(2차 재검증 G)
         stages_ok = all(self.stages.get(s, {}).get("ok", True) for s in ("sources", "queue", "ai", "enqueue"))
         ratio = self.m["sources_ok"] / self.m["sources_total"] if self.m["sources_total"] else 0.0
@@ -624,9 +685,18 @@ class Run:
         self.report.update({"metrics": self.m, "alerts": self.alerts, "stages": self.stages, "completed": completed})
         self.api.run_log({"run_id": self.run_id, "started_at": self.started.isoformat(timespec="seconds"),
                           "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "completed": completed and full,
-                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "ai": {"ok": self.ai_ok} if self.ai_ok is not None else None,
+                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "workload": self.report["workload"], "ai": {"ok": self.ai_ok} if self.ai_ok is not None else None,
                           "sources": list(self.source_rows.values())})
         return self.report
+
+
+def ai_credit_out() -> bool:
+    import ai
+    return bool(ai.CREDIT["out"])
+
+
+def _unknown(v):
+    return "unknown" if v is None else v
 
 
 def schedule_delay_min(cron: str, now: datetime) -> int | None:

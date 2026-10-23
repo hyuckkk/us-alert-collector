@@ -208,6 +208,17 @@ def build_extract_prompt(entries: list, today: str, text_chars: int) -> str:
 
 
 STOP_ERRORS = (anthropic.RateLimitError, anthropic.AuthenticationError, anthropic.PermissionDeniedError)
+# API 선불 크레딧이 떨어지면 호출이 거부된다(카드·자동 충전이 없으면 추가 과금 없음). 그 실행에서는 AI 를 더 부르지 않고,
+# 비AI 수집·기존 알림 발송은 계속한다. 카드 등록·충전·자동 충전은 소유자 승인 없이 하지 않는다.
+CREDIT = {"out": False, "error": None}
+
+
+def credit_exhausted(e: Exception) -> bool:
+    t = str(e).lower()
+    hit = isinstance(e, anthropic.APIStatusError) and ("credit balance" in t or "insufficient credit" in t or "billing" in t or "purchase credits" in t)
+    if hit:
+        CREDIT.update(out=True, error=str(e)[:200])
+    return hit
 
 
 @dataclass
@@ -266,8 +277,8 @@ def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> Extra
                     continue
                 if err is not None:
                     usage.error(c["model"])
-                    if isinstance(err, STOP_ERRORS):
-                        out.stopped = type(err).__name__
+                    if isinstance(err, STOP_ERRORS) or credit_exhausted(err):
+                        out.stopped = "credit-exhausted" if CREDIT["out"] else type(err).__name__
                         out.failed.update({i: out.stopped for i in idx})
                     elif isinstance(err, (anthropic.APIError, ValueError)):
                         out.failed.update({i: f"{type(err).__name__}: {str(err)[:120]}" for i in idx})
@@ -323,8 +334,8 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
     for start in range(0, len(items), c["batch"]):
         chunk = items[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
-        if not usage.allows(c.get("reserve_usd", 0.4)):
-            out.missing.update({i: "run-cost-cap" for i in idx})
+        if not usage.allows(c.get("reserve_usd", 0.4)) or CREDIT["out"]:
+            out.missing.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
             continue
         body = "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 2000)}, ensure_ascii=False) for i, (ev, txt) in enumerate(chunk))
         try:
@@ -340,6 +351,7 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
             )
         except (anthropic.APIError, ValueError) as e:
             usage.error(c["model"])
+            credit_exhausted(e)
             out.missing.update({i: f"{type(e).__name__}" for i in idx})
             continue
         usage.add(c["model"], resp.usage)
@@ -377,31 +389,39 @@ class Recommendation(BaseModel):
     summary_ko: str
     highlights: list[Highlight]
     reason: str
+    special_reason: str
 
 
 class RecommendBatch(BaseModel):
     items: list[Recommendation]
 
 
-RECOMMEND_RULES = """You are the editor of three Telegram alert channels for people living in the Denver metro (Westminster, Colorado):
-- life: adults' hobbies, culture, sports, classes, outings, experiences (not family-with-kids focused)
-- family: things a whole family (parents with children) would do together
-- kids: activities, classes, camps and programs for school-age children (roughly 5–17)
-The system collects every public notice it can find; your job is to decide what is worth ALERTING people about. Judge each item by its purpose and the experience of taking part, not by keywords.
+RECOMMEND_RULES = """You are the editor of three Telegram alert channels for a Korean family and their local friends in the Denver metro (base: Westminster, CO 80234):
+- life: adults' hobbies, culture, sports, classes, outings, experiences
+- family: things a whole family does together (budget for 5 people: 2 adults + 3 children)
+- kids: activities, classes, camps and programs for school-age children
+The system collects every public notice; you decide what is worth a PUSH alert. The owner does NOT want ordinary schedules of things they could attend any time at full price.
+They want SPECIAL OPPORTUNITIES: rare or time-limited access, publicly funded or sponsored programs that are much cheaper than usual or free, short registration windows, small quotas.
+Judge by purpose, rarity and real benefit — never by keywords like family, free, concert, Red Rocks or university, and never because a venue is famous.
 
-For each item decide:
-- level:
-  push = worth an alert for anyone in this channel: performances, festivals, sports (watching or joining), hands-on experiences, hobby/skill classes, university events open to the public, special venues, national/state park permits and reservations, camp or program enrollment, first-come or lottery opportunities, rare or once-a-year experiences. Special experiences are worth more even if they are far away or cost money.
-  interest = only for people who chose this category: e.g. toddler/baby programs, senior-only programs, routine weekly library meetups, support groups, niche professional talks.
-  none = not an activity people go to for the experience: city council, board, commission and committee meetings, public hearings, drug take-back or disposal, utility/permit/administrative services, staff/members/students-only items, items whose audience does not match any channel, meaningless repetitive low-value listings.
-- bot: the channel whose audience fits best (move it if the current one is wrong; toddler-only items are kids only with level=interest; senior-only items are life with level=interest).
-- category: the best fit from the list.
-- score 0–100: how strongly to recommend within its level (special, time-limited, rare, first-come, registration opening soon → higher; ordinary recurring → lower).
-- title_ko: concise natural Korean title (max ~30 characters; keep a proper noun in English only if needed).
-- summary_ko: one or two short Korean sentences saying what you actually do or get there (the special benefit, what is included). No dates, prices or addresses here; those are shown separately.
-- highlights: only those the item actually supports: 선착순, 무료, 예약 필요, 추첨, 접수 예정, 마감 임박, 특별 체험, 허가 필요, 연례 행사.
-- reason: one short Korean sentence explaining the level.
-Use general participation value for the channel audience, not one person's taste; personal interests are applied later by each user's settings."""
+level:
+  push — ONLY if there is a concrete special reason, and you must state it in special_reason:
+    * rarely open / special access: military base, aviation or space facility, special facility open house, rides, behind-the-scenes, one-off tours
+    * time-limited or scarce: one-off pop-up, short season, limited spots, first-come or lottery, free tickets that run out, park permits / limited reservations, non-regular camps
+    * notable price advantage: city/county/state/public agency/university-sponsored performance, experience, sports, education or festival that is free or far below normal price
+    * high experience value for the cost (paid is fine when truly special)
+  interest — only for people who chose this category: routine recurring programs (weekly classes, regular library meetups, support groups), toddler/baby-only, senior-only, niche talks.
+  none — not worth alerting: council/board/commission/committee meetings, hearings, drug take-back, administrative services; routine full-price concerts and shows (including ordinary Red Rocks concerts and regular theater/concert-hall seasons); routine university seminars, colloquia, interdisciplinary panels and lectures; ordinary sports games and facilities that are always open; members/staff/students-only items; programs whose age or eligibility does not fit the audience.
+  Any venue (including Red Rocks) is still judged on its own merits: a genuinely free, publicly sponsored, limited-access or very rare event there can be push.
+- special_reason: for push, ONE short Korean sentence saying why it is special (e.g. "평소 비공개인 공군기지 비행장을 하루만 개방", "시 지원으로 정가의 절반 이하", "선착순 30명·접수 기간 3일"). Empty for interest/none. Never invent a reason that is not in the source.
+- Consider total cost for a family of five, residency/age eligibility, travel from Westminster and whether pre-registration is needed. If eligibility or total cost is unclear, say so in reason and prefer interest over push unless the opportunity is clearly special.
+- Distinguish info useful now (2026, for local friends) from early registration or annual events relevant to a stay from late June 2027 to August 2028; both can be push if special.
+- bot: the channel whose audience fits best (toddler-only → kids with interest; senior-only → life with interest).
+- category: best fit from the list. score 0–100 within its level (special, time-limited, rare, first-come, registration opening soon → higher).
+- title_ko: concise natural Korean title (max ~30 characters).
+- summary_ko: one or two short Korean sentences on what you actually do or get there. No dates, prices or addresses.
+- highlights: only those the item supports: 선착순, 무료, 예약 필요, 추첨, 접수 예정, 마감 임박, 특별 체험, 허가 필요, 연례 행사.
+- reason: one short Korean sentence explaining the level."""
 
 
 @dataclass
@@ -417,19 +437,20 @@ def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usag
     for start in range(0, len(items), c["batch"]):
         chunk = items[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
-        if not usage.allows(c.get("reserve_usd", 0.5)):
-            out.missing.update({i: "run-cost-cap" for i in idx})
+        if not usage.allows(c.get("reserve_usd", 0.5)) or CREDIT["out"]:
+            out.missing.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
             continue
         body = f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500)}, ensure_ascii=False)
                                                  for i, (ev, txt) in enumerate(chunk))
         try:
             resp = client.beta.messages.parse(
-                model=c["model"], max_tokens=c["max_tokens"], system=RECOMMEND_RULES,
+                model=c["model"], max_tokens=c["max_tokens"], system=RECOMMEND_RULES + "\n\n" + household_profile(),
                 messages=[{"role": "user", "content": body}], output_config={"effort": c["effort"]},
                 output_format=RecommendBatch, betas=[FALLBACK_BETA], fallbacks="default",
             )
         except (anthropic.APIError, ValueError) as e:
             usage.error(c["model"])
+            credit_exhausted(e)
             out.missing.update({i: f"{type(e).__name__}" for i in idx})
             continue
         usage.add(c["model"], resp.usage)
@@ -474,14 +495,15 @@ Registered source hosts are given; if the host is already registered, the fix is
 def gap_analysis(client, cfg: dict, items: list[dict], registered_hosts: list[str], usage: Usage) -> dict:
     """items: {index, title, url, found, start_date, description}. 반환: index → GapFix. 큰 모델(추천 판정과 같은 설정)."""
     c = cfg["recommend"]
-    if not items or not usage.allows(c.get("reserve_usd", 0.5)):
+    if not items or not usage.allows(c.get("reserve_usd", 0.5)) or CREDIT["out"]:
         return {}
     body = json.dumps({"registered_hosts": registered_hosts[:200], "events": items}, ensure_ascii=False)
     try:
         resp = client.beta.messages.parse(model=c["model"], max_tokens=c["max_tokens"], system=GAP_RULES, messages=[{"role": "user", "content": body}],
                                           output_config={"effort": c["effort"]}, output_format=GapBatch, betas=[FALLBACK_BETA], fallbacks="default")
-    except (anthropic.APIError, ValueError):
+    except (anthropic.APIError, ValueError) as e:
         usage.error(c["model"])
+        credit_exhausted(e)
         return {}
     usage.add(c["model"], resp.usage)
     if resp.parsed_output is None:
@@ -490,8 +512,11 @@ def gap_analysis(client, cfg: dict, items: list[dict], registered_hosts: list[st
 
 
 def apply_recommendation(ev: dict, r: Recommendation) -> dict:
-    ev.update({"rec_level": r.level, "bot": r.bot, "category": r.category, "rec_score": r.score, "summary_ko": r.summary_ko.strip()[:240],
-               "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200]})
+    special = (r.special_reason or "").strip()[:160]
+    # 특별한 근거가 없으면 적극 알림으로 보내지 않는다(소유자 기준: 정가·상시 공연·일상 세미나 제외)
+    level = r.level if (r.level != "push" or special) else "interest"
+    ev.update({"rec_level": level, "bot": r.bot, "category": r.category, "rec_score": r.score, "summary_ko": r.summary_ko.strip()[:240],
+               "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200], "special_reason": special if level == "push" else ""})
     if r.title_ko.strip():
         ev["title_ko"] = r.title_ko.strip()[:60]
     return ev
@@ -541,16 +566,23 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_
     tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": max_searches or c["max_searches"],
               "user_location": {"type": "approximate", "city": "Westminster", "region": "Colorado", "country": "US", "timezone": "America/Denver"}}]
     seen_urls: set[str] = set()
+    queries: list[str] = []
     text = ""
     for _ in range(3):  # pause_turn 이면 이어서 요청
-        if not usage.allows(c.get("reserve_usd", 1.2)):
+        if not usage.allows(c.get("reserve_usd", 1.2)) or CREDIT["out"]:
             break
-        resp = client.beta.messages.create(
-            model=c["model"], max_tokens=c["max_tokens"], system=DISCOVER_SYSTEM, messages=messages, tools=tools,
-            output_config={"effort": c["effort"]}, betas=[FALLBACK_BETA], fallbacks="default",
-        )
+        try:
+            resp = client.beta.messages.create(
+                model=c["model"], max_tokens=c["max_tokens"], system=DISCOVER_SYSTEM, messages=messages, tools=tools,
+                output_config={"effort": c["effort"]}, betas=[FALLBACK_BETA], fallbacks="default",
+            )
+        except anthropic.APIError as e:
+            credit_exhausted(e)
+            raise
         searches = 0
         for b in resp.content:
+            if b.type == "server_tool_use" and isinstance(getattr(b, "input", None), dict) and b.input.get("query"):
+                queries.append(str(b.input["query"])[:200])  # 작업량 기록: 실제 검색어
             if b.type == "web_search_tool_result":
                 searches += 1
                 if isinstance(b.content, list):
@@ -571,4 +603,4 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_
     events = [e for e in raw_e if isinstance(e, dict) and ok(e.get("url"))
               and not (isinstance(e.get("date"), str) and re.match(r"\d{4}-\d{2}-\d{2}$", e["date"]) and e["date"] < today)]
     return {"sources": sources, "events": events, "dropped_urls": len(raw_s) + len(raw_e) - len(sources) - len(events),
-            "result_urls": len(seen_urls), "raw_text": text[-1500:]}
+            "result_urls": len(seen_urls), "queries": queries, "raw_text": text[-1500:]}

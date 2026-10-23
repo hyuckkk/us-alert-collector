@@ -54,6 +54,7 @@ export function renderEvent(d, opts = {}) {
   if (opts.kind === "season" && d.year_label) lines.push(esc(d.year_label));
   const b = badges(d);
   if (b) lines.push(b);
+  if (d.special_reason) lines.push(`✨ <b>${esc(cut(d.special_reason, 160))}</b>`); // 왜 특별한지 한 문장
   if (d.summary_ko) lines.push(esc(cut(d.summary_ko, 240)));
   lines.push("");
   const when = [dateRange(d), d.time_text].filter(Boolean).join(" ");

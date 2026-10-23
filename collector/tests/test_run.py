@@ -3,7 +3,7 @@ import pytest
 
 import ai
 import run
-from conftest import FakeAPI, FakeClient, ev
+from conftest import credit_error, FakeAPI, FakeClient, ev
 from fetch import Entry, FetchResult
 
 CLAY = "https://butterflies.org/events/clay"
@@ -159,13 +159,26 @@ def test_1_3_detail_change_reextracts_and_keeps_event_key(world, monkeypatch):
     assert c.messages.calls == []
 
 
-def test_8_budget_exceeded_keeps_items_queued_and_notifies_owner_with_unverified(world):
+def test_8_month_spend_no_longer_stops_ai(world):
+    """이슈 #20: 내부 월 상한(예: $150)으로 AI 를 멈추지 않는다. 사용액이 커도 정상 처리."""
     api = FakeAPI(month_usd=999)
-    c = FakeClient([])
+    c = FakeClient([reply_for([CLAY])])
     rep = run.main([], client=c, api=api)
-    assert c.messages.calls == []
-    assert any("예산" in a for a in rep["alerts"])
-    assert [r["status"] for r in api._mem.values()] == ["queued"], "예산 초과여도 삭제하지 않음"
+    assert c.messages.calls, "사용액만으로는 AI 를 멈추지 않음"
+    assert not any("예산" in a for a in rep["alerts"])
+    assert rep["workload"]["path"] == "github_collector" and rep["workload"]["cost_usd"]["extract"] > 0
+
+
+def test_8_credit_exhausted_isolates_ai_keeps_items_and_alerts(world):
+    """크레딧이 실제로 바닥나면 AI 단계만 멈추고, 항목은 대기열에 남기고, 소유자에게 알리고, 검증 전 공식 정보 경로를 쓴다."""
+    api = FakeAPI()
+    c = FakeClient([credit_error])
+    rep = run.main([], client=c, api=api)
+    assert len(c.messages.calls) == 1, "첫 거절 뒤 더 부르지 않음"
+    assert ai.CREDIT["out"] and rep["workload"]["credit_exhausted"] is True
+    assert any("크레딧 소진" in a and "카드" in a for a in rep["alerts"])
+    assert [r["status"] for r in api._mem.values()] == ["queued"], "삭제하지 않고 보존"
+    assert rep["stages"]["dispatch"]["ok"], "발송 단계는 계속"
     sent = [a for n, a in api.log if n == "unverified"]
     assert sent and sent[0][0][0]["url"] == CLAY
 

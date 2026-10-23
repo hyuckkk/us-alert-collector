@@ -226,7 +226,8 @@ async function recipientsFor(env) {
 export function parseInterests(x) { try { const v = JSON.parse(x || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } }
 export function recLevel(e, r) {
   const lv = e.rec_level;
-  if (lv === "push") return null;
+  // 적극 알림은 '왜 특별한지' 근거가 있어야 보낸다(소유자 기준: 정가·상시 공연·일상 세미나는 보내지 않음)
+  if (lv === "push") return String(e.special_reason || "").trim() ? null : "no-special-reason";
   if (!lv) return "not-recommended-yet";
   if (e.category && parseInterests(r.interests).includes(e.category)) return null;
   return lv === "interest" ? "interest-only" : "not-recommended";
@@ -730,7 +731,7 @@ export async function preview(env, bot, n = 4, keys = null) {
 }
 
 // ---------------------------------------------------------------- 추천 판정 결과만 갱신(재평가). 판·변경 알림·대기열은 건드리지 않는다
-const REC_FIELDS = ["rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason", "title_ko"];
+const REC_FIELDS = ["rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason", "title_ko", "special_reason"];
 export async function recommendUpdate(env, body) {
   const items = (body.items || []).filter((x) => x && x.event_key && ["push", "interest", "none"].includes(x.rec_level)).slice(0, 300);
   if (!items.length) return { ok: true, updated: 0 };
@@ -901,14 +902,14 @@ export async function usage(env, method, body, url) {
   }
   const rows = await all(env.DB.prepare("SELECT * FROM usage WHERE month = ?").bind(month));
   const usd = rows.reduce((a, r) => a + r.usd, 0);
-  // 예산 사전 경고(50·80·100%). 예산은 수집기 설정값을 받는다. 초과해도 대기열은 보존된다.
-  const budget = Number(body.budget) || 0;
-  if (method === "POST" && budget > 0) {
+  // 사용액 경고(참고 크레딧의 50·80·100%). 경고만 하고 멈추지 않는다(이슈 #20: 내부 상한 제거).
+  // 실제 정지는 Anthropic 이 크레딧 부족으로 호출을 거절할 때뿐이며, 그때도 AI 단계만 멈추고 수집·발송은 계속된다.
+  const ref = Number(body.budget) || 0;
+  if (method === "POST" && ref > 0) {
     for (const pct of [50, 80, 100]) {
-      if (usd >= (budget * pct) / 100 && (await claimNotice(env, `budget:${month}:${pct}`))) {
-        await notifyOwner(env, pct < 100
-          ? `💰 이번 달 미국 시스템 AI 사용액 $${usd.toFixed(2)} — 예산 $${budget}의 ${pct}%`
-          : `💰 이번 달 AI 예산 $${budget} 도달 ($${usd.toFixed(2)}). AI 분석을 멈추고 수집 항목은 대기열에 보존합니다.\n예산을 올릴지 승인이 필요합니다(config/models.json monthly_budget_usd).`);
+      if (usd >= (ref * pct) / 100 && (await claimNotice(env, `budget:${month}:${pct}`))) {
+        await notifyOwner(env, `💰 이번 달 미국 알림 API 사용액 $${usd.toFixed(2)} — 보유 크레딧 기준 $${ref}의 ${pct}%.\n` +
+          "시스템이 스스로 멈추지는 않습니다. 크레딧이 실제로 바닥나면 AI 분석만 멈추고 수집·발송은 계속합니다. 카드 등록·충전·자동 충전은 하지 않습니다.");
       }
     }
   }

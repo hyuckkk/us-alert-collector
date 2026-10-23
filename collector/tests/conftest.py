@@ -5,6 +5,22 @@ from types import SimpleNamespace
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import ai  # noqa: E402
+import pytest  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _reset_credit():
+    ai.CREDIT.update(out=False, error=None)
+    yield
+    ai.CREDIT.update(out=False, error=None)
+
+
+def credit_error(*_):
+    """Anthropic 이 크레딧 부족으로 거절할 때의 실제 오류 형식."""
+    import anthropic
+    import httpx
+    raise anthropic.BadRequestError("Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+                                    response=httpx.Response(400, request=httpx.Request("POST", "https://api.anthropic.com/v1/messages")), body=None)
 
 
 def U(i=1000, o=200):
@@ -183,7 +199,8 @@ def default_recommendation(request, monkeypatch):
         out = ai.RecommendOutcome()
         for i, (e, _) in enumerate(items):
             out.recs[i] = ai.Recommendation(index=i, level="push", bot=e.get("bot") or "family", category="other", score=50,
-                                            title_ko=e.get("title_ko") or e.get("title") or "", summary_ko="", highlights=[], reason="")
+                                            title_ko=e.get("title_ko") or e.get("title") or "", summary_ko="", highlights=[], reason="",
+                                            special_reason="시험용 특별 근거")
         return out
     monkeypatch.setattr(ai, "recommend", fake)
 

@@ -26,13 +26,13 @@ def test_ingest_runs_full_pipeline_and_same_event_is_not_new(monkeypatch):
     api = FakeAPI()
     raw = {"events": [{"title": "Blossoms of Light", "url": "https://www.botanicgardens.org/blossoms-light", "audience": "family", "description": "holiday lights"}]}
     rep = xi.ingest(raw, api, FakeClient([reply]), {"extract": {"model": "claude-haiku-5-5", "effort": "low", "batch": 12, "max_tokens": 1000, "text_chars": 4500},
-                                                       "prices": {}, "limits": {"monthly_budget_usd": 20}}, "2026-10-22")
+                                                       "prices": {}, "limits": {"credit_reference_usd": 100}}, "2026-10-22")
     assert rep["enqueued"] == 1 and api.enqueued[0]["source_id"] == "ext-search" and api.enqueued[0]["rec_level"] == "push"
     key = api.enqueued[0]["event_key"]
     # 같은 행사가 다시 들어오면 Worker 의 행사 목록과 대조해 같은 키(새 행사가 아님)
     api.index = [{**api.enqueued[0]}]
     rep2 = xi.ingest(raw, api, FakeClient([reply]), {"extract": {"model": "claude-haiku-5-5", "effort": "low", "batch": 12, "max_tokens": 1000, "text_chars": 4500},
-                                                        "prices": {}, "limits": {"monthly_budget_usd": 20}}, "2026-10-22")
+                                                        "prices": {}, "limits": {"credit_reference_usd": 100}}, "2026-10-22")
     assert rep2["event_keys"] == [key]
 
 

@@ -8,7 +8,7 @@ const denverToday = new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Denver
 const plus = (n) => new Date(Date.parse(denverToday + "T12:00:00Z") + n * 86400000).toISOString().slice(0, 10);
 const ev = (key, over = {}) => ({
   event_key: key, bot: "life", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(10), url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "weekly", tags: ["t"], annual: false, source_id: "test", registration_status: "open", special_reason: "시험용 특별 근거", ...over,
 });
 
 const E = await startEnv({ tgPort: 9989, wPort: 8790, vars: {} });
@@ -36,7 +36,21 @@ try {
     assert.ok(has(got, "concert"));
     for (const k of ["council", "takeback", "storytime", "legacy"]) assert.ok(!has(got, k), `${k} 가 발송됨`);
     const m = got.find((c) => /행사 concert/.test(c.payload.text));
-    assert.match(m.payload.text, /🆓 무료\n야외 재즈 공연과 푸드트럭\n\n📅/);
+    assert.match(m.payload.text, /🆓 무료\n✨ <b>시험용 특별 근거<\/b>\n야외 재즈 공연과 푸드트럭\n\n📅/);
+  });
+
+  await step("특별한 근거가 없는 '적극 알림'은 보내지 않는다(Red Rocks 정가 공연·학제간 토론·일반 공연장 정가 공연 부정 사례)", async () => {
+    const n = E.calls.length;
+    await admin("/admin/enqueue", { events: [
+      ev("redrocks", { urgency: "now", rec_level: "push", category: "performance", special_reason: "", title_ko: "행사 redrocks Red Rocks 정기 콘서트", cost_text: "$89.50" }),
+      ev("seminar", { urgency: "now", rec_level: "push", category: "university", special_reason: "  ", title_ko: "행사 seminar 학제간 토론" }),
+      ev("theater", { urgency: "now", rec_level: "push", category: "performance", special_reason: null, title_ko: "행사 theater 극장 정기 공연" }),
+      ev("airshow", { urgency: "now", rec_level: "push", category: "outdoors", special_reason: "평소 비공개인 공군기지 비행장을 하루만 개방" }),
+    ] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    const got = to(n);
+    for (const k of ["redrocks", "seminar", "theater"]) assert.ok(!has(got, k), `${k} 가 근거 없이 발송됨`);
+    assert.ok(got.some((c) => /행사 airshow/.test(c.payload.text) && /✨ <b>평소 비공개인 공군기지 비행장을 하루만 개방<\/b>/.test(c.payload.text)));
   });
 
   await step("관심 분야를 고르면(/interests add toddler) 그 분야는 받고, 고르지 않은 회의는 여전히 받지 않음", async () => {

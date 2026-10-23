@@ -187,7 +187,7 @@ def ingest(raw: dict, api: WorkerAPI, client, models: dict, today: str) -> dict:
         report["gaps"] = check_gaps(evs, items, by_key, api, client, models, usage)
     except Exception as e:  # noqa: BLE001  대조가 실패해도 등록·발송은 그대로
         report["gaps_error"] = f"{type(e).__name__}: {str(e)[:120]}"
-    api.add_usage(usage.by_model, float(models.get("limits", {}).get("monthly_budget_usd", 20)))
+    api.add_usage(usage.by_model, float(models.get("limits", {}).get("credit_reference_usd", 0)))
     report.update({"extracted_events": len(extracted), "dropped": dropped, "recommend_missing": len(ro.missing), "duplicates": dup,
                    "enqueued": len(payload), "worker": {k: res.get(k) for k in ("new", "changed", "same", "outbox")} if res else {},
                    "levels": {lv: sum(1 for p in payload if p.get("rec_level") == lv) for lv in ("push", "interest", "none")},

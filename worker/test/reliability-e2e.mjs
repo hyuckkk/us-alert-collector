@@ -11,7 +11,7 @@ const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(30), end_date: null, time_text: "10:00",
   location: "Library", city: "Westminster", age_text: "6-10", english: [], cost_text: "$10", signup: "fcfs", registration_opens: null,
   registration_status: "open", deadline: null, eligibility: null, status_note: null, url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: [key], annual: false, source_id: "test", rec_level: "push", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: [key], annual: false, source_id: "test", rec_level: "push", special_reason: "시험용 특별 근거", ...over,
 });
 
 const E = await startEnv({ tgPort: 9993, wPort: 8803, vars: { DELIVERY_MODE: "all", FAMILY_AVAILABLE_FROM: "2026-01-01" } });

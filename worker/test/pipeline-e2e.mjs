@@ -9,7 +9,7 @@ const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Test Org", start_date: "2027-07-10", end_date: null,
   time_text: "10:00", location: "Westminster Library", city: "Westminster", age_text: "6-10세", english: ["초보 가능"], cost_text: "$20",
   price_level: "보통", signup: "fcfs", deadline: null, status_note: null, url: `https://example.org/${key}`, checked_at: "2026-10-20T00:00:00Z",
-  urgency: "weekly", tags: ["art"], annual: false, source_id: "test", rec_level: "push", ...over,
+  urgency: "weekly", tags: ["art"], annual: false, source_id: "test", rec_level: "push", special_reason: "시험용 특별 근거", ...over,
 });
 
 // ---------------------------------------------------------------- A. 모든 사람에게 보내는 모드(DELIVERY_MODE=all)
@@ -62,7 +62,7 @@ try {
     const s = sends(n);
     const friendE1 = s.find((x) => String(x.payload.chat_id) === FRIEND);
     // 행사 1건 = 1통: 제목 굵게, 특징(선착순), 한국식 날짜, 확인된 항목만, 본문에 주소 없음 → [🔗 공식 안내] 버튼
-    assert.equal(friendE1.payload.text, '🆕 <b>행사 e1</b>\n🏃 선착순\n\n📅 11월 10일(화) 10:00\n📍 Westminster Library · Test Org\n💲 $20   👤 6-10세');
+    assert.equal(friendE1.payload.text, '🆕 <b>행사 e1</b>\n🏃 선착순\n✨ <b>시험용 특별 근거</b>\n\n📅 11월 10일(화) 10:00\n📍 Westminster Library · Test Org\n💲 $20   👤 6-10세');
     assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[0], [{ text: "🔗 공식 안내", url: "https://example.org/e1" }]);
     assert.equal(friendE1.payload.parse_mode, "HTML");
     assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[1].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
