@@ -5,6 +5,9 @@ set -euo pipefail
 args=(-sS -o out.json -w "%{http_code}" -H "Authorization: Bearer $US_ADMIN_KEY")
 case "$1" in
   clicks|status|watchdog|source-health|baseline|usage) ;;
+  compare) set -- "compare?since=${COMPARE_SINCE:-2026-10-01}" ;;
+  catchup) args+=(-X POST -H "content-type: application/json" --data "{}") ;;
+  catchup-dry) args+=(-X POST -H "content-type: application/json" --data '{"dry": true}'); set -- catchup ;;
   dump-life|dump-family|dump-kids) set -- "events-dump?bot=${1#dump-}" ;;
   baseline-start) args+=(-X POST -H "content-type: application/json" --data "{\"hours\": ${BASELINE_HOURS:-36}}"); set -- baseline ;;
   baseline-stop) args+=(-X POST -H "content-type: application/json" --data '{"hours": 0}'); set -- baseline ;;

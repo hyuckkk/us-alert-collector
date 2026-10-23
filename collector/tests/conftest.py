@@ -185,6 +185,27 @@ class FakeAPI(WorkerAPI):
     def run_log(self, body):
         self._r("run_log", body)
 
+    def workload(self, w):
+        self._r("workload", w)
+        return {"ok": True}
+
+    def inbox(self, op, path, sha="", report=None, failed=False):
+        self._r("inbox", op, path, sha, report, failed)
+        done = getattr(self, "inbox_done", set())
+        if op == "claim":
+            return {"ok": True, "claimed": (path, sha) not in done}
+        if op == "done" and not failed:
+            done.add((path, sha))
+            self.inbox_done = done
+        return {"ok": True}
+
+    def queue_find(self, urls):
+        return []
+
+    def gaps(self, gaps, sources, queries):
+        self._r("gaps", gaps, sources, queries)
+        return {"ok": True}
+
 
 import pytest  # noqa: E402
 

@@ -17,6 +17,7 @@ jobs:
     timeout-minutes: 15
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      HOUSEHOLD_PROFILE: ${{ secrets.HOUSEHOLD_PROFILE }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       # 받은 내용은 실행 명령에 끼워 넣지 않고 환경 변수로만 넘긴다(명령 주입 방지)

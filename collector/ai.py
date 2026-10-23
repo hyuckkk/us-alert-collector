@@ -396,7 +396,7 @@ class RecommendBatch(BaseModel):
     items: list[Recommendation]
 
 
-RECOMMEND_RULES = """You are the editor of three Telegram alert channels for a Korean family and their local friends in the Denver metro (base: Westminster, CO 80234):
+RECOMMEND_RULES = """You are the editor of three Telegram alert channels for a Korean family and their local friends in the Denver metro (base: Westminster, CO):
 - life: adults' hobbies, culture, sports, classes, outings, experiences
 - family: things a whole family does together (budget for 5 people: 2 adults + 3 children)
 - kids: activities, classes, camps and programs for school-age children
@@ -467,8 +467,14 @@ def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usag
 
 
 # ---------------------------------------------------------------- 놓친 검색 분석: 외부 검색이 찾은 행사를 우리 수집이 왜 못 찾았나, 다음부터 찾으려면
+CAUSE_CODES = ("missing_source", "query_gap", "scrape_or_js_failure", "freshness_or_schedule", "extraction_error",
+               "eligibility_or_recommendation_error", "identity_duplicate_error", "delivery_error", "outside_scope", "uncertain")
+
+
 class GapFix(BaseModel):
     index: int
+    cause_code: Literal["missing_source", "query_gap", "scrape_or_js_failure", "freshness_or_schedule", "extraction_error",
+                        "eligibility_or_recommendation_error", "identity_duplicate_error", "delivery_error", "outside_scope", "uncertain"]
     cause_ko: str
     monitor_url: Optional[str]
     monitor_type: Literal["html", "rss", "ical", "json"]
@@ -489,7 +495,17 @@ and propose a fix that would catch this event AND similar future ones:
 - monitor_url: one official https page that lists such events or announces them (an events/calendar/special-events/registration page of the organization; prefer a list or calendar page over a single-event page; use the event page itself only for a recurring annual event with its own page). Must be on the organization's own site, not a ticket reseller or news site. null if none fits.
 - monitor_type: html for normal pages (rss/ical/json only if the URL clearly is a feed). monitor_mode: list (a page with links to many events) or page-change (a single page whose text changes, e.g. registration dates).
 - queries: 1–3 short English search phrases (as people would search news/listings) that would surface this and similar events, e.g. "holiday light show Denver tickets".
-Registered source hosts are given; if the host is already registered, the fix is usually a more specific list page on that site."""
+Registered source hosts are given; if the host is already registered, the fix is usually a more specific list page on that site.
+cause_code (pick one; do not guess beyond the evidence):
+- missing_source: the organization's official site is not monitored at all AND none of our keyword searches would plausibly surface it.
+- query_gap: the event is publicised in ways our searches could catch, but our search phrases do not cover its name/type.
+- scrape_or_js_failure: the host IS registered but the listing is likely rendered by JavaScript, a separate special-events page, a ticketing widget or blocked to bots.
+- extraction_error: our_history says we fetched this exact URL before but produced no event (text was there but not extracted).
+- freshness_or_schedule: our_history says we had it queued / it was published after our last run.
+- eligibility_or_recommendation_error / identity_duplicate_error / delivery_error: only when our_history shows that stage dropped it.
+- outside_scope: not attendable for this household (members/students only, far outside Colorado, already over).
+- uncertain: the evidence is not enough to tell.
+Do NOT pick missing_source merely because the host is absent from registered_hosts; first consider query_gap and outside_scope."""
 
 
 def gap_analysis(client, cfg: dict, items: list[dict], registered_hosts: list[str], usage: Usage) -> dict:

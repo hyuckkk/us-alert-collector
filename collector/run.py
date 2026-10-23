@@ -548,6 +548,9 @@ class Run:
             self.event_owners = {j: self.event_owners[i] for j, i in enumerate(keep) if i in self.event_owners}
             if not evs:
                 return {"events": 0, "lease_lost": len(lost)}
+        for ev in evs:  # 3경로 대조용 발견 경로 표시(메시지에는 나오지 않음)
+            ev.setdefault("found_by", "github_collector")
+            ev.setdefault("run_id", self.run_id)
         try:
             r = self.api.enqueue(evs)
         except Exception:
@@ -671,6 +674,10 @@ class Run:
             self.alerts.append("API 크레딧 소진 — AI 분석(발굴·추출·판정·추천)만 멈춤. 공식 정보원 수집과 기존 알림 발송은 계속하고, "
                                "AI 대기 항목은 보존합니다. 카드 등록·충전·자동 충전은 소유자 승인 없이 하지 않습니다.")
         self.report["workload"] = self.workload()
+        try:
+            self.api.workload(self.report["workload"])
+        except Exception as e:  # noqa: BLE001  작업량 기록 실패가 수집을 막지 않음
+            self.alerts.append(f"작업량 기록 실패: {type(e).__name__}")
         # 프로그램이 끝까지 돈 것과 실제로 정보를 모은 것을 구분한다(2차 재검증 G)
         stages_ok = all(self.stages.get(s, {}).get("ok", True) for s in ("sources", "queue", "ai", "enqueue"))
         ratio = self.m["sources_ok"] / self.m["sources_total"] if self.m["sources_total"] else 0.0

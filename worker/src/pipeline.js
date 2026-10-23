@@ -345,6 +345,17 @@ export async function enqueue(env, body) {
     ).bind(JSON.stringify(watches)));
     stats.watch = watches.length;
   }
+  // 경로별 발견 기록(이슈 #20). 같은 행사를 다른 경로가 다시 보내도 경로마다 최초 발견 시각은 그대로 둔다.
+  const finds = input.map((e) => ({ event_key: e.event_key, finder: finderOf(e), found_at: validIso(e.found_at), url: e.url,
+    verified: e.verified === false ? 0 : 1, rec_level: e.rec_level || null, ext_level: e.ext_level || null, run_id: e.run_id || body.run_id || null }));
+  stmts.push(env.DB.prepare(
+    "INSERT INTO event_finds (event_key, finder, first_seen, found_at, last_seen, url, verified, rec_level, ext_level, run_id) " +
+    "SELECT json_extract(value,'$.event_key'), json_extract(value,'$.finder'), ?1, json_extract(value,'$.found_at'), ?1, json_extract(value,'$.url'), " +
+    "json_extract(value,'$.verified'), json_extract(value,'$.rec_level'), json_extract(value,'$.ext_level'), json_extract(value,'$.run_id') FROM json_each(?2) WHERE true " +
+    "ON CONFLICT(event_key, finder) DO UPDATE SET last_seen = excluded.last_seen, rec_level = COALESCE(excluded.rec_level, event_finds.rec_level), " +
+    "found_at = COALESCE(event_finds.found_at, excluded.found_at), verified = MAX(COALESCE(event_finds.verified, 0), excluded.verified), " +
+    "ext_level = COALESCE(excluded.ext_level, event_finds.ext_level)",
+  ).bind(now, JSON.stringify(finds)));
   const out = [];
   for (const { e, version, kind: force } of fanout) {
     for (const r of recips) {
@@ -359,6 +370,16 @@ export async function enqueue(env, body) {
   const res = await env.DB.batch(stmts);
   if (out.length) stats.outbox = res[res.length - 1].meta.changes;
   return { ok: true, ...stats };
+}
+
+export const FINDERS = ["github_collector", "claude", "chatgpt"];
+// 발견 경로: 외부 입력은 수집기가 found_by 를 붙여 보낸다. 표시가 없는 예전 외부 입력은 chatgpt(이 경로만 있었음), 나머지는 GitHub 수집기.
+function finderOf(e) {
+  if (FINDERS.includes(e.found_by)) return e.found_by;
+  return e.source_id === "ext-search" ? "chatgpt" : "github_collector";
+}
+function validIso(v) {
+  return typeof v === "string" && !Number.isNaN(Date.parse(v)) ? new Date(Date.parse(v)).toISOString() : null;
 }
 
 function outboxInsert(env, out) {
@@ -599,7 +620,8 @@ export async function digest(env, opts = {}) {
   const now = nowIso();
   const groups = await all(env.DB.prepare(
     "SELECT o.chat_id, o.bot, p.tz, p.quiet_start, p.quiet_end, p.digest_mode, p.digest_hour, p.interests, " +
-    "SUM(o.status = 'pending') AS fresh, SUM(o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1)) AS retry " +
+    "SUM(o.status = 'pending') AS fresh, SUM(o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1)) AS retry, " +
+    "SUM(o.status = 'pending' AND o.reason = 'catchup') AS catchup " +
     "FROM outbox o LEFT JOIN people p ON p.chat_id = o.chat_id WHERE o.kind = 'digest' AND o.status IN ('pending', 'failed', 'uncertain') GROUP BY o.chat_id, o.bot").bind(now));
   const r = { messages: 0, items: 0, waiting: 0, skipped: 0, expired: 0, failed: 0 };
   let calls = 0;
@@ -616,7 +638,7 @@ export async function digest(env, opts = {}) {
     if (!opts.force && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.waiting++; continue; }
     const dayOk = p.digest_mode === "weekly" ? weekdayIn(p.tz) === 6 : true;
     const timeOk = dayOk && hourIn(p.tz) >= (p.digest_hour ?? 8);
-    let take = g.retry > 0; // 실패분 재시도는 시간 조건 없이
+    let take = g.retry > 0 || g.catchup > 0; // 실패분 재시도·보충 발송은 요약 시각을 기다리지 않고 매시 실행에서
     if (opts.force || (g.fresh > 0 && timeOk && (await claimNotice(env, `digest:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`)))) take = true;
     if (!take) { r.waiting++; continue; }
     const rows = await all(env.DB.prepare(
@@ -668,6 +690,52 @@ export async function digest(env, opts = {}) {
     await finish(env, done);
   }
   return { ok: true, ...r };
+}
+
+// ---------------------------------------------------------------- 보충 발송(이슈 #20)
+// 아직 소유자가 받지 못한 '지금도 유효한 적극 알림'(특별 근거 있음)을 한 통씩 보낸다. 같은 행사는 다시 보내지 않는다.
+// 1) 예전 하루 5건 상한으로 보관만 된 것(held), 2) 추천 판정이 나중에 붙어 알림 대기열이 없던 것.
+// 보충분은 요약 시각을 기다리지 않고 매시 실행(실행당 발송 수 안에서)으로 나간다. 조용한 시간·관심없음·끝난 행사는 그대로 지킨다.
+export async function catchup(env, body = {}) {
+  const today = dateIn(DENVER);
+  const { recips, mutedTags } = await recipientsFor(env);
+  const owners = recips.filter((r) => isOwner(env, r.chat_id));
+  const owner = String(env.OWNER_CHAT_ID || "");
+  const cand = await all(env.DB.prepare(
+    "SELECT e.event_key, e.bot, e.version, e.data FROM events e WHERE json_extract(e.data, '$.rec_level') = 'push' " +
+    "AND TRIM(COALESCE(json_extract(e.data, '$.special_reason'), '')) <> '' " +
+    "AND MAX(COALESCE(e.end_date, ''), COALESCE(e.start_date, ''), COALESCE(e.registration_opens, ''), COALESCE(e.deadline, '')) >= ?1 " +
+    "AND NOT EXISTS (SELECT 1 FROM outbox o WHERE o.event_key = e.event_key AND o.chat_id = ?2 AND (o.status IN ('sent', 'sending', 'pending', 'uncertain') OR o.reason = 'muted')) " +
+    "ORDER BY COALESCE(e.start_date, '9999') LIMIT 500").bind(today, owner));
+  const states = new Map((await all(env.DB.prepare("SELECT chat_id, item_key, state FROM item_state WHERE chat_id = ?").bind(owner)))
+    .map((r) => [`${r.chat_id}|${r.item_key}`, r.state]));
+  const out = [], why = {};
+  const heldIds = [];
+  for (const ev of cand) {
+    const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot: ev.bot };
+    if (isExpired(e, "America/Denver")) { why.expired = (why.expired || 0) + 1; continue; }
+    for (const r of owners) {
+      const [kind, w] = targetKind(env, r, e, states, mutedTags, { skipAcked: true, kind: "digest" });
+      if (w) why[w] = (why[w] || 0) + 1;
+      if (kind) out.push({ chat_id: String(r.chat_id), bot: e.bot, event_key: e.event_key, version: ev.version, kind: "digest" });
+    }
+  }
+  if (body.dry) return { ok: true, dry: true, candidates: cand.length, would_queue: out.length, skipped: why, events: out.map((x) => x.event_key) };
+  // 같은 판의 행이 이미 있으면(예전 상한으로 보관 held, 추천 판정 전이라 건너뜀 skipped 등) 그 행을 보충분으로 되살린다.
+  // 이 행사를 이미 보냈거나 보내는 중이면 위 후보에서 빠졌으므로 중복 발송은 없다.
+  const keys = new Set(out.map((x) => `${x.event_key}|${x.version}`));
+  const held = await all(env.DB.prepare("SELECT o.id, o.event_key, o.version FROM outbox o WHERE o.chat_id = ? AND o.status IN ('held', 'skipped', 'superseded', 'failed')")
+    .bind(owner));
+  for (const h of held) if (keys.has(`${h.event_key}|${h.version}`)) heldIds.push(h.id);
+  const stmts = [];
+  if (heldIds.length) stmts.push(env.DB.prepare("UPDATE outbox SET status = 'pending', reason = 'catchup', kind = 'digest', next_attempt_at = NULL WHERE id IN (SELECT value FROM json_each(?))").bind(JSON.stringify(heldIds)));
+  if (out.length) {
+    stmts.push(outboxInsert(env, out));
+    stmts.push(env.DB.prepare("UPDATE outbox SET reason = 'catchup' WHERE status = 'pending' AND reason IS NULL AND kind = 'digest' AND chat_id = ? " +
+      "AND event_key IN (SELECT value FROM json_each(?))").bind(owner, JSON.stringify(out.map((x) => x.event_key))));
+  }
+  if (stmts.length) await env.DB.batch(stmts);
+  return { ok: true, candidates: cand.length, queued: out.length, revived_held: heldIds.length, skipped: why };
 }
 
 // ---------------------------------------------------------------- 사용자가 원할 때 더 보기(/more)
@@ -984,9 +1052,11 @@ export async function gaps(env, method, body) {
   if (method === "POST") {
     const now = nowIso();
     const g = (body.gaps || []).filter((x) => x && x.event_key && x.url).slice(0, 30);
-    const stmts = g.map((x) => env.DB.prepare("INSERT INTO ext_gaps (event_key, url, title, host, found, cause, action, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
-      "ON CONFLICT(event_key) DO UPDATE SET found = excluded.found, cause = excluded.cause, action = excluded.action, at = excluded.at")
-      .bind(x.event_key, x.url, x.title || null, x.host || null, x.found, x.cause || null, x.action || null, now));
+    const stmts = g.map((x) => env.DB.prepare("INSERT INTO ext_gaps (event_key, url, title, host, found, cause, action, at, finder, cause_code, rediscovered) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+      "ON CONFLICT(event_key) DO UPDATE SET found = excluded.found, cause = excluded.cause, action = excluded.action, at = excluded.at, finder = excluded.finder, " +
+      "cause_code = excluded.cause_code, rediscovered = excluded.rediscovered")
+      .bind(x.event_key, x.url, x.title || null, x.host || null, x.found, x.cause || null, x.action || null, now, FINDERS.includes(x.finder) ? x.finder : null,
+        CAUSE_CODES.includes(x.cause_code) ? x.cause_code : null, x.rediscovered === true ? 1 : x.rediscovered === false ? 0 : null));
     for (const src of (body.sources || []).filter((x) => x && /^https:\/\//.test(x.url || "")).slice(0, 10)) {
       stmts.push(env.DB.prepare("INSERT INTO sources_extra (id, url, name, type, bots, added_at, mode, reason) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id) DO NOTHING")
         .bind(`gap-${(await sha(src.url.toLowerCase())).slice(0, 10)}`, src.url, src.name || null, ["html", "rss", "ical", "json"].includes(src.type) ? src.type : "html",
@@ -1004,6 +1074,100 @@ export async function gaps(env, method, body) {
   for (const r of rows) by[r.found] = (by[r.found] || 0) + 1;
   return { ok: true, summary: by, gaps: rows };
 }
+export const CAUSE_CODES = ["missing_source", "query_gap", "scrape_or_js_failure", "freshness_or_schedule", "extraction_error",
+  "eligibility_or_recommendation_error", "identity_duplicate_error", "delivery_error", "outside_scope", "uncertain"];
+
+// ---------------------------------------------------------------- 3경로 대조·작업량·외부 입력 파일 (이슈 #20)
+// 실행(경로)별 작업량 저장. 텔레그램으로 요약을 보내지 않고 조용히 쌓는다.
+export async function workload(env, method, body, url) {
+  if (method === "POST") {
+    const w = body.workload || {};
+    if (!w.run_id || !FINDERS.includes(w.path)) return { ok: false, error: "run_id and path required" };
+    await env.DB.prepare("INSERT INTO workload (run_id, path, started_at, data) VALUES (?, ?, ?, ?) ON CONFLICT(run_id) DO UPDATE SET data = excluded.data")
+      .bind(String(w.run_id).slice(0, 80), w.path, validIso(w.started_at) || nowIso(), JSON.stringify(w).slice(0, 200000)).run();
+    return { ok: true };
+  }
+  const since = (url && url.searchParams.get("since")) || "2026-10-01";
+  const rows = await all(env.DB.prepare("SELECT run_id, path, started_at, data FROM workload WHERE started_at >= ? ORDER BY started_at").bind(since));
+  return { ok: true, rows: rows.map((r) => ({ ...JSON.parse(r.data), run_id: r.run_id, path: r.path, started_at: r.started_at })) };
+}
+
+// 외부 입력 파일 선점: 같은 경로·같은 내용(sha)이 이미 처리됐거나 처리 중이면 거절 → 재실행·중복 push 에도 한 번만 처리
+export async function inbox(env, body) {
+  const path = String(body.path || "");
+  if (!/^external-inbox\/(chatgpt|claude)\/[A-Za-z0-9._-]{1,100}\.json$/.test(path)) return { ok: false, error: "bad path" };
+  const finder = path.split("/")[1];
+  const now = nowIso();
+  if (body.op === "claim") {
+    const prev = await env.DB.prepare("SELECT sha, status, at FROM inbox_files WHERE path = ?").bind(path).first();
+    // 처리 중으로 30분 넘게 남은 것(실행이 끊김)은 다시 처리할 수 있다
+    if (prev && prev.sha === body.sha && (prev.status === "done" || (prev.status === "processing" && Date.now() - Date.parse(prev.at) < 30 * 60000))) {
+      return { ok: true, claimed: false, status: prev.status };
+    }
+    await env.DB.prepare("INSERT INTO inbox_files (path, sha, finder, status, at) VALUES (?, ?, ?, 'processing', ?) ON CONFLICT(path) DO UPDATE SET sha = excluded.sha, status = 'processing', at = excluded.at")
+      .bind(path, String(body.sha || "").slice(0, 80), finder, now).run();
+    return { ok: true, claimed: true, finder };
+  }
+  if (body.op === "done") {
+    await env.DB.prepare("UPDATE inbox_files SET status = ?, at = ?, report = ? WHERE path = ?")
+      .bind(body.failed ? "failed" : "done", now, JSON.stringify(body.report || {}).slice(0, 20000), path).run();
+    return { ok: true };
+  }
+  return { ok: false, error: "unknown op" };
+}
+
+// 3경로 대조: 행사마다 경로별 최초 발견·검증·추천과 실제 발송(소유자)을 모은다
+export async function compare(env, url) {
+  const since = (url && url.searchParams.get("since")) || "2026-10-01";
+  const rows = await all(env.DB.prepare(
+    "SELECT f.event_key, f.finder, f.first_seen, f.found_at, f.url, f.verified, f.rec_level, f.ext_level, e.bot, json_extract(e.data, '$.title_ko') AS title, " +
+    "json_extract(e.data, '$.rec_level') AS final_level, json_extract(e.data, '$.special_reason') AS special_reason, " +
+    "(SELECT MIN(o.sent_at) FROM outbox o WHERE o.event_key = f.event_key AND o.status = 'sent' AND o.chat_id = ?2) AS sent_at, " +
+    "g.found AS gap_found, g.cause_code, g.cause, g.action, g.rediscovered " +
+    "FROM event_finds f LEFT JOIN events e ON e.event_key = f.event_key LEFT JOIN ext_gaps g ON g.event_key = f.event_key " +
+    "WHERE f.event_key IN (SELECT event_key FROM event_finds WHERE first_seen >= ?1) ORDER BY f.event_key, f.first_seen")
+    .bind(since, String(env.OWNER_CHAT_ID || "")));
+  const events = new Map();
+  for (const r of rows) {
+    const x = events.get(r.event_key) || { event_key: r.event_key, title: r.title, bot: r.bot, final_level: r.final_level, special_reason: r.special_reason,
+      sent_at: r.sent_at, gap: r.gap_found ? { found: r.gap_found, cause_code: r.cause_code, cause: r.cause, action: r.action, rediscovered: r.rediscovered } : null, finds: {} };
+    x.finds[r.finder] = { first_seen: r.first_seen, found_at: r.found_at, url: r.url, verified: r.verified, rec_level: r.rec_level, ext_level: r.ext_level };
+    events.set(r.event_key, x);
+  }
+  const list = [...events.values()];
+  for (const x of list) {
+    const order = Object.entries(x.finds).sort((a, b) => (a[1].found_at || a[1].first_seen).localeCompare(b[1].found_at || b[1].first_seen));
+    x.first_finder = order[0][0];
+    // 발송을 일으킨 경로: 발송 시각 이전에 찾은 경로 중 가장 먼저 찾은 경로
+    x.sent_via = x.sent_at ? (order.find(([, f]) => f.first_seen <= x.sent_at) || order[0])[0] : null;
+  }
+  const s = { events: list.length, by_finder: {}, only: {}, overlap: {}, first: {}, sent_via: {}, push_by_finder: {}, causes: {} };
+  for (const x of list) {
+    const fs = Object.keys(x.finds).sort();
+    for (const f of fs) {
+      s.by_finder[f] = (s.by_finder[f] || 0) + 1;
+      if (x.final_level === "push") s.push_by_finder[f] = (s.push_by_finder[f] || 0) + 1;
+    }
+    if (fs.length === 1) s.only[fs[0]] = (s.only[fs[0]] || 0) + 1;
+    else s.overlap[fs.join("+")] = (s.overlap[fs.join("+")] || 0) + 1;
+    s.first[x.first_finder] = (s.first[x.first_finder] || 0) + 1;
+    if (x.sent_via) s.sent_via[x.sent_via] = (s.sent_via[x.sent_via] || 0) + 1;
+    if (x.gap && x.gap.cause_code) s.causes[x.gap.cause_code] = (s.causes[x.gap.cause_code] || 0) + 1;
+  }
+  return { ok: true, since, summary: s, events: list };
+}
+
+// 누적 내보내기(JSON). CSV·Markdown 은 scripts/export_eval.py 가 이 결과로 만든다.
+export async function exportAll(env, url) {
+  const [c, w, g, u] = await Promise.all([compare(env, url), workload(env, "GET", {}, url),
+    all(env.DB.prepare("SELECT * FROM ext_gaps ORDER BY at")), all(env.DB.prepare("SELECT * FROM usage ORDER BY month, model"))]);
+  const extra = { sources: await all(env.DB.prepare("SELECT id, url, name, type, mode, reason, added_at FROM sources_extra ORDER BY added_at")),
+    queries: await all(env.DB.prepare("SELECT query, bot, reason, added_at FROM queries_extra ORDER BY added_at")),
+    failing_sources: await all(env.DB.prepare("SELECT id, consecutive_failures, last_status, last_ok_at FROM source_health WHERE consecutive_failures >= 3 ORDER BY consecutive_failures DESC")),
+    inbox: await all(env.DB.prepare("SELECT path, finder, status, at FROM inbox_files ORDER BY at")) };
+  return { ok: true, generated_at: nowIso(), compare: c, workload: w.rows, gaps: g, usage: u, ...extra };
+}
+
 export async function queriesExtra(env) {
   return { ok: true, queries: await all(env.DB.prepare("SELECT query, bot FROM queries_extra ORDER BY added_at DESC LIMIT 80")) };
 }

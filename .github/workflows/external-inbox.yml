@@ -1,0 +1,59 @@
+name: external-inbox
+# 외부 검색(ChatGPT·Claude)이 저장소에 새로 만든 external-inbox/<finder>/<이름>.json 을 받아 처리한다(이슈 #20).
+#  - push 한 사람이 저장소 쓰기 권한이 있어야 하므로 외부인은 넣을 수 없다. 파일 내용은 명령에 끼워 넣지 않고 Python 이 읽는다.
+#  - 새로 추가된 파일만(git diff --diff-filter=A). 같은 파일·같은 내용은 Worker 기록으로 한 번만 처리한다.
+#  - 한국 알림 시스템과 무관(미국 Worker us-alert-worker 만 호출). 발송은 Worker 의 소유자 전용 설정을 따른다.
+#  - repository_dispatch 경로(external-events.yml)는 그대로 둔다.
+on:
+  push:
+    paths:
+      - "external-inbox/**/*.json"
+permissions:
+  contents: read
+concurrency:
+  group: external-inbox
+  cancel-in-progress: false
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      HOUSEHOLD_PROFILE: ${{ secrets.HOUSEHOLD_PROFILE }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      BEFORE: ${{ github.event.before }}
+      AFTER: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: New inbox files
+        id: files
+        run: |
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            BASE="$(git rev-parse "$AFTER^" 2>/dev/null || true)"
+          else
+            BASE="$BEFORE"
+          fi
+          if [ -n "$BASE" ]; then
+            git diff --name-only --diff-filter=A "$BASE" "$AFTER" -- 'external-inbox/' > "$RUNNER_TEMP/inbox_paths.txt"
+          else
+            git ls-tree -r --name-only "$AFTER" -- 'external-inbox/' > "$RUNNER_TEMP/inbox_paths.txt"
+          fi
+          grep -E '^external-inbox/(chatgpt|claude)/[A-Za-z0-9._-]{1,100}\.json$' "$RUNNER_TEMP/inbox_paths.txt" > "$RUNNER_TEMP/inbox_ok.txt" || true
+          echo "count=$(wc -l < "$RUNNER_TEMP/inbox_ok.txt")" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        if: steps.files.outputs.count != '0'
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt
+        if: steps.files.outputs.count != '0'
+      - name: Worker address
+        if: steps.files.outputs.count != '0'
+        run: |
+          bash scripts/cf_env.sh
+          set -a; . "$GITHUB_ENV"; set +a
+          bash scripts/worker_ready.sh
+      - name: Ingest
+        if: steps.files.outputs.count != '0' && env.READY == '1'
+        run: |
+          INBOX_PATHS="$(cat "$RUNNER_TEMP/inbox_ok.txt")" python collector/inbox.py

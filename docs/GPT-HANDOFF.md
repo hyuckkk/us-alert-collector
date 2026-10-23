@@ -91,7 +91,30 @@ ChatGPT 가 보낸 행사마다 "우리 수집이 이미 찾았는가"를 자동
 
 ## 3. ChatGPT 가 행사를 보내는 방법
 
-### 3-1. 호출
+### 3-0. 파일로 보내기(권장, 이슈 #20)
+ChatGPT GitHub 연결의 파일 만들기(create_file)로 이 저장소에 **새 파일**을 만든다. push 되면 `external-inbox` 워크플로가 자동으로 처리한다.
+- 경로: `external-inbox/chatgpt/<고유이름>.json` (Claude 예약 검색은 `external-inbox/claude/…`). 고유이름은 영문·숫자·`.`·`_`·`-`, 예: `2026-10-24T0700Z.json`.
+- 새 파일만 처리한다. 같은 파일·같은 내용은 한 번만 처리한다. 파일은 200KB, 30건까지.
+- 형식(스키마 `us-alert-inbox/1`). 모르는 값은 빼면 `unknown` 으로 기록된다.
+```json
+{
+  "schema": "us-alert-inbox/1",
+  "run": {"started_at": "2026-10-24T07:00:00Z", "finished_at": "2026-10-24T07:12:00Z", "searches": 14,
+          "queries": ["Denver holiday lights tickets 2026"], "urls_attempted": 30, "urls_ok": 26, "official_pages_checked": 12,
+          "candidates": 40, "excluded": 33, "excluded_reasons": {"past": 9, "routine": 20, "far": 4}},
+  "events": [{"title": "...", "url": "https://기관 공식 페이지", "start_date": "2026-11-20", "end_date": null, "time": "...", "location": "...",
+              "cost": "...", "age": "...", "registration_opens": null, "deadline": null, "description": "...", "audience": "family",
+              "verified": true, "verification_note": "공식 페이지에서 날짜·가격 확인", "found_at": "2026-10-24T07:05:00Z", "origin": "scheduled",
+              "recommend": "push", "special_reason": "한 문장: 왜 특별한가(드문 공개·기간 한정·선착순·공공 지원 대폭 할인 등)"}]
+}
+```
+- 공식 페이지를 시스템이 다시 읽는다. 다시 읽지 못한 행사는 `verified: true` 라도 보내지 않는다.
+- 메시지는 미국 봇 3개로 소유자에게만 간다. 행사 하나에 한 통이고, GPT·Claude·미국 같은 출처 표시는 붙지 않는다.
+- 우리 수집기가 같은 행사를 먼저 찾았는지 3경로(GitHub 수집기·Claude·ChatGPT)로 대조해 조용히 쌓는다.
+- 놓친 것은 원인 코드(missing_source, query_gap, scrape_or_js_failure 등)를 붙이고 정보원·검색어를 자동으로 보완한다. 보완 뒤 같은 행사가 다시 잡히는지도 확인한다.
+- 키·토큰은 파일에 넣지 않는다.
+
+### 3-1. 호출(repository_dispatch, 기존 방식 유지)
 ```
 POST https://api.github.com/repos/hyuckkk/us-alert-collector/dispatches
 Authorization: Bearer <GitHub 토큰>
@@ -130,7 +153,8 @@ Accept: application/vnd.github+json
 
 ### 3-2. 무엇을 찾아 보내면 좋은가(추천 기준과 같은 방향)
 - 우선: 선착순·추첨·예약 시작일, 국립·주립공원 허가·시간지정 입장, 캠프·강습 접수 시작, 특별 체험, 드문 행사, 축제·공연, 대학 공개 행사.
-- 반복 정기 프로그램, 행정 회의, 민원 서비스는 보내지 않아도 된다(받아도 걸러진다).
+- 반복 정기 프로그램, 행정 회의, 민원 서비스, 정가 일반 공연(Red Rocks 정기 공연 등), 대학 일반 세미나·콜로키엄·학제간 토론, 일반 극장·공연장 시즌, 일반 스포츠 경기는 보내지 않아도 된다(받아도 '특별 근거' 없이는 알리지 않는다).
+- 보낼 때는 `special_reason` 에 왜 특별한지 한 문장을 적는다. 예: 평소 비공개인 군·항공·우주 시설 개방, 기간 한정, 선착순·추첨, 공공 지원 대폭 할인·무료 특별 프로그램. 5인 가족 총비용과 2027년 체류 기간을 함께 본다.
 - 지역: 덴버 광역권(Westminster 중심). 특별한 경험이면 멀어도 된다(예: 로키산맥 국립공원 허가).
 - 같은 행사를 다시 보내도 된다. 같은 행사로 판별해 다시 알리지 않는다. 날짜·비용 등 실제 값이 바뀌었으면 "🔄 변경"으로 한 번 알린다.
 

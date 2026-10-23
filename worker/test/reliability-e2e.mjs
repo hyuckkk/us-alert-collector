@@ -266,13 +266,14 @@ try {
     assert.equal(r.sent, 0);
   });
 
-  await step("8 예산 50·80·100% 사전 경고 각 1회", async () => {
+  await step("8 사용액 50·80·100% 경고 각 1회(경고만, 멈추지 않음)", async () => {
     const n = E.calls.length;
     const u = (usd) => admin("/admin/usage", { model: "claude-opus-5-5", input_tokens: 1, output_tokens: 1, usd, calls: 1, budget: 1, searches: 2, cache_read_tokens: 5 });
     await u(0.6); await u(0.25); await u(0.2); await u(0.01);
     const t = sends(n, /💰/).map((c) => c.payload.text);
     assert.equal(t.length, 3);
-    assert.match(t[2], /예산 \$1 도달/);
+    assert.match(t[2], /크레딧 기준 \$1의 100%/);
+    assert.match(t[2], /스스로 멈추지는 않습니다/);
     const row = (await admin("/admin/usage")).rows.find((r) => r.model === "claude-opus-5-5");
     assert.equal(row.searches, 8);
     assert.equal(row.cache_read_tokens, 20);
