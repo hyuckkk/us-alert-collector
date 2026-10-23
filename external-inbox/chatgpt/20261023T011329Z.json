@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-23T01:13:29.740Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Denver Arts Week: Free Night at Wings Over the Rockies Air and Space Museum",
+      "url": "https://wingsmuseum.org/events/denver-arts-week-free-night-at-the-museum/",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "5:00 PM–10:00 PM MST",
+      "location": "Wings Over the Rockies Air & Space Museum, 7711 East Academy Blvd, Denver, CO 80230",
+      "cost": "Free general admission with free ticket; optional MaxFlight simulator costs extra",
+      "age": "All ages; family",
+      "audience": "family",
+      "description": "Official aviation museum one-night free after-hours opening for Denver Arts Week with a recently restored Thunderbird F-16D, real aircraft on display, STEAM hands-on activities, and museum open at night. Free ticket available on museum's event page. Distinct from its everyday regular-price museum admission. Do not imply aircraft cockpit entry or free simulator."
+    }
+  ]
+}
