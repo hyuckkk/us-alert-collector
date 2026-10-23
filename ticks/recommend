@@ -1,3 +1,2 @@
-recommend 3 (이슈 #20: 특별 근거 필수 기준으로 전체 행사 재평가)
-usd_cap=5
-args=--bots life,family,kids --out eval/recommend_backfill_all.json
+recommend 4 (이슈 #21·#22·#24: 일반화된 추천 기준·원문 근거 게이트로 전체 행사 재평가, 상한 없음)
+args=--bots life,family,kids --out eval/recommend_backfill_v4.json

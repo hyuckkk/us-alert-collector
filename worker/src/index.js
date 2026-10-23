@@ -632,6 +632,7 @@ export default {
         if (p === "/admin/inbox" && POST) return json(await pipeline.inbox(env, body));
         if (p === "/admin/compare") return json(await pipeline.compare(env, url));
         if (p === "/admin/event") return json(await pipeline.eventLookup(env, url));
+        if (p === "/admin/outbox-preview") return json(await pipeline.outboxPreview(env));
         if (p === "/admin/catchup" && POST) {
           try { return json(await pipeline.catchup(env, body)); } catch (e) { return json({ ok: false, error: String(e && e.stack || e).slice(0, 1500) }, 500); }
         }

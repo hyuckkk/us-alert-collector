@@ -4,7 +4,7 @@ set -euo pipefail
 : "${US_WORKER_URL:?}"; : "${US_ADMIN_KEY:?run scripts/cf_env.sh first}"
 args=(-sS -o out.json -w "%{http_code}" -H "Authorization: Bearer $US_ADMIN_KEY")
 case "$1" in
-  clicks|status|watchdog|source-health|baseline|usage) ;;
+  clicks|status|watchdog|source-health|baseline|usage|outbox-preview) ;;
   compare) set -- "compare?since=${COMPARE_SINCE:-2026-10-01}" ;;
   workload) set -- "workload?since=${COMPARE_SINCE:-2026-10-01}" ;;
   event) set -- "event?q=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "${SKIP_KEY:?key 입력에 검색어}")" ;;

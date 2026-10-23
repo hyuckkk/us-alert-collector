@@ -1223,6 +1223,25 @@ export async function exportAll(env, url) {
   return { ok: true, generated_at: nowIso(), compare: c, workload: w.rows, gaps: g, usage: u, ...extra };
 }
 
+// 미발송 대기열 미리 보기(읽기 전용): 지금 기준(추천 재판정·차단 사유·회차 묶음·지난 행사)으로 실제로 나갈 것과 걸러질 것
+export async function outboxPreview(env) {
+  const rows = await all(env.DB.prepare(
+    "SELECT o.chat_id, o.event_key, o.kind, o.status, e.source_id, e.data, p.interests, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+    "LEFT JOIN people p ON p.chat_id = o.chat_id LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key " +
+    "WHERE o.status IN ('pending', 'failed', 'uncertain', 'held') ORDER BY o.id"));
+  const series = await sentSeries(env, [...new Set(rows.map((r) => r.chat_id))]);
+  const out = { total: rows.length, would_send: [], skipped: {} };
+  for (const r of rows) {
+    const d = JSON.parse(r.data);
+    let why = r.state === "MUTED" ? "muted" : recLevel(d, { interests: r.interests });
+    if (!why && isExpired(d, "America/Denver")) why = "expired";
+    if (!why && sameSeriesSeen(series, r.chat_id, r.source_id, d, r.event_key)) why = "same-series";
+    if (why) { const k = String(why).split(":")[0] + (String(why).includes(":") ? ":" + String(why).split(":")[1].split(",")[0] : ""); out.skipped[k] = (out.skipped[k] || 0) + 1; }
+    else out.would_send.push({ owner: isOwner(env, r.chat_id), kind: r.kind, title: d.title_ko || d.title, special_reason: d.special_reason });
+  }
+  return { ok: true, ...out };
+}
+
 // 행사 한 건의 전체 기록(원인 추적용): 어느 정보원·경로에서 왔는지, 추천 판정·근거, 발송 이력(받는 사람 ID 는 관리 스크립트가 가림)
 export async function eventLookup(env, url) {
   const q = String(url.searchParams.get("q") || "").slice(0, 80);
