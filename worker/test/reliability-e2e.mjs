@@ -117,7 +117,8 @@ try {
     await admin("/admin/enqueue", { events: [ev("reg", { registration_status: "upcoming" })] });
     await admin("/admin/dispatch", {});
     await hook("kids", E.cb(OWNER, "ack:reg", 1));
-    const r = await admin("/admin/enqueue", { events: [ev("reg", { registration_status: "upcoming", registration_opens: plus(20) })] });
+    // 접수 시작이 7일 안이라 지금 알린다(더 먼 접수는 7일 전까지 보류 — compare-e2e 에서 시험)
+    const r = await admin("/admin/enqueue", { events: [ev("reg", { registration_status: "upcoming", registration_opens: plus(5) })] });
     assert.equal(r.changed, 1);
     const n = E.calls.length;
     await admin("/admin/dispatch", {});
@@ -132,8 +133,8 @@ try {
     await hook("kids", E.cb(OWNER, "ack:dl", 1));
     const n = E.calls.length;
     await admin("/admin/dispatch", {});
-    const opens = sends(n, /^⏰ <b>행사 opens/).map((c) => String(c.payload.chat_id)).sort();
-    const dl = sends(n, /^⏰ <b>행사 dl/).map((c) => String(c.payload.chat_id));
+    const opens = sends(n, /^⏰ <b>(?:<a href="[^"]*">)?행사 opens/).map((c) => String(c.payload.chat_id)).sort();
+    const dl = sends(n, /^⏰ <b>(?:<a href="[^"]*">)?행사 dl/).map((c) => String(c.payload.chat_id));
     assert.deepEqual(opens, [FRIEND, OWNER].sort());
     assert.deepEqual(dl, [FRIEND]);
     const n2 = E.calls.length;
@@ -151,7 +152,7 @@ try {
     assert.deepEqual([r.items, r.messages, r.held || 0], [23, 23, 0], JSON.stringify(r));
     const keys = sends(n).map((c) => /행사 (d\d+)/.exec(c.payload.text)[1]);
     assert.equal(new Set(keys).size, 23);
-    assert.ok(sends(n).every((c) => c.payload.reply_markup && !/https?:/.test(c.payload.text.replace(/<a href="https:\/\/www\.google\.com\/maps\/[^"]*">/g, ""))));
+    assert.ok(sends(n).every((c) => c.payload.reply_markup && !/https?:/.test(c.payload.text.replace(/<a href="[^"]*">/g, ""))));
   });
 
   await step("7 아주 긴 행사 30건: 한 통 4,096자 이하, 버튼은 그 행사에 연결, 한 번에 못 보낸 것은 다음 실행에서 이어 보내 모두 발송", async () => {
@@ -167,9 +168,8 @@ try {
     assert.equal(r.items, 5, JSON.stringify(r));
     for (const c of sends(n)) {
       assert.ok(c.payload.text.length <= 4096);
-      const key = c.payload.reply_markup.inline_keyboard[0][0].url.split("/").pop();
-      assert.ok(c.payload.text.includes(`행사 ${key} `), "공식 안내 버튼이 다른 행사");
-      assert.equal(c.payload.reply_markup.inline_keyboard[1][0].callback_data, `ack:${key}`);
+      const key = c.payload.reply_markup.inline_keyboard[0][0].callback_data.split(":")[1];
+      assert.ok(c.payload.text.includes(`/${key}">행사 ${key} `), "제목 링크가 다른 행사");
     }
     const st = sql("SELECT status, COUNT(*) AS n FROM outbox WHERE event_key LIKE 'L%' AND status <> 'skipped' GROUP BY status ORDER BY status");
     assert.deepEqual(st, [{ status: "sent", n: 30 }], JSON.stringify(st));

@@ -78,7 +78,7 @@ try {
 
   await step("지인이 버튼 ✅ 확인 → 기록되고 그 메시지 버튼이 바뀜", async () => {
     const m = to(0, FRIEND).find((c) => /행사 near1/.test(c.payload.text));
-    const key = m.payload.reply_markup.inline_keyboard[1][0].callback_data.split(":")[1];
+    const key = m.payload.reply_markup.inline_keyboard[0][0].callback_data.split(":")[1];
     const n = E.calls.length;
     await hook("kids", E.cb(FRIEND, `ack:${key}`, 901, m.payload.reply_markup));
     assert.equal(sql(`SELECT COUNT(*) AS n FROM clicks WHERE chat_id = '${FRIEND}' AND item_key = '${key}' AND action = 'ack'`)[0].n, 1);

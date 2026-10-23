@@ -55,18 +55,18 @@ try {
     assert.equal(r.skipped["before-available"], 1);
   });
 
-  await step("dispatch: 즉시·예고 3건 발송, 7줄 형식 + 버튼 3개", async () => {
+  await step("dispatch: 즉시·예고 3건 발송, 제목 링크 + 버튼 한 줄", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/dispatch", {});
     assert.equal(r.sent, 3, JSON.stringify(r));
     const s = sends(n);
     const friendE1 = s.find((x) => String(x.payload.chat_id) === FRIEND);
-    // 행사 1건 = 1통: 제목 굵게, 특징(선착순), 한국식 날짜, 확인된 항목만, 본문에 주소 없음 → [🔗 공식 안내] 버튼
-    assert.equal(friendE1.payload.text, '🆕 <b>행사 e1</b>\n🏃 선착순\n✨ <b>시험용 특별 근거</b>\n\n📅 11월 10일(화) 10:00\n📍 <a href="https://www.google.com/maps/search/?api=1&amp;query=Westminster%20Library%2C%20CO">Westminster Library</a> · Test Org\n💲 $20   👤 6-10세');
-    assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[0], [{ text: "🔗 공식 안내", url: "https://example.org/e1" }]);
+    // 행사 1건 = 1통: 제목(누르면 공식 안내) 굵게, 특징(선착순), 한국식 날짜, 확인된 항목만, 버튼은 [✅][🚫] 한 줄
+    assert.equal(friendE1.payload.text, '🆕 <b><a href="https://example.org/e1">행사 e1</a></b>\n🏃 선착순\n✨ <b>시험용 특별 근거</b>\n\n📅 11월 10일(화) 10:00\n📍 <a href="https://www.google.com/maps/search/?api=1&amp;query=Westminster%20Library%2C%20CO">Westminster Library</a> · Test Org\n💲 $20   👤 6-10세');
+    assert.equal(friendE1.payload.reply_markup.inline_keyboard.length, 1, "공식 안내 버튼 줄 없음");
     assert.equal(friendE1.payload.parse_mode, "HTML");
-    assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[1].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
-    assert.ok(s.some((x) => String(x.payload.chat_id) === OWNER && /^📆 예고 <b>행사 e2<\/b>/.test(x.payload.text)));
+    assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[0].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
+    assert.ok(s.some((x) => String(x.payload.chat_id) === OWNER && /^📆 예고 <b>(?:<a href="[^"]*">)?행사 e2(?:<\/a>)?<\/b>/.test(x.payload.text)));
     assert.ok(s.some((x) => x.token === "tLIFE" && /행사 e4/.test(x.payload.text)));
   });
 
@@ -88,36 +88,35 @@ try {
     await admin("/admin/dispatch", {});
     const s = sends(n);
     assert.equal(s.length, 1);
-    assert.match(s[0].payload.text, /^🔄 변경 <b>행사 e1<\/b>/);
+    assert.match(s[0].payload.text, /^🔄 변경 <b>(?:<a href="[^"]*">)?행사 e1(?:<\/a>)?<\/b>/);
     assert.match(s[0].payload.text, /바뀐 점: 비용 \$20 → \$25/);
   });
 
-  await step("요약(force): 행사마다 한 통, 본문에 주소 없음, [🔗 공식 안내] + [✅ 확인][🚫 관심없음]", async () => {
+  await step("요약(force): 행사마다 한 통, 본문에 주소 없음, 제목 링크 + [✅ 확인][🚫 관심없음] 한 줄", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/digest", { force: true });
     const f = sends(n, FRIEND);
     assert.equal(f.length, 2, JSON.stringify(r));
     for (const m of f) {
-      assert.match(m.payload.text, /^🆕 <b>행사 e[23]<\/b>/);
-      assert.ok(!/https?:\/\//.test(m.payload.text.replace(/<a href="https:\/\/www\.google\.com\/maps\/[^"]*">/g, "")), "본문에 원문 주소가 보임(지도 링크만 허용)");
+      assert.match(m.payload.text, /^🆕 <b><a href="https:\/\/example\.org\/e[23]">행사 e[23]<\/a><\/b>/);
+      assert.ok(!/https?:\/\//.test(m.payload.text.replace(/<a href="[^"]*">/g, "")), "본문에 원문 주소가 보임(지도 링크만 허용)");
       const kb = m.payload.reply_markup.inline_keyboard;
-      assert.match(kb[0][0].url, /^https:\/\/example.org\/e[23]$/);
-      const key = kb[0][0].url.split("/").pop(); // 시험 행사는 주소 끝이 행사 키와 같다
-      assert.ok(m.payload.text.includes(`행사 ${key}`), "공식 안내 버튼이 다른 행사로 연결됨");
-      assert.deepEqual(kb[1].map((b) => b.callback_data), [`ack:${key}`, `mute:${key}`], "확인 버튼이 다른 행사로 연결됨");
-      assert.deepEqual(kb[1].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
+      assert.equal(kb.length, 1);
+      const key = kb[0][0].callback_data.split(":")[1];
+      assert.ok(m.payload.text.includes(`<a href="https://example.org/${key}">행사 ${key}</a>`), "제목 링크가 다른 행사로 연결됨"); // 시험 행사는 주소 끝이 행사 키
+      assert.deepEqual(kb[0].map((b) => b.callback_data), [`ack:${key}`, `mute:${key}`], "확인 버튼이 다른 행사로 연결됨");
+      assert.deepEqual(kb[0].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
     }
     E.digestMarkup = f[1].payload.reply_markup;
   });
 
-  await step("요약 행사의 ✅ → 그 메시지의 버튼만 바뀌고 공식 안내 버튼은 그대로", async () => {
-    const key = E.digestMarkup.inline_keyboard[1][0].callback_data.split(":")[1];
+  await step("요약 행사의 ✅ → 그 메시지의 버튼만 바뀜", async () => {
+    const key = E.digestMarkup.inline_keyboard[0][0].callback_data.split(":")[1];
     const n = E.calls.length;
     await hook("kids", E.cb(FRIEND, `ack:${key}`, 777, E.digestMarkup));
     const edit = since(n).find((c) => c.method === "editMessageReplyMarkup");
     const kb = edit.payload.reply_markup.inline_keyboard;
-    assert.equal(kb[0][0].text, "🔗 공식 안내");
-    assert.deepEqual(kb[1].map((b) => b.text), ["✅ 확인함", "🚫 관심없음"]);
+    assert.deepEqual(kb[0].map((b) => b.text), ["✅ 확인함", "🚫 관심없음"]);
   });
 
   await step("정지 시간대: 지금 시각이 정지 구간이면 미뤘다가, 풀리면 발송", async () => {

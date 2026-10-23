@@ -10,7 +10,7 @@ const ev = (key, over = {}) => ({
   checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: ["t"], annual: false, source_id: "test", rec_level: "push", special_reason: "연 1회 특별 개방", ...over,
 });
 
-const E = await startEnv({ tgPort: 9987, wPort: 8811, vars: {} });
+const E = await startEnv({ tgPort: 9987, wPort: 8811, vars: { NOTIFY_FAR_DAYS: "90" } });
 const { admin, hook, msg, sql } = E;
 const to = (n) => E.calls.slice(n).filter((c) => c.method === "sendMessage" && String(c.payload.chat_id) === OWNER);
 
@@ -151,6 +151,26 @@ try {
     assert.equal(to(n).filter((c) => /행사 sbath/.test(c.payload.text)).length, 0);
     const why = sql("SELECT reason FROM outbox WHERE event_key = 'sbath'")[0];
     assert.ok(!why || /blocked:routine_commercial_program/.test(why.reason), JSON.stringify(why));
+  });
+
+  await step("알릴 때: 내년 접수(예: 국립공원 시간대 예약)는 지금 보내지 않고 접수 7일 전에, 날짜가 하나도 없으면 보내지 않음, 먼 행사는 30일 전", async () => {
+    const n = E.calls.length;
+    await admin("/admin/enqueue", { events: [
+      ev("rmnp", { title: "Timed entry reservations", source_id: "nps", start_date: null, registration_opens: plus(190), special_basis: "scarce_quota_or_lottery" }),
+      ev("nodate", { title: "Some permit", source_id: "nps2", start_date: null }),
+      ev("farfest", { title: "Far festival", source_id: "x9", start_date: plus(200) }),
+      ev("soonreg", { title: "Camp signup", source_id: "x10", start_date: plus(60), registration_opens: plus(3) })] });
+    const r = await admin("/admin/dispatch", { ignoreQuiet: true });
+    const got = to(n).map((c) => c.payload.text);
+    assert.ok(got.some((t) => /행사 soonreg/.test(t)), "7일 안 접수는 지금");
+    for (const k of ["rmnp", "nodate", "farfest"]) assert.ok(!got.some((t) => new RegExp(`행사 ${k}\\b`).test(t)), k + " 가 지금 감");
+    const rows = Object.fromEntries(sql("SELECT event_key, status, reason, next_attempt_at FROM outbox WHERE event_key IN ('rmnp','nodate','farfest')").map((x) => [x.event_key, x]));
+    assert.equal(rows.rmnp.status, "pending"); assert.equal(rows.rmnp.next_attempt_at.slice(0, 10), plus(183), "접수 7일 전");
+    assert.equal(rows.farfest.next_attempt_at.slice(0, 10), plus(170), "행사 30일 전");
+    assert.equal(rows.nodate.status, "skipped"); assert.equal(rows.nodate.reason, "no-date");
+    const p = await admin("/admin/outbox-preview");
+    assert.ok(p.skipped.scheduled >= 2 && p.skipped["no-date"] === undefined, JSON.stringify(p.skipped));
+    assert.ok(r.deferred >= 2);
   });
 
   await step("사용액 경고는 경고만(멈춘다는 말·예산 승인 요청 없음), 카드·충전 안 함 명시", async () => {
