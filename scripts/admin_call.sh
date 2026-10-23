@@ -39,7 +39,8 @@ def red(x, k=None):
     return x
 d = red(d)
 if isinstance(d.get("events"), list):  # 행사 목록은 확인에 필요한 필드만(주석 길이 제한)
-    d["events"] = [{k: e.get(k) for k in ("event_key", "bot", "title_ko", "start_date", "rec_level", "rec_score", "category", "source_id", "url")} for e in d["events"]]
+    d["events"] = [{k: e.get(k) for k in ("event_key", "bot", "title_ko", "start_date", "rec_level", "rec_score", "category", "source_id", "url")} if isinstance(e, dict) else e
+                   for e in d["events"]]
 print(json.dumps(d, ensure_ascii=False, indent=1))
 PY
 { echo "### $1 (HTTP $code)"; echo '```json'; cat shown.json; echo '```'; } | tee -a "${GITHUB_STEP_SUMMARY:-/dev/null}"
