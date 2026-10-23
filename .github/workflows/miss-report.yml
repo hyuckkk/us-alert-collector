@@ -1,0 +1,45 @@
+name: miss-report
+# 매일 경로별 누락 보고(이슈 #20 대조 고리): GitHub 수집기·Claude 검색·ChatGPT 검색이 각각 놓친 '적극 알림' 행사를
+# 소유자에게만 알리고(누락이 있을 때만), Claude·ChatGPT 누락의 이유와 보완 검색어를 external-inbox/LESSONS.md 에 쌓는다.
+# GitHub 수집기 누락은 외부 입력 처리 때 정보원·검색어로 자동 보완된다(ext_gaps). 한국 알림 시스템과 무관.
+on:
+  schedule:
+    - cron: "20 16 * * *"      # 덴버 오전 10:20(서머타임) — 아침 수집·Claude 검색 뒤
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: miss-report
+  cancel-in-progress: false
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r collector/requirements.txt
+      - name: Worker address
+        run: |
+          bash scripts/cf_env.sh
+          set -a; . "$GITHUB_ENV"; set +a
+          bash scripts/worker_ready.sh
+      - name: Report
+        if: env.READY == '1'
+        run: python collector/miss_report.py
+      - name: Save lessons
+        if: env.READY == '1'
+        run: |
+          if ! git diff --quiet -- external-inbox/LESSONS.md 2>/dev/null || [ -n "$(git status --porcelain external-inbox/LESSONS.md)" ]; then
+            git config user.name "us-alert-collector[bot]"
+            git config user.email "us-alert-collector[bot]@users.noreply.github.com"
+            git add external-inbox/LESSONS.md
+            git commit -m "검색 누락 교훈 갱신 [skip ci]"
+            git push origin HEAD:main
+          fi

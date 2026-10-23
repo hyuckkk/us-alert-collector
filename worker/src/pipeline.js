@@ -591,27 +591,49 @@ export function seriesKey(sourceId, d) {
   return `${sourceId || ""}|${String(d.title || d.title_ko || "").toLowerCase().replace(/\s+/g, " ").trim()}`;
 }
 async function sentSeries(env, chatIds) {
-  const out = new Map();
+  const out = { series: new Map(), urls: new Map(), dated: new Map() };
   if (!chatIds.length) return out;
   const since = new Date(Date.now() - 180 * 86400000).toISOString();
   const rows = await all(env.DB.prepare(
-    "SELECT DISTINCT o.chat_id, o.event_key, e.source_id, json_extract(e.data, '$.title') AS title, json_extract(e.data, '$.title_ko') AS title_ko " +
-    "FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id IN (SELECT value FROM json_each(?1)) " +
+    "SELECT DISTINCT o.chat_id, o.event_key, e.source_id, e.url, json_extract(e.data, '$.title') AS title, json_extract(e.data, '$.title_ko') AS title_ko, " +
+    "json_extract(e.data, '$.start_date') AS start_date FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id IN (SELECT value FROM json_each(?1)) " +
     "AND o.status IN ('sent', 'sending', 'uncertain') AND COALESCE(o.sent_at, o.created_at) >= ?2").bind(JSON.stringify(chatIds.map(String)), since));
-  for (const r of rows) {
-    const k = `${r.chat_id}|${seriesKey(r.source_id, r)}`;
-    if (!out.has(k)) out.set(k, new Set());
-    out.get(k).add(r.event_key);
-  }
+  for (const r of rows) remember(out, r.chat_id, r.source_id, r, r.event_key);
   return out;
 }
-// 이미 같은 회차 묶음의 '다른' 행사를 받았으면 true. 받기로 한 것은 기록해 같은 실행 안의 중복도 막는다
-function sameSeriesSeen(seen, chatId, sourceId, d, eventKey) {
-  const k = `${chatId}|${seriesKey(sourceId, d)}`;
-  const set = seen.get(k);
-  if (set && [...set].some((x) => x !== eventKey)) return true;
-  if (!set) seen.set(k, new Set([eventKey])); else set.add(eventKey);
-  return false;
+function normUrl(u) {
+  return String(u || "").toLowerCase().replace(/^https?:\/\/(www\.)?/, "").replace(/[?#].*$/, "").replace(/\/+$/, "");
+}
+const WEAK = new Set(["with", "from", "free", "night", "event", "events", "무료", "행사", "체험", "개방", "야간"]);
+function titleTokens(d) {
+  const en = String(d.title || "").toLowerCase().match(/[a-z0-9]{4,}/g) || [];
+  const ko = String(d.title_ko || "").match(/[가-힣]{2,}/g) || [];
+  return new Set([...en, ...ko].filter((w) => !WEAK.has(w)));
+}
+function remember(seen, chatId, sourceId, d, eventKey) {
+  const add = (m, k, v) => { if (!m.has(k)) m.set(k, []); m.get(k).push(v); };
+  add(seen.series, `${chatId}|${seriesKey(sourceId, d)}`, { key: eventKey });
+  if (d.url) add(seen.urls, `${chatId}|${normUrl(d.url)}`, { key: eventKey });
+  if (d.start_date) add(seen.dated, `${chatId}|${d.start_date}`, { key: eventKey, tokens: titleTokens(d) });
+}
+// 이 사람이 이미 받은(또는 이번 실행에서 받기로 한) 것과 같은 행사면 사유를 돌려준다. 아니면 기록하고 null.
+// 1) 같은 정보원·같은 원제목의 다른 회차 2) 같은 공식 주소(다른 경로·정보원이 다른 키로 등록) 3) 같은 날짜 + 제목이 대부분 같음
+// 같은 행사의 변경 알림(같은 event_key)은 막지 않는다.
+function sameAsSent(seen, chatId, sourceId, d, eventKey) {
+  const other = (list) => (list || []).some((x) => x.key !== eventKey);
+  if (other(seen.series.get(`${chatId}|${seriesKey(sourceId, d)}`))) return "same-series";
+  if (d.url && other(seen.urls.get(`${chatId}|${normUrl(d.url)}`))) return "same-url";
+  if (d.start_date) {
+    const t = titleTokens(d);
+    const hit = (seen.dated.get(`${chatId}|${d.start_date}`) || []).some((x) => {
+      if (x.key === eventKey || t.size < 2 || x.tokens.size < 2) return false;
+      const common = [...t].filter((w) => x.tokens.has(w)).length;
+      return common / Math.min(t.size, x.tokens.size) >= 0.6;
+    });
+    if (hit) return "same-event-other-source";
+  }
+  remember(seen, chatId, sourceId, d, eventKey);
+  return null;
 }
 
 export async function dispatch(env, opts = {}) {
@@ -646,7 +668,8 @@ export async function dispatch(env, opts = {}) {
       if (tm.skip) { done.push({ id: row.id, status: "skipped", reason: tm.skip }); r.skipped++; continue; }
       if (tm.defer) { done.push({ id: row.id, status: "pending", reason: "scheduled", next_attempt_at: tm.defer }); r.deferred++; continue; }
     }
-    if (sameSeriesSeen(series, row.chat_id, row.source_id, data, row.event_key)) { done.push({ id: row.id, status: "skipped", reason: "same-series" }); r.skipped++; continue; }
+    { const dup = sameAsSent(series, row.chat_id, row.source_id, data, row.event_key);
+      if (dup) { done.push({ id: row.id, status: "skipped", reason: dup }); r.skipped++; continue; } }
     if (!opts.ignoreQuiet && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.deferred++; continue; }
     sendable.push({ ...row, data });
   }
@@ -727,7 +750,8 @@ export async function digest(env, opts = {}) {
       { const tm = timing(data, dateIn(DENVER), env);
         if (tm.skip) { done.push({ id: x.id, status: "skipped", reason: tm.skip }); continue; }
         if (tm.defer) { done.push({ id: x.id, status: "pending", reason: "scheduled", next_attempt_at: tm.defer }); continue; } }
-      if (sameSeriesSeen(series, g.chat_id, x.source_id, data, x.event_key)) { done.push({ id: x.id, status: "skipped", reason: "same-series" }); continue; }
+      { const dup = sameAsSent(series, g.chat_id, x.source_id, data, x.event_key);
+        if (dup) { done.push({ id: x.id, status: "skipped", reason: dup }); continue; } }
       seenKey.add(x.event_key);
       live.push({ ...x, data });
     }
@@ -1250,6 +1274,15 @@ export async function exportAll(env, url) {
   return { ok: true, generated_at: nowIso(), compare: c, workload: w.rows, gaps: g, usage: u, ...extra };
 }
 
+// 경로별 누락 보고: 소유자에게만, 하루 한 번(같은 key 는 다시 보내지 않음). 지인에게는 보내지 않는다
+export async function missReport(env, body) {
+  const text = String(body.text || "").slice(0, 3900);
+  if (!text) return { ok: false, error: "text required" };
+  if (!(await claimNotice(env, `miss-report:${String(body.key || localDate(env)).slice(0, 40)}`))) return { ok: true, sent: false, reason: "already sent" };
+  const d = await notifyOwner(env, text);
+  return { ok: true, sent: !!d.ok };
+}
+
 // 미발송 대기열 미리 보기(읽기 전용): 지금 기준(추천 재판정·차단 사유·회차 묶음·지난 행사)으로 실제로 나갈 것과 걸러질 것
 export async function outboxPreview(env) {
   const rows = await all(env.DB.prepare(
@@ -1263,7 +1296,7 @@ export async function outboxPreview(env) {
     let why = r.state === "MUTED" ? "muted" : recLevel(d, { interests: r.interests });
     if (!why && isExpired(d, "America/Denver")) why = "expired";
     if (!why) { const tm = timing(d, dateIn(DENVER), env); if (tm.skip) why = tm.skip; else if (tm.defer) why = "scheduled"; }
-    if (!why && sameSeriesSeen(series, r.chat_id, r.source_id, d, r.event_key)) why = "same-series";
+    if (!why) why = sameAsSent(series, r.chat_id, r.source_id, d, r.event_key);
     if (why) { const k = String(why).split(":")[0] + (String(why).includes(":") ? ":" + String(why).split(":")[1].split(",")[0] : ""); out.skipped[k] = (out.skipped[k] || 0) + 1; }
     else out.would_send.push({ owner: isOwner(env, r.chat_id), kind: r.kind, title: d.title_ko || d.title, special_reason: d.special_reason });
   }
