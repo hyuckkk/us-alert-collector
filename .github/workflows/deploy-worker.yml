@@ -78,5 +78,6 @@ jobs:
       - name: Verify public sports calendar routes
         run: |
           set -euo pipefail
-          curl -fsS --retry 3 --retry-delay 1 --max-time 15 "$US_WORKER_URL/sports" | grep -q '<title>Colorado'
+          curl -fsS --retry 3 --retry-delay 1 --max-time 15 "$US_WORKER_URL/sports" -o "$RUNNER_TEMP/colorado-sports.html"
+          grep -q '<title>Colorado' "$RUNNER_TEMP/colorado-sports.html"
           curl -fsS --retry 3 --retry-delay 1 --max-time 20 "$US_WORKER_URL/sports/events?month=2026-10" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("ok") is True and isinstance(d.get("events"),list); print("sports API OK, records:",len(d["events"]),"inspected:",d.get("inspected"))'
