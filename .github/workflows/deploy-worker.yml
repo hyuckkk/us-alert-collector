@@ -74,3 +74,9 @@ jobs:
       - name: Register Telegram webhooks
         run: |
           bash ../scripts/run.sh bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - add BOT_TOKEN_* secrets in GitHub and re-run deploy-worker, then run the 'admin' workflow with action=setup"
+
+      - name: Verify public sports calendar routes
+        run: |
+          set -euo pipefail
+          curl -fsS --retry 3 --retry-delay 1 --max-time 15 "$US_WORKER_URL/sports" | grep -q '<title>Colorado'
+          curl -fsS --retry 3 --retry-delay 1 --max-time 20 "$US_WORKER_URL/sports/events?month=2026-10" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d.get("ok") is True and isinstance(d.get("events"),list); print("sports API OK, records:",len(d["events"]),"inspected:",d.get("inspected"))'
