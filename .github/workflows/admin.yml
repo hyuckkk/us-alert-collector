@@ -40,8 +40,12 @@ jobs:
           [ -n "$ACTION" ] || ACTION=$(head -n1 ticks/admin | tr -d '[:space:]')
           echo "ACTION=$ACTION" >> "$GITHUB_ENV"
           if [ "$ACTION" = "export" ]; then
-            set -a; . "$GITHUB_ENV"; set +a
-            python3 scripts/export_eval.py --out "$RUNNER_TEMP/issue20"
+            code=$(curl -sS -o "$RUNNER_TEMP/export.json" -w "%{http_code}" -H "Authorization: Bearer $US_ADMIN_KEY" "$US_WORKER_URL/admin/export?since=2026-10-01")
+            if [ "${code:0:1}" != "2" ]; then
+              echo "::error title=export::HTTP $code $(head -c 1500 "$RUNNER_TEMP/export.json" | tr '\n' ' ' | sed "s#$US_WORKER_URL#<worker>#g")"; exit 1
+            fi
+            python3 scripts/export_eval.py --from-json "$RUNNER_TEMP/export.json" --out "$RUNNER_TEMP/issue20" 2>&1 | tail -5 | sed 's/^/::notice title=export::/'
+            test -s "$RUNNER_TEMP/issue20/summary.md"
             cat "$RUNNER_TEMP/issue20/summary.md" >> "$GITHUB_STEP_SUMMARY"
           else
             bash scripts/admin_call.sh "$ACTION"
