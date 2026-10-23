@@ -1,6 +1,6 @@
 // 지인별 거리 판정: /city 로 정한 기준 도시에서 너무 먼 일반 행사는 보내지 않는다.
 // 정확한 주소는 저장하지 않고 도시 중심 좌표(공개 지명 좌표, 소수 둘째 자리)만 쓴다.
-// 국립공원 허가·추첨·예약·연례 행사처럼 드물고 멀어도 갈 만한 것은 거리와 상관없이 보낸다.
+// 국립공원 허가·추첨처럼 드물고 멀어도 갈 만한 것은 거리와 상관없이 보낸다(근거가 확인된 희귀 기회만).
 
 // 콜로라도 주요 도시·마을(덴버 광역권, 프런트 레인지, 산간 관광지) 중심 좌표 [위도, 경도]
 export const CITIES = {
@@ -51,11 +51,13 @@ export function miles(a, b) {
   return 3958.8 * 2 * Math.asin(Math.sqrt(x));
 }
 
-// 거리와 상관없이 보낼 행사: 국립·주립공원 허가·예약·추첨, 시간지정 입장, 연례 행사, 드문 체험
-const SPECIAL_TAGS = new Set(["permit", "lottery", "reservation", "timed-entry", "national-park", "state-park", "camping", "rare", "festival"]);
-const SPECIAL_TEXT = /허가|추첨|예약|시간\s*지정|국립공원|주립공원|permit|lottery|timed[- ]entry|national park|reservation|once a year|rare/i;
+// 거리와 상관없이 보낼 행사(이슈 #22: '예약'·'축제'라는 글자만으로는 예외가 아니다)
+// 국립·주립공원 허가·추첨·시간지정 입장, 그리고 추천 판정이 원문 근거로 확인한 드문 기회(비공개 시설 개방·한정 정원·희귀 행사)만
+const SPECIAL_TAGS = new Set(["permit", "lottery", "timed-entry", "national-park", "state-park"]);
+const SPECIAL_TEXT = /허가|추첨|시간\s*지정|국립공원|주립공원|permit|lottery|timed[- ]entry|national park|state park/i;
+const RARE_BASIS = new Set(["restricted_access", "scarce_quota_or_lottery", "rare_one_off"]);
 export function distanceExempt(d) {
-  if (d.annual) return true;
+  if (d.rec_level === "push" && RARE_BASIS.has(d.special_basis)) return true;
   if ((d.tags || []).some((t) => SPECIAL_TAGS.has(String(t).toLowerCase()))) return true;
   return SPECIAL_TEXT.test(`${d.title || ""} ${d.title_ko || ""}`) || d.signup === "lottery";
 }

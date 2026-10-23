@@ -379,6 +379,13 @@ Category = Literal["performance", "festival", "sports", "outdoors", "class", "mu
 Highlight = Literal["선착순", "무료", "예약 필요", "추첨", "접수 예정", "마감 임박", "특별 체험", "허가 필요", "연례 행사"]
 
 
+SpecialBasis = Literal["restricted_access", "public_subsidy_price", "free_limited", "scarce_quota_or_lottery", "rare_one_off", "school_community_nonregular", "none"]
+Blocker = Literal["routine_commercial_program", "routine_performance", "pro_sports", "school_sports_regular", "english_listening_core", "civic_admin",
+                  "age_or_eligibility_mismatch", "ordinary_open_facility", "promo_wording_only", "recurring_series"]
+# 이 중 하나라도 있으면 적극 알림 금지(이슈 #21·#22·#24). 수집·저장은 그대로, 발송만 거른다
+PUSH_BLOCKERS = set(Blocker.__args__)
+
+
 class Recommendation(BaseModel):
     index: int
     level: Literal["push", "interest", "none"]
@@ -390,38 +397,59 @@ class Recommendation(BaseModel):
     highlights: list[Highlight]
     reason: str
     special_reason: str
+    special_basis: SpecialBasis
+    evidence_quote: str
+    usual_alternative: str
+    blockers: list[Blocker]
 
 
 class RecommendBatch(BaseModel):
     items: list[Recommendation]
 
 
-RECOMMEND_RULES = """You are the editor of three Telegram alert channels for a Korean family and their local friends in the Denver metro (base: Westminster, CO):
-- life: adults' hobbies, culture, sports, classes, outings, experiences
-- family: things a whole family does together (budget for 5 people: 2 adults + 3 children)
-- kids: activities, classes, camps and programs for school-age children
-The system collects every public notice; you decide what is worth a PUSH alert. The owner does NOT want ordinary schedules of things they could attend any time at full price.
-They want SPECIAL OPPORTUNITIES: rare or time-limited access, publicly funded or sponsored programs that are much cheaper than usual or free, short registration windows, small quotas.
-Judge by purpose, rarity and real benefit — never by keywords like family, free, concert, Red Rocks or university, and never because a venue is famous.
+RECOMMEND_RULES = """You are the editor of three Telegram alert channels (life, family, kids) for Korean residents in the Denver metro (base: Westminster, CO) and their local friends.
+- life: adults' outings and experiences; family: things a whole family does together (budget for 5 people: 2 adults + 3 children); kids: school-age children's activities and camps.
+This editorial policy is the purpose of the service and applies to all three channels and every subscriber. The system collects everything; you decide what deserves a PUSH alert.
 
-level:
-  push — ONLY if there is a concrete special reason, and you must state it in special_reason:
-    * rarely open / special access: military base, aviation or space facility, special facility open house, rides, behind-the-scenes, one-off tours
-    * time-limited or scarce: one-off pop-up, short season, limited spots, first-come or lottery, free tickets that run out, park permits / limited reservations, non-regular camps
-    * notable price advantage: city/county/state/public agency/university-sponsored performance, experience, sports, education or festival that is free or far below normal price
-    * high experience value for the cost (paid is fine when truly special)
-  interest — only for people who chose this category: routine recurring programs (weekly classes, regular library meetups, support groups), toddler/baby-only, senior-only, niche talks.
-  none — not worth alerting: council/board/commission/committee meetings, hearings, drug take-back, administrative services; routine full-price concerts and shows (including ordinary Red Rocks concerts and regular theater/concert-hall seasons); routine university seminars, colloquia, interdisciplinary panels and lectures; ordinary sports games and facilities that are always open; members/staff/students-only items; programs whose age or eligibility does not fit the audience.
-  Any venue (including Red Rocks) is still judged on its own merits: a genuinely free, publicly sponsored, limited-access or very rare event there can be push.
-- special_reason: for push, ONE short Korean sentence saying why it is special (e.g. "평소 비공개인 공군기지 비행장을 하루만 개방", "시 지원으로 정가의 절반 이하", "선착순 30명·접수 기간 3일"). Empty for interest/none. Never invent a reason that is not in the source.
-- Consider total cost for a family of five, residency/age eligibility, travel from Westminster and whether pre-registration is needed. If eligibility or total cost is unclear, say so in reason and prefer interest over push unless the opportunity is clearly special.
-- Distinguish info useful now (2026, for local friends) from early registration or annual events relevant to a stay from late June 2027 to August 2028; both can be push if special.
-- bot: the channel whose audience fits best (toddler-only → kids with interest; senior-only → life with interest).
-- category: best fit from the list. score 0–100 within its level (special, time-limited, rare, first-come, registration opening soon → higher).
+THE KEY QUESTION: "Is this just an ordinary product or schedule that anyone can buy or attend at its normal price on another day?" If yes, it is NOT push, however it is advertised.
+PUSH is for opportunities that would be a pity to miss: experiences normally impossible, publicly funded or sponsored programs much cheaper than usual or free, scarce quotas/lotteries/permits, genuinely rare one-off events, and hands-on experiences.
+Prefer direct participation (riding, making, trying, entering a closed facility, joining a community event) over passive listening. The audience does not follow long spoken English well.
+
+Fill these fields for every item:
+- special_basis: the single strongest verified basis for push, or none:
+    restricted_access - a place normally closed to the public opens (military base, airfield, aviation/space/research facility, behind-the-scenes, special rides);
+    public_subsidy_price - a city/county/state/school/public agency/university funds it so it is free or far below the usual market price for the same thing;
+    free_limited - free tickets/admission days with limited supply (e.g. museum or zoo free days, first-come free tickets);
+    scarce_quota_or_lottery - permits, lotteries, timed-entry or registrations with a small quota or a short window;
+    rare_one_off - a genuinely rare event (once a year or less, short season, pop-up) whose core is an experience you cannot normally get;
+    school_community_nonregular - a non-regular school/university community event the public can join or watch (e.g. district/regional tournament, school field day, student-run festival, community engagement day);
+    none - no such basis.
+- evidence_quote: a short phrase copied EXACTLY (verbatim, original language) from the source text that proves special_basis (e.g. "free admission", "open to the public for one day only", "limited to 30 participants", "funded by SCFD"). Empty if none. Never paraphrase; never invent.
+- usual_alternative: one short Korean phrase on how one can normally get the same thing (e.g. "같은 수업이 매주 $20에 상시 운영", "정규 시즌 홈경기 상시 판매", "평소에도 무료 개방"). Empty if there is no ordinary alternative.
+- blockers: every trait that applies (these forbid push):
+    routine_commercial_program - a class, session or service sold at its normal price by a gym, recreation/fitness center, studio, shop or venue: yoga, meditation, sound bath, singing bowl, healing, breathwork, wellness, massage, fitness/dance class, cooking, crafts, pottery, painting, adult hobby class, paid one-day workshop or drop-in, regular camp sessions - even if a public recreation district runs it, even if it is a single date, needs registration or has limited spots, as long as that is how it is normally sold;
+    routine_performance - regular-season or full-price concerts, theater, orchestras (including civic/city orchestras' regular concerts), ordinary Red Rocks shows, ordinary concert-hall programs;
+    pro_sports - professional or semi-pro league games (NBA, NHL, NFL, MLB, MLS, volleyball leagues etc.);
+    school_sports_regular - regular-season games or meets of elementary, middle, high school or college/university teams, including club sports (these go to a separate calendar page, not alerts); a district/state tournament or a school field day the public can join is NOT this blocker;
+    english_listening_core - the value is mainly listening to or reading English: lectures, talks, seminars, colloquia, panels, author/director Q&A, documentary screening with discussion, docent-led talks, book clubs, conversation groups, theory-heavy science talks;
+    civic_admin - council/board/commission meetings, hearings, administrative services, drug take-back, recycling drop-off;
+    age_or_eligibility_mismatch - toddler/baby-only, senior-only, members/staff/students-only, residents-only that the audience cannot join, or ages that do not fit the household;
+    ordinary_open_facility - a facility, museum, park or gallery that is simply open as usual;
+    promo_wording_only - the only "special" claim is marketing wording ("special", "one time", "limited", "exclusive", "reservation required", "small group") with no verified scarcity, price advantage or access;
+    recurring_series - one date of a weekly or monthly recurring program (e.g. a tour every Friday).
+- level:
+    push - ONLY when special_basis is not none, evidence_quote is verbatim in the source, and blockers is empty. Free alone is not enough (a library's always-free weekly meetup is not push); paid is fine if the experience itself is rare (e.g. a holiday train ride that runs only a few weeks a year).
+    interest - worthwhile for people who chose this category but not special (routine classes, recurring programs, ordinary performances).
+    none - not worth alerting (items such as civic_admin, pro_sports, school_sports_regular, english_listening_core, mismatched age).
+    When in doubt, do not push.
+- special_reason: for push, ONE short Korean sentence stating the verified reason (e.g. "평소 비공개인 공군기지 비행장을 하루만 개방", "시 지원으로 무료, 선착순 30명"). Empty otherwise. It must follow from evidence_quote.
+- Consider the total cost for a family of five, age/residency eligibility for a stay from late June 2027 to August 2028, travel from Westminster, and pre-registration. Far places are push only when the experience is truly rare. If eligibility or total cost is unclear, say so in reason and do not push.
+- Any venue is judged on the event itself: a famous place is not a reason, and a genuinely free, publicly sponsored or restricted-access event at a famous place can still be push.
+- bot: the channel whose audience fits best. category: best fit. score 0-100 within its level.
 - title_ko: concise natural Korean title (max ~30 characters).
 - summary_ko: one or two short Korean sentences on what you actually do or get there. No dates, prices or addresses.
-- highlights: only those the item supports: 선착순, 무료, 예약 필요, 추첨, 접수 예정, 마감 임박, 특별 체험, 허가 필요, 연례 행사.
-- reason: one short Korean sentence explaining the level."""
+- highlights: only those the item supports: 선착순, 무료, 예약 필요, 추첨, 접수 예정, 마감 임박, 특별 체험, 허가 필요, 연례 행사. Use 무료 only if the source states it is free.
+- reason: one short Korean sentence explaining the level (for interest/none, name the main blocker or the missing basis)."""
 
 
 @dataclass
@@ -527,12 +555,44 @@ def gap_analysis(client, cfg: dict, items: list[dict], registered_hosts: list[st
     return {g.index: g for g in resp.parsed_output.items}
 
 
-def apply_recommendation(ev: dict, r: Recommendation) -> dict:
+SOURCE_FIELDS = ("title", "org", "location", "cost_text", "time_text", "age_text", "eligibility", "status_note", "registration_status", "signup")
+
+
+def _norm(t: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[\u2018\u2019\u201c\u201d\"'`]", "", str(t or "").lower())).strip()
+
+
+def push_gate(r: Recommendation, text: str | None) -> str | None:
+    """적극 알림 결정 검증(이슈 #24). 통과하면 None, 아니면 막은 사유(내부 기록용).
+    모델의 판단만 믿지 않는다: 근거 종류·원문 인용·차단 사유를 코드로 다시 본다."""
+    if r.level != "push":
+        return None
+    if not (r.special_reason or "").strip():
+        return "no-special-reason"
+    if r.special_basis == "none":
+        return "no-special-basis"
+    bad = [x for x in r.blockers if x in PUSH_BLOCKERS]
+    if bad:
+        return "blocked:" + ",".join(bad)
+    q = _norm(r.evidence_quote)
+    if len(q) < 4:
+        return "no-evidence-quote"
+    if text is not None and q not in _norm(text):
+        return "evidence-not-in-source"   # 원문에 없는 근거(지어낸 근거·홍보 문구 해석)는 인정하지 않는다
+    return None
+
+
+def apply_recommendation(ev: dict, r: Recommendation, text: str | None = None) -> dict:
+    """판정 적용. text 를 주면 근거 인용이 원문에 실제로 있는지 대조한다(없으면 적극 알림 불가)."""
     special = (r.special_reason or "").strip()[:160]
-    # 특별한 근거가 없으면 적극 알림으로 보내지 않는다(소유자 기준: 정가·상시 공연·일상 세미나 제외)
-    level = r.level if (r.level != "push" or special) else "interest"
+    if text is not None:  # 모델이 본 것과 같게: 원문 + 추출된 행사 정보(제목·비용·자격 등)
+        text = text + " " + " ".join(str(ev.get(k) or "") for k in SOURCE_FIELDS)
+    blocked = push_gate(r, text)
+    level = "interest" if blocked else r.level
     ev.update({"rec_level": level, "bot": r.bot, "category": r.category, "rec_score": r.score, "summary_ko": r.summary_ko.strip()[:240],
-               "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200], "special_reason": special if level == "push" else ""})
+               "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200], "special_reason": special if level == "push" else "",
+               "special_basis": r.special_basis, "evidence_quote": r.evidence_quote.strip()[:200], "usual_alternative": r.usual_alternative.strip()[:120],
+               "rec_blockers": list(dict.fromkeys(r.blockers)), "push_blocked": blocked or ""})
     if r.title_ko.strip():
         ev["title_ko"] = r.title_ko.strip()[:60]
     return ev

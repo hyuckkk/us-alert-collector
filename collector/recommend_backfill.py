@@ -42,14 +42,14 @@ def dump(api: WorkerAPI, bot: str = "", sent: bool = False) -> list[dict]:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--usd-cap", type=float, default=5.0)
+    ap.add_argument("--usd-cap", type=float, default=0.0, help="0 이하면 상한 없음")
     ap.add_argument("--out", default=str(ROOT / "eval/recommend_backfill.json"))
     ap.add_argument("--bots", default="life,family,kids")
     ap.add_argument("--only-sent", action="store_true")
     ap.add_argument("--skip-done", action="store_true", help="이미 판정이 있는 행사는 건너뜀")
     a = ap.parse_args(argv)
     cfg = json.loads((ROOT / "config/models.json").read_text())
-    usage = ai.Usage(cfg.get("prices", {}), cap=a.usd_cap)
+    usage = ai.Usage(cfg.get("prices", {}), cap=a.usd_cap if a.usd_cap and a.usd_cap > 0 else None)  # 0 이하 = 상한 없음
     api = WorkerAPI.from_env()
     sent_life = {e["event_key"]: e for e in dump(api, "life", sent=True)}
     events: list[dict] = []
@@ -84,9 +84,10 @@ def main(argv=None) -> int:
         if not r:
             continue
         # 수집기와 같은 규칙으로 적용(특별 근거가 없으면 적극 알림으로 두지 않음)
-        x = ai.apply_recommendation({"title_ko": e.get("title_ko")}, r)
+        x = ai.apply_recommendation({k: e.get(k) for k in SHOW}, r, texts[j] or "")
         updates.append({"event_key": e["event_key"], **{k: x.get(k) for k in ("rec_level", "bot", "category", "rec_score", "summary_ko", "highlights",
-                                                                              "rec_reason", "special_reason", "title_ko")}})
+                                                                              "rec_reason", "special_reason", "title_ko", "special_basis", "evidence_quote",
+                                                                              "usual_alternative", "rec_blockers", "push_blocked")}})
         rows.append({"event_key": e["event_key"], "was_bot": e.get("bot"), "was_title": e.get("title_ko") or e.get("title"), "source_id": e.get("source_id"),
                      "sent_life": e["event_key"] in sent_life, **updates[-1]})
     for i in range(0, len(updates), 100):

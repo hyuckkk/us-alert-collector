@@ -122,10 +122,9 @@ jobs:
         run: |
           bash scripts/cf_env.sh
           set -a; . "$GITHUB_ENV"; set +a
-          WANT=$(grep -oE '^usd_cap=[0-9.]+' ticks/recommend | cut -d= -f2); WANT=${WANT:-5}
+          # 소유자 지시(2026-10-23): 재평가는 상한 없이 전체를 판정한다. 개발 예산 장부에는 기록만 한다(실제 한계는 API 크레딧)
           ARGS=$(grep -oE '^args=.*' ticks/recommend | cut -d= -f2-)
-          python3 scripts/dev_budget.py check --cap "$WANT" | tee budget.txt
-          CAP=$(grep -oE '^CAP=[0-9.]+' budget.txt | cut -d= -f2); [ -n "$CAP" ] || exit 1
+          CAP=0
           echo "REC_CAP=$CAP" >> "$GITHUB_ENV"; echo "REC_STARTED=1" >> "$GITHUB_ENV"
           export USAGE_LIVE_FILE=reports/usage-recommend.json
           python collector/recommend_backfill.py --usd-cap "$CAP" $ARGS

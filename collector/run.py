@@ -496,7 +496,7 @@ class Run:
                     self.m["recommend_missing"] = len(ro.missing)
                     held |= {evs[j]["_entry_index"] for j in ro.missing}
                     for j, r in ro.recs.items():
-                        ai.apply_recommendation(evs[j], r)
+                        ai.apply_recommendation(evs[j], r, entries[evs[j]["_entry_index"]].text or "")
                     evs = [ev for ev in evs if ev["_entry_index"] not in held]
                     for lv in ("push", "interest", "none"):
                         self.m[f"rec_{lv}"] = self.m.get(f"rec_{lv}", 0) + sum(1 for ev in evs if ev.get("rec_level") == lv)

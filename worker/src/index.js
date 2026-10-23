@@ -312,7 +312,9 @@ async function handleMessage(env, bot, m) {
       await reply(`내 텔레그램 ID: ${fromId}\n\n아직 소유자가 설정되지 않았습니다. 이 숫자를 GitHub 비밀값 OWNER_CHAT_ID 로 넣고 deploy-worker 를 다시 실행하면 이 계정이 소유자가 됩니다.`);
       return;
     }
-    await reply(`${BOTS[bot].label} 알림 신청이 접수되었습니다. 소유자 승인 후 알림이 옵니다.\n내 텔레그램 ID: ${fromId}`);
+    await reply(`${BOTS[bot].label} 알림 신청이 접수되었습니다. 소유자 승인 후 알림이 옵니다.\n내 텔레그램 ID: ${fromId}\n\n` +
+      "승인된 뒤 /city Westminster 40 처럼 기준 도시와 거리(마일)를 보내면 먼 곳의 일반 행사는 빼고 받습니다(/city off 로 해제). " +
+      "이 설정은 받는 범위만 줄이며 검색 지역을 넓히지는 않습니다.");
     if (cmd === "/start" && (await claimNotice(env, `join:${bot}:${fromId}`))) {
       await notifyOwner(env, `[${BOTS[bot].label}] 새 수신 신청: ${[from.first_name, from.last_name].filter(Boolean).join(" ")} ${from.username ? "@" + from.username : ""}\nID ${fromId}\n승인: ${BOTS[bot].handle} 에서 /approve ${fromId}${ownerOnly(env) ? "\n(현재 소유자 전용 모드라 승인해도 1차 검증 전에는 발송되지 않습니다)" : ""}`);
     }
@@ -629,6 +631,7 @@ export default {
         if (p === "/admin/workload") return json(await pipeline.workload(env, request.method, body, url));
         if (p === "/admin/inbox" && POST) return json(await pipeline.inbox(env, body));
         if (p === "/admin/compare") return json(await pipeline.compare(env, url));
+        if (p === "/admin/event") return json(await pipeline.eventLookup(env, url));
         if (p === "/admin/catchup" && POST) {
           try { return json(await pipeline.catchup(env, body)); } catch (e) { return json({ ok: false, error: String(e && e.stack || e).slice(0, 1500) }, 500); }
         }

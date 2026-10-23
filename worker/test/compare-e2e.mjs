@@ -113,6 +113,46 @@ try {
     assert.equal(s2.skipped["same-series"], 2, "train2 와, 이미 받은 'Event late' 의 다른 날짜(late2)");
   });
 
+  await step("메시지: 주소는 구글 지도 링크, 비용 정보 없으면 '입장료 미확인'(신청 불필요와 구분), 모델이 '무료'라 해도 비용 근거 없으면 무료 표시 안 함", async () => {
+    const n = E.calls.length;
+    await admin("/admin/enqueue", { events: [ev("hockey2", { title: "Community Skate Day", source_id: "s-hockey", location: "Student Recreation Center, Ice Rink, 1855 Pleasant Street",
+      city: "Boulder", cost_text: null, signup: "none", highlights: ["무료"] }), ev("freeday", { title: "Free Day", source_id: "s-free", cost_text: "무료 (시간지정 입장권 필요)", location: "Denver Zoo" })] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    const t = to(n).map((c) => c.payload.text);
+    const h = t.find((x) => /행사 hockey2/.test(x));
+    assert.match(h, /📍 <a href="https:\/\/www\.google\.com\/maps\/search\/\?api=1&amp;query=Student%20Recreation%20Center%2C%20Ice%20Rink%2C%201855%20Pleasant%20Street%2C%20Boulder%2C%20CO">Student Recreation Center, Ice Rink, 1855 Pleasant Street<\/a>/);
+    assert.match(h, /💲 입장료 미확인/);
+    assert.match(h, /신청 불필요/);
+    assert.ok(!/🆓/.test(h), "비용 근거 없이 무료 표시");
+    const f = t.find((x) => /행사 freeday/.test(x));
+    assert.match(f, /🆓 무료/); assert.match(f, /💲 무료 \(시간지정 입장권 필요\)/);
+  });
+
+  await step("같은 회차 묶음(매주 금요일 투어의 다른 날짜)은 사람마다 한 통만 — 즉시·요약 모두, 같은 행사의 변경 알림은 막지 않음", async () => {
+    const n = E.calls.length;
+    await admin("/admin/enqueue", { events: [ev("fri1", { title: "Friday Highlights Tour", source_id: "railroad", start_date: plus(7) }),
+      ev("fri2", { title: "Friday Highlights Tour", source_id: "railroad", start_date: plus(14) })] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    await admin("/admin/enqueue", { events: [ev("fri3", { title: "Friday  highlights tour", source_id: "railroad", start_date: plus(21), urgency: "weekly" })] });
+    await admin("/admin/digest", { force: true });
+    const got = to(n).filter((c) => /행사 fri/.test(c.payload.text));
+    assert.equal(got.length, 1, got.map((c) => c.payload.text.split("\n")[0]).join(" / "));
+    const m = n;
+    await admin("/admin/enqueue", { events: [ev("fri1", { title: "Friday Highlights Tour", source_id: "railroad", start_date: plus(8) })] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    assert.equal(to(m).filter((c) => /🔄 변경/.test(c.payload.text) && /행사 fri1/.test(c.payload.text)).length, 1, "같은 행사의 날짜 변경은 알림");
+  });
+
+  await step("차단 사유가 기록된 적극 알림은 발송 직전에 다시 막힘(대기열에 이미 들어간 것 포함)", async () => {
+    const n = E.calls.length;
+    await admin("/admin/enqueue", { events: [ev("sbath", { title: "Sound Bath", source_id: "hh", rec_blockers: ["routine_commercial_program"] }),
+      ev("sbath2", { title: "Sound Bath 2", source_id: "hh", push_blocked: "evidence-not-in-source" })] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    assert.equal(to(n).filter((c) => /행사 sbath/.test(c.payload.text)).length, 0);
+    const why = sql("SELECT reason FROM outbox WHERE event_key = 'sbath'")[0];
+    assert.ok(!why || /blocked:routine_commercial_program/.test(why.reason), JSON.stringify(why));
+  });
+
   await step("사용액 경고는 경고만(멈춘다는 말·예산 승인 요청 없음), 카드·충전 안 함 명시", async () => {
     const n = E.calls.length;
     await admin("/admin/usage", { model: "claude-opus-5-5", usd: 101, calls: 1, budget: 100 });

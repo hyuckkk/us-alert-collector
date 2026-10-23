@@ -7,6 +7,7 @@ case "$1" in
   clicks|status|watchdog|source-health|baseline|usage) ;;
   compare) set -- "compare?since=${COMPARE_SINCE:-2026-10-01}" ;;
   workload) set -- "workload?since=${COMPARE_SINCE:-2026-10-01}" ;;
+  event) set -- "event?q=$(python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.argv[1]))' "${SKIP_KEY:?key 입력에 검색어}")" ;;
   catchup) args+=(-X POST -H "content-type: application/json" --data "{}") ;;
   catchup-dry) args+=(-X POST -H "content-type: application/json" --data '{"dry": true}'); set -- catchup ;;
   dump-life|dump-family|dump-kids) set -- "events-dump?bot=${1#dump-}" ;;
@@ -39,7 +40,7 @@ def red(x, k=None):
         return re.sub(r"(?<!\d)-?\d{9,}(?!\d)", "<id>", x.replace(sys.argv[1], "<worker>"))
     return x
 d = red(d)
-if isinstance(d.get("events"), list):  # 행사 목록은 확인에 필요한 필드만(주석 길이 제한)
+if isinstance(d.get("events"), list) and "q" not in d:  # 행사 목록은 확인에 필요한 필드만(주석 길이 제한). 한 건 추적(event)은 전체
     d["events"] = [{k: e.get(k) for k in ("event_key", "bot", "title_ko", "start_date", "rec_level", "rec_score", "category", "source_id", "url")} if isinstance(e, dict) else e
                    for e in d["events"]]
 print(json.dumps(d, ensure_ascii=False, indent=1))
