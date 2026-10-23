@@ -60,3 +60,8 @@ jobs:
             [ -f "$file" ] || continue
             python3 collector/external_ingest.py --payload-file "$file"
           done < "$RUNNER_TEMP/inbox-paths.txt"
+      - name: Dispatch verified Colorado alerts
+        if: env.READY == '1'
+        run: |
+          bash scripts/admin_call.sh dispatch
+          bash scripts/admin_call.sh digest
