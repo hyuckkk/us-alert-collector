@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-23T01:11:05.303Z",
+  "test": false,
+  "events": [
+    {
+      "title": "RMMA Fall Carnival: free aircraft and airport rescue equipment experience",
+      "url": "https://www.jeffco.us/5240/2026-Fall-Carnival",
+      "start_date": "2026-10-24",
+      "end_date": "2026-10-24",
+      "time": "11:00 AM–1:00 PM MDT",
+      "location": "Rocky Mountain Metropolitan Airport Terminal, 11755 Airport Way, Broomfield, CO 80021",
+      "cost": "Free; no registration required; free terminal parking",
+      "age": "All ages",
+      "audience": "family",
+      "description": "Official airport-run one-day free Fall Carnival: aircraft static displays, flight simulator, Airport Rescue and Fire Fighting vehicles, behind-the-scenes airport activities, pumpkin painting, bounce house and aviation partners. Direct hands-on activity rather than an English lecture. Public welcome, October 24, 2026."
+    },
+    {
+      "title": "Downtown Westminster Trunk or Treat Halloween Spooktacular",
+      "url": "https://www.westminsterchamber.biz/events/details/trunk-or-treat-halloween-spooktacular-free-community-event-23804?calendarMonth=2026-10-01",
+      "start_date": "2026-10-24",
+      "end_date": "2026-10-24",
+      "time": "12:00 PM–2:00 PM MDT",
+      "location": "Kokopelli Beer Company parking lot, 8931 N Harlan St, Westminster, CO 80031",
+      "cost": "Free admission",
+      "age": "All ages, family-friendly",
+      "audience": "family",
+      "description": "Westminster Chamber of Commerce verified free one-day Trunk or Treat with creatively decorated vehicle trunks offering Halloween candy, bubbles, crafts, music and costume-friendly family activities. Event announced for Saturday Oct 24 2026; not a regular commercial show."
+    }
+  ],
+  "workload_note": "Created via ChatGPT independent official-source research; do not treat these as delivered until US Worker confirms successful sends."
+}
