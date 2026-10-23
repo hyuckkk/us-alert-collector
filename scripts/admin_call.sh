@@ -47,6 +47,6 @@ print(json.dumps(d, ensure_ascii=False, indent=1))
 PY
 { echo "### $1 (HTTP $code)"; echo '```json'; cat shown.json; echo '```'; } | tee -a "${GITHUB_STEP_SUMMARY:-/dev/null}"
 # 결과를 주석으로도 남긴다(로그를 받을 수 없는 환경에서 API 로 확인). 주석 한 개 최대 약 4KB
-python3 -c "import json;s=json.dumps(json.load(open('shown.json')),ensure_ascii=False,separators=(',',':'));[print('::notice title=admin $1 (%02d)::%s' % (i+1, s[j:j+3500])) for i,j in enumerate(range(0,min(len(s),140000),3500))]"
+python3 -c "import json,sys;s=json.dumps(json.load(open('shown.json')),ensure_ascii=False,separators=(',',':'));t=sys.argv[1].split('?')[0];[print('::notice title=admin {} ({:02d})::{}'.format(t, i+1, s[j:j+3500])) for i,j in enumerate(range(0,min(len(s),140000),3500))]" "$1"
 case "$code" in 2*) ;; *) exit 1 ;; esac
 python3 -c "import json,sys; sys.exit(0 if json.load(open('out.json')).get('ok') else 1)"
