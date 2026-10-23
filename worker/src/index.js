@@ -184,6 +184,7 @@ const HELP_ALL = [
   "/from 2027-07-01 — 이 날짜 이후 행사만 받기 (/from off 로 해제)",
   "/digest daily|weekly|off — 요약 방식 · /digest 8 — 요약 받을 시각(현지)",
   "/myid — 내 텔레그램 ID",
+  "/sports — 초·중·고·대학 정기경기 달력 링크",
   "/more — 알림으로 보내지 않고 보관한 행사 5건 더 보기",
   "/interests — 기본 알림에서 빠지는 분야(영유아·시니어·회의 등)를 골라 받기",
   "/stop — 이 봇 알림 그만 받기 (다시 받으려면 /start)",
@@ -330,6 +331,11 @@ async function handleMessage(env, bot, m) {
   if (!active) return;
   if (isOwner(env, fromId)) await pipeline.watchdog(env); // GitHub Actions 가 통째로 멈춰도 소유자가 봇을 쓰면 감지
   if (["/settings", "/quiet", "/tz", "/city", "/from", "/digest"].includes(cmd)) { await reply(await personCommand(env, fromId, cmd, args)); return; }
+  if (cmd === "/sports") {
+    const origin = await kvGet(env, "public_worker_origin");
+    await reply(origin ? `🏟️ 학교·대학 스포츠 경기 달력\n\n이번 달·다음 달 / 학교급·종목·요금별 검색\n${origin}/sports` : "달력 사이트 주소 등록을 확인하는 중입니다.");
+    return;
+  }
   if (cmd === "/interests") { await reply(await interestsCommand(env, fromId, args)); return; }
   if (cmd === "/more") {
     if (ownerOnly(env) && !isOwner(env, fromId)) { await reply("지금은 소유자 시험 기간이라 보내 드릴 수 없습니다."); return; }
@@ -453,6 +459,7 @@ async function keyCheckReport(env, body) {
 async function setupWebhooks(env, origin) {
   if (!env.ADMIN_KEY) return { ok: false, error: "ADMIN_KEY not set" };
   const secret = await hookSecret(env);
+  await kvSet(env, "public_worker_origin", origin); // /sports bot command uses the live webhook origin, never a guessed subdomain
   const out = {};
   for (const bot of Object.keys(BOTS)) {
     if (!botToken(env, bot)) { out[bot] = { ok: false, error: `${BOTS[bot].secret} not set` }; continue; }
@@ -462,6 +469,7 @@ async function setupWebhooks(env, origin) {
       commands: [
         { command: "start", description: "알림 받기 시작" },
         { command: "settings", description: "내 설정 보기" },
+        { command: "sports", description: "학교·대학 스포츠 달력" },
         { command: "more", description: "보관한 행사 더 보기" },
         { command: "interests", description: "관심 분야 고르기" },
         { command: "help", description: "도움말" },
