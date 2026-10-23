@@ -3,7 +3,7 @@ name: external-inbox
 #  - push 한 사람이 저장소 쓰기 권한이 있어야 하므로 외부인은 넣을 수 없다. 파일 내용은 명령에 끼워 넣지 않고 Python 이 읽는다.
 #  - 새로 추가된 파일만(git diff --diff-filter=A). 같은 파일·같은 내용은 Worker 기록으로 한 번만 처리한다.
 #  - 한국 알림 시스템과 무관(미국 Worker us-alert-worker 만 호출). 발송은 Worker 의 소유자 전용 설정을 따른다.
-#  - repository_dispatch 경로(external-events.yml)는 그대로 둔다.
+#  - repository_dispatch 경로(external-events.yml)는 그대로 둔다. 예전 chatgpt-inbox.yml 은 이 워크플로로 합쳤다(같은 파일을 두 번 처리하지 않게).
 on:
   push:
     paths:
@@ -57,3 +57,9 @@ jobs:
         if: steps.files.outputs.count != '0' && env.READY == '1'
         run: |
           INBOX_PATHS="$(cat "$RUNNER_TEMP/inbox_ok.txt")" python collector/inbox.py
+      - name: Send accepted alerts now
+        # 받은 행사를 다음 매시 실행까지 기다리지 않고 바로 발송 대기열에서 내보낸다(받는 사람·조용한 시간·소유자 승인 규칙은 Worker 가 그대로 적용)
+        if: steps.files.outputs.count != '0' && env.READY == '1'
+        run: |
+          bash scripts/admin_call.sh dispatch
+          bash scripts/admin_call.sh digest
