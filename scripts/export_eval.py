@@ -42,6 +42,17 @@ def flat(d, prefix=""):
     return out
 
 
+def redact(v, k=None):
+    """문자열 안의 긴 숫자(텔레그램 ID 형태)와 ID 필드만 가린다. 토큰 수 같은 숫자 값은 그대로 둔다."""
+    if isinstance(v, dict):
+        return {kk: redact(vv, kk) for kk, vv in v.items()}
+    if isinstance(v, list):
+        return [redact(vv) for vv in v]
+    if k in ("chat_id", "from_id", "user_id") and v is not None:
+        return "<id>"
+    return ID.sub("<id>", v) if isinstance(v, str) else v
+
+
 def write_csv(path: Path, rows: list[dict]) -> None:
     cols = []
     for r in rows:
@@ -57,7 +68,7 @@ def write_csv(path: Path, rows: list[dict]) -> None:
 
 def build(x: dict, out: Path) -> dict:
     out.mkdir(parents=True, exist_ok=True)
-    x = json.loads(ID.sub("<id>", json.dumps(x, ensure_ascii=False)))
+    x = redact(x)
     (out / "export.json").write_text(json.dumps(x, ensure_ascii=False, indent=1) + "\n")
     events = x["compare"]["events"]
     ev_rows = []
