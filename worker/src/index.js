@@ -20,6 +20,11 @@
  *   POST /admin/dispatch        즉시·예고 알림 발송(정지 시간대는 미룸)
  *   POST /admin/digest          주간 요약(각자 토요일 9시 이후)
  *   POST /admin/run-log         실행 기록(측정 항목)
+ *   GET|POST /admin/workload    경로별 작업량·비용(조용히 누적)
+ *   POST /admin/inbox           외부 입력 파일 선점·완료 기록(재실행 중복 방지)
+ *   POST /admin/catchup         아직 못 받은 유효한 적극 알림 보충 발송(dry: 미리 보기)
+ *   GET  /admin/compare         3경로(GitHub 수집기·Claude·ChatGPT) 발견 대조
+ *   GET  /admin/export          누적 기록 내보내기(JSON)
  *   GET|POST /admin/usage       월별 AI 사용량
  *   POST /admin/candidates      정보원 후보(op 없음: 추가, unverified: 검증할 후보, verify: 검증 결과 → 소유자 질문)
  *   GET  /admin/sources-extra   승격된 정보원
@@ -605,6 +610,11 @@ export default {
         }
         if (p === "/admin/events-dump") return json(await pipeline.eventsDump(env, url));
         if (p === "/admin/gaps") return json(await pipeline.gaps(env, request.method, body));
+        if (p === "/admin/workload") return json(await pipeline.workload(env, request.method, body, url));
+        if (p === "/admin/inbox" && POST) return json(await pipeline.inbox(env, body));
+        if (p === "/admin/compare") return json(await pipeline.compare(env, url));
+        if (p === "/admin/catchup" && POST) return json(await pipeline.catchup(env, body));
+        if (p === "/admin/export") return json(await pipeline.exportAll(env, url));
         if (p === "/admin/queries-extra") return json(await pipeline.queriesExtra(env));
         if (p === "/admin/queue-find" && POST) return json(await pipeline.queueFind(env, body.urls));
         if (p === "/admin/events-sample") {

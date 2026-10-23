@@ -8,7 +8,7 @@ const denverToday = new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Denver
 const plus = (n) => new Date(Date.parse(denverToday + "T12:00:00Z") + n * 86400000).toISOString().slice(0, 10);
 const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(30), url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: ["t"], annual: false, source_id: "test", registration_status: "open", rec_level: "push", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: ["t"], annual: false, source_id: "test", registration_status: "open", rec_level: "push", special_reason: "시험용 특별 근거", ...over,
 });
 const hoursAgo = (h) => new Date(Date.now() - h * 3600000).toISOString();
 

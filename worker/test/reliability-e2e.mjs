@@ -11,7 +11,7 @@ const ev = (key, over = {}) => ({
   event_key: key, bot: "kids", title: `Event ${key}`, title_ko: `행사 ${key}`, org: "Org", start_date: plus(30), end_date: null, time_text: "10:00",
   location: "Library", city: "Westminster", age_text: "6-10", english: [], cost_text: "$10", signup: "fcfs", registration_opens: null,
   registration_status: "open", deadline: null, eligibility: null, status_note: null, url: `https://example.org/${key}`,
-  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: [key], annual: false, source_id: "test", rec_level: "push", ...over,
+  checked_at: "2026-10-20T00:00:00Z", urgency: "now", tags: [key], annual: false, source_id: "test", rec_level: "push", special_reason: "시험용 특별 근거", ...over,
 });
 
 const E = await startEnv({ tgPort: 9993, wPort: 8803, vars: { DELIVERY_MODE: "all", FAMILY_AVAILABLE_FROM: "2026-01-01" } });
@@ -266,13 +266,14 @@ try {
     assert.equal(r.sent, 0);
   });
 
-  await step("8 예산 50·80·100% 사전 경고 각 1회", async () => {
+  await step("8 사용액 50·80·100% 경고 각 1회(경고만, 멈추지 않음)", async () => {
     const n = E.calls.length;
     const u = (usd) => admin("/admin/usage", { model: "claude-opus-5-5", input_tokens: 1, output_tokens: 1, usd, calls: 1, budget: 1, searches: 2, cache_read_tokens: 5 });
     await u(0.6); await u(0.25); await u(0.2); await u(0.01);
     const t = sends(n, /💰/).map((c) => c.payload.text);
     assert.equal(t.length, 3);
-    assert.match(t[2], /예산 \$1 도달/);
+    assert.match(t[2], /크레딧 기준 \$1의 100%/);
+    assert.match(t[2], /스스로 멈추지는 않습니다/);
     const row = (await admin("/admin/usage")).rows.find((r) => r.model === "claude-opus-5-5");
     assert.equal(row.searches, 8);
     assert.equal(row.cache_read_tokens, 20);

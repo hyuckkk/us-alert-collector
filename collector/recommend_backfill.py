@@ -83,9 +83,10 @@ def main(argv=None) -> int:
         r = ro.recs.get(j)
         if not r:
             continue
-        updates.append({"event_key": e["event_key"], "rec_level": r.level, "bot": r.bot, "category": r.category, "rec_score": r.score,
-                        "summary_ko": r.summary_ko.strip()[:240], "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200],
-                        "title_ko": r.title_ko.strip()[:60] or e.get("title_ko")})
+        # 수집기와 같은 규칙으로 적용(특별 근거가 없으면 적극 알림으로 두지 않음)
+        x = ai.apply_recommendation({"title_ko": e.get("title_ko")}, r)
+        updates.append({"event_key": e["event_key"], **{k: x.get(k) for k in ("rec_level", "bot", "category", "rec_score", "summary_ko", "highlights",
+                                                                              "rec_reason", "special_reason", "title_ko")}})
         rows.append({"event_key": e["event_key"], "was_bot": e.get("bot"), "was_title": e.get("title_ko") or e.get("title"), "source_id": e.get("source_id"),
                      "sent_life": e["event_key"] in sent_life, **updates[-1]})
     for i in range(0, len(updates), 100):
@@ -102,9 +103,9 @@ def main(argv=None) -> int:
     order = {"push": 0, "interest": 1, "none": 2}
     md = ["# 일상 봇으로 실제 보냈던 알림 재평가", "", f"대상 {len(sent_life)}건 · 판정 {len(life_rows)}건 · " +
           " · ".join(f"{LEVEL_KO[k]} {v}건" for k, v in sorted(summary['life_sent']['by_level'].items(), key=lambda x: order[x[0]])), "",
-          "| # | 행사(새 제목) | 판정 | 대상 봇 | 분야 | 이유 |", "|---|---|---|---|---|---|"]
+          "| # | 행사(새 제목) | 판정 | 대상 봇 | 분야 | 특별 근거(적극 알림) 또는 이유 |", "|---|---|---|---|---|---|"]
     for i, r in enumerate(sorted(life_rows, key=lambda r: (order[r["rec_level"]], -r["rec_score"])), 1):
-        md.append(f"| {i} | {r['title_ko']} | {LEVEL_KO[r['rec_level']]} | {r['bot']} | {r['category']} | {r['rec_reason']} |".replace("\n", " "))
+        md.append(f"| {i} | {r['title_ko']} | {LEVEL_KO[r['rec_level']]} | {r['bot']} | {r['category']} | {r.get('special_reason') or r['rec_reason']} |".replace("\n", " "))
     if life_rows:  # 이번 실행에서 실제 발송분을 판정한 경우에만(다른 봇만 판정한 실행이 표를 비우지 않게)
         (ROOT / "eval/life_sent_review.md").write_text("\n".join(md) + "\n")
     live = os.environ.get("USAGE_LIVE_FILE")

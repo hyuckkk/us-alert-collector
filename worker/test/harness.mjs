@@ -65,7 +65,7 @@ export async function startEnv({ tgPort, wPort, vars = {}, fresh = false }) {
 
   const allVars = {
     TG_API: `http://127.0.0.1:${tgPort}`, BOT_TOKEN_LIFE: "tLIFE", BOT_TOKEN_FAMILY: "tFAMILY", BOT_TOKEN_KIDS: "tKIDS",
-    OWNER_CHAT_ID: OWNER, ADMIN_KEY: ADMIN, OWNER_TZ: "Asia/Seoul", ...vars,
+    OWNER_CHAT_ID: OWNER, ADMIN_KEY: ADMIN, OWNER_TZ: "Asia/Seoul", DELIVERY_MODE: "owner-only", ...vars,  // 운영 설정과 무관하게 시험은 소유자 전용이 기본(지인 발송 시험은 vars 로 켬)
   };
   const wr = "node_modules/.bin/wrangler";
   execFileSync(wr, ["d1", "migrations", "apply", "us-alert-db", "--local", "--persist-to", persist], { stdio: "pipe", env: { ...process.env, CI: "1" } });

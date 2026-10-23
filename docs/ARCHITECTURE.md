@@ -26,7 +26,7 @@ GitHub Actions (이 저장소, 공개)                         Cloudflare Worker
 |---|---|
 | `config/sources.json` | 정보원 등록부(A). 형식, 주기(every_days), 대상 봇, 공식 여부 |
 | `config/queries.json` | 무토큰 검색어(매일 + 요일별 심층) |
-| `config/models.json` | 모델·effort·묶음 크기·실행당 상한·월 예산·가격 |
+| `config/models.json` | 모델·effort·묶음 크기·실행당 처리 건수 상한·크레딧 기준액(경고용)·가격 |
 | `config/annual.json` | 연간 고정 일정표 |
 | `collector/fetch.py` | 무토큰 수집, 상세 페이지 본문 |
 | `collector/ai.py` | **AI 호출이 있는 유일한 파일**: 키 점검, 추출, 판단, 발굴 |
@@ -49,7 +49,7 @@ GitHub Actions (이 저장소, 공개)                         Cloudflare Worker
 ## 안전장치
 - **소유자 전용 모드**: `DELIVERY_MODE=owner-only`(기본). 지인이 승인돼 있어도 대기열·발송 단계에서 소유자 외에는 모두 건너뛴다.
 - **링크 환각 방지**: AI 가 낸 URL 이 수집 주소와 다르면 수집 주소로 바꾼다. 발굴은 검색 결과에 나온 URL 만 쓴다.
-- **비용 상한**: 실행당 AI 처리 건수 상한, 월 예산 초과 시 AI 단계 건너뜀(80% 경고).
+- **비용**: 실행당 AI 처리 건수 상한만 둔다. 월 내부 상한은 없다(이슈 #20). API 크레딧 소진으로 거절되면 AI 단계만 멈추고 수집·발송은 계속한다. 사용액 경고는 크레딧 기준 50·80·100%.
 - **비밀값**: GitHub 비밀값에만. 배포 때 Worker 비밀값으로 복사. 관리 키는 Cloudflare 토큰에서 파생. 로그에서 Worker 주소 가림.
 - **개인정보**: 주소·아이 정보·텔레그램 ID 는 저장소에 없음. `/city` 는 숫자가 들어간 입력(번지·우편번호)을 거부.
 

@@ -236,5 +236,14 @@ class WorkerAPI:
     def candidates_verify(self, results: list[dict]) -> dict:
         return {"dry_run": True} if self.dry_run or not results else self._post("/admin/candidates", {"op": "verify", "results": results})
 
+    def workload(self, w: dict) -> dict:
+        """경로별 작업량·비용(이슈 #20). Worker 에 조용히 쌓는다(텔레그램 요약 없음)."""
+        return {"dry_run": True} if self.dry_run else self._post("/admin/workload", {"workload": w})
+
+    def inbox(self, op: str, path: str, sha: str = "", report: dict | None = None, failed: bool = False) -> dict:
+        if self.dry_run:
+            return {"ok": True, "claimed": True, "dry_run": True}
+        return self._post("/admin/inbox", {"op": op, "path": path, "sha": sha, "report": report or {}, "failed": failed})
+
     def run_log(self, body: dict) -> dict:
         return {"dry_run": True} if self.dry_run else self._post("/admin/run-log", body)

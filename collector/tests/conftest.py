@@ -5,6 +5,22 @@ from types import SimpleNamespace
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import ai  # noqa: E402
+import pytest  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _reset_credit():
+    ai.CREDIT.update(out=False, error=None)
+    yield
+    ai.CREDIT.update(out=False, error=None)
+
+
+def credit_error(*_):
+    """Anthropic 이 크레딧 부족으로 거절할 때의 실제 오류 형식."""
+    import anthropic
+    import httpx
+    raise anthropic.BadRequestError("Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+                                    response=httpx.Response(400, request=httpx.Request("POST", "https://api.anthropic.com/v1/messages")), body=None)
 
 
 def U(i=1000, o=200):
@@ -169,6 +185,27 @@ class FakeAPI(WorkerAPI):
     def run_log(self, body):
         self._r("run_log", body)
 
+    def workload(self, w):
+        self._r("workload", w)
+        return {"ok": True}
+
+    def inbox(self, op, path, sha="", report=None, failed=False):
+        self._r("inbox", op, path, sha, report, failed)
+        done = getattr(self, "inbox_done", set())
+        if op == "claim":
+            return {"ok": True, "claimed": (path, sha) not in done}
+        if op == "done" and not failed:
+            done.add((path, sha))
+            self.inbox_done = done
+        return {"ok": True}
+
+    def queue_find(self, urls):
+        return []
+
+    def gaps(self, gaps, sources, queries):
+        self._r("gaps", gaps, sources, queries)
+        return {"ok": True}
+
 
 import pytest  # noqa: E402
 
@@ -183,7 +220,8 @@ def default_recommendation(request, monkeypatch):
         out = ai.RecommendOutcome()
         for i, (e, _) in enumerate(items):
             out.recs[i] = ai.Recommendation(index=i, level="push", bot=e.get("bot") or "family", category="other", score=50,
-                                            title_ko=e.get("title_ko") or e.get("title") or "", summary_ko="", highlights=[], reason="")
+                                            title_ko=e.get("title_ko") or e.get("title") or "", summary_ko="", highlights=[], reason="",
+                                            special_reason="시험용 특별 근거")
         return out
     monkeypatch.setattr(ai, "recommend", fake)
 
