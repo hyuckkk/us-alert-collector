@@ -8,7 +8,7 @@ on:
       action:
         description: "실행할 작업"
         type: choice
-        options: [test-send, outbox-skip, dump-life, dump-family, dump-kids, preview-life, preview-family, preview-kids, compare, export, catchup-dry, catchup, clicks, status, usage, heartbeat, setup, run-cron, dispatch, digest, report, baseline, baseline-start, baseline-stop]
+        options: [test-send, outbox-skip, dump-life, dump-family, dump-kids, preview-life, preview-family, preview-kids, compare, workload, export, catchup-dry, catchup, clicks, status, usage, heartbeat, setup, run-cron, dispatch, digest, report, baseline, baseline-start, baseline-stop]
         default: test-send
       key:
         description: "outbox-skip: 행사 키(e…)"
