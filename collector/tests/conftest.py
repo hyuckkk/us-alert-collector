@@ -221,7 +221,8 @@ def default_recommendation(request, monkeypatch):
         for i, (e, _) in enumerate(items):
             out.recs[i] = ai.Recommendation(index=i, level="push", bot=e.get("bot") or "family", category="other", score=50,
                                             title_ko=e.get("title_ko") or e.get("title") or "", summary_ko="", highlights=[], reason="",
-                                            special_reason="시험용 특별 근거")
+                                            special_reason="시험용 특별 근거", special_basis="rare_one_off",
+                                            evidence_quote=e.get("title") or "", usual_alternative="", blockers=[])
         return out
     monkeypatch.setattr(ai, "recommend", fake)
 

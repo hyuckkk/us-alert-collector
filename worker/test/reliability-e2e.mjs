@@ -151,7 +151,7 @@ try {
     assert.deepEqual([r.items, r.messages, r.held || 0], [23, 23, 0], JSON.stringify(r));
     const keys = sends(n).map((c) => /행사 (d\d+)/.exec(c.payload.text)[1]);
     assert.equal(new Set(keys).size, 23);
-    assert.ok(sends(n).every((c) => c.payload.reply_markup && !/https?:/.test(c.payload.text)));
+    assert.ok(sends(n).every((c) => c.payload.reply_markup && !/https?:/.test(c.payload.text.replace(/<a href="https:\/\/www\.google\.com\/maps\/[^"]*">/g, ""))));
   });
 
   await step("7 아주 긴 행사 30건: 한 통 4,096자 이하, 버튼은 그 행사에 연결, 한 번에 못 보낸 것은 다음 실행에서 이어 보내 모두 발송", async () => {

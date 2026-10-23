@@ -28,13 +28,30 @@ function regLine(d) {
     d.signup === "fcfs" || d.signup === "lottery" ? null : SIGNUP[d.signup] || null].filter(Boolean).join(" · "); // 선착순·추첨은 특징 표시에 이미 나옴
 }
 
+// 비용: 원문에 무료라고 적힌 경우만 '무료'. 비용 정보가 없으면 '입장료 미확인'(신청 불필요와 무료를 구분)
+export function isFree(cost) {
+  const s = String(cost || "").trim();
+  return /^(free|무료)\b|^무료/i.test(s) && !/\$\s*[1-9]|유료/.test(s);
+}
+export function costLine(d) {
+  const s = String(d.cost_text || "").trim();
+  if (!s || /^(unknown|미확인|tbd|별도 확인)$/i.test(s)) return "입장료 미확인";
+  return s;
+}
+// 주소를 누르면 구글 지도에서 그 장소가 바로 열린다(장소 이름 + 도시 + 콜로라도로 검색)
+export function mapUrl(d) {
+  const q = [d.location, d.city && !String(d.location || "").toLowerCase().includes(String(d.city).toLowerCase()) ? d.city : null, "CO"].filter(Boolean).join(", ");
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+}
+
 // 특징 표시(눈에 띄게 제목 아래). 추천 판정이 고른 것 + 데이터에서 확실히 알 수 있는 것
 const HL_ICON = { "선착순": "🏃", "무료": "🆓", "예약 필요": "📌", "추첨": "🎲", "접수 예정": "🗓", "마감 임박": "⏳", "특별 체험": "✨", "허가 필요": "🎫", "연례 행사": "🎉" };
 export function badges(d, today = new Date().toISOString().slice(0, 10)) {
   const set = new Set(Array.isArray(d.highlights) ? d.highlights : []);
+  set.delete("무료"); // '무료'는 원문 비용 정보로만 판단(신청 불필요·비용 미확인을 무료로 보이지 않게)
   if (d.signup === "fcfs") set.add("선착순");
   if (d.signup === "lottery") set.add("추첨");
-  if (/^\s*(free|무료)/i.test(d.cost_text || "")) set.add("무료");
+  if (isFree(d.cost_text)) set.add("무료");
   if (d.registration_opens && d.registration_opens > today) set.add("접수 예정");
   if (d.deadline && d.deadline >= today && Date.parse(d.deadline) - Date.parse(today) <= 3 * 86400000) set.add("마감 임박");
   if (d.annual) set.add("연례 행사");
@@ -59,10 +76,11 @@ export function renderEvent(d, opts = {}) {
   lines.push("");
   const when = [dateRange(d), d.time_text].filter(Boolean).join(" ");
   if (when) lines.push(`📅 ${esc(cut(when, 160))}`);
-  const where = [d.location, d.org && !String(d.location || "").includes(d.org) ? d.org : null].filter(Boolean).join(" · ");
-  if (where) lines.push(`📍 ${esc(cut(where, 160))}`);
-  const money = [d.cost_text ? `💲 ${esc(cut(d.cost_text, 120))}` : null, d.age_text ? `👤 ${esc(cut(d.age_text, 80))}` : null].filter(Boolean).join("   ");
-  if (money) lines.push(money);
+  const org = d.org && !String(d.location || "").includes(d.org) ? d.org : null;
+  if (d.location) lines.push(`📍 <a href="${esc(mapUrl(d))}">${esc(cut(d.location, 140))}</a>${org ? ` · ${esc(cut(org, 60))}` : ""}`);
+  else if (org) lines.push(`📍 ${esc(cut(org, 160))}`);
+  const money = [`💲 ${esc(cut(costLine(d), 120))}`, d.age_text ? `👤 ${esc(cut(d.age_text, 80))}` : null].filter(Boolean).join("   ");
+  lines.push(money);
   const reg = regLine(d);
   if (reg) lines.push(`📝 ${esc(cut(reg, 200))}`);
   const cond = [d.eligibility, d.status_note].filter(Boolean).join(" · ");

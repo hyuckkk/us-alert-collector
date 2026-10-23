@@ -23,7 +23,7 @@ try {
   await step("적극 알림만 기본 발송: 시의회 회의(제외)·약물 반납(제외)·영유아 동화(관심 설정 시)·판정 없는 행사는 저장만", async () => {
     const n = E.calls.length;
     const r = await admin("/admin/enqueue", { events: [
-      ev("concert", { urgency: "now", rec_level: "push", category: "performance", rec_score: 80, summary_ko: "야외 재즈 공연과 푸드트럭", highlights: ["무료"] }),
+      ev("concert", { urgency: "now", rec_level: "push", category: "performance", rec_score: 80, summary_ko: "야외 재즈 공연과 푸드트럭", highlights: ["무료"], cost_text: "무료" }),
       ev("council", { urgency: "now", rec_level: "none", category: "civic", title_ko: "행사 council 시의회 정례 회의" }),
       ev("takeback", { urgency: "now", rec_level: "none", category: "public-service" }),
       ev("storytime", { urgency: "now", rec_level: "interest", category: "toddler" }),
@@ -37,6 +37,7 @@ try {
     for (const k of ["council", "takeback", "storytime", "legacy"]) assert.ok(!has(got, k), `${k} 가 발송됨`);
     const m = got.find((c) => /행사 concert/.test(c.payload.text));
     assert.match(m.payload.text, /🆓 무료\n✨ <b>시험용 특별 근거<\/b>\n야외 재즈 공연과 푸드트럭\n\n📅/);
+    assert.match(m.payload.text, /💲 무료/);
   });
 
   await step("특별한 근거가 없는 '적극 알림'은 보내지 않는다(Red Rocks 정가 공연·학제간 토론·일반 공연장 정가 공연 부정 사례)", async () => {
@@ -128,7 +129,7 @@ try {
       const key = kb[0][0].url.split("/").pop();
       assert.ok(c.payload.text.includes(`행사 ${key}`));
       assert.deepEqual(kb[1].map((b) => b.callback_data), [`ack:${key}`, `mute:${key}`]);
-      assert.ok(!/https?:/.test(c.payload.text));
+      assert.ok(!/https?:/.test(c.payload.text.replace(/<a href="https:\/\/www\.google\.com\/maps\/[^"]*">/g, "")));
     }
   });
 } finally {

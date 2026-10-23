@@ -249,7 +249,7 @@ def ingest(raw: dict, api: WorkerAPI, client, models: dict, today: str, finder: 
                     ev["bot"] = "life" if aud.startswith("adult") else aud
             ro = ai.recommend(client, models, [(rules.for_worker(ev), k_entries[ev["_entry_index"]].text or "") for ev in evs], today, usage) if evs else ai.RecommendOutcome()
             for j, r in ro.recs.items():
-                ai.apply_recommendation(evs[j], r)
+                ai.apply_recommendation(evs[j], r, k_entries[evs[j]["_entry_index"]].text or "")
             ro_missing = len(ro.missing)
             evs = [ev for j, ev in enumerate(evs) if j in ro.recs]
             evs, _ = identity.collapse_same(evs)

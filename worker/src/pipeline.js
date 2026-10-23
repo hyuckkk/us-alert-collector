@@ -230,7 +230,13 @@ export function recLevel(e, r) {
   if (isRoutineSportsMatch(e)) return "sports-calendar-only";
   const lv = e.rec_level;
   // 적극 알림은 '왜 특별한지' 근거가 있어야 보낸다(소유자 기준: 정가·상시 공연·일상 세미나는 보내지 않음)
-  if (lv === "push") return String(e.special_reason || "").trim() ? null : "no-special-reason";
+  if (lv === "push") {
+    if (!String(e.special_reason || "").trim()) return "no-special-reason";
+    // 수집기 게이트와 같은 기준을 발송 직전에 다시 적용(이슈 #24): 차단 사유가 하나라도 있으면 일반 발송 금지
+    if (Array.isArray(e.rec_blockers) && e.rec_blockers.length) return "blocked:" + e.rec_blockers.join(",");
+    if (String(e.push_blocked || "").trim()) return "blocked:" + e.push_blocked;
+    return null;
+  }
   if (!lv) return "not-recommended-yet";
   if (e.category && parseInterests(r.interests).includes(e.category)) return null;
   return lv === "interest" ? "interest-only" : "not-recommended";
@@ -560,6 +566,36 @@ export async function welcomeQueue(env, chatId, bot) {
   return { queued: out.length };
 }
 
+// ---------------------------------------------------------------- 같은 회차 묶음은 한 번만
+// 같은 정보원·같은 원제목인데 날짜만 다른 행사(매주 금요일 투어, 시즌 열차의 여러 날짜 등)는 사람마다 한 번만 보낸다.
+// 같은 행사의 '변경'(같은 event_key 의 새 판)은 막지 않는다. 연례 행사가 내년에 다시 열리면 보낼 수 있게 180일 안만 본다.
+export function seriesKey(sourceId, d) {
+  return `${sourceId || ""}|${String(d.title || d.title_ko || "").toLowerCase().replace(/\s+/g, " ").trim()}`;
+}
+async function sentSeries(env, chatIds) {
+  const out = new Map();
+  if (!chatIds.length) return out;
+  const since = new Date(Date.now() - 180 * 86400000).toISOString();
+  const rows = await all(env.DB.prepare(
+    "SELECT DISTINCT o.chat_id, o.event_key, e.source_id, json_extract(e.data, '$.title') AS title, json_extract(e.data, '$.title_ko') AS title_ko " +
+    "FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id IN (SELECT value FROM json_each(?1)) " +
+    "AND o.status IN ('sent', 'sending', 'uncertain') AND COALESCE(o.sent_at, o.created_at) >= ?2").bind(JSON.stringify(chatIds.map(String)), since));
+  for (const r of rows) {
+    const k = `${r.chat_id}|${seriesKey(r.source_id, r)}`;
+    if (!out.has(k)) out.set(k, new Set());
+    out.get(k).add(r.event_key);
+  }
+  return out;
+}
+// 이미 같은 회차 묶음의 '다른' 행사를 받았으면 true. 받기로 한 것은 기록해 같은 실행 안의 중복도 막는다
+function sameSeriesSeen(seen, chatId, sourceId, d, eventKey) {
+  const k = `${chatId}|${seriesKey(sourceId, d)}`;
+  const set = seen.get(k);
+  if (set && [...set].some((x) => x !== eventKey)) return true;
+  if (!set) seen.set(k, new Set([eventKey])); else set.add(eventKey);
+  return false;
+}
+
 export async function dispatch(env, opts = {}) {
   const limit = Math.min(opts.limit || SEND_LIMIT, SEND_LIMIT);
   const owner = await ensureOwnerRecipients(env);
@@ -567,7 +603,7 @@ export async function dispatch(env, opts = {}) {
   const stale = await recoverStale(env);
   const now = nowIso();
   const rows = await all(env.DB.prepare(
-    "SELECT o.id, o.chat_id, o.bot, o.event_key, o.version, o.kind, o.attempts, o.resend, e.data, e.change_note, e.version AS cur_version, " +
+    "SELECT o.id, o.chat_id, o.bot, o.event_key, o.version, o.kind, o.attempts, o.resend, e.data, e.change_note, e.version AS cur_version, e.source_id, " +
     "p.tz, p.quiet_start, p.quiet_end, p.interests, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key LEFT JOIN people p ON p.chat_id = o.chat_id " +
     "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key " +
     "WHERE o.kind IN ('now', 'season') AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?1))) " +
@@ -577,6 +613,7 @@ export async function dispatch(env, opts = {}) {
   const latest = new Map();
   for (const row of rows) latest.set(`${row.chat_id}|${row.event_key}`, Math.max(latest.get(`${row.chat_id}|${row.event_key}`) || 0, row.version));
   const sendable = [];
+  const series = await sentSeries(env, [...new Set(rows.map((x) => x.chat_id))]);
   for (const row of rows) {
     const data = JSON.parse(row.data);
     const p = { ...defaultPerson(env, row.chat_id), ...(row.tz ? { tz: row.tz, quiet_start: row.quiet_start, quiet_end: row.quiet_end } : {}) };
@@ -586,6 +623,7 @@ export async function dispatch(env, opts = {}) {
     { const why = recLevel(data, { interests: row.interests }); if (why) { done.push({ id: row.id, status: "skipped", reason: why }); r.skipped++; continue; } }
     if (row.version < latest.get(`${row.chat_id}|${row.event_key}`)) { done.push({ id: row.id, status: "superseded", reason: "새 판이 대신 감" }); r.superseded++; continue; }
     if (isExpired(data, p.tz)) { done.push({ id: row.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
+    if (sameSeriesSeen(series, row.chat_id, row.source_id, data, row.event_key)) { done.push({ id: row.id, status: "skipped", reason: "same-series" }); r.skipped++; continue; }
     if (!opts.ignoreQuiet && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.deferred++; continue; }
     sendable.push({ ...row, data });
   }
@@ -645,7 +683,7 @@ export async function digest(env, opts = {}) {
     if (opts.force || (g.fresh > 0 && timeOk && (await claimNotice(env, `digest:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`)))) take = true;
     if (!take) { r.waiting++; continue; }
     const rows = await all(env.DB.prepare(
-      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
       "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? " +
       "AND (o.status = 'pending' OR (o.status IN ('failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?))) " +
       "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 300").bind(g.chat_id, g.bot, now));
@@ -654,12 +692,15 @@ export async function digest(env, opts = {}) {
     for (const x of rows) latest.set(x.event_key, Math.max(latest.get(x.event_key) || 0, x.version));
     const live = [];
     const seenKey = new Set();
+    const series = await sentSeries(env, [g.chat_id]);
+    // 같은 묶음이면 날짜가 가까운 회차 하나만(행은 시작일 순)
     for (const x of rows) {
       const data = JSON.parse(x.data);
       if (x.state === "MUTED") { done.push({ id: x.id, status: "skipped", reason: "muted" }); continue; }
       { const why = recLevel(data, { interests: g.interests }); if (why) { done.push({ id: x.id, status: "skipped", reason: why }); continue; } }
       if (x.version < latest.get(x.event_key) || seenKey.has(x.event_key)) { done.push({ id: x.id, status: "superseded", reason: "같은 행사 중복" }); continue; }
       if (isExpired(data, p.tz)) { done.push({ id: x.id, status: "expired", reason: "이미 끝난 행사" }); r.expired++; continue; }
+      if (sameSeriesSeen(series, g.chat_id, x.source_id, data, x.event_key)) { done.push({ id: x.id, status: "skipped", reason: "same-series" }); continue; }
       seenKey.add(x.event_key);
       live.push({ ...x, data });
     }
@@ -812,7 +853,8 @@ export async function preview(env, bot, n = 4, keys = null) {
 }
 
 // ---------------------------------------------------------------- 추천 판정 결과만 갱신(재평가). 판·변경 알림·대기열은 건드리지 않는다
-const REC_FIELDS = ["rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason", "title_ko", "special_reason"];
+const REC_FIELDS = ["rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason", "title_ko", "special_reason", "special_basis", "evidence_quote",
+  "usual_alternative", "rec_blockers", "push_blocked"];
 export async function recommendUpdate(env, body) {
   const items = (body.items || []).filter((x) => x && x.event_key && ["push", "interest", "none"].includes(x.rec_level)).slice(0, 300);
   if (!items.length) return { ok: true, updated: 0 };
@@ -1179,6 +1221,24 @@ export async function exportAll(env, url) {
     failing_sources: await all(env.DB.prepare("SELECT id, consecutive_failures, last_status, last_ok_at FROM source_health WHERE consecutive_failures >= 3 ORDER BY consecutive_failures DESC")),
     inbox: await all(env.DB.prepare("SELECT path, finder, status, at FROM inbox_files ORDER BY at")) };
   return { ok: true, generated_at: nowIso(), compare: c, workload: w.rows, gaps: g, usage: u, ...extra };
+}
+
+// 행사 한 건의 전체 기록(원인 추적용): 어느 정보원·경로에서 왔는지, 추천 판정·근거, 발송 이력(받는 사람 ID 는 관리 스크립트가 가림)
+export async function eventLookup(env, url) {
+  const q = String(url.searchParams.get("q") || "").slice(0, 80);
+  if (q.length < 3) return { ok: false, error: "q (3자 이상) 필요" };
+  const evs = await all(env.DB.prepare("SELECT event_key, bot, version, source_id, url, first_seen, last_changed, data FROM events " +
+    "WHERE event_key = ?1 OR LOWER(json_extract(data, '$.title')) LIKE ?2 OR json_extract(data, '$.title_ko') LIKE ?2 ORDER BY first_seen LIMIT 20").bind(q, `%${q.toLowerCase()}%`));
+  const out = [];
+  for (const e of evs) {
+    const d = JSON.parse(e.data);
+    out.push({ event_key: e.event_key, bot: e.bot, version: e.version, source_id: e.source_id, url: e.url, first_seen: e.first_seen, last_changed: e.last_changed,
+      title: d.title, title_ko: d.title_ko, start_date: d.start_date, cost_text: d.cost_text, found_by: d.found_by, run_id: d.run_id,
+      rec: Object.fromEntries(REC_FIELDS.map((k) => [k, d[k]])),
+      finds: await all(env.DB.prepare("SELECT finder, first_seen, found_at, rec_level, run_id FROM event_finds WHERE event_key = ?").bind(e.event_key)),
+      outbox: await all(env.DB.prepare("SELECT chat_id, bot, version, kind, status, reason, created_at, sent_at FROM outbox WHERE event_key = ? ORDER BY id").bind(e.event_key)) });
+  }
+  return { ok: true, q, events: out };
 }
 
 export async function queriesExtra(env) {

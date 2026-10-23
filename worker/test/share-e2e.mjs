@@ -52,7 +52,7 @@ try {
     assert.ok(["dead0", "reg0", "reg1", "reg2"].every((k) => has(got, k)) && !has(got, "old0"));
   });
 
-  await step("/city Westminster 30: 먼 일반 행사는 받지 않고, 먼 곳이라도 국립공원 허가·추첨·연례 행사는 받는다", async () => {
+  await step("/city Westminster 30: 먼 일반 행사는 받지 않고, 먼 곳이라도 국립공원 허가·추첨·근거가 확인된 희귀 기회는 받는다('연례'·'축제'·'예약' 글자만으로는 예외 아님, #22)", async () => {
     const n0 = E.calls.length;
     await hook("kids", msg(FRIEND, "/city Westminster 30"));
     assert.match(to(n0, FRIEND)[0].payload.text, /기준 도시: Westminster, 30마일/);
@@ -65,12 +65,14 @@ try {
       ev("farGeneral2", { urgency: "now", location: "Lincoln Park, Grand Junction, CO 81501" }),
       ev("permit1", { urgency: "now", city: "Estes Park", title: "Timed entry permit reservations open", tags: ["permit"] }),
       ev("annual1", { urgency: "now", city: "Durango", annual: true }),
+      ev("fest1", { urgency: "now", city: "Durango", title: "Fall Festival - reservation recommended", tags: ["festival", "reservation"] }),
+      ev("rare1", { urgency: "now", city: "Colorado Springs", special_basis: "restricted_access" }),
       ev("nocity1", { urgency: "now", location: "Online" }),
     ] });
     await admin("/admin/dispatch", { ignoreQuiet: true });
     const got = to(n, FRIEND);
-    assert.ok(has(got, "near1") && has(got, "permit1") && has(got, "annual1") && has(got, "nocity1"), got.map((c) => c.payload.text.split("\n")[0]).join(" | "));
-    assert.ok(!has(got, "far1") && !has(got, "farGeneral2"), "먼 일반 행사가 감");
+    assert.ok(has(got, "near1") && has(got, "permit1") && has(got, "rare1") && has(got, "nocity1"), got.map((c) => c.payload.text.split("\n")[0]).join(" | "));
+    assert.ok(!has(got, "far1") && !has(got, "farGeneral2") && !has(got, "annual1") && !has(got, "fest1"), "먼 일반 행사가 감");
     assert.ok(has(to(n, OWNER), "far1"), "소유자(기준 도시 없음)는 모두 받음");
   });
 
