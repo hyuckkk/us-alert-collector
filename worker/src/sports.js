@@ -3,7 +3,7 @@ import { tg, claimNotice, isOwner } from "./common.js";
 // Read-only public school/club sports calendar. Do NOT export people, chat ids, or admin data.
 const ZONE = "America/Denver";
 const SPORTS = /\b(hockey|soccer|football|baseball|basketball|volleyball|softball|tennis|wrestling|lacrosse|rugby|gymnastics|swimming|water polo|field hockey|cross.country|track.and.field|futsal|badminton)\b|농구|배구|야구|축구|아이스하키|하키|풋볼|미식축구|레슬링|테니스|수영|체조|육상/i;
-const VS = /\b(?:vs\.?|versus|against)\b|(?:\s+@\s+)|\s+대\s+|대항전/i;
+const VS = /\b(?:vs\.?|v\.|versus|against)\b|(?:\s+@\s+)|\s+대\s+|대항전/i;
 const ATHLETIC_SOURCE = /athlet|sport.?club|club.?sports|soccer|hockey|high.?school.?sport|school.?athlet|varsity|^cu-.*club/i;
 const UNIVERSITY = /cu-|boulder|university.of.denver|du-athlet|csu-|colorado.state|mines-|air.force|afa-|university|college|sport.?club/i;
 const GRADE = {
@@ -58,7 +58,7 @@ function costClass(raw) {
 }
 function matchup(e) {
   const title = String(e.title || e.title_ko || "");
-  const m = title.match(/^(.*?)\s+(?:vs\.?|versus|against)\s+(.*)$/i);
+  const m = title.match(/^(.*?)\s+(?:vs\.?|v\.|versus|against)\s+(.*)$/i);
   if (m) return { home: m[1].trim(), away: m[2].trim() };
   const a = title.match(/^(.*?)\s+@\s+(.*?)$/i);
   if (a) return { home: a[2].trim(), away: a[1].trim() };
@@ -113,7 +113,7 @@ export async function sportsEvents(env, url) {
   }
   const end = monthShift(start, 2) + "-01";
   const rows = (await env.DB.prepare(
-    "SELECT event_key, data, source_id, url, start_date FROM events WHERE start_date >= ? AND start_date < ? ORDER BY start_date, event_key LIMIT 3500"
+    "SELECT event_key, data, source_id, url, start_date, last_changed FROM events WHERE start_date >= ? AND start_date < ? ORDER BY start_date, event_key LIMIT 3500"
   ).bind(start + "-01", end).all()).results || [];
   const events = [], seen = new Set();
   for (const r of rows) {
@@ -127,7 +127,7 @@ export async function sportsEvents(env, url) {
     seen.add(key);
     events.push(rec);
   }
-  return new Response(JSON.stringify({ ok: true, month: start, through: monthShift(start, 1), generated_at: new Date().toISOString(), events, inspected: rows.length,
+  return new Response(JSON.stringify({ ok: true, month: start, through: monthShift(start, 1), generated_at: new Date().toISOString(), events, inspected: rows.length, latest_record_changed: rows.map((x) => x.last_changed).filter(Boolean).sort().pop() || null,
     limit_reached: rows.length >= 3500, coverage: "현재 수집된 공식 일정 중 날짜·학교·종목·경기로 식별되는 항목만 표시됩니다. 전체 초·중·고 경기 수집을 보장하지 않습니다." }), { headers: CORS });
 }
 const PAGE = String.raw`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Colorado | 학교·대학 스포츠 경기 달력</title><style>
@@ -197,7 +197,7 @@ async function load(){state.loading=true;render();try{
  var res=await fetch("/sports/events?month="+encodeURIComponent(state.month),{cache:"no-store"});if(!res.ok)throw Error("HTTP "+res.status);
  var payload=await res.json();if(!payload.ok)throw Error(payload.error||"자료 조회 실패");
  state.data=payload.events||[];var sport=node("sports"),old=state.sport;var kinds=Array.from(new Set(state.data.map(a=>a.sport).filter(Boolean))).sort();sport.replaceChildren();sport.appendChild(new Option("모든 종목","all"));kinds.forEach(function(x){sport.appendChild(new Option(x,x))});if(kinds.indexOf(old)<0)state.sport="all";sport.value=state.sport;
- node("source-note").textContent=payload.limit_reached?"자료가 많아 일부만 표시됨 · 업데이트 "+payload.generated_at.slice(0,10):"수집된 경기 "+state.data.length+"건 · "+payload.generated_at.slice(0,10)+" 갱신";
+ node("source-note").textContent=payload.limit_reached?"자료가 많아 일부만 표시됨 · 업데이트 "+payload.generated_at.slice(0,10):"수집된 경기 "+state.data.length+"건 · "+payload.generated_at.slice(0,10)+" 조회";
  }catch(e){state.data=[];node("source-note").textContent="자료 불러오기 실패: "+e.message+" · 새로고침 후 다시 시도해 주세요";}finally{state.loading=false;render()}}
 node("sports").onchange=function(e){state.sport=e.target.value;render()};
 node("prev").onclick=function(){state.month=monthAdd(state.month,-1);state.selected="";history.replaceState(null,"","?month="+state.month);load()};
