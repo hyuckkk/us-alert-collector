@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-23T23:59:15.484Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Denver Arts Week Free Night at the Museums: Special Hands-on Access",
+      "url": "https://visitdenver.com/denver-arts-week/free-night-at-the-museums/",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "5:00–10:00 p.m. America/Denver (individual activities may have different times)",
+      "location": "Morrison Natural History Museum, 501 CO-8, Morrison, CO 80465; Forney Museum of Transportation, 4303 Brighton Blvd, Denver, CO 80216; Children's Museum of Denver, 2121 Children's Museum Drive, Denver, CO 80211",
+      "cost": "Free general admission on Nov 7; regular family-of-five prices: Forney $61 (2 adults $17 + 3 children $9), Children's Museum $98.75 (five visitors ages 2–59 at $19.75); transportation and separately ticketed extras not included",
+      "age": "Public, all ages including families; children with adults; advance reservation requirements vary by museum and were not confirmed",
+      "audience": "family",
+      "description": "One-night 2026 Denver Arts Week free late opening with unusual direct experiences, not a routine full-price museum visit: Morrison Natural History Museum advertises 'Dig at Night', a special backstage fossil-preparation research-lab tour, and hands-on fossil tools; Forney Museum explicitly offers trains visitors can walk through just for this event, kids' crafts and a scavenger hunt; Children's Museum opens its indoor play areas free and stages site-specific dances among the exhibits. At Children's Museum, Joy Park and Adventure Forest will be closed. Free city shuttles include Forney and Children's Museum; Morrison is not on shuttle routes. Venue-specific items are alternatives within the same evening, not consecutive sessions at one site. This 2026 event is for local Colorado friends; not a 2027–2028 stay event. Official organizer and Children's Museum/Forney Museum published details confirm event date and public free access."
+    },
+    {
+      "title": "Denver Zoo Conservation Alliance: November 2026 Limited Community Free Days",
+      "url": "https://denverzoo.org/free-days/",
+      "start_date": "2026-11-11",
+      "end_date": "2026-11-22",
+      "time": "Zoo normally 9:00 a.m.–4:00 p.m. America/Denver; select timed ticket. Online free ticket release times are not stated by organizer.",
+      "location": "Denver Zoo Conservation Alliance, 2300 Steele St, Denver, CO 80205",
+      "cost": "Free with advance online Community Free Day timed-entry tickets; usual admission adults 16–64 $27, children 3–15 $19, so 2 adults + 3 children ages 3–15 ordinarily $111 and free-day tickets save $111",
+      "age": "Open to general public, all ages; children under 16 must attend with a person age 16 or older; up to five tickets per person per Free Day, including tickets for children age two or under",
+      "audience": "family",
+      "description": "Only seven Community Free Days in 2026, limited free tickets available online only; NO walk-ups. Three upcoming 2026 dates and their distinct releases are Wednesday Nov 11 (tickets released Wednesday Oct 28), Saturday Nov 14 (tickets released Saturday Oct 31), and Sunday Nov 22 (tickets released Sunday Nov 8). The Free Days page specifies first-come-first-served booking, whereas the general admission page uses the term lottery; rely on the dedicated Free Days schedule and do not promise availability or an unannounced release time. One registration per person per Free Day, maximum five tickets. This is for local Colorado friends in 2026, not a 2027–2028 stay event. Verify ticket status at official link before notifying subscribers."
+    }
+  ]
+}
