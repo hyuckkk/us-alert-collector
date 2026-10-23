@@ -1,0 +1,33 @@
+{
+  "schema": "us-alert-inbox/1",
+  "run": {
+    "started_at": "2026-10-23T01:45:00Z",
+    "finished_at": "2026-10-23T01:50:00Z",
+    "searches": 2,
+    "queries": ["Colorado November 2026 free family event special open house air force base OR space museum OR observatory",
+                "Colorado Railroad Museum Polar Express 2026 tickets on sale date"],
+    "candidates": 4,
+    "excluded": 3,
+    "excluded_reasons": {"past_year_listing": 1, "routine_monthly": 1, "unconfirmed_year": 1},
+    "notes": "Claude Code session, manual verification run for issue #20 (not a scheduled run)"
+  },
+  "events": [
+    {
+      "title": "THE POLAR EXPRESS Train Ride at Colorado Railroad Museum",
+      "url": "https://coloradorailroadmuseum.org/Polar-Express/",
+      "start_date": "2026-11-06",
+      "end_date": "2026-12-23",
+      "location": "Colorado Railroad Museum, Golden, CO",
+      "cost": "Paid tickets online; performances before Thanksgiving 10% off regular price",
+      "age": "All ages",
+      "audience": "family",
+      "description": "Seasonal ride on Nov 6-8, 13-15, 20-24 and daily Nov 27 - Dec 23, 2026. Public online sales opened Sep 29, 2026.",
+      "verified": false,
+      "verification_note": "Found via web search summary of the official site; the official page itself was not opened by the finder.",
+      "found_at": "2026-10-23T01:49:00Z",
+      "origin": "manual",
+      "recommend": "push",
+      "special_reason": "Season-limited holiday train ride that sells out; pre-Thanksgiving dates are 10% off"
+    }
+  ]
+}
