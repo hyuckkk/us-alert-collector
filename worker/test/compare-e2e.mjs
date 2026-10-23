@@ -173,6 +173,23 @@ try {
     assert.ok(r.deferred >= 2);
   });
 
+  await step("경로 간 중복: 다른 경로·정보원이 다른 키로 올린 같은 행사(같은 공식 주소, 또는 같은 날짜+비슷한 제목)는 한 통만", async () => {
+    const n = E.calls.length;
+    const d = plus(15);
+    await admin("/admin/enqueue", { events: [ev("gh1", { title: "Free Night at Wings Over the Rockies Air and Space Museum", source_id: "wings-api", start_date: d, url: "https://wingsmuseum.org/events/free-night/" })] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    await admin("/admin/enqueue", { events: [
+      ev("gpt1", { title: "Denver Arts Week: Free Night at Wings Over the Rockies", source_id: "ext-search", found_by: "chatgpt", start_date: d, url: "https://wingsmuseum.org/events/free-night" }),
+      ev("cl1", { title: "Wings Over the Rockies museum free night (Arts Week)", source_id: "ext-search", found_by: "claude", start_date: d, url: "https://www.wingsmuseum.org/other-page/" }),
+      ev("diff1", { title: "Pumpkin Splash at Recreation Pool", source_id: "ext-search", found_by: "claude", start_date: d, url: "https://e.org/pumpkin" })] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    const got = to(n).map((c) => c.payload.text);
+    assert.equal(got.filter((t) => /행사 (gh1|gpt1|cl1)\b/.test(t)).length, 1, got.map((t) => t.split("\n")[0]).join(" / "));
+    assert.ok(got.some((t) => /행사 diff1/.test(t)), "다른 행사는 그대로");
+    const why = Object.fromEntries(sql("SELECT event_key, reason FROM outbox WHERE event_key IN ('gpt1','cl1')").map((x) => [x.event_key, x.reason]));
+    assert.equal(why.gpt1, "same-url"); assert.equal(why.cl1, "same-event-other-source");
+  });
+
   await step("사용액 경고는 경고만(멈춘다는 말·예산 승인 요청 없음), 카드·충전 안 함 명시", async () => {
     const n = E.calls.length;
     await admin("/admin/usage", { model: "claude-opus-5-5", usd: 101, calls: 1, budget: 100 });

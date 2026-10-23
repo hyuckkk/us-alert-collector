@@ -91,6 +91,10 @@ ChatGPT 가 보낸 행사마다 "우리 수집이 이미 찾았는가"를 자동
 
 ## 3. ChatGPT 가 행사를 보내는 방법
 
+### 3-00. 검색 전에 읽을 것(매번)
+- `external-inbox/LESSONS.md`: 다른 경로(GitHub 수집기·Claude 검색)는 찾았는데 ChatGPT 검색이 놓친 '적극 알림' 행사와 그 이유, 보완 검색어·감시할 공식 페이지. 매일 자동 갱신된다. 여기 적힌 검색어·페이지는 반드시 검색 범위에 넣는다.
+- 세 경로(GitHub 수집기·Claude 검색·ChatGPT 검색)가 각자 찾은 것을 시스템이 대조한다. 같은 행사는 한 번만 알린다. 어느 경로가 무엇을 놓쳤는지는 매일 소유자에게 보고된다.
+
 ### 3-0. 파일로 보내기(권장, 이슈 #20)
 ChatGPT GitHub 연결의 파일 만들기(create_file)로 이 저장소에 **새 파일**을 만든다. push 되면 `external-inbox` 워크플로가 자동으로 처리한다.
 - 경로: `external-inbox/chatgpt/<고유이름>.json` (Claude 예약 검색은 `external-inbox/claude/…`). 고유이름은 영문·숫자·`.`·`_`·`-`, 예: `2026-10-24T0700Z.json`.
