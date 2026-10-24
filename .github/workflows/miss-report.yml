@@ -4,7 +4,7 @@ name: miss-report
 # GitHub 수집기 누락은 외부 입력 처리 때 정보원·검색어로 자동 보완된다(ext_gaps). 한국 알림 시스템과 무관.
 on:
   schedule:
-    - cron: "20 16 * * *"      # 덴버 오전 10:20(서머타임) — 아침 수집·Claude 검색 뒤
+    - cron: "50 22 * * *"      # 한국 오전 7:50 — 소유자가 한국에 있는 동안 요약 알림(오전 8시) 직전. 입국 후 덴버 시간에 맞춰 조정
   workflow_dispatch:
 permissions:
   contents: write
