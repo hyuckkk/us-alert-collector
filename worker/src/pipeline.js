@@ -1283,6 +1283,16 @@ export async function missReport(env, body) {
   return { ok: true, sent: !!d.ok };
 }
 
+// 최근 발송 기록(읽기 전용): 소유자·지인 구분, 봇·시각·제목. 받는 사람 ID 는 내보내지 않는다
+export async function sentRecent(env, url) {
+  const hours = Math.min(Number(url.searchParams.get("hours")) || 30, 240);
+  const since = new Date(Date.now() - hours * 3600000).toISOString();
+  const rows = await all(env.DB.prepare("SELECT o.chat_id, o.bot, o.kind, o.sent_at, json_extract(e.data, '$.title_ko') AS title FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+    "WHERE o.status = 'sent' AND o.sent_at >= ? ORDER BY o.sent_at").bind(since));
+  return { ok: true, since, owner: rows.filter((r) => isOwner(env, r.chat_id)).map(({ chat_id, ...x }) => x),
+    friends: rows.filter((r) => !isOwner(env, r.chat_id)).length };
+}
+
 // 미발송 대기열 미리 보기(읽기 전용): 지금 기준(추천 재판정·차단 사유·회차 묶음·지난 행사)으로 실제로 나갈 것과 걸러질 것
 export async function outboxPreview(env) {
   const rows = await all(env.DB.prepare(
