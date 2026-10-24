@@ -1,0 +1,295 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-10-23T23:53:04Z",
+  "finished_at_utc": "2026-10-24T00:01:50.835Z",
+  "search_requests": 50,
+  "queries": [
+    "Colorado October 24 2026 free hands on science aviation family airport event",
+    "Colorado 2026 October November airport open house public free aircraft tour aviation day",
+    "Buckley Space Force Base open house 2026 October November public access tour",
+    "Denver Colorado November 2026 special access behind the scenes open house family tours",
+    "Colorado 2027 special park permit lottery registration opening 2026 November reservations",
+    "Denver Arts Week November 2026 free night museum hands on science aviation",
+    "Denver Westminster Colorado summer camp 2027 registration opens October November 2026 scholarships",
+    "Colorado October 31 2026 public space museum military aviation STEM hands on kids special events",
+    "site:wingsmuseum.org/events/ \"Paint a Plane\" \"Oct\" \"2026\" KAPA",
+    "KAPA Paint a Plane Aerial Bootlegging and Barnstorming October 24 2026 tickets cost",
+    "site:coloradopilots.org/events/ October 2026 KAPA Paint a Plane",
+    "site:wingsmuseum.org/events/ 2026 November \"Open Cockpits\" \"Free\"",
+    "Denver November 2026 \"Night at the Museums\" \"Children's Museum\" free reservation",
+    "Colorado October 2026 \"free\" \"behind the scenes\" November public tour aircraft",
+    "site:wingsmuseum.org/events/ \"Paint a Plane\" \"October 24\" 2026",
+    "\"Paint a Plane\" \"Aerial Bootlegging\" ticket Oct 24 2026 Centennial",
+    "site:wingsmuseum.org \"Paint a Plane\" \"October 24\" \"2026\" $",
+    "site:wingsmuseum.org/events 2026 \"November\" \"Free Day\" cockpit 2026",
+    "Colorado 2026 November public access \"open cockpit\" free museum aviation",
+    "site:forneymuseum.org \"Night at the Museums\" \"2026\" train open",
+    "\"Forney Museum\" \"November 7, 2026\" \"train\" free",
+    "site:dinoridge.org \"Night at the Museums\" \"2026\" shuttle",
+    "site:botanicgardens.org \"Night at the Museums\" \"2026\" herbarium",
+    "site:mychildsmuseum.org \"Night at the Museums Open House\" \"2026\" children museum Denver",
+    "site:cpw.state.co.us 2027 camping reservations Colorado \"2026\" six months advance",
+    "site:nps.gov/romo 2027 timed entry permits 2027 on sale registration park",
+    "site:fs.usda.gov Colorado 2027 wilderness permit lottery open 2026 October",
+    "\"Morrison Natural History Museum\" \"Night at the Museums\" \"2026\" free lab",
+    "\"Forney Museum\" \"Night at the Museums\" \"2026\" open trains November 7",
+    "\"Dinosaur Ridge\" \"Night at the Museums\" November 7 2026 flashlight free",
+    "\"Denver Botanic Gardens\" \"Night at the Museums\" November 7 2026 herbarium tour",
+    "\"Paint a Plane: A Mural Workshop\" \"October 24, 2026\" \"wingsmuseum.org/events\"",
+    "site:denverzoo.org/free-days 2026 November 11 14 22 free ticket release date",
+    "\"Morrison Natural History Museum\" \"November 7\" \"2026\" lab",
+    "site:mnhm.org 2026 November 7 \"Night at the Museums\"",
+    "site:forneymuseum.org \"November 7, 2026\" free night trains",
+    "site:wingsmuseum.org/events/ \"Paint a Plane\" \"October 24\" \"2026\" Cessna",
+    "Morrison Natural History Museum official website 2026 November 7 Night at the Museums lab behind scenes",
+    "\"Morrison Natural History Museum\" \"Night at the Museums\" \"2026\" site:mnhm.org OR site:morrisonmuseum.org OR site:mnhm.com",
+    "morrison natural history museum denver night at the museums lab tours November 7 2026 official",
+    "Colorado November 2026 Air Force Academy Planetarium public star party open house free tickets",
+    "Colorado November 2026 rocket launch model rocket public spectators space STEM kids",
+    "site:colorado.edu/events November 2026 \"free\" \"build\" \"workshop\" public community kids",
+    "site:thorntonco.gov 2026 November free hands on festival city family registration",
+    "site:broomfield.org 2026 November public free hands-on special festival nature event",
+    "Colorado 2026 November December county open space ranger night hike free limited registration unusual",
+    "\"Denver Zoo\" \"October 28\" \"November 11\" \"2026\" tickets",
+    "site:scfd.org \"Denver Zoo\" \"November 11\" \"November 14\" \"2026\"",
+    "site:denvergov.org \"Denver Zoo\" \"November 14\" \"2026\" free day",
+    "\"Denver Zoo Conservation Alliance\" \"2026\" \"Community Free Days\" \"October 31\""
+  ],
+  "url_read_attempts": 16,
+  "url_read_successes": 16,
+  "url_read_failures": 0,
+  "failed_searches": 0,
+  "failed_page_reads": 0,
+  "official_detail_verified": 5,
+  "official_original_pages_verified": [
+    {
+      "url": "https://www.mychildsmuseum.org/widgets/EventDetail/night-at-the-museums-open-house-2025/",
+      "evidence": "2026 Nov7 event 5-10pm and public free late admission, event page slug has 2025 but live event text and museum 2026 calendar confirmed"
+    },
+    {
+      "url": "https://visitdenver.com/denver-arts-week/free-night-at-the-museums/",
+      "evidence": "2026 Nov7 5-10pm, special fossil lab, rare train interior access, free at listed venues"
+    },
+    {
+      "url": "https://www.forneymuseum.org/events",
+      "evidence": "2026 Nov7 Free Night with 5-10pm free admission"
+    },
+    {
+      "url": "https://denverzoo.org/free-days/",
+      "evidence": "2026 three November zoo free dates with exact Oct28/Oct31/Nov8 online ticket release dates and five-person limit"
+    },
+    {
+      "url": "https://www.regis.edu/summer-camps/regis-research-camp",
+      "evidence": "2027 June research camp dates and grade 6-8 eligibility; rejected for this audience"
+    }
+  ],
+  "page_read_attempts_annotated": [
+    "Wings official Paint a Plane 2026 Oct listing was read, but its event link redirected to a May 2026 detail page; held, not counted as Oct official-detail verification",
+    "CPA Colorado Pilots Oct24 Paint a Plane calendar has date/time/location but no admission conditions; held",
+    "Official VisitDenver citywide festival page is produced by the event organizer and cross-checked against Forney/Children's Museum official event listings"
+  ],
+  "candidate_events": 22,
+  "duplicate_candidates": 2,
+  "rejected_events": 10,
+  "held_events": 4,
+  "qualified_events": 6,
+  "candidate_reviews": [
+    {
+      "event": "2026-11-07 Children's Museum Night at Museums free indoor open house",
+      "status": "qualified",
+      "group": "2026-11-07 citywide museums",
+      "reason": "after-hours normally paid admission free, hands-on play and in-gallery activities"
+    },
+    {
+      "event": "2026-11-07 Forney Museum free train walk-through",
+      "status": "qualified",
+      "group": "2026-11-07 citywide museums",
+      "reason": "access to trains opened for this night, free $61 family regular admission"
+    },
+    {
+      "event": "2026-11-07 Morrison Natural History Museum Dig at Night/research lab",
+      "status": "qualified",
+      "group": "2026-11-07 citywide museums",
+      "reason": "free, special nighttime fossil tools and behind-scenes lab"
+    },
+    {
+      "event": "2026-11-11 Denver Zoo limited free day",
+      "status": "qualified",
+      "group": "2026-11-11/14/22 zoo free days",
+      "reason": "only seven annual free days, Oct28 limited ticket release, up to $111 5-person savings"
+    },
+    {
+      "event": "2026-11-14 Denver Zoo limited free day",
+      "status": "qualified",
+      "group": "2026-11-11/14/22 zoo free days",
+      "reason": "only seven annual free days, Oct31 limited ticket release"
+    },
+    {
+      "event": "2026-11-22 Denver Zoo limited free day",
+      "status": "qualified",
+      "group": "2026-11-11/14/22 zoo free days",
+      "reason": "only seven annual free days, Nov8 limited ticket release"
+    },
+    {
+      "event": "2026-10-24 RMMA Fall Carnival",
+      "status": "duplicate",
+      "reason": "previous ChatGPT external-inbox 20261023T011105Z already submitted"
+    },
+    {
+      "event": "2026-11-07 Wings Over the Rockies Free Night",
+      "status": "duplicate",
+      "reason": "previous ChatGPT external-inbox 20261023T011329Z already submitted"
+    },
+    {
+      "event": "2026-10-24 Paint a Plane, Centennial Airport",
+      "status": "held",
+      "reason": "official October event link redirects to May 2026 program; October price/ticket eligibility not confirmed"
+    },
+    {
+      "event": "2026-11-07 Dinosaur Ridge flashlight/night shuttle",
+      "status": "held",
+      "reason": "2026 special tour exact ticket price/details not verified; official detailed page found 2025 $10"
+    },
+    {
+      "event": "2026-11-21 Wings astronomy night/planet party",
+      "status": "held",
+      "reason": "CPR event confirms telescope activity but organizer price and value vs ordinary event unverified"
+    },
+    {
+      "event": "2026-11-18 Apex Center Stardust Sessions",
+      "status": "held",
+      "reason": "registration required but actual price and unusual benefit unverified"
+    },
+    {
+      "event": "2027-06-07 / 2027-06-21 Regis R.E.G.I.S. STEM girls research camps",
+      "status": "rejected",
+      "reason": "rising grade 6–8; ordinary paid $400 camp and before/near expected 2027 arrival, no clear special public subsidy"
+    },
+    {
+      "event": "2026-11-07 DMNS routine SCFD free night",
+      "status": "rejected",
+      "reason": "already regular annual free day; no independent unusual access; combined museum free night is better use of one alert"
+    },
+    {
+      "event": "2026-11-07 Denver Botanic Gardens Freyer-Newman museum night",
+      "status": "rejected",
+      "reason": "overlapping citywide museum night, library/herbarium often accessible and separate exceptional value not established"
+    },
+    {
+      "event": "2026-11-07 Clyfford Still regular/free Maker Morning",
+      "status": "rejected",
+      "reason": "regularly offered maker activity; not independently scarce or special enough compared with multi-museum alert"
+    },
+    {
+      "event": "2026-11-08 Children's Museum National STEAM Day",
+      "status": "rejected",
+      "reason": "ordinary museum admission and recurring programming"
+    },
+    {
+      "event": "2026-11-14 Forney model car make-and-take",
+      "status": "rejected",
+      "reason": "recurs second Saturday monthly, requires regular museum admission"
+    },
+    {
+      "event": "2026-11-12 Forney Wienermobile visit",
+      "status": "rejected",
+      "reason": "minor $4 admission discount and normal ticketed museum event"
+    },
+    {
+      "event": "2026-10/11 USAFA public free planetarium shows",
+      "status": "rejected",
+      "reason": "normally recurring free public film screenings rather than one-off base open-house or hands-on experience"
+    },
+    {
+      "event": "2026-11-19 Arapahoe Community College star party",
+      "status": "rejected",
+      "reason": "repeat seasonal star parties open-house style; not rare high-impact opportunity"
+    },
+    {
+      "event": "2026-10-27 Colorado Springs Astronomical Society routine meeting at USAFA Planetarium",
+      "status": "rejected",
+      "reason": "monthly meeting and language-heavy planetarium talk, routine rather than special access"
+    }
+  ],
+  "known_by_collector": 0,
+  "verified_collector_misses": 1,
+  "comparison_method": "Source/query registry, previous external-inbox files, GitHub code search/available reports, and 2026-10-23T23:59Z Worker external-inbox automated official-source recheck. Collector gap confirmed for VisitDenver separate special-events page by ingest diagnosis. Zoo source returned HTTP 403 to Worker; its presence/absence in live collector DB is unknown. No missing claim solely because source is unregistered.",
+  "previous_inbox_duplicate_events": 2,
+  "collector_confirmed_missing_details": [
+    {
+      "title": "Denver Arts Week Night at the Museums / special venues",
+      "cause": "registered-missed; scrape_or_js_failure: separate organizer's special-events URL not discovered by general VisitDenver listing",
+      "evidence": "external-inbox GitHub Actions 40042651383, log report gaps.by_found.registered-missed=1"
+    }
+  ],
+  "collector_overlap_unknown": [
+    {
+      "title": "Denver Zoo November 2026 Free Days",
+      "status": "cannot verify collector overlap; Worker recheck HTTP 403; dedicated denver-zoo-events source is disabled in registry"
+    }
+  ],
+  "submitted_events": 2,
+  "submitted_event_groups": 2,
+  "submitted_qualified_date_instances": 6,
+  "submitted_inbox": "external-inbox/chatgpt/20261023T235915Z.json",
+  "ingest_workflow_url": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40042651383",
+  "ingest_received": 2,
+  "ingest_valid": 2,
+  "ingest_official_recheck_attempted": 2,
+  "ingest_official_recheck_ok": 1,
+  "ingest_unreachable": 1,
+  "ingest_extracted_events": 1,
+  "ingest_enqueued_events": 1,
+  "ingest_worker_outbox_new": 3,
+  "ingest_worker_recheck_error": {
+    "title": "Denver Zoo November 2026 Limited Community Free Days",
+    "url": "https://denverzoo.org/free-days/",
+    "status": "HTTP 403; not accepted by official recheck; no automatic delivery proof"
+  },
+  "delivered_events": 0,
+  "delivery_evidence": "GitHub Actions external-inbox dispatch HTTP 200 sent=0, digest HTTP 200 messages=0 (4 waiting); outbox=3 are recipient queue rows, not delivered receipts.",
+  "account_remaining_usage": "unknown",
+  "account_usage_estimated": false,
+  "qualified_urls": [
+    "https://visitdenver.com/denver-arts-week/free-night-at-the-museums/",
+    "https://denverzoo.org/free-days/"
+  ],
+  "official_source_registry_findings": [
+    "Existing sources: children's-museum enabled; wings-museum-api enabled; denver-zoo-events disabled. Registered source by itself does not imply event discovered.",
+    "Queries include 'Denver free day museum zoo'; this is not confirmation of event identification.",
+    "Forney and Morrison lack known dedicated entries in current config/sources.json; an external path may still have already discovered them."
+  ],
+  "source_gap_recommendations": [
+    {
+      "source": "VisitDenver Denver Arts Week Free Night at the Museums",
+      "suggested_monitor_url": "https://visitdenver.com/denver-arts-week/free-night-at-the-museums/",
+      "queries": [
+        "Denver Arts Week 2026 free museum night",
+        "Morrison Natural History Museum fossil preparation lab after hours",
+        "Forney Museum train walk-through free night"
+      ],
+      "cause": "Registered general pages omitted separate special-events URL; verified by existing Worker recheck"
+    },
+    {
+      "source": "Denver Zoo limited Community Free Days",
+      "suggested_monitor_url": "https://denverzoo.org/free-days/",
+      "queries": [
+        "Denver Zoo Community Free Days 2026 online ticket release October 28 October 31",
+        "Denver Zoo free day lottery first come ticket"
+      ],
+      "cause": "Current external inbox recheck HTTP 403; find official accessible feed or site-sanctioned mirror, preserve original provenance and no unverified transmission"
+    },
+    {
+      "source": "Wings Oct24 Paint a Plane",
+      "suggested_monitor_url": "https://wingsmuseum.org/events/",
+      "queries": [
+        "2026 Oct 24 Paint a Plane Wings museum tickets",
+        "Cessna 150 October 24 2026 artwork ticket price"
+      ],
+      "cause": "Official event listing URL redirects to unrelated past May2026 detail; do not publish stale link as 2026 live registration"
+    }
+  ],
+  "residency_fit": "New submitted opportunities are for local Colorado people in 2026 before owner's planned late-June-2027 arrival; no 2027/2028 event falsely inferred from historic 2026 permit/2027 typical schedule. Westminster/Denver/Morrison locality verified at city/venue level; driving time and exact miles unknown, Morrison requires separate trip and no museum-night shuttle.",
+  "notes": "50 actual web search queries; 16 explicit source URL opens/clicks successful, 0 failed (3 find-within-open-page operations are not new URL reads). Grouped six well-supported individual opportunities into two source records to minimize Telegram noise. Two prior-inbox already-submitted events excluded. Public research log contains no private location other than generic Westminster area, IDs, API keys, tokens or user secrets. Worker process completed successfully but its delivery calls returned zero actual sends. Zoo official site could be read here but the existing worker HTTP client was denied 403."
+}
