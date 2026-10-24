@@ -2,7 +2,7 @@
   "schema": 1,
   "actor": "chatgpt",
   "started_at_utc": "2026-10-23T23:53:04Z",
-  "finished_at_utc": "2026-10-24T00:01:50.835Z",
+  "finished_at_utc": "2026-10-24T00:02:25.011Z",
   "search_requests": 50,
   "queries": [
     "Colorado October 24 2026 free hands on science aviation family airport event",
@@ -56,8 +56,8 @@
     "site:denvergov.org \"Denver Zoo\" \"November 14\" \"2026\" free day",
     "\"Denver Zoo Conservation Alliance\" \"2026\" \"Community Free Days\" \"October 31\""
   ],
-  "url_read_attempts": 16,
-  "url_read_successes": 16,
+  "url_read_attempts": 17,
+  "url_read_successes": 17,
   "url_read_failures": 0,
   "failed_searches": 0,
   "failed_page_reads": 0,
@@ -87,7 +87,8 @@
   "page_read_attempts_annotated": [
     "Wings official Paint a Plane 2026 Oct listing was read, but its event link redirected to a May 2026 detail page; held, not counted as Oct official-detail verification",
     "CPA Colorado Pilots Oct24 Paint a Plane calendar has date/time/location but no admission conditions; held",
-    "Official VisitDenver citywide festival page is produced by the event organizer and cross-checked against Forney/Children's Museum official event listings"
+    "Official VisitDenver citywide festival page is produced by the event organizer and cross-checked against Forney/Children's Museum official event listings",
+    "A final independent re-open of the official Regis University 2027 camp detail URL confirmed the previously recorded grade/year/price facts; same unique official event, so official_detail_verified remains 5."
   ],
   "candidate_events": 22,
   "duplicate_candidates": 2,
@@ -291,5 +292,5 @@
     }
   ],
   "residency_fit": "New submitted opportunities are for local Colorado people in 2026 before owner's planned late-June-2027 arrival; no 2027/2028 event falsely inferred from historic 2026 permit/2027 typical schedule. Westminster/Denver/Morrison locality verified at city/venue level; driving time and exact miles unknown, Morrison requires separate trip and no museum-night shuttle.",
-  "notes": "50 actual web search queries; 16 explicit source URL opens/clicks successful, 0 failed (3 find-within-open-page operations are not new URL reads). Grouped six well-supported individual opportunities into two source records to minimize Telegram noise. Two prior-inbox already-submitted events excluded. Public research log contains no private location other than generic Westminster area, IDs, API keys, tokens or user secrets. Worker process completed successfully but its delivery calls returned zero actual sends. Zoo official site could be read here but the existing worker HTTP client was denied 403."
+  "notes": "50 actual web search queries; 17 explicit source URL opens/clicks successful, 0 failed (3 find-within-open-page operations are not new URL reads). Grouped six well-supported individual opportunities into two source records to minimize Telegram noise. Two prior-inbox already-submitted events excluded. Public research log contains no private location other than generic Westminster area, IDs, API keys, tokens or user secrets. Worker process completed successfully but its delivery calls returned zero actual sends. Zoo official site could be read here but the existing worker HTTP client was denied 403."
 }
