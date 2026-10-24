@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-24T23:32:01.171Z",
+  "test": false,
+  "events": [
+    {
+      "title": "UCAR NSF NCAR Super Science Saturday — 30th Anniversary",
+      "url": "https://cpaess.ucar.edu/news/david-stuebing-super-science-saturday",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "10:00 AM–4:00 PM MST (2026 schedule, cross-checked against UCAR Center for Science Education)",
+      "location": "NSF NCAR Mesa Lab, 1850 Table Mesa Drive, Boulder, CO 80305",
+      "cost": "Free public science celebration, five guests $0, as confirmed by the UCAR Center for Science Education 2026 event announcement",
+      "age": "Public all-ages celebration for adults and children; no membership restriction on organizer announcement",
+      "audience": "family",
+      "description": "2026 one-day annual science-festival 30th-anniversary edition at NSF atmospheric research Mesa Lab. Official UCAR/CPAESS recap specifically announces Nov 7, 2026 and describes free public interactive activities from the prior edition: live Science Wizards science demonstrations, weather-balloon launches, supercomputing demonstrations and audience participation; 2026 exact program may differ. Free and 10AM-4PM confirmed on current-year official UCAR SciEd event page https://scied.ucar.edu/visit/ncar/super-science-saturday , which can trigger HTTP 403 for automated fetch, so this alternate official UCAR-owned article is provided for source verification. This is the same event as previously submitted, NOT a separate festival; use identity/dedup. Pertains to local Colorado residents in 2026."
+    },
+    {
+      "title": "2026 Robot Chaos — free combat robotics spectator tournament",
+      "url": "https://monumentalimpact.org/events/2026-robot-chaos/",
+      "start_date": "2026-11-21",
+      "end_date": "2026-11-21",
+      "time": "Approximately 10:00 AM–4:00 PM MST (final matches about 2:00 PM; schedule subject to change)",
+      "location": "Bear Creek Elementary School, 1330 Creekside Dr, Monument, CO 80132",
+      "cost": "Free to watch: official page explicitly states 'Spectators are welcome at no cost'; family of five spectators $0; competitor registration has fee",
+      "age": "Families and guests of all ages may spectate; no member status or equipment needed to watch",
+      "audience": "family",
+      "description": "Exceptional one-day robot-combat tournament held during MITEE Gobble Squabble. Live 150g fairyweight and 1lb plastic-antweight robot matches inside an enclosed arena, contestants explain the engineering behind their creations and meet visitors; free and public (the official subevent page explicitly confirms free spectator admission). Companion Makers & Community Expo runs 10:30AM-2:30PM; all public. Previously the broad event 'MITEE Gobble Squabble' was correctly identified but classified interest due a mistaken inference that free admission was unverified even though the host page states it clearly. This subevent's organizer source directly validates $0 spectator admission; deduplicate with parent festival/ORC event if found. Pertains to 2026 local Colorado residents/friends."
+    }
+  ]
+}
