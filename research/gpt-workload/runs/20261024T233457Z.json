@@ -1,0 +1,386 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-10-24T23:24:42Z",
+  "finished_at_utc": "2026-10-24T23:34:57.035Z",
+  "search_requests": 67,
+  "queries": [
+    "Colorado 2026 October 31 November 1 airport open house aircraft tours trick or treat public",
+    "Colorado Denver November 2026 free family event special behind scenes rare access open house",
+    "Westminster Thornton Broomfield Colorado November 2026 free kids festival hands on STEM craft",
+    "Colorado space force aerospace base public open house November 2026 community events",
+    "Denver 2026 November library makerspace free workshop kids special one day",
+    "Colorado 2027 national park permit lottery opens October November 2026 reserved",
+    "Colorado 2026 November 7 free museum special night behind scenes events",
+    "Denver November 2026 free aviation museum hands-on cockpit special access community",
+    "site:wingsmuseum.org/events/ \"2026\" \"Nov\" \"Cockpit\" free",
+    "site:coloradorailroadmuseum.org \"2026\" \"November\" special day free train ride",
+    "site:historycolorado.org \"November\" \"2026\" \"Free\" \"Family\" hands-on",
+    "site:denvergov.org \"2026\" \"November\" \"open house\" fire station kids",
+    "site:coloradosprings.gov \"November\" \"2026\" public \"air\" \"open house\"",
+    "site:cpw.state.co.us \"2026\" \"November\" \"free\" \"clinic\" \"fishing\"",
+    "site:arvadaco.gov \"November\" \"2026\" \"STEM\" free family",
+    "site:denverlibrary.org/events/ \"Nov\" \"2026\" \"maker\" special",
+    "Colorado \"2026\" \"November\" \"open house\" airport aviation tours public",
+    "site:coloradopilots.org/events \"2026\" \"November\" \"Young Eagles\"",
+    "site:eaa.org 2026 Denver Young Eagles October November 2026 free airplane rides children",
+    "2026 November Colorado \"free airplane rides\" kids \"Young Eagles\"",
+    "2026 November Denver \"fire station\" \"open house\" \"family\"",
+    "2026 November Denver \"free fishing\" clinic youth registration parks",
+    "2026 November \"behind the scenes\" tour Denver Colorado free museum",
+    "2026 November space museum \"flight simulator\" free community day Colorado",
+    "site:denverzoo.org \"November 11\" \"November 14\" \"November 22\" 2026 free",
+    "site:denverzoo.org \"Community Free Days\" \"October 28\" 2026",
+    "site:denverzoo.org \"Free Days\" \"Nov. 11\" 2026 tickets",
+    "site:denverzoo.org/events/ \"November 11\" \"free\" 2026",
+    "Denver Zoo free days 2026 November 11 14 22 official zoo reservation release October 28",
+    "2026 November 14 \"Plains Conservation Center\" \"Indigenous\" free day official",
+    "site:botanicgardens.org \"November 14, 2026\" \"Plains Conservation Center\"",
+    "site:wingsmuseum.org \"November\" \"2026\" \"Free Day\" family",
+    "site:historycolorado.org \"November\" \"2026\" special free kids family discovery",
+    "2026 2027 Colorado STEM free rocket workshop space foundation discovery center family registration",
+    "2026 November 2027 Colorado maker nonprofit science free event kids lab rare registration",
+    "2027 Colorado \"limited\" \"2027\" \"registration\" kids summer camp opens October 2026 public",
+    "2026 \"November\" \"Young Eagles\" \"Boulder\" Colorado registration",
+    "site:botanicgardens.org \"Plains Conservation Center\" \"November 14\" \"2026\"",
+    "site:auroragov.org \"Plains Conservation Center\" \"Nov\" \"2026\"",
+    "site:scied.ucar.edu/visit/ncar/super-science-saturday \"2026\" \"hands-on\" \"tours\"",
+    "\"Super Science Saturday\" \"2026\" \"NCAR\" \"lab\" \"tour\" \"registration\"",
+    "Colorado \"2026\" \"November\" \"robotics competition\" public spectators free high school",
+    "Denver Colorado \"Nov\" \"2026\" \"FIRST Robotics\" \"competition\" open public",
+    "Colorado 2026 November high school science robotics expo hands on community free tournament",
+    "Colorado \"2026\" \"Nov\" \"STEM\" \"open house\" engineering university public",
+    "Colorado 2026 November \"FLL\" robotics tournament public visit free",
+    "site:colorado.edu \"November 2026\" \"STEM\" \"Open House\" public free kids",
+    "Colorado November 2026 rocket launch spectator model rocketry club free",
+    "site:flightsketch.org Colorado Nov 2026 rocket competition public launch",
+    "Colorado 2026 November \"free\" \"factory tour\" special children registration",
+    "2026 November \"Denver\" \"water treatment\" \"open house\" public tour",
+    "Colorado 2026 November special \"behind the scenes\" airport fire station guided tour",
+    "2026 November \"Colorado\" \"family\" \"hands on\" \"open house\" science technology free",
+    "2027 summer 2027 Colorado state parks boat ride guided free registration early",
+    "Colorado 2026 November \"National Laboratory\" public open house tour free",
+    "site:scied.ucar.edu/visit/ncar \"November 7, 2026\" free science all ages",
+    "NSF NCAR Mesa Lab Boulder address 1850 Table Mesa Drive official",
+    "2026 MITEE Gobble Squabble 2026 November 21 free open public Monument",
+    "\"Super Science Saturday\" \"November 7, 2026\" site:ucar.edu -scied.ucar.edu",
+    "\"Super Science Saturday\" \"2026\" \"November\" site:ncar.ucar.edu",
+    "\"Super Science Saturday\" \"2026\" site:colorado.edu",
+    "\"Super Science Saturday\" \"2026\" site:events.colorado.edu",
+    "\"Super Science Saturday\" \"2026\" site:bouldercolorado.gov",
+    "\"Super Science Saturday\" \"November 7, 2026\" Boulder UCAR free",
+    "\"Super Science Saturday\" \"2026\" \"UCAR\" register",
+    "\"Super Science Saturday\" \"2026\" site:cpaess.ucar.edu",
+    "\"Super Science Saturday\" \"2026\" site:calendar.colorado.edu"
+  ],
+  "url_read_attempts": 15,
+  "url_read_successes": 15,
+  "official_detail_verified": 9,
+  "official_original_urls_inspected": [
+    {
+      "url": "https://scied.ucar.edu/visit/ncar/super-science-saturday",
+      "verified": true,
+      "evidence": "2026 Nov 7 10-16, free all-ages one-day science festival"
+    },
+    {
+      "url": "https://factorytwo.org/events/making-steam-awesome-balancing-sculpture-2026-11-14",
+      "verified": true,
+      "evidence": "dated cost age venue; excluded Flint Michigan"
+    },
+    {
+      "url": "https://monumentalimpact.org/events/open-robotics-competition-20261121/",
+      "verified": true,
+      "evidence": "dated guests welcome time and venue"
+    },
+    {
+      "url": "https://monumentalimpact.org/events/2026-pikes-peak-regional-first-robotics-weekend/",
+      "verified": true,
+      "evidence": "event ended 2026 Mar; free public"
+    },
+    {
+      "url": "https://coloradofirst.org/events/",
+      "verified": false,
+      "evidence": "2026 school competitions listed, spectator pricing unspecified"
+    },
+    {
+      "url": "https://www.rockymountainbest.org/",
+      "verified": false,
+      "evidence": "Nov 7 Game Day listed, venue TBD"
+    },
+    {
+      "url": "https://events.vex.com/robot-competitions/vex-robotics-competition/VE-V5-26-66405.html",
+      "verified": true,
+      "evidence": "2026 Nov 7 dates and venue, but spectator eligibility unknown"
+    },
+    {
+      "url": "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/",
+      "verified": true,
+      "evidence": "2026 Nov 21 free for spectators and makers expo"
+    },
+    {
+      "url": "https://aesp.org/event/aesp-rocky-mountain-chapter-onsite-tour-national-labs-of-the-rockies-golden/",
+      "verified": true,
+      "evidence": "free restricted facility tour Nov 5, spots capped at 20; membership uncertain"
+    },
+    {
+      "url": "https://www.7x24exchange.org/event/the-rocky-mountain-chapter-national-laboratory-r-tour/",
+      "verified": false,
+      "evidence": "2026 Nov 6 chapter listing incomplete"
+    },
+    {
+      "url": "https://scied.ucar.edu/visit/ncar",
+      "verified": false,
+      "evidence": "general venue/organizer page, not detailed event"
+    },
+    {
+      "url": "https://monumentalimpact.org/events/2026-robot-chaos/",
+      "verified": true,
+      "evidence": "free Nov 21 combat-robot audience, public all ages"
+    },
+    {
+      "url": "https://cpaess.ucar.edu/news/david-stuebing-super-science-saturday",
+      "verified": true,
+      "evidence": "UCAR retrospective confirms 2026 Nov 7 30th-anniversary"
+    }
+  ],
+  "candidate_events": 36,
+  "duplicate_candidates": 8,
+  "rejected_events": 18,
+  "held_events": 8,
+  "qualified_events": 2,
+  "known_by_collector": 5,
+  "verified_collector_misses": 0,
+  "submitted_events": 4,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "failed_page_reads": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://scied.ucar.edu/visit/ncar/super-science-saturday",
+    "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/"
+  ],
+  "qualified_events_list": [
+    {
+      "id": "ncar-super-science-2026",
+      "title": "NSF NCAR Super Science Saturday",
+      "date": "2026-11-07",
+      "url": "https://scied.ucar.edu/visit/ncar/super-science-saturday",
+      "cost": "free",
+      "state": "submitted_twice_but_worker_recheck_403"
+    },
+    {
+      "id": "mitee-gobble-squabble-2026",
+      "title": "MITEE Gobble Squabble & Robot Chaos",
+      "date": "2026-11-21",
+      "url": "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/",
+      "cost": "free_for_5_spectators",
+      "state": "submitted_twice_but_worker_classified_interest"
+    }
+  ],
+  "duplicates_detail": [
+    {
+      "title": "Denver Arts Week Free Night at the Museums",
+      "reason": "already in previous external-inbox/chatgpt 20261023T235915Z"
+    },
+    {
+      "title": "Denver Zoo Nov 2026 Community Free Days",
+      "reason": "already in previous external-inbox/chatgpt 20261023T235915Z; prior Worker fetch HTTP 403"
+    },
+    {
+      "title": "Wings Over Rockies Denver Arts Week Free Night",
+      "reason": "already in previous external-inbox/chatgpt 20261023T011329Z"
+    },
+    {
+      "title": "Wings Over Rockies Cockpit Demo Day Nov 21",
+      "reason": "present in available reports/fullsystem-run.json dated 2026-10-22 dry-run"
+    },
+    {
+      "title": "Colorado Railroad Museum Polar Express Nov 6",
+      "reason": "present in available reports/fullsystem-run.json dry-run; routine full-price"
+    },
+    {
+      "title": "Plains Conservation Center Nov 14 Free Day",
+      "reason": "present in available reports/fullsystem-run.json dry-run"
+    },
+    {
+      "title": "Denver Art Museum Nov 7 Free Day",
+      "reason": "present in available reports/fullsystem-run.json dry-run"
+    },
+    {
+      "title": "Denver Museum of Nature & Science Nov 16 SCFD Free Day",
+      "reason": "present in available reports/fullsystem-run.json dry-run"
+    }
+  ],
+  "rejected_detail": [
+    {
+      "title": "Broomfield Morning Makers Mason Jar Lanterns",
+      "reason": "routine library craft and/or past"
+    },
+    {
+      "title": "Arapahoe Libraries Fall Button Bonanza",
+      "reason": "ordinary recurring library crafts"
+    },
+    {
+      "title": "Douglas County Library Stack & Style",
+      "reason": "ordinary paid library workshop"
+    },
+    {
+      "title": "Clyfford Still Still Uncovered conservation tour Nov 13",
+      "reason": "$50 adults, ages 13+, recurring guided art-heavy experience"
+    },
+    {
+      "title": "Denver Public Art Skynets walking tour Nov 7",
+      "reason": "free but primarily 90-minute interpretation-heavy guided walk, no exceptional direct access"
+    },
+    {
+      "title": "EAA Young Eagles rally Payson Nov 21",
+      "reason": "outside Colorado"
+    },
+    {
+      "title": "EAA Chapter 1675 private Young Eagles Nov 14",
+      "reason": "private SOAR class, general public not eligible"
+    },
+    {
+      "title": "Factory Two Balancing Sculpture Nov 14",
+      "reason": "Flint Michigan, outside target region"
+    },
+    {
+      "title": "Foothills Park & Rec 2027 winter league registration Oct 28",
+      "reason": "ordinary sports seasons before family's arrival"
+    },
+    {
+      "title": "Carbon Valley summer camp 2027",
+      "reason": "ordinary weeklong full-price camp at $300/$450"
+    },
+    {
+      "title": "Bird Conservancy of the Rockies 2027 summer camp",
+      "reason": "ordinary weeklong paid camp ($375 in 2026; 2027 dates/price unconfirmed)"
+    },
+    {
+      "title": "Space Foundation Hooray for SLS for ages 2–5 Oct 13",
+      "reason": "expired and wrong age"
+    },
+    {
+      "title": "Space Foundation Homeschool Telescope Technology Sept 2",
+      "reason": "expired"
+    },
+    {
+      "title": "FIRST Pikes Peak Regional FRC March 7 2026",
+      "reason": "expired"
+    },
+    {
+      "title": "Aurora Library Wood Shop Build Your Own Nov 6",
+      "reason": "monthly recurring ordinary free workshop"
+    },
+    {
+      "title": "Denver Botanic Gardens harvest wreaths Nov 14–15",
+      "reason": "ordinary craft class with no verified subsidy"
+    },
+    {
+      "title": "Makers Meetup at Resolute Brewing Nov 8",
+      "reason": "monthly recurring meetup"
+    },
+    {
+      "title": "Big AZ Launch spectator weekend Nov 6–8",
+      "reason": "Arizona out of scope"
+    }
+  ],
+  "held_detail": [
+    {
+      "title": "National Laboratory of the Rockies AESP restricted lab tour Nov 5",
+      "reason": "public membership and noncitizen screening eligibility unclear; 20 spots and Nov 3 cutoff"
+    },
+    {
+      "title": "National Laboratory of the Rockies 7x24 chapter tour Nov 6",
+      "reason": "attendance eligibility, price, and actual local start time not publicly verified"
+    },
+    {
+      "title": "Rocky Mountain BEST Game Day Nov 7",
+      "reason": "exact venue and spectator public access unverified"
+    },
+    {
+      "title": "VEX St. Vrain middle-school V5 tournament Nov 7",
+      "reason": "team registration $75 is not spectator price; public spectator/fees unverified"
+    },
+    {
+      "title": "Colorado FIRST LEGO League West Metro Nov 7 qualifier",
+      "reason": "team-only participation instructions; visitor public access/price not verified"
+    },
+    {
+      "title": "Boulder EAA Young Eagles 2027 free flights",
+      "reason": "attractive recurring source but next dated 2027 rally not announced"
+    },
+    {
+      "title": "Catamount Institute 2027 summer camp",
+      "reason": "next registration announced only for Jan/Feb 2027, no particular dated rare value"
+    },
+    {
+      "title": "Rocky Mountain National Park 2027 special permits",
+      "reason": "no verified opening for 2027-2028 target yet"
+    }
+  ],
+  "inspected_unique_original_pages": 13,
+  "known_by_collector_evidence": "Five matched prior GitHub reports/fullsystem-run.json dry-run records; current private D1 event index was not accessible, so zero verified new collector misses.",
+  "previous_chatgpt_inbox_compared": [
+    "external-inbox/chatgpt/20261023T011105Z.json",
+    "external-inbox/chatgpt/20261023T011329Z.json",
+    "external-inbox/chatgpt/20261023T235915Z.json"
+  ],
+  "collector_config_checked": [
+    "config/sources.json",
+    "config/queries.json"
+  ],
+  "last_collector_workflow_checked": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40139725664 (success, 2026-10-24T22:42:45Z; current event rows not available from its summary artifact)",
+  "submissions": [
+    {
+      "path": "external-inbox/chatgpt/20261024T232920Z.json",
+      "events": 2,
+      "commit": "b435b99449311ee6cfdd337984d802c874e7613c",
+      "workflow": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40142939860",
+      "result": {
+        "received": 2,
+        "verified_official_in_worker": 1,
+        "unreachable_403": 1,
+        "extracted": 1,
+        "enqueued": 1,
+        "recommendation_interest": 1,
+        "push": 0,
+        "new_outbox": 0,
+        "dispatch_sent": 0,
+        "digest_sent_for_submitted_items": 0
+      }
+    },
+    {
+      "path": "external-inbox/chatgpt/20261024T233201Z.json",
+      "events": 2,
+      "commit": "5d56d461807c24da77c9cabfd86509c0c9d2823a",
+      "workflow": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40143127257",
+      "result": {
+        "received": 2,
+        "verified_official_in_worker": 1,
+        "unreachable_403": 1,
+        "extracted": 1,
+        "enqueued": 1,
+        "recommendation_interest": 1,
+        "push": 0,
+        "new_outbox": 0,
+        "dispatch_sent": 0,
+        "digest_sent_for_submitted_items": 0
+      }
+    }
+  ],
+  "downstream_failure_analysis": [
+    {
+      "event": "NCAR Super Science Saturday",
+      "cause": "Claude/Worker independent HTTP GET 403 on the original scied.ucar.edu event URL, then again on an alternate official cpaess.ucar.edu URL; browser web.run could read both. This is a source reachability/scraping problem, NOT failure to find.",
+      "action_for_collector": "Investigate compliant public original-source retrieval (alternative official open API, syndication, Google Index, public announcements) and explicit verified-by-finder handling. No code modifications performed."
+    },
+    {
+      "event": "MITEE Gobble Squabble / Robot Chaos",
+      "cause": "Official source openly says no spectator charge, but both Claude recommendation runs marked interest, saying free/public value absent from extracted snippet or distance not worth push; user explicitly allows farther rare meaningful events. Potential source truncation, retrieval/preprocessing or recommendation reasoning failure; do not assert a single exact cause without tracing.",
+      "action_for_collector": "Trace full official source text, HTML extraction/truncation and classification rule. Re-evaluate and suppress duplicates based on one festival day. No code modifications performed."
+    }
+  ],
+  "account_usage_note": "ChatGPT subscription quota unknown; Claude API bill $0.0372+$0.0373 is reported by downstream worker, independent of ChatGPT quota.",
+  "notes": "67 explicit web search queries counted (each fast record one search), 15 explicit page open/click attempts all returned; 13 unique official-domain pages inspected and 9 event-specific official details independently verified. Two distinct worthwhile 2026 local-resident opportunities found, submitted twice using distinct official source URLs to recover false negatives; the Worker recorded 2 interest-level records and 2 source HTTP403 misses across attempts, created no sendable outbox and confirmed zero Telegram deliveries for these events. Other unrelated digest messages must not be credited to these findings. No private recipients/identifiers, tokens or source labels included in public GitHub file. No existing collector code changed. No delivery success inferred."
+}
