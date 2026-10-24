@@ -1,0 +1,94 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-24T13:42:00Z",
+  "finished_at": "2026-10-24T13:43:00Z",
+  "searches": 10,
+  "queries": [
+   "Denver Arts Week 2026 Free Night at the Museums November 7 participating museums list",
+   "Westminster Colorado holiday lighting ceremony 2026 City Hall date",
+   "Thornton Winterfest 2026 date free ice skating Carpenter Park",
+   "Rocky Mountain National Park fee-free day Veterans Day November 11 2026",
+   "Colorado State Capitol free holiday tour OR open house December 2026",
+   "Arvada Broomfield free family holiday event November 2026 tree lighting parade",
+   "NREL OR NOAA Boulder OR NIST Boulder public open house tour 2026 November",
+   "Denver Public Library OR Anythink Library free special event November 2026 family hands-on",
+   "Denver Art Museum free day November December 2026 SCFD",
+   "Mile High drone show holiday 2026 free Denver November 20"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 13,
+  "excluded": 9,
+  "excluded_reasons": {
+   "2026_date_unconfirmed": 5,
+   "routine_recurring": 3,
+   "only_unofficial_source": 1
+  },
+  "notes": "Claude 독립 검색(예약). 어제 교훈 항목 대부분은 어제 검색 완료라 오늘은 새 범위(아츠위크 무료 야간, 연말 시 행사, 국립공원 무료일, 연구소 공개, 도서관 특별 행사)를 넓혔다. 제외: 웨스트민스터·손턴 연말 행사·주지사 관저 투어·마일하이 드론쇼(2026 날짜 미게시), 주의사당·NOAA 정기 투어·도서관 상시 프로그램(정기). 참고: 다른 경로가 등록한 드론쇼 11/20 날짜는 공식 페이지에 아직 2026 날짜가 없어 확인 필요."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-24T13:55:00Z",
+   "origin": "scheduled",
+   "title": "Night at the Museums 2026 at Clyfford Still Museum (Denver Arts Week)",
+   "url": "https://clyffordstillmuseum.org/events/night-at-the-museums-2026/",
+   "start_date": "2026-11-07",
+   "time": "5:00 PM - 10:00 PM",
+   "location": "Clyfford Still Museum, Denver",
+   "cost": "Free",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Annual Night at the Museums during Denver Arts Week (Nov 6-15, 2026): free after-hours visit; Nov 7 is also an SCFD Free Day.",
+   "recommend": "push",
+   "special_reason": "덴버 아츠 위크 하룻밤만 미술관을 밤 10시까지 무료 개방"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-24T13:55:00Z",
+   "origin": "scheduled",
+   "title": "Denver Art Museum Free Day (November 7, 2026)",
+   "url": "https://www.denverartmuseum.org/en/free-days-dam",
+   "start_date": "2026-11-07",
+   "time": "10:00 AM - 10:00 PM",
+   "location": "Denver Art Museum, Denver",
+   "cost": "Free general admission (ticketed exhibitions extra)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD-funded free general admission day at the Denver Art Museum.",
+   "recommend": "push",
+   "special_reason": "SCFD 지원으로 연 몇 번뿐인 미술관 무료 관람일(밤 10시까지)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-24T13:55:00Z",
+   "origin": "scheduled",
+   "title": "Rocky Mountain National Park fee-free day (Veterans Day)",
+   "url": "https://www.nps.gov/planyourvisit/passes.htm",
+   "start_date": "2026-11-11",
+   "location": "Rocky Mountain National Park, Estes Park",
+   "cost": "Free entrance (camping and permits not waived)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "National Park Service 2026 fee-free day on Veterans Day, Wednesday Nov 11. Free days apply to U.S. citizens and residents.",
+   "recommend": "push",
+   "special_reason": "연중 몇 번뿐인 국립공원 입장료 면제일(미국 시민·거주자)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-24T13:55:00Z",
+   "origin": "scheduled",
+   "title": "Broomfield Holiday Tree Lighting Ceremony 2026",
+   "url": "https://broomfield.org/index.aspx?NID=2468",
+   "start_date": "2026-12-04",
+   "time": "5:30 PM - 8:00 PM",
+   "location": "George Di Ciero City and County Building, Broomfield",
+   "age": "All ages",
+   "audience": "family",
+   "description": "City and County of Broomfield annual tree lighting: school caroling, Santa visit, food trucks, holiday wagon ride. Schedule details coming soon.",
+   "recommend": "interest"
+  }
+ ]
+}
