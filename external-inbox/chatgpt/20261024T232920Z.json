@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-24T23:29:20.260Z",
+  "test": false,
+  "events": [
+    {
+      "title": "NSF NCAR Super Science Saturday 2026 — 30 Years of Boldly Going",
+      "url": "https://scied.ucar.edu/visit/ncar/super-science-saturday",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "10:00 AM–4:00 PM MST (America/Denver)",
+      "location": "NSF NCAR Mesa Lab, 1850 Table Mesa Drive, Boulder, CO 80305",
+      "cost": "Free public science festival admission; family of five $0",
+      "age": "Public event for all ages, adults and children welcome; special event registration requirement not stated on organizer page",
+      "audience": "family",
+      "description": "One-day annual large-scale NSF/UCAR public science celebration with hands-on exploration of Earth-system science and public science activities, hosted at a working atmospheric research campus (not just a regular free visitor-center visit). The 2026 theme is the 30th anniversary, '30 Years of Boldly Going'. Organizer confirms Saturday Nov 7 2026 10:00-16:00, free and public for all ages. 2026 local residents/friends; before June 2027 visiting family arrival. Venue/address confirmed on official UCAR visitor page."
+    },
+    {
+      "title": "Monumental Impact 2026 MITEE Gobble Squabble — free Robot Chaos and Makers Expo",
+      "url": "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/",
+      "start_date": "2026-11-21",
+      "end_date": "2026-11-21",
+      "time": "10:00 AM–5:00 PM MST; robot combat from 10:00, Makers & Community Expo 10:30–14:30, FTC scrimmage 11:00–15:00, Open Robotics 15:30–17:00 (subject to organizer changes)",
+      "location": "Bear Creek Elementary School, 1330 Creekside Dr, Monument, CO 80132",
+      "cost": "Free for public spectators and makers expo, explicitly confirmed by organizer; family of five $0; participating as a competitor may have separate costs",
+      "age": "Public family event, guests and children welcome, watching competition or visiting expo requires no membership; competing teams have separate registration",
+      "audience": "family",
+      "description": "One-day 6th annual rare combined robot combat arena, student FTC scrimmage, open robotics contest, and Makers & Community Expo. Official organizer explicitly states no charge for viewing robotics competitions or visiting expo; visitors can meet robot builders and watch several distinct technical competitions. High experience value despite distance from Denver metro. Event is in 2026 for current local residents/friends, not the family's 2027-28 stay."
+    }
+  ]
+}
