@@ -148,6 +148,6 @@ jobs:
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/source_candidates_43_result.json eval/sports_diag.json eval/audit_sample.json eval/recommend_backfill*.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/source_candidates_43_result.json eval/source_candidates_43b_result.json eval/sports_diag.json eval/audit_sample.json eval/recommend_backfill*.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"

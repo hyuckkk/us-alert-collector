@@ -1,0 +1,223 @@
+{
+ "_comment": "#43 2차 후보",
+ "candidates": [
+  {
+   "id": "mp-mountainrange-gym",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/mountain-range-mustangs/gymnastics/schedule/",
+   "field": "school-gym"
+  },
+  {
+   "id": "mp-standleylake-gym",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/standley-lake-gators/gymnastics/schedule/",
+   "field": "school-gym"
+  },
+  {
+   "id": "mp-mountainrange-fb",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/mountain-range-mustangs/football/schedule/",
+   "field": "school-high"
+  },
+  {
+   "id": "mp-westminster-vb",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/westminster-wolves/volleyball/schedule/",
+   "field": "school-high"
+  },
+  {
+   "id": "mp-legacy-bb",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/broomfield/legacy-lightning/basketball/schedule/",
+   "field": "school-high"
+  },
+  {
+   "id": "chsaa-gym-news",
+   "type": "html",
+   "url": "https://chsaanow.com/sports/gymnastics",
+   "field": "school-gym",
+   "link_pattern": "/news/2026/"
+  },
+  {
+   "id": "chsaa-fall-champ",
+   "type": "html",
+   "url": "https://chsaanow.com/news/2026/09/09/fall-2026-state-championship-dates-locations-announced",
+   "field": "school-gym",
+   "mode": "page-change"
+  },
+  {
+   "id": "hyland-youth-sched",
+   "type": "html",
+   "url": "https://hylandhillssports.com/Org/Schedules.aspx?d=lq2B3aLV5arZhpLNCU9N34yMczK%2BIDzVpZPkE9NgDfc%3D",
+   "field": "school-youth",
+   "mode": "page-change"
+  },
+  {
+   "id": "mountainrange-calendar",
+   "type": "html",
+   "url": "https://mountainrange.adams12.org/our-school/calendar",
+   "field": "school-high",
+   "mode": "page-change"
+  },
+  {
+   "id": "adams12-calendar",
+   "type": "html",
+   "url": "https://www.adams12.org/our-district/calendar",
+   "field": "school-high",
+   "mode": "page-change"
+  },
+  {
+   "id": "du-ics-all",
+   "type": "ical",
+   "url": "https://denverpioneers.com/calendar.ashx/calendar.ics",
+   "field": "school-univ"
+  },
+  {
+   "id": "du-gym-2026-news",
+   "type": "html",
+   "url": "https://denverpioneers.com/news/2025/10/6/denver-gymnastics-reveals-2026-meet-schedule",
+   "field": "school-gym",
+   "mode": "page-change"
+  },
+  {
+   "id": "fort-carson-calendar",
+   "type": "html",
+   "url": "https://home.army.mil/carson/event-calendar",
+   "field": "military"
+  },
+  {
+   "id": "usafa-events-2",
+   "type": "html",
+   "url": "https://www.usafa.edu/events/",
+   "field": "military"
+  },
+  {
+   "id": "cns-events",
+   "type": "html",
+   "url": "https://www.coloradonationalspeedway.com/events",
+   "field": "cars"
+  },
+  {
+   "id": "cos-liftoff-schedule",
+   "type": "html",
+   "url": "https://www.coloradospringslabordayliftoff.com/schedule",
+   "field": "balloon",
+   "mode": "page-change"
+  },
+  {
+   "id": "greeley-stampede",
+   "type": "html",
+   "url": "https://www.greeleystampede.org/",
+   "field": "rodeo",
+   "mode": "page-change"
+  },
+  {
+   "id": "nwss-rodeo",
+   "type": "html",
+   "url": "https://nationalwestern.com/events/",
+   "field": "rodeo"
+  },
+  {
+   "id": "ball-arena-events",
+   "type": "html",
+   "url": "https://www.ballarena.com/events",
+   "field": "monster"
+  },
+  {
+   "id": "hpr-calendar",
+   "type": "html",
+   "url": "https://www.highplainsraceway.com/events/month/",
+   "field": "cars"
+  },
+  {
+   "id": "mountain-games-sched",
+   "type": "html",
+   "url": "https://mountaingames.com/schedule/",
+   "field": "water"
+  },
+  {
+   "id": "cpw-fishing-clinics",
+   "type": "html",
+   "url": "https://cpw.state.co.us/fishing/fishing-events-and-clinics",
+   "field": "hunt-fish"
+  },
+  {
+   "id": "cpw-youth-hunt",
+   "type": "html",
+   "url": "https://cpw.state.co.us/hunting/youth",
+   "field": "hunt-fish"
+  },
+  {
+   "id": "cpw-events-hunter",
+   "type": "html",
+   "url": "https://cpw.state.co.us/events",
+   "field": "hunt-fish"
+  },
+  {
+   "id": "usatkd-tournaments",
+   "type": "html",
+   "url": "https://www.usatkd.org/tournaments",
+   "field": "tkd"
+  },
+  {
+   "id": "dacono-bmx-sched",
+   "type": "html",
+   "url": "https://www.daconoco.gov/874/Race-Schedule",
+   "field": "bmx",
+   "mode": "page-change"
+  },
+  {
+   "id": "usabmx-dacono",
+   "type": "html",
+   "url": "https://www.usabmx.com/tracks/1496",
+   "field": "bmx",
+   "mode": "page-change"
+  },
+  {
+   "id": "winterpark-events",
+   "type": "html",
+   "url": "https://www.winterparkresort.com/events",
+   "field": "mtb"
+  },
+  {
+   "id": "trestle-events",
+   "type": "html",
+   "url": "https://www.trestlebikepark.com/events",
+   "field": "mtb"
+  },
+  {
+   "id": "ava-rafting-faq",
+   "type": "html",
+   "url": "https://www.coloradorafting.net/faq/",
+   "field": "water",
+   "mode": "page-change"
+  },
+  {
+   "id": "clearcreek-rafting-faq",
+   "type": "html",
+   "url": "https://www.clearcreekrafting.com/faq/",
+   "field": "water",
+   "mode": "page-change"
+  },
+  {
+   "id": "standley-lake",
+   "type": "html",
+   "url": "https://www.westminsterco.gov/ParksRecreation/StandleyLakeRegionalPark",
+   "field": "water",
+   "mode": "page-change"
+  },
+  {
+   "id": "pwam-home",
+   "type": "html",
+   "url": "https://pwam.org/",
+   "field": "military",
+   "mode": "page-change"
+  },
+  {
+   "id": "wings-rockies-events",
+   "type": "html",
+   "url": "https://wingsmuseum.org/events/",
+   "field": "military"
+  }
+ ]
+}
