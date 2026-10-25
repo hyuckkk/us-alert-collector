@@ -228,6 +228,8 @@ export function parseInterests(x) { try { const v = JSON.parse(x || "[]"); retur
 export function recLevel(e, r) {
   // 평범한 학교/클럽/대학 정기경기는 달력·주간 링크로만 제공하고 건별 Telegram 알림 금지.
   if (isRoutineSportsMatch(e)) return "sports-calendar-only";
+  // 수집기가 보류한 행사(이슈 #43: 군사시설 외국인 출입 미확인·제한)는 관심 설정과 상관없이 아무에게도 보내지 않는다
+  if (String(e.hold_reason || "").trim()) return "hold:" + e.hold_reason;
   const lv = e.rec_level;
   // 적극 알림은 '왜 특별한지' 근거가 있어야 보낸다(소유자 기준: 정가·상시 공연·일상 세미나는 보내지 않음)
   if (lv === "push") {
@@ -905,7 +907,7 @@ export async function preview(env, bot, n = 4, keys = null) {
 
 // ---------------------------------------------------------------- 추천 판정 결과만 갱신(재평가). 판·변경 알림·대기열은 건드리지 않는다
 const REC_FIELDS = ["rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason", "title_ko", "special_reason", "special_basis", "evidence_quote",
-  "usual_alternative", "rec_blockers", "push_blocked"];
+  "usual_alternative", "rec_blockers", "push_blocked", "hold_reason", "topic", "foreign_access", "access_note", "family_water", "water_note", "fee_note", "status_note"];
 export async function recommendUpdate(env, body) {
   const items = (body.items || []).filter((x) => x && x.event_key && ["push", "interest", "none"].includes(x.rec_level)).slice(0, 300);
   if (!items.length) return { ok: true, updated: 0 };

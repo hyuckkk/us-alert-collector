@@ -126,7 +126,7 @@ def _year_in_text(ev: dict, entry, today: date) -> bool:
     return bool(keys) and all(0 <= (k - today).days <= YEAR_CONFIRM_DAYS and re.search(rf"\b{k.year}\b", text) for k in keys)
 
 
-def finalize(extracted, entries: list, today: date, checked_at: str | None = None) -> tuple[list[dict], dict]:
+def finalize(extracted, entries: list, today: date, checked_at: str | None = None, sources: dict | None = None) -> tuple[list[dict], dict]:
     """extracted: ai.EntryResult 목록(index 는 entries 기준). 반환: (행사 목록, 버린 이유별 건수).
     행사 키는 아직 없다(identity.assign_keys 가 기존 행사 목록과 대조해 정한다)."""
     checked_at = checked_at or datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -181,6 +181,10 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             d["source_id"] = entry.source_id
             d["checked_at"] = checked_at
             d["_entry_index"] = r.index
+            sports_normalize(d, entry, (sources or {}).get(entry.source_id))
+            if out_of_state_game(d):
+                drop("out-of-state-game")
+                continue
             d["_anchor"] = identity.anchor(d, entry, official=bool(entry.extra.get("official")))
             out.append(d)
     return out, dropped
@@ -202,11 +206,141 @@ def apply_verdicts(events: list[dict], review_idx: list[int], verdicts) -> tuple
     return [e for i, e in enumerate(events) if i not in remove], len(remove)
 
 
+# ---------------------------------------------------------------- 경기 달력 정규화(이슈 #27·#43, 토큰 0)
+# Codex 달력 페이지와의 자료 계약: docs/SPORTS-CONTRACT.md
+SPORTS_FIELDS = ("school_level", "level_detail", "sport", "event_type", "home_team", "away_team", "participants", "start_time", "venue", "cost_class")
+LEVELS = ("elementary", "middle", "high", "university")
+VS_RE = re.compile(r"^(.*?)\s+(?:vs\.?|v\.|versus)\s+(.+)$", re.I)
+AT_RE = re.compile(r"^(.*?)\s+(?:at|@)\s+(.+)$", re.I)
+MEET_RE = re.compile(r"\b(meet|invitational|tri-?meet|triangular|quad(?:-meet)?|dual|championships?|regionals?|classic|cup)\b", re.I)
+SPORT_RE = re.compile(r"\b(gymnastics|hockey|soccer|football|baseball|basketball|volleyball|softball|tennis|wrestling|lacrosse|rugby|swimming|"
+                      r"water polo|field hockey|cross country|track and field|track & field|futsal|golf|skiing|diving)\b", re.I)
+ICS_TIME = re.compile(r"^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})\d{2}(Z?)$")
+FREE_WORDS = re.compile(r"(^|[\s,(])(free|무료|no admission|no charge)(?=[\s.,)]|$)", re.I)
+PAID_WORDS = re.compile(r"\$\s*[1-9]|유료|tickets? (?:required|start)", re.I)
+
+
+# 콜로라도 밖 경기(대학 원정·중립 대회): 장소에 다른 주 이름·약칭이 있으면 저장하지 않는다(볼 수 없는 경기)
+OTHER_STATES = re.compile(
+    r"\b(Alabama|Ala\.|Alaska|Arizona|Ariz\.|Arkansas|Ark\.|California|Calif\.|Connecticut|Conn\.|Delaware|Florida|Fla\.|Georgia|Ga\.|Hawaii|Idaho|Illinois|Ill\.|"
+    r"Indiana|Ind\.|Iowa|Kansas|Kan\.|Kentucky|Ky\.|Louisiana|La\.|Maine|Maryland|Md\.|Massachusetts|Mass\.|Michigan|Mich\.|Minnesota|Minn\.|Mississippi|Miss\.|"
+    r"Missouri|Mo\.|Montana|Mont\.|Nebraska|Neb\.|Nevada|Nev\.|New Hampshire|N\.H\.|New Jersey|N\.J\.|New Mexico|N\.M\.|New York|N\.Y\.|North Carolina|N\.C\.|"
+    r"North Dakota|N\.D\.|Ohio|Oklahoma|Okla\.|Oregon|Ore\.|Pennsylvania|Pa\.|Rhode Island|R\.I\.|South Carolina|S\.C\.|South Dakota|S\.D\.|Tennessee|Tenn\.|"
+    r"Texas|Utah|Vermont|Vt\.|Virginia|Va\.|Washington|Wash\.|West Virginia|W\.Va\.|Wisconsin|Wis\.|Wyoming|Wyo\.|Puerto Rico|Mexico|Canada)(?![a-z])")
+
+
+def out_of_state_game(d: dict) -> bool:
+    if not (d.get("sport") and d.get("event_type")):
+        return False
+    where = " ".join(str(d.get(k) or "") for k in ("location", "city"))
+    return bool(OTHER_STATES.search(where)) and not re.search(r"\b(Colorado|Colo\.|CO)\b", where)
+
+
+def cost_class(cost: str | None) -> str:
+    """관중 입장료 분류. 무료라고 적힌 경우만 free(참가비·등록비는 cost_text 에 넣지 않는다)."""
+    s = str(cost or "").strip()
+    if not s:
+        return "unknown"
+    if FREE_WORDS.search(s) and not PAID_WORDS.search(s):
+        return "free"
+    return "paid" if PAID_WORDS.search(s) else "unknown"
+
+
+def _ics_local_time(published: str | None) -> str | None:
+    m = ICS_TIME.match(str(published or ""))
+    if not m:
+        return None
+    y, mo, d, hh, mm, z = m.groups()
+    t = datetime(int(y), int(mo), int(d), int(hh), int(mm), tzinfo=timezone.utc if z else None)
+    if z:
+        from zoneinfo import ZoneInfo
+        t = t.astimezone(ZoneInfo("America/Denver"))
+    return None if (t.hour, t.minute) == (0, 0) else f"{t.hour:02d}:{t.minute:02d}"   # 자정 = 종일 일정(시각 미상)
+
+
+def sports_normalize(d: dict, entry=None, source: dict | None = None) -> dict:
+    """경기·대회 행사에 달력 필드를 채운다. 경기가 아니면 그대로 둔다.
+    - school_level: 정보원 설정(sources.json school_level)이 모델 판단보다 우선
+    - event_type: A vs B / A at B → match, 다자 대회 명칭(meet·invitational·quad·championship) → meet
+    - start_time: iCal 시작 시각을 덴버 현지 시각으로(모델 추출보다 정확)
+    - cost_class: 관중 입장료(무료라고 적힌 경우만 free)"""
+    source = source or {}
+    title = str(d.get("title") or "")
+    sport = (d.get("sport") or source.get("sport") or "").strip().lower() or None
+    m = SPORT_RE.search(title)
+    if not sport and m:
+        sport = m.group(1).lower().replace(" & ", " and ")
+    if not sport:
+        return d
+    d["sport"] = sport
+    lv = source.get("school_level") or d.get("school_level")
+    d["school_level"] = lv if lv in LEVELS else None
+    if source.get("level_detail") and not d.get("level_detail"):
+        d["level_detail"] = source["level_detail"]
+    et = d.get("event_type")
+    if not et:
+        if d.get("home_team") and d.get("away_team"):
+            et = "match"
+        elif MEET_RE.search(title):
+            et = "meet"
+        elif VS_RE.match(title) or AT_RE.match(title):
+            et = "match"
+    d["event_type"] = et
+    if et == "match" and not (d.get("home_team") and d.get("away_team")):
+        mv, ma = VS_RE.match(title), AT_RE.match(title)
+        if mv:
+            d["home_team"], d["away_team"] = mv.group(1).strip(), mv.group(2).strip()
+        elif ma and not MEET_RE.search(ma.group(2)):
+            d["home_team"], d["away_team"] = ma.group(2).strip(), ma.group(1).strip()
+    if et == "meet":
+        d["home_team"] = d["away_team"] = None   # 다자 대회를 1:1 경기로 꾸미지 않는다
+    d["participants"] = list(dict.fromkeys(p.strip() for p in (d.get("participants") or []) if p and p.strip()))[:24]
+    t = _ics_local_time(entry.published) if entry is not None and "uid" in entry.extra else None   # iCal 항목만
+    if t:
+        d["start_time"] = t
+    elif d.get("start_time") and not re.match(r"^\d{2}:\d{2}$", str(d["start_time"])):
+        d["start_time"] = None
+    d["venue"] = d.get("location")
+    d["cost_class"] = cost_class(d.get("cost_text"))
+    return d
+
+
+SPECIAL_GAME = re.compile(r"championship|state\s+(meet|tournament|finals?)|regionals?|district\s+tournament|playoffs?|finals?\b|bowl\b|open\s+house|"
+                          r"clinic|camp|youth\s+day|kids?\s+day|free\s+admission|fan\s+fest|결승|챔피언십|주\s*대회", re.I)
+
+
+def routine_game(ev: dict) -> bool:
+    """학교·대학 정기 경기(대진·다자 정규 대회)인가. 정기 경기는 개별 알림이 아니라 경기 달력에만 둔다(이슈 #25·#27) →
+    추천 판정(유료 큰 모델)을 부르지 않는다. 결승·주 대회·지역 예선·공개 행사 같은 특별 경기는 판정에 보낸다."""
+    return bool(ev.get("sport") and ev.get("event_type") in ("match", "meet") and ev.get("school_level") in LEVELS
+                and not SPECIAL_GAME.search(" ".join(str(ev.get(k) or "") for k in ("title", "title_ko", "status_note"))))
+
+
+def calendar_only(ev: dict) -> dict:
+    """정기 경기의 추천 결과를 규칙으로 채운다(토큰 0). 저장·달력 표시는 그대로, 텔레그램 개별 알림은 없음."""
+    ev.update({"rec_level": "none", "category": "sports", "rec_score": 0, "summary_ko": "", "highlights": [], "rec_reason": "학교·대학 정기 경기 — 경기 달력에만 표시",
+               "special_reason": "", "special_basis": "none", "evidence_quote": "", "usual_alternative": "정기 시즌 경기", "rec_blockers": ["school_sports_regular"],
+               "push_blocked": "calendar-only", "hold_reason": "", "topic": "gymnastics" if ev.get("sport") == "gymnastics" else "school_sports"})
+    return ev
+
+
+def calendar_title_ko(ev: dict) -> None:
+    """한국어 제목에 '경기'를 붙여 달력 판별(sports.js: 체육 정보원 + match|game|경기)이 다자 대회(meet)를 놓치지 않게 한다.
+    추천 판정이 title_ko 를 다시 쓰므로 Worker 로 보내기 직전에 적용한다."""
+    if ev.get("sport") and ev.get("event_type") in ("match", "meet", "tournament"):
+        t = str(ev.get("title_ko") or ev.get("title") or "")
+        if t and not re.search(r"경기|대회|match|game", t, re.I):
+            ev["title_ko"] = (t + (" 경기" if ev["event_type"] == "match" else " 대회 경기"))[:60]
+
+
 def for_worker(ev: dict) -> dict:
     """Worker 로 보내는 필드만 남긴다."""
+    calendar_title_ko(ev)
     keep = ("event_key", "identity", "bot", "title", "title_ko", "org", "start_date", "end_date", "time_text", "event_tz", "location", "city",
             "age_text", "english", "cost_text", "signup", "registration_opens", "registration_status", "deadline", "eligibility", "status_note",
             "url", "checked_at", "urgency", "tags", "annual", "year_label", "source_id", "date_uncertain",
             "rec_level", "category", "rec_score", "summary_ko", "highlights", "rec_reason", "special_reason", "found_by", "found_at", "verified", "ext_level", "run_id",
-            "special_basis", "evidence_quote", "usual_alternative", "rec_blockers", "push_blocked")
+            "special_basis", "evidence_quote", "usual_alternative", "rec_blockers", "push_blocked",
+            "hold_reason", "topic", "foreign_access", "access_note", "family_water", "water_note", "fee_note",
+            *SPORTS_FIELDS)
     return {k: ev.get(k) for k in keep}

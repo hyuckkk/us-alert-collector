@@ -1,0 +1,14 @@
+{
+  "_comment": "군사·연방 시설의 외국 국적 방문객 출입 공식 문장(이슈 #43). 실행기에서 공식 페이지를 직접 읽어 확인한 원문만 넣는다(지어내지 않음). 추천 판정 원문 뒤에 붙어, 행사 자체 조건(시민 전용 등)과 함께 판단된다. 확인 못 한 시설은 넣지 않는다 → 그 시설 행사는 '미확인'으로 보류된다.",
+  "policies": [
+    {
+      "id": "usafa",
+      "name": "U.S. Air Force Academy",
+      "match": "air force academy|usafa|falcon stadium|cadet chapel|usafa\\.edu",
+      "url": "https://www.usafa.edu/visitors/getting-on-base/",
+      "checked": "2026-10-25",
+      "quote": "International guests Non-U.S. citizens must visit the Pass and Registration Office (PRO) in person with a valid passport and the link to the associated event to obtain a pass. Hours of operation are weekdays from 7:30 a.m. to 3 p.m. Weekend access is reserved for events, cadet visitors and housing guests only.",
+      "note_ko": "비시민권자: 여권 원본과 행사 안내 링크를 가지고 출입증 사무소(PRO) 방문, 평일 07:30–15:00. 전원 신원 조회. 행사별 조건은 따로 확인"
+    }
+  ]
+}

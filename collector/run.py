@@ -39,14 +39,14 @@ DAILY_THEMES = {           # 세 분야를 매일 발굴(1차 검증 2-1)
     "family": "family outings near Denver: festivals, free days, school/university games and performances, nature and park programs, special experiences, notable family travel deals from Denver",
     "life": "adults near Westminster/Denver: hobby and skills classes, community college noncredit courses, rec-center adult sports leagues, clubs, talks, performances",
 }
-DEEP_THEMES = {            # 요일별 심층(월=0) — 설계안 유지
-    0: "kids after-school programs, camps, youth sports and arts/science classes",
-    1: "adult hobby and skills classes (crafts, cooking, tech, language exchange, sports leagues)",
-    2: "Westminster / Adams County local government, schools (Adams 12, Westminster Public Schools) and community events",
-    3: "aviation, military and special facilities open to the public (air shows, base open houses, Air Force Academy, space)",
-    4: "nature, state parks and national parks (ranger programs, reservations, seasonal openings)",
-    5: "universities near Denver (DU, CU Boulder, CSU, Mines): public lectures, games, family days",
-    6: "family travel from Denver: unusual flight deals, cruise family programs and kids-sail-free promotions, road-trip festivals",
+DEEP_THEMES = {            # 요일별 심층(월=0). 이슈 #41·#42·#43 관심 분야를 같은 호출 수 안에서 요일별로 나눠 넣었다(비용 증가 없음)
+    0: "kids after-school programs, camps, youth sports and arts/science classes; youth taekwondo tournaments and demonstrations, BMX races and track open days, kids fishing derbies",
+    1: "adult hobby and skills classes (crafts, cooking, tech, language exchange, sports leagues); public archery/3D shoots, official shooting matches and large public shoots (not a range's everyday rental packages), mountain bike downhill/enduro races and rides",
+    2: "Westminster / Adams County local government, schools (Adams 12, Westminster Public Schools) and community events; public school sports schedules (high school, middle school, K-8 youth leagues) and gymnastics meets",
+    3: "U.S. military and aviation events the public - including foreign visitors - can attend: base open houses, air shows, aircraft/helicopter/tank displays or rides, ship tours, academy events; note the official visitor-access rules for non-U.S. citizens",
+    4: "nature, state parks and national parks (ranger programs, reservations, seasonal openings); family-friendly rafting/kayak/canoe/SUP trips with minimum ages and weights, youth hunting and fishing mentor programs",
+    5: "universities near Denver (DU, CU Boulder, CSU, Mines): public lectures, games, family days; college gymnastics meets; rodeos and hot-air balloon festivals with real rides",
+    6: "family travel from Denver: unusual flight deals, cruise family programs and kids-sail-free promotions, road-trip festivals; Monster Jam, NASCAR and speedway events, legal drag racing and night tuner/JDM car shows at tracks",
 }
 OFFICIAL_TLD = (".gov", ".edu", ".us", ".org", ".mil")
 MIN_SOURCE_OK_RATIO = 0.5  # 정보원 조회 성공률이 이보다 낮으면 '정상 수집'으로 기록하지 않는다(2차 재검증 G)
@@ -161,7 +161,8 @@ class Run:
             self.alerts.append(f"승격 정보원 조회 실패: {e}")
         self.all_sources = srcs
         if self.args.only:
-            srcs = [s for s in srcs if s["id"] == self.args.only]
+            only = set(self.args.only.split(","))   # 쉼표로 여러 개(검증 실행용)
+            srcs = [s for s in srcs if s["id"] in only]
         due = [s for s in srcs if self.args.only or getattr(self.args, "all_sources", False) or is_due(s, self.today)]
         everything = {x["id"]: x for x in load("sources.json")["sources"]}
         for s in due:
@@ -429,7 +430,8 @@ class Run:
                 if out.stopped:
                     self.alerts.append(f"AI 추출 중단({out.stopped}) — 남은 {len(out.failed)}건은 대기열에 보존")
                 extracted = [out.results[i] for i in sorted(out.results)]
-                evs, dropped = rules.finalize(extracted, entries, self.today, self.checked_at)
+                evs, dropped = rules.finalize(extracted, entries, self.today, self.checked_at,
+                                              {x["id"]: x for x in getattr(self, "all_sources", [])})
                 self.report["dropped"] = dropped
                 # 애매한 건만 큰 모델(실패하면 그 행사들만 다음 실행으로)
                 review_idx = [i for i, ev in enumerate(evs) if ev.get("needs_review")]
@@ -480,24 +482,31 @@ class Run:
                 evs, dup = identity.dedupe(evs)
                 if dup:
                     self.report["dropped"]["duplicate"] = dup
-                # 추천 판정(큰 모델): 모든 발송 후보에 적용. 판정이 빠지거나 실패한 항목은 보내지 않고 다음 실행에서 다시
-                if evs:
+                # 학교·대학 정기 경기는 경기 달력 전용: 추천 판정(큰 모델)을 부르지 않고 규칙으로 채운다(비용 절감, 이슈 #43)
+                games = [ev for ev in evs if rules.routine_game(ev)]
+                for ev in games:
+                    rules.calendar_only(ev)
+                self.m["calendar_only"] = self.m.get("calendar_only", 0) + len(games)
+                judge_evs = [ev for ev in evs if not rules.routine_game(ev)]
+                # 추천 판정(큰 모델): 나머지 모든 발송 후보에 적용. 판정이 빠지거나 실패한 항목은 보내지 않고 다음 실행에서 다시
+                if judge_evs:
                     u0 = self.usage.usd
                     try:
-                        ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in evs],
+                        ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in judge_evs],
                                           self.today.isoformat(), self.usage)
                     except Exception as e:  # noqa: BLE001
-                        ro = ai.RecommendOutcome(missing={j: type(e).__name__ for j in range(len(evs))})
+                        ro = ai.RecommendOutcome(missing={j: type(e).__name__ for j in range(len(judge_evs))})
                     self.work["cost_usd"]["recommend"] += self.usage.usd - u0
                     if ro.missing and not ro.recs:
                         self.work["failure_usd"] += self.usage.usd - u0
                     if ro.missing:
                         self.alerts.append(f"추천 판정 누락 {len(ro.missing)}건 — 보내지 않고 다음 실행에서 다시")
                     self.m["recommend_missing"] = len(ro.missing)
-                    held |= {evs[j]["_entry_index"] for j in ro.missing}
+                    held |= {judge_evs[j]["_entry_index"] for j in ro.missing}
                     for j, r in ro.recs.items():
-                        ai.apply_recommendation(evs[j], r, entries[evs[j]["_entry_index"]].text or "")
-                    evs = [ev for ev in evs if ev["_entry_index"] not in held]
+                        ai.apply_recommendation(judge_evs[j], r, entries[judge_evs[j]["_entry_index"]].text or "")
+                evs = [ev for ev in evs if ev["_entry_index"] not in held]
+                if evs:
                     for lv in ("push", "interest", "none"):
                         self.m[f"rec_{lv}"] = self.m.get(f"rec_{lv}", 0) + sum(1 for ev in evs if ev.get("rec_level") == lv)
                 for ev in evs:
@@ -689,6 +698,14 @@ class Run:
         collected = full and self.m["sources_total"] > 0 and ratio >= MIN_SOURCE_OK_RATIO and (not self.core_due or core_ok > 0)
         completed = stages_ok and collected
         self.report["collected"] = collected
+        if self.args.only:   # 검증 실행: 정보원별 실제 수집 항목 표본(공개 웹 정보만)
+            per: dict = {}
+            for e in self.entries.values():
+                lst = per.setdefault(e.source_id, [])
+                if len(lst) < 12:
+                    lst.append({"title": e.title[:120], "url": e.url, "published": e.published, "text": (e.text or "")[:500],
+                                "detail_ok": e.extra.get("detail_ok")})
+            self.report["entries_sample"] = per
         self.report.update({"metrics": self.m, "alerts": self.alerts, "stages": self.stages, "completed": completed})
         self.api.run_log({"run_id": self.run_id, "started_at": self.started.isoformat(timespec="seconds"),
                           "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "completed": completed and full,

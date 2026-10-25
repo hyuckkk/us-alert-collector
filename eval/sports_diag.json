@@ -1,0 +1,169 @@
+{
+ "today": "2026-10-25",
+ "events_total": 889,
+ "sports_like": 233,
+ "sports_like_future": 213,
+ "calendar_future": 202,
+ "calendar_by_grade": {
+  "university": 202
+ },
+ "calendar_by_sport": {
+  "basketball": 145,
+  "hockey": 25,
+  "volleyball": 22,
+  "football": 8,
+  "미식축구": 2
+ },
+ "calendar_by_source": {
+  "du-athletics-ics": 48,
+  "cu-athletics-ics": 47,
+  "afa-athletics-ics": 47,
+  "csu-athletics-ics": 35,
+  "mines-athletics-ics": 21,
+  "usafa-events": 3,
+  "cu-boulder-localist": 1
+ },
+ "sports_future_by_source": {
+  "du-athletics-ics": 48,
+  "cu-athletics-ics": 47,
+  "afa-athletics-ics": 47,
+  "csu-athletics-ics": 35,
+  "mines-athletics-ics": 21,
+  "ai-discover": 5,
+  "usafa-events": 3,
+  "brighton-rss": 2,
+  "hyland-hills-events-api": 2,
+  "erie-rss": 1,
+  "gap-879e24a599": 1,
+  "cu-boulder-localist": 1
+ },
+ "not_calendar_future_by_reason": {
+  "no-vs-or-game": 11
+ },
+ "not_calendar_meet_like": [],
+ "not_calendar_samples": [
+  {
+   "start_date": "2026-10-28",
+   "title": "Jack O Lantern Pickleball Tournament",
+   "source_id": "brighton-rss",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6806",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-12-02",
+   "title": "Gold Crown Winter Youth Development Basketball League",
+   "source_id": "ai-discover",
+   "url": "https://www.goldcrownfoundation.com/basketball-programs/",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-10-31",
+   "title": "Eerie Erie",
+   "source_id": "erie-rss",
+   "url": "https://www.erieco.gov/Calendar.aspx?EID=5449",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-11-07",
+   "title": "Girls Basketball League – Saturday Late Fall 2026",
+   "source_id": "ai-discover",
+   "url": "https://www.i9sports.com/venues/north-westminster-north-youth-sports-programs/7526",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-10-25",
+   "title": "NADAC 도그 어질리티 대회 (일반 관람)",
+   "source_id": "gap-879e24a599",
+   "url": "https://www.jeffco.us/calendar.aspx?CID=27",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2027-01-07",
+   "title": "Gold Crown 2027 Competitive Basketball League (grades 4–8)",
+   "source_id": "ai-discover",
+   "url": "https://www.goldcrownfoundation.com/events/competitive-league/",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-11-07",
+   "title": "Girls Basketball League, Saturday Late Fall 2026",
+   "source_id": "ai-discover",
+   "url": "https://www.i9sports.com/venues/north-westminster-north-youth-sports-programs/7526",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-11-07",
+   "title": "i9 Sports Westminster Saturday Late Fall 2026 Basketball League",
+   "source_id": "ai-discover",
+   "url": "https://www.i9sports.com/venues/north-westminster-north-youth-sports-programs/7526",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-11-03",
+   "title": "Little Dribblers Basketball Starts",
+   "source_id": "hyland-hills-events-api",
+   "url": "https://www.hylandhills.gov/event/little-dribblers-basketball-starts/",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-11-21",
+   "title": "Turkey Toss Free Throw Competition",
+   "source_id": "hyland-hills-events-api",
+   "url": "https://www.hylandhills.gov/event/turkey-toss-free-throw-competition-3/",
+   "rec_level": "interest",
+   "category": "kids-activity",
+   "grade": "unknown",
+   "calendar": false
+  },
+  {
+   "start_date": "2026-11-03",
+   "title": "Youth Flex Force Series",
+   "source_id": "brighton-rss",
+   "url": "https://www.brightonco.gov/Calendar.aspx?EID=6798",
+   "rec_level": "interest",
+   "category": "sports",
+   "grade": "unknown",
+   "calendar": false
+  }
+ ],
+ "gymnastics_all": [
+  {
+   "start_date": null,
+   "title": "Thornton Winter Gymnastics Registration",
+   "source_id": "thornton-registration",
+   "url": "https://www.thorntonco.gov/parks-recreation/activity-registration-information",
+   "rec_level": "interest",
+   "category": "class",
+   "grade": "unknown",
+   "calendar": false
+  }
+ ],
+ "non_university_any": []
+}

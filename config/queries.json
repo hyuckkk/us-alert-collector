@@ -1,5 +1,5 @@
 {
-  "_comment": "무토큰 키워드 검색(Google News RSS). daily 는 분야별로 매일, weekday 는 요일별 심층(0=월 … 6=일). 뉴스에 잘 안 나오는 학교·시설·동호회 정보는 config/sources.json 의 공식 정보원과 AI 발굴로 보완한다.",
+  "_comment": "무토큰 키워드 검색(Google News RSS). daily 는 분야별로 매일, weekday 는 요일별 심층(0=월 … 6=일). 뉴스에 잘 안 나오는 학교·시설·동호회 정보는 config/sources.json 의 공식 정보원과 AI 발굴로 보완한다. 2026-10-25(#43): 요일별 심층에 군사(미국판 job5)·사격·양궁·사냥·낚시·가족 수상·태권도·BMX·MTB·체조·학교 경기·로데오·열기구·몬스터트럭·NASCAR·야간 자동차 문화 검색어 추가.",
   "daily": {
     "kids": [
       "Westminster Colorado kids classes",
@@ -43,12 +43,74 @@
     ]
   },
   "weekday": {
-    "0": ["Denver kids after school program", "Colorado youth sports registration Westminster", "Denver kids art class"],
-    "1": ["Denver adult hobby class beginner", "Denver language exchange meetup", "Denver photography workshop"],
-    "2": ["Westminster Colorado city news recreation", "Adams 12 Five Star Schools family event", "Westminster Public Schools community event"],
-    "3": ["Colorado air show", "Buckley Space Force Base open house", "Air Force Academy public event", "Wings Over the Rockies event"],
-    "4": ["Great Sand Dunes event", "Colorado national park ranger program kids", "Colorado state park ranger program"],
-    "5": ["University of Denver hockey family", "Colorado State University open house", "Colorado School of Mines public event", "CU Boulder family event"],
-    "6": ["cruise kids sail free promotion", "Colorado family road trip event", "Denver airport new route deal"]
+    "0": [
+      "Denver kids after school program",
+      "Colorado youth sports registration Westminster",
+      "Denver kids art class",
+      "Colorado youth taekwondo tournament 2027",
+      "Colorado BMX race youth Dacono Grand Junction",
+      "Colorado kids fishing derby free",
+      "Colorado youth archery 3D shoot"
+    ],
+    "1": [
+      "Denver adult hobby class beginner",
+      "Denver language exchange meetup",
+      "Denver photography workshop",
+      "Colorado 3D archery shoot public",
+      "Colorado public machine gun shoot",
+      "Colorado shooting match registration IDPA USPSA 3-gun",
+      "Colorado mountain bike downhill enduro race public"
+    ],
+    "2": [
+      "Westminster Colorado city news recreation",
+      "Adams 12 Five Star Schools family event",
+      "Westminster Public Schools community event",
+      "Colorado high school gymnastics meet schedule",
+      "Adams 12 high school game schedule",
+      "Colorado middle school athletics schedule Westminster",
+      "CHSAA state championship 2026 schedule"
+    ],
+    "3": [
+      "Colorado air show",
+      "Buckley Space Force Base open house",
+      "Air Force Academy public event",
+      "Wings Over the Rockies event",
+      "Colorado air show 2027",
+      "Fort Carson open house public",
+      "Peterson Space Force Base open house",
+      "military helicopter ride festival Colorado",
+      "Colorado National Guard open house tank display",
+      "Air Force Academy open house international visitors"
+    ],
+    "4": [
+      "Great Sand Dunes event",
+      "Colorado national park ranger program kids",
+      "Colorado state park ranger program",
+      "Colorado family rafting minimum age 6",
+      "Colorado family kayak lake rental kids",
+      "Colorado Parks and Wildlife youth hunt mentor",
+      "Colorado Parks and Wildlife free fishing day"
+    ],
+    "5": [
+      "University of Denver hockey family",
+      "Colorado State University open house",
+      "Colorado School of Mines public event",
+      "CU Boulder family event",
+      "Denver women's gymnastics meet 2027",
+      "Air Force gymnastics meet Denver",
+      "Colorado rodeo kids mutton busting",
+      "Colorado hot air balloon ride festival"
+    ],
+    "6": [
+      "cruise kids sail free promotion",
+      "Colorado family road trip event",
+      "Denver airport new route deal",
+      "Monster Jam Denver 2027",
+      "Colorado legal drag racing night",
+      "Colorado JDM tuner car show night",
+      "NASCAR Colorado race 2027",
+      "Colorado lowrider car show",
+      "Colorado speedway family night"
+    ]
   }
 }

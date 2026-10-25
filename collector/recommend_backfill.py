@@ -27,7 +27,7 @@ from worker_api import WorkerAPI  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 LEVEL_KO = {"push": "적극 알림", "interest": "개인 관심 설정 시 알림", "none": "일반 알림 제외"}
 SHOW = ("title", "title_ko", "org", "start_date", "end_date", "time_text", "location", "city", "age_text", "cost_text", "signup",
-        "registration_opens", "registration_status", "deadline", "eligibility", "tags", "annual", "bot", "url", "source_id")
+        "registration_opens", "registration_status", "deadline", "eligibility", "status_note", "tags", "annual", "bot", "url", "source_id")
 
 
 def dump(api: WorkerAPI, bot: str = "", sent: bool = False) -> list[dict]:
@@ -87,7 +87,7 @@ def main(argv=None) -> int:
         x = ai.apply_recommendation({k: e.get(k) for k in SHOW}, r, texts[j] or "")
         updates.append({"event_key": e["event_key"], **{k: x.get(k) for k in ("rec_level", "bot", "category", "rec_score", "summary_ko", "highlights",
                                                                               "rec_reason", "special_reason", "title_ko", "special_basis", "evidence_quote",
-                                                                              "usual_alternative", "rec_blockers", "push_blocked")}})
+                                                                              "usual_alternative", "rec_blockers", "push_blocked", *ai.TOPIC_FIELDS)}})
         rows.append({"event_key": e["event_key"], "was_bot": e.get("bot"), "was_title": e.get("title_ko") or e.get("title"), "source_id": e.get("source_id"),
                      "sent_life": e["event_key"] in sent_life, **updates[-1]})
     for i in range(0, len(updates), 100):

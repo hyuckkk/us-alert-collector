@@ -1,0 +1,748 @@
+{
+ "run_id": "20261025T201719Z",
+ "mode": "full",
+ "today": "2026-10-25",
+ "dry_run": true,
+ "sources": [
+  {
+   "id": "du-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 171,
+   "error": null
+  },
+  {
+   "id": "afa-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 348,
+   "error": null
+  },
+  {
+   "id": "chsaa-gymnastics-athletics",
+   "ok": true,
+   "status": 200,
+   "items": 6,
+   "error": null
+  },
+  {
+   "id": "chsaa-state-championships-athletics",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "colorado-action-shooting",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "big-sandy-shoot",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "mountain-games",
+   "ok": true,
+   "status": 200,
+   "items": 47,
+   "error": null
+  },
+  {
+   "id": "royal-gorge-whitewater",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "dacono-bmx",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "winter-park-events",
+   "ok": true,
+   "status": 200,
+   "items": 3,
+   "error": null
+  },
+  {
+   "id": "high-plains-raceway",
+   "ok": true,
+   "status": 200,
+   "items": 40,
+   "error": null
+  },
+  {
+   "id": "ppihc",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "cos-balloon-liftoff",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "greeley-stampede",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  },
+  {
+   "id": "usafa-getting-on-base",
+   "ok": true,
+   "status": 200,
+   "items": 1,
+   "error": null
+  }
+ ],
+ "dropped": {},
+ "events": [],
+ "queue_taken": 300,
+ "ai_skipped": "no key / --no-ai / budget",
+ "queue": {
+  "queued": 624,
+  "extracted": 0,
+  "stuck": 0,
+  "oldest_queued_hours": 0
+ },
+ "workload": {
+  "path": "github_collector",
+  "run_id": "20261025T201719Z",
+  "mode": "full",
+  "started_at": "2026-10-25T20:17:19+00:00",
+  "finished_at": "2026-10-25T20:17:38+00:00",
+  "schedule_delay_min": "unknown",
+  "search_requests": 0,
+  "news_search_queries": [],
+  "web_search_queries": [],
+  "web_search_requests": 0,
+  "web_search_result_urls": 0,
+  "source_urls_attempted": 15,
+  "source_urls_ok": 15,
+  "official_pages_checked": 120,
+  "official_pages_ok": 120,
+  "candidates_total": 624,
+  "candidates_new": 624,
+  "candidates_changed": 0,
+  "queued": 624,
+  "ai_processed": 0,
+  "ai_failed_retry": 0,
+  "dropped": {},
+  "held_for_retry": 0,
+  "recommended": {
+   "push": 0,
+   "interest": 0,
+   "none": 0
+  },
+  "submitted": 0,
+  "outbox_new": 0,
+  "sent_now": "unknown",
+  "already_found_or_missed": "unknown",
+  "cost_usd": {
+   "discover": 0.0,
+   "extract": 0.0,
+   "judge": 0.0,
+   "recommend": 0.0
+  },
+  "web_search_usd": 0.0,
+  "total_usd": 0.0,
+  "failure_usd": 0.0,
+  "billing": "anthropic_api_prepaid_credit",
+  "credit_exhausted": false
+ },
+ "collected": true,
+ "entries_sample": {
+  "du-athletics-ics": [
+   {
+    "title": "[W] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=15977&sport_id=4",
+    "published": "20261024T010000Z",
+    "text": "Denver, Colo., Magness Arena [W] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend W 5-2 TV: Altitude 2/NCHC.tv Radio: Denver Sports 104.3 HD3 Streaming Video: https://nchchockey.com/tv/schedule/week/2026-10-18 Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3 Tickets: https://denverpioneers.evenue.net/event/H27/H04?&RDAT=schedule&RSRC=comms&utm_source=sidearm&utm_medium=web&utm_campaign=singlegame\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[W] University of Denver Women's Soccer at San Francisco",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16032&sport_id=15",
+    "published": "20261024T200000Z",
+    "text": "San Francisco, Calif. [W] University of Denver Women's Soccer at San Francisco W 1-0 Streaming Video: https://www.espn.com/watch/player/_/id/9d68f84c-1c32-4f71-9062-83fe73b545bc\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[W] University of Denver Volleyball at Pacific",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16086&sport_id=18",
+    "published": "20261024T200000Z",
+    "text": "Stockton, Calif. [W] University of Denver Volleyball at Pacific W 3-0 TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[T] University of Denver Men's Soccer vs Pacific - Homecoming Weekend | Attend N Win | Alumni Reunion",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16061&sport_id=7",
+    "published": "20261024T210000Z",
+    "text": "Denver, Colo., University of Denver Soccer Stadium [T] University of Denver Men's Soccer vs Pacific - Homecoming Weekend | Attend N Win | Alumni Reunion T 2-2 TV: ESPN+ Streaming Video: https://www.espn.com/watch/player/_/id/901d11ef-1dba-4e3c-86a1-9f80bcf1f87b Tickets: https://denverpioneers.evenue.net/list/MS?&RSRC=comms&RDAT=2024&utm_source=web&utm_medium=social&utm_campaign=alltix\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[T] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend | Presented by AAA",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=15978&sport_id=4",
+    "published": "20261025T000000Z",
+    "text": "Denver, Colo., Magness Arena [T] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend | Presented by AAA T 2-2 (SOL) TV: Altitude 2/NCHC.tv Radio: Denver Sports 104.3 HD3 Streaming Video: https://nchchockey.com/tv/schedule/week/2026-10-18 Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3 Tickets: https://denverpioneers.evenue.net/event/H27/H05?&RDAT=schedule&RSRC=comms&utm_source=sidearm&utm_medium=web&utm_campaign=singlegame\nComposite Schedule - University of Denv",
+    "detail_ok": true
+   },
+   {
+    "title": "University of Denver Women's Soccer at LMU",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16033&sport_id=15",
+    "published": "20261029T010000Z",
+    "text": "Los Angeles, Calif. University of Denver Women's Soccer at LMU Streaming Video: https://www.espn.com/watch/player/_/id/1eaf91de-42a5-4eda-b18d-e6a1d6ce536f\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "University of Denver Volleyball vs Santa Clara",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16087&sport_id=18",
+    "published": "20261030T000000Z",
+    "text": "Denver, Colo., Hamilton Gymnasium University of Denver Volleyball vs Santa Clara TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule Tickets: https://denverpioneers.evenue.net/list/V?&RSRC=comms&RDAT=vbtix&utm_source=sidearm&utm_medium=web&utm_campaign=tickethome\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "University of Denver Men's Tennis vs Colorado Cup",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16217&sport_id=9",
+    "published": "20261030",
+    "text": "Denver, Colo., Denver Tennis Park University of Denver Men's Tennis vs Colorado Cup\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "University of Denver Women's Swimming & Diving vs Colorado State - Swim: 12 p.m. MT | Dive: 2 p.m. MT",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16136&sport_id=16",
+    "published": "20261030T180000Z",
+    "text": "Denver, Colo., El Pomar Natatorium University of Denver Women's Swimming & Diving vs Colorado State - Swim: 12 p.m. MT | Dive: 2 p.m. MT\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "University of Denver #4 Ice Hockey vs Omaha",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=15979&sport_id=4",
+    "published": "20261031T010000Z",
+    "text": "Denver, Colo., Magness Arena University of Denver #4 Ice Hockey vs Omaha TV: NCHC.tv Radio: Denver Sports 104.3 HD3 Streaming Video: https://nchchockey.com/tv/schedule/week/2026-10-25 Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3 Tickets: https://denverpioneers.evenue.net/event/H27/H06?&RDAT=schedule&RSRC=comms&utm_source=sidearm&utm_medium=web&utm_campaign=singlegame://denverpioneers.evenue.net/event/H27/H06&RDAT=schedule&RSRC=comms&utm_source=sidearm&utm_medium=web&utm_campaign=s",
+    "detail_ok": true
+   },
+   {
+    "title": "University of Denver Men's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m. MT",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16105&sport_id=8",
+    "published": "20261031T160000Z",
+    "text": "Denver, Colo., El Pomar Natatorium University of Denver Men's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m. MT | Swim: 12 p.m. MT\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "University of Denver Women's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m. ",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16123&sport_id=16",
+    "published": "20261031T160000Z",
+    "text": "Denver, Colo., El Pomar Natatorium University of Denver Women's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m. MT | Swim: 12 p.m. MT\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   }
+  ],
+  "afa-athletics-ics": [
+   {
+    "title": "[L] Air Force Academy Football at Wyoming",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24314&sport_id=4",
+    "published": "20261024T010000Z",
+    "text": "Laramie, WY [L] Air Force Academy Football at Wyoming L 14-28 TV: CW Radio: KVOR AM 740 Streaming Audio: https://www.kvor.com/ Tickets: https://goairforcefalcons.evenue.net/event/F26/F13",
+    "detail_ok": null
+   },
+   {
+    "title": "[L] Air Force Academy Men's Ice Hockey at Colorado College",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24335&sport_id=9",
+    "published": "20261024T010500Z",
+    "text": "Colorado Springs, CO [L] Air Force Academy Men's Ice Hockey at Colorado College L 2-6 Radio: XtraSports1300 AM Streaming Video: https://nchchockey.com/tv/ Streaming Audio: https://www.xtrasports1300.com/",
+    "detail_ok": null
+   },
+   {
+    "title": "[N] Air Force Academy Wrestling vs Air Force Black & Blue Intersquad",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27323&sport_id=23",
+    "published": "20261024T150000Z",
+    "text": "USAFA, CO [N] Air Force Academy Wrestling vs Air Force Black & Blue Intersquad Completed",
+    "detail_ok": null
+   },
+   {
+    "title": "[N] Air Force Academy Cross Country at Colorado Springs XC Open",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27044&sport_id=2",
+    "published": "20261024T151500Z",
+    "text": "Colorado Springs, CO [N] Air Force Academy Cross Country at Colorado Springs XC Open NTS",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Women's Swimming and Diving vs New Mexico State University - Breast Cancer Awareness Meet",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27190&sport_id=20",
+    "published": "20261024T170000Z",
+    "text": "USAFA, CO, Cadet Natatorium [W] Air Force Academy Women's Swimming and Diving vs New Mexico State University - Breast Cancer Awareness Meet W 189-100 Streaming Video: https://watch.themw.com/air-force/swimming-diving/event/af_swim_102426",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Women's Volleyball at UTEP",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26496&sport_id=22",
+    "published": "20261024T190000Z",
+    "text": "El Paso, TX [W] Air Force Academy Women's Volleyball at UTEP W 3-2 TV: MW+ Streaming Video: https://watch.themw.com/air-force/?ra=air-force Tickets: https://utepminers.com/sports/2020/2/11/tickets.aspx",
+    "detail_ok": null
+   },
+   {
+    "title": "[L] Air Force Academy Men's Water Polo at USC",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27037&sport_id=14",
+    "published": "20261024T190000Z",
+    "text": "Los Angeles, CA - Uytengsu Aquatics Center [L] Air Force Academy Men's Water Polo at USC L 8-21 Streaming Video: https://www.overnght.com/",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Women's Soccer vs San Jose State University",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26446&sport_id=19",
+    "published": "20261024T220000Z",
+    "text": "USAFA, CO, Cadet Soccer Stadium [W] Air Force Academy Women's Soccer vs San Jose State University W 3-0 Streaming Video: https://watch.themw.com/air-force/soccer-womens/event/air_force_san_jose_state_20262410",
+    "detail_ok": null
+   },
+   {
+    "title": "[T] Air Force Academy Men's Soccer vs San Jose State",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26523&sport_id=11",
+    "published": "20261025T010000Z",
+    "text": "USAFA, CO [T] Air Force Academy Men's Soccer vs San Jose State T 1-1 Streaming Video: https://watch.themw.com/sports/soccer-mens/",
+    "detail_ok": null
+   },
+   {
+    "title": "[L] Air Force Academy Men's Ice Hockey vs Colorado College",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24336&sport_id=9",
+    "published": "20261025T010500Z",
+    "text": "USAFA, Colo. [L] Air Force Academy Men's Ice Hockey vs Colorado College L 0-4 Radio: XtraSports1300 AM Streaming Video: https://go.flohockey.tv/partner/aha?utm_medium=partner&utm_source=multiple&utm_content=signup&utm_term=aha&utm_campaign=atlantic-hockey-america&contract_id=006px00000amnp7yad Streaming Audio: https://www.xtrasports1300.com/",
+    "detail_ok": null
+   },
+   {
+    "title": "Air Force Academy Men's Water Polo at UC Irvine",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27038&sport_id=14",
+    "published": "20261025T190000Z",
+    "text": "Irvine, CA - Anteater Aquatics Complex Air Force Academy Men's Water Polo at UC Irvine",
+    "detail_ok": null
+   },
+   {
+    "title": "Air Force Academy Women's Soccer vs Colorado College - City for Champions Cup",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26447&sport_id=19",
+    "published": "20261029T000000Z",
+    "text": "Wiedner Field | Colorado Springs, CO Air Force Academy Women's Soccer vs Colorado College - City for Champions Cup Streaming Video: https://watch.themw.com/air-force/soccer-womens/event/air_force_colorado_college_20262810 Tickets: https://seatgeek.com/city-for-champions-cup-tickets/womens-college-soccer/2026-10-28-6-pm/18400182",
+    "detail_ok": null
+   }
+  ],
+  "chsaa-gymnastics-athletics": [
+   {
+    "title": "Gymnastics: Regionals Scheduled For Oct. 29-31 The 2026 Colorado high school gymnastics regionals are Oct. 29-31 at Over",
+    "url": "https://chsaanow.com/news/2026/10/19/gymnastics-regionals-scheduled-for-oct-29-31-2026",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Gymnastics Weekly: Niwot Posts 180.275 Team Score as League Meets Approach Karlee Knabenshue and Niwot delivered standou",
+    "url": "https://chsaanow.com/news/2026/10/19/gymnastics-2026-w42",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Gymnastics Weekly: Niwot Posts 181.95 Team Score to Highlight High-Scoring Week Niwot impressed with a season-high team ",
+    "url": "https://chsaanow.com/news/2026/10/12/gymnastics-2026-w41",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Gymnastics Weekly: Roosevelt claims Think Pink Invitational title during impressive week Roosevelt led the week by winni",
+    "url": "https://chsaanow.com/news/2026/10/05/gymnastics-2026-w40",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Gymnastics Weekly: Niwot and Rock Canyon Post High Team Scores to Lead the Week Niwot and Rock Canyon put up team totals",
+    "url": "https://chsaanow.com/news/2026/09/28/gymnastics-2026-w39",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Gymnastics Weekly: Niwot Posts 176.95 Team Score to Highlight Impressive Week Niwot posted a week-high 176.95 team score",
+    "url": "https://chsaanow.com/news/2026/09/21/gymnastics-2026-w38",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   }
+  ],
+  "chsaa-state-championships-athletics": [
+   {
+    "title": "CHSAA fall 2026 state championship dates and sites",
+    "url": "https://chsaanow.com/news/2026/09/09/fall-2026-state-championship-dates-locations-announced",
+    "published": null,
+    "text": "he Boys Golf State Championships on October 5-6 and will conclude with the Spirit State Championships on December 10-12. In total, CHSAA will host championships for 14 sports and activities. Specific details for early round postseason events will be released at later dates. The individual sports and activities bulletins linked below provide specific information for administrators and coaches on classifications, important dates, CHSAA and NFHS rules and procedures, and more. Dates and Locations f",
+    "detail_ok": null
+   }
+  ],
+  "colorado-action-shooting": [
+   {
+    "title": "Colorado Action Shooting featured matches",
+    "url": "https://coloradoactionshooting.com/matches.html",
+    "published": null,
+    "text": "Matches COLORADO ACTION SHOOTING Featured Matches Multi-Gun > Ben Lomond 3-Gun Briggsdale County Shootists - Cowboy Action CRC Multigun Johnson 3-Gun Pawnee 3-Gun SOCO 3-Gun Weld County 3-Gun Pistol > Defensive Pistol @ NCRGC High Plains Practical Shooters @ BLGC IDPA @ Pikes Peak NoCo TAC @ NCRGC Pueblo West Sportsman's Association USPSA SoCo Practical Shooters @ PPGC Steel Challenge @ NCRGC Steel Challenge @ Pikes Peak Whistling Pines IPSC Precision Rifle > Pawnee Long Range Pueblo Precision F",
+    "detail_ok": null
+   }
+  ],
+  "big-sandy-shoot": [
+   {
+    "title": "Big Sandy Shoot (public machine gun shoot)",
+    "url": "https://bigsandyshoot.com/",
+    "published": null,
+    "text": "Big Sandy Shoot – Largest Machine-Gun Shoot In The World Events Registration Directions Services Media Events Registration Directions Services Media UPDATE: 23-25 October shoot CANCELLED – Fire Danger Next Shoot: 19-21 March 2027 SPECTATORS : The Big Sandy is a live fire, firearm festival. Know what we are about and what you need to survive the dusty, remote, Big Sandy ! Read FAQ A twice a year, weekend of friends , weapons , targets and gear in Arizona’s high, western desert. With a quarter mil",
+    "detail_ok": null
+   }
+  ],
+  "mountain-games": [
+   {
+    "title": "GOPRO DUAL SLALOM",
+    "url": "https://mountaingames.com/event/dual-slalom/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "GoPro Jump Jam",
+    "url": "https://mountaingames.com/event/jumpjam/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Lucid KIDS BIKE RACE",
+    "url": "https://mountaingames.com/event/kids-bike-race/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Lucid XC MOUNTAIN BIKE",
+    "url": "https://mountaingames.com/event/xc-mountain-bike/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Lucid XC Short Track",
+    "url": "https://mountaingames.com/event/xc-shorttrack/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "GOPRO ROAD BIKE HILL CLIMB",
+    "url": "https://mountaingames.com/event/road-bike-hill-climb/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Kids Mini Dash",
+    "url": "https://mountaingames.com/event/kids-mini-dash/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "NATURE VALLEY MOUNTAIN MUD RUN",
+    "url": "https://mountaingames.com/event/mountain-mud-run/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "BFGOODRICH ROCKY DOG FUN RUN",
+    "url": "https://mountaingames.com/event/rocky-dog-fun-run/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "ADIDAS TERREX APRÈS 5K",
+    "url": "https://mountaingames.com/event/apres-5k-2/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "ADIDAS TERREX 10K SPRING RUNOFF",
+    "url": "https://mountaingames.com/event/trail-10k/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "ADIDAS TERREX 20K TRAIL RUN",
+    "url": "https://mountaingames.com/event/trail-20k/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   }
+  ],
+  "royal-gorge-whitewater": [
+   {
+    "title": "Royal Gorge Whitewater Festival",
+    "url": "https://royalgorgewhitewaterfestival.com/",
+    "published": null,
+    "text": "Royal Gorge Whitewater Festival in Cañon City, Colorado !! 2026 Festival Cancelled Due to Aspen Acres Fire !! Follow Follow Follow Home Activities Whitewater Events Land Events Live Music Gallery Get Involved Be a Sponsor Be a Volunteer Be a Vendor Schedule & Map Plan Your Visit About Contact Tickets Home Activities Whitewater Events Land Events Live Music Gallery Get Involved Be a Sponsor Be a Volunteer Be a Vendor Schedule & Map Plan Your Visit About Contact Tickets !! 2026 Festival Cancelled ",
+    "detail_ok": null
+   }
+  ],
+  "dacono-bmx": [
+   {
+    "title": "Dacono BMX track (USA BMX sanctioned)",
+    "url": "https://www.daconoco.gov/873/BMX-Track",
+    "published": null,
+    "text": "Dacono BMX | Dacono, CO - Official Website Skip to Main Content Create a Website Account - Manage notification subscriptions, save form progress and more. Website Sign In Our Community Your Government City Services Resident Resource Center Search BMX Track City Parks Carbon Valley Veterans Memorial Park Facilities Fitness Programs Senior Center Trails Home Your Government Departments Parks & Recreation BMX Track Dacono BMX Dacono BMX Dacono BMX is a USA BMX sanctioned bicycle motocross racing fa",
+    "detail_ok": null
+   }
+  ],
+  "winter-park-events": [
+   {
+    "title": "Send'er November",
+    "url": "https://www.winterparkresort.com/things-to-do/events/sender-november",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Deck the Slopes",
+    "url": "https://www.winterparkresort.com/things-to-do/events/deck-the-slopes",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Torchlight Parade",
+    "url": "https://www.winterparkresort.com/things-to-do/events/torchlight-parade",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   }
+  ],
+  "high-plains-raceway": [
+   {
+    "title": "Semi-Exclusive Test and Tune",
+    "url": "https://www.highplainsraceway.com/event/semi-exclusive-test-and-tune-45/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Private Event",
+    "url": "https://www.highplainsraceway.com/event/private-event-21/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Private Event",
+    "url": "https://www.highplainsraceway.com/event/private-event-12/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Paddock Closed Thursday Night",
+    "url": "https://www.highplainsraceway.com/event/paddock-closed-thursday-night-22/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Cars Open Lapping 8-5",
+    "url": "https://www.highplainsraceway.com/event/cars-open-lapping-8-5-43/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Paddock Open 24 Hours Friday Night",
+    "url": "https://www.highplainsraceway.com/event/paddock-open-24-hours-friday-night-39/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "BMW Car Club of America School and Time Trials",
+    "url": "https://www.highplainsraceway.com/event/bmw-car-club-of-america-school-and-time-trials-4/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Paddock Closed Saturday Night",
+    "url": "https://www.highplainsraceway.com/event/paddock-closed-saturday-night-18/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Private Event",
+    "url": "https://www.highplainsraceway.com/event/private-event-39/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Paddock Closed Sunday Night",
+    "url": "https://www.highplainsraceway.com/event/paddock-closed-sunday-night-52/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Motorcycles Open Lapping 8-5",
+    "url": "https://www.highplainsraceway.com/event/motorcycles-open-lapping-8-5-18/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   },
+   {
+    "title": "Semi-Exclusive Test and Tune",
+    "url": "https://www.highplainsraceway.com/event/semi-exclusive-test-and-tune-46/",
+    "published": null,
+    "text": "",
+    "detail_ok": null
+   }
+  ],
+  "ppihc": [
+   {
+    "title": "Pikes Peak International Hill Climb",
+    "url": "https://ppihc.org/tickets-camping-permits/",
+    "published": null,
+    "text": "on at any PPIHC event. There area a limited number of tickets available and are based on parking. Spectators are encouraged to carpool and can save money on ticket purchases. Tickets are expected to sell-out. Anyone who is 10 years of age and over needs a race ticket. Ticket Prices Race Day Tickets are sold by spectator area. Race Day ticket prices vary based on the total number of attendees in a vehicle and location. There must be a functioning seatbelt for every attendee inside the vehicle. Ti",
+    "detail_ok": null
+   }
+  ],
+  "cos-balloon-liftoff": [
+   {
+    "title": "Colorado Springs Labor Day Lift Off schedule",
+    "url": "https://www.coloradospringslabordayliftoff.com/schedule",
+    "published": null,
+    "text": "Schedule – Labor Day Lift Off Guest Info Schedule Parking Event Map 2026 Vendors Lodging During Your Visit Event Merchandise Events Ballooning Buy Tickets Guest Info Schedule Parking Event Map 2026 Vendors Lodging During Your Visit Event Merchandise Events Ballooning Buy Tickets Get Involved Pathfinders Volunteer Program Media Application Become a Vendor Sponsors 2026 Sponsors Become a Sponsor About About Us In The News Contact Us FAQ Get Involved Pathfinders Volunteer Program Media Application ",
+    "detail_ok": null
+   }
+  ],
+  "greeley-stampede": [
+   {
+    "title": "Greeley Stampede (PRCA rodeo)",
+    "url": "https://www.greeleystampede.org/",
+    "published": null,
+    "text": "Greeley Stampede skip to main content Log In Rodeos PRCA Rodeo Series PRCA Xtreme Bulls American Bull Fighting 2026 Day Sheets Concerts SuperStars Concert Series Park Music Stage Locals Stage Kickoff Concert Family Fun Carnival Kids Korral Demolition Derby Parades Special Events Food and Shopping Get Involved Get your Tickets! Upcoming Events Major Sponsors Community Giveback Strengthening Our Community In 2024, the Stampede gave back: Get your Tickets! 600 N. 14th Ave, Greeley, CO 80631 970.356",
+    "detail_ok": null
+   }
+  ],
+  "usafa-getting-on-base": [
+   {
+    "title": "USAFA visitor access rules (non-U.S. citizens)",
+    "url": "https://www.usafa.edu/visitors/getting-on-base/",
+    "published": null,
+    "text": "ss and Registration Office during business hours to facilitate a Defense Biometric Identification System (DBIDS) card or an Entry Authorization List (EAL) for groups. Background Checks: All individuals seeking access will undergo a mandatory criminal background check. Access may be denied for those with a history of felonies, outstanding warrants, or significant criminal activity. International guests Non-U.S. citizens must visit the Pass and Registration Office (PRO) in person with a valid pass",
+    "detail_ok": null
+   }
+  ]
+ },
+ "metrics": {
+  "sources_total": 15,
+  "sources_ok": 15,
+  "queries": 0,
+  "discover_calls": 0,
+  "entries_fetched": 624,
+  "entries_new": 624,
+  "entries_changed": 0,
+  "details_ok": 120,
+  "details_total": 120,
+  "watch_checked": 0,
+  "watch_changed": 0,
+  "queue_added": 624,
+  "ai_items": 0,
+  "ai_missing": 0,
+  "ai_failed": 0,
+  "events_out": 0,
+  "outbox": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "searches": 0,
+  "queue_queued": 624,
+  "queue_oldest_hours": 0,
+  "usd": 0.0,
+  "detail_missing": 0,
+  "lease_rejected": 0,
+  "sources_ok_ratio": 1.0,
+  "core_failed": 0
+ },
+ "alerts": [],
+ "stages": {
+  "sources": {
+   "ok": true,
+   "due": 15,
+   "seconds": 10
+  },
+  "watch": {
+   "ok": true,
+   "checked": 0,
+   "changed": 0,
+   "seconds": 0
+  },
+  "queue": {
+   "ok": true,
+   "fresh": 624,
+   "seconds": 8
+  },
+  "ai": {
+   "ok": true,
+   "taken": 300,
+   "events": 0,
+   "seconds": 0
+  },
+  "enqueue": {
+   "ok": true,
+   "events": 0,
+   "seconds": 0
+  },
+  "annual": {
+   "ok": true,
+   "events": 0,
+   "seconds": 0
+  },
+  "candidates": {
+   "ok": true,
+   "verified": 0,
+   "seconds": 0
+  },
+  "fallback": {
+   "ok": true,
+   "needed": false,
+   "seconds": 1
+  },
+  "dispatch": {
+   "ok": true,
+   "dispatch": {
+    "dry_run": true
+   },
+   "digest": {
+    "dry_run": true
+   },
+   "seconds": 0
+  }
+ },
+ "completed": true
+}

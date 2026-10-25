@@ -31,7 +31,8 @@ def ev(**over):
     base = dict(title="Kids Clay Workshop", title_ko="어린이 점토 공방", org="Butterfly Pavilion", bot="kids", start_date="2027-07-10",
                 end_date=None, year_basis="stated", time_text="10:00-12:00", event_tz="America/Denver", location="Butterfly Pavilion", city="Westminster",
                 age_text="6-10", english=["초보 가능"], cost_text="$20", signup="fcfs", registration_opens=None, registration_status="open",
-                deadline=None, eligibility=None, status_note=None, tags=["art"], annual=False, paid_work=False, needs_review=False, review_reason=None, url="https://b.org/e/1")
+                deadline=None, eligibility=None, status_note=None, tags=["art"], annual=False, paid_work=False, needs_review=False, review_reason=None, url="https://b.org/e/1",
+                school_level=None, level_detail=None, sport=None, event_type=None, home_team=None, away_team=None, participants=[], start_time=None)
     base.update(over)
     return ai.ExtractedEvent(**base)
 
@@ -222,7 +223,7 @@ def default_recommendation(request, monkeypatch):
             out.recs[i] = ai.Recommendation(index=i, level="push", bot=e.get("bot") or "family", category="other", score=50,
                                             title_ko=e.get("title_ko") or e.get("title") or "", summary_ko="", highlights=[], reason="",
                                             special_reason="시험용 특별 근거", special_basis="rare_one_off",
-                                            evidence_quote=e.get("title") or "", usual_alternative="", blockers=[])
+                                            evidence_quote=e.get("title") or "", usual_alternative="", blockers=[], topic="other", foreign_access="not_applicable", access_quote="", access_note="", family_water="not_applicable", water_note="", fee_note="")
         return out
     monkeypatch.setattr(ai, "recommend", fake)
 

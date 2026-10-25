@@ -1,0 +1,335 @@
+{
+ "_comment": "#43 후보 정보원 접근 시험(토큰 0). 통과한 것만 config/sources.json 에 등록한다.",
+ "candidates": [
+  {
+   "id": "chsaa-gymnastics",
+   "type": "html",
+   "url": "https://chsaanow.com/sports/gymnastics",
+   "field": "school-gym"
+  },
+  {
+   "id": "chsaa-gymnastics-schedule",
+   "type": "html",
+   "url": "https://chsaanow.com/sports/gymnastics/schedule",
+   "field": "school-gym"
+  },
+  {
+   "id": "du-wgym-schedule",
+   "type": "html",
+   "url": "https://denverpioneers.com/sports/womens-gymnastics/schedule",
+   "field": "school-gym",
+   "mode": "page-change"
+  },
+  {
+   "id": "du-wgym-ics",
+   "type": "ical",
+   "url": "https://denverpioneers.com/calendar.ashx/calendar.ics?sport_id=13",
+   "field": "school-gym"
+  },
+  {
+   "id": "afa-wgym-2627",
+   "type": "html",
+   "url": "https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2026-27",
+   "field": "school-gym",
+   "mode": "page-change"
+  },
+  {
+   "id": "afa-wgym-2526",
+   "type": "html",
+   "url": "https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2025-26",
+   "field": "school-gym",
+   "mode": "page-change"
+  },
+  {
+   "id": "mountain-range-hs",
+   "type": "html",
+   "url": "https://mountainrange.adams12.org/athletics-activities/athletics",
+   "field": "school-high"
+  },
+  {
+   "id": "legacy-hs",
+   "type": "html",
+   "url": "https://legacy.adams12.org/athletics-activities/athletics",
+   "field": "school-high"
+  },
+  {
+   "id": "arvada-west-hs",
+   "type": "html",
+   "url": "https://arvadawest.jeffcopublicschools.org/student-life/athletics",
+   "field": "school-high"
+  },
+  {
+   "id": "centaurus-football",
+   "type": "html",
+   "url": "https://chswarriorsfootball.com/season-schedules/",
+   "field": "school-high",
+   "mode": "page-change"
+  },
+  {
+   "id": "dps-athletics",
+   "type": "html",
+   "url": "https://athletics.dpsk12.org/",
+   "field": "school-high"
+  },
+  {
+   "id": "adams12-ms-sports",
+   "type": "html",
+   "url": "https://www.adams12.org/resources/athletics-activities/middle-school-sports",
+   "field": "school-middle"
+  },
+  {
+   "id": "thundervista-ms",
+   "type": "html",
+   "url": "https://thundervista.adams12.org/clubs-activities/middle-school-athletics",
+   "field": "school-middle"
+  },
+  {
+   "id": "westlake-ms",
+   "type": "html",
+   "url": "https://westlake.adams12.org/clubs-activities/athletics",
+   "field": "school-middle"
+  },
+  {
+   "id": "westy-futures",
+   "type": "html",
+   "url": "https://www.westyathletics.com/sports",
+   "field": "school-youth"
+  },
+  {
+   "id": "hyland-youth-bball",
+   "type": "html",
+   "url": "https://hylandhillssports.com/content/86/Basketball",
+   "field": "school-youth"
+  },
+  {
+   "id": "westy-little-league",
+   "type": "html",
+   "url": "https://westylittleleague.org/",
+   "field": "school-youth"
+  },
+  {
+   "id": "cu-sportclubs-msoccer",
+   "type": "html",
+   "url": "https://www.colorado.edu/sportclubs/mens-sports/mens-soccer/mens-soccer-schedule",
+   "field": "school-univ",
+   "mode": "page-change"
+  },
+  {
+   "id": "colorado-action-shooting",
+   "type": "html",
+   "url": "https://coloradoactionshooting.com/matches.html",
+   "field": "shooting",
+   "mode": "page-change"
+  },
+  {
+   "id": "dynamic-shooting-faq",
+   "type": "html",
+   "url": "https://dynamicshootingsports.us/faq",
+   "field": "shooting",
+   "mode": "page-change"
+  },
+  {
+   "id": "milehigh-firearms-expo",
+   "type": "html",
+   "url": "https://milehighfirearmsexpo.com/",
+   "field": "shooting",
+   "mode": "page-change"
+  },
+  {
+   "id": "big-sandy-shoot",
+   "type": "html",
+   "url": "https://bigsandyshoot.com/",
+   "field": "shooting",
+   "mode": "page-change"
+  },
+  {
+   "id": "cpw-shooting-ranges",
+   "type": "html",
+   "url": "https://cpw.state.co.us/shooting-ranges",
+   "field": "shooting"
+  },
+  {
+   "id": "cpw-youth-hunting",
+   "type": "html",
+   "url": "https://cpw.state.co.us/hunting/youth-hunting",
+   "field": "hunt-fish"
+  },
+  {
+   "id": "cpw-hunter-outreach",
+   "type": "html",
+   "url": "https://cpw.state.co.us/hunter-outreach",
+   "field": "hunt-fish"
+  },
+  {
+   "id": "coloradoyo",
+   "type": "html",
+   "url": "https://coloradoyo.org/",
+   "field": "hunt-fish"
+  },
+  {
+   "id": "greeley-archers",
+   "type": "html",
+   "url": "https://greeleyarchers.com/",
+   "field": "archery",
+   "mode": "page-change"
+  },
+  {
+   "id": "cpw-fishing-events",
+   "type": "html",
+   "url": "https://cpw.state.co.us/fishing",
+   "field": "hunt-fish"
+  },
+  {
+   "id": "raftmw-faqs",
+   "type": "html",
+   "url": "https://www.raftmw.com/faqs/",
+   "field": "water",
+   "mode": "page-change"
+  },
+  {
+   "id": "royal-gorge-whitewater",
+   "type": "html",
+   "url": "https://royalgorgewhitewaterfestival.com/",
+   "field": "water",
+   "mode": "page-change"
+  },
+  {
+   "id": "mountain-games",
+   "type": "html",
+   "url": "https://mountaingames.com/",
+   "field": "water"
+  },
+  {
+   "id": "cpw-boating",
+   "type": "html",
+   "url": "https://cpw.state.co.us/boating",
+   "field": "water"
+  },
+  {
+   "id": "usatkd-events",
+   "type": "html",
+   "url": "https://www.usatkd.org/events",
+   "field": "tkd"
+  },
+  {
+   "id": "dacono-bmx",
+   "type": "html",
+   "url": "https://www.daconoco.gov/873/BMX-Track",
+   "field": "bmx",
+   "mode": "page-change"
+  },
+  {
+   "id": "cobr-mountain",
+   "type": "html",
+   "url": "https://coloradobicycleracing.org/mountain",
+   "field": "mtb"
+  },
+  {
+   "id": "usabmx-colorado",
+   "type": "html",
+   "url": "https://www.usabmx.com/tracks?state=CO",
+   "field": "bmx"
+  },
+  {
+   "id": "co-national-speedway",
+   "type": "html",
+   "url": "https://www.coloradonationalspeedway.com/",
+   "field": "cars"
+  },
+  {
+   "id": "sls-official",
+   "type": "html",
+   "url": "https://slsofficial.co/",
+   "field": "cars"
+  },
+  {
+   "id": "hin-events",
+   "type": "html",
+   "url": "https://hinevents.com/",
+   "field": "cars"
+  },
+  {
+   "id": "pueblo-dragstrip",
+   "type": "html",
+   "url": "https://racepmp.com/drag-strip",
+   "field": "cars"
+  },
+  {
+   "id": "cfd-rodeo",
+   "type": "html",
+   "url": "https://www.cfdrodeo.com/",
+   "field": "rodeo"
+  },
+  {
+   "id": "erie-balloon",
+   "type": "html",
+   "url": "https://erieballoonfestival.com/",
+   "field": "balloon",
+   "mode": "page-change"
+  },
+  {
+   "id": "cos-balloon-liftoff",
+   "type": "html",
+   "url": "https://www.coloradospringslabordayliftoff.com/",
+   "field": "balloon",
+   "mode": "page-change"
+  },
+  {
+   "id": "monster-jam-denver",
+   "type": "html",
+   "url": "https://www.monsterjam.com/en-US/find-event",
+   "field": "monster"
+  },
+  {
+   "id": "ppihc",
+   "type": "html",
+   "url": "https://ppihc.org/",
+   "field": "cars"
+  },
+  {
+   "id": "high-plains-raceway",
+   "type": "html",
+   "url": "https://www.highplainsraceway.com/events",
+   "field": "cars"
+  },
+  {
+   "id": "usafa-getting-on-base",
+   "type": "html",
+   "url": "https://www.usafa.edu/visitors/getting-on-base/",
+   "field": "military",
+   "mode": "page-change"
+  },
+  {
+   "id": "buckley-visitor-pass",
+   "type": "html",
+   "url": "https://www.buckley.spaceforce.mil/NEWS/Article/4072816/access-procedures-obtaining-a-visitor-pass-at-buckley-space-force-base/",
+   "field": "military",
+   "mode": "page-change"
+  },
+  {
+   "id": "buckley-news",
+   "type": "html",
+   "url": "https://www.buckley.spaceforce.mil/News/",
+   "field": "military"
+  },
+  {
+   "id": "fort-carson-news",
+   "type": "html",
+   "url": "https://home.army.mil/carson/",
+   "field": "military"
+  },
+  {
+   "id": "pikes-peak-airshow",
+   "type": "html",
+   "url": "https://www.pikespeakregionalairshow.com/",
+   "field": "military",
+   "mode": "page-change"
+  },
+  {
+   "id": "pueblo-aircraft-museum",
+   "type": "html",
+   "url": "https://pwam.org/events/",
+   "field": "military"
+  }
+ ]
+}

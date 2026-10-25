@@ -124,3 +124,13 @@ def test_timeout_is_retried_once():
         return httpx.Response(200, text="<rss><channel><item><title>Ok event</title><link>https://x.org/a</link></item></channel></rss>")
     r = fetch_source({"id": "x", "type": "rss", "url": "https://x.org/f"}, client=_client(h))
     assert r.ok and calls["n"] == 2 and r.entries[0].title == "Ok event"
+
+
+def test_ical_past_events_are_filtered_before_ai():
+    """#43: 대학 iCal 의 지난 경기 결과([W]/[L])는 AI 로 넘기지 않는다. 날짜를 모르는 항목은 남긴다."""
+    ics = ("BEGIN:VEVENT\r\nSUMMARY:[W] DU Soccer vs LMU\r\nDTSTART:20200101T010000Z\r\nUID:a\r\nEND:VEVENT\r\n"
+           "BEGIN:VEVENT\r\nSUMMARY:DU Gymnastics at Denver Quad\r\nDTSTART:20990115T190000Z\r\nUID:b\r\nEND:VEVENT\r\n"
+           "BEGIN:VEVENT\r\nSUMMARY:Season tickets on sale\r\nUID:c\r\nEND:VEVENT")
+    r = fetch_source({"id": "du-athletics-ics", "type": "ical", "url": "https://d.com/cal.ics"},
+                     client=_client(lambda req: httpx.Response(200, content=ics.encode())))
+    assert [e.title for e in r.entries] == ["DU Gymnastics at Denver Quad", "Season tickets on sale"] and r.filtered == 1

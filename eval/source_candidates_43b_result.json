@@ -1,0 +1,629 @@
+{
+ "tested": 34,
+ "good": 5,
+ "results": [
+  {
+   "id": "mp-mountainrange-gym",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/mountain-range-mustangs/gymnastics/schedule/",
+   "field": "school-gym",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "mp-standleylake-gym",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/standley-lake-gators/gymnastics/schedule/",
+   "field": "school-gym",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "mp-mountainrange-fb",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/mountain-range-mustangs/football/schedule/",
+   "field": "school-high",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 58,
+   "eventish": 1,
+   "sample": [
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Fall 25-26"
+   ],
+   "sample_urls": [
+    "https://www.maxpreps.com/news/1kaTlgLBKUKkzkQPotK9yw/national-high-school-football-record-book.htm",
+    "https://www.maxpreps.com/news/viAlrzyYJUCPhWbwrqfTXA/national-high-school-baseball-record-book.htm",
+    "https://www.maxpreps.com/news/NJXu8aL8DUeoU-eSSSAxvg/national-high-school-basketball-record-book.htm"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "mp-westminster-vb",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/westminster/westminster-wolves/volleyball/schedule/",
+   "field": "school-high",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 40,
+   "eventish": 1,
+   "sample": [
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Fall 25-26"
+   ],
+   "sample_urls": [
+    "https://www.maxpreps.com/news/cIKV6USFeUinmv3U6-AUqA/national-high-school-volleyball-record-book.htm",
+    "https://www.maxpreps.com/news/1kaTlgLBKUKkzkQPotK9yw/national-high-school-football-record-book.htm",
+    "https://www.maxpreps.com/news/viAlrzyYJUCPhWbwrqfTXA/national-high-school-baseball-record-book.htm"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "mp-legacy-bb",
+   "type": "html",
+   "url": "https://www.maxpreps.com/co/broomfield/legacy-lightning/basketball/schedule/",
+   "field": "school-high",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 60,
+   "eventish": 1,
+   "sample": [
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Record Book",
+    "Winter 25-26"
+   ],
+   "sample_urls": [
+    "https://www.maxpreps.com/news/NJXu8aL8DUeoU-eSSSAxvg/national-high-school-basketball-record-book.htm",
+    "https://www.maxpreps.com/news/1kaTlgLBKUKkzkQPotK9yw/national-high-school-football-record-book.htm",
+    "https://www.maxpreps.com/news/viAlrzyYJUCPhWbwrqfTXA/national-high-school-baseball-record-book.htm"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "chsaa-gym-news",
+   "type": "html",
+   "url": "https://chsaanow.com/sports/gymnastics",
+   "field": "school-gym",
+   "link_pattern": "/news/2026/",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 10,
+   "eventish": 7,
+   "sample": [
+    "This week in CHSAA: Cross Country State Championships Set for Saturday Postseaso",
+    "CHSAA Board of Directors Holds October Meeting, Girls Golf Sites Set The CHSAA B",
+    "Gymnastics: Regionals Scheduled For Oct. 29-31 The 2026 Colorado high school gym",
+    "Gymnastics Weekly: Niwot Posts 180.275 Team Score as League Meets Approach Karle",
+    "This week in CHSAA: Softball State Championships highlight action State titles a",
+    "Gymnastics Weekly: Niwot Posts 181.95 Team Score to Highlight High-Scoring Week "
+   ],
+   "sample_urls": [
+    "https://chsaanow.com/news/2026/10/25/this-week-in-chsaa-2026-w44",
+    "https://chsaanow.com/news/2026/10/21/chsaa-board-of-directors-holds-october-meeting-girls-golf-sites-set",
+    "https://chsaanow.com/news/2026/10/19/gymnastics-regionals-scheduled-for-oct-29-31-2026"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "chsaa-fall-champ",
+   "type": "html",
+   "url": "https://chsaanow.com/news/2026/09/09/fall-2026-state-championship-dates-locations-announced",
+   "field": "school-gym",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "chsaa-fall-champ"
+   ],
+   "sample_urls": [
+    "https://chsaanow.com/news/2026/09/09/fall-2026-state-championship-dates-locations-announced"
+   ],
+   "sample_text": "he Boys Golf State Championships on October 5-6 and will conclude with the Spirit State Championships on December 10-12. In total, CHSAA will host championships for 14 sports and activities. Specific details for early round postseason events will be released at later dates. The individual sports and activities bulletins linked below provide specific information for administrators and coaches on classifications, important dates, CHSAA and NFHS rules and procedures, and more. Dates and Locations for Fall 2026 State Championships Cross Country ( Cross Country Bulletin ) Saturday, Oct. 31 2A, 3A, 4A and 5A for both boys and girls at Norris Penrose Event Center in Colorado Springs Esports ( Espor"
+  },
+  {
+   "id": "hyland-youth-sched",
+   "type": "html",
+   "url": "https://hylandhillssports.com/Org/Schedules.aspx?d=lq2B3aLV5arZhpLNCU9N34yMczK%2BIDzVpZPkE9NgDfc%3D",
+   "field": "school-youth",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "hyland-youth-sched"
+   ],
+   "sample_urls": [
+    "https://hylandhillssports.com/Org/Schedules.aspx?d=lq2B3aLV5arZhpLNCU9N34yMczK%2BIDzVpZPkE9NgDfc%3D"
+   ],
+   "sample_text": "Hyland Hills Parks and Recreation {1} ##LOC[OK]## {1} ##LOC[OK]## ##LOC[Cancel]## {1} ##LOC[OK]## ##LOC[Cancel]## Sign In | ( 0 ) Cart Menu Home Game Schedules Youth Sports 6v6 Soccer 3v3 Soccer CARA Track Spring Baseball & Tee Ball Spring Girls Softball Basketball Beginner Basketball Volleyball Gymnastics Wrestling Fall Girls Softball Sandlot Baseball Adult Sports Pickleball Adult Softball Twelve Step Softball Camps & Clinics Winter Basketball Camp Special Olympics Coaches Corner Volunteer To Coach Locations & Facilities Sports Field Rental Application Baseball / Softball Courts / Grass Fields Hyland Hills Parks & Facilities Map Hyland Hills Park Rules Downloads Activities Registration Regi"
+  },
+  {
+   "id": "mountainrange-calendar",
+   "type": "html",
+   "url": "https://mountainrange.adams12.org/our-school/calendar",
+   "field": "school-high",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "mountainrange-calendar"
+   ],
+   "sample_urls": [
+    "https://mountainrange.adams12.org/our-school/calendar"
+   ],
+   "sample_text": "tals (opens in new window/tab) Chromebook Community Flyers Community Resources (SFOP) (opens in new window/tab) Counseling Drivers Ed FutureForward Bus Schedules Health Services (opens in new window/tab) Infinite Campus (opens in new window/tab) Library Links Lunch Menu (opens in new window/tab) Meal Payments (opens in new window/tab) Nutrition (opens in new window/tab) Pay Fees (opens in new window/tab) Registration Safe 2 Tell (opens in new window/tab) School Store (opens in new window/tab) Student Records Request (opens in new window/tab) School Accountability Committee Student & Family Support (opens in new window/tab) Student Handbook Supply List Transitioning to High School Yearbook (o"
+  },
+  {
+   "id": "adams12-calendar",
+   "type": "html",
+   "url": "https://www.adams12.org/our-district/calendar",
+   "field": "school-high",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "adams12-calendar"
+   ],
+   "sample_urls": [
+    "https://www.adams12.org/our-district/calendar"
+   ],
+   "sample_text": "pecial Education STEM Summer School School Transfers Transcripts and Academic Records Newsroom District News & Stories Newsletters Share a Story The Focus ENROLL School Finder School Tours Boundary Info & Maps Why Five Star Schools? Enroll Now Preschool Kindergarten *NEW* K-8 Magnet (2027-28) Alternative Education Special Education Schools of Choice Program Contact Admissions Breadcrumb Home > Our District > Calendar Calendar Our calendar consists of events for the district, academic dates by level, board of education meetings, community events, community groups and more. Filter the calendar by selecting or unselecting the categories below on the right. Subscribe to events or a full calendar"
+  },
+  {
+   "id": "du-ics-all",
+   "type": "ical",
+   "url": "https://denverpioneers.com/calendar.ashx/calendar.ics",
+   "field": "school-univ",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 268,
+   "eventish": 69,
+   "sample": [
+    "[N] University of Denver Women's Tennis at Husker Invitational",
+    "[L] University of Denver Volleyball vs Saint Mary's",
+    "[T] University of Denver Men's Soccer at San Diego",
+    "[W] University of Denver Women's Soccer vs Saint Mary's - Pups at the Pitch | Fa",
+    "[N] University of Denver Triathlon at Desert's Edge Triathlon - Hosted by Colora",
+    "[N] University of Denver Men's Golf at Rounds 1/2"
+   ],
+   "sample_urls": [
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16227&sport_id=17",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16079&sport_id=18",
+    "https://admin.denverpioneers.com/calendar.aspx?game_id=16056&sport_id=7"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "du-gym-2026-news",
+   "type": "html",
+   "url": "https://denverpioneers.com/news/2025/10/6/denver-gymnastics-reveals-2026-meet-schedule",
+   "field": "school-gym",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "du-gym-2026-news"
+   ],
+   "sample_urls": [
+    "https://denverpioneers.com/news/2025/10/6/denver-gymnastics-reveals-2026-meet-schedule"
+   ],
+   "sample_text": "Denver Gymnastics Reveals 2026 Meet Schedule - University of Denver Athletics"
+  },
+  {
+   "id": "fort-carson-calendar",
+   "type": "html",
+   "url": "https://home.army.mil/carson/event-calendar",
+   "field": "military",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "usafa-events-2",
+   "type": "html",
+   "url": "https://www.usafa.edu/events/",
+   "field": "military",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 20,
+   "eventish": 12,
+   "sample": [
+    "Apply Today",
+    "USAFA Family Movie: The Nightmare Before Christmas on Thurs, Oct 29 @ 6 p.m.",
+    "Homeschool Program: The Outer Solar System Fri, Oct 30 @ 10:30 a.m.",
+    "USAFA Family Movie: Hocus Pocus on Fri, Oct 30 @ 7:45 p.m.",
+    "USAFA VS. UConn",
+    "Armed Services Blood Program Blood Drive"
+   ],
+   "sample_urls": [
+    "https://www.usafa.edu/admissions/register/pre-candidate-questionnaire/",
+    "https://www.usafa.edu/event-single/nightmare-before/",
+    "https://www.usafa.edu/event-single/homeschool-oct-30/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "cns-events",
+   "type": "html",
+   "url": "https://www.coloradonationalspeedway.com/events",
+   "field": "cars",
+   "ok": false,
+   "status": 522,
+   "error": "HTTP 522",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "cos-liftoff-schedule",
+   "type": "html",
+   "url": "https://www.coloradospringslabordayliftoff.com/schedule",
+   "field": "balloon",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "cos-liftoff-schedule"
+   ],
+   "sample_urls": [
+    "https://www.coloradospringslabordayliftoff.com/schedule"
+   ],
+   "sample_text": "Schedule – Labor Day Lift Off Guest Info Schedule Parking Event Map 2026 Vendors Lodging During Your Visit Event Merchandise Events Ballooning Buy Tickets Guest Info Schedule Parking Event Map 2026 Vendors Lodging During Your Visit Event Merchandise Events Ballooning Buy Tickets Get Involved Pathfinders Volunteer Program Media Application Become a Vendor Sponsors 2026 Sponsors Become a Sponsor About About Us In The News Contact Us FAQ Get Involved Pathfinders Volunteer Program Media Application Become a Vendor Sponsors 2026 Sponsors Become a Sponsor About About Us In The News Contact Us FAQ Schedule Parking Buy Tickets Event Map Events 2026 Vendors Scotty’s Skyview Lounge NEW SkyFest Village"
+  },
+  {
+   "id": "greeley-stampede",
+   "type": "html",
+   "url": "https://www.greeleystampede.org/",
+   "field": "rodeo",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "greeley-stampede"
+   ],
+   "sample_urls": [
+    "https://www.greeleystampede.org/"
+   ],
+   "sample_text": "Greeley Stampede skip to main content Log In Rodeos PRCA Rodeo Series PRCA Xtreme Bulls American Bull Fighting 2026 Day Sheets Concerts SuperStars Concert Series Park Music Stage Locals Stage Kickoff Concert Family Fun Carnival Kids Korral Demolition Derby Parades Special Events Food and Shopping Get Involved Get your Tickets! Upcoming Events Major Sponsors Community Giveback Strengthening Our Community In 2024, the Stampede gave back: Get your Tickets! 600 N. 14th Ave, Greeley, CO 80631 970.356.7787 info@greeleystampede.org Privacy, Terms & Cookies Copyright ©2026, Greeley Stampede. All Rights Reserved. Powered by Back to Top My Account Log Out Log In Search Search Get your Tickets! Directi"
+  },
+  {
+   "id": "nwss-rodeo",
+   "type": "html",
+   "url": "https://nationalwestern.com/events/",
+   "field": "rodeo",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "ball-arena-events",
+   "type": "html",
+   "url": "https://www.ballarena.com/events",
+   "field": "monster",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "hpr-calendar",
+   "type": "html",
+   "url": "https://www.highplainsraceway.com/events/month/",
+   "field": "cars",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 44,
+   "eventish": 22,
+   "sample": [
+    "CALENDAR",
+    "HPR News & Events",
+    "Semi-Exclusive Test and Tune",
+    "Private Event",
+    "Private Event",
+    "Paddock Closed Thursday Night"
+   ],
+   "sample_urls": [
+    "https://www.highplainsraceway.com/calendar/",
+    "https://www.highplainsraceway.com/news/",
+    "https://www.highplainsraceway.com/event/semi-exclusive-test-and-tune-45/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "mountain-games-sched",
+   "type": "html",
+   "url": "https://mountaingames.com/schedule/",
+   "field": "water",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 49,
+   "eventish": 4,
+   "sample": [
+    "REGISTER",
+    "GOPRO DUAL SLALOM",
+    "GoPro Jump Jam",
+    "Lucid KIDS BIKE RACE",
+    "Lucid XC MOUNTAIN BIKE",
+    "Lucid XC Short Track"
+   ],
+   "sample_urls": [
+    "https://mountaingames.com/register",
+    "https://mountaingames.com/event/dual-slalom/",
+    "https://mountaingames.com/event/jumpjam/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "cpw-fishing-clinics",
+   "type": "html",
+   "url": "https://cpw.state.co.us/fishing/fishing-events-and-clinics",
+   "field": "hunt-fish",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "cpw-youth-hunt",
+   "type": "html",
+   "url": "https://cpw.state.co.us/hunting/youth",
+   "field": "hunt-fish",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "cpw-events-hunter",
+   "type": "html",
+   "url": "https://cpw.state.co.us/events",
+   "field": "hunt-fish",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "usatkd-tournaments",
+   "type": "html",
+   "url": "https://www.usatkd.org/tournaments",
+   "field": "tkd",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "dacono-bmx-sched",
+   "type": "html",
+   "url": "https://www.daconoco.gov/874/Race-Schedule",
+   "field": "bmx",
+   "mode": "page-change",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "usabmx-dacono",
+   "type": "html",
+   "url": "https://www.usabmx.com/tracks/1496",
+   "field": "bmx",
+   "mode": "page-change",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "winterpark-events",
+   "type": "html",
+   "url": "https://www.winterparkresort.com/events",
+   "field": "mtb",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 4,
+   "eventish": 1,
+   "sample": [
+    "Activities",
+    "Send'er November",
+    "Deck the Slopes",
+    "Torchlight Parade"
+   ],
+   "sample_urls": [
+    "https://www.winterparkresort.com/things-to-do/activities",
+    "https://www.winterparkresort.com/things-to-do/events/sender-november",
+    "https://www.winterparkresort.com/things-to-do/events/deck-the-slopes"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "trestle-events",
+   "type": "html",
+   "url": "https://www.trestlebikepark.com/events",
+   "field": "mtb",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "ava-rafting-faq",
+   "type": "html",
+   "url": "https://www.coloradorafting.net/faq/",
+   "field": "water",
+   "mode": "page-change",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "clearcreek-rafting-faq",
+   "type": "html",
+   "url": "https://www.clearcreekrafting.com/faq/",
+   "field": "water",
+   "mode": "page-change",
+   "ok": true,
+   "status": 202,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "clearcreek-rafting-faq"
+   ],
+   "sample_urls": [
+    "https://www.clearcreekrafting.com/faq/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "standley-lake",
+   "type": "html",
+   "url": "https://www.westminsterco.gov/ParksRecreation/StandleyLakeRegionalPark",
+   "field": "water",
+   "mode": "page-change",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "pwam-home",
+   "type": "html",
+   "url": "https://pwam.org/",
+   "field": "military",
+   "mode": "page-change",
+   "ok": true,
+   "status": 202,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "pwam-home"
+   ],
+   "sample_urls": [
+    "https://pwam.org/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "wings-rockies-events",
+   "type": "html",
+   "url": "https://wingsmuseum.org/events/",
+   "field": "military",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  }
+ ]
+}
