@@ -302,6 +302,15 @@ def _pub(s: str | None):
             return None
 
 
+def _ics_date(s: str | None):
+    """iCal DTSTART(20261030, 20261030T190000Z)의 날짜. 모르면 None(남긴다)."""
+    m = re.match(r"(\d{4})(\d{2})(\d{2})", str(s or ""))
+    try:
+        return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3))).date() if m else None
+    except ValueError:
+        return None
+
+
 def set_param(url: str, key: str, value) -> str:
     u = urllib.parse.urlsplit(url)
     q = [(k, v) for k, v in urllib.parse.parse_qsl(u.query, keep_blank_values=True) if k != key] + [(key, str(value))]
@@ -368,6 +377,11 @@ def fetch_source(source: dict, secrets=None, probe: bool = False, client: httpx.
             before = len(res.entries)
             res.entries = [e for e in res.entries if (not inc or inc.search(e.title)) and not (exc and exc.search(e.title))]
             res.filtered = before - len(res.entries)
+        if t == "ical":  # 지난 일정(경기 결과 [W]/[L] 등)은 AI 로 넘기지 않는다(토큰 0, #43: 대학 iCal 716건 중 대부분이 지난 경기)
+            today = datetime.now(timezone.utc).date() - timedelta(days=1)
+            before = len(res.entries)
+            res.entries = [e for e in res.entries if not ((d := _ics_date(e.published)) and d < today)]
+            res.filtered = (res.filtered or 0) + before - len(res.entries)
         if source.get("max_age_days"):  # 오래된 글이 쌓인 뉴스 피드(예: RMNP 1,000건): 최근 게시글만. 게시일을 모르면 남긴다
             cut = datetime.now(timezone.utc).date() - timedelta(days=int(source["max_age_days"]))
             before = len(res.entries)
