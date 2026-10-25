@@ -1,9 +1,23 @@
 {
- "run_id": "20261025T200440Z",
+ "run_id": "20261025T201239Z",
  "mode": "full",
  "today": "2026-10-25",
  "dry_run": true,
  "sources": [
+  {
+   "id": "du-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 205,
+   "error": null
+  },
+  {
+   "id": "afa-athletics-ics",
+   "ok": true,
+   "status": 200,
+   "items": 406,
+   "error": null
+  },
   {
    "id": "chsaa-gymnastics-athletics",
    "ok": true,
@@ -13,20 +27,6 @@
   },
   {
    "id": "chsaa-state-championships-athletics",
-   "ok": true,
-   "status": 200,
-   "items": 1,
-   "error": null
-  },
-  {
-   "id": "du-gymnastics-athletics-schedule",
-   "ok": true,
-   "status": 200,
-   "items": 1,
-   "error": null
-  },
-  {
-   "id": "afa-gymnastics-athletics-schedule",
    "ok": true,
    "status": 200,
    "items": 1,
@@ -112,20 +112,20 @@
  ],
  "dropped": {},
  "events": [],
- "queue_taken": 107,
+ "queue_taken": 300,
  "ai_skipped": "no key / --no-ai / budget",
  "queue": {
-  "queued": 107,
+  "queued": 716,
   "extracted": 0,
   "stuck": 0,
   "oldest_queued_hours": 0
  },
  "workload": {
   "path": "github_collector",
-  "run_id": "20261025T200440Z",
+  "run_id": "20261025T201239Z",
   "mode": "full",
-  "started_at": "2026-10-25T20:04:40+00:00",
-  "finished_at": "2026-10-25T20:04:59+00:00",
+  "started_at": "2026-10-25T20:12:39+00:00",
+  "finished_at": "2026-10-25T20:12:57+00:00",
   "schedule_delay_min": "unknown",
   "search_requests": 0,
   "news_search_queries": [],
@@ -134,12 +134,12 @@
   "web_search_result_urls": 0,
   "source_urls_attempted": 15,
   "source_urls_ok": 15,
-  "official_pages_checked": 96,
-  "official_pages_ok": 96,
-  "candidates_total": 107,
-  "candidates_new": 107,
+  "official_pages_checked": 120,
+  "official_pages_ok": 120,
+  "candidates_total": 716,
+  "candidates_new": 716,
   "candidates_changed": 0,
-  "queued": 107,
+  "queued": 716,
   "ai_processed": 0,
   "ai_failed_retry": 0,
   "dropped": {},
@@ -167,48 +167,220 @@
  },
  "collected": true,
  "entries_sample": {
+  "du-athletics-ics": [
+   {
+    "title": "[N] University of Denver Women's Tennis at Husker Invitational",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16227&sport_id=17",
+    "published": "20260925",
+    "text": "Lincoln, Neb. [N] University of Denver Women's Tennis at Husker Invitational Streaming Video: https://web.playsight.com/facility/university-of-nebraska/home\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[L] University of Denver Volleyball vs Saint Mary's",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16079&sport_id=18",
+    "published": "20260926T190000Z",
+    "text": "Denver, Colo., Hamilton Gymnasium [L] University of Denver Volleyball vs Saint Mary's L 1-3 TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule Tickets: https://denverpioneers.evenue.net/list/V?&RSRC=comms&RDAT=vbtix&utm_source=sidearm&utm_medium=web&utm_campaign=tickethome\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[T] University of Denver Men's Soccer at San Diego",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16056&sport_id=7",
+    "published": "20260927T000000Z",
+    "text": "San Diego, Calif. [T] University of Denver Men's Soccer at San Diego T 0-0 TV: ESPN+ Streaming Video: https://www.espn.com/watch/player/_/id/9045e962-d3f5-4ea2-9509-de553c454e3a\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[W] University of Denver Women's Soccer vs Saint Mary's - Pups at the Pitch | Family Weekend | Campus Appreciation",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16027&sport_id=15",
+    "published": "20260927T010000Z",
+    "text": "Denver, Colo., University of Denver Soccer Stadium [W] University of Denver Women's Soccer vs Saint Mary's - Pups at the Pitch | Family Weekend | Campus Appreciation W 2-1 Streaming Video: https://www.espn.com/watch/player/_/id/19fac313-7ff2-45be-9777-64fbc4fdb4d2 Tickets: https://denverpioneers.evenue.net/list/WS?RSRC=comms&RDAT=schedule&utm_source=sidearm&utm_medium=web&utm_campaign=homepage\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[N] University of Denver Men's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | Sat",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16100&sport_id=8",
+    "published": "20261002T230000Z",
+    "text": "Fort Collins, Colo. [N] University of Denver Men's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | Saturday at 11 a.m. MT 3/3 Streaming Video: https://www.youtube.com/@CSURams/streams\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[N] University of Denver Women's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | S",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16118&sport_id=16",
+    "published": "20261002T230000Z",
+    "text": "Fort Collins, Colo. [N] University of Denver Women's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | Saturday at 11 a.m. MT 5/5 Streaming Video: https://www.youtube.com/@CSURams/streams\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[W] University of Denver #4 Ice Hockey at Alaska Anchorage",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=15973&sport_id=4",
+    "published": "20261003T030000Z",
+    "text": "Anchorage, Alaska [W] University of Denver #4 Ice Hockey at Alaska Anchorage W 6-2 TV: YouTube.com Radio: Denver Sports 104.3 HD3 Streaming Video: https://www.youtube.com/live/KoSzA7s26hA Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[L] University of Denver Volleyball at San Diego",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16080&sport_id=18",
+    "published": "20261003T190000Z",
+    "text": "San Diego, Calif. [L] University of Denver Volleyball at San Diego L 0-3 TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[L] University of Denver Women's Soccer at Santa Clara",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16028&sport_id=15",
+    "published": "20261003T200000Z",
+    "text": "Santa Clara, Calif. [L] University of Denver Women's Soccer at Santa Clara L 0-3 Streaming Video: https://www.espn.com/watch/player/_/id/1cf265bb-c2b6-489d-a715-dc0744d0b0ad\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[W] University of Denver Men's Soccer vs LMU - DU Oktoberfest | Camp Reunion | Campus Appreciation | Post-Match Autograp",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16057&sport_id=7",
+    "published": "20261004T000000Z",
+    "text": "Denver, Colo., University of Denver Soccer Stadium [W] University of Denver Men's Soccer vs LMU - DU Oktoberfest | Camp Reunion | Campus Appreciation | Post-Match Autographs W 2-1 TV: ESPN+ Streaming Video: https://www.espn.com/watch/player/_/id/8d369695-737c-41a9-add8-a6bfd6e0adc4 Tickets: https://denverpioneers.evenue.net/list/MS?&RSRC=comms&RDAT=2024&utm_source=web&utm_medium=social&utm_campaign=alltix\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[W] University of Denver #4 Ice Hockey at Alaska Anchorage",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=15974&sport_id=4",
+    "published": "20261004T010000Z",
+    "text": "Anchorage, Alaska [W] University of Denver #4 Ice Hockey at Alaska Anchorage W 4-1 TV: YouTube.com Radio: Denver Sports 104.3 HD3 Streaming Video: https://www.youtube.com/live/JNxHbsMT55s Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   },
+   {
+    "title": "[N] University of Denver Men's Tennis at ITA Mountain Regional Championships",
+    "url": "https://admin.denverpioneers.com/calendar.aspx?game_id=16216&sport_id=9",
+    "published": "20261006",
+    "text": "Provo, Utah [N] University of Denver Men's Tennis at ITA Mountain Regional Championships Streaming Video: https://docs.google.com/spreadsheets/d/1aWTGiGQ7lzDIJTaK9nJnx_mKuT-GbVA6TdC1JlktK7c/edit?usp=sharing\nComposite Schedule - University of Denver Athletics",
+    "detail_ok": true
+   }
+  ],
+  "afa-athletics-ics": [
+   {
+    "title": "Air Force Academy Women's Tennis vs ITA Bedford Cup In The Mountains",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27098&sport_id=21",
+    "published": "20260925T150000Z",
+    "text": "USAFA, Colo., Tennis Courts Air Force Academy Women's Tennis vs ITA Bedford Cup In The Mountains",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Men's Water Polo vs Biola (Calif.)",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27029&sport_id=14",
+    "published": "20260926T173000Z",
+    "text": "USAFA, CO, Cadet Natatorium [W] Air Force Academy Men's Water Polo vs Biola (Calif.) W 18-13 Streaming Video: https://www.youtube.com/@AF_Falcons",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Women's Volleyball vs San Jose State - Bruno Mars Pre-Show Match",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26488&sport_id=22",
+    "published": "20260926T190000Z",
+    "text": "USAFA [W] Air Force Academy Women's Volleyball vs San Jose State - Bruno Mars Pre-Show Match W 3-2 TV: MW+ Streaming Video: https://watch.themw.com/air-force/?ra=air-force Tickets: https://goairforcefalcons.evenue.net/events/VSG",
+    "detail_ok": null
+   },
+   {
+    "title": "[T] Air Force Academy Men's Soccer vs Utah Tech",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26517&sport_id=11",
+    "published": "20260927T000000Z",
+    "text": "USAFA, CO [T] Air Force Academy Men's Soccer vs Utah Tech T 1-1 Streaming Video: https://watch.themw.com/sports/soccer-mens/",
+    "detail_ok": null
+   },
+   {
+    "title": "[L] Air Force Academy Men's Water Polo vs UC Santa Barbara",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27031&sport_id=14",
+    "published": "20260927T010000Z",
+    "text": "USAFA, CO, Cadet Natatorium [L] Air Force Academy Men's Water Polo vs UC Santa Barbara L 14-21 Streaming Video: https://www.youtube.com/@AF_Falcons",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Football at Nevada",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=24310&sport_id=4",
+    "published": "20260927T023000Z",
+    "text": "Reno, NV [W] Air Force Academy Football at Nevada W 36-33 2 OT TV: FS1 Radio: KVOR AM 740 Streaming Video: https://www.fox.com/sports/football/college-football?cmpid=org=one::ag=partnership::mc=referral::src=AFF::cmp=100_o1_th1::cont=m2_tp10::add=07_29_08_00_41_00_02_A Streaming Audio: https://www.kvor.com/ Tickets: https://goairforcefalcons.evenue.net/event/F26/F11",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Men's Water Polo vs Wagner",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27032&sport_id=14",
+    "published": "20260927T180000Z",
+    "text": "USAFA, CO, Cadet Natatorium [W] Air Force Academy Men's Water Polo vs Wagner W 16-15 Streaming Video: https://www.youtube.com/@AF_Falcons",
+    "detail_ok": null
+   },
+   {
+    "title": "[L] Air Force Academy Women's Soccer vs University of Hawaii",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26441&sport_id=19",
+    "published": "20260927T190000Z",
+    "text": "USAFA, CO, Cadet Soccer Stadium [L] Air Force Academy Women's Soccer vs University of Hawaii L 0-2 Streaming Video: https://watch.themw.com/air-force/soccer-womens/event/air_force_hawaii_20262709",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Men's Water Polo vs OUAZ",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27033&sport_id=14",
+    "published": "20260927T210000Z",
+    "text": "USAFA, CO, Cadet Natatorium [W] Air Force Academy Men's Water Polo vs OUAZ W 21-14 Streaming Video: https://www.youtube.com/@AF_Falcons",
+    "detail_ok": null
+   },
+   {
+    "title": "[W] Air Force Academy Men's Soccer at UC Davis",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26518&sport_id=11",
+    "published": "20261001T020000Z",
+    "text": "Davis, CA [W] Air Force Academy Men's Soccer at UC Davis W 2-0 Streaming Video: https://watch.themw.com/sports/soccer-mens/",
+    "detail_ok": null
+   },
+   {
+    "title": "[L] Air Force Academy Women's Volleyball at UC Davis",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=26489&sport_id=22",
+    "published": "20261002T010000Z",
+    "text": "Davis, CA [L] Air Force Academy Women's Volleyball at UC Davis L 0-3 TV: MW+ Streaming Video: https://watch.themw.com/air-force/?ra=air-force Tickets: https://ucdavisaggies.evenue.net/list/VB",
+    "detail_ok": null
+   },
+   {
+    "title": "Air Force Academy Men's Tennis vs Utah Invitational",
+    "url": "https://admin.goairforcefalcons.com/calendar.aspx?game_id=27127&sport_id=13",
+    "published": "20261002",
+    "text": "Salt Lake City, UT Air Force Academy Men's Tennis vs Utah Invitational",
+    "detail_ok": null
+   }
+  ],
   "chsaa-gymnastics-athletics": [
    {
     "title": "Gymnastics: Regionals Scheduled For Oct. 29-31 The 2026 Colorado high school gymnastics regionals are Oct. 29-31 at Over",
     "url": "https://chsaanow.com/news/2026/10/19/gymnastics-regionals-scheduled-for-oct-29-31-2026",
     "published": null,
-    "text": "Gymnastics: Regionals Scheduled For Oct. 29-31 Gymnastics: Regionals Scheduled For Oct. 29-31 By CHSAA October 19, 2026 at 1:55 PM Photo: Brad Cochi/CHSAANow Related Content Regional Schedules & Rotations Print All Regional Sites AURORA — The 2026 Gymnastics regional competition will take place at Overland, Mountain Range and Arvada West high schools next week. The Overland Regional is Thursday, Oct. 29, the Mountain Range Regional is Friday, Oct. 30, and the Arvada West Regional is Saturday, Oc",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Gymnastics Weekly: Niwot Posts 180.275 Team Score as League Meets Approach Karlee Knabenshue and Niwot delivered standou",
     "url": "https://chsaanow.com/news/2026/10/19/gymnastics-2026-w42",
     "published": null,
-    "text": "Gymnastics Weekly: Niwot Posts 180.275 Team Score as League Meets Approach Gymnastics Weekly: Niwot Posts 180.275 Team Score as League Meets Approach By Digest October 19, 2026 at 9:45 AM Karlee Knabenshue and Niwot delivered standout performances this week as teams prepared for upcoming league championships. Looking ahead, Callista Larson enters league competition with the No. 1 all-around score in the state, while Ella Mikolajewski leads Colorado on uneven bars. Results Niwot vs Broomfield vs ",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Gymnastics Weekly: Niwot Posts 181.95 Team Score to Highlight High-Scoring Week Niwot impressed with a season-high team ",
     "url": "https://chsaanow.com/news/2026/10/12/gymnastics-2026-w41",
     "published": null,
-    "text": "Gymnastics Weekly: Niwot Posts 181.95 Team Score to Highlight High-Scoring Week Gymnastics Weekly: Niwot Posts 181.95 Team Score to Highlight High-Scoring Week By Digest October 12, 2026 at 12:19 PM Photo: Cannon Casey/CHSAANow.com Niwot impressed with a season-high team score this past week, while close team races highlighted competition across both classifications. Looking ahead, Rock Canyon’s Callista Larson enters the Overland Tri holding the No. 1 all-around score in the state this season. ",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Gymnastics Weekly: Roosevelt claims Think Pink Invitational title during impressive week Roosevelt led the week by winni",
     "url": "https://chsaanow.com/news/2026/10/05/gymnastics-2026-w40",
     "published": null,
-    "text": "Gymnastics Weekly: Roosevelt claims Think Pink Invitational title during impressive week Gymnastics Weekly: Roosevelt claims Think Pink Invitational title during impressive week By Digest October 5, 2026 at 11:47 AM Photo: Brad Cochi/CHSAANow Roosevelt led the week by winning the 14-team Think Pink Invitational with a 172.75 team score after posting a 174 total days earlier. Action continues this week as Rock Canyon’s Callista Larson holds the No. 1 all-around score in the state at 36.575, while",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Gymnastics Weekly: Niwot and Rock Canyon Post High Team Scores to Lead the Week Niwot and Rock Canyon put up team totals",
     "url": "https://chsaanow.com/news/2026/09/28/gymnastics-2026-w39",
     "published": null,
-    "text": "Gymnastics Weekly: Niwot and Rock Canyon Post High Team Scores to Lead the Week Gymnastics Weekly: Niwot and Rock Canyon Post High Team Scores to Lead the Week By Digest September 28, 2026 at 12:12 PM Photo: CHSAA file photo Niwot and Rock Canyon put up team totals above 177 to lead strong performances across 5A and 4A competition. Looking ahead, Rock Canyon’s Callista Larson, who holds the No. 1 all-around score in the state this season, heads to the Overland Quad while Roosevelt’s Liviana Whit",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Gymnastics Weekly: Niwot Posts 176.95 Team Score to Highlight Impressive Week Niwot posted a week-high 176.95 team score",
     "url": "https://chsaanow.com/news/2026/09/21/gymnastics-2026-w38",
     "published": null,
-    "text": "Gymnastics Weekly: Niwot Posts 176.95 Team Score to Highlight Impressive Week Gymnastics Weekly: Niwot Posts 176.95 Team Score to Highlight Impressive Week By Digest September 21, 2026 at 8:22 AM Photo: Brad Cochi/CHSAANow Niwot posted a week-high 176.95 team score while Mountain Range cleared 172 points behind standout individual routines. Looking ahead, Rock Canyon’s Callista Larson enters the Palmer Ridge Invite holding the state’s No. 1 all-around score of 36.575. Results Niwot vs Roosevelt ",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    }
   ],
   "chsaa-state-championships-athletics": [
@@ -217,24 +389,6 @@
     "url": "https://chsaanow.com/news/2026/09/09/fall-2026-state-championship-dates-locations-announced",
     "published": null,
     "text": "he Boys Golf State Championships on October 5-6 and will conclude with the Spirit State Championships on December 10-12. In total, CHSAA will host championships for 14 sports and activities. Specific details for early round postseason events will be released at later dates. The individual sports and activities bulletins linked below provide specific information for administrators and coaches on classifications, important dates, CHSAA and NFHS rules and procedures, and more. Dates and Locations f",
-    "detail_ok": null
-   }
-  ],
-  "du-gymnastics-athletics-schedule": [
-   {
-    "title": "University of Denver women's gymnastics schedule",
-    "url": "https://denverpioneers.com/sports/womens-gymnastics/schedule",
-    "published": null,
-    "text": "2026 Gymnastics Schedule - University of Denver Athletics",
-    "detail_ok": null
-   }
-  ],
-  "afa-gymnastics-athletics-schedule": [
-   {
-    "title": "Air Force women's gymnastics 2026-27 schedule",
-    "url": "https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2026-27",
-    "published": null,
-    "text": "2026 Women's Gymnastics Schedule - Air Force Academy Athletics",
     "detail_ok": null
    }
   ],
@@ -261,85 +415,85 @@
     "title": "GOPRO DUAL SLALOM",
     "url": "https://mountaingames.com/event/dual-slalom/",
     "published": null,
-    "text": "GoPro Dual Slalom HEAD-TO-HEAD RACING Head-to-head racing doesn’t get more intense than Dual Slalom at the Minturn Bike Park. Riders go side-by-side on mirrored tracks packed with tight berms, massive rollers, and airtime-ready jumps. DATE TBD Want to be in the know? Join our email list and download the app to get the latest Mountain Games news, updates, and insider info right at your fingertips. The official camera partner of the GoPro Mountain Games. AMATEUR START LIST PRO START LIST Info Resu",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "GoPro Jump Jam",
     "url": "https://mountaingames.com/event/jumpjam/",
     "published": null,
-    "text": "GoPro Jump Jam JUMP, JUMP, JUMP, JUMP AROUND Prepare for an adrenaline-fueled GoPro Jump Jam where the session never stops! Ride hard for over an hour, throwing down your wildest tricks as judges hunt for the ultimate combo of style, difficulty, height, and steeze. It’s your time to dominate the air so send it big and leave your mark ! DATE TBD Want to be in the know? Join our email list to get the latest Mountain Games news right at your fingertips. The official camera partner of the GoPro Moun",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Lucid KIDS BIKE RACE",
     "url": "https://mountaingames.com/event/kids-bike-race/",
     "published": null,
-    "text": "Lucid Kids Bike Race BECAUSE KIDS SHRED TOO From balance bikes to training wheels to pedal bikes, kids of all ages are invited to have a blast racing around Golden Peak. With s even waves of age groups , the Kids Bike Race is a rad introductory event and sends everyone home with a prize! DATE TBD Want to be in the know? Join our email list and download the app to get the latest Mountain Games news, updates, and insider info right at your fingertips. The official auto partner of the GoPro Mountai",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Lucid XC MOUNTAIN BIKE",
     "url": "https://mountaingames.com/event/xc-mountain-bike/",
     "published": null,
-    "text": "Lucid XC Mountain Bike rules for category requirements, start procedures, course regulations, feed zones and other important race information. VIEW FULL RACE RULES Price & Prizes REGISTRATION PRICING EARLY BIRD Feb 4 – Apr 1 STANDARD Apr 2 – May 26 FOMO May 27 – Jun 5 Pro/Open + Single Speed $75 $80 $95 Expert / Sport / Beginner $55 $60 $75 Juniors 18 & Under $50 $55 $70 DOUBLE DOWN Race more. Save more. Register for both the Lucid XC Mountain Bike and Lucid XC Short Track races and save 10% on ",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Lucid XC Short Track",
     "url": "https://mountaingames.com/event/xc-shorttrack/",
     "published": null,
-    "text": "Lucid XC Short Track FAST TRACKS, BIG THRILLS The faster, wilder sibling of the classic XC Mountain Bike race, the C Short Track is a high-intensity sprint where riders battle to rack up the most laps in just 20 minutes. Tight turns, loose dirt, and elbow-to-elbow action make this short course a thrilling test of speed and control. DATE TBD IMPORTANT: The course map will be available 1 week prior to the race. Want to be in the know? Join our email list to get the latest Mountain Games news right",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "GOPRO ROAD BIKE HILL CLIMB",
     "url": "https://mountaingames.com/event/road-bike-hill-climb/",
     "published": null,
-    "text": "GoPro Road Bike Hill Climb THE COURSE GOES UP. THE RACE IS ON. The Road Bike Hill C lim b invites everyone from seasoned racers to weekend warriors to gear up, grab their spandex, and grind up one of the most legendary road climbs in the Rockies from Vail Village to the base of Vail Pass. DATE TBD IMPORTANT : Helmets are required for all riders at all times while on course. Riders without a properly fitted helmet will not be permitted to start . The course map will be available 1 week prior to t",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Kids Mini Dash",
     "url": "https://mountaingames.com/event/kids-mini-dash/",
     "published": null,
-    "text": "Kids Mini Dash WHERE KIDS RUN WILD (IN THE BEST WAY) Big smiles, fast feet, and nonstop energy are taking over the GoPro Mountain Games with the Kids Mini Dash , designed just for kids ages 6–12. This isn’t about winning— it’s about running, laughing, and soaking up the joy of movement in a high-energy, feel-good experience from start to finish. DATE TBD IMPORTANT : Athlete’s age category is based on their age on the day of the event. The course map will be available 1 week prior to the race. Wa",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "NATURE VALLEY MOUNTAIN MUD RUN",
     "url": "https://mountaingames.com/event/mountain-mud-run/",
     "published": null,
-    "text": "Nature Valley Mountain Mud Run A LITTLE DIRT NEVER HURT! Get absolutely pitted in mud as you enjoy a GoPro Mountain Games classic. All abilities are welcome to join in on the family-friendly fun — just don’t wear your favorite shirt! May the muddiest mud runner win! DATE TBD IMPORTANT: The minimum age to participate in the Nature Valley Mountain Mud Run is 6 years old based on the athletes age on the day of the race. No exceptions . Want to be in the know? Join our email list to get the latest M",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "BFGOODRICH ROCKY DOG FUN RUN",
     "url": "https://mountaingames.com/event/rocky-dog-fun-run/",
     "published": null,
-    "text": "BFGoodrich Rocky Dog Fun Run GET RUNNING WITH YOUR BESTIE Get your pup involved at the GoPro Mountain Games with this unique event! Bring your four-legged friend along for a 5K fun run/walk on Vail Mountain. Dogs and humans of all abilities and sizes are encouraged to participate in the most wholesome event of the weekend! DATE TBD IMPORTANT: The course map will be available 1 week prior to the race. Want to be in the know? Join our email list and download the app to get the latest Mountain Game",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "ADIDAS TERREX APRÈS 5K",
     "url": "https://mountaingames.com/event/apres-5k-2/",
     "published": null,
-    "text": "adidas Terrex Après 5K Trail Run YOUR WEEKEND STARTS NOW! Kick off your GoPro Mountain Games weekend with the perfect evening trail run on Vail Mountain. Start in Nature Valley Mountain Plaza and settle in for good vibes, fresh air, and great company. DATE TBD IMPORTANT : The course map will be available 1 week prior to the race. Want to be in the know? Join our email list and download the app to get the latest Mountain Games news, updates, and insider info right at your fingertips. The official",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "ADIDAS TERREX 10K SPRING RUNOFF",
     "url": "https://mountaingames.com/event/trail-10k/",
     "published": null,
-    "text": "adidas Terrex 10K Spring Runoff TRAIL RUN AT 9K FEET Craving something a bit more exhilarating than the chill adidas Terrex Aprés 5K Trail Run? Get ready to level up with this epic challenge! Hit the stunning Vail Mountain trails and conquer a thrilling 10K—your next big achievement awaits! DATE TBD IMPORTANT: The course map will be available 1 week prior to the race. Want to be in the know? Join our email list and download the app to get the latest Mountain Games news, updates, and insider info",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "ADIDAS TERREX 20K TRAIL RUN",
     "url": "https://mountaingames.com/event/trail-20k/",
     "published": null,
-    "text": "adidas Terrex 20K Trail Run GO THE DISTANCE, GO FOR SPEED A behemoth of running races, the adidas TERREX 20K Trail Run is for the boldest competitors. Destroy a near -half marathon on a difficult course that spans nearly the entire front side of Vail Mountain! DATE TBD IMPORTANT : The course map will be available 1 week prior to the race. Want to be in the know? Join our email list and download the app to get the latest Mountain Games news, updates, and insider info right at your fingertips. The",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    }
   ],
   "royal-gorge-whitewater": [
@@ -365,22 +519,22 @@
     "title": "Send'er November",
     "url": "https://www.winterparkresort.com/things-to-do/events/sender-november",
     "published": null,
-    "text": "Send'er November Nov 14 Sat Weekly Location Winter Park Resort 85 Parsenn Rd See on map Price FREE X carousel-component Start the season with three weekends of playful competition including a Poker Run and Mini Mary Jane Mogul Freeride. Pass Holders can enjoy a dedicated lounge at Sunspot with weekly giveaways and special offerings. Ski, celebrate, and make your November laps count at Winter Park. Additional information below. View Tickets and Passes Nov 14 Sat Weekly Winter starts here. So shou",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Deck the Slopes",
     "url": "https://www.winterparkresort.com/things-to-do/events/deck-the-slopes",
     "published": null,
-    "text": "Deck The Slopes Holiday magic on the mountain Deck The Slopes Nov 28 Sat Special Event Date & Time Nov. 28, 2026 — Dec. 31, 2026 All day Location Winter Park Resort 85 Parsenn Road Winter Park, Colorado 80482 See on map Price FREE X carousel-component Join us in Winter Park for Deck the Slopes, where the holiday spirit meets alpine adventure. From November 28 to December 31, the resort will transform into a winter wonderland with sparkling lights, festive cheer, and unforgettable weekend activit",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Torchlight Parade",
     "url": "https://www.winterparkresort.com/things-to-do/events/torchlight-parade",
     "published": null,
-    "text": "Torchlight Parade Dec 24 Thu Annual Date & Time Dec. 24, 2026 5:30 PM Location Winter Park Resort 85 Parsenn Road Winter Park, Colorado 80482 See on map Price FREE X carousel-component Our iconic holiday celebration is back, and you’re invited! At 5:30pm, cozy up with a cup of cocoa around the fire and watch as more than 100 skiers make their way down the mountain, illuminating the night with flares and a brilliant fireworks display. Before the big event, get your fill of holiday cheer with our ",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    }
   ],
   "high-plains-raceway": [
@@ -388,85 +542,85 @@
     "title": "Semi-Exclusive Test and Tune",
     "url": "https://www.highplainsraceway.com/event/semi-exclusive-test-and-tune-45/",
     "published": null,
-    "text": "Semi-Exclusive Test and Tune This event has passed. × Semi-Exclusive Test and Tune September 28 @ 8:00 am - 4:00 pm This date has been reserved under our Semi-Exclusive Test and Tune program. If you would like more information or would like to join this event please visit the Track Rental Page on the HPR website. Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation Paddock Closed Sunday Night Priva",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Private Event",
     "url": "https://www.highplainsraceway.com/event/private-event-21/",
     "published": null,
-    "text": "Private Event - High Plains Raceway Skip to content HOME CALENDAR HPR Calendar HPR News & Events OPEN LAPPING DAYS Information Registration Multiple Gift Card Packages Unlimited Season Pass Single Gift Cards Track Day Insurance GENERAL INFO Track Details and Location HPR Amenities and Lodging Cafe Track Rental Information Track Rental Request Form Camping Watch Racing Go Racing Drive the Track Track Reviews Facility Rules ABOUT US About High Plains Raceway The History of HPR HPR Sponsors Foundin",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Private Event",
     "url": "https://www.highplainsraceway.com/event/private-event-12/",
     "published": null,
-    "text": "Private Event - High Plains Raceway Skip to content HOME CALENDAR HPR Calendar HPR News & Events OPEN LAPPING DAYS Information Registration Multiple Gift Card Packages Unlimited Season Pass Single Gift Cards Track Day Insurance GENERAL INFO Track Details and Location HPR Amenities and Lodging Cafe Track Rental Information Track Rental Request Form Camping Watch Racing Go Racing Drive the Track Track Reviews Facility Rules ABOUT US About High Plains Raceway The History of HPR HPR Sponsors Foundin",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Paddock Closed Thursday Night",
     "url": "https://www.highplainsraceway.com/event/paddock-closed-thursday-night-22/",
     "published": null,
-    "text": "Paddock Closed Thursday Night This event has passed. × Paddock Closed Thursday Night October 1 @ 6:00 pm Gates will close at the conclusion of the day’s event. No overnight use of the paddock/camping/RV/Carport areas will be allowed. Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation Private Event Cars Open Lapping 8-5 Details Date: October 1 Time: 6:00 pm Event Category: Overnight No Venue High ",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Cars Open Lapping 8-5",
     "url": "https://www.highplainsraceway.com/event/cars-open-lapping-8-5-43/",
     "published": null,
-    "text": "Cars Open Lapping 8-5 This event has passed. × Cars Open Lapping 8-5 October 2 @ 8:00 am - 5:00 pm Open Lapping Day – cars only. Session structure and length dependent on participation. For more information FIRST read the Open Lapping Day Information Page HERE If you would like to participate you can register and pay HERE Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation Paddock Closed Thursday ",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Paddock Open 24 Hours Friday Night",
     "url": "https://www.highplainsraceway.com/event/paddock-open-24-hours-friday-night-39/",
     "published": null,
-    "text": "Paddock Open 24 Hours Friday Night This event has passed. × Paddock Open 24 Hours Friday Night October 2 @ 6:00 pm Overnight use of the paddock/camping/RV/Carport areas will be allowed. Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation Cars Open Lapping 8-5 BMW Car Club of America School and Time Trials Details Date: October 2 Time: 6:00 pm Event Category: Overnight Yes Venue High Plains Raceway",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "BMW Car Club of America School and Time Trials",
     "url": "https://www.highplainsraceway.com/event/bmw-car-club-of-america-school-and-time-trials-4/",
     "published": null,
-    "text": "BMW Car Club of America School and Time Trials - High Plains Raceway Skip to content HOME CALENDAR HPR Calendar HPR News & Events OPEN LAPPING DAYS Information Registration Multiple Gift Card Packages Unlimited Season Pass Single Gift Cards Track Day Insurance GENERAL INFO Track Details and Location HPR Amenities and Lodging Cafe Track Rental Information Track Rental Request Form Camping Watch Racing Go Racing Drive the Track Track Reviews Facility Rules ABOUT US About High Plains Raceway The Hi",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Paddock Closed Saturday Night",
     "url": "https://www.highplainsraceway.com/event/paddock-closed-saturday-night-18/",
     "published": null,
-    "text": "Paddock Closed Saturday Night This event has passed. × Paddock Closed Saturday Night October 3 @ 6:00 pm Gates will close at the conclusion of the day’s event. No overnight use of the paddock/camping/RV/Carport areas will be allowed. Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation BMW Car Club of America School and Time Trials Private Event Details Date: October 3 Time: 6:00 pm Event Category:",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Private Event",
     "url": "https://www.highplainsraceway.com/event/private-event-39/",
     "published": null,
-    "text": "Private Event - High Plains Raceway Skip to content HOME CALENDAR HPR Calendar HPR News & Events OPEN LAPPING DAYS Information Registration Multiple Gift Card Packages Unlimited Season Pass Single Gift Cards Track Day Insurance GENERAL INFO Track Details and Location HPR Amenities and Lodging Cafe Track Rental Information Track Rental Request Form Camping Watch Racing Go Racing Drive the Track Track Reviews Facility Rules ABOUT US About High Plains Raceway The History of HPR HPR Sponsors Foundin",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Paddock Closed Sunday Night",
     "url": "https://www.highplainsraceway.com/event/paddock-closed-sunday-night-52/",
     "published": null,
-    "text": "Paddock Closed Sunday Night This event has passed. × Paddock Closed Sunday Night October 4 @ 6:00 pm Gates will close at the conclusion of the day’s event. No overnight use of the paddock/camping/RV/Carport areas will be allowed. Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation Private Event Motorcycles Open Lapping 8-5 Details Date: October 4 Time: 6:00 pm Event Category: Overnight No Venue Hi",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Motorcycles Open Lapping 8-5",
     "url": "https://www.highplainsraceway.com/event/motorcycles-open-lapping-8-5-18/",
     "published": null,
-    "text": "Motorcycles Open Lapping 8-5 This event has passed. × Motorcycles Open Lapping 8-5 October 5 @ 8:00 am - 5:00 pm Open Lapping Day – motorcycles only. Session structure and length dependent on participation. For more information FIRST read the Open Lapping Day Information Page HERE If you would like to participate you can register and pay HERE Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation Pad",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    },
    {
     "title": "Semi-Exclusive Test and Tune",
     "url": "https://www.highplainsraceway.com/event/semi-exclusive-test-and-tune-46/",
     "published": null,
-    "text": "Semi-Exclusive Test and Tune This event has passed. × Semi-Exclusive Test and Tune October 6 @ 8:00 am - 4:00 pm This date has been reserved under our Semi-Exclusive Test and Tune program. If you would like more information or would like to join this event please visit the Track Rental Page on the HPR website. Add to calendar Google Calendar iCalendar Outlook 365 Outlook Live Share This Event! Facebook X Reddit LinkedIn Tumblr Pinterest Email Event Navigation Motorcycles Open Lapping 8-5 Semi-Ex",
-    "detail_ok": true
+    "text": "",
+    "detail_ok": null
    }
   ],
   "ppihc": [
@@ -511,14 +665,14 @@
   "sources_ok": 15,
   "queries": 0,
   "discover_calls": 0,
-  "entries_fetched": 107,
-  "entries_new": 107,
+  "entries_fetched": 716,
+  "entries_new": 716,
   "entries_changed": 0,
-  "details_ok": 96,
-  "details_total": 96,
+  "details_ok": 120,
+  "details_total": 120,
   "watch_checked": 0,
   "watch_changed": 0,
-  "queue_added": 107,
+  "queue_added": 716,
   "ai_items": 0,
   "ai_missing": 0,
   "ai_failed": 0,
@@ -527,7 +681,7 @@
   "input_tokens": 0,
   "output_tokens": 0,
   "searches": 0,
-  "queue_queued": 107,
+  "queue_queued": 716,
   "queue_oldest_hours": 0,
   "usd": 0.0,
   "detail_missing": 0,
@@ -540,7 +694,7 @@
   "sources": {
    "ok": true,
    "due": 15,
-   "seconds": 11
+   "seconds": 10
   },
   "watch": {
    "ok": true,
@@ -550,12 +704,12 @@
   },
   "queue": {
    "ok": true,
-   "fresh": 107,
+   "fresh": 716,
    "seconds": 7
   },
   "ai": {
    "ok": true,
-   "taken": 107,
+   "taken": 300,
    "events": 0,
    "seconds": 0
   },
