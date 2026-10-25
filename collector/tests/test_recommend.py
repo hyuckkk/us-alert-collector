@@ -15,11 +15,14 @@ def resp(items):
     return SimpleNamespace(parsed_output=ai.RecommendBatch(items=items), stop_reason="end_turn", usage=U())
 
 
+DEFAULTS = dict(topic="other", foreign_access="not_applicable", access_quote="", access_note="", family_water="not_applicable", water_note="", fee_note="")
+
+
 def rec(i, level, **k):
     base = dict(index=i, level=level, bot="life", category="civic" if level == "none" else "performance", score=10, title_ko=f"행사 {i}",
                 summary_ko="무엇을 하는지", highlights=[], reason="이유", special_reason="한정 기간 무료" if level == "push" else "",
                 special_basis="free_limited" if level == "push" else "none", evidence_quote="free admission" if level == "push" else "",
-                usual_alternative="", blockers=[])
+                usual_alternative="", blockers=[], **DEFAULTS)
     base.update(k)
     return ai.Recommendation(**base)
 
@@ -74,7 +77,7 @@ def test_push_without_special_reason_is_downgraded():
 # ---------------------------------------------------------------- 이슈 #21·#22·#24: 일반화된 적극 알림 게이트(모델 판단 + 코드 재검증)
 def P(**k):
     base = dict(index=0, level="push", bot="life", category="other", score=90, title_ko="t", summary_ko="s", highlights=[], reason="r",
-                special_reason="특별", special_basis="rare_one_off", evidence_quote="", usual_alternative="", blockers=[])
+                special_reason="특별", special_basis="rare_one_off", evidence_quote="", usual_alternative="", blockers=[], **DEFAULTS)
     base.update(k)
     return ai.Recommendation(**base)
 

@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 import os
 import re
 from dataclasses import dataclass, field
+from pathlib import Path
 from types import SimpleNamespace
 from typing import Literal, Optional
 
@@ -108,6 +109,9 @@ Signup = Literal["fcfs", "lottery", "open", "none", "unknown"]
 RegStatus = Literal["upcoming", "open", "closed", "soldout", "waitlist", "cancelled", "postponed", "unknown"]
 YearBasis = Literal["stated", "published", "assumed", "none"]
 Bot = Literal["life", "family", "kids"]
+SchoolLevel = Literal["elementary", "middle", "high", "university"]
+LevelDetail = Literal["school_team", "club", "youth_league"]
+EventType = Literal["match", "meet", "tournament"]
 
 
 class ExtractedEvent(BaseModel):
@@ -137,6 +141,15 @@ class ExtractedEvent(BaseModel):
     needs_review: bool
     review_reason: Optional[str]
     url: str
+    # 경기 달력용(이슈 #27·#43). 경기·대회가 아니면 모두 null / []
+    school_level: Optional[SchoolLevel]
+    level_detail: Optional[LevelDetail]
+    sport: Optional[str]
+    event_type: Optional[EventType]
+    home_team: Optional[str]
+    away_team: Optional[str]
+    participants: list[str]
+    start_time: Optional[str]
 
 
 class EntryResult(BaseModel):
@@ -185,6 +198,8 @@ Rules:
 - Registration, enrollment, reservation, permit, lottery, tryout and ticket-sale announcements ARE relevant (relevant=true) even when the page is not a single event: e.g. "Winter swim lesson registration begins Nov 30 for residents, Dec 1 for non-residents", "timed-entry reservations open Jan 15", "summer camp enrollment opens Feb 1". Output one record per program, season or permit with registration_opens set (the earliest date; put resident/non-resident or member differences in eligibility), deadline if stated, registration_status=upcoming or open, start_date null unless the program dates are stated, title naming the program and season. Far-future items (next year) count too. General season lines count as their own record too (e.g. "Winter/Spring Registration | Begins November 24" → one record for the season's general registration); if the year is not stated, use the next occurrence after today with year_basis=assumed.
 - relevant=false when only a closed group may attend: enrolled students only, employees/faculty/staff only, military base personnel and their families only, private members only, invitation only. Events open to the public that merely need a ticket, RSVP, base visitor pass or registration ARE relevant.
 - relevant=false (events=[]) for news without an attendable event or program, job postings, ads, or places outside the U.S. unless it is a travel promotion departing Denver.
+- SPORTS GAMES AND MEETS (school, university, club and youth-league competitions the public can watch): fill sport (lowercase English, e.g. "gymnastics", "basketball"), event_type (match = two teams, e.g. "A vs B" / "A at B"; meet = several teams in one competition: invitational, tri-meet, quad meet, dual meet, league/regional/state meet; tournament = bracket over days), school_level (elementary, middle, high, university; K-8 or youth leagues use elementary or middle by grade/age), level_detail (school_team, club = university sport club or club team, youth_league = city/rec league), home_team and away_team for matches (as written, e.g. "Mountain Range" / "Legacy"), participants = all team names listed for a meet, start_time = local start time "HH:MM" 24-hour when stated, location = the venue (arena/gym/field and address as written). One meet = ONE record (never one per participating team). cost_text for games is the SPECTATOR admission only; a team or league registration fee is not admission (put it in eligibility). If the admission price is not stated, cost_text=null (never "무료" unless the source says free admission). Not games: practices, tryouts, lessons, camps, open gym, facility hours, season registration (those keep the normal registration rules and these sports fields null except sport).
+- Sport schedule pages and athletics calendars list many games: list every upcoming game or meet as its own record (date, opponents, venue, time); skip past results.
 - One item may contain several distinct events (e.g. a calendar page); list each.
 Return exactly one result for EVERY item index you were given, including irrelevant ones."""
 
@@ -381,9 +396,15 @@ Highlight = Literal["선착순", "무료", "예약 필요", "추첨", "접수 �
 
 SpecialBasis = Literal["restricted_access", "public_subsidy_price", "free_limited", "scarce_quota_or_lottery", "rare_one_off", "school_community_nonregular", "none"]
 Blocker = Literal["routine_commercial_program", "routine_performance", "pro_sports", "school_sports_regular", "english_listening_core", "civic_admin",
-                  "age_or_eligibility_mismatch", "ordinary_open_facility", "promo_wording_only", "recurring_series"]
-# 이 중 하나라도 있으면 적극 알림 금지(이슈 #21·#22·#24). 수집·저장은 그대로, 발송만 거른다
+                  "age_or_eligibility_mismatch", "ordinary_open_facility", "promo_wording_only", "recurring_series",
+                  "routine_range_offer", "unsanctioned_or_illegal"]
+# 이 중 하나라도 있으면 적극 알림 금지(이슈 #21·#22·#24·#43). 수집·저장은 그대로, 발송만 거른다
 PUSH_BLOCKERS = set(Blocker.__args__)
+# 관심 분야(이슈 #41·#42·#43). 분야별 추가 검증(외국인 출입·가족 동승·비용 구분)과 채널 고정에 쓴다. Worker 의 category 와 별개
+Topic = Literal["military", "shooting", "archery", "hunting", "fishing", "paddling", "taekwondo", "bmx", "mtb", "motorsport_night", "motorsport",
+                "rodeo", "balloon", "monster_truck", "school_sports", "gymnastics", "other"]
+ForeignAccess = Literal["confirmed", "restricted", "unknown", "not_applicable"]
+FamilyWater = Literal["all_together", "not_all", "unknown", "not_applicable"]
 
 
 class Recommendation(BaseModel):
@@ -401,6 +422,13 @@ class Recommendation(BaseModel):
     evidence_quote: str
     usual_alternative: str
     blockers: list[Blocker]
+    topic: Topic
+    foreign_access: ForeignAccess
+    access_quote: str
+    access_note: str
+    family_water: FamilyWater
+    water_note: str
+    fee_note: str
 
 
 class RecommendBatch(BaseModel):
@@ -436,7 +464,22 @@ Fill these fields for every item:
     age_or_eligibility_mismatch - toddler/baby-only, senior-only, members/staff/students-only, residents-only that the audience cannot join, or ages that do not fit the household;
     ordinary_open_facility - a facility, museum, park or gallery that is simply open as usual;
     promo_wording_only - the only "special" claim is marketing wording ("special", "one time", "limited", "exclusive", "reservation required", "small group") with no verified scarcity, price advantage or access;
-    recurring_series - one date of a weekly or monthly recurring program (e.g. a tour every Friday).
+    recurring_series - one date of a weekly or monthly recurring program (e.g. a tour every Friday);
+    routine_range_offer - a shooting range's (or gun club's) ordinary paid experience sold all year: "shoot a machine gun", "try any gun", rental packages, gun + ammo bundles, date-night or bachelor packages, regular lane rentals, standard classes - however it is advertised;
+    unsanctioned_or_illegal - street racing, street takeovers, unpermitted car meets or anything that is not a permitted official event.
+- topic: the interest field that fits (military, shooting, archery, hunting, fishing, paddling = kayak/canoe/raft/SUP, taekwondo, bmx, mtb, motorsport_night = night tuner/JDM/lowrider/car meets/legal drag nights, motorsport = NASCAR, speedway, circuit, hill climb, rodeo, balloon = hot-air balloons, monster_truck, school_sports, gymnastics, other).
+- MILITARY / FEDERAL FACILITIES (topic military, or any event on a military base, academy or federal installation): the audience are FOREIGN NATIONALS (Korean passports, not U.S. citizens or permanent residents).
+    foreign_access: confirmed - the official source says non-U.S. citizens / international visitors / foreign nationals can attend this event or this kind of visit, and with what steps; restricted - only U.S. citizens, permanent residents, ID-card holders (DoD/military ID), sponsored personnel, or REAL ID/U.S. ID only; unknown - "open to the public" without saying anything about non-citizens. "Open to the public" alone is unknown, never confirmed. Use not_applicable for non-military events.
+    access_quote: the exact verbatim sentence from the source that supports confirmed or restricted; empty if unknown.
+    access_note: Korean, the actual conditions: sponsor, original passport, visitor pass / Pass and Registration Office, background check or pre-screening lead time, children allowed, visitor-center hours. Never suggest bypassing access control.
+    push requires foreign_access=confirmed; restricted is level none; unknown is at most interest (held until verified).
+- SHOOTING (topic shooting, also archery/hunting with fees): push only for large public shoots or festivals (e.g. a once-a-year machine-gun shoot), official public demonstrations, official competitions (match registration), or genuinely free or publicly discounted events. fee_note: Korean, separate every cost: match/entry fee vs. firearm rental, ammunition, eye/ear protection, range fee, spectator admission. A "$10 match fee" is a competitor's registration fee - it is NOT a "$10 shooting experience" and does not include guns or ammo. Say whether spectators may watch, and any age/residency/eligibility limits.
+- PADDLING (kayak, canoe, rafting, SUP): the household wants trips where ONE parent and THREE children ride together on the same date (same boat or same guided trip); this ranks above races and whitewater festivals.
+    family_water: all_together - the source shows that all of them meet the minimum age (by season/water level), minimum weight and trip class on the same trip; not_all - the youngest child cannot join (e.g. min age 13 in early-season high water, Class III-IV); unknown - min age, weight or class not stated, or the minimum age changes with water level and the date is not covered; not_applicable - spectator events and non-paddling items.
+    water_note: Korean, min age by season and water level, min weight (e.g. 50 lb), rapid class, whether everyone can go on the same trip/boat, and total cost for the family. Never assume a young child can do a high-water or advanced trip; a minimum-age rule of one outfitter does not apply to others.
+    A participation paddling push requires family_water=all_together.
+- NIGHT CAR CULTURE (topic motorsport_night: tuner/JDM/lowrider nights, legal drag nights, car meets at a track): bot=life only. Mention in reason if children may attend, but do not use family. Only sanctioned events at a track, venue or permitted event.
+- HOT-AIR BALLOONS: say in summary_ko whether visitors can actually RIDE (tethered or free flight, price, age) or only watch. MONSTER TRUCKS, RODEO, NASCAR: distinguish a national tour/Cup event from ordinary weekly local nights.
 - level:
     push - ONLY when special_basis is not none, evidence_quote is verbatim in the source, and blockers is empty. Free alone is not enough (a library's always-free weekly meetup is not push); paid is fine if the experience itself is rare (e.g. a holiday train ride that runs only a few weeks a year).
     interest - worthwhile for people who chose this category but not special (routine classes, recurring programs, ordinary performances).
@@ -468,7 +511,7 @@ def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usag
         if not usage.allows(c.get("reserve_usd", 0.5)) or CREDIT["out"]:
             out.missing.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
             continue
-        body = f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500)}, ensure_ascii=False)
+        body = f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500) + access_context(ev)}, ensure_ascii=False)
                                                  for i, (ev, txt) in enumerate(chunk))
         try:
             resp = client.beta.messages.parse(
@@ -582,20 +625,91 @@ def push_gate(r: Recommendation, text: str | None) -> str | None:
     return None
 
 
+MILITARY = re.compile(r"\b(air force base|space force base|afb|sfb|fort carson|army|navy|marine corps|military|national guard|air force academy|usafa|"
+                      r"buckley|peterson|schriever|cheyenne mountain|norad|base open house|installation)\b", re.I)
+PADDLE = re.compile(r"\b(raft(ing)?|kayak(ing)?|canoe(ing)?|paddle ?board(ing)?|sup|whitewater|float trip)\b", re.I)
+SPECTATOR = re.compile(r"\b(festival|race|races|rodeo|competition|championships?|slalom|film)\b", re.I)
+MATCH_FEE = re.compile(r"\b(match|entry|registration|competitor|shooter)\s+fees?\b|\bper (match|gun|run)\b", re.I)
+
+
+def topic_gate(ev: dict, r: Recommendation, text: str | None) -> tuple[str | None, str | None]:
+    """분야별 추가 게이트(이슈 #43 P0). 반환: (적극 알림 막는 사유, 발송 자체를 보류하는 사유).
+    보류(hold)는 관심 설정과 상관없이 아무에게도 보내지 않는다(Worker recLevel 이 hold_reason 을 본다)."""
+    facts = " ".join(str(ev.get(k) or "") for k in ("title", "org", "location", "eligibility", "status_note")) + " " + (r.evidence_quote or "")
+    military = r.topic == "military" or (r.special_basis == "restricted_access" and MILITARY.search(facts))
+    if military:
+        if r.foreign_access == "restricted":
+            return "foreign-access-restricted", "foreign-access-restricted"
+        q = _norm(r.access_quote)
+        if r.foreign_access != "confirmed" or len(q) < 8 or (text is not None and q not in _norm(text)):
+            return "foreign-access-unverified", "foreign-access-unverified"   # 미확인은 확정 알림 금지, 확인될 때까지 보류
+    if r.level != "push":
+        return None, None
+    if r.topic == "shooting":
+        if "routine_range_offer" in r.blockers:
+            return "blocked:routine_range_offer", None
+        if not (r.fee_note or "").strip():
+            return "shooting-fee-breakdown-missing", None
+        if r.special_basis in ("public_subsidy_price", "free_limited") and MATCH_FEE.search(r.evidence_quote or ""):
+            return "match-fee-is-not-experience-price", None
+    name = " ".join(str(ev.get(k) or "") for k in ("title", "title_ko"))
+    paddle = r.topic == "paddling" or PADDLE.search(name)
+    fw = r.family_water
+    if paddle and fw == "not_applicable" and not SPECTATOR.search(name):
+        fw = "unknown"   # 직접 타는 체험인데 동승 조건을 안 냈으면 미확인으로 본다(관람형 축제·경주만 예외)
+    if paddle and fw not in ("not_applicable", "all_together"):
+        return f"family-water-{fw}", None
+    if paddle and r.family_water == "all_together" and not (r.water_note or "").strip():
+        return "family-water-note-missing", None
+    return None, None
+
+
+_POLICIES: list | None = None
+
+
+def access_context(ev: dict) -> str:
+    """군사·연방 시설 행사면 그 시설의 공식 외국인 출입 문장(config/access_policies.json)을 돌려준다. 아니면 빈 문자열."""
+    global _POLICIES
+    if _POLICIES is None:
+        p = Path(__file__).resolve().parent.parent / "config/access_policies.json"
+        _POLICIES = json.loads(p.read_text())["policies"] if p.exists() else []
+    facts = " ".join(str(ev.get(k) or "") for k in ("title", "org", "location", "url", "source_id"))
+    hits = [x for x in _POLICIES if re.search(x["match"], facts, re.I)]
+    return "".join(f"\n[Official access policy of {x['name']} ({x['url']}, checked {x['checked']})]: {x['quote']}" for x in hits)
+
+
 def apply_recommendation(ev: dict, r: Recommendation, text: str | None = None) -> dict:
     """판정 적용. text 를 주면 근거 인용이 원문에 실제로 있는지 대조한다(없으면 적극 알림 불가)."""
     special = (r.special_reason or "").strip()[:160]
-    if text is not None:  # 모델이 본 것과 같게: 원문 + 추출된 행사 정보(제목·비용·자격 등)
-        text = text + " " + " ".join(str(ev.get(k) or "") for k in SOURCE_FIELDS)
+    if text is not None:  # 모델이 본 것과 같게: 원문 + 시설 출입 공식 문장 + 추출된 행사 정보(제목·비용·자격 등)
+        text = text + access_context(ev) + " " + " ".join(str(ev.get(k) or "") for k in SOURCE_FIELDS)
     blocked = push_gate(r, text)
+    t_block, hold = topic_gate(ev, r, text)
+    blocked = blocked or t_block
     level = "interest" if blocked else r.level
-    ev.update({"rec_level": level, "bot": r.bot, "category": r.category, "rec_score": r.score, "summary_ko": r.summary_ko.strip()[:240],
+    if hold == "foreign-access-restricted":
+        level = "none"   # 시민권·영주권 필요: 추천 제외
+    bot = "life" if r.topic == "motorsport_night" else r.bot   # 야간 자동차 문화는 일상 봇 한 곳만(가족 봇 복제 금지)
+    ev.update({"rec_level": level, "bot": bot, "category": r.category, "rec_score": r.score, "summary_ko": r.summary_ko.strip()[:240],
                "highlights": list(dict.fromkeys(r.highlights)), "rec_reason": r.reason.strip()[:200], "special_reason": special if level == "push" else "",
                "special_basis": r.special_basis, "evidence_quote": r.evidence_quote.strip()[:200], "usual_alternative": r.usual_alternative.strip()[:120],
-               "rec_blockers": list(dict.fromkeys(r.blockers)), "push_blocked": blocked or ""})
+               "rec_blockers": list(dict.fromkeys(r.blockers)), "push_blocked": blocked or "", "hold_reason": hold or "",
+               "topic": r.topic, "foreign_access": r.foreign_access, "access_note": r.access_note.strip()[:240],
+               "family_water": r.family_water, "water_note": r.water_note.strip()[:240], "fee_note": r.fee_note.strip()[:200]})
+    notes = [f"외국인 출입: {FA_KO[r.foreign_access]}" + (f" — {r.access_note.strip()[:120]}" if r.access_note.strip() else "") if r.foreign_access != "not_applicable" else "",
+             f"가족 동승: {FW_KO[r.family_water]}" + (f" — {r.water_note.strip()[:120]}" if r.water_note.strip() else "") if r.family_water != "not_applicable" else "",
+             f"비용 구분: {r.fee_note.strip()[:120]}" if r.topic in ("shooting", "archery", "hunting") and r.fee_note.strip() else ""]
+    notes = [n for n in notes if n and n not in str(ev.get("status_note") or "")]
+    if notes:   # 메시지 🛂 줄에 보인다(Worker 화면 변경 없음)
+        ev["status_note"] = "; ".join([x for x in [ev.get("status_note")] if x] + notes)[:400]
     if r.title_ko.strip():
         ev["title_ko"] = r.title_ko.strip()[:60]
     return ev
+
+
+TOPIC_FIELDS = ("hold_reason", "topic", "foreign_access", "access_note", "family_water", "water_note", "fee_note", "status_note")
+FA_KO = {"confirmed": "공식 확인", "restricted": "공식 제한(시민권·영주권 등)", "unknown": "미확인 — 확인 전 보류", "not_applicable": ""}
+FW_KO = {"all_together": "아빠+아이 3명 같은 일정 가능(공식 조건 확인)", "not_all": "막내 동승 불가", "unknown": "연령·체중·급류 조건 미확인", "not_applicable": ""}
 
 
 # ---------------------------------------------------------------- 발굴(큰 모델 + 웹 검색)

@@ -8,7 +8,7 @@ name: experiments
 on:
   push:
     branches-ignore: [main]
-    paths: ["ticks/recommend", "ticks/audit", "ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent", "ticks/sourceprobe", "ticks/sportsdiag"]
+    paths: ["ticks/recommend", "ticks/audit", "ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent", "ticks/sourceprobe", "ticks/sportsdiag", "ticks/verify43"]
 permissions:
   contents: write
 concurrency:
@@ -38,6 +38,7 @@ jobs:
           echo "FULLSYSTEM=$(echo "$changed" | grep -q ticks/fullsystem && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "AUDIT=$(echo "$changed" | grep -q ticks/audit && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "RECOMMEND=$(echo "$changed" | grep -q ticks/recommend && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "VERIFY43=$(echo "$changed" | grep -q ticks/verify43 && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "SPORTSDIAG=$(echo "$changed" | grep -q ticks/sportsdiag && echo 1 || echo 0)" >> "$GITHUB_ENV"
       - name: Model comparison
         if: env.COMPARE == '1'
@@ -71,6 +72,29 @@ jobs:
           bash scripts/cf_env.sh
           set -a; . "$GITHUB_ENV"; set +a
           python collector/sports_diag.py --out eval/sports_diag.json
+      - name: Issue 43 dry run on chosen sources (paid AI, capped; no Worker/Telegram writes)
+        if: env.VERIFY43 == '1'
+        timeout-minutes: 30
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HOUSEHOLD_PROFILE: ${{ secrets.HOUSEHOLD_PROFILE }}
+        run: |
+          ONLY=$(grep -oE '^only=[A-Za-z0-9,_-]+' ticks/verify43 | cut -d= -f2)
+          WANT=$(grep -oE '^usd_cap=[0-9.]+' ticks/verify43 | cut -d= -f2); WANT=${WANT:-0}
+          if [ "$WANT" = "0" ]; then   # 무료: 수집·정규화만(AI 없음). 유료 판정은 소유자 승인 후 usd_cap 을 적어 실행
+            python collector/run.py --mode full --dry-run --no-ai --only "$ONLY" --out reports/verify43-run.json
+            python3 scripts/verify43_summary.py reports/verify43-run.json eval/verify43.md; exit 0
+          fi
+          python3 scripts/dev_budget.py check --cap "$WANT" | tee budget.txt
+          CAP=$(grep -oE '^CAP=[0-9.]+' budget.txt | cut -d= -f2); [ -n "$CAP" ] || exit 1
+          echo "V43_CAP=$CAP" >> "$GITHUB_ENV"; echo "V43_STARTED=1" >> "$GITHUB_ENV"
+          export USAGE_LIVE_FILE=reports/usage-verify43.json
+          # US_WORKER_URL 없음 → WorkerAPI 는 건식(dry_run): 읽기·쓰기 모두 하지 않는다
+          python collector/run.py --mode full --dry-run --only "$ONLY" --usd-cap "$CAP" --out reports/verify43-run.json
+          python3 scripts/verify43_summary.py reports/verify43-run.json eval/verify43.md
+      - name: Record verify43 AI spend
+        if: always() && env.V43_STARTED == '1'
+        run: python3 scripts/dev_budget.py record --run "$GITHUB_RUN_ID" --kind verify43 --cap "$V43_CAP" --usage reports/usage-verify43.json --status "${{ job.status }}"
       - name: Coverage before/after new sources
         if: env.COVERAGE == '1'
         run: python collector/coverage.py
@@ -148,6 +172,6 @@ jobs:
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/source_candidates_43_result.json eval/source_candidates_43b_result.json eval/sports_diag.json eval/audit_sample.json eval/recommend_backfill*.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/source_candidates_43_result.json eval/source_candidates_43b_result.json eval/sports_diag.json reports/verify43-run.json eval/verify43.md eval/audit_sample.json eval/recommend_backfill*.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"

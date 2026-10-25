@@ -1,2 +1,3 @@
 anthropic==1.11.0
 httpx==0.28.1
+brotli==1.1.0   # 일부 사이트가 요청과 상관없이 br 압축으로 보낸다(#43: Big Sandy Shoot 본문 깨짐)

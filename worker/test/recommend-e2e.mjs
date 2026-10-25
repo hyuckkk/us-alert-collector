@@ -132,6 +132,24 @@ try {
       assert.ok(!/https?:/.test(c.payload.text.replace(/<a href="[^"]*">/g, "")));
     }
   });
+  await step("이슈 #43: 수집기가 보류한 군사시설 행사(외국인 출입 미확인·제한)는 관심 분야를 골라도·적극 알림이어도 보내지 않음, 확인되면 발송", async () => {
+    const n = E.calls.length;
+    await hook("life", msg(OWNER, "/interests add other"));
+    await admin("/admin/enqueue", { events: [
+      ev("basehold", { urgency: "now", rec_level: "interest", category: "other", hold_reason: "foreign-access-unverified", title_ko: "행사 basehold 기지 개방(외국인 미확인)" }),
+      ev("baseno", { urgency: "now", rec_level: "none", category: "other", hold_reason: "foreign-access-restricted", title_ko: "행사 baseno 시민 전용 견학" }),
+      ev("basepush", { urgency: "now", rec_level: "push", category: "outdoors", hold_reason: "foreign-access-unverified", title_ko: "행사 basepush 기지 개방" }),
+      ev("baseok", { urgency: "now", rec_level: "push", category: "outdoors", hold_reason: "", foreign_access: "confirmed",
+        status_note: "외국인 출입: 공식 확인 — 여권 원본 지참", title_ko: "행사 baseok 사관학교 개방" }),
+    ] });
+    await admin("/admin/dispatch", { ignoreQuiet: true });
+    const got = to(n);
+    for (const k of ["basehold", "baseno", "basepush"]) assert.ok(!has(got, k), `${k} 가 보류 중인데 발송됨`);
+    const ok = got.find((c) => /행사 baseok/.test(c.payload.text));
+    assert.ok(ok, "확인된 행사는 발송");
+    assert.match(ok.payload.text, /🛂 외국인 출입: 공식 확인 — 여권 원본 지참/);
+    await hook("life", msg(OWNER, "/interests remove other"));
+  });
 } finally {
   E.stop();
 }
