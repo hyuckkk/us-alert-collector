@@ -1,6 +1,6 @@
 # #43 건식 검증(2026-10-25, 발송 없음)
 
-- 정보원 15/15 · 새 항목 716 · 행사 0 · 비용 $0.0
+- 정보원 15/15 · 새 항목 624 · 행사 0 · 비용 $0.0
 - 버린 이유: {}
 
 | 정보원 | 날짜 | 제목 | 분야 | 학교급·종목·형식 | 판정 | 외국인 출입·가족 동승·비용 | 예상 처리 |
@@ -10,8 +10,8 @@
 
 | 정보원 | 성공 | 항목 | 오류 |
 |---|---|---|---|
-| du-athletics-ics | True | 205 |  |
-| afa-athletics-ics | True | 406 |  |
+| du-athletics-ics | True | 171 |  |
+| afa-athletics-ics | True | 348 |  |
 | chsaa-gymnastics-athletics | True | 6 |  |
 | chsaa-state-championships-athletics | True | 1 |  |
 | colorado-action-shooting | True | 1 |  |
@@ -28,67 +28,65 @@
 
 ### du-athletics-ics
 
-- [N] University of Denver Women's Tennis at Husker Invitational — https://admin.denverpioneers.com/calendar.aspx?game_id=16227&sport_id=17
-  > Lincoln, Neb. [N] University of Denver Women's Tennis at Husker Invitational Streaming Video: https://web.playsight.com/facility/university-of-nebraska/home
+- [W] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend — https://admin.denverpioneers.com/calendar.aspx?game_id=15977&sport_id=4
+  > Denver, Colo., Magness Arena [W] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend W 5-2 TV: Altitude 2/NCHC.tv Radio: Denver Sports 104.3 HD3 Streaming Video: https://nchchockey.com/tv/schedule/week/2026-10-18 Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3 Ticke
+- [W] University of Denver Women's Soccer at San Francisco — https://admin.denverpioneers.com/calendar.aspx?game_id=16032&sport_id=15
+  > San Francisco, Calif. [W] University of Denver Women's Soccer at San Francisco W 1-0 Streaming Video: https://www.espn.com/watch/player/_/id/9d68f84c-1c32-4f71-9062-83fe73b545bc
 Composite Schedule - University of Denver Athletics
-- [L] University of Denver Volleyball vs Saint Mary's — https://admin.denverpioneers.com/calendar.aspx?game_id=16079&sport_id=18
-  > Denver, Colo., Hamilton Gymnasium [L] University of Denver Volleyball vs Saint Mary's L 1-3 TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule Tickets: https://denverpioneers.evenue.net/list/V?&RSRC=comms&RDAT=vbtix&utm_source=sidearm&utm_medium=web&utm_campaign=tickethome
-Composite Sche
-- [T] University of Denver Men's Soccer at San Diego — https://admin.denverpioneers.com/calendar.aspx?game_id=16056&sport_id=7
-  > San Diego, Calif. [T] University of Denver Men's Soccer at San Diego T 0-0 TV: ESPN+ Streaming Video: https://www.espn.com/watch/player/_/id/9045e962-d3f5-4ea2-9509-de553c454e3a
+- [W] University of Denver Volleyball at Pacific — https://admin.denverpioneers.com/calendar.aspx?game_id=16086&sport_id=18
+  > Stockton, Calif. [W] University of Denver Volleyball at Pacific W 3-0 TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule
 Composite Schedule - University of Denver Athletics
-- [W] University of Denver Women's Soccer vs Saint Mary's - Pups at the Pitch | Family Weekend | Campus Appreciation — https://admin.denverpioneers.com/calendar.aspx?game_id=16027&sport_id=15
-  > Denver, Colo., University of Denver Soccer Stadium [W] University of Denver Women's Soccer vs Saint Mary's - Pups at the Pitch | Family Weekend | Campus Appreciation W 2-1 Streaming Video: https://www.espn.com/watch/player/_/id/19fac313-7ff2-45be-9777-64fbc4fdb4d2 Tickets: https://denverpioneers.eve
-- [N] University of Denver Men's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | Sat — https://admin.denverpioneers.com/calendar.aspx?game_id=16100&sport_id=8
-  > Fort Collins, Colo. [N] University of Denver Men's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | Saturday at 11 a.m. MT 3/3 Streaming Video: https://www.youtube.com/@CSURams/streams
+- [T] University of Denver Men's Soccer vs Pacific - Homecoming Weekend | Attend N Win | Alumni Reunion — https://admin.denverpioneers.com/calendar.aspx?game_id=16061&sport_id=7
+  > Denver, Colo., University of Denver Soccer Stadium [T] University of Denver Men's Soccer vs Pacific - Homecoming Weekend | Attend N Win | Alumni Reunion T 2-2 TV: ESPN+ Streaming Video: https://www.espn.com/watch/player/_/id/901d11ef-1dba-4e3c-86a1-9f80bcf1f87b Tickets: https://denverpioneers.evenue
+- [T] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend | Presented by AAA — https://admin.denverpioneers.com/calendar.aspx?game_id=15978&sport_id=4
+  > Denver, Colo., Magness Arena [T] University of Denver #4 Ice Hockey vs Boston College - Homecoming Weekend | Presented by AAA T 2-2 (SOL) TV: Altitude 2/NCHC.tv Radio: Denver Sports 104.3 HD3 Streaming Video: https://nchchockey.com/tv/schedule/week/2026-10-18 Streaming Audio: https://tuner.bonnevill
+- University of Denver Women's Soccer at LMU — https://admin.denverpioneers.com/calendar.aspx?game_id=16033&sport_id=15
+  > Los Angeles, Calif. University of Denver Women's Soccer at LMU Streaming Video: https://www.espn.com/watch/player/_/id/1eaf91de-42a5-4eda-b18d-e6a1d6ce536f
 Composite Schedule - University of Denver Athletics
-- [N] University of Denver Women's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | S — https://admin.denverpioneers.com/calendar.aspx?game_id=16118&sport_id=16
-  > Fort Collins, Colo. [N] University of Denver Women's Swimming & Diving at Front Range Invite - Diving at Air Force | Friday at 5 p.m. MT | Saturday at 11 a.m. MT 5/5 Streaming Video: https://www.youtube.com/@CSURams/streams
+- University of Denver Volleyball vs Santa Clara — https://admin.denverpioneers.com/calendar.aspx?game_id=16087&sport_id=18
+  > Denver, Colo., Hamilton Gymnasium University of Denver Volleyball vs Santa Clara TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule Tickets: https://denverpioneers.evenue.net/list/V?&RSRC=comms&RDAT=vbtix&utm_source=sidearm&utm_medium=web&utm_campaign=tickethome
+Composite Schedule - Univ
+- University of Denver Men's Tennis vs Colorado Cup — https://admin.denverpioneers.com/calendar.aspx?game_id=16217&sport_id=9
+  > Denver, Colo., Denver Tennis Park University of Denver Men's Tennis vs Colorado Cup
 Composite Schedule - University of Denver Athletics
-- [W] University of Denver #4 Ice Hockey at Alaska Anchorage — https://admin.denverpioneers.com/calendar.aspx?game_id=15973&sport_id=4
-  > Anchorage, Alaska [W] University of Denver #4 Ice Hockey at Alaska Anchorage W 6-2 TV: YouTube.com Radio: Denver Sports 104.3 HD3 Streaming Video: https://www.youtube.com/live/KoSzA7s26hA Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3
+- University of Denver Women's Swimming & Diving vs Colorado State - Swim: 12 p.m. MT | Dive: 2 p.m. MT — https://admin.denverpioneers.com/calendar.aspx?game_id=16136&sport_id=16
+  > Denver, Colo., El Pomar Natatorium University of Denver Women's Swimming & Diving vs Colorado State - Swim: 12 p.m. MT | Dive: 2 p.m. MT
 Composite Schedule - University of Denver Athletics
-- [L] University of Denver Volleyball at San Diego — https://admin.denverpioneers.com/calendar.aspx?game_id=16080&sport_id=18
-  > San Diego, Calif. [L] University of Denver Volleyball at San Diego L 0-3 TV: ESPN+ Streaming Video: https://www.espn.com/watch/schedule
+- University of Denver #4 Ice Hockey vs Omaha — https://admin.denverpioneers.com/calendar.aspx?game_id=15979&sport_id=4
+  > Denver, Colo., Magness Arena University of Denver #4 Ice Hockey vs Omaha TV: NCHC.tv Radio: Denver Sports 104.3 HD3 Streaming Video: https://nchchockey.com/tv/schedule/week/2026-10-25 Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3 Tickets: https://denverpioneers.evenue.net/event/H27/H06
+- University of Denver Men's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m. MT — https://admin.denverpioneers.com/calendar.aspx?game_id=16105&sport_id=8
+  > Denver, Colo., El Pomar Natatorium University of Denver Men's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m. MT | Swim: 12 p.m. MT
 Composite Schedule - University of Denver Athletics
-- [L] University of Denver Women's Soccer at Santa Clara — https://admin.denverpioneers.com/calendar.aspx?game_id=16028&sport_id=15
-  > Santa Clara, Calif. [L] University of Denver Women's Soccer at Santa Clara L 0-3 Streaming Video: https://www.espn.com/watch/player/_/id/1cf265bb-c2b6-489d-a715-dc0744d0b0ad
-Composite Schedule - University of Denver Athletics
-- [W] University of Denver Men's Soccer vs LMU - DU Oktoberfest | Camp Reunion | Campus Appreciation | Post-Match Autograp — https://admin.denverpioneers.com/calendar.aspx?game_id=16057&sport_id=7
-  > Denver, Colo., University of Denver Soccer Stadium [W] University of Denver Men's Soccer vs LMU - DU Oktoberfest | Camp Reunion | Campus Appreciation | Post-Match Autographs W 2-1 TV: ESPN+ Streaming Video: https://www.espn.com/watch/player/_/id/8d369695-737c-41a9-add8-a6bfd6e0adc4 Tickets: https://
-- [W] University of Denver #4 Ice Hockey at Alaska Anchorage — https://admin.denverpioneers.com/calendar.aspx?game_id=15974&sport_id=4
-  > Anchorage, Alaska [W] University of Denver #4 Ice Hockey at Alaska Anchorage W 4-1 TV: YouTube.com Radio: Denver Sports 104.3 HD3 Streaming Video: https://www.youtube.com/live/JNxHbsMT55s Streaming Audio: https://tuner.bonneville.com/live/KKFN-HD3
-Composite Schedule - University of Denver Athletics
-- [N] University of Denver Men's Tennis at ITA Mountain Regional Championships — https://admin.denverpioneers.com/calendar.aspx?game_id=16216&sport_id=9
-  > Provo, Utah [N] University of Denver Men's Tennis at ITA Mountain Regional Championships Streaming Video: https://docs.google.com/spreadsheets/d/1aWTGiGQ7lzDIJTaK9nJnx_mKuT-GbVA6TdC1JlktK7c/edit?usp=sharing
+- University of Denver Women's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m.  — https://admin.denverpioneers.com/calendar.aspx?game_id=16123&sport_id=16
+  > Denver, Colo., El Pomar Natatorium University of Denver Women's Swimming & Diving vs Colorado Mesa - Alumni and Family Tailgate: 9 a.m. MT | Dive: 10 a.m. MT | Swim: 12 p.m. MT
 Composite Schedule - University of Denver Athletics
 
 ### afa-athletics-ics
 
-- Air Force Academy Women's Tennis vs ITA Bedford Cup In The Mountains — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27098&sport_id=21
-  > USAFA, Colo., Tennis Courts Air Force Academy Women's Tennis vs ITA Bedford Cup In The Mountains
-- [W] Air Force Academy Men's Water Polo vs Biola (Calif.) — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27029&sport_id=14
-  > USAFA, CO, Cadet Natatorium [W] Air Force Academy Men's Water Polo vs Biola (Calif.) W 18-13 Streaming Video: https://www.youtube.com/@AF_Falcons
-- [W] Air Force Academy Women's Volleyball vs San Jose State - Bruno Mars Pre-Show Match — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26488&sport_id=22
-  > USAFA [W] Air Force Academy Women's Volleyball vs San Jose State - Bruno Mars Pre-Show Match W 3-2 TV: MW+ Streaming Video: https://watch.themw.com/air-force/?ra=air-force Tickets: https://goairforcefalcons.evenue.net/events/VSG
-- [T] Air Force Academy Men's Soccer vs Utah Tech — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26517&sport_id=11
-  > USAFA, CO [T] Air Force Academy Men's Soccer vs Utah Tech T 1-1 Streaming Video: https://watch.themw.com/sports/soccer-mens/
-- [L] Air Force Academy Men's Water Polo vs UC Santa Barbara — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27031&sport_id=14
-  > USAFA, CO, Cadet Natatorium [L] Air Force Academy Men's Water Polo vs UC Santa Barbara L 14-21 Streaming Video: https://www.youtube.com/@AF_Falcons
-- [W] Air Force Academy Football at Nevada — https://admin.goairforcefalcons.com/calendar.aspx?game_id=24310&sport_id=4
-  > Reno, NV [W] Air Force Academy Football at Nevada W 36-33 2 OT TV: FS1 Radio: KVOR AM 740 Streaming Video: https://www.fox.com/sports/football/college-football?cmpid=org=one::ag=partnership::mc=referral::src=AFF::cmp=100_o1_th1::cont=m2_tp10::add=07_29_08_00_41_00_02_A Streaming Audio: https://www.k
-- [W] Air Force Academy Men's Water Polo vs Wagner — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27032&sport_id=14
-  > USAFA, CO, Cadet Natatorium [W] Air Force Academy Men's Water Polo vs Wagner W 16-15 Streaming Video: https://www.youtube.com/@AF_Falcons
-- [L] Air Force Academy Women's Soccer vs University of Hawaii — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26441&sport_id=19
-  > USAFA, CO, Cadet Soccer Stadium [L] Air Force Academy Women's Soccer vs University of Hawaii L 0-2 Streaming Video: https://watch.themw.com/air-force/soccer-womens/event/air_force_hawaii_20262709
-- [W] Air Force Academy Men's Water Polo vs OUAZ — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27033&sport_id=14
-  > USAFA, CO, Cadet Natatorium [W] Air Force Academy Men's Water Polo vs OUAZ W 21-14 Streaming Video: https://www.youtube.com/@AF_Falcons
-- [W] Air Force Academy Men's Soccer at UC Davis — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26518&sport_id=11
-  > Davis, CA [W] Air Force Academy Men's Soccer at UC Davis W 2-0 Streaming Video: https://watch.themw.com/sports/soccer-mens/
-- [L] Air Force Academy Women's Volleyball at UC Davis — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26489&sport_id=22
-  > Davis, CA [L] Air Force Academy Women's Volleyball at UC Davis L 0-3 TV: MW+ Streaming Video: https://watch.themw.com/air-force/?ra=air-force Tickets: https://ucdavisaggies.evenue.net/list/VB
-- Air Force Academy Men's Tennis vs Utah Invitational — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27127&sport_id=13
-  > Salt Lake City, UT Air Force Academy Men's Tennis vs Utah Invitational
+- [L] Air Force Academy Football at Wyoming — https://admin.goairforcefalcons.com/calendar.aspx?game_id=24314&sport_id=4
+  > Laramie, WY [L] Air Force Academy Football at Wyoming L 14-28 TV: CW Radio: KVOR AM 740 Streaming Audio: https://www.kvor.com/ Tickets: https://goairforcefalcons.evenue.net/event/F26/F13
+- [L] Air Force Academy Men's Ice Hockey at Colorado College — https://admin.goairforcefalcons.com/calendar.aspx?game_id=24335&sport_id=9
+  > Colorado Springs, CO [L] Air Force Academy Men's Ice Hockey at Colorado College L 2-6 Radio: XtraSports1300 AM Streaming Video: https://nchchockey.com/tv/ Streaming Audio: https://www.xtrasports1300.com/
+- [N] Air Force Academy Wrestling vs Air Force Black & Blue Intersquad — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27323&sport_id=23
+  > USAFA, CO [N] Air Force Academy Wrestling vs Air Force Black & Blue Intersquad Completed
+- [N] Air Force Academy Cross Country at Colorado Springs XC Open — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27044&sport_id=2
+  > Colorado Springs, CO [N] Air Force Academy Cross Country at Colorado Springs XC Open NTS
+- [W] Air Force Academy Women's Swimming and Diving vs New Mexico State University - Breast Cancer Awareness Meet — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27190&sport_id=20
+  > USAFA, CO, Cadet Natatorium [W] Air Force Academy Women's Swimming and Diving vs New Mexico State University - Breast Cancer Awareness Meet W 189-100 Streaming Video: https://watch.themw.com/air-force/swimming-diving/event/af_swim_102426
+- [W] Air Force Academy Women's Volleyball at UTEP — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26496&sport_id=22
+  > El Paso, TX [W] Air Force Academy Women's Volleyball at UTEP W 3-2 TV: MW+ Streaming Video: https://watch.themw.com/air-force/?ra=air-force Tickets: https://utepminers.com/sports/2020/2/11/tickets.aspx
+- [L] Air Force Academy Men's Water Polo at USC — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27037&sport_id=14
+  > Los Angeles, CA - Uytengsu Aquatics Center [L] Air Force Academy Men's Water Polo at USC L 8-21 Streaming Video: https://www.overnght.com/
+- [W] Air Force Academy Women's Soccer vs San Jose State University — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26446&sport_id=19
+  > USAFA, CO, Cadet Soccer Stadium [W] Air Force Academy Women's Soccer vs San Jose State University W 3-0 Streaming Video: https://watch.themw.com/air-force/soccer-womens/event/air_force_san_jose_state_20262410
+- [T] Air Force Academy Men's Soccer vs San Jose State — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26523&sport_id=11
+  > USAFA, CO [T] Air Force Academy Men's Soccer vs San Jose State T 1-1 Streaming Video: https://watch.themw.com/sports/soccer-mens/
+- [L] Air Force Academy Men's Ice Hockey vs Colorado College — https://admin.goairforcefalcons.com/calendar.aspx?game_id=24336&sport_id=9
+  > USAFA, Colo. [L] Air Force Academy Men's Ice Hockey vs Colorado College L 0-4 Radio: XtraSports1300 AM Streaming Video: https://go.flohockey.tv/partner/aha?utm_medium=partner&utm_source=multiple&utm_content=signup&utm_term=aha&utm_campaign=atlantic-hockey-america&contract_id=006px00000amnp7yad Strea
+- Air Force Academy Men's Water Polo at UC Irvine — https://admin.goairforcefalcons.com/calendar.aspx?game_id=27038&sport_id=14
+  > Irvine, CA - Anteater Aquatics Complex Air Force Academy Men's Water Polo at UC Irvine
+- Air Force Academy Women's Soccer vs Colorado College - City for Champions Cup — https://admin.goairforcefalcons.com/calendar.aspx?game_id=26447&sport_id=19
+  > Wiedner Field | Colorado Springs, CO Air Force Academy Women's Soccer vs Colorado College - City for Champions Cup Streaming Video: https://watch.themw.com/air-force/soccer-womens/event/air_force_colorado_college_20262810 Tickets: https://seatgeek.com/city-for-champions-cup-tickets/womens-college-so
 
 ### chsaa-gymnastics-athletics
 
