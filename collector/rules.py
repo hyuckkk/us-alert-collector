@@ -182,6 +182,9 @@ def finalize(extracted, entries: list, today: date, checked_at: str | None = Non
             d["checked_at"] = checked_at
             d["_entry_index"] = r.index
             sports_normalize(d, entry, (sources or {}).get(entry.source_id))
+            if out_of_state_game(d):
+                drop("out-of-state-game")
+                continue
             d["_anchor"] = identity.anchor(d, entry, official=bool(entry.extra.get("official")))
             out.append(d)
     return out, dropped
@@ -215,6 +218,22 @@ SPORT_RE = re.compile(r"\b(gymnastics|hockey|soccer|football|baseball|basketball
 ICS_TIME = re.compile(r"^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})\d{2}(Z?)$")
 FREE_WORDS = re.compile(r"(^|[\s,(])(free|무료|no admission|no charge)(?=[\s.,)]|$)", re.I)
 PAID_WORDS = re.compile(r"\$\s*[1-9]|유료|tickets? (?:required|start)", re.I)
+
+
+# 콜로라도 밖 경기(대학 원정·중립 대회): 장소에 다른 주 이름·약칭이 있으면 저장하지 않는다(볼 수 없는 경기)
+OTHER_STATES = re.compile(
+    r"\b(Alabama|Ala\.|Alaska|Arizona|Ariz\.|Arkansas|Ark\.|California|Calif\.|Connecticut|Conn\.|Delaware|Florida|Fla\.|Georgia|Ga\.|Hawaii|Idaho|Illinois|Ill\.|"
+    r"Indiana|Ind\.|Iowa|Kansas|Kan\.|Kentucky|Ky\.|Louisiana|La\.|Maine|Maryland|Md\.|Massachusetts|Mass\.|Michigan|Mich\.|Minnesota|Minn\.|Mississippi|Miss\.|"
+    r"Missouri|Mo\.|Montana|Mont\.|Nebraska|Neb\.|Nevada|Nev\.|New Hampshire|N\.H\.|New Jersey|N\.J\.|New Mexico|N\.M\.|New York|N\.Y\.|North Carolina|N\.C\.|"
+    r"North Dakota|N\.D\.|Ohio|Oklahoma|Okla\.|Oregon|Ore\.|Pennsylvania|Pa\.|Rhode Island|R\.I\.|South Carolina|S\.C\.|South Dakota|S\.D\.|Tennessee|Tenn\.|"
+    r"Texas|Utah|Vermont|Vt\.|Virginia|Va\.|Washington|Wash\.|West Virginia|W\.Va\.|Wisconsin|Wis\.|Wyoming|Wyo\.|Puerto Rico|Mexico|Canada)(?![a-z])")
+
+
+def out_of_state_game(d: dict) -> bool:
+    if not (d.get("sport") and d.get("event_type")):
+        return False
+    where = " ".join(str(d.get(k) or "") for k in ("location", "city"))
+    return bool(OTHER_STATES.search(where)) and not re.search(r"\b(Colorado|Colo\.|CO)\b", where)
 
 
 def cost_class(cost: str | None) -> str:
@@ -284,6 +303,25 @@ def sports_normalize(d: dict, entry=None, source: dict | None = None) -> dict:
     d["venue"] = d.get("location")
     d["cost_class"] = cost_class(d.get("cost_text"))
     return d
+
+
+SPECIAL_GAME = re.compile(r"championship|state\s+(meet|tournament|finals?)|regionals?|district\s+tournament|playoffs?|finals?\b|bowl\b|open\s+house|"
+                          r"clinic|camp|youth\s+day|kids?\s+day|free\s+admission|fan\s+fest|결승|챔피언십|주\s*대회", re.I)
+
+
+def routine_game(ev: dict) -> bool:
+    """학교·대학 정기 경기(대진·다자 정규 대회)인가. 정기 경기는 개별 알림이 아니라 경기 달력에만 둔다(이슈 #25·#27) →
+    추천 판정(유료 큰 모델)을 부르지 않는다. 결승·주 대회·지역 예선·공개 행사 같은 특별 경기는 판정에 보낸다."""
+    return bool(ev.get("sport") and ev.get("event_type") in ("match", "meet") and ev.get("school_level") in LEVELS
+                and not SPECIAL_GAME.search(" ".join(str(ev.get(k) or "") for k in ("title", "title_ko", "status_note"))))
+
+
+def calendar_only(ev: dict) -> dict:
+    """정기 경기의 추천 결과를 규칙으로 채운다(토큰 0). 저장·달력 표시는 그대로, 텔레그램 개별 알림은 없음."""
+    ev.update({"rec_level": "none", "category": "sports", "rec_score": 0, "summary_ko": "", "highlights": [], "rec_reason": "학교·대학 정기 경기 — 경기 달력에만 표시",
+               "special_reason": "", "special_basis": "none", "evidence_quote": "", "usual_alternative": "정기 시즌 경기", "rec_blockers": ["school_sports_regular"],
+               "push_blocked": "calendar-only", "hold_reason": "", "topic": "gymnastics" if ev.get("sport") == "gymnastics" else "school_sports"})
+    return ev
 
 
 def calendar_title_ko(ev: dict) -> None:

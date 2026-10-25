@@ -18,7 +18,7 @@
 | `cost_class` | `free` · `paid` · `unknown` | 원문에 무료가 적힌 경우만 `free`. 비어 있거나 애매하면 `unknown` |
 
 ## 함께 바뀐 점(화면 변경 없이 지금 Worker 판별이 통과하도록)
-- 체육 정보원 아이디에는 `athletics` 가 들어간다(`chsaa-gymnastics-athletics`, `du-gymnastics-athletics-schedule` 등) → `ATHLETIC_SOURCE` 통과.
+- 체육 정보원 아이디에는 `athletics` 가 들어간다(`chsaa-gymnastics-athletics`, `chsaa-state-championships-athletics`. 대학은 기존 `du-athletics-ics` 등) → `ATHLETIC_SOURCE` 통과.
 - `event_type` 이 `match`·`meet`·`tournament` 인 행사는 `title_ko` 에 '경기'를 붙인다(예: `프론트레인지 리그 체조 대회 경기`). 지금 `isCalendarMatch` 의 `VS` 조건은 `vs/@` 만 보므로 `Women's Gymnastics at Denver Quad`, `Soccer at San Diego` 같은 원정·다자 대회가 빠졌다. 이 처리로 `(match|game|경기) + 체육 정보원` 조건을 통과한다.
 - **Codex 에 요청(선택)**: `isCalendarMatch` 가 `e.event_type in (match, meet, tournament)` 를 직접 인정하면 위 제목 처리 없이도 된다. 그때도 위 필드는 그대로 유지한다.
 

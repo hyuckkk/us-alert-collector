@@ -10,6 +10,7 @@ import ai
 import rules
 from conftest import ev as make_ev
 from test_recommend import DEFAULTS
+from test_run import world  # noqa: F401
 
 pytestmark = pytest.mark.real_recommend
 
@@ -183,3 +184,46 @@ def test_non_sports_event_untouched_and_lessons_not_games():
     assert lesson["sport"] == "gymnastics" and lesson["event_type"] is None   # 강습 등록은 경기가 아니다
     w = rules.for_worker(dict(lesson, event_key="e2"))
     assert "경기" not in w["title_ko"]
+
+
+# ---------------------------------------------------------------- 정기 경기는 달력 전용(추천 판정 생략), 콜로라도 밖 경기는 저장 안 함
+def test_routine_game_vs_special_game():
+    g = norm(title="University of Denver Women's Soccer vs Saint Mary's", source={"school_level": "university"})
+    assert rules.routine_game(g)
+    rules.calendar_only(g)
+    assert g["rec_level"] == "none" and g["rec_blockers"] == ["school_sports_regular"] and g["push_blocked"] == "calendar-only" and g["category"] == "sports"
+    for t in ("CHSAA Gymnastics State Championship", "Gymnastics Regionals: Mountain Range Regional", "DU Hockey Kids Day vs Omaha"):
+        assert not rules.routine_game(norm(title=t, source={"school_level": "high"})), t
+    assert not rules.routine_game(norm(title="Winter Gymnastics Registration"))       # 경기가 아님(학교급 없음·형식 없음)
+    assert not rules.routine_game(norm(title="Kids Clay Workshop"))
+
+
+def test_out_of_state_games_are_dropped_colorado_away_games_kept():
+    far = norm(title="University of Denver Women's Tennis at Husker Invitational", location="Lincoln, Neb.", source={"school_level": "university"})
+    near = norm(title="Air Force Women's Gymnastics at Denver Quad", location="Magness Arena, Denver, Colo.", source={"school_level": "university"})
+    assert rules.out_of_state_game(far) and not rules.out_of_state_game(near)
+    assert not rules.out_of_state_game(norm(title="Workshop", location="Lincoln, Neb."))   # 경기가 아니면 이 규칙 적용 안 함
+
+
+def test_run_skips_paid_recommendation_for_routine_games(world, monkeypatch):
+    import run
+    from conftest import FakeAPI, FakeClient
+    from test_run import reply_for
+    seen = []
+
+    def fake_rec(client, cfg, items, today, usage):
+        seen.extend(e["title"] for e, _ in items)
+        return ai.RecommendOutcome()
+    monkeypatch.setattr(ai, "recommend", fake_rec)
+
+    def extract(kw):
+        n = kw["messages"][0]["content"].count('"index"')
+        return ai.ExtractBatch(results=[ai.EntryResult(index=i, relevant=True, reason="", events=[
+            make_ev(title="Mountain Range vs Legacy Volleyball", school_level="high", sport="volleyball", event_type="match", url="https://butterflies.org/events/clay"),
+            make_ev(title="Kids Clay Workshop", url="https://butterflies.org/events/clay")]) for i in range(n)])
+    api = FakeAPI()
+    rep = run.main([], client=FakeClient([extract]), api=api)
+    assert seen == ["Kids Clay Workshop"]                     # 정기 경기는 큰 모델에 보내지 않음
+    assert rep["metrics"]["calendar_only"] == 1
+    games = [e for e in api.enqueued if e["title"].startswith("Mountain Range")]
+    assert games and games[0]["rec_level"] == "none" and games[0]["event_type"] == "match" and "경기" in games[0]["title_ko"]

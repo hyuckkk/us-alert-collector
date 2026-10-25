@@ -482,24 +482,31 @@ class Run:
                 evs, dup = identity.dedupe(evs)
                 if dup:
                     self.report["dropped"]["duplicate"] = dup
-                # 추천 판정(큰 모델): 모든 발송 후보에 적용. 판정이 빠지거나 실패한 항목은 보내지 않고 다음 실행에서 다시
-                if evs:
+                # 학교·대학 정기 경기는 경기 달력 전용: 추천 판정(큰 모델)을 부르지 않고 규칙으로 채운다(비용 절감, 이슈 #43)
+                games = [ev for ev in evs if rules.routine_game(ev)]
+                for ev in games:
+                    rules.calendar_only(ev)
+                self.m["calendar_only"] = self.m.get("calendar_only", 0) + len(games)
+                judge_evs = [ev for ev in evs if not rules.routine_game(ev)]
+                # 추천 판정(큰 모델): 나머지 모든 발송 후보에 적용. 판정이 빠지거나 실패한 항목은 보내지 않고 다음 실행에서 다시
+                if judge_evs:
                     u0 = self.usage.usd
                     try:
-                        ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in evs],
+                        ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in judge_evs],
                                           self.today.isoformat(), self.usage)
                     except Exception as e:  # noqa: BLE001
-                        ro = ai.RecommendOutcome(missing={j: type(e).__name__ for j in range(len(evs))})
+                        ro = ai.RecommendOutcome(missing={j: type(e).__name__ for j in range(len(judge_evs))})
                     self.work["cost_usd"]["recommend"] += self.usage.usd - u0
                     if ro.missing and not ro.recs:
                         self.work["failure_usd"] += self.usage.usd - u0
                     if ro.missing:
                         self.alerts.append(f"추천 판정 누락 {len(ro.missing)}건 — 보내지 않고 다음 실행에서 다시")
                     self.m["recommend_missing"] = len(ro.missing)
-                    held |= {evs[j]["_entry_index"] for j in ro.missing}
+                    held |= {judge_evs[j]["_entry_index"] for j in ro.missing}
                     for j, r in ro.recs.items():
-                        ai.apply_recommendation(evs[j], r, entries[evs[j]["_entry_index"]].text or "")
-                    evs = [ev for ev in evs if ev["_entry_index"] not in held]
+                        ai.apply_recommendation(judge_evs[j], r, entries[judge_evs[j]["_entry_index"]].text or "")
+                evs = [ev for ev in evs if ev["_entry_index"] not in held]
+                if evs:
                     for lv in ("push", "interest", "none"):
                         self.m[f"rec_{lv}"] = self.m.get(f"rec_{lv}", 0) + sum(1 for ev in evs if ev.get("rec_level") == lv)
                 for ev in evs:
