@@ -21,7 +21,8 @@ def check(c: dict) -> dict:
     items = r.entries
     eventish = sum(1 for e in items if EVENT_WORDS.search(e.title) or RELEVANT.search(e.title + " " + (e.text or "")[:300]))
     return {**c, "ok": r.ok, "status": r.status, "error": r.error, "items": len(items), "eventish": eventish,
-            "sample": [e.title[:80] for e in items[:6]], "sample_urls": [e.url for e in items[:3]]}
+            "sample": [e.title[:80] for e in items[:6]], "sample_urls": [e.url for e in items[:3]],
+            "sample_text": (items[0].text or "")[:700] if items and c.get("mode") == "page-change" else ""}
 
 
 def main() -> int:
