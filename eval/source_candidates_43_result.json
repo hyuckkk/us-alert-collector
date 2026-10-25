@@ -1,0 +1,913 @@
+{
+ "tested": 52,
+ "good": 7,
+ "results": [
+  {
+   "id": "chsaa-gymnastics",
+   "type": "html",
+   "url": "https://chsaanow.com/sports/gymnastics",
+   "field": "school-gym",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 15,
+   "eventish": 8,
+   "sample": [
+    "Activities",
+    "This week in CHSAA: Cross Country State Championships Set for Saturday Postseaso",
+    "CHSAA Board of Directors Holds October Meeting, Girls Golf Sites Set The CHSAA B",
+    "Gymnastics: Regionals Scheduled For Oct. 29-31 The 2026 Colorado high school gym",
+    "Gymnastics Weekly: Niwot Posts 180.275 Team Score as League Meets Approach Karle",
+    "This week in CHSAA: Softball State Championships highlight action State titles a"
+   ],
+   "sample_urls": [
+    "https://chsaanow.com/activities",
+    "https://chsaanow.com/news/2026/10/25/this-week-in-chsaa-2026-w44",
+    "https://chsaanow.com/news/2026/10/21/chsaa-board-of-directors-holds-october-meeting-girls-golf-sites-set"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "chsaa-gymnastics-schedule",
+   "type": "html",
+   "url": "https://chsaanow.com/sports/gymnastics/schedule",
+   "field": "school-gym",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "Activities"
+   ],
+   "sample_urls": [
+    "https://chsaanow.com/activities"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "du-wgym-schedule",
+   "type": "html",
+   "url": "https://denverpioneers.com/sports/womens-gymnastics/schedule",
+   "field": "school-gym",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "du-wgym-schedule"
+   ],
+   "sample_urls": [
+    "https://denverpioneers.com/sports/womens-gymnastics/schedule"
+   ],
+   "sample_text": "2026 Gymnastics Schedule - University of Denver Athletics"
+  },
+  {
+   "id": "du-wgym-ics",
+   "type": "ical",
+   "url": "https://denverpioneers.com/calendar.ashx/calendar.ics?sport_id=13",
+   "field": "school-gym",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "afa-wgym-2627",
+   "type": "html",
+   "url": "https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2026-27",
+   "field": "school-gym",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "afa-wgym-2627"
+   ],
+   "sample_urls": [
+    "https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2026-27"
+   ],
+   "sample_text": "2026 Women's Gymnastics Schedule - Air Force Academy Athletics"
+  },
+  {
+   "id": "afa-wgym-2526",
+   "type": "html",
+   "url": "https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2025-26",
+   "field": "school-gym",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "afa-wgym-2526"
+   ],
+   "sample_urls": [
+    "https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2025-26"
+   ],
+   "sample_text": "2026 Women's Gymnastics Schedule - Air Force Academy Athletics"
+  },
+  {
+   "id": "mountain-range-hs",
+   "type": "html",
+   "url": "https://mountainrange.adams12.org/athletics-activities/athletics",
+   "field": "school-high",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "Calendar"
+   ],
+   "sample_urls": [
+    "https://mountainrange.adams12.org/our-school/calendar"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "legacy-hs",
+   "type": "html",
+   "url": "https://legacy.adams12.org/athletics-activities/athletics",
+   "field": "school-high",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "Calendar"
+   ],
+   "sample_urls": [
+    "https://legacy.adams12.org/our-school/calendar"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "arvada-west-hs",
+   "type": "html",
+   "url": "https://arvadawest.jeffcopublicschools.org/student-life/athletics",
+   "field": "school-high",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "Calendar"
+   ],
+   "sample_urls": [
+    "https://arvadawest.jeffcopublicschools.org/about/calendar"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "centaurus-football",
+   "type": "html",
+   "url": "https://chswarriorsfootball.com/season-schedules/",
+   "field": "school-high",
+   "mode": "page-change",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "dps-athletics",
+   "type": "html",
+   "url": "https://athletics.dpsk12.org/",
+   "field": "school-high",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "adams12-ms-sports",
+   "type": "html",
+   "url": "https://www.adams12.org/resources/athletics-activities/middle-school-sports",
+   "field": "school-middle",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 9,
+   "eventish": 2,
+   "sample": [
+    "CALENDAR (opens in new window/tab)",
+    "Classified Job Descriptions",
+    "Programming",
+    "Acceleration",
+    "Advanced Learning Plans",
+    "Early Entrance"
+   ],
+   "sample_urls": [
+    "https://www.adams12.org/our-district/calendar",
+    "https://www.adams12.org/our-district/human-resources/job-descriptions/classified-job-descriptions",
+    "https://www.adams12.org/academics/gifted-advanced/programming"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "thundervista-ms",
+   "type": "html",
+   "url": "https://thundervista.adams12.org/clubs-activities/middle-school-athletics",
+   "field": "school-middle",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 18,
+   "eventish": 6,
+   "sample": [
+    "CALENDAR",
+    "Classrooms",
+    "Preschool",
+    "Kindergarten",
+    "First Grade",
+    "Second Grade"
+   ],
+   "sample_urls": [
+    "https://thundervista.adams12.org/our-school/calendar",
+    "https://thundervista.adams12.org/classrooms",
+    "https://thundervista.adams12.org/classrooms/preschool"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "westlake-ms",
+   "type": "html",
+   "url": "https://westlake.adams12.org/clubs-activities/athletics",
+   "field": "school-middle",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "CALENDAR"
+   ],
+   "sample_urls": [
+    "https://westlake.adams12.org/our-school/calendar"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "westy-futures",
+   "type": "html",
+   "url": "https://www.westyathletics.com/sports",
+   "field": "school-youth",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "hyland-youth-bball",
+   "type": "html",
+   "url": "https://hylandhillssports.com/content/86/Basketball",
+   "field": "school-youth",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "Game Schedules"
+   ],
+   "sample_urls": [
+    "https://hylandhillssports.com/Org/Schedules.aspx?d=lq2B3aLV5arZhpLNCU9N34yMczK%2BIDzVpZPkE9NgDfc%3D"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "westy-little-league",
+   "type": "html",
+   "url": "https://westylittleleague.org/",
+   "field": "school-youth",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "cu-sportclubs-msoccer",
+   "type": "html",
+   "url": "https://www.colorado.edu/sportclubs/mens-sports/mens-soccer/mens-soccer-schedule",
+   "field": "school-univ",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "cu-sportclubs-msoccer"
+   ],
+   "sample_urls": [
+    "https://www.colorado.edu/sportclubs/mens-sports/mens-soccer/mens-soccer-schedule"
+   ],
+   "sample_text": "Men's Soccer Schedule | Sport Clubs | University of Colorado Boulder Skip to main content Sport Clubs Home Men - Sports Sports | Men Men - Sports Baseball Ice Hockey D1 Ice Hockey D2 Rugby Soccer Ultimate Volleyball Water Polo Women - Sports Sports | Women Women - Sports Dance Ice Hockey Rugby Soccer Softball Ultimate Volleyball Water Polo Co-ed Sports Co-ed Sports Co-ed Sports Crew Cycling Fencing Figure Skating Freeski Roller Hockey Snowboard Swim & Dive Taekwondo Tennis Triathlon Resources About Us Injury Care Donate News and Media Search Enter the terms you wish to search for. Other ways to search: Events Calendar Campus Map Sport Clubs Division of Student Life Home Men - Sports Sports |"
+  },
+  {
+   "id": "colorado-action-shooting",
+   "type": "html",
+   "url": "https://coloradoactionshooting.com/matches.html",
+   "field": "shooting",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "colorado-action-shooting"
+   ],
+   "sample_urls": [
+    "https://coloradoactionshooting.com/matches.html"
+   ],
+   "sample_text": "Matches COLORADO ACTION SHOOTING Featured Matches Multi-Gun > Ben Lomond 3-Gun Briggsdale County Shootists - Cowboy Action CRC Multigun Johnson 3-Gun Pawnee 3-Gun SOCO 3-Gun Weld County 3-Gun Pistol > Defensive Pistol @ NCRGC High Plains Practical Shooters @ BLGC IDPA @ Pikes Peak NoCo TAC @ NCRGC Pueblo West Sportsman's Association USPSA SoCo Practical Shooters @ PPGC Steel Challenge @ NCRGC Steel Challenge @ Pikes Peak Whistling Pines IPSC Precision Rifle > Pawnee Long Range Pueblo Precision Field Rifle Tactical Rifle > Big Ben Tactical Rifle Pueblo Tactical Rifle Rimfire > PPGC .22 Plate Match NSSF Rimfire Challenge @ NCRGC Know Your Limits @ NCRGC Calendar Locations Ben Lomond Gun Club C"
+  },
+  {
+   "id": "dynamic-shooting-faq",
+   "type": "html",
+   "url": "https://dynamicshootingsports.us/faq",
+   "field": "shooting",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "dynamic-shooting-faq"
+   ],
+   "sample_urls": [
+    "https://dynamicshootingsports.us/faq"
+   ],
+   "sample_text": "ed information. How much does it cost to participate in your matches? Match fees vary. Information can be found in the specific pages for each match type in our MATCHES section of the website or in the match description on PractiScore. 2026 Pricing: Dynamic Steel - $10 ($5 for additional gun/run) Steel Challenge - $15 ($10 for additional gun/run) USPSA - $25 ($15 for 2nd gun, $5-10 for additional classifiers) PCSL - $30 ADM Rifle - $30 How do I pay my match fee? Match fees are paid for at the range on the day of the match. What form of payments do you accept? We accept cash only for match fees. Where can I find the results for your matches? The results for matches can be found under the SCOR"
+  },
+  {
+   "id": "milehigh-firearms-expo",
+   "type": "html",
+   "url": "https://milehighfirearmsexpo.com/",
+   "field": "shooting",
+   "mode": "page-change",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "big-sandy-shoot",
+   "type": "html",
+   "url": "https://bigsandyshoot.com/",
+   "field": "shooting",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "big-sandy-shoot"
+   ],
+   "sample_urls": [
+    "https://bigsandyshoot.com/"
+   ],
+   "sample_text": "y�WQ\u0018�\u001bS,\u0001�9_T�la|\u0005f\u0014�!��E���\u0011��� w\u0014\u0004�$ �[3zL �`?Jb��/���h���3'���^z\u0010\u0004�8 �3ȍ�\u0005�> �R�o\b���^�U�p6�� �!\u0017k\u0015�_��5E��\u0002a.���K�)\u0004� -�UFA\u0007��\u0002w�$\u0019D�+\u000e'�����\u0007�+r �V�0\u0005�c�~�� \b��j\u0002&\u0002\"8ٍ�` \u0007ؓ�(a|�\u001a\u000eF��A�\u000fA��\u0018\u0004�~���\u001at�� -�]�豣E�\u0012\u0006QҤ8{�Qx�$ /���[v�N��� �(�\u000fF��1���\b�/�iwsYZ[��ސ�7u� ��5MQ��j\u0016��\u0016Z\u0010\" l�T�&_0� �?ѫch7�\bF�8��\u0019o7c��\u0001��\u0017%�?�+��!�T��5_��\u0010�Z~+�+\u0015�#�\u0015��e\u0015%�PH���\u000f� `�o2\u0013?��\u0005��%��ss\u0010\u0012�ש;�\u0013\u0002 �N1�8Π,�+\u0015.[�)c� ���e�0e�0e�0e�0�z������t���j9{��\u0006ת��^��J6\u0003�=���^l��mR�IY� \u0013�X�ipOa��j=̻�X�%J9c��\u0014���ǆ�\u0005\u0012�;��Qw�E��{q�^q�k��d�e���'\\/KZN��\u0015�%� ajZ`��|I\u0001�H�M P!\u0018\u001bn�\u0004��p�% �?B�.���Z4����-7R�+�R\u001b����r&�QΤ6ʙ�F{@����*�4i΂F\u0016)=\\S\"\u0002�`����4 7�8-��6-}D$ �rW��?\u0002�.��\u0019�U�\u0015� ��\u000e �E��`n�\u0019C���N���\u0011�2mL�DI�pgw?� �c��\u001b�9�۝�#�\u0015G�(d��y."
+  },
+  {
+   "id": "cpw-shooting-ranges",
+   "type": "html",
+   "url": "https://cpw.state.co.us/shooting-ranges",
+   "field": "shooting",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 20,
+   "eventish": 5,
+   "sample": [
+    "Camping and Lodging",
+    "Nonresidents",
+    "Hunting Reservations",
+    "Find A CWD Inspection Station",
+    "Learn How To Get Started",
+    "Clean Your Gear"
+   ],
+   "sample_urls": [
+    "https://cpw.state.co.us/camping",
+    "https://cpw.state.co.us/activities/nonresidents",
+    "https://cpw.state.co.us/activities/hunting-reservations"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "cpw-youth-hunting",
+   "type": "html",
+   "url": "https://cpw.state.co.us/hunting/youth-hunting",
+   "field": "hunt-fish",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "cpw-hunter-outreach",
+   "type": "html",
+   "url": "https://cpw.state.co.us/hunter-outreach",
+   "field": "hunt-fish",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "coloradoyo",
+   "type": "html",
+   "url": "https://coloradoyo.org/",
+   "field": "hunt-fish",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "greeley-archers",
+   "type": "html",
+   "url": "https://greeleyarchers.com/",
+   "field": "archery",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "greeley-archers"
+   ],
+   "sample_urls": [
+    "https://greeleyarchers.com/"
+   ],
+   "sample_text": "stances Our full “3D course is comprised of 18 Rinehart targets. These targets are set at different distances with the longest shot set at 50 yards. Our indoor range has 10 target butts. The club provides paper targets for our members and have “use at your own risk” tools for those that want to tune their own bows. Our Ranges Use of the ranges is by membership only through The Greeley Archers. Indoor Range: Our indoor range is in the basement of the Greeley Recreation Center To use our indoor range, you are required to be a Greely Archers Member. Members will need to contact a Greeley Archers officer to schedule a walk through. After your walk through is completed, you are free to use the ra"
+  },
+  {
+   "id": "cpw-fishing-events",
+   "type": "html",
+   "url": "https://cpw.state.co.us/fishing",
+   "field": "hunt-fish",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 30,
+   "eventish": 5,
+   "sample": [
+    "Camping and Lodging",
+    "Nonresidents",
+    "Hunting Reservations",
+    "Find A CWD Inspection Station",
+    "Learn How To Get Started",
+    "Clean Your Gear"
+   ],
+   "sample_urls": [
+    "https://cpw.state.co.us/camping",
+    "https://cpw.state.co.us/activities/nonresidents",
+    "https://cpw.state.co.us/activities/hunting-reservations"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "raftmw-faqs",
+   "type": "html",
+   "url": "https://www.raftmw.com/faqs/",
+   "field": "water",
+   "mode": "page-change",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "royal-gorge-whitewater",
+   "type": "html",
+   "url": "https://royalgorgewhitewaterfestival.com/",
+   "field": "water",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "royal-gorge-whitewater"
+   ],
+   "sample_urls": [
+    "https://royalgorgewhitewaterfestival.com/"
+   ],
+   "sample_text": "Royal Gorge Whitewater Festival in Cañon City, Colorado !! 2026 Festival Cancelled Due to Aspen Acres Fire !! Follow Follow Follow Home Activities Whitewater Events Land Events Live Music Gallery Get Involved Be a Sponsor Be a Volunteer Be a Vendor Schedule & Map Plan Your Visit About Contact Tickets Home Activities Whitewater Events Land Events Live Music Gallery Get Involved Be a Sponsor Be a Volunteer Be a Vendor Schedule & Map Plan Your Visit About Contact Tickets !! 2026 Festival Cancelled Due to Aspen Acres Fire Water Festival Fun in the Heart of Colorado The 17th Annual Royal Gorge Whitewater Festival (RGWF) features whitewater competitions and land-based recreation events to celebrat"
+  },
+  {
+   "id": "mountain-games",
+   "type": "html",
+   "url": "https://mountaingames.com/",
+   "field": "water",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 50,
+   "eventish": 4,
+   "sample": [
+    "REGISTER",
+    "Schedule",
+    "GOPRO DUAL SLALOM",
+    "GoPro Jump Jam",
+    "Lucid KIDS BIKE RACE",
+    "Lucid XC MOUNTAIN BIKE"
+   ],
+   "sample_urls": [
+    "https://mountaingames.com/register",
+    "https://mountaingames.com/schedule/",
+    "https://mountaingames.com/event/dual-slalom/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "cpw-boating",
+   "type": "html",
+   "url": "https://cpw.state.co.us/boating",
+   "field": "water",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "usatkd-events",
+   "type": "html",
+   "url": "https://www.usatkd.org/events",
+   "field": "tkd",
+   "ok": false,
+   "status": 404,
+   "error": "HTTP 404",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "dacono-bmx",
+   "type": "html",
+   "url": "https://www.daconoco.gov/873/BMX-Track",
+   "field": "bmx",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "dacono-bmx"
+   ],
+   "sample_urls": [
+    "https://www.daconoco.gov/873/BMX-Track"
+   ],
+   "sample_text": "Dacono BMX | Dacono, CO - Official Website Skip to Main Content Create a Website Account - Manage notification subscriptions, save form progress and more. Website Sign In Our Community Your Government City Services Resident Resource Center Search BMX Track City Parks Carbon Valley Veterans Memorial Park Facilities Fitness Programs Senior Center Trails Home Your Government Departments Parks & Recreation BMX Track Dacono BMX Dacono BMX Dacono BMX is a USA BMX sanctioned bicycle motocross racing facility located in Dacono and has served riders and families in the Carbon Valley community since 2001. The track is operated by BMX of the Rockies , a volunteer-led 501(c)(3) nonprofit organization, i"
+  },
+  {
+   "id": "cobr-mountain",
+   "type": "html",
+   "url": "https://coloradobicycleracing.org/mountain",
+   "field": "mtb",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "usabmx-colorado",
+   "type": "html",
+   "url": "https://www.usabmx.com/tracks?state=CO",
+   "field": "bmx",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "co-national-speedway",
+   "type": "html",
+   "url": "https://www.coloradonationalspeedway.com/",
+   "field": "cars",
+   "ok": false,
+   "status": 522,
+   "error": "HTTP 522",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "sls-official",
+   "type": "html",
+   "url": "https://slsofficial.co/",
+   "field": "cars",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "hin-events",
+   "type": "html",
+   "url": "https://hinevents.com/",
+   "field": "cars",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "pueblo-dragstrip",
+   "type": "html",
+   "url": "https://racepmp.com/drag-strip",
+   "field": "cars",
+   "ok": true,
+   "status": 202,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "cfd-rodeo",
+   "type": "html",
+   "url": "https://www.cfdrodeo.com/",
+   "field": "rodeo",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "erie-balloon",
+   "type": "html",
+   "url": "https://erieballoonfestival.com/",
+   "field": "balloon",
+   "mode": "page-change",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "cos-balloon-liftoff",
+   "type": "html",
+   "url": "https://www.coloradospringslabordayliftoff.com/",
+   "field": "balloon",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 0,
+   "sample": [
+    "cos-balloon-liftoff"
+   ],
+   "sample_urls": [
+    "https://www.coloradospringslabordayliftoff.com/"
+   ],
+   "sample_text": "Labor Day Lift Off Guest Info Schedule Parking Event Map 2026 Vendors Lodging During Your Visit Event Merchandise Events Ballooning Buy Tickets Guest Info Schedule Parking Event Map 2026 Vendors Lodging During Your Visit Event Merchandise Events Ballooning Buy Tickets Get Involved Pathfinders Volunteer Program Media Application Become a Vendor Sponsors 2026 Sponsors Become a Sponsor About About Us In The News Contact Us FAQ Get Involved Pathfinders Volunteer Program Media Application Become a Vendor Sponsors 2026 Sponsors Become a Sponsor About About Us In The News Contact Us FAQ Schedule Parking Buy Tickets Event Map Events 2026 Vendors Scotty’s Skyview Lounge NEW SkyFest Village Event Merc"
+  },
+  {
+   "id": "monster-jam-denver",
+   "type": "html",
+   "url": "https://www.monsterjam.com/en-US/find-event",
+   "field": "monster",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "ppihc",
+   "type": "html",
+   "url": "https://ppihc.org/",
+   "field": "cars",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 2,
+   "eventish": 1,
+   "sample": [
+    "learn more",
+    "Exhibition"
+   ],
+   "sample_urls": [
+    "https://ppihc.org/tickets-camping-permits/",
+    "https://ppihc.org/divisions/exhibition/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "high-plains-raceway",
+   "type": "html",
+   "url": "https://www.highplainsraceway.com/events",
+   "field": "cars",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 45,
+   "eventish": 22,
+   "sample": [
+    "CALENDAR",
+    "HPR News & Events",
+    "This Month",
+    "Semi-Exclusive Test and Tune",
+    "Private Event",
+    "Private Event"
+   ],
+   "sample_urls": [
+    "https://www.highplainsraceway.com/calendar/",
+    "https://www.highplainsraceway.com/news/",
+    "https://www.highplainsraceway.com/events/month/"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "usafa-getting-on-base",
+   "type": "html",
+   "url": "https://www.usafa.edu/visitors/getting-on-base/",
+   "field": "military",
+   "mode": "page-change",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 1,
+   "eventish": 1,
+   "sample": [
+    "usafa-getting-on-base"
+   ],
+   "sample_urls": [
+    "https://www.usafa.edu/visitors/getting-on-base/"
+   ],
+   "sample_text": "ss and Registration Office during business hours to facilitate a Defense Biometric Identification System (DBIDS) card or an Entry Authorization List (EAL) for groups. Background Checks: All individuals seeking access will undergo a mandatory criminal background check. Access may be denied for those with a history of felonies, outstanding warrants, or significant criminal activity. International guests Non-U.S. citizens must visit the Pass and Registration Office (PRO) in person with a valid passport and the link to the associated event to obtain a pass. Hours of operation are weekdays from 7:30 a.m. to 3 p.m. Weekend access is reserved for events, cadet visitors and housing guests only. The "
+  },
+  {
+   "id": "buckley-visitor-pass",
+   "type": "html",
+   "url": "https://www.buckley.spaceforce.mil/NEWS/Article/4072816/access-procedures-obtaining-a-visitor-pass-at-buckley-space-force-base/",
+   "field": "military",
+   "mode": "page-change",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "buckley-news",
+   "type": "html",
+   "url": "https://www.buckley.spaceforce.mil/News/",
+   "field": "military",
+   "ok": false,
+   "status": 403,
+   "error": "HTTP 403",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "fort-carson-news",
+   "type": "html",
+   "url": "https://home.army.mil/carson/",
+   "field": "military",
+   "ok": true,
+   "status": 200,
+   "error": null,
+   "items": 2,
+   "eventish": 0,
+   "sample": [
+    "Calendar",
+    "4ID and Fort Carson News"
+   ],
+   "sample_urls": [
+    "https://home.army.mil/carson/event-calendar",
+    "https://home.army.mil/carson/about/news"
+   ],
+   "sample_text": ""
+  },
+  {
+   "id": "pikes-peak-airshow",
+   "type": "html",
+   "url": "https://www.pikespeakregionalairshow.com/",
+   "field": "military",
+   "mode": "page-change",
+   "ok": false,
+   "status": null,
+   "error": "ConnectError: [Errno -2] Name or service not known",
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  },
+  {
+   "id": "pueblo-aircraft-museum",
+   "type": "html",
+   "url": "https://pwam.org/events/",
+   "field": "military",
+   "ok": true,
+   "status": 202,
+   "error": null,
+   "items": 0,
+   "eventish": 0,
+   "sample": [],
+   "sample_urls": [],
+   "sample_text": ""
+  }
+ ]
+}

@@ -10,19 +10,19 @@
    "id": "westminster-calendar:6",
    "source": "westminster-calendar",
    "path": "rss+detail",
-   "chars": 1606,
+   "chars": 1496,
    "date_in_input": true,
    "cost_in_input": true,
-   "head": "Event date: October 24, 2026 Event Time: 08:30 AM - 12:00 PM Location: 9150 Lowell Blvd Westminster, CO 80031\nCar Seat Clinic Skip to Main Content Search I Want To... Services Community Business Gover"
+   "head": "Car Seat Clinic Skip to Main Content Search I Want To... Services Community Business Government Home Calendar Calendar View All Calendars is the default. Choose Select a Calendar to view a specific ca"
   },
   {
    "id": "westminster-calendar:7",
    "source": "westminster-calendar",
    "path": "rss+detail",
-   "chars": 2249,
+   "chars": 2124,
    "date_in_input": true,
    "cost_in_input": true,
-   "head": "Event date: October 24, 2026 Event Time: 12:00 PM - 02:00 PM Location: 8931 N Harlan Street Westminster, CO 80031\nTrunk or Treat Halloween Spooktacular in Downtown Skip to Main Content Search I Want T"
+   "head": "Trunk or Treat Halloween Spooktacular in Downtown Skip to Main Content Search I Want To... Services Community Business Government Home Calendar Calendar View All Calendars is the default. Choose Selec"
   },
   {
    "id": "westminster-calendar:11",
@@ -37,10 +37,10 @@
    "id": "westminster-calendar:4",
    "source": "westminster-calendar",
    "path": "rss+detail",
-   "chars": 1884,
+   "chars": 1752,
    "date_in_input": true,
    "cost_in_input": null,
-   "head": "Event date: October 22, 2026 Event Time: 07:30 PM - 09:00 PM Location: 14694 Orchard Pkwy Ste 100 Westminster Westminster, CO 80023\nPartner Event: A Theatrical Drink Tasting Experie Skip to Main Conte"
+   "head": "Partner Event: A Theatrical Drink Tasting Experie Skip to Main Content Search Programs & Classes Libraries Golf Events Parks & Open Space Facilities Parks and Recreation /QuickLinks.aspx Home Calendar"
   },
   {
    "id": "usafa-events:47",
@@ -172,28 +172,28 @@
    "id": "ind:brighton-fafsa",
    "source": "brighton-rss",
    "path": "rss+detail",
-   "chars": 2218,
+   "chars": 2091,
    "date_in_input": true,
    "cost_in_input": false,
-   "head": "Event date: October 22, 2026 Event Time: 06:00 PM - 07:30 PM Location: Brighton High School 270 S. 8th Ave. Brighton, CO 80601\nFAFSA Night Skip to Main Content Government Services Business Community I"
+   "head": "FAFSA Night Skip to Main Content Government Services Business Community I Want To...? Search Agendas & Minutes Election Information Departments Events KBRI-8 Job Opportunities Recreation Center Emerge"
   },
   {
    "id": "ind:brighton-treat-street",
    "source": "brighton-rss",
    "path": "rss+detail",
-   "chars": 2108,
+   "chars": 1718,
    "date_in_input": true,
    "cost_in_input": true,
-   "head": "Event date: October 24, 2026 Event Time: 12:00 AM - 11:59 PM Location: 555 North 11th Avenue Brighton, CO 80601 Description: Treat Street is a family-friendly Halloween event where kids can dress up a"
+   "head": "Treat Street: Trick or Treating Event Skip to Main Content Government Services Business Community I Want To...? Search Agendas & Minutes Election Information Departments Events KBRI-8 Job Opportunitie"
   },
   {
    "id": "ind:brighton-splashing-pumpkins",
    "source": "brighton-rss",
    "path": "rss+detail",
-   "chars": 2153,
+   "chars": 2045,
    "date_in_input": true,
    "cost_in_input": true,
-   "head": "Event date: October 24, 2026 Event Time: 12:00 AM - 11:59 PM Location: 555 N.11th Avenue Brighton, CO 80601\nSplashing Pumpkins Turkey Trot 5k Run/Walk Race Treat Street: Trick Or Treat Event Annual Se"
+   "head": "Splashing Pumpkins Turkey Trot 5k Run/Walk Race Treat Street: Trick Or Treat Event Annual Seed Swap Event Baskets & Baskets: Parks and Recreation Month Celebration Donut Hole Fun Run Noon Year Celebra"
   },
   {
    "id": "ind:lafayette-ddlm-storytime",
@@ -236,19 +236,19 @@
    "id": "ind:erie-med-takeback",
    "source": "erie-rss",
    "path": "rss+detail",
-   "chars": 1725,
+   "chars": 1619,
    "date_in_input": true,
    "cost_in_input": null,
-   "head": "Event date: October 24, 2026 Event Time: 10:00 AM - 02:00 PM Location: 1000 Telleen Avenue Erie, CO 80516\nMedication Take-Back Skip to Main Content Search I Want To ... Community Business Government S"
+   "head": "Medication Take-Back Skip to Main Content Search I Want To ... Community Business Government Services Transparency Home Calendar Featured Events Personal Safety and Situational Awareness | ... Details"
   },
   {
    "id": "ind:erie-boo-briggs",
    "source": "erie-rss",
-   "path": "rss",
-   "chars": 584,
+   "path": "rss+detail",
+   "chars": 1634,
    "date_in_input": true,
    "cost_in_input": true,
-   "head": "Event date: October 24, 2026 Event Time: 03:00 PM - 06:00 PM Location: Erie, CO 80516 Description: Ghouls, ghosts, and witches! Oh my! Enjoy a spook-tacular time with the entire family at our downtown"
+   "head": "Boo! on Briggs Street Skip to Main Content Search I Want To ... Community Business Government Services Transparency Home Calendar Featured Events Personal Safety and Situational Awareness | ... Detail"
   },
   {
    "id": "ind:erie-tree-walk",
