@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-25T23:59:25Z",
+  "test": false,
+  "events": [
+    {
+      "title": "EAA Chapter 72 Young Eagles Rally — Free 15–20 Minute Airplane Flights",
+      "url": "https://eaa72.org/event-6728412",
+      "start_date": "2026-11-14",
+      "end_date": "2026-11-14",
+      "time": "9:00 AM–12:00 PM MST (America/Denver); flight slots 9:00, 9:45, 10:30 AM, arrive 15 minutes early",
+      "location": "Meadow Lake Airport, EAA Chapter 72 MLAA Hangar east ramp, 13550 Piper Lane, Peyton, CO 80831",
+      "cost": "FREE child introductory flights; each eligible child $0, up to three eligible children $0; accompanying family attendance conditions and travel costs not specified",
+      "age": "Children ages 8–17 for flight; youth must pre-register via official chapter page; parent/guardian attendance and aviation safety requirements follow EAA program rules",
+      "audience": "kids",
+      "description": "Genuinely high-value, directly participatory youth aviation opportunity: actual 15–20 minute passenger flight with an EAA volunteer pilot, plus an on-site flight simulator; not a lecture or ordinary airport tour. The EAA Chapter 72 organizer lists the Nov 14 2026 rally with precise times and a clickable 'PLEASE REGISTER HERE' link to eaachapters.org/event-details/YE3357V92. EAA's own chapter Young Eagles page explicitly confirms flights are free for ages 8–17. Exact booking openings, remaining seats, and possible eligibility conditions beyond age are not visible in the public event detail and must be rechecked prior to notification. Publicly offered youth flight event in Peyton (farther from Denver, but exceptional direct experience); relevant for current Colorado residents in 2026, not a confirmed 2027/28 date."
+    },
+    {
+      "title": "Colorado Parks and Wildlife Fresh Air Friday — FREE Entry to All State Parks",
+      "url": "https://cpw.state.co.us/event/2026/11/free-state-park-entry-fresh-air-friday",
+      "start_date": "2026-11-27",
+      "end_date": "2026-11-27",
+      "time": "8:00 AM–10:00 PM MST (statewide program hours; individual park daylight/access rules may be narrower)",
+      "location": "All Colorado state parks, statewide (select a park; near Denver: St. Vrain, Barr Lake, Eldorado Canyon, etc.)",
+      "cost": "FREE vehicle entrance for everyone that day; $0 total for five people travelling in one eligible vehicle, compared with standard $10–$12 Colorado-plate and $15–$17 out-of-state vehicle day passes at certain parks; camping or separately paid activities not included",
+      "age": "Open to the general public, all ages; no registration required per Colorado Parks and Wildlife event detail (page shows contradictory generic registration-label placeholders)",
+      "audience": "family",
+      "description": "Statewide one-day Black Friday fee waiver specifically confirmed by Colorado Parks and Wildlife for Nov 27 2026, not the ordinary always-open full-price park visit. Exceptional 100% discount on day vehicle entry, though its absolute value is modest (typically $10–$17 per vehicle); multiple public state parks participate. The official CPW event says no registration required under the detailed Registration row; separate camping reservations and activities may still cost extra. CPW visitor centers also offer a 25% retail discount through Nov 30. Relevant to 2026 local residents; 2027–2028 dates are not confirmed. Existing annual pass holders do not gain admission savings."
+    }
+  ]
+}
