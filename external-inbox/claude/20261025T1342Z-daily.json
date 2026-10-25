@@ -1,0 +1,63 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-25T13:42:00Z",
+  "finished_at": "2026-10-25T13:42:00Z",
+  "searches": 8,
+  "queries": [
+   "Denver Arts Week 2026 Free Night at the Museums November 7 visitdenver participating museums",
+   "CU Boulder ATLAS Whaaat festival 2026 experimental games date",
+   "Clyfford Still Museum SCFD free day 2026 last free day date",
+   "Colorado Christmas tree cutting permit 2026 national forest Arapaho Roosevelt sale date",
+   "Children's Museum of Denver free day November December 2026",
+   "Butterfly Pavilion free day 2026 November SCFD Westminster",
+   "Lakewood OR Golden Colorado free holiday event 2026 November December city",
+   "History Colorado Center free day November December 2026"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 10,
+  "excluded": 8,
+  "excluded_reasons": {
+   "already_submitted": 2,
+   "2026_date_unconfirmed": 3,
+   "no_event_found": 2,
+   "official_page_unusable": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일의 새 항목(아츠위크 무료 야간 전체 목록, CU ATLAS 게임 축제, 클리퍼드 스틸 마지막 무료일)과 새 범위(국유림 크리스마스트리 벌목 허가, 어린이박물관·나비관·역사박물관 무료일, 레이크우드·골든 연말 행사)를 찾았다. 제외: 클리퍼드 스틸·덴버 미술관 11/7(어제 이미 올림), 레이크우드 라이츠·골든 연말 행사(2026 날짜 미확인), 어린이박물관·나비관 겨울 무료일(없음), 역사박물관 11/7 무료(공식 안내가 개발용 주소로만 확인됨)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-25T13:50:00Z",
+   "origin": "scheduled",
+   "title": "2026 Whaaat!? Festival (CU Boulder ATLAS experimental games)",
+   "url": "https://www.colorado.edu/atlas/events",
+   "start_date": "2026-11-07",
+   "time": "10:00 AM - 6:00 PM",
+   "location": "Roser ATLAS Center, CU Boulder",
+   "age": "All ages",
+   "audience": "family",
+   "description": "9th annual festival: a full Saturday of experimental games and playful interactive installations you play yourself. Date from an event listing; confirm on the ATLAS events page.",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 대학이 여는 실험 게임 축제로 직접 해 보는 체험 중심"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-25T13:50:00Z",
+   "origin": "scheduled",
+   "title": "Christmas tree cutting permits 2026 - Arapaho and Roosevelt National Forests",
+   "url": "https://www.fs.usda.gov/r02/arp/permits/christmas-trees",
+   "start_date": "2026-11-07",
+   "end_date": "2027-01-06",
+   "location": "Arapaho and Roosevelt National Forests (Sulphur and Canyon Lakes Ranger Districts)",
+   "cost": "Permit required (sold on Recreation.gov)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Cut your own Christmas tree in the national forest with a permit bought in advance on Recreation.gov. Sulphur district cutting Nov 7, 2026 - Jan 6, 2027; Canyon Lakes district Nov 21, 2026 - Jan 6, 2027 (permits on sale since Oct 8).",
+   "recommend": "push",
+   "special_reason": "국유림에서 허가를 받아 크리스마스트리를 직접 베어 오는 연말 한정 체험"
+  }
+ ]
+}
