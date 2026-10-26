@@ -1,0 +1,78 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-26T13:51:00Z",
+  "finished_at": "2026-10-26T13:52:26Z",
+  "searches": 12,
+  "queries": [
+   "EAA Young Eagles free airplane rides kids Colorado November 2026",
+   "CHSAA gymnastics state championships 2026 Thornton dates",
+   "Monster Jam Denver Ball Arena 2027 dates",
+   "National Western Stock Show 2027 dates rodeo January",
+   "Colorado taekwondo tournament November December 2026 Denver open championship",
+   "Denver Day of the Dead OR holiday \"Parade of Lights\" 2026 date downtown Denver",
+   "Westminster Colorado holiday tree lighting 2026 free family event city",
+   "2026 gymnastics state championships CHSAA November 5 6 7 Thornton High School 4A 5A",
+   "Wings Over the Rockies free day November December 2026 Exploration of Flight Centennial",
+   "Colorado Parks and Wildlife ice fishing clinic free kids December 2026",
+   "EAA Chapter 72 OR Chapter 301 Young Eagles rally 2026 Erie OR Centennial OR Watkins date",
+   "Colorado air show 2027 announced Pikes Peak Regional OR Buckley OR \"Thunder\" dates"
+  ],
+  "urls_attempted": 2,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 12,
+  "excluded": 9,
+  "excluded_reasons": {
+   "no_2026_date_found": 5,
+   "resale_site_only": 1,
+   "no_event_found": 3
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일의 새 항목(EAA Young Eagles 무료 비행, 빛의 퍼레이드)과 #43 새 분야(체조 주 대회, 몬스터잼, 로데오, 태권도, 얼음낚시 교실, 에어쇼)를 찾았다. 이 환경에서는 공식 사이트 직접 열기가 DNS 오류로 실패해 모두 verified:false(GitHub 쪽에서 원문 재확인). 제외: Young Eagles 덴버권 11월 일정 없음, 고교 체조 주 대회 2026 날짜 미공개, 몬스터잼 2027은 재판매 사이트만, 태권도·얼음낚시 교실·2027 에어쇼 일정 없음, 웨스트민스터 점등식 2026 날짜 미확인."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-26T13:52:26Z",
+   "origin": "scheduled",
+   "title": "9NEWS Parade of Lights 2026 (52nd annual)",
+   "url": "https://www.downtowndenver.com/parade-of-lights",
+   "start_date": "2026-12-05",
+   "location": "Downtown Denver (starts at 14th and Bannock Streets)",
+   "cost": "Free",
+   "age": "All ages",
+   "audience": "family",
+   "description": "52nd annual holiday parade of lighted floats and balloons through downtown Denver, free to attend. Start time not yet posted (past years 6 PM).",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 도심에서 무료로 열리는 연말 빛의 퍼레이드"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-26T13:52:26Z",
+   "origin": "scheduled",
+   "title": "SCFD Free Day at Exploration of Flight (Wings Over the Rockies, Centennial Airport) - November",
+   "url": "https://wingsmuseum.org/events/scfd-free-day-at-exploration-of-flight-nov/",
+   "location": "Exploration of Flight, 13005 Wings Way, Englewood (Centennial Airport)",
+   "cost": "Free admission (SCFD Free Day)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD free admission day at the Wings Over the Rockies Exploration of Flight center at Centennial Airport. Year and date must be confirmed on the official page (a past year's page may be listed).",
+   "recommend": "push",
+   "special_reason": "공공기금(SCFD) 지원으로 공항 항공체험관을 하루 무료 개방"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-26T13:52:26Z",
+   "origin": "scheduled",
+   "title": "National Western Stock Show 2027 (pro rodeo)",
+   "url": "https://nationalwestern.com/",
+   "start_date": "2027-01-09",
+   "end_date": "2027-01-24",
+   "location": "National Western Complex, Denver",
+   "audience": "family",
+   "description": "16-day annual stock show with pro rodeos, livestock and horse shows in Denver. Tickets required; prices not confirmed.",
+   "recommend": "interest",
+   "special_reason": ""
+  }
+ ]
+}
