@@ -1,0 +1,379 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-10-25T23:53:29Z",
+  "finished_at_utc": "2026-10-26T00:04:55.189Z",
+  "search_requests": 64,
+  "queries": [
+    "Colorado 2026 November December free open cockpit aircraft tour special event public museum",
+    "Colorado 2026 November 2026 public military base open house air force civilian family event",
+    "Denver Westminster Broomfield Thornton 2026 November free family special hands-on maker STEM festival 2026",
+    "Colorado November 2026 free train ride railroad museum community day special 2026",
+    "2026 November Colorado state parks limited lottery special permit public ranger guided program winter 2026",
+    "Rocky Mountain National Park 2027 wilderness camping permits 2026 application opens booking lottery",
+    "Colorado 2026 November 2027 summer camps early registration grant free STEM kids Denver",
+    "site:wingsmuseum.org/events/ \"November\" \"2026\" \"cockpit\"",
+    "site:historycolorado.org/events 2026 \"November\" \"free\" children",
+    "Denver 2026 November December free museum family day ticket release dates SCFD",
+    "site:colorado.edu 2026 November open house student engineering design expo public free",
+    "2026 November 2026 Denver colorado free maker faire robots competition public children",
+    "2026 October 31 November 2026 Denver space rocket model launch public spectators hands on",
+    "2026 November Colorado annual free days aviation space museum Wings Over the Rockies",
+    "site:usafa.edu/events/ \"November\" \"2026\" free tickets holiday concert public",
+    "2026 November Colorado national lab rare tour public sign up free",
+    "Colorado 2027 summer \"lottery\" national park permit opening November 2026",
+    "Denver Broomfield Westminster 2026 November free try sailing kayaking family unusual hands-on event",
+    "EAA Young Eagles Colorado November 2026 free airplane rides 8-17 rally registration Denver Centennial Broomfield Fort Collins",
+    "Young Eagles 2026 November Colorado open to public registration chapters 2026 November",
+    "site:youngeaglesday.org \"Nov\" \"2026\" \"Colorado\"",
+    "site:eaachapters.org \"November\" \"2026\" \"Young Eagles\" \"Colorado\"",
+    "site:events.eaa.org 2026 Colorado Young Eagles November rally",
+    "2026 November Colorado free helicopter rides kids airport open house public EAA",
+    "2026 November 2026 Space Force free public planetarium telescope special meteor sky event Denver",
+    "site:colorado.edu/program/ide/ide-design-expo November 14 2026 free admission 2:30",
+    "Colorado School of Mines November 2026 \"design showcase\" \"open to the public\"",
+    "site:cu.edu 2026 November engineering expo public hands-on open house STEM K12 Boulder",
+    "site:afacademy.af.edu 2026 November public cadet event holiday free community celebration",
+    "Colorado 2026 November December state special recreational activities free permit state park family",
+    "site:cpw.state.co.us \"Fresh Air Friday\" 2026 November 27 state parks free",
+    "2026 \"Fresh Air Friday\" \"Nov 27\" Colorado state parks official",
+    "site:coloradoparksandwildlife.org 2026 \"Fresh Air Friday\" November",
+    "2026 November \"open house\" \"free\" \"Denver\" \"airport\" aircraft",
+    "2026 November \"free\" \"steam locomotive\" \"open house\" Golden Colorado",
+    "2026 November 14 \"Young Eagles\" Colorado Peyton free flight register",
+    "Colorado EAA 2026 December Young Eagles Rally Denver Colorado exact date",
+    "2026 November 2026 Space Force free public planetarium telescope special meteor sky event Denver",
+    "2026 November Colorado regional robotics championship public admission free schools \"Nov\"",
+    "Colorado 2026 November STEM free engineering expo open public children games robot day",
+    "Colorado 2026 December 2027 public fireworks science open house military special access annual",
+    "November 2026 free \"maker fair\" Denver Thornton Lafayette Broomfield",
+    "2026 December National Laboratories of the Rockies public tour rare event",
+    "Colorado November 2026 free government-sponsored recreational free outdoor park entry event",
+    "site:fs.usda.gov \"2026\" \"Christmas Tree Permits\" \"Colorado\" \"Nov\" $20",
+    "2026 Colorado public national forest cut Christmas tree permit opens November 2026 Colorado state annual family",
+    "2026 November rare Colorado public open house manufacturing plant brewery? family behind scenes tour free",
+    "2026 November 2026 Colorado cave special access ranger guided tour lottery kids",
+    "2026 November Colorado SCFD free museum backstage tours hands on special access aerospace",
+    "2026 November Denver Boulder Westminster free \"maker\" \"open house\" event",
+    "2026 November Colorado kids \"build a rocket\" free STEM one-time",
+    "2026 December Colorado Air Force band free Christmas concert tickets USAFA military 2026",
+    "2026 Colorado State Capitol official \"open house\" \"Nov\" family tours",
+    "2026 November \"Dinosaur Ridge\" \"free\" \"guided\" night event",
+    "2027 Colorado \"spring\" special \"permit\" lottery \"December 2026\" outdoors entry",
+    "site:colorado.edu \"November\" \"2026\" \"free\" \"exhibition\" \"interactive\" \"public\"",
+    "site:cpw.state.co.us 2026 \"Christmas Tree Cut\" \"November\" \"2026\" Golden Gate Canyon drawing",
+    "site:cpw.state.co.us \"Golden Gate Canyon\" \"2026\" \"tree\" \"lottery\"",
+    "site:cpw.state.co.us \"Christmas Tree Cut Draw\" 2026",
+    "site:cpw.state.co.us \"Christmas Tree Cut\" \"Nov 1\" \"2026\" 250",
+    "site:cpw.state.co.us \"2026\" \"Christmas Tree\" \"Nott Creek\" $35",
+    "Golden Gate Canyon 2026 christmas tree cutting lottery state park application November 1 2026",
+    "site:cpw.state.co.us state parks daily vehicle pass fee $10 Colorado 2026",
+    "2026 Colorado state park day pass daily $10 vehicle 2026 CPW"
+  ],
+  "url_read_attempts": 17,
+  "url_read_successes": 13,
+  "failed_page_reads": 4,
+  "failed_searches": 0,
+  "official_detail_verified": 5,
+  "official_original_urls_inspected": [
+    {
+      "url": "https://eaa72.org/event-6728412",
+      "status": "verified",
+      "evidence": "Nov 14 2026 9:00–12:00 MST, 3 slots, Peyton airport, chapter registration link, 15–20 minute real flight"
+    },
+    {
+      "url": "https://eaa72.org/young-eagles",
+      "status": "verified",
+      "evidence": "EAA chapter explicitly says age 8–17 flights are free"
+    },
+    {
+      "url": "https://cpw.state.co.us/event/2026/11/free-state-park-entry-fresh-air-friday",
+      "status": "verified",
+      "evidence": "Nov 27 2026 8:00–22:00, all state parks, all ages, free, no registration in the specific row"
+    },
+    {
+      "url": "https://calendar.colorado.edu/event/ide-design-expo-fall-2026",
+      "status": "verified",
+      "evidence": "Public Nov 14 2:30–3:30, no 2026 price stated"
+    },
+    {
+      "url": "https://calendar.colorado.edu/event/ecee-networking-day",
+      "status": "verified",
+      "evidence": "Public Nov 14 2:30–3:30, 30 first-year technology projects, admission unspecified"
+    },
+    {
+      "url": "https://www.usafa.edu/event-single/holly-ivy-concert/",
+      "status": "verified",
+      "evidence": "2026 Dec 4-6 free concerts; ticket and base access information not yet published"
+    },
+    {
+      "url": "https://eaa72.org/events",
+      "status": "verified",
+      "evidence": "Organizer's event listing corroborates Nov 14 2026 youth rally"
+    },
+    {
+      "url": "https://eaa72.org/",
+      "status": "verified",
+      "evidence": "Organizer and airport contact"
+    },
+    {
+      "url": "https://www.eaa301.org/young-eagles",
+      "status": "verified",
+      "evidence": "2026 season closed; no 2027 dates yet"
+    },
+    {
+      "url": "https://cpw.state.co.us/event/2025/11/christmas-tree-cut-draw",
+      "status": "verified-but-past-year",
+      "evidence": "2025 250-permit drawing; not 2026 confirmation"
+    },
+    {
+      "url": "https://www.eaachapters.org/event-details/YE4098MQT",
+      "status": "unreadable-empty",
+      "evidence": "EAA registration HTML not rendered by web reader"
+    },
+    {
+      "url": "https://www.eaachapters.org/event-details/YE3357V92",
+      "status": "unreadable-empty",
+      "evidence": "Live EAA Nov14 2026 registration URL linked from organizer; remaining seats not validated"
+    },
+    {
+      "url": "https://capstone.mines.edu/showcase/",
+      "status": "read-failed-403",
+      "evidence": "Current admission/detailed format inaccessible"
+    },
+    {
+      "url": "https://dinoridge.org/event/night-at-the-museums-3/",
+      "status": "read-failed-403",
+      "evidence": "Search index has organizer text with date/price, original page HTTP 403"
+    }
+  ],
+  "candidate_events": 32,
+  "duplicate_candidates": 6,
+  "rejected_events": 16,
+  "held_events": 8,
+  "qualified_events": 2,
+  "known_by_collector": 4,
+  "verified_collector_misses": 0,
+  "submitted_events": 2,
+  "delivered_events": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://eaa72.org/event-6728412",
+    "https://cpw.state.co.us/event/2026/11/free-state-park-entry-fresh-air-friday"
+  ],
+  "candidate_reviews": {
+    "qualified": [
+      {
+        "title": "EAA Chapter 72 Young Eagles Nov 14 2026",
+        "reason": "Organizer dated free flight (ages 8-17), 9-12 MST, official web registration and 15-20 minute flying, nonroutine scarce high-value direct experience."
+      },
+      {
+        "title": "Colorado Parks and Wildlife statewide Fresh Air Friday Nov 27 2026",
+        "reason": "One-day 100% vehicle entry fee waiver across all Colorado state parks, officially confirmed 2026, ordinarily $10-$17 per vehicle; absolute savings modest."
+      }
+    ],
+    "duplicates": [
+      {
+        "title": "Denver Arts Week Free Night at the Museums Nov 7",
+        "reason": "Already in ChatGPT external inbox 20261023T235915Z and related existing dry-run events."
+      },
+      {
+        "title": "Denver Zoo November 11/14/22 Community Free Days",
+        "reason": "Already in ChatGPT external inbox 20261023T235915Z; earlier pipeline encountered HTTP 403."
+      },
+      {
+        "title": "NSF NCAR Super Science Saturday Nov 7",
+        "reason": "Already submitted in 20261024T232920Z and 20261024T233201Z."
+      },
+      {
+        "title": "MITEE Gobble Squabble / Robot Chaos Nov 21",
+        "reason": "Already submitted in 20261024T232920Z and 20261024T233201Z."
+      },
+      {
+        "title": "Wings Over the Rockies free Night at Museum Nov 7",
+        "reason": "Already submitted in 20261023T011329Z and present in 2026-10-22 dry-run."
+      },
+      {
+        "title": "Denver Museum of Nature & Science Nov 16 SCFD Free Day",
+        "reason": "Already present in reports/fullsystem-run.json 2026-10-22 dry-run; not an exceptional new experience."
+      }
+    ],
+    "held": [
+      {
+        "title": "CU Boulder IDE Design Expo Nov 14",
+        "reason": "Officially open to general public 2:30-3:30 pm; 2026 actual admission fee not explicitly stated; demos instead of hands-on participatory learning."
+      },
+      {
+        "title": "CU Boulder ECEE First-Year Assistive Technology Expo Nov 14",
+        "reason": "Official public 2:30-3:30 pm; admission cost unlisted; overlap with IDE expo."
+      },
+      {
+        "title": "Colorado School of Mines Capstone Design Showcase Dec 3",
+        "reason": "Official search snippet indicates date and public viewing but original page fetch HTTP 403; no current confirmed admission fee."
+      },
+      {
+        "title": "US Air Force Academy Holly & Ivy Holiday Concert Dec 4-6",
+        "reason": "Official USAFA 2026 page says free, public community event at Arnold Hall; says ticket and base-access conditions to follow. Already in prior collector dry-run."
+      },
+      {
+        "title": "Golden Gate Canyon State Park Christmas Tree Cut lottery",
+        "reason": "Official 250-permit $35 lottery is confirmed only for 2025; 2026 opening/cutting dates not officially published as of this search."
+      },
+      {
+        "title": "Dinosaur Ridge Night at Museums illuminated fossil-track flashlight tours Nov 7",
+        "reason": "Organizer search result states $10 tours, free crafts and all ages; direct original web page returned HTTP 403; overlaps previously submitted citywide museum night."
+      },
+      {
+        "title": "EAA Chapter 1117 Greeley Young Eagles Nov 7",
+        "reason": "Date appeared on third-party listing but matching 2026 organizer booking/event requirements not directly verified."
+      },
+      {
+        "title": "Roosevelt Robot Rumble Nov 21",
+        "reason": "VEX official participant price $100 and team restrictions, but public spectator admission/eligibility not verified."
+      }
+    ],
+    "rejected": [
+      {
+        "title": "EAA Boulder Chapter 1627 Young Eagles Oct 10",
+        "reason": "Past date."
+      },
+      {
+        "title": "EAA Chapter 1675 Young Eagles Nov 14",
+        "reason": "Organizer explicitly calls Nov 14 private Wings of Hope SOAR-into-STEM class, not public."
+      },
+      {
+        "title": "EAA Chapter 72 National Learn to Fly Day May 16",
+        "reason": "Past date."
+      },
+      {
+        "title": "EAA Chapter 1373 Young Eagles in Delta Oct 24",
+        "reason": "Past date."
+      },
+      {
+        "title": "BLM public-land fee-free days Oct 27 and Nov 11",
+        "reason": "Residency/citizenship rules and ordinary sightseeing, poor fit compared with exceptional experiences."
+      },
+      {
+        "title": "Barr Lake State Park Waddle Walk Nov 27",
+        "reason": "Ordinary short guided stroll; redundant with statewide free entrance event."
+      },
+      {
+        "title": "Colorado state parks Veterans Day Nov 11",
+        "reason": "Discount restricted to veterans or active military, not broadly applicable."
+      },
+      {
+        "title": "Colorado Railroad Museum Polar Express November-December",
+        "reason": "Full-price recurring $85+ seasonal commercial attraction."
+      },
+      {
+        "title": "Colorado Model Railroad Museum Military Trains Nov 6-8",
+        "reason": "Normal model railroad displays, free admission only for veterans and active service personnel."
+      },
+      {
+        "title": "Colorado Railroad Museum Friday Tour Nov 13",
+        "reason": "Regular weekly $3 tour plus regular museum admission."
+      },
+      {
+        "title": "Denver Winter Market Nov 28–Dec 13",
+        "reason": "Regular commercial vendor market, not rare-access or clearly high-value subsidized activity."
+      },
+      {
+        "title": "Thornton Dino Fest Aug 8",
+        "reason": "Past date."
+      },
+      {
+        "title": "Anythink Thornton Maker Fair May 9",
+        "reason": "Past date."
+      },
+      {
+        "title": "Regis R.E.G.I.S. Research Camp June 7/21 2027",
+        "reason": "Ordinary $400 camp, before relevant late-June arrival for most sessions, grade eligibility restrictive."
+      },
+      {
+        "title": "EAA Chapter 301 Young Eagles 2027",
+        "reason": "2026 season finished and 2027 schedule/registration not announced."
+      },
+      {
+        "title": "RMNP 2027 wilderness camping permit dates",
+        "reason": "No currently actionable 2027-specific enrollment notice; official 2026 and annual March 1 precedent is not sufficient to invent 2027 availability."
+      }
+    ]
+  },
+  "previous_collector_comparison": {
+    "registry_sources_sha": "cccb6669198f22679b7b3d70ea090500988bc336",
+    "registry_sources_count": 71,
+    "registry_sources_active": 55,
+    "queries_sha": "107e43181f5667fcec91d79d8ff4f5293d87bd5c",
+    "dry_run_path": "reports/fullsystem-run.json",
+    "dry_run_id": "20261022T004300Z",
+    "dry_run_is_live": false,
+    "dry_run_known_events": [
+      "Wings Over the Rockies Denver Arts Week Nov 7",
+      "Denver Museum of Nature & Science Nov 16 free day",
+      "USAFA Holly & Ivy Dec 4",
+      "Denver Museum of Nature & Science Nov 7 Night at the Museums"
+    ],
+    "recent_collect_workflow": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40241813109",
+    "live_collector_db_comparison": "unknown; recent successful collect run logs do not expose exact current event list/rec_level",
+    "verified_collector_misses": 0,
+    "scope_note": "A source not present in config/sources.json is not evidence the live collector failed to find an event."
+  },
+  "submission": {
+    "file": "external-inbox/chatgpt/20261025T235925Z.json",
+    "commit": "d49e9a7424bdb6f160b8f85a12e071cb60b6f98e",
+    "re_read_sha": "d4d9967e9776b50e844bc28fb7e4bae3ebdb684b",
+    "created_and_re_read": true,
+    "ingest_workflow": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40247217267",
+    "ingested_received": 2,
+    "ingested_valid": 2,
+    "official_recheck_attempted": 2,
+    "official_recheck_ok": 2,
+    "ingested_extracted": 2,
+    "identity_new": 2,
+    "recommendation_levels": {
+      "push": 1,
+      "interest": 1,
+      "none": 0
+    },
+    "new_worker_outbox_items": 3,
+    "worker_immediate_dispatch_sent": 0,
+    "worker_digest_returned_messages": 3,
+    "worker_digest_returned_items": 3,
+    "delivery_status": "No per-event recipient delivery receipt exposed in checked public GitHub run; digest total 3 messages/3 items may include other queued items, so delivered_events remains 0 verified.",
+    "no_direct_telegram_api": true
+  },
+  "improvements_for_existing_collector": [
+    {
+      "type": "source-and-query",
+      "official_url": "https://eaa72.org/events",
+      "proposed_queries": [
+        "Young Eagles rally Colorado free airplane rides kids",
+        "EAA youth introductory airplane flights Colorado",
+        "Meadow Lake Airport Peyton EAA Young Eagles"
+      ],
+      "issue": "High-value free youth flights from EAA Chapter 72 were not in registered static sources; current ingest gap analysis says query_gap, but that is not proof of current-live collector miss."
+    },
+    {
+      "type": "factual-correction",
+      "official_url": "https://eaa72.org/event-6728412",
+      "issue": "The automatic gap analysis misidentified EAA Chapter 72 as 'Erie airport' and proposed a query with Erie; organizer specifies Meadow Lake Airport, Peyton, Colorado 80831. Do not propagate Erie as a venue/source location."
+    },
+    {
+      "type": "judgement-note",
+      "official_url": "https://cpw.state.co.us/event/2026/11/free-state-park-entry-fresh-air-friday",
+      "issue": "Ingest classified CPW free statewide parks day as interest; stated justification that 'free' is not on the original page is factually wrong: official event title and paragraph confirm FREE ENTRY. The practical saving is only about $10–$17 per vehicle, which can reasonably support interest rather than push based on impact, but do not invent a missing-free-text premise."
+    },
+    {
+      "type": "watchlist-not-send",
+      "official_url": "https://www.usafa.edu/event-single/holly-ivy-concert/",
+      "issue": "USAFA Dec 4–6 public free holiday concert has ticket details/base access pending; already present in dry-run, monitor official update rather than send early."
+    },
+    {
+      "type": "watchlist-not-send",
+      "official_url": "https://cpw.state.co.us/event/2025/11/christmas-tree-cut-draw",
+      "issue": "A previous-year $35 / 250 permits Golden Gate Canyon Christmas Tree Cut draw has historically opened Nov1–15. No specific 2026 organizer event exists in checked sources; do not turn 2025 dates into 2026."
+    }
+  ],
+  "url_read_count_method": "Counts 17 explicit web open/click operations, including repeated verification reads; 13 returned readable page bodies, 2 HTTP 403 and 2 EAA signup zero-text results. Search results viewed without open are not counted as original page reads.",
+  "notes": "Independent search covered military/aviation, direct flights, university engineering expos, county/city free experiences, robotics, museums, special park fees/lotteries, state and federal outdoor permits, seasonal events, and forward-looking 2027 possibilities. The 2 submitted 2026 events target local Colorado recipients; no actionable confirmed 2027–28 family event was found. Prior run events were not resubmitted. Source/queries code was not edited. GitHub merged external-inbox workflow is the actual ingest path; the older chatgpt-inbox.yml has been consolidated into external-inbox.yml."
+}
