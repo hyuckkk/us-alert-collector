@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-26T23:56:49Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Northern Colorado Rocketry Atlas Launch — Public High-Power Rocket Launch Viewing",
+      "url": "https://ncrocketry.club/calendar/upcoming-events/",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "9:00 AM–4:00 PM MST (America/Denver, per Northern Colorado Rocketry; subject to weather/fire restrictions)",
+      "location": "Northern Colorado Rocketry Atlas Launch Site, Pawnee National Grassland east of Ault, Colorado; GPS 40.649070,-104.384445 (directions: https://ncrocketry.club/about-us/locations/atlas-site/)",
+      "cost": "Organizer does not state any charge for spectators; NOT confirmed free. Five-person spectator admission total UNKNOWN; any participation/launch fees are separate and should not be equated with observation.",
+      "age": "Club publicly documents spectators including friends and children. General public observation appears allowed; exact spectator age restrictions or guardian rules are not stated on its official pages. Non-member launching is a separate activity.",
+      "audience": "family",
+      "description": "Genuine close-range viewing of multiple Class 2 high-power hobby rockets at a remote permitted launch range, not a lecture or normal commercial attraction. Organiser specifically confirms Nov 7 2026, 9am–4pm, Atlas Site, up to K-impulse motor class with 12,000-ft AGL airspace ceiling (NOT a promised rocket size or altitude). A separate official 2026 schedule gives backup date Nov 14. The club's official FAQ confirms normal attendance by spectators, children and friends; site FAQ notes no food, water, shade or restrooms, and launches may be cancelled by wind, clouds, precipitation or fire risk. Cost not confirmed and should be clearly described as unknown rather than free. The organizer's generic locations page conflicts with the date-specific November Atlas announcement, so defer to event detail and same-year launch schedule. Relevant to local Colorado residents in Nov 2026, not a confirmed 2027/2028 opportunity. Routine monthly rocket launches should not each generate alerts automatically; this is a single first discovery for the specialized rocket launch viewing category."
+    }
+  ]
+}
