@@ -8,10 +8,11 @@
 import { DurableObject } from "cloudflare:workers";
 import * as pipeline from "./pipeline.js";
 import { kvGet, kvSet, nowIso, claimNotice, notifyOwner, localDate } from "./common.js";
+import { collectGuard } from "./collect-guard.js";
+export { collectGuard } from "./collect-guard.js";
+import { pendingReminder } from "./subscriptions.js";
 
 const MINUTE_OF_HOUR = 35;        // 매시 35분(GitHub dispatch 의 20분과 겹치지 않게)
-const LIGHT_LATE_HOURS = 6;       // 가벼운 수집은 4시간 간격 → 6시간 넘게 실행 기록이 없으면 지연
-const FULL_LATE_HOURS = 26;       // 전체 수집은 하루 1회 → 26시간 넘게 성공 기록이 없으면 지연
 
 export function nextSlot(now = Date.now()) {
   const d = new Date(now);
@@ -65,41 +66,8 @@ export async function beat(env, via) {
   try { r.dispatch = await pipeline.dispatch(env, {}); } catch (e) { r.dispatch_error = String(e && e.message).slice(0, 200); }
   try { r.digest = await pipeline.digest(env, {}); } catch (e) { r.digest_error = String(e && e.message).slice(0, 200); }
   try { r.collect = await collectGuard(env); } catch (e) { r.collect_error = String(e && e.message).slice(0, 200); }
+  try { r.pending = await pendingReminder(env); } catch { r.pending_error = "pending reminder failed"; }
   await kvSet(env, "last_heartbeat", { at: r.at, via, sent: r.dispatch ? r.dispatch.sent : null, digest: r.digest ? r.digest.messages : null,
-    collect: r.collect || null, error: r.dispatch_error || r.digest_error || r.collect_error || null });
+    collect: r.collect || null, pending: r.pending || null, error: r.dispatch_error || r.digest_error || r.collect_error || r.pending_error || null });
   return { ok: true, ...r };
-}
-
-// 수집 지연 감시: 마지막 실행·성공 기록을 보고 늦었으면 GitHub 에 수집 실행을 요청한다(6시간 구간마다 최대 1번)
-export async function collectGuard(env, now = Date.now()) {
-  const lastRun = await kvGet(env, "last_run_at");
-  const lastOk = await kvGet(env, "last_collect_ok_at");
-  const h = (x) => (x ? (now - Date.parse(x)) / 3600000 : null);
-  const sinceRun = h(lastRun), sinceOk = h(lastOk);
-  // 한 번도 실행된 적이 없으면(배포 직후) 판단하지 않는다
-  if (sinceRun === null) return { late: false, reason: "no-run-yet" };
-  let mode = null;
-  if (sinceOk === null || sinceOk > FULL_LATE_HOURS) mode = "full";
-  else if (sinceRun > LIGHT_LATE_HOURS) mode = "light";
-  const out = { late: !!mode, mode, hours_since_run: Math.round(sinceRun * 10) / 10, hours_since_ok: sinceOk === null ? null : Math.round(sinceOk * 10) / 10 };
-  if (!mode) return out;
-  const slot = `${new Date(now).toISOString().slice(0, 10)}:${Math.floor(new Date(now).getUTCHours() / 6)}`;
-  if (!(await claimNotice(env, `collect-recover:${slot}`))) return { ...out, action: "already-requested" };
-  if (env.GH_DISPATCH_TOKEN && env.GH_REPO) {
-    const res = await fetch(`${env.GH_API || "https://api.github.com"}/repos/${env.GH_REPO}/actions/workflows/collect.yml/dispatches`, {
-      method: "POST",
-      headers: { authorization: `Bearer ${env.GH_DISPATCH_TOKEN}`, accept: "application/vnd.github+json", "user-agent": "us-alert-worker", "content-type": "application/json" },
-      body: JSON.stringify({ ref: "main", inputs: { mode, dry_run: "false" } }),
-    });
-    out.action = res.status === 204 ? "requested" : `request-failed-${res.status}`;
-    if (res.status !== 204 && (await claimNotice(env, `collect-recover-fail:${localDate(env)}`))) {
-      await notifyOwner(env, `⚠️ 수집이 ${Math.floor(sinceRun)}시간째 실행되지 않아 다시 실행을 요청했지만 실패했습니다(응답 ${res.status}).\nGitHub 수집 실행 토큰(GH_DISPATCH_TOKEN)의 권한·만료를 확인해 주세요.`);
-    }
-  } else {
-    out.action = "no-token";
-    if (await claimNotice(env, `collect-late:${localDate(env)}`)) {
-      await notifyOwner(env, `⚠️ 수집이 ${Math.floor(sinceRun)}시간째 실행되지 않았습니다(GitHub 예약 지연).\n자동 재실행용 토큰이 아직 없어 직접 실행하지 못했습니다. 알림 발송은 따로 매시 계속됩니다.`);
-    }
-  }
-  return out;
 }
