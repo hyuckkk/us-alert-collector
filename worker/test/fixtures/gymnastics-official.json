@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-26",
+  "purpose": "Official historical regression examples, not new production ingestion or future 2027 schedules. Spectator admission price remains unknown.",
+  "events": [
+    {"title":"Mountain Range Invitational","start_date":"2026-10-10","start_time":"08:00","venue":"Mountain Range High School","school_level":"high","sport":"gymnastics","event_type":"meet","participants":["Valor Christian"],"participants_complete":false,"source_id":"valor-athletics","url":"https://valoreagles.com/sports/gymnastics/schedule/2026"},
+    {"title":"Cherry Creek Invitational","start_date":"2026-09-19","start_time":"08:00","venue":"Cherry Creek High School","school_level":"high","sport":"gymnastics","event_type":"meet","participants":["Valor Christian"],"participants_complete":false,"source_id":"valor-athletics","url":"https://valoreagles.com/sports/gymnastics/schedule/2026"},
+    {"title":"Denver Gymnastics vs Stanford","start_date":"2026-01-11","start_time":"13:45","venue":"Magness Arena","city":"Denver","school_level":"university","sport":"gymnastics","event_type":"match","home_team":"Denver","away_team":"Stanford","source_id":"du-athletics-ics","url":"https://denverpioneers.com/sports/womens-gymnastics/schedule/2026"},
+    {"title":"Denver Gymnastics vs Iowa State","start_date":"2026-02-01","start_time":"14:45","venue":"Magness Arena","city":"Denver","school_level":"university","sport":"gymnastics","event_type":"match","home_team":"Denver","away_team":"Iowa State","source_id":"du-athletics-ics","url":"https://denverpioneers.com/sports/womens-gymnastics/schedule/2026"},
+    {"title":"Air Force Gymnastics at Denver","start_date":"2026-03-09","start_time":"18:00","venue":"Magness Arena","city":"Denver","school_level":"university","sport":"gymnastics","event_type":"match","home_team":"Denver","away_team":"Air Force","source_id":"afa-athletics-ics","verification":"DU host schedule says 17:45; AF says 18:00. Venue cross-checked with host. Do not silently assert a single start time.","url":"https://goairforcefalcons.com/sports/womens-gymnastics/schedule/2025-26"},
+    {"title":"Denver Gymnastics vs Air Force","start_date":"2026-03-09","start_time":"17:45","venue":"Magness Arena","city":"Denver","school_level":"university","sport":"gymnastics","event_type":"match","home_team":"Denver","away_team":"Air Force","source_id":"du-athletics-ics","url":"https://denverpioneers.com/sports/womens-gymnastics/schedule/2026"}
+  ]
+}

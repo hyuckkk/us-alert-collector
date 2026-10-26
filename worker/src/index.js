@@ -45,6 +45,7 @@ import * as pipeline from "./pipeline.js";
 import { sportsEvents, sportsPage, sportsWeekly } from "./sports.js";
 import { Heartbeat, ensureHeartbeat, beatNow } from "./heartbeat.js";
 import { normCity, CITIES } from "./geo.js";
+import { approvalButtons, sendPending, decideSubscription, subscriptionCallback } from "./subscriptions.js";
 
 export { Heartbeat };
 
@@ -133,6 +134,7 @@ async function handleCallback(env, bot, cq, updateId) {
   const msg = cq.message || {};
   const chat = msg.chat ? String(msg.chat.id) : from;
   const data = cq.data || "";
+  if (/^sub[ar]:/.test(data)) return subscriptionCallback(env, bot, cq);
   const sep = data.indexOf(":");
   const action = sep > 0 ? data.slice(0, sep) : "";
   const itemKey = sep > 0 ? data.slice(sep + 1) : "";
@@ -291,6 +293,7 @@ async function handleMessage(env, bot, m) {
     const owner = isOwner(env, fromId);
     const at = nowIso();
     const prev = await env.DB.prepare("SELECT status FROM recipients WHERE chat_id = ? AND bot = ?").bind(fromId, bot).first();
+    if (prev?.status === "blocked") { await reply("신청이 거절된 상태입니다. 재승인은 소유자의 별도 확인이 필요합니다."); return; }
     if (cmd === "/start" && prev && prev.status === "stopped") {
       // 본인이 /stop 했던 승인된 지인: 다시 승인받지 않고 바로 재개, 쌓인 행사 대신 2주 안 접수 정보만 한 번
       await env.DB.prepare("UPDATE recipients SET status = 'active', updated_at = ? WHERE chat_id = ? AND bot = ?").bind(at, fromId, bot).run();
@@ -303,11 +306,13 @@ async function handleMessage(env, bot, m) {
       await env.DB.prepare(
         "INSERT INTO recipients (chat_id, bot, name, username, status, joined_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) " +
         "ON CONFLICT(chat_id, bot) DO UPDATE SET name = excluded.name, username = excluded.username, updated_at = excluded.updated_at, " +
-        "status = CASE WHEN recipients.status = 'blocked' THEN 'blocked' WHEN excluded.status = 'active' THEN 'active' ELSE recipients.status END",
+        "status = CASE WHEN recipients.status = 'blocked' THEN 'blocked' WHEN excluded.status = 'active' THEN 'active' WHEN recipients.status = 'withdrawn' THEN 'pending' ELSE recipients.status END",
       ).bind(fromId, bot, [from.first_name, from.last_name].filter(Boolean).join(" ") || null, from.username || null, owner ? "active" : "pending", at, at).run();
       await ensurePerson(env, fromId);
     }
     if (owner) { await reply(`${BOTS[bot].label} 봇 소유자로 확인되었습니다.\n\n${HELP_OWNER}`); return; }
+    if (cmd === "/myid") { await reply(`내 텔레그램 ID: ${fromId}`); return; }
+    if (prev?.status === "active") { await reply("이미 승인되어 알림을 받고 있습니다. /settings 로 설정을 확인하세요."); return; }
     if (!env.OWNER_CHAT_ID) {
       await reply(`내 텔레그램 ID: ${fromId}\n\n아직 소유자가 설정되지 않았습니다. 이 숫자를 GitHub 비밀값 OWNER_CHAT_ID 로 넣고 deploy-worker 를 다시 실행하면 이 계정이 소유자가 됩니다.`);
       return;
@@ -316,12 +321,12 @@ async function handleMessage(env, bot, m) {
       "승인된 뒤 /city Westminster 40 처럼 기준 도시와 거리(마일)를 보내면 먼 곳의 일반 행사는 빼고 받습니다(/city off 로 해제). " +
       "이 설정은 받는 범위만 줄이며 검색 지역을 넓히지는 않습니다.");
     if (cmd === "/start" && (await claimNotice(env, `join:${bot}:${fromId}`))) {
-      await notifyOwner(env, `[${BOTS[bot].label}] 새 수신 신청: ${[from.first_name, from.last_name].filter(Boolean).join(" ")} ${from.username ? "@" + from.username : ""}\nID ${fromId}\n승인: ${BOTS[bot].handle} 에서 /approve ${fromId}${ownerOnly(env) ? "\n(현재 소유자 전용 모드라 승인해도 1차 검증 전에는 발송되지 않습니다)" : ""}`);
+      await notifyOwner(env, `[${BOTS[bot].label}] 새 수신 신청: ${[from.first_name, from.last_name].filter(Boolean).join(" ").slice(0, 100)}\n${ownerOnly(env) ? "소유자 전용 모드 유지. " : ""}아래 버튼 또는 ${BOTS[bot].handle} 에서 /approve ${fromId}\n전체 목록: /pending`, { reply_markup: { inline_keyboard: [approvalButtons(bot, fromId)] } });
     }
     return;
   }
   if (cmd === "/stop") {
-    const r = await env.DB.prepare("UPDATE recipients SET status = 'stopped', updated_at = ? WHERE chat_id = ? AND bot = ? AND status IN ('active', 'pending')").bind(nowIso(), fromId, bot).run();
+    const r = await env.DB.prepare("UPDATE recipients SET status = CASE WHEN status = 'active' THEN 'stopped' ELSE 'withdrawn' END, updated_at = ? WHERE chat_id = ? AND bot = ? AND status IN ('active', 'pending')").bind(nowIso(), fromId, bot).run();
     if (r.meta.changes) {
       await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = 'stopped' WHERE chat_id = ? AND bot = ? AND status IN ('pending', 'failed', 'uncertain')").bind(fromId, bot).run();
       await reply(`${BOTS[bot].label} 알림을 더 보내지 않습니다. 다시 받으려면 /start 를 보내 주세요.`);
@@ -383,16 +388,14 @@ async function handleMessage(env, bot, m) {
     return;
   }
   if (cmd === "/pending") {
-    const rows = (await env.DB.prepare("SELECT chat_id, bot, name, username, joined_at FROM recipients WHERE status = 'pending' ORDER BY joined_at").all()).results;
-    await reply(rows.length ? "승인 대기\n" + rows.map((r) => `${r.bot} ${r.chat_id} ${r.name || ""} ${r.username ? "@" + r.username : ""}`).join("\n") : "승인 대기 없음");
+    await sendPending(env, Number(args[0] || 1));
     return;
   }
   if (cmd === "/approve" && args[0]) {
-    const r = await env.DB.prepare("UPDATE recipients SET status = 'active', updated_at = ? WHERE chat_id = ? AND bot = ? AND status <> 'active'").bind(nowIso(), args[0], bot).run();
-    if (!r.meta.changes) { await reply(`이 봇에 /start 한 기록이 없거나 이미 승인된 사람입니다: ${args[0]}`); return; }
-    const w = await pipeline.welcomeQueue(env, args[0], bot);
+    const w = await decideSubscription(env, bot, args[0], true);
+    if (!w.changed) { await reply("이 봇의 승인 대기 대상이 없거나 이미 처리되었습니다."); return; }
     await reply(`승인: ${args[0]} (${BOTS[bot].label}) · 첫 요약 ${w.queued}건(2주 안 접수 시작·마감만)${ownerOnly(env) ? "\n현재 소유자 전용 모드라 지인 발송을 켜기 전까지는 발송되지 않습니다." : ""}`);
-    if (!ownerOnly(env)) await tg(env, bot, "sendMessage", { chat_id: args[0], text: `${BOTS[bot].label} 알림 신청이 승인되었습니다.\n\n${HELP_ALL}`, disable_web_page_preview: true });
+    if (w.welcome_error) await reply("승인은 완료했지만 첫 안내 준비에 실패했습니다. 관리자 확인이 필요합니다.");
     return;
   }
   await reply(HELP_OWNER);
