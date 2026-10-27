@@ -1,0 +1,443 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-10-26T23:51:43Z",
+  "finished_at_utc": "2026-10-27T00:04:47.746Z",
+  "search_requests": 73,
+  "queries": [
+    "Colorado 2026 November military base open house public civilians Space Force family aviation event",
+    "site:usafa.edu/events/ 2026 November December public open house cadet training special access",
+    "2026 November Colorado Young Eagles free flight November 21 December 2026 EAA",
+    "site:wingsmuseum.org/events/ November 2026 build launch flight simulator kids workshop free",
+    "Denver Boulder Colorado 2026 November open house science engineering public hands on exhibits free special",
+    "Denver Westminster 2026 November 2026 family community maker STEM contest free public",
+    "Colorado state park 2026 Christmas tree lottery Golden Gate Canyon application opens November 2026",
+    "Colorado 2027 2028 national park special backcountry cave park permit lottery opens 2026 December",
+    "2026 November Denver family special open cockpit aircraft trains behind scenes free",
+    "2026 November 2026 Colorado state museum free after hours scavenger hunt special access",
+    "Colorado 2026 November 2027 children camp scholarship sign up opening Denver free",
+    "2026 November Colorado aerospace manufacturing open house free public Air Force NASA",
+    "2026 November 2026 Colorado astronomy November rocket launch public launch model rockets club Colorado",
+    "Colorado science engineering maker festival November 2026 free admission Denver Boulder",
+    "Westminster Colorado 2026 November city holiday festival kids hands on free unusual",
+    "Colorado 2027 national parks wilderness permits opening November December 2026 permit applications",
+    "site:ncrocketry.club/calendar/upcoming-events/ November 7 2026 Atlas launch spectators public welcome directions",
+    "site:ncrocketry.club \"Spectators\" \"free\" \"Atlas\" 2026",
+    "site:ncrocketry.club \"2026\" \"November 7\" launch \"open\"",
+    "2026 November 2026 Colorado free public rocket launch demonstration kids rockets NASA club",
+    "site:wingsmuseum.org/events/ \"Nov\" \"2026\" \"open cockpit\" \"free\"",
+    "site:wingsmuseum.org/events/ \"Nov 28, 2026\"",
+    "site:colorado.edu \"2026\" \"November\" \"free\" \"hands-on\" family science expo",
+    "site:colorado.edu \"November 2026\" \"design expo\" \"public\" \"free\"",
+    "site:usafa.edu \"November 2026\" \"open to the public\" cadet",
+    "site:cpw.state.co.us/event/2026/11 \"lottery\" \"tree\"",
+    "site:cpw.state.co.us \"2026\" \"Christmas Tree Cut\" draw permit",
+    "site:recreation.gov/timed-entry 2027 2026 lottery Colorado",
+    "site:recreation.gov/permits/ Colorado 2027 \"October\" 2026",
+    "2026 November Colorado free robotics tournament visitors spectators maker competition official",
+    "November 2026 Colorado Denver model train hands-on free open house kids school",
+    "2026 December 2026 Denver family tour fire station aircraft military special",
+    "2026 November 2026 \"free\" \"flight\" \"Centennial Airport\" Young Eagles chapter",
+    "site:ncrocketry.club \"spectators\" \"free\"",
+    "site:ncrocketry.club \"spectators\" \"welcome\" \"visitors\"",
+    "site:ncrocketry.club \"guest\" \"launch\" \"spectator\" \"cost\"",
+    "site:ncrocketry.club \"attend\" \"launch\" \"membership\" \"spectator\"",
+    "site:coloradorailroadmuseum.org/events 2026 November steam train rides free member 2026 behind scenes November",
+    "site:coloradorailroadmuseum.org 2026 November free family day locomotive demonstration",
+    "site:wingsmuseum.org/events/ December 2026 STEM build flight aviation open cockpit cockpit accessible ticket discount",
+    "site:dmns.org 2026 November science free special \"hands-on\" \"2026\"",
+    "site:denverzoo.org 2026 November admission free special event limited tickets",
+    "site:scfd.org 2026 November December free special family passes sky science Denver",
+    "site:usafa.edu 2026 December \"Holly and Ivy\" 2026 concert free",
+    "site:csu.edu \"2026\" \"November\" \"kids\" \"free\" \"science\" maker",
+    "2026 November 2026 Colorado Boulder Denver public 3D print drone robotics workshops science open house",
+    "2026 November Jefferson County Colorado rocket engine testing public demonstration event",
+    "2026 November \"Colorado\" \"robotics\" \"open to public\" \"free\" tournament",
+    "2026 November \"Colorado\" \"firefighter\" \"open house\" public kids fire trucks ride",
+    "Westminster Broomfield Thornton 2026 \"November\" \"touch a truck\" or \"touch a plane\"",
+    "2026 December Denver student theater free holiday show public universities schools",
+    "2027 2028 Colorado camping cabins lottery booking open November 2026 backcountry",
+    "Denver Colorado 2026 2027 \"scholarship\" \"camp\" \"registration opens\" November 2026 kids free",
+    "Colorado 2026 November Young Eagles rally \"November 7\" \"Greeley\" chapter",
+    "2026 November Colorado Young Eagles rally November 7 21 Colorado Springs Fort Collins Boulder free flight",
+    "Colorado 2026 November science fairs \"free\" \"hands-on\" aviation open house public youth November",
+    "\"Northern Colorado Rocketry\" \"spectators\" \"free\"",
+    "\"NCR Atlas Launch\" \"spectators\" \"free\"",
+    "site:ncrocketry.club \"admission\" \"spectators\"",
+    "site:ncrocketry.club \"spectators\" \"welcome\" \"free\"",
+    "site:ncrocketry.club \"spectator\" \"fee\" \"launch\"",
+    "November 2026 Colorado \"free\" \"open house\" \"aircraft\" \"cockpit\" community",
+    "November 2026 Denver \"free\" \"try\" \"flight simulator\" \"kids\" STEM",
+    "November 2026 Westminster Broomfield Thornton Arvada \"free\" \"hands-on\" science community",
+    "November 2026 \"Colorado\" \"free\" \"behind the scenes\" museum special tour",
+    "November 2026 \"Colorado\" \"open to public\" engineering design expo show free interactive",
+    "November 2026 \"Colorado\" \"free\" \"planetarium\" \"space\" public special program",
+    "Colorado 2026 December \"restricted\" \"free\" tours aerospace military academy public family",
+    "Colorado 2027 2028 program lottery children horseback free scholarship opens 2026 Denver",
+    "site:coloradospacegrant.org November 2026 space camp student community free",
+    "site:jeffco.us \"2026\" \"November\" \"free\" \"maker\" \"hands-on\" kids",
+    "site:westminsterco.gov \"2026\" \"November\" \"open house\" \"equipment\" family",
+    "site:colorado.edu \"November 2026\" \"open to the public\" \"hands on\" \"robot\""
+  ],
+  "search_batches": [
+    {
+      "batch": 1,
+      "request_count": 16,
+      "engine": "fast"
+    },
+    {
+      "batch": 2,
+      "request_count": 17,
+      "engine": "fast"
+    },
+    {
+      "batch": 3,
+      "request_count": 4,
+      "engine": "fast"
+    },
+    {
+      "batch": 4,
+      "request_count": 16,
+      "engine": "fast"
+    },
+    {
+      "batch": 5,
+      "request_count": 3,
+      "engine": "slow"
+    },
+    {
+      "batch": 6,
+      "request_count": 5,
+      "engine": "fast"
+    },
+    {
+      "batch": 7,
+      "request_count": 12,
+      "engine": "fast"
+    }
+  ],
+  "url_read_attempts": 17,
+  "url_read_successes": 16,
+  "failed_page_reads": 1,
+  "official_detail_verified": 14,
+  "official_original_urls_inspected": [
+    {
+      "url": "https://ncrocketry.club/calendar/upcoming-events/",
+      "status": "verified; 2026-11-07 09:00–16:00 MST Atlas Class 2 rockets up to K motor"
+    },
+    {
+      "url": "https://ncrocketry.club/about-us/locations/",
+      "status": "verified; spectator directions & event-site context; seasonal generic statement conflicts with Nov Atlas event"
+    },
+    {
+      "url": "https://ncrocketry.club/about-us/locations/atlas-site/",
+      "status": "verified; official Atlas launch GPS and driving instructions"
+    },
+    {
+      "url": "https://ncrocketry.club/about-us/launch-schedule/",
+      "status": "verified; Nov7 launch, Nov14 backup, Dec5 repeat"
+    },
+    {
+      "url": "https://ncrocketry.club/about-us/frequently-asked-questions/",
+      "status": "verified; members, friends, children and spectators; cancellations and lack of facilities"
+    },
+    {
+      "url": "https://wingsmuseum.org/events/cockpit-demo-day/",
+      "status": "verified; Nov21 10–14, list of rotating aircraft; existing collector event"
+    },
+    {
+      "url": "https://wingsmuseum.org/events/",
+      "status": "verified; November timetable with cockpit, astronomy and other events"
+    },
+    {
+      "url": "https://wingsmuseum.org/buy-tickets/discounts-and-benefits-programs/",
+      "status": "verified; Wings regular benefit and free-day information"
+    },
+    {
+      "url": "https://56000.blackbaudhosting.com/56000/page.aspx?pid=196&tab=2&txobjid=718f08b9-2b33-4a00-aa24-1104e4c3c076",
+      "status": "verified; normal entry $19.95 adult, $12.95 youth (specific event surcharge not stated)"
+    },
+    {
+      "url": "https://wingsmuseum.org/events/astronomy-night/",
+      "status": "verified; Nov21 night event existing collector record"
+    },
+    {
+      "url": "https://www.challengercolorado.org/what-we-do/public/second-saturday-science.html",
+      "status": "verified; Nov14 NASA Mars-themed free interactive building/launch and planetarium"
+    },
+    {
+      "url": "https://www.challengercolorado.org/news-events/event-calendar.html/event-form/registration-form/117503/tickets",
+      "status": "verified; timed free seats booking page, remaining seats shown at indexed check"
+    },
+    {
+      "url": "https://www.challengercolorado.org/news-events/event-calendar.html/event/2026/11/14/second-saturday-science/580245",
+      "status": "verified; Nov14 9:00–12:00, 8717 Wolf Valley Dr Colorado Springs and registration"
+    },
+    {
+      "url": "https://fcmod.org/blog/",
+      "status": "verified; Oct21 dated 2026 Nov programs, feeding and solar-scope activities are recurring"
+    }
+  ],
+  "failed_searches": 0,
+  "candidate_events": 37,
+  "duplicate_candidates": 11,
+  "rejected_events": 19,
+  "held_events": 5,
+  "qualified_events": 2,
+  "known_by_collector": 4,
+  "verified_collector_misses": 0,
+  "submitted_events": 2,
+  "delivered_events": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://ncrocketry.club/calendar/upcoming-events/",
+    "https://www.challengercolorado.org/news-events/event-calendar.html/event/2026/11/14/second-saturday-science/580245"
+  ],
+  "candidate_reviews": {
+    "qualified": [
+      {
+        "title": "Northern Colorado Rocketry Atlas high-power rocket launch, Nov 7",
+        "reason": "Official Nov7 date/time/Atlas GPS and spectator attendance confirmed; onsite observer price not published; scarce hands-on-adjacent high-power rocket launch spectacle."
+      },
+      {
+        "title": "Challenger Colorado Meet Me on Mars: 3D-printed rocket build/launch + planetarium, Nov14",
+        "reason": "Official event and registration page verify free for whole family, 9am-noon, school-age STEM, timed and limited planetarium seats; launch conditional on restrictions."
+      }
+    ],
+    "duplicates": [
+      {
+        "title": "Wings Over Rockies Cockpit Demo Day Nov21",
+        "reason": "Present in collector-generated reports/fullsystem-run.json: Wings API event; not new collector discovery."
+      },
+      {
+        "title": "Wings Over Rockies Astronomy Night Nov21",
+        "reason": "Present in collector-generated reports/fullsystem-run.json: Wings API event."
+      },
+      {
+        "title": "Wings Over Rockies Breakfast Fly-in Food Drive Nov14",
+        "reason": "Present in collector-generated reports/fullsystem-run.json: Wings API event."
+      },
+      {
+        "title": "EAA Chapter 72 Young Eagles Nov14",
+        "reason": "Already independently submitted 20261025T235925Z.json."
+      },
+      {
+        "title": "Colorado Parks and Wildlife Fresh Air Friday Nov27",
+        "reason": "Already independently submitted 20261025T235925Z.json."
+      },
+      {
+        "title": "Denver Arts Week free Night at the Museums Nov7",
+        "reason": "Already independently submitted 20261023T235915Z.json."
+      },
+      {
+        "title": "Wings Over Rockies free Night at Museum Nov7",
+        "reason": "Already submitted 20261023T011329Z.json."
+      },
+      {
+        "title": "NSF NCAR Super Science Saturday Nov7",
+        "reason": "Already submitted 20261024T232920Z.json and 20261024T233201Z.json."
+      },
+      {
+        "title": "MITEE Gobble Squabble combat robotics Nov21",
+        "reason": "Already submitted 20261024T232920Z.json and 20261024T233201Z.json."
+      },
+      {
+        "title": "Denver Zoo Nov11/14/22 free days",
+        "reason": "Already submitted 20261023T235915Z.json."
+      },
+      {
+        "title": "Denver Museum of Nature and Science Nov16 free day",
+        "reason": "Present in reports/fullsystem-run.json snapshot; ordinary recurring SCFD free day."
+      }
+    ],
+    "held": [
+      {
+        "title": "Golden Gate Canyon State Park 2026 Christmas tree cut lottery",
+        "reason": "Found past 2025 opening only; no 2026 official application dates/fees confirmed."
+      },
+      {
+        "title": "EAA Chapter 1117 Greeley Nov7 possible Young Eagles rally",
+        "reason": "Unable to verify a 2026-11-07 matching date and registration on chapter original, so not submitted."
+      },
+      {
+        "title": "RMNP 2027 timed-entry permits",
+        "reason": "Official recreation.gov site only publishes 2026 schedule, not 2027 opening dates."
+      },
+      {
+        "title": "Black Canyon of Gunnison 2027 wilderness permit release",
+        "reason": "Recreation.gov publishes 2026 dates only; no 2027 opening confirmed."
+      },
+      {
+        "title": "CU Boulder IDE Design Expo Nov14",
+        "reason": "Past research noted public access but 2026 price and degree of direct hands-on opportunity unclear; not upgraded."
+      }
+    ],
+    "rejected": [
+      {
+        "title": "Boulder Firefly Handmade Holiday Market Nov14-15",
+        "reason": "Normal retail craft market rather than rare experiential access."
+      },
+      {
+        "title": "Bluff Lake Nature Center fall mini camps",
+        "reason": "$100/day ordinary outdoor camp; free conditional scholarship only."
+      },
+      {
+        "title": "CU Boulder Holiday Festival Dec4-6",
+        "reason": "Normal full-price seasonal student concert; $31–94."
+      },
+      {
+        "title": "MSU Denver Holiday Card to the City Dec4-5",
+        "reason": "Free only for affiliated students/staff, ordinary holiday concert otherwise."
+      },
+      {
+        "title": "Newman Center student matinee Dec10",
+        "reason": "Free for registered school field trips, not public walk-in family."
+      },
+      {
+        "title": "Colorado Railroad Museum Polar Express Nov/Dec",
+        "reason": "Ordinary high-priced commercial seasonal attraction, no exceptional discount."
+      },
+      {
+        "title": "Colorado Railroad Museum Small Wonders Weekend May2-3",
+        "reason": "Past date."
+      },
+      {
+        "title": "Colorado Railroad Museum Galloping Goose rides Oct24-25",
+        "reason": "Past date."
+      },
+      {
+        "title": "CU Boulder Build Something Cool Oct10",
+        "reason": "Past date."
+      },
+      {
+        "title": "Colorado Springs Cool Science Festival Oct3-18",
+        "reason": "Past date."
+      },
+      {
+        "title": "Phantom Ranch Dec2027 reservation lottery",
+        "reason": "Outside Colorado, October 25 submission deadline passed, mule rides also constrained."
+      },
+      {
+        "title": "Wings Over Rockies Scout Aviation Merit Badge workshop Nov21",
+        "reason": "Restricted specialty badge workshop, not freely publicly accessible broad family offer."
+      },
+      {
+        "title": "Denver Public Library ideaLAB Open Lab Nov23",
+        "reason": "Recurring general access session, no special time limit or subsidy unique to this date."
+      },
+      {
+        "title": "US Air Force Academy planetarium public shows Nov1-30",
+        "reason": "Base pass required but regularly open free public film shows, no one-off special access."
+      },
+      {
+        "title": "CSU Spur free guided tours November",
+        "reason": "Ongoing publicly available guided tours rather than uniquely rare facility access."
+      },
+      {
+        "title": "Fort Collins Museum of Discovery black-footed ferret feeding Nov7/21",
+        "reason": "Twice monthly routine 30-minute talk and feeding; not a unique high-interaction activity."
+      },
+      {
+        "title": "Fort Collins Museum of Discovery NCAS Solar Scopes Nov21",
+        "reason": "Regular astronomy observation; not exceptional or scarce enough for push."
+      },
+      {
+        "title": "US Air Force Academy Hosmer self-guided visitor center",
+        "reason": "Regular public visitor center, not a special open house."
+      },
+      {
+        "title": "CU Science Discovery Teen Science Café 2026-27",
+        "reason": "Monthly teen-only program; no date-specific special opportunity for general family."
+      }
+    ]
+  },
+  "source_comparison": {
+    "sources_sha": "cccb6669198f22679b7b3d70ea090500988bc336",
+    "sources_count": 71,
+    "queries_sha": "107e43181f5667fcec91d79d8ff4f5293d87bd5c",
+    "reviewed_collector_snapshot": "reports/fullsystem-run.json dry_run=true 2026-10-22 event count 632; current 2026-10-26 collect workflow succeeded, but its complete event DB was not readable without private credentials",
+    "repo_code_search": [
+      "NCR Atlas Launch: 0 hits",
+      "ncrocketry.club: 0 hits",
+      "Cockpit Demo Day: existing collector snapshot and probe hits",
+      "challengercolorado.org: 0 hits; no direct confirmation about uncommitted pending items"
+    ],
+    "confirmed_existing_collector_events": [
+      "Wings Cockpit Demo Day 2026-11-21",
+      "Wings Astronomy Night 2026-11-21",
+      "Wings Breakfast Fly-in Food Drive 2026-11-14",
+      "DMNS Free Day 2026-11-16"
+    ],
+    "verified_new_worker_events": [
+      {
+        "title": "Northern Colorado Rocketry Atlas Launch 2026-11-07",
+        "event_key": "e0ecc183bf7a3ef2",
+        "worker_new": 1,
+        "collector_gap_label": "excluded/outside_scope",
+        "recommendation": "interest",
+        "outbox_new": 0
+      },
+      {
+        "title": "Challenger Meet Me on Mars 2026-11-14",
+        "event_key": "e162fccbb07900b0",
+        "worker_new": 1,
+        "collector_gap_label": "excluded/outside_scope",
+        "recommendation": "interest",
+        "outbox_new": 0
+      }
+    ],
+    "caveat": "Worker.new=1 proves no prior event row in Worker at intake, but does not prove GitHub source never discovered a raw candidate; do not classify as a verified collector miss without raw input comparison."
+  },
+  "submissions": [
+    {
+      "path": "external-inbox/chatgpt/20261026T235649Z.json",
+      "created_and_reread": true,
+      "workflow_run": 40423220698,
+      "workflow_status": "success",
+      "source_verified": 1,
+      "extracted": 1,
+      "new_worker_event": 1,
+      "level": "interest",
+      "push_outbox_new": 0,
+      "dispatch_sent": 0,
+      "digest_messages": 0
+    },
+    {
+      "path": "external-inbox/chatgpt/20261026T235949Z.json",
+      "created_and_reread": true,
+      "workflow_run": 40423511122,
+      "workflow_status": "success",
+      "source_verified": 1,
+      "extracted": 1,
+      "new_worker_event": 1,
+      "level": "interest",
+      "push_outbox_new": 0,
+      "dispatch_sent": 0,
+      "digest_messages": 0
+    }
+  ],
+  "verification_exceptions": [
+    "Calendar .ics link at challengercolorado.org: unsupported text/calendar read; official HTML event and booking pages were both successfully read."
+  ],
+  "recommended_source_candidates": [
+    {
+      "url": "https://www.challengercolorado.org/what-we-do/public/second-saturday-science.html",
+      "reason": "Unique free themed family STEM sessions; 2026-11-14 offered actual 3D printed rocket assembly/launch and free planetarium with scarce booking."
+    },
+    {
+      "url": "https://ncrocketry.club/calendar/upcoming-events/",
+      "reason": "Specialized spectator rocket launches with date-specific field/range/weather status; distinguish ordinary monthly repetition from particularly valuable access."
+    }
+  ],
+  "recommended_query_improvements": [
+    "Colorado Challenger Learning Center Second Saturday Science rocket build free planetarium",
+    "Colorado Northern Colorado Rocketry club high power launches spectators dates",
+    "Colorado Space Foundation Discovery Center co-sponsored free family rocket events"
+  ],
+  "recommendation_filter_observations": [
+    "Live Claude reevaluation of NCR launch rejected push as monthly routine with spectator access uncertain, despite official FAQ explicitly confirming spectator attendance (fee remains unknown).",
+    "Live Claude reevaluation of Challenger Mars rocket-build program rejected push as monthly free series and 1.5hr travel, despite November session's free build-and-launch plus time-slot-limited planetarium. User explicitly wants meaningful direct hands-on experiences and rare/high-value trips even outside Denver Metro; review weighting without blanket whitelist.",
+    "Both were new Worker event rows but no push outbox and no confirmed individual Telegram delivery. Do not call GitHub file submission a successful notification."
+  ],
+  "notes": "73 web search requests: 68 fast and 3 slow? See search_batches sum for exact counts (70 fast +3 slow). Twelve early webpage read attempts plus 4 Challenger page/click operations and one FCMoD blog read. One failed unsupported .ics read, all other 16 succeeded. Verified 14 unique current official HTML/booking pages. Two new high-value 2026 opportunities submitted as two new files and reread; both automatically checked and entered the US Worker DB but Claude rated interest (outside_scope) so 0 fanout/0 dispatch/0 digest. 2027/28 permit release dates not yet independently confirmed; no invented 2027 dates. No source code, tokens, recipients or Telegram APIs touched. No separate new bot or Korean service touched."
+}
