@@ -1,0 +1,43 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-27T13:43:00Z",
+  "finished_at": "2026-10-27T13:43:31Z",
+  "searches": 5,
+  "queries": [
+   "CU Art Museum events Boulder November 2026 free",
+   "Young Eagles free airplane rides kids Colorado airport 2026 rally Erie Vance Brand",
+   "Denver free holiday event November 2026 tree lighting family Arvada OR Broomfield OR Thornton OR Northglenn",
+   "Denver Zoo Lights 2026 dates free night OR Blossoms of Light 2026 Denver Botanic Gardens dates",
+   "Colorado Veterans Day 2026 military display open to public helicopter tank Denver November 11"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 7,
+  "excluded": 6,
+  "excluded_reasons": {
+   "no_2026_date_found": 3,
+   "aggregator_only_paid_seasonal": 2,
+   "no_event_found": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(CU 아트뮤지엄 행사, EAA Young Eagles 무료 비행)과 연말 지역 행사·재향군인의 날 군 장비 전시를 찾았다. 공식 사이트 직접 열기는 이 환경에서 DNS 오류라 verified:false. 제외: CU 아트뮤지엄 11월 2026 일정 미확인, Young Eagles 덴버권 남은 2026 일정 없음, 재향군인의 날 군 장비 전시 2026 공지 없음, Zoo Lights·Blossoms of Light는 정가 시즌 행사이고 2026 날짜가 집계 사이트에만 있음, 덴버 Mile High Tree 2026 날짜 미확인."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-27T13:43:31Z",
+   "origin": "scheduled",
+   "title": "Broomfield Holiday Tree Lighting Ceremony 2026",
+   "url": "https://broomfield.org/index.aspx?NID=2468",
+   "start_date": "2026-12-04",
+   "time": "5:30 PM - 8:00 PM",
+   "location": "George DiCiero City and County Building, Broomfield",
+   "age": "All ages",
+   "audience": "family",
+   "description": "City and County of Broomfield annual holiday tree lighting ceremony. More details coming from the city; cost not stated on the listing (previous years free).",
+   "recommend": "push",
+   "special_reason": "시가 1년에 한 번 여는 연말 점등식"
+  }
+ ]
+}
