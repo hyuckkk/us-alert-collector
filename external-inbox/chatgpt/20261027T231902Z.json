@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-27T23:19:02.573Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Parker Arts Science Night — Free Hands-On Science and Engineering",
+      "url": "https://parkerarts.org/event/parker-science-night/",
+      "start_date": "2026-11-08",
+      "end_date": "2026-11-08",
+      "time": "Sunday 2:00–5:00 PM MST; timed RSVP choices 2:00–3:30 PM or 3:30–5:00 PM",
+      "location": "PACE Center, 20000 Pikes Peak Avenue, Parker, CO 80138",
+      "cost": "Free admission ($0 per participant, $0 for family of five); parking and transport not confirmed",
+      "age": "Open to the general public, all ages; especially elementary-aged children and families. RSVP required, including a ticket for each child. Ticket availability not independently confirmed.",
+      "audience": "family",
+      "description": "One-day special SCFD-supported hands-on STEM experience with Wings Over the Rockies, Cheyenne Mountain Zoo, Playground Ensemble and interactive exhibits. Not merely a lecture or regular paid class. Organizer explicitly posts Nov 8, two timed entry choices, free to everyone and registration open. Must check availability at organizer's RSVP link; no claim of confirmed seats. Applicable to Colorado locals in 2026, not a verified 2027/2028 date."
+    },
+    {
+      "title": "Whaaat!? Festival 2026 — Experimental Games and Playful Interactions",
+      "url": "https://whaaat.io/",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "Saturday 9:00 AM check-in; interactive gaming arcades 10:00 AM–5:00 PM MST; program until 4:30 PM",
+      "location": "ATLAS Institute / Roser ATLAS Center, University of Colorado Boulder, Boulder, CO (specific 2026 venue room info on organizer program)",
+      "cost": "Tourist Pass $21/person; five at this published face value $105 before any checkout fees; Citizen Pass $40/person ($200 for five); Travel Waiver pay-what-you-can, minimum not published; early-bird reduction terms and actual checkout fees not verified",
+      "age": "Festival invitation to the public; specific minimum age or suitability of every installation is not stated. Do not promise young-child entry without organizer confirmation.",
+      "audience": "life",
+      "description": "Unusual one-day experiential festival featuring playable interactive experimental arcade games, oversized multiplayer maze, physical/group games, surreal media installations and vintage consoles, beyond ordinary full-price entertainment or lecture. Organizing ATLAS-based festival site lists Nov 7 2026 and published tiers, including pay-what-you-can Travel Waiver. Tickets routed to Eventbrite; live remaining capacity and total fees unverified. Relevant to 2026 local adults, not a confirmed 2027/2028 date."
+    },
+    {
+      "title": "Rocky Mountain AI Interest Group — AI Robotics Live Robot Showcase",
+      "url": "https://www.meetup.com/rmaiig/events/316986284/",
+      "start_date": "2026-11-17",
+      "end_date": "2026-11-17",
+      "time": "Tuesday 5:45–7:15 PM MST robot showcase and demonstrations; optional talks 7:15–8:45 PM",
+      "location": "Ann and H.J. Smead Aerospace Engineering Sciences Building (Room 120), 3775 Discovery Drive, CU Boulder East Campus, Boulder, CO 80303",
+      "cost": "RMAIIG organizer states general monthly meetings are free with free pizza; $0 entry for eligible attendees; no per-event ticket fee listed. Five free only if everyone is admitted; parking cost may apply.",
+      "age": "Organizer says public meetings open to everyone, including beginners. No explicit child-specific eligibility or minimum age; treat as adults/life category. Meetup RSVP recommended; remaining RSVP places unverified.",
+      "audience": "life",
+      "description": "November 17-specific featured live demonstrations with robotics companies and humanoid/social robots, robot dogs and autonomous machines, expressly offering hands-on interaction before the lecture segment. Organizer-published original meetup event confirms date, 5:45–7:15 experiential phase and exact campus room; organizer official https://rmaiig.org/meetings/ verifies free admission for regular meetings. The later talk segment is not the reason for the alert. Avoid treating every monthly AI talk as special. 2026 Colorado locals only."
+    },
+    {
+      "title": "CU Wizards! AIRBUSTERS! — Free Halloween Hands-On Air-Science Show",
+      "url": "https://calendar.colorado.edu/event/cu-wizards-airbusters",
+      "start_date": "2026-10-31",
+      "end_date": "2026-10-31",
+      "time": "Saturday 9:30–10:30 AM MDT",
+      "location": "Cristol Chemistry, Room 140, 1606 Central Campus Mall, Boulder, CO 80309",
+      "cost": "Free for the public; $0 for family of five (no admission charge published). Parking/travel not confirmed.",
+      "age": "For kindergarten through eighth-grade students (K–8); family audience at public outreach event. No pre-registration requirement is stated on university calendar.",
+      "audience": "kids",
+      "description": "Halloween-themed visual, interactive CU Wizards AIRBUSTERS outreach show: professors use technology and tangible demonstrations to visualize otherwise invisible air pollutants and 'ghostly gases'; costumes invited. Special short hands-on STEM show for children rather than a long academic lecture. CU Boulder university calendar explicitly lists 2026-10-31 at 09:30 and FREE, K–8, Cristol 140. One-hour event; no ticket or spot guarantee. 2026 locals only."
+    },
+    {
+      "title": "2026 Youth Pollinator Summit — Free Teen Hands-On Conservation",
+      "url": "https://www.peopleandpollinators.org/event-details-registration/2026-youth-pollinator-summit",
+      "start_date": "2026-11-15",
+      "end_date": "2026-11-15",
+      "time": "Sunday 12:00–4:00 PM MST",
+      "location": "University of Colorado Museum of Natural History (Henderson Building), 1030 Broadway, Boulder, CO 80309",
+      "cost": "Free for eligible registered teen participants ($0 per eligible participant). Five-person family total not applicable to all members because age-limited to teenagers; parents' participation not specified.",
+      "age": "Ages 13–18 only; public teen participation; registration required via linked Google Form. No adult/younger sibling attendance entitlement confirmed.",
+      "audience": "kids",
+      "description": "Special one-day youth biodiversity and pollinator conservation summit with hands-on conservation alongside experts and peers, not just ordinary museum admission. Organizer People and Pollinators Action Network and Colorado Pollinator Network list Nov 15 2026, 12–4, teen-only 13–18, FREE, registration required; live remaining form capacity not checked. Relevant to eligible local Colorado teens in 2026, not the younger children of a future 2027–2028 family visit."
+    }
+  ]
+}
