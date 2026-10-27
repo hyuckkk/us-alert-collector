@@ -2,8 +2,8 @@
   "schema": 1,
   "actor": "chatgpt",
   "started_at_utc": "2026-10-27T23:12:19.603Z",
-  "finished_at_utc": "2026-10-27T23:20:35.361Z",
-  "search_requests": 100,
+  "finished_at_utc": "2026-10-27T23:22:07.431Z",
+  "search_requests": 104,
   "queries": [
     "Colorado November 2026 free hands on special access military aircraft museum public open house family",
     "Denver Colorado November 2026 free science festival engineering open house robotics kids STEM",
@@ -104,7 +104,11 @@
     "Boulder 2026 November 15 Youth Pollinator Summit free 13-18 registration original organizer",
     "site:boulder.earth \"Youth Pollinator Summit\" 2026",
     "site:colorado.edu \"Youth Pollinator Summit\" November 15 2026",
-    "Rocky Mountain AI Interest Group November 17 2026 robotics live demos 5:45 pm CU Smead AI physical world free Meetup"
+    "Rocky Mountain AI Interest Group November 17 2026 robotics live demos 5:45 pm CU Smead AI physical world free Meetup",
+    "site:parkerco.gov \"Science Night\" \"November 8\" 2026 Parker PACE",
+    "site:parkeronline.org \"Science Night\" \"2026\" PACE",
+    "Parker Colorado November 8 2026 science night official Town of Parker calendar",
+    "Parker Arts science night 2026 PACE Center alternate event listing official venue ticket"
   ],
   "search_batches": [
     {
@@ -150,6 +154,11 @@
     {
       "batch": 9,
       "search_requests": 1,
+      "engine": "fast"
+    },
+    {
+      "batch": 10,
+      "search_requests": 4,
       "engine": "fast"
     }
   ],
@@ -266,5 +275,61 @@
       "Rocky Mountain BEST Robotics Game Day 2026-11-07 — exact venue/general public access not confirmed"
     ]
   },
-  "notes": "Independent searches compare 2026 official web notices against current config/sources.json (71 registered sources), config/queries.json and immutable reports/fullsystem-run.json snapshot (run 20261022T004300Z, 632 events), plus previous ChatGPT inbox files. This older snapshot is NOT today's live D1, so absent event titles cannot be called verified collector misses. Documented collector-known candidates=2 (DMNS SCFD Nov16, Wings Cockpit Demo Nov21). GitHub Oct27 collect workflow succeeded, but its live event rows/DB comparison and per-event Telegram receipts were unavailable. New items were submitted through the existing external-inbox GitHub workflow; submission is not delivery. Of the five new opportunities, all occur in 2026 for current Colorado locals; none is a confirmed 2027/2028 edition. Whaaat festival published ticket tier $21 or $40 plus optional pay-what-you-can fee (minimum unverified); RMAIIG admission free is per organizer standard meetings and Meetup event has no listed individual ticket charge. Count methodology: search_requests counts 100 individual search records (six fast batches, one slow batch, two fast verification batches), never search hits; webpage reads count 30 open/click attempts and failures; in-page find operations not counted as new URL reads. Unverified actual checkout capacity and 2027 event releases are held or annotated."
+  "notes": "Independent searches compare 2026 official web notices against current config/sources.json (71 registered sources), config/queries.json and immutable reports/fullsystem-run.json snapshot (run 20261022T004300Z, 632 events), plus previous ChatGPT inbox files. This older snapshot is NOT today's live D1, so absent event titles cannot be called verified collector misses. Documented collector-known candidates=2 (DMNS SCFD Nov16, Wings Cockpit Demo Nov21). GitHub Oct27 collect workflow succeeded, but its live event rows/DB comparison and per-event Telegram receipts were unavailable. New items were submitted through the existing external-inbox GitHub workflow; submission is not delivery. Of the five new opportunities, all occur in 2026 for current Colorado locals; none is a confirmed 2027/2028 edition. Whaaat festival published ticket tier $21 or $40 plus optional pay-what-you-can fee (minimum unverified); RMAIIG admission free is per organizer standard meetings and Meetup event has no listed individual ticket charge. Count methodology: search_requests counts 100 individual search records (six fast batches, one slow batch, two fast verification batches), never search hits; webpage reads count 30 open/click attempts and failures; in-page find operations not counted as new URL reads. Unverified actual checkout capacity and 2027 event releases are held or annotated. Post-ingestion official recheck succeeded for 4/5, Parker Arts failed HTTP403; remaining four registered, one scored push and three interest. Immediately dispatched 0; an ordinary digest globally emitted four items but attribution to newly submitted specific events is unverified; delivered_events=0.",
+  "followup_verification": {
+    "checked_at_utc": "2026-10-27T23:22:07.431Z",
+    "searches": 4,
+    "outcome": "Official organizer ParkerArts 2026 Nov8 original confirmed on web, but US collector's external-inbox re-fetch returned HTTP 403; no independently matching primary-organizer page under parkerco.gov indexed. Not resubmitted to avoid false verification. Finding must be used to improve verified source access; don't classify source-not-registered as confirmed collector miss."
+  },
+  "inbox_processing": {
+    "file": "external-inbox/chatgpt/20261027T231902Z.json",
+    "workflow_url": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40601292641",
+    "workflow_status": "completed_success",
+    "received": 5,
+    "valid": 5,
+    "official_pages_rechecked": 5,
+    "official_pages_ok": 4,
+    "unreachable": [
+      {
+        "title": "Parker Arts Science Night",
+        "official_url": "https://parkerarts.org/event/parker-science-night/",
+        "error": "HTTP 403"
+      }
+    ],
+    "extracted_events": 4,
+    "identity_new": 4,
+    "duplicated_on_ingest": 0,
+    "worker_enqueued": 4,
+    "recommended": {
+      "push": 1,
+      "interest": 3,
+      "none": 0
+    },
+    "labels_for_nonpush": [
+      "RMAIIG AI Robotics — interest: regular monthly meetup + English presentation; direct live demo benefit not accepted as special by recommender",
+      "CU Wizards Halloween AIRBUSTERS — interest: model treated free Halloween hands-on show as an ordinary termly series",
+      "Youth Pollinator Summit — interest: model treated free teen-only hands-on conservation as limited ages/possibly academic talk"
+    ],
+    "gap_analysis": {
+      "checked": 4,
+      "unregistered": 1,
+      "excluded": 3,
+      "source_suggestion_added": 1,
+      "query_suggestions_added": 3
+    },
+    "dispatch_now": {
+      "sent": 0,
+      "pending": 0
+    },
+    "digest_aggregate": {
+      "messages": 4,
+      "items": 4,
+      "waiting": 2,
+      "skipped": 0,
+      "failed": 0,
+      "expired": 1
+    },
+    "per_event_delivery_receipts_confirmed": 0,
+    "notes": "Digest total of 4 could include unrelated previously queued events; without specific event_key+recipient receipt, cannot attribute any message to the five submitted. Delivered_events remains 0."
+  }
 }
