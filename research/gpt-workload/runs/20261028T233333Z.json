@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-10-28T23:26:40Z",
+  "finished_at_utc": "2026-10-28T23:33:33.457Z",
+  "search_requests": 110,
+  "queries": [
+    "2026 Nov 14 Plains Conservation Center Indigenous Peoples SCFD Free Day wagon rides hawkquest 2026",
+    "Plains Conservation Center Nov 14 2026 Indigenous Peoples free day 21901 East Hampden address booking",
+    "Colorado November 2026 free aviation museum admission veterans day cockpit open airbase family 2026",
+    "Colorado November 2026 special free train ride historic steam locomotive heritage open house children",
+    "Denver 2026 November 14 free science STEM hands on family event registration community",
+    "Colorado November 2026 ranger led free tours limited space access behind scenes preserve museum",
+    "Westminster Denver November 2026 free maker festival science experiments robotics kids event 2026",
+    "Colorado 2026 November 14 space science free open house hands on workshop families",
+    "Colorado November 2026 STEM day at CSU Spur animal hospital tour 2026 public",
+    "Colorado 2026 November free helicopter rides kids public events air force national guard",
+    "Factory Two makerspace address Making STEAM Awesome balancing sculpture Nov 14 2026",
+    "site:botanicgardens.org \"York Street\" \"Tickets\" \"Adults\" \"$\" 2026 admission prices",
+    "site:botanicgardens.org 2026 November 27 free day York Street Chatfield Farms ticket sold out",
+    "Colorado November 2026 \"free\" \"special access\" \"behind the scenes\" kids Denver limited time",
+    "\"Free Days at the Plains Conservation Center\" 1977744596327 November 14 Indigenous Peoples 2026 tickets",
+    "\"Free Days at the Plains Conservation Center\" \"November 14\" wagon ride raptor free",
+    "2026 Nov 27 York Street Denver Botanic Gardens free day advance registration available current Colorado SCFD"
+  ],
+  "queries_complete": false,
+  "missing_earlier_search_query_text_count": 93,
+  "search_request_batches": [
+    12,
+    12,
+    8,
+    8,
+    3,
+    8,
+    10,
+    10,
+    5,
+    8,
+    5,
+    4,
+    2,
+    8,
+    1,
+    3,
+    3
+  ],
+  "url_read_attempts": 22,
+  "url_read_successes": 18,
+  "failed_page_reads": 4,
+  "official_detail_verified": 9,
+  "official_detail_verified_urls": [
+    "https://www.auroragov.org/things_to_do/parks__open_space___trails/nature___open_space/nature_centers/plains_conservation_center/plains_conservation_center_s_c_f_d_free_days",
+    "https://www.botanicgardens.org/events/free-days",
+    "https://www.botanicgardens.org/york-street",
+    "https://www.botanicgardens.org/chatfield-farms",
+    "https://www.nps.gov/romo/planyourvisit/fees.htm",
+    "https://home.nps.gov/aboutus/nonresident-fees.htm",
+    "https://www.powderhorn.com/bob-beverly-free-learn-to-ski-ride-program/",
+    "https://www.recreation.gov/tree-permits/49f7193c-e64e-11ea-a244-5e6d4b9f6262",
+    "https://www.milehighwing.org/events.php"
+  ],
+  "official_booking_page_read_failures": [
+    {
+      "url": "https://www.eventbrite.com/e/free-days-at-the-plains-conservation-center-tickets-1977744596327",
+      "http": 429
+    },
+    {
+      "url": "https://tickets.botanicgardens.org/events/01949559-881b-e435-70df-877606de86ad",
+      "http": 403
+    },
+    {
+      "url": "https://tickets.botanicgardens.org/events/bd8314b0-e0dc-05f3-4aae-ecdef93c3acf",
+      "http": 403
+    },
+    {
+      "url": "https://www.eventbrite.com/e/free-days-at-the-plains-conservation-center-tickets-1977744596327",
+      "http": 429
+    }
+  ],
+  "candidate_events": 22,
+  "duplicate_candidates": 7,
+  "rejected_events": 9,
+  "held_events": 4,
+  "qualified_events": 2,
+  "candidate_decisions": {
+    "duplicate": [
+      "2026-11-07 Wings Over the Rockies free museum night (prior inbox)",
+      "2026-11-07 NCAR Super Science Saturday (prior inbox)",
+      "2026-11-21 Monumental Impact Robot Chaos (prior inbox)",
+      "2026-11-14 EAA Chapter 72 Young Eagles flight (prior inbox)",
+      "2026-11-14 Challenger Mars/3D rocket family science (prior inbox)",
+      "2026-11-11/14/22 Denver Zoo free days (prior inbox)",
+      "2026-10-31 CU Wizards AIRBUSTERS (prior inbox)"
+    ],
+    "rejected": [
+      "Colorado Railroad Museum Polar Express at normal $85+ per person",
+      "Wings Over Rockies regular full-price cockpit demos",
+      "Wings Exploration of Flight regular monthly breakfast fly-in",
+      "CSU Spur regular second Saturday general free programming without unusually special benefit",
+      "Denver Public Library recurring Families Create",
+      "Aurora Veterans Salute $20 admission/dinner and routine program",
+      "Factory Two free STEM class, located Flint MI, outside Colorado",
+      "Boulder City airport day: city in Nevada, not Boulder CO",
+      "Ordinary collegiate/school league matchups"
+    ],
+    "held": [
+      "Powderhorn Bob Beverly free beginner ski lessons: capacity valuable but 2026-27 booking/session start date unavailable",
+      "USFS South Platte Christmas tree permits: sale began Oct 8, live remaining quantity and official current charge not verified",
+      "Mile High Wing Santa Flies into RMMA Dec 12: earlier search listing but organizer live events page no longer shows event",
+      "RMNP Nov 11 national park free admission: US citizens/residents only; not applicable to non-US-resident travelers, broad recurring fee-free day"
+    ],
+    "qualified": [
+      "2026-11-14 Plains Conservation Center SCFD Indigenous Peoples free culture day",
+      "2026-11-27 Denver Botanic Gardens York Street & Chatfield Farms advance-ticket SCFD admission waiver"
+    ]
+  },
+  "known_by_collector": 0,
+  "verified_collector_misses": 0,
+  "collector_seen_but_recommendation_dropped": 1,
+  "collector_comparison": {
+    "source_registry_count": 71,
+    "queries_json_checked": true,
+    "prior_chatgpt_inbox_files_checked": 9,
+    "latest_collect_workflow_run": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40770826386",
+    "worker_event_db_direct_read": false,
+    "notes": "The US collector had previously seen Denver Botanic Gardens free-day source, but its recommendation/extraction filtering dropped the specific Plains event (confirmed by current external-inbox gap report 'seen-dropped'). This is not an independently proven never-crawled miss. No event-specific DB read for candidate York/Chatfield; cannot claim collectors missed it."
+  },
+  "submitted_events": 2,
+  "submission_files": [
+    "external-inbox/chatgpt/20261028T233141Z.json"
+  ],
+  "pipeline_result": {
+    "workflow": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40787986284",
+    "workflow_result": "success",
+    "received": 2,
+    "valid": 2,
+    "official_pages_rechecked": 2,
+    "official_pages_ok": 2,
+    "extracted": 2,
+    "dropped_closed": 1,
+    "new_worker_events": 1,
+    "new_worker_outbox_rows": 3,
+    "rec_push": 1,
+    "rec_interest": 0,
+    "rec_none": 0,
+    "enqueued_event_title": "Plains Conservation Center 무료의 날: 원주민 문화",
+    "denver_botanic_gardens_20261127": "Dropped as 'closed' by model despite organizer listing future free day; ticket inventory could not be opened (403); cannot independently adjudicate sellout.",
+    "dispatch_send_count": 0,
+    "digest_messages_sent_count": 2,
+    "digest_message_event_identity_proven": false,
+    "verified_event_specific_deliveries": 0,
+    "noted_gap": "eligibility_or_recommendation_error / seen-dropped for Plains event; extra source and search keyword suggestions were recorded by the pipeline"
+  },
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://www.botanicgardens.org/events/free-days"
+  ],
+  "qualified_events_expanded": [
+    {
+      "title": "Plains Conservation Center Indigenous Peoples Free Day",
+      "date": "2026-11-14",
+      "url": "https://www.botanicgardens.org/events/free-days",
+      "verified_date_and_price": true,
+      "ticket_inventory": "unknown"
+    },
+    {
+      "title": "Denver Botanic Gardens York/Chatfield SCFD Free Day",
+      "date": "2026-11-27",
+      "url": "https://www.botanicgardens.org/events/free-days",
+      "verified_date_and_price": true,
+      "ticket_inventory": "unknown",
+      "family5_regular_price_york_usd": 68.5,
+      "family5_regular_price_chatfield_usd": 49
+    }
+  ],
+  "notes": "Independent Colorado search; includes official organizer corroboration and 2026-local audience distinction. Eventbrite booking page blocked 429, botanical ticket supplier blocked 403; live ticket availability unknown. Official date for Plains confirmed independently on City of Aurora and Denver Botanic Gardens (2026). 2026 national park fee-free day strictly for US citizens/residents, not nonresident visitors. GitHub external-inbox.yml replaces old chatgpt-inbox.yml; source code was not altered, no Telegram API called directly. 110 search requests equals 93 earlier searches from preserved batch counts + 17 late exact queries; due execution transcript compression full literal text of the 93 early queries cannot be recovered and is explicitly not fabricated. 22 named unique screening decisions are recorded. 'delivered_events:0' means no event-specific receipt verified; the Worker digest sent 2 messages but their event identity was not independently certified."
+}
