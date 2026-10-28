@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-28T23:31:41.687Z",
+  "test": false,
+  "events": [
+    {
+      "title": "2026 Plains Conservation Center SCFD Free Day — Indigenous Peoples Prairie Discovery",
+      "url": "https://www.botanicgardens.org/events/free-days",
+      "start_date": "2026-11-14",
+      "end_date": "2026-11-14",
+      "time": "Saturday 10:00 a.m.–3:00 p.m. America/Denver",
+      "location": "Plains Conservation Center Visitor Center, 21901 E Hampden Ave, Aurora, CO 80013",
+      "cost": "FREE; 5 people = $0 for advertised SCFD day; advance free event registration is required. Normal self-guided grounds access is already free; special demonstrations/programs are the additional benefit. Any optional costs not stated.",
+      "age": "All ages (organizer Eventbrite listing); public visitors; advance registration required. Current remaining tickets unverified (Eventbrite 429).",
+      "audience": "family",
+      "description": "Unique Nov 14 Indigenous Peoples-themed shortgrass prairie history/nature day; jointly organized by City of Aurora and Denver Botanic Gardens, SCFD-supported. Free themed programs and demonstrations in 1880s homestead and tipi setting (series listings mention wagon rides weather permitting); regular walks are already free and should NOT be treated as the special benefit. 2026 Colorado locals only, not the user's 2027-2028 travel stay. City organizer confirms date, 10 a.m.–3 p.m., registration requirement; Denver Botanic Gardens corroborates 2026. Current ticket quantity unknown."
+    },
+    {
+      "title": "Denver Botanic Gardens SCFD Free Day — York Street and Chatfield Farms (2026 Nov 27)",
+      "url": "https://www.botanicgardens.org/events/free-days",
+      "start_date": "2026-11-27",
+      "end_date": "2026-11-27",
+      "time": "Friday regular daytime hours only; York Street 9:00 a.m.–2:30 p.m. posted seasonal hours, Chatfield Farms 9:00 a.m.–3:00 p.m. holiday early closing; America/Denver",
+      "location": "Choose one: York Street, 1007 York St, Denver, CO 80206; OR Chatfield Farms, 8500 W Deer Creek Canyon Rd, Littleton, CO 80128",
+      "cost": "FREE general admission with advance timed free-day tickets (subject to inventory); normal 5-person admissions York Street $68.50 (2 adults $16.25 + 3 children 3–15 $12), Chatfield Farms $49 (2 adults $14 + 3 children $7). Separate winter light shows not included; travel/food extra.",
+      "age": "All ages; public SCFD free day. Advance timed-entry reservation on each location's own ticket page, possibly sold out. Check any residency restriction on checkout; ticket availability not independently verified (booking provider 403).",
+      "audience": "family",
+      "description": "City/regional Scientific and Cultural Facilities District-funded free admission for only the last published 2026 SCFD day at both botanical garden locations, a real $49–$68.50 admission saving for 2 adults+3 ages 3–15 versus everyday prices. Scarce tickets; organizer explicitly warns sellouts and no walk-up admission once sold out. General gardens hours only, excludes Trail of Lights, Blossoms of Light and separately ticketed special programs. 2026 residents/friends, not 2027/2028 family date. Organizer primary pages verify Nov 27 and published standard admissions; live ticket inventory could not be verified due to HTTP 403."
+    }
+  ]
+}
