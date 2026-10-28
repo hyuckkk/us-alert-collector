@@ -1,0 +1,74 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-28T13:53:00Z",
+  "finished_at": "2026-10-28T13:53:57Z",
+  "searches": 4,
+  "queries": [
+   "national park fee-free days 2026 list Veterans Day November 11 NPS",
+   "Whaaat!? festival 2026 experimental games Boulder date whaaat.io",
+   "Colorado state parks free day \"Fall Free Day\" OR \"Free Fall Friday\" November 2026 Colorado Parks and Wildlife",
+   "Denver museum free day November 2026 SCFD free days list Denver Art Museum Children's Museum DMNS"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 9,
+  "excluded": 6,
+  "excluded_reasons": {
+   "already_submitted": 1,
+   "date_unconfirmed": 4,
+   "eligibility_unclear": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(국립공원 무료 입장일, Whaaat!? 게임 축제)과 11월 무료일을 찾았다. 공식 사이트 직접 열기는 이 환경에서 DNS 오류라 verified:false. 제외: 국립공원 2026 무료일은 미국 시민·거주자 전용으로 바뀌었고 11/11 포함 여부 미확인(자격 불명확), 덴버 미술관 11/7(이미 제출), 덴버 동물원 11/11·14·22와 역사박물관·어린이박물관 11월 무료일(공식 확인 안 됨), CPW 재향군인의 날 무료(2026 공지 없음)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-28T13:53:57Z",
+   "origin": "scheduled",
+   "title": "Fresh Air Friday - free entry to all Colorado state parks (Nov. 27, 2026)",
+   "url": "https://cpw.state.co.us/event/2026/11/free-state-park-entry-fresh-air-friday",
+   "start_date": "2026-11-27",
+   "location": "All Colorado state parks",
+   "cost": "Free entry",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Colorado Parks and Wildlife: on Black Friday, Nov. 27, 2026, entry to all Colorado state parks is free.",
+   "recommend": "push",
+   "special_reason": "1년에 하루 모든 콜로라도 주립공원 입장이 무료"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-28T13:53:57Z",
+   "origin": "scheduled",
+   "title": "2026 Whaaat!? Festival - experimental games (ATLAS Institute, CU Boulder)",
+   "url": "https://whaaat.io/",
+   "start_date": "2026-11-07",
+   "time": "10:00 AM - 6:00 PM",
+   "location": "Roser ATLAS Center, CU Boulder",
+   "cost": "Tickets from $0 (free tier listed)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Annual day of experimental games and playful interactive installations you play yourself, hosted by CU Boulder's ATLAS Institute. Date from an event listing; confirm on the official page.",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 대학이 여는 실험 게임 축제로 직접 해 보는 체험 중심"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-28T13:53:57Z",
+   "origin": "scheduled",
+   "title": "SCFD Free Day at Denver Museum of Nature & Science (Nov. 16, 2026)",
+   "url": "https://www.dmns.org/programs-and-events/freedays/",
+   "start_date": "2026-11-16",
+   "time": "9:00 AM - 5:00 PM",
+   "location": "Denver Museum of Nature & Science",
+   "cost": "Free general admission (advance reservation required)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD-funded free general admission day; free tickets must be reserved in advance. Date from several listings; confirm on the museum's free-days page.",
+   "recommend": "push",
+   "special_reason": "공공기금(SCFD) 지원 무료 입장일, 사전 예약 수량 한정"
+  }
+ ]
+}
