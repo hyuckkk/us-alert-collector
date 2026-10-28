@@ -120,12 +120,12 @@ try {
     await admin("/admin/dispatch", { ignoreQuiet: true });
     const t = to(n).map((c) => c.payload.text);
     const h = t.find((x) => /행사 hockey2/.test(x));
-    assert.match(h, /📍 <a href="https:\/\/www\.google\.com\/maps\/search\/\?api=1&amp;query=Student%20Recreation%20Center%2C%20Ice%20Rink%2C%201855%20Pleasant%20Street%2C%20Boulder%2C%20CO">Student Recreation Center, Ice Rink, 1855 Pleasant Street<\/a>/);
-    assert.match(h, /💲 입장료 미확인/);
+    assert.match(h, /장소: <a href="https:\/\/www\.google\.com\/maps\/search\/\?api=1&amp;query=Student%20Recreation%20Center%2C%20Ice%20Rink%2C%201855%20Pleasant%20Street%2C%20Boulder%2C%20CO">Student Recreation Center, Ice Rink, 1855 Pleasant Street<\/a>/);
+    assert.match(h, /비용: 입장료 미확인/);
     assert.match(h, /신청 불필요/);
     assert.ok(!/🆓/.test(h), "비용 근거 없이 무료 표시");
     const f = t.find((x) => /행사 freeday/.test(x));
-    assert.match(f, /🆓 무료/); assert.match(f, /💲 무료 \(시간지정 입장권 필요\)/);
+    assert.match(f, /비용: 무료/); assert.match(f, /비용: 무료 \(시간지정 입장권 필요\)/);
   });
 
   await step("같은 회차 묶음(매주 금요일 투어의 다른 날짜)은 사람마다 한 통만 — 즉시·요약 모두, 같은 행사의 변경 알림은 막지 않음", async () => {
@@ -140,7 +140,7 @@ try {
     const m = n;
     await admin("/admin/enqueue", { events: [ev("fri1", { title: "Friday Highlights Tour", source_id: "railroad", start_date: plus(8) })] });
     await admin("/admin/dispatch", { ignoreQuiet: true });
-    assert.equal(to(m).filter((c) => /🔄 변경/.test(c.payload.text) && /행사 fri1/.test(c.payload.text)).length, 1, "같은 행사의 날짜 변경은 알림");
+    assert.equal(to(m).filter((c) => /\[변경\]/.test(c.payload.text) && /행사 fri1/.test(c.payload.text)).length, 1, "같은 행사의 날짜 변경은 알림");
   });
 
   await step("차단 사유가 기록된 적극 알림은 발송 직전에 다시 막힘(대기열에 이미 들어간 것 포함)", async () => {
