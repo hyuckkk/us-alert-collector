@@ -36,8 +36,8 @@ try {
     assert.ok(has(got, "concert"));
     for (const k of ["council", "takeback", "storytime", "legacy"]) assert.ok(!has(got, k), `${k} 가 발송됨`);
     const m = got.find((c) => /행사 concert/.test(c.payload.text));
-    assert.match(m.payload.text, /🆓 무료\n✨ <b>시험용 특별 근거<\/b>\n야외 재즈 공연과 푸드트럭\n\n📅/);
-    assert.match(m.payload.text, /💲 무료/);
+    assert.match(m.payload.text, /야외 재즈 공연과 푸드트럭\n일시:/);
+    assert.match(m.payload.text, /비용: 무료/);
   });
 
   await step("특별한 근거가 없는 '적극 알림'은 보내지 않는다(Red Rocks 정가 공연·학제간 토론·일반 공연장 정가 공연 부정 사례)", async () => {
@@ -51,7 +51,7 @@ try {
     await admin("/admin/dispatch", { ignoreQuiet: true });
     const got = to(n);
     for (const k of ["redrocks", "seminar", "theater"]) assert.ok(!has(got, k), `${k} 가 근거 없이 발송됨`);
-    assert.ok(got.some((c) => /행사 airshow/.test(c.payload.text) && /✨ <b>평소 비공개인 공군기지 비행장을 하루만 개방<\/b>/.test(c.payload.text)));
+    assert.ok(got.some((c) => /행사 airshow/.test(c.payload.text) && /평소 비공개인 공군기지 비행장을 하루만 개방/.test(c.payload.text)));
   });
 
   await step("관심 분야를 고르면(/interests add toddler) 그 분야는 받고, 고르지 않은 회의는 여전히 받지 않음", async () => {
@@ -115,7 +115,7 @@ try {
     r = await admin("/admin/enqueue", { events: [ev("blossoms", { urgency: "now", rec_level: "push", category: "festival", start_date: plus(30), time_text: "4:30-9 p.m.", location: "Denver Botanic Gardens (York Street)", cost_text: "$30" })] });
     assert.equal(r.changed, 1, JSON.stringify(r));
     await admin("/admin/dispatch", { ignoreQuiet: true });
-    const ch = to(n).filter((c) => /🔄 변경/.test(c.payload.text) && /행사 blossoms/.test(c.payload.text));
+    const ch = to(n).filter((c) => /\[변경\]/.test(c.payload.text) && /행사 blossoms/.test(c.payload.text));
     assert.equal(ch.length, 1);
     assert.match(ch[0].payload.text, /비용 \$25 per person → \$30/);
   });

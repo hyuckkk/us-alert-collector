@@ -25,7 +25,7 @@ function dateRange(d) {
 function regLine(d) {
   return [d.registration_opens ? `접수 시작 ${krDate(d.registration_opens)}` : null, d.deadline ? `마감 ${krDate(d.deadline)}` : null,
     REG[d.registration_status] && !(d.registration_opens && d.registration_status === "upcoming") ? REG[d.registration_status] : null,
-    d.signup === "fcfs" || d.signup === "lottery" ? null : SIGNUP[d.signup] || null].filter(Boolean).join(" · "); // 선착순·추첨은 특징 표시에 이미 나옴
+    d.signup === "fcfs" ? "선착순" : d.signup === "lottery" ? "추첨" : SIGNUP[d.signup] || null].filter(Boolean).join(" · ");
 }
 
 // 비용: 원문에 무료라고 적힌 경우만 '무료'. 비용 정보가 없으면 '입장료 미확인'(신청 불필요와 무료를 구분)
@@ -59,45 +59,52 @@ export function badges(d, today = new Date().toISOString().slice(0, 10)) {
   return order.filter((x) => set.has(x)).slice(0, 4).map((x) => `${HL_ICON[x]} ${x}`).join("  ");
 }
 
-// 한 건짜리 알림. 본문에 원문 주소를 글자로 넣지 않는다(제목에 링크로 연결).
-// 확인된 정보만 짧게: 특징 → 한두 줄 설명 → 날짜·시간 → 장소 → 비용·대상 → 신청. 없는 항목은 줄째로 뺀다.
+// 미국 행사 안내도 한국 알림처럼 짧고 담백하게 표시한다.
+// 한 행사 한 통: 제목(원문 링크) → 핵심 설명 → 날짜·장소 → 비용·대상 → 신청·필수 조건.
+// 이모지는 본문에서 쓰지 않는다. 확인/관심없음 버튼은 기존 동작을 유지한다.
 // kind: now | season | digest | more. opts: {version, note}
 export function renderEvent(d, opts = {}) {
-  const note = opts.note || "";
-  const head = d.registration_status === "cancelled" ? "❌ 취소" : note.startsWith("⏰") ? "⏰" : opts.version > 1 ? "🔄 변경" : opts.kind === "season" ? "📆 예고" : "🆕";
-  // 제목을 누르면 공식 안내(원문)가 열린다(별도 '공식 안내' 버튼 줄 없음)
+  const note = String(opts.note || "");
+  // 취소·변경·마감 등 실제 행동에 영향을 주는 상태만 문자로 표시한다.
+  const state = d.registration_status === "cancelled" ? "[취소] "
+    : note.startsWith("⏰") ? "[마감 임박] "
+    : opts.version > 1 ? "[변경] "
+    : opts.kind === "season" ? "[사전 안내] " : "";
   const title = esc(cut(d.title_ko || d.title, 120));
   const link = /^https?:\/\//.test(d.url || "") && d.url.length <= 2000 ? d.url : null;
-  const lines = [`${head} <b>${link ? `<a href="${esc(link)}">${title}</a>` : title}</b>`];
-  if (note.startsWith("⏰")) lines.push(`<b>${esc(cut(note.slice(2).trim(), 200))}</b>`);
-  else if (opts.version > 1 && note) lines.push(`바뀐 점: ${esc(cut(note, 300))}`);
-  if (opts.kind === "season" && d.year_label) lines.push(esc(d.year_label));
-  const b = badges(d);
-  if (b) lines.push(b);
-  if (d.special_reason) lines.push(`✨ <b>${esc(cut(d.special_reason, 160))}</b>`); // 왜 특별한지 한 문장
-  if (d.summary_ko) lines.push(esc(cut(d.summary_ko, 240)));
-  lines.push("");
+  const lines = [`${state}<b>${link ? `<a href="${esc(link)}">${title}</a>` : title}</b>`];
+
+  if (note.startsWith("⏰")) lines.push(`마감 안내: ${esc(cut(note.slice(2).trim(), 180))}`);
+  else if (opts.version > 1 && note) lines.push(`바뀐 점: ${esc(cut(note, 240))}`);
+  if (opts.kind === "season" && d.year_label) lines.push(esc(cut(d.year_label, 120)));
+
+  // 특별한 이유와 일반 설명은 동일 행사에서 서로 반복하기 쉬워 한 가지만 표시.
+  // 희소성 판단에 필요한 special_reason 원본은 DB에 보존되며 분류·발송 기준은 바꾸지 않는다.
+  const explanation = String(d.summary_ko || "").trim() || String(d.special_reason || "").trim();
+  if (explanation) lines.push(esc(cut(explanation, 200)));
+
   const when = [dateRange(d), d.time_text].filter(Boolean).join(" ");
-  if (when) lines.push(`📅 ${esc(cut(when, 160))}`);
-  const org = d.org && !String(d.location || "").includes(d.org) ? d.org : null;
-  if (d.location) lines.push(`📍 <a href="${esc(mapUrl(d))}">${esc(cut(d.location, 140))}</a>${org ? ` · ${esc(cut(org, 60))}` : ""}`);
-  else if (org) lines.push(`📍 ${esc(cut(org, 160))}`);
-  const money = [`💲 ${esc(cut(costLine(d), 120))}`, d.age_text ? `👤 ${esc(cut(d.age_text, 80))}` : null].filter(Boolean).join("   ");
-  lines.push(money);
+  if (when) lines.push(`일시: ${esc(cut(when, 155))}`);
+  if (d.location) lines.push(`장소: <a href="${esc(mapUrl(d))}">${esc(cut(d.location, 110))}</a>`);
+  else if (d.org) lines.push(`주최: ${esc(cut(d.org, 100))}`);
+
+  lines.push(`비용: ${esc(cut(costLine(d), 135))}`);
+  if (d.age_text) lines.push(`대상: ${esc(cut(d.age_text, 120))}`);
   const reg = regLine(d);
-  if (reg) lines.push(`📝 ${esc(cut(reg, 200))}`);
+  if (reg) lines.push(`신청: ${esc(cut(reg, 180))}`);
+
+  // 국적·연령·안전·예약 조건은 길어지더라도 누락하지 않는다.
   const cond = [d.eligibility, d.status_note].filter(Boolean).join(" · ");
-  if (cond) lines.push(`🛂 ${esc(cut(cond, 300))}`);
-  while (lines[lines.length - 1] === "") lines.pop();
+  if (cond) lines.push(`참고: ${esc(cut(cond, 320))}`);
   return lines.join("\n");
 }
 
-// 요약은 목록이 아니라 짧은 개수 안내 한 통(버튼·주소 없음). 상세는 각각의 메시지 또는 /more
+// 요약은 새로 발송 가능한 내용이 몇 건인지 짧은 텍스트로 안내한다.
 export function renderCount(botLabel, o) {
   const { total, sent, held } = o;
-  const lines = [`🗓 오늘 새로 찾은 ${esc(botLabel)} 소식 ${total}건`];
+  const lines = [`오늘 새로 찾은 ${esc(botLabel)} 소식 ${total}건`];
   if (sent) lines.push(`중요한 ${sent}건을 따로 보냈습니다.`);
-  if (held) lines.push(`나머지 ${held}건은 /more 를 보내면 중요한 순서로 5건씩 보여 드립니다.`);
+  if (held) lines.push(`나머지 ${held}건은 /more 에서 확인할 수 있습니다.`);
   return lines.join("\n");
 }
 

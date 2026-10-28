@@ -127,19 +127,19 @@ try {
     assert.match(s.payload.text, /바뀐 점: 접수 시작 미확인 → /);
   });
 
-  await step("1-5 오늘 접수 시작 → ⏰ 알림(확인한 사람 포함), 내일 마감 → 확인 안 한 사람에게만", async () => {
+  await step("1-5 접수 시작·마감 임박 알림(확인한 사람 포함 조건 유지), 중복 방지", async () => {
     await admin("/admin/enqueue", { events: [ev("opens", { registration_opens: denverToday, urgency: "weekly" }), ev("dl", { deadline: plus(1), urgency: "weekly" })] });
     await hook("kids", E.cb(OWNER, "ack:opens", 1));
     await hook("kids", E.cb(OWNER, "ack:dl", 1));
     const n = E.calls.length;
     await admin("/admin/dispatch", {});
-    const opens = sends(n, /^⏰ <b>(?:<a href="[^"]*">)?행사 opens/).map((c) => String(c.payload.chat_id)).sort();
-    const dl = sends(n, /^⏰ <b>(?:<a href="[^"]*">)?행사 dl/).map((c) => String(c.payload.chat_id));
+    const opens = sends(n, /^\[마감 임박\] <b>(?:<a href="[^"]*">)?행사 opens/).map((c) => String(c.payload.chat_id)).sort();
+    const dl = sends(n, /^\[마감 임박\] <b>(?:<a href="[^"]*">)?행사 dl/).map((c) => String(c.payload.chat_id));
     assert.deepEqual(opens, [FRIEND, OWNER].sort());
     assert.deepEqual(dl, [FRIEND]);
     const n2 = E.calls.length;
     await admin("/admin/dispatch", {});
-    assert.equal(sends(n2, /^⏰/).length, 0, "같은 날 두 번 알리지 않음");
+    assert.equal(sends(n2, /^\[마감 임박\]/).length, 0, "같은 날 두 번 알리지 않음");
   });
 
   // ------------------------------------------------ 7 요약
