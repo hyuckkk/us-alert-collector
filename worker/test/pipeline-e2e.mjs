@@ -61,12 +61,20 @@ try {
     assert.equal(r.sent, 3, JSON.stringify(r));
     const s = sends(n);
     const friendE1 = s.find((x) => String(x.payload.chat_id) === FRIEND);
-    // 행사 1건 = 1통: 제목(누르면 공식 안내) 굵게, 특징(선착순), 한국식 날짜, 확인된 항목만, 버튼은 [✅][🚫] 한 줄
-    assert.equal(friendE1.payload.text, '🆕 <b><a href="https://example.org/e1">행사 e1</a></b>\n🏃 선착순\n✨ <b>시험용 특별 근거</b>\n\n📅 11월 10일(화) 10:00\n📍 <a href="https://www.google.com/maps/search/?api=1&amp;query=Westminster%20Library%2C%20CO">Westminster Library</a> · Test Org\n💲 $20   👤 6-10세');
+    // 행사 1건 = 1통: 장식 이모지·중복 없이 한국어로 안내, 확인 버튼은 기존대로 유지
+    assert.equal(friendE1.payload.text, [
+      '<b><a href="https://example.org/e1">행사 e1</a></b>',
+      '시험용 특별 근거',
+      '일시: 11월 10일(화) 10:00',
+      '장소: <a href="https://www.google.com/maps/search/?api=1&amp;query=Westminster%20Library%2C%20CO">Westminster Library</a>',
+      '비용: $20',
+      '대상: 6-10세',
+      '신청: 선착순',
+    ].join("\n"));
     assert.equal(friendE1.payload.reply_markup.inline_keyboard.length, 1, "공식 안내 버튼 줄 없음");
     assert.equal(friendE1.payload.parse_mode, "HTML");
     assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[0].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
-    assert.ok(s.some((x) => String(x.payload.chat_id) === OWNER && /^📆 예고 <b>(?:<a href="[^"]*">)?행사 e2(?:<\/a>)?<\/b>/.test(x.payload.text)));
+    assert.ok(s.some((x) => String(x.payload.chat_id) === OWNER && /^\[사전 안내\] <b>(?:<a href="[^"]*">)?행사 e2(?:<\/a>)?<\/b>/.test(x.payload.text)));
     assert.ok(s.some((x) => x.token === "tLIFE" && /행사 e4/.test(x.payload.text)));
   });
 
@@ -88,7 +96,7 @@ try {
     await admin("/admin/dispatch", {});
     const s = sends(n);
     assert.equal(s.length, 1);
-    assert.match(s[0].payload.text, /^🔄 변경 <b>(?:<a href="[^"]*">)?행사 e1(?:<\/a>)?<\/b>/);
+    assert.match(s[0].payload.text, /^\[변경\] <b>(?:<a href="[^"]*">)?행사 e1(?:<\/a>)?<\/b>/);
     assert.match(s[0].payload.text, /바뀐 점: 비용 \$20 → \$25/);
   });
 
@@ -98,7 +106,7 @@ try {
     const f = sends(n, FRIEND);
     assert.equal(f.length, 2, JSON.stringify(r));
     for (const m of f) {
-      assert.match(m.payload.text, /^🆕 <b><a href="https:\/\/example\.org\/e[23]">행사 e[23]<\/a><\/b>/);
+      assert.match(m.payload.text, /^<b><a href="https:\/\/example\.org\/e[23]">행사 e[23]<\/a><\/b>/);
       assert.ok(!/https?:\/\//.test(m.payload.text.replace(/<a href="[^"]*">/g, "")), "본문에 원문 주소가 보임(지도 링크만 허용)");
       const kb = m.payload.reply_markup.inline_keyboard;
       assert.equal(kb.length, 1);
