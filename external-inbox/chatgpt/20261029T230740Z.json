@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-29T23:07:40Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Golden Gate Canyon State Park 2026 Christmas Tree Cut Lottery — 250 Permits",
+      "url": "https://cpw.state.co.us/event/events-and-festivals/2026/11/christmas-tree-cut-draw",
+      "start_date": "2026-11-01",
+      "end_date": "2026-11-15",
+      "time": "Lottery applications Nov 1 00:00–Nov 15 17:00 America/Denver; permit holders cut tree Saturday Dec 5 (cutting hours not confirmed)",
+      "location": "Golden Gate Canyon State Park, 92 Crawford Gulch Road, Golden, CO 80403",
+      "cost": "$35 per selected Christmas-tree cutting permit (charged only on success); Colorado state park vehicle pass also required, price depends on pass already held; one permit is family activity; 5-person total $35 plus any needed park pass",
+      "age": "Public application; organizer does not specify a children's minimum age or applicant residency/ID rules; verify CPWshop during application",
+      "audience": "family",
+      "description": "High-value genuinely restricted access: only 250 lottery winners may personally cut a Christmas tree in a state park on December 5, 2026. Applications open Nov 1 and close Nov 15, selected permits $35. Official CPW page and registration route cpwshop.com > VISIT A PARK > SPECIAL EVENTS > CHRISTMAS TREE DRAW. Park pass required. Suitable for 2026 local residents; no 2027 date announced."
+    },
+    {
+      "title": "Cherry Creek Schools STEAM-A-Palooza X 2026 — Free Robotics and Aerospace Makers Festival",
+      "url": "https://cherrycreekschools.tfaforms.net/f/sap_preregistration",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "9:00 AM–4:00 PM America/Denver; registration choices 9 AM–noon or 1–4 PM",
+      "location": "Cherry Creek Innovation Campus (CCIC), Aurora, Colorado (street address not published in event form)",
+      "cost": "Free event and preregistration; family of five $0 excluding transport and any optional purchases",
+      "age": "Public-facing family registration for Pre-K–Grade 6 children and accompanying adults; registration form provides non-Cherry-Creek-school child option, exact capacity unverified",
+      "audience": "family",
+      "description": "Rare public school-campus 10th anniversary STEAM event with hands-on building circuits, programming robots, flying paper rockets, painting with a robot, VR and aerospace activities; differentiated from weekly classes. Preregistration required. District school home confirms 2026 November 7 and now accepting registrations. Form displays 'No contact found' banner to text crawlers, so end-to-end registration success not verified. Primarily for 2026 locals, not the user's 2027-28 family stay."
+    },
+    {
+      "title": "Denver Botanic Gardens Math in Bloom — Fibonacci Day 2026",
+      "url": "https://www.botanicgardens.org/events/public-events/math-bloom-presents-fibonacci-day",
+      "start_date": "2026-11-21",
+      "end_date": "2026-11-21",
+      "time": "10:00 AM–2:00 PM America/Denver; mathematician-led drop-in tours at 11 AM and 1 PM",
+      "location": "Denver Botanic Gardens York Street, 1007 York Street, Denver, CO 80206",
+      "cost": "Included with regular York Street admission: adults $16.25, children 3–15 $12; 2 adults+3 children family example $68.50. Reservation/timed entry required; no special free admission or discount.",
+      "age": "All ages; mathematics-themed activities and plant tours suitable for kids; public paid entry",
+      "audience": "family",
+      "description": "One-date Simons Foundation-supported nature-and-mathematics participatory program, not ordinary public admission alone: meet mathematicians, hands-on Fibonacci activities, family storytelling, pattern-themed plant displays, special short guided tours and local performances. 2026 residents only; strong unique activity despite standard paid entry; organizer source confirms included in general admission. Ticket stock unknown."
+    }
+  ]
+}
