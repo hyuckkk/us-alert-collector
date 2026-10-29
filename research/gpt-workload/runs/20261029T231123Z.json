@@ -1,0 +1,245 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-10-29T23:02:55.871Z",
+  "finished_at_utc": "2026-10-29T23:11:23.259Z",
+  "search_requests": 61,
+  "queries": [
+    "Colorado October 30 November December 2026 free aviation museum open cockpit airport day kids event hands on",
+    "Colorado November 2026 free STEM festival robots rockets makerspace family hands on \"November\"",
+    "Colorado November 2026 military base public open house aircraft museum air force special access",
+    "Colorado November December 2026 free steam train rides kids historical museum special event",
+    "Colorado 2026 November free behind the scenes tours science research facility public family",
+    "Denver Boulder Fort Collins November 2026 free space science robotics family workshop registration",
+    "Colorado special access tours november 2026 public dam power plant aerospace factory museum",
+    "Colorado state parks 2026 November December lottery permits guided snowshoe astronomy free tours",
+    "Denver Westminster 2026 November youth free learn to ski camp new registration subsidized",
+    "Colorado Denver 2026 November school public student performance festival rare sports competition free",
+    "2027 Colorado family free kids ski lessons Epic SchoolKids passport registration 2027 2028",
+    "2026 Colorado November county sponsored free family event scavenger outdoor challenge hands-on",
+    "site:colorado.edu \"November\" \"2026\" \"family\" \"hands-on\" free event Boulder",
+    "site:cherrycreekschools.org \"STEAM-A-Palooza\" 2026 November 7 free community",
+    "site:cpw.state.co.us/event 2026 \"lottery\" \"December\" \"2026\" special",
+    "site:cpw.state.co.us/event \"Nov\" \"2026\" free \"program\" unique family",
+    "site:historycolorado.org/events \"November\" \"2026\" free family workshop special",
+    "site:wingsmuseum.org/events November 2026 free 7 14 21 special open cockpit",
+    "site:coloradorailroadmuseum.org/event/ November 2026 steam special rides free children",
+    "site:usafa.edu \"November\" 2026 \"open\" public air force event academy",
+    "site:schriever.spaceforce.mil November 2026 open house public colorado",
+    "site:colorado.gov 2026 \"November\" \"2026\" \"free\" \"STEM\" \"families\"",
+    "site:dnr.colorado.gov \"November\" \"2026\" free entrance state park rare opportunity",
+    "site:parks.coloradosprings.gov 2026 November free youth adventures registration",
+    "Colorado November 2026 families free \"build\" \"robot\" \"engineering\" hands on November 7 14 21 festivals",
+    "Colorado 2026 November limited public tour \"behind-the-scenes\" laboratory Denver Boulder Golden",
+    "Colorado November 2026 special limited permit lottery participate state park Christmas tree draw 250",
+    "Colorado 2026 school district STEAM fair open to community November December free aviation robotics",
+    "2026 November 2026 free youth winter sports try curling ice skating lessons Colorado registration",
+    "Colorado 2026 free museum night November 7 \"aviation\" \"train cab\" open museum",
+    "2026 Colorado November guided facility public tour manufacturing defense military space special tour Golden",
+    "Colorado November 2026 \"free\" \"ride and drive\" electric car demo events",
+    "Colorado November 2026 \"free flights\" \"Young Eagles\" rally 7 21 December EAA",
+    "2026 November Colorado \"open house\" \"flight simulator\" airport public",
+    "2026 Colorado November \"open house\" \"research\" \"hands-on\" family university Denver Boulder",
+    "2026 Colorado \"November 7\" \"STEM\" \"free\" \"school\" \"family\" unique",
+    "2026 Colorado \"November 14\" \"free\" \"makers\" \"festival\" craft kids",
+    "2026 Colorado \"November 21\" \"open house\" laboratory robotics public free",
+    "2026 November \"special tour\" \"mines\" \"nuclear\" Golden \"free\"",
+    "2026 November 2026 \"free admission day\" \"air museum\" \"hands on\" Colorado",
+    "Colorado state parks 2026 limited draw \"Christmas tree\" other parks December",
+    "site:cpw.state.co.us/event/2026/11 \"Horseback\" \"free\" kids special",
+    "site:cpw.state.co.us/event/2026/11 \"laser\" \"night\" \"tour\" park",
+    "2026 Colorado \"learn to ski\" free application 2027 class county sponsored December",
+    "Colorado 2026 November robotics competition high school open public free tournament Denver",
+    "site:botanicgardens.org \"Math in Bloom\" \"Fibonacci Day\" \"November 21\" \"2026\"",
+    "Colorado November 2026 free \"Fibonacci Day\" math kids botanical gardens special",
+    "2026 Colorado November science museum hands on free \"special\" \"robot\" November 7",
+    "site:cpw.state.co.us 2026 \"Nov 1\" \"Nov 15\" \"Christmas Tree Cut Draw\" eligibility nonresidents",
+    "site:cherrycreekschools.org \"STEAM-A-Palooza 2026\" \"Innovation Campus\" \"address\"",
+    "\"Turkey Toss Free Throw Competition\" \"Hyland Hills\" November 21 2026",
+    "site:hylandhills.gov \"Turkey Toss\" 2026 age free",
+    "site:hylandhills.gov 2026 \"competition\" November 21 sports center",
+    "2026 Westminster \"free throw competition\" November 21 Turkey Toss youth",
+    "site:hylandhills.gov/events \"Turkey Toss\" \"2026\"",
+    "\"Turkey Toss Free Throw Competition\" \"Hyland Hills\" \"free\" 2026 25",
+    "\"Turkey Toss Free Throw Competition\" \"hylandhills.gov\"",
+    "site:botanicgardens.org/visit/york-street \"adults\" \"children\" \"$\" 2026",
+    "site:botanicgardens.org \"York Street\" \"Admission\" \"Children (3-15)\" 2026 $17 $12",
+    "site:botanicgardens.org \"Nov 21\" \"Fibonacci\" included admission family pricing",
+    "Cherry Creek Innovation Campus official address location CCIC 2026 STEAM-A-Palooza 7 2026"
+  ],
+  "search_request_batches": [
+    12,
+    12,
+    7,
+    14,
+    5,
+    4,
+    3,
+    3,
+    1
+  ],
+  "url_read_attempts": 12,
+  "url_read_successes": 10,
+  "failed_page_reads": 2,
+  "failed_searches": 0,
+  "official_detail_verified": 8,
+  "official_detail_verified_urls": [
+    "https://cpw.state.co.us/event/events-and-festivals/2026/11/christmas-tree-cut-draw",
+    "https://cherrycreekschools.tfaforms.net/f/sap_preregistration",
+    "https://campus.cherrycreekschools.org/",
+    "https://ccic.cherrycreekschools.org/",
+    "https://www.botanicgardens.org/events/public-events/math-bloom-presents-fibonacci-day",
+    "https://www.botanicgardens.org/tickets-log",
+    "https://www.epicpass.com/info/epic-schoolkids.aspx",
+    "https://ces-mines.cventevents.com/event/NuclearEnergySymposium/register"
+  ],
+  "failed_page_read_details": [
+    {
+      "url": "https://www.hylandhills.gov/events/",
+      "result": "HTTP 403"
+    },
+    {
+      "url": "https://www.hylandhills.gov/",
+      "result": "timeout"
+    }
+  ],
+  "candidate_events": 42,
+  "duplicate_candidates": 11,
+  "rejected_events": 22,
+  "held_events": 6,
+  "qualified_events": 3,
+  "candidate_decisions": {
+    "qualified": [
+      "Golden Gate Canyon State Park Christmas Tree Cut Lottery (Nov 1–15 application; Dec 5 cutting; 250 permits)",
+      "Cherry Creek Innovation Campus 10th STEAM-A-Palooza (Nov 7, free hands-on science/robots)",
+      "Denver Botanic Gardens Math in Bloom Fibonacci Day (Nov 21, special hands-on mathematical nature day, normal admission)"
+    ],
+    "duplicate": [
+      "Wings Over Rockies Denver Arts Week free night Nov 7 — previously submitted",
+      "NSF NCAR Super Science Saturday Nov 7 — previously submitted",
+      "Monumental Impact MITEE Gobble Squabble Nov 21 — previously submitted",
+      "Challenger Second Saturday Science Nov 14 — previously submitted",
+      "EAA Chapter 72 Young Eagles Nov 14 — previously submitted",
+      "CPW Fresh Air Friday free entry Nov 27 — previously submitted",
+      "Denver Zoo free Nov 11/14/22 — previously submitted",
+      "Denver Botanic Gardens free Nov 27 — previously submitted",
+      "RMAIIG AI Robot Show Nov 17 — previously submitted",
+      "CU Wizards AIRBUSTERS Oct 31 — previously submitted",
+      "Northern Colorado Rocketry Atlas launch Nov 7 — previously submitted"
+    ],
+    "rejected": [
+      "Colorado Railroad Museum Polar Express regular $85+ each, full-price seasonal product",
+      "Wings Over Rockies monthly normal-price cockpit demo Nov 21",
+      "Wings Exploration of Flight monthly breakfast fly-in Nov 14",
+      "AESP National Laboratory of the Rockies Nov 5 access for association members and security restrictions",
+      "CSU Spur recurring regular 2nd Saturday science activities",
+      "Denver Mint regular ongoing free public guided tours",
+      "Cheyenne Mountain State Park Creature Feature repeated free-with-park-pass class",
+      "Mueller State Park regular recurring storytime",
+      "Mueller State Park Big Backyard Winter Edition ordinary interpretation",
+      "Mueller State Park Basic Survival Skills ordinary park interpretive class",
+      "Cherry Creek State Park Little Nature Explorers ages 3–6 routine repeated class",
+      "Thanksgiving Point Super STEM Saturday Nov 14 is in Utah, not Colorado",
+      "EAA Chapter 34 November Young Eagles is Fort Worth Texas",
+      "EAA Chapter 810 November Young Eagles is Payson Arizona",
+      "Connecticut Afterschool Network STEM Week remote/other-state discussion-heavy",
+      "Colorado School of Mines Discover Mines college applicant recruitment event",
+      "Generic normal-price holiday craft and shopping markets",
+      "NCAR free Explorer Series brewery lecture, talk-heavy",
+      "Colorado Railroad Museum Harvest Haunt Oct 17–18 already past",
+      "Colorado Railroad Museum Dinosaur Express May 30–31 already past",
+      "Colorado School of Mines Nuclear Energy Symposium tour already full, lectures unsuitable",
+      "Hyland Hills sound bath and routine wellness class"
+    ],
+    "held": [
+      "Hyland Hills Turkey Toss Free Throw Competition Nov 21: third-party calendar lists free 6+ but official domain HTTP 403/timeout, no official confirmation",
+      "Epic SchoolKids 2027/28 Colorado Pack: free first-timer lesson and resort days, official registration only says spring 2027, no exact opening date",
+      "Evergreen Lake Avalanche free Try Hockey 2026/27: program will return, exact date and registration not posted",
+      "Colorado FIRST Windsor FTC Nov 14 scrimmage: spectator public access and admission not confirmed",
+      "Roosevelt VEX Robot Rumble Nov 21: team tournament registration published but spectator access/cost not verified",
+      "Colorado Railroad Museum 2027 Boulder County Free Days: dates TBA, residency restriction applies"
+    ]
+  },
+  "known_by_collector": 1,
+  "verified_collector_misses": 1,
+  "collector_comparison": {
+    "source_registry_count": 71,
+    "queries_json_checked": true,
+    "last_successful_collect_workflow": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40957551870",
+    "official_data_recheck_by_external_inbox": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40970992196",
+    "prior_chatgpt_inbox_files_checked": 10,
+    "current_worker_event_db_direct_read": false,
+    "external_inbox_identity": {
+      "new": 3,
+      "exact": 0,
+      "matched": 0,
+      "registered_missed": 1,
+      "unregistered": 1,
+      "previously_seen_and_recommendation_excluded": 1
+    },
+    "findings": [
+      "CPW Golden Gate Canyon Christmas Tree Cut draw: live inbox recheck labels registered-missed, with source path /events blocked and specific /events-and-festivals page outside working scraper; counted one confirmed miss using worker gap verdict, not mere absence from registry.",
+      "Cherry Creek school STEAM-A-Palooza: live inbox recheck labels unregistered/query_gap. Do not equate unregistered alone with an independently proven collector miss.",
+      "Denver Botanic Gardens Fibonacci Day: worker comparison labels excluded/interest; counted as one found-by-collector but recommendation rejected from aggressive alerts. Its cost is normal admission, no discount.",
+      "Three submitted events were 'new' according to existing Worker identity comparison, while one was previously scanned at recommendation stage; there is no inference that all three were independently missed."
+    ]
+  },
+  "submitted_events": 3,
+  "submission_files": [
+    "external-inbox/chatgpt/20261029T230740Z.json"
+  ],
+  "pipeline_result": {
+    "source_file_saved_and_reopened": true,
+    "official_pages_rechecked": 3,
+    "official_pages_ok": 3,
+    "identity_new": 3,
+    "enqueued": 3,
+    "worker_new": 3,
+    "worker_outbox_rows": 7,
+    "rec_push": 2,
+    "rec_interest": 1,
+    "rec_none": 0,
+    "dispatch_messages_sent_total": 4,
+    "digest_messages_sent_total": 1,
+    "event_specific_delivery_receipts_proven": 0,
+    "workflow": "https://github.com/hyuckkk/us-alert-collector/actions/runs/40970992196",
+    "workflow_result": "success",
+    "subsequent_correction": "location for CCIC corrected in original inbox file to 8000 S Chambers Rd Centennial; update-only workflow did not repeat ingestion"
+  },
+  "delivered_events": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://cpw.state.co.us/event/events-and-festivals/2026/11/christmas-tree-cut-draw",
+    "https://cherrycreekschools.tfaforms.net/f/sap_preregistration",
+    "https://www.botanicgardens.org/events/public-events/math-bloom-presents-fibonacci-day"
+  ],
+  "future_family_notice": "2027/28 Epic SchoolKids Colorado Pack registration announced only as spring 2027. No date or availability for 2027/28 yet; not submitted.",
+  "source_gap_suggestions": [
+    {
+      "kind": "source",
+      "url": "https://cpw.state.co.us/event/events-and-festivals/2026/11/christmas-tree-cut-draw",
+      "reason": "CPW state park draw/special permit announcements distinct from generic CPW events"
+    },
+    {
+      "kind": "source",
+      "url": "https://ccic.cherrycreekschools.org/",
+      "reason": "School district special 10th anniversary public STEAM fair and new CCIC pathways; check district public event landing page"
+    },
+    {
+      "kind": "source",
+      "url": "https://www.botanicgardens.org/events/public-events",
+      "reason": "Sponsored unique Math in Bloom activities may warrant separate interest display, not automatic push at regular admission"
+    },
+    {
+      "kind": "queries",
+      "queries": [
+        "Golden Gate Canyon Christmas Tree Cut Draw 2026",
+        "CPW state parks lottery special event permit",
+        "Cherry Creek STEAM-A-Palooza free robotics rockets CCIC",
+        "Denver Botanic Gardens Math in Bloom Fibonacci Day",
+        "youth sports free nonleague tournaments Westminster"
+      ]
+    }
+  ],
+  "notes": "Independent Colorado search for 2026 residents versus 2027-2028 family. Search count covers 61 actual web search requests (60 group searches plus one CCIC venue address search); all original queries preserved. Source dnr.colorado.gov displayed a robots restriction inside search results but no search request itself failed. URL read attempts count only open/click operations, not find-on-already-open-source. Two Hyland Hills official pages failed. Event form banner said 'No contact found' even while registration fields were displayed; completion/space availability not verified. CCIC form loosely says Aurora, official campus address is in Centennial (corrected in submitted file). Ticket status for Fibonacci Day unverified. 2026 school district fair and 250 permit lottery should reach local contacts, not be described as user-family 2027 events. Github collection code unchanged; no direct Telegram API calls. Current .github/workflows/external-inbox.yml replaced older chatgpt-inbox.yml. Aggregate dispatch (4) and digest (1) are not event-specific receipts, therefore delivered_events=0. Subscription balance unknown."
+}
