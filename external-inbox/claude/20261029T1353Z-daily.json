@@ -1,0 +1,73 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-29T13:53:00Z",
+  "finished_at": "2026-10-29T13:53:35Z",
+  "searches": 4,
+  "queries": [
+   "Denver Arts Week 2026 Night at the Museums November 7 free participating museums list",
+   "Colorado fireworks rescheduled Veterans Day 2026 OR Thanksgiving holiday parade Colorado November 2026 free",
+   "Denver holiday train ride OR Santa train November December 2026 Georgetown Loop OR Royal Gorge tickets on sale",
+   "Thornton Winterfest 2026 OR Northglenn holiday OR Arvada Olde Town holiday 2026 date free"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 9,
+  "excluded": 6,
+  "excluded_reasons": {
+   "date_unconfirmed": 3,
+   "regular_paid_seasonal": 2,
+   "no_event_found": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(덴버 아트위크 박물관의 밤, 파커 재향군인의 날 불꽃놀이)과 연말 지역 축제·기차 체험을 찾았다. 공식 사이트 직접 열기는 이 환경에서 DNS 오류라 verified:false. 제외: 파커 불꽃놀이(검색 결과 없음), 푸에블로·그릴리 퍼레이드·캐슬록 점등(2026 날짜 불확실), 로열고지·조지타운 산타 열차(정가 시즌 상품, 2026 일정 미확인), 볼더 철도박물관 산타 열차(정가)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-29T13:53:35Z",
+   "origin": "scheduled",
+   "title": "Night at the Museums 2026 (Denver Arts Week) - free after-hours museums",
+   "url": "https://clyffordstillmuseum.org/events/night-at-the-museums-2026/",
+   "start_date": "2026-11-07",
+   "time": "5:00 PM - 10:00 PM",
+   "location": "Clyfford Still Museum and participating Denver museums",
+   "cost": "Free",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Annual Denver Arts Week night when more than a dozen Denver museums open free and late; free shuttles in past years.",
+   "recommend": "push",
+   "special_reason": "1년에 하루 덴버 박물관 여러 곳이 밤까지 무료 개방"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-29T13:53:35Z",
+   "origin": "scheduled",
+   "title": "Thornton WinterFest 2026",
+   "url": "https://www.thorntonco.gov/node/600",
+   "start_date": "2026-12-11",
+   "end_date": "2026-12-13",
+   "location": "Carpenter Park, Thornton",
+   "age": "All ages",
+   "audience": "family",
+   "description": "City of Thornton annual three-day winter festival: Santa's Village, lit trees, ice skating, ice carving, live music, fireworks and drone show. Dates from listings; admission not confirmed.",
+   "recommend": "push",
+   "special_reason": "시가 1년에 한 번 여는 겨울 축제(불꽃놀이·드론쇼)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-29T13:53:35Z",
+   "origin": "scheduled",
+   "title": "Estes Park Catch the Glow Parade 2026",
+   "url": "https://estes-park.com/things-to-do/start-a-new-holiday-tradition-in-estes-park/",
+   "start_date": "2026-11-27",
+   "location": "Downtown Estes Park",
+   "cost": "Free",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Annual lighted holiday parade the day after Thanksgiving in Estes Park; town tree lighting listed Nov 21.",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 열리는 무료 빛 퍼레이드"
+  }
+ ]
+}
