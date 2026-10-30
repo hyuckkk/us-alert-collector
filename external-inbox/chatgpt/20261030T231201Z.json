@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-30T23:12:01.103Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Denver Museum of Nature & Science — SCFD Free Day (November 16, 2026)",
+      "url": "https://www.dmns.org/programs-and-events/freedays/",
+      "start_date": "2026-11-16",
+      "end_date": "2026-11-16",
+      "time": "Monday 9:00 AM–5:00 PM MST, America/Denver",
+      "location": "Denver Museum of Nature & Science, 2001 Colorado Blvd, Denver, CO 80205",
+      "cost": "$0 general museum admission, no ticket required. Compared with published ordinary admission $27.95/adult and $20.95/child age 3–18, 2 adults + 3 children save $118.75 (tax, travel excluded). Theater, planetarium and separately ticketed temporary exhibits require extra payment.",
+      "age": "Public, all ages; normal permanent exhibits free with no ticket or residency restriction stated for the SCFD day; younger than age 3 ordinarily free. No capacity guarantee.",
+      "audience": "family",
+      "description": "Substantial verified SCFD public subsidy, not just a free ordinarily-free event: one specific free museum-admission day on Nov 16 2026, advertised by museum. Normally 5 people (2 adults +3 youth age 3–18) cost $118.75. Walk-up admission free, no booking required. Separate timed tickets for optional shows/exhibitions; special programs are not implied. This repeats several times a year, and its urgency is lower than truly rare special access. Local Colorado residents in 2026; user family arrival 2027 Jun–Aug 2028. Official museum 2027 free dates currently published: Jun 18 before expected arrival, Aug 23 after expected 2027 summer (but during stay until 2028 Aug), cannot assume they are eligible on exact day without exact arrival/departure."
+    }
+  ]
+}
