@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-30T23:09:54.314Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Emergence: Exploring Quantum Technology Through Music and Dance — Free NIST Quantum Hands-On Event",
+      "url": "https://calendar.colorado.edu/event/emergence-exploring-quantum-technology-through-music-and-dance",
+      "start_date": "2026-11-14",
+      "end_date": "2026-11-14",
+      "time": "Saturday 6:00 PM hands-on quantum activities/demonstrations; 7:00 PM quantum/music/dance performance; campus calendar says until 8:00 PM MST, registration page lists 9:00 PM (organizer schedule discrepancy, verify)",
+      "location": "Boulder Public Library, Canyon Theater, Boulder CO 80302 (CU calendar: 1001 Arapahoe Avenue; linked organizer registration: 1000 Canyon Boulevard—same library, verify entrance)",
+      "cost": "FREE event, family of five $0 published admission; transportation/parking optional; registration page displays Register but real-time spots not independently proven",
+      "age": "Open to general public and families/all ages per university event and Science Discovery organizer; no U.S.-citizenship or student-only rule stated. Adult supervision for children as appropriate; specific minimum age not stated",
+      "audience": "family",
+      "description": "Distinct one-date public outreach event: NIST quantum scientist demonstrations and a hands-on quantum activity period starting at 6 PM, followed by live music/tango/physics stage show starting 7 PM. Backed by CU Boulder Science Discovery and university PACES community outreach grant. Not an ordinary paid performance or lecture; practical learning with free admission. Official organizer https://www.colorado.edu/sciencediscovery/emergence-exploring-quantum-technology-through-music-and-dance and registration https://lp.constantcontactpages.com/ev/reg/x7q8jsb/lp/296c5ae3-e29c-4c92-b6b0-a403d9b03dc3; conflict 8pm vs 9pm finish and street addresses flagged rather than invented resolution. For Colorado residents in 2026, no 2027–28 recurrence confirmed."
+    },
+    {
+      "title": "Social Sculpture: Artnauts + YOU — Free University Artist-Led Making Day",
+      "url": "https://calendar.colorado.edu/event/social-sculpture-artnauts-you",
+      "start_date": "2026-11-07",
+      "end_date": "2026-11-07",
+      "time": "Saturday 1:00 PM–4:00 PM MST (America/Denver)",
+      "location": "CU Art Museum, 1085 18th Street, Boulder, CO 80309",
+      "cost": "FREE to participate, family of five $0 for advertised program; parking and optional purchases unverified",
+      "age": "Explicitly lists General Public, Parents/Families, Children and High School Students; no age minimum or residency restrictions stated. Advance registration not required or offered on listed university event page; capacity not verified",
+      "audience": "family",
+      "description": "One-off, publicly funded university artist-led hands-on art-making event with CU Boulder's Unstable Design Lab: collaborative photo project, teacup exchange, postcard making for Sunflower Seeds and artist demonstrations. Unlike routine passive exhibition/admission or talk-heavy program. CU Art Museum calendar confirms 2026 Nov 7 1–4 PM, family/general public, free to participate; special 30th-anniversary Artnauts exhibition tie-in. For Colorado locals in 2026; not a verified 2027–28 family date. Allow simple direct-making activity despite some optional artist talks."
+    }
+  ]
+}
