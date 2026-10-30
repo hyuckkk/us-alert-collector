@@ -1,0 +1,55 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-30T13:42:00Z",
+  "finished_at": "2026-10-30T13:42:35Z",
+  "searches": 4,
+  "queries": [
+   "New Year's Eve fireworks downtown Denver 2026 free 16th Street",
+   "Golden Gate Canyon State Park Christmas tree cutting draw 2026 application deadline",
+   "free STEM festival kids Denver school district 2026 family science night Adams 12 OR Jeffco OR Boulder Valley",
+   "Mile High Tree lighting 2026 Civic Center Park date free"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 6,
+  "excluded": 4,
+  "excluded_reasons": {
+   "date_unconfirmed": 2,
+   "no_event_found": 1,
+   "past_event": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(새해 불꽃놀이, 골든게이트 캐년 트리 벌목 추첨, 학군 과학축제)과 Mile High Tree를 찾았다. 공식 사이트 직접 열기는 이 환경에서 DNS 오류라 verified:false. 제외: 학군 과학축제 가을 일정 없음(봄 행사는 지남), Mile High Tree 2026 날짜·장소 미확인(시빅센터 공원 공사 중), Union Station 무료 새해 파티 날짜·예약 조건 원문 미확인. 골든게이트 추첨 2026 공지는 아직 없지만 2025 패턴(11/1–15 신청, 250장)으로 감시 페이지를 올린다(날짜 비움)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-30T13:42:35Z",
+   "origin": "scheduled",
+   "title": "New Year's Eve Fireworks over Downtown Denver 2026 (two free shows)",
+   "url": "https://visitdenver.com/things-to-do/fall-winter/festivals-events/new-years-eve-weekend/",
+   "start_date": "2026-12-31",
+   "time": "9:00 PM and midnight",
+   "location": "16th Street, Downtown Denver",
+   "cost": "Free",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Two free fireworks shows launched from two downtown rooftops along 16th Street; RTD typically free on New Year's Eve.",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 도심에서 열리는 무료 새해 불꽃놀이"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-30T13:42:35Z",
+   "origin": "scheduled",
+   "title": "Golden Gate Canyon State Park Christmas tree cut permit draw",
+   "url": "https://cpw.state.co.us/events",
+   "location": "Golden Gate Canyon State Park",
+   "audience": "family",
+   "description": "CPW lottery for a limited number of Christmas tree cutting permits at Golden Gate Canyon State Park (2025: application Nov 1-15, 250 permits, one per household, $35). 2026 dates not yet published.",
+   "recommend": "push",
+   "special_reason": "주립공원 트리 벌목 허가를 추첨으로 한정 발급"
+  }
+ ]
+}
