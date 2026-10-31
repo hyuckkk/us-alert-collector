@@ -2,8 +2,8 @@
   "schema": 1,
   "actor": "chatgpt",
   "started_at_utc": "2026-10-31T23:20:19.356Z",
-  "finished_at_utc": "2026-10-31T23:24:03.158Z",
-  "search_requests": 73,
+  "finished_at_utc": "2026-10-31T23:24:42.357Z",
+  "search_requests": 78,
   "queries": [
     "Colorado November 2026 free hands on aerospace open house kids lab tours Denver Boulder",
     "Colorado November 2026 Young Eagles free flights rally official EAA Denver Erie Longmont",
@@ -77,7 +77,12 @@
     "site:erieco.gov 2026 \"Carriage Rides\" \"Nov 28\"",
     "site:eriechamber.org/events 2026 \"Shop Small\" \"carriage\"",
     "2026 November 28 Erie Colorado \"free carriage rides\" official organizer",
-    "site:we-love-erie.com events 2026 \"carriage\""
+    "site:we-love-erie.com events 2026 \"carriage\"",
+    " \"Erie Balloon Festival\" \"July 9\" \"2027\" site:eriechamber.org",
+    "\"Erie Balloon Festival\" \"July 9-11, 2027\" site:erieco.gov OR site:colorado.com OR site:visitboulder.com",
+    "2027 Erie Balloon Festival July 9 11 Erie Chamber 2027 alternate organizer official",
+    "site:members.eriechamber.org/events/details \"Balloon Festival\" \"2027\"",
+    "site:erieballoonfestival.com \"2027\" pdf festival"
   ],
   "search_request_batches": [
     12,
@@ -87,6 +92,7 @@
     12,
     7,
     3,
+    5,
     5
   ],
   "url_read_attempts": 23,
@@ -108,7 +114,7 @@
   "held_events": 5,
   "qualified_events": 2,
   "known_by_collector": 0,
-  "verified_collector_misses": 0,
+  "verified_collector_misses": 1,
   "submitted_events": 2,
   "delivered_events": 0,
   "failed_searches": 0,
@@ -177,7 +183,8 @@
     "matched_prior_gpt_submissions": 8,
     "live_d1_comparison": "unknown (no authorized latest-event DB dump available in this run)",
     "source_absence_does_not_prove_miss": true,
-    "verified_collector_misses": 0
+    "verified_collector_misses": 1,
+    "verified_miss_detail": "Live external-inbox ingest report for We Love Erie 2026 free horse-drawn carriage experience: identity.new=1; worker.new=1; gaps.by_found.unregistered=1, missing_source=1, rediscovered.yes=1. This event was absent from existing registered sources at that ingestion snapshot, not inferred solely from source registration."
   },
   "github_submission_path": "external-inbox/chatgpt/20261031T232318Z.json",
   "ingest_workflow": ".github/workflows/external-inbox.yml",
@@ -188,5 +195,37 @@
     "Potential recurring overlap of free carriage offerings: prioritize one concise event instead of several almost-identical immediate messages",
     "Official 2027 balloon ride rules for minors/heights and whether five can fit in one basket remain unconfirmed"
   ],
-  "notes": "Independent cross-check against public GitHub sources, prior GPT inbox records and older dry-run report. Live Worker D1 latest items, recommendation state and per-event delivery receipt unavailable; missing source registration was NOT counted as proven collector miss. Erie Chamber Parade of Lights is also verified free carriage experience but held to avoid overlapping free-carriage recommendations. 2026 local-only events are not presented as 2027 user-family events. No source collector or Worker code was modified. No Telegram Bot API used. No account quota data exposed."
+  "notes": "Independent search and subsequent workflow outcome audited. 78 web search requests; 23 successful directly opened official/general pages. Original festival event source accessible in browser research and confirms July 9–11 2027, but ingestion recheck of same URL returns HTTP 403 so the 2027 event was NOT registered or sent. One 2026 Erie carriage ride event passed official recheck and was newly enqueued (push), but no per-event Telegram delivery proof available. No worker or collector code changed; actual source gap confirmed only for the one newly ingested carriage event. Original public source registry and query files checked; prior GPT submissions cross-referenced; no unsupported live database claims beyond ingest log.",
+  "ingest_verification": {
+    "github_workflow": "external-inbox",
+    "workflow_url": "https://github.com/hyuckkk/us-alert-collector/actions/runs/41252327127",
+    "status": "completed success",
+    "received": 2,
+    "valid": 2,
+    "official_pages_rechecked": 2,
+    "official_pages_ok": 1,
+    "enrolled_to_us_worker": 1,
+    "levels": {
+      "push": 1,
+      "interest": 0,
+      "none": 0
+    },
+    "worker": {
+      "new": 1,
+      "changed": 0,
+      "same": 0,
+      "outbox": 3
+    },
+    "unreachable_official_urls": [
+      {
+        "url": "https://erieballoonfestival.com/",
+        "error": "HTTP 403 from collector independent recheck; event was NOT enqueued"
+      }
+    ],
+    "missed_event_title": "Shop Small Erie 2026 – Free Holiday Carriage Rides",
+    "dispatch_all_sent": 0,
+    "digest_all_messages": 2,
+    "per_event_verified_deliveries": 0,
+    "note": "GitHub workflow completed successfully at job level, but festival failed automated source reading. Digest aggregate shows 2 messages not attributable to these event keys; do not treat as delivery confirmation."
+  }
 }
