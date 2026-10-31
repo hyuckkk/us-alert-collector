@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-10-31T23:23:18.894Z",
+  "test": false,
+  "events": [
+    {
+      "title": "2027 Erie Balloon Festival – Free Mass Balloon Ascension, Night Glow and $20 Tethered Rides",
+      "url": "https://erieballoonfestival.com/",
+      "start_date": "2027-07-09",
+      "end_date": "2027-07-11",
+      "time": "America/Denver MDT: morning balloon inflation and mass launches daily about 5:00–7:00 AM (arrive by 5:45 AM); Saturday July 10 evening Night Glow about 8:00 PM (field opens 5:00 PM); tethered rides during advertised sessions, weather permitting",
+      "location": "Open balloon launch field at Weld County Road 5 and Colliers Parkway, east of Erie High School, Erie, Colorado 80516",
+      "cost": "Festival entry, balloon launches, night glow and published parking are FREE ($0 for five). Tethered balloon rides $20 per person CASH ONLY; five riders = $100, optional food extra; first come, first served; subject to weather and capacity",
+      "age": "Open to general public and families; festival states tethered balloon experience is for all ages; no stated residency or citizenship requirement. Exact minimum age/height restriction not published, confirm with operator",
+      "audience": "family",
+      "description": "Official Erie Chamber-sponsored July 9–11, 2027 family event during the prospective 2027-28 Colorado stay: dozens of balloons inflate and launch at dawn, special-shaped balloons new for 2027, walk-through balloons and Saturday Night Glow, plus unusual direct hot-air-balloon tethered basket rides reaching 40–50 feet above ground for $20 cash per person. Festival FAQ https://erieballoonfestival.com/faqs/ explicitly verifies free admission, $20 rides, cash-only, first-come service, and flight cancellation risk even at 8–10 mph wind. Parking and Erie Bee shuttle advertised as free. Full untethered balloon flights are NOT offered. Subject to family arrival date, weather, capacity and final operator age/height rule."
+    },
+    {
+      "title": "Shop Small Erie 2026 – Free Horse-Drawn Holiday Carriage Rides (Town-Supported)",
+      "url": "https://www.weloveerie.biz/event-details/shop-small-free-holiday-carriage-rides",
+      "start_date": "2026-11-28",
+      "end_date": "2026-11-28",
+      "time": "Saturday November 28, 2026, 12:00–2:00 PM MST (America/Denver); alternative town-supported free rides December 3, 10 and 17, 4:30–7:30 PM listed by organizer (not additional submitted events)",
+      "location": "Coal Creek Park parking lot, 575 Kattell Street, Erie, CO 80516",
+      "cost": "Horse-drawn holiday carriage rides explicitly FREE; $0 for family of five subject to available capacity; any local shopping or food optional and paid",
+      "age": "Public community activity advertised for local residents and visitors, specific child age and five-person carriage seating rules not stated; no advance registration method or availability confirmed",
+      "audience": "family",
+      "description": "Two-hour, event-only public experience with a real horse-drawn carriage ride sponsored by ALLO Fiber under the We Love Erie Business Collective's local Shop Small event. Official organizer lists November 28 noon–2 PM at Coal Creek Park; separate Town of Erie government newsletter https://erieco.gov/CivicSend/ViewMessage/Message/300599 independently confirms the Nov 28 date and the Dec 3/10/17 alternative dates. Not an ordinary market, lecture, or shopping announcement: the documented free carriage ride itself is the participation value. Short hours and unknown queue/availability, arrive early; local friends in 2026, not a confirmed 2027–28 recurrence."
+    }
+  ]
+}
