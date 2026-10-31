@@ -82,3 +82,29 @@ def test_seasonal_config_is_bounded_and_does_not_invent_event_date():
         assert len(season["weekdays"]) >= 2
         assert any("{year}" in term for terms in season["queries"].values() for term in terms)
         assert not any("2026" in term for terms in season["queries"].values() for term in terms)
+
+
+def test_seasonal_official_source_not_fetched_before_june_2027(monkeypatch):
+    from types import SimpleNamespace
+    from conftest import FakeAPI
+    from fetch import FetchResult
+
+    src = next(x for x in run.load("sources.json")["sources"] if x["id"] == "westminster-special-events")
+    real_load = run.load
+    monkeypatch.setattr(run, "load", lambda name: {"sources": [src]} if name == "sources.json" else real_load(name))
+    monkeypatch.setattr(run, "is_due", lambda source, day: True)
+    fetched = []
+
+    def fake_fetch(source, secrets=None):
+        fetched.append(source["id"])
+        return FetchResult(True, 200, entries=[])
+
+    monkeypatch.setattr(run, "fetch_source", fake_fetch)
+    args = SimpleNamespace(mode="full", dry_run=True, only=None, all_sources=True)
+    runner = run.Run(args, api=FakeAPI())
+    runner.today = date(2026, 10, 31)
+    assert runner.sources()["due"] == 0
+    assert fetched == []
+    runner.today = date(2027, 6, 1)
+    assert runner.sources()["due"] == 1
+    assert fetched == ["westminster-special-events"]
