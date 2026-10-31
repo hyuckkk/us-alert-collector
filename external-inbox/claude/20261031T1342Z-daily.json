@@ -1,0 +1,73 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-10-31T13:42:00Z",
+  "finished_at": "2026-10-31T13:42:47Z",
+  "searches": 3,
+  "queries": [
+   "Denver Zoo free days 2026 November December dates denverzoo.org",
+   "Denver Botanic Gardens free day November December 2026 OR Children's Museum of Denver free day 2026 November",
+   "Westminster Colorado November 2026 free community event city Westminster holiday"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 7,
+  "excluded": 4,
+  "excluded_reasons": {
+   "already_submitted": 1,
+   "date_conflict": 1,
+   "no_event_found": 2
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(덴버 동물원 무료 입장일)과 11월 무료일, 웨스트민스터 행사를 찾았다. 공식 사이트 직접 열기는 이 환경에서 DNS 오류라 verified:false. 동물원 날짜는 2025년 12월 발표 목록 기준(11/11, 11/14, 11/22; 선착순 사전 배부). 제외: 미술관·클리퍼드 스틸 11/7(이미 제출), 플레인스 보전센터 12월(날짜 충돌), 어린이박물관 11~12월·웨스트민스터 11월 시 행사(없음)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-10-31T13:42:47Z",
+   "origin": "scheduled",
+   "title": "Denver Zoo Community Free Days - November 2026 (Nov. 11, 14, 22)",
+   "url": "https://denverzoo.org/free-days/",
+   "start_date": "2026-11-11",
+   "end_date": "2026-11-22",
+   "location": "Denver Zoo, City Park",
+   "cost": "Free admission (tickets released in advance, first come first served)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD community free days at Denver Zoo listed for Nov. 11, 14 and 22, 2026; free tickets must be reserved in advance (no walk-ups). Release dates reported: Nov. 6 for Nov. 14, Nov. 12 for Nov. 22.",
+   "recommend": "push",
+   "special_reason": "공공기금 지원 동물원 무료 입장일, 사전 배부 수량 한정",
+   "registration_opens": "2026-11-06"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-31T13:42:47Z",
+   "origin": "scheduled",
+   "title": "Denver Botanic Gardens Free Day (York Street and Chatfield Farms) - Nov. 27, 2026",
+   "url": "https://www.botanicgardens.org/events/free-days",
+   "start_date": "2026-11-27",
+   "location": "Denver Botanic Gardens York Street and Chatfield Farms",
+   "cost": "Free general admission (holiday light shows excluded)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD free day the day after Thanksgiving at both Botanic Gardens locations; ticketed events such as Blossoms of Light are not included.",
+   "recommend": "push",
+   "special_reason": "공공기금 지원 식물원 무료 입장일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-10-31T13:42:47Z",
+   "origin": "scheduled",
+   "title": "Plains Conservation Center Free Day - Nov. 14, 2026",
+   "url": "https://www.botanicgardens.org/events/free-days",
+   "start_date": "2026-11-14",
+   "location": "Plains Conservation Center, Aurora",
+   "cost": "Free",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Denver Botanic Gardens' Plains Conservation Center free day (prairie site in Aurora).",
+   "recommend": "push",
+   "special_reason": "공공기금 지원 무료 입장일"
+  }
+ ]
+}
