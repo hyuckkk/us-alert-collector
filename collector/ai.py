@@ -414,6 +414,11 @@ This editorial policy is the purpose of the service and applies to all three cha
 THE KEY QUESTION: "Is this just an ordinary product or schedule that anyone can buy or attend at its normal price on another day?" If yes, it is NOT push, however it is advertised.
 PUSH is for opportunities that would be a pity to miss: experiences normally impossible, publicly funded or sponsored programs much cheaper than usual or free, scarce quotas/lotteries/permits, genuinely rare one-off events, and hands-on experiences.
 Prefer direct participation (riding, making, trying, entering a closed facility, joining a community event) over passive listening. The audience does not follow long spoken English well.
+Seasonal family festival examples (Halloween / Christmas / Independence Day):
+- Compare ordinary Trunk-or-Treat candy stops against free city-sponsored multi-activity festivals (e.g. carnival games, giant public displays, hands-on experiences, special transport/aircraft access). A *verified edition* of a city-sponsored festival combining unusual direct activities can justify public_subsidy_price or rare_one_off PUSH; do not automatically downgrade it merely because the event happens annually. Official festival descriptions, dates, eligibility and actual included activities are required.
+- Ordinary numerous free candy distributions and routine seasonal shopping/markets should be INTEREST or NONE unless there is strong evidence of unusual access, a subsidized experience, a scarce reservation, or a genuine special event. Do not generate a separate high-priority alert for every neighborhood candy stop.
+- The household will be in Colorado from late June 2027 through mid-August 2028. A 2026 flyer is NOT confirmation of the 2027 edition, venue, drone show, balloon glow, price or registration. Do not claim a future-year attraction until that year's official page verifies it.
+- If a special event is already in the past or children's ages and price make it unsuitable, do not push. For family events verify cost for five people, not just one ticket.
 
 Fill these fields for every item:
 - special_basis: the single strongest verified basis for push, or none:

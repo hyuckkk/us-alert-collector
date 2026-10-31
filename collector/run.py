@@ -66,11 +66,29 @@ def is_due(source: dict, today: date) -> bool:
     return (today.toordinal() + zlib.crc32(source["id"].encode())) % n == 0
 
 
+def active_seasons(q: dict, today: date) -> list[dict]:
+    """현지 날짜의 행사 시즌만 선택한다. 작년 행사 일정을 올해 확정으로 취급하지 않는다."""
+    md = today.strftime("%m-%d")
+    return [
+        season for season in q.get("seasonal", [])
+        if int(season.get("start_year", 0)) <= today.year <= int(season.get("end_year", 9999))
+        and season.get("start", "01-01") <= md <= season.get("end", "12-31")
+    ]
+
+
 def queries_for(q: dict, today: date) -> list[tuple[str, str]]:
-    """(분야, 검색어). daily 는 분야별 목록, weekday 는 요일별 심층."""
+    """(분야, 검색어). 기존 daily·weekday 유지 + 계절별 검색만 제한된 날짜에 추가."""
     daily = q["daily"]
     out = [(bot, s) for bot, lst in daily.items() for s in lst] if isinstance(daily, dict) else [("any", s) for s in daily]
     out += [("deep", s) for s in q.get("weekday", {}).get(str(today.weekday()), [])]
+    md = today.strftime("%m-%d")
+    for season in active_seasons(q, today):
+        # 평시에는 주 2회, 행사/접수 임박 시에는 매일. 과도한 RSS 요청을 막는다.
+        if today.weekday() not in season.get("weekdays", []) and not (season.get("daily_from") and md >= season["daily_from"]):
+            continue
+        searches = season.get("queries", {})
+        for bot, terms in searches.items():
+            out.extend((bot, term.replace("{year}", str(today.year))) for term in terms)
     return list(dict.fromkeys(out))
 
 
@@ -154,7 +172,8 @@ class Run:
 
     # ------------------------------------------------ A. 정보원 감시
     def sources(self):
-        srcs = [s for s in load("sources.json")["sources"] if s.get("enabled", True)]
+        srcs = [s for s in load("sources.json")["sources"]
+                if s.get("enabled", True) and s.get("active_from", "0000-01-01") <= self.today.isoformat()]
         try:
             srcs += self.api.sources_extra()
         except Exception as e:  # noqa: BLE001
@@ -222,6 +241,12 @@ class Run:
         import ai
         known = [s["url"] for s in getattr(self, "all_sources", [])]
         themes = ([(b, t) for b, t in DAILY_THEMES.items()] if cfg.get("daily_per_bot", True) else []) + [("deep", DEEP_THEMES[self.today.weekday()])]
+        # 새로운 AI 호출을 만들지 않고 기존 주간 심층 발굴에 시즌별 공식 행사 확인을 결합.
+        if self.today.weekday() in (2, 5):
+            focuses = [s["ai_focus"] for s in active_seasons(load("queries.json"), self.today) if s.get("ai_focus")]
+            if focuses:
+                b, theme = themes[-1]
+                themes[-1] = (b, theme + "; Seasonal official-page search: " + " ".join(focuses))
         found_sources, found_events, errors = [], [], 0
         for bot, theme in themes:
             if not self.usage.allows(cfg.get("reserve_usd", 1.2)):
