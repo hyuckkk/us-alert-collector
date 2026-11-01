@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-01T23:41:07Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Denver Astronomical Society Public Open House: Neptune, Saturn & Uranus through the Historic 20-inch Chamberlin Telescope",
+      "url": "https://www.denverastro.org/events/open-house-11-14-26/?occurrence=2026-11-14",
+      "start_date": "2026-11-14",
+      "end_date": "2026-11-14",
+      "time": "Saturday November 14, 2026, 5:15–9:15 PM MST; telescope lawn activity at dusk, historic Chamberlin Observatory tours after dark; weather permitting",
+      "location": "University of Denver, historic Chamberlin Observatory (south lawn), 2930 E. Warren Avenue, Denver, CO 80210",
+      "cost": "FREE admission; $0 for two adults and three children. No tickets or reservations required. Distinct regular reservation-based Astronomy Nights cost $10/adult and $7/child; no assertion these are the same program.",
+      "age": "Open to general public and families of all ages, no tickets, registration, membership, or citizenship restriction stated. Standard Astronomy Nights' 42-inch minimum height may not govern the FREE Open House; not inferred here.",
+      "audience": "family",
+      "description": "Official Denver Astronomical Society Nov 14 special evening titled Neptune! Saturn! Uranus! Visitors can directly look through the historic 20-inch Alvan Clark-Saegmuller refractor, join weather-dependent observatory tours after dark and use additional amateur telescopes on the lawn; bring own telescope for hands-on setup help. Distinctive free physical access to rare scientific instrument, not a lengthy lecture, routine wellness class or paid normal show. The society holds monthly open houses (do not misrepresent as one-time), but this is a dated planetary viewing session. Confirmed date/time from event metadata and society calendar; event's introductory paragraph mistakenly says 'Saturday July 18' (copied boilerplate), so use authoritative Nov 14 metadata and calendar. Weather and crowding affect actual telescope access; no reservations. For 2026 Colorado local friends, not guaranteed to recur during 2027-28 stay."
+    }
+  ]
+}
