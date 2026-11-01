@@ -128,10 +128,10 @@
     3
   ],
   "url_read_attempts": 19,
-  "url_read_successes": 16,
-  "url_read_failures": 3,
+  "url_read_successes": 15,
+  "url_read_failures": 4,
   "failed_searches": 0,
-  "failed_page_reads": 3,
+  "failed_page_reads": 4,
   "official_detail_verified": 6,
   "official_detail_verified_urls": [
     "https://www.denverastro.org/das-events/event-calendar/",
@@ -238,5 +238,5 @@
     "Follow Rocky Mountain Star Stare 2027 registration opening and exact family fees. Current FAQ 400 registrant cap, nonrefundable; organizer fee page still keyed to 2026, registration redirect inaccessible to independent check",
     "When external-inbox feed is submitted, require actual per-event US Worker/Telegram receipt before saying sent; avoid claiming source-list absence proves collector miss"
   ],
-  "notes": "Independent broad search; 110 individual web text-search requests across 9 batches. 19 website URL open/click attempts including two unsuccessful registration redirects and one initial rmss.org timeout; subsequent successful openings included official DAS event, society policy/calendar, 2027 star-party organizer and fees, and other event research. 2027 family-stay event RMSS held due registration/cost ambiguity. New 2026 local-friends family opportunity submitted; no direct US bot API and no existing code modified. Unknown live US worker outcome. Candidate count is unique shortlisted event opportunities explicitly classified here, not all search-result hits. Additional inaccessible GitHub API workflow listing was attempted beyond URL open/click event research counts."
+  "notes": "Independent broad search; 110 individual web text-search requests across 9 batches. 19 web URL open/click attempts: 15 succeeded and 4 failed (one initial rmss.org timeout, two registration redirects to inaccessible rmss.app, one inaccessible GitHub API workflow listing); subsequent successful openings included official DAS event, society policy/calendar, 2027 star-party organizer and fees, and other event research. 2027 family-stay event RMSS held due registration/cost ambiguity. New 2026 local-friends family opportunity submitted; no direct US bot API and no existing code modified. Unknown live US worker outcome. Candidate count is unique shortlisted event opportunities explicitly classified here, not all search-result hits. Additional inaccessible GitHub API workflow listing was attempted beyond URL open/click event research counts."
 }
