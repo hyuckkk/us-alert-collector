@@ -1,0 +1,56 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-01T14:42:00Z",
+  "finished_at": "2026-11-01T14:42:41Z",
+  "searches": 3,
+  "queries": [
+   "Denver Zoo Winter at DZCA 2026 kids free admission December",
+   "Small Business Saturday 2026 Colorado free holiday carriage rides Erie OR Broomfield OR Westminster OR Arvada",
+   "Golden Gate Canyon Christmas tree permit 2026 application open November"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 5,
+  "excluded": 3,
+  "excluded_reasons": {
+   "no_2026_event_found": 2,
+   "outside_area_or_past": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(동물원 12월 어린이 무료, Erie Shop Small 마차, 골든게이트 트리 벌목 허가)을 찾았다. 공식 사이트 직접 열기는 이 환경에서 DNS 오류라 verified:false. 제외: Erie·주변 도시 Small Business Saturday 마차(2026 공지 없음), 골든 무료 마차(1월·지난 일정), 그랜드정크션(생활권 밖)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-01T14:42:41Z",
+   "origin": "scheduled",
+   "title": "Kids Free December at Denver Zoo (children 3-15 free daytime admission)",
+   "url": "https://denverzoo.org/?p=43900",
+   "start_date": "2026-12-01",
+   "end_date": "2026-12-31",
+   "location": "Denver Zoo Conservation Alliance, City Park",
+   "cost": "Free daytime admission for ages 3-15 (online reservation required); adults pay regular price",
+   "age": "3–15세 무료",
+   "audience": "family",
+   "description": "December promotion: free daytime admission for children ages 3-15 with an online reservation. Year not shown on the page; confirm it applies to 2026. Zoo Lights in the evening is separate and paid.",
+   "recommend": "push",
+   "special_reason": "12월 한 달 아이 입장료 무료(어른만 유료)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-01T14:42:41Z",
+   "origin": "scheduled",
+   "title": "Golden Gate Canyon State Park Christmas tree cut permit draw 2026 (applications Nov. 1-15)",
+   "url": "https://cpw.state.co.us/state-parks/golden-gate-canyon-state-park",
+   "registration_opens": "2026-11-01",
+   "deadline": "2026-11-15",
+   "location": "Golden Gate Canyon State Park",
+   "cost": "$35 permit (lottery)",
+   "audience": "family",
+   "description": "CPW online draw for 250 Christmas tree cutting permits, one per household; hand tools only. Application window Nov. 1-15 per a 2026-dated listing; confirm on CPW.",
+   "recommend": "push",
+   "special_reason": "주립공원 트리 벌목 허가 250장 추첨"
+  }
+ ]
+}
