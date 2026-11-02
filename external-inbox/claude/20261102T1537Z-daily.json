@@ -1,0 +1,49 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-02T15:37:00Z",
+  "finished_at": "2026-11-02T15:37:18Z",
+  "searches": 3,
+  "queries": [
+   "Native American Heritage Month celebration Jefferson County Colorado November 2026",
+   "Downtown Westminster holiday lighting ceremony holiday market 2026 date",
+   "Native American Heritage Month events Denver November 2026 free family powwow"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 6,
+  "excluded": 4,
+  "excluded_reasons": {
+   "no_2026_event_found": 3,
+   "other_city_far": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(제퍼슨 카운티 원주민 문화유산의 달 축제, 다운타운 웨스트민스터 점등식·홀리데이 마켓)을 찾았다. 웨스트민스터 시 공식 일정 페이지 2곳은 연도가 검색 결과에 보이지 않아 날짜를 비우고 올린다(GitHub 쪽에서 원문 재확인, 지난 행사면 자동 제외). 제외: 제퍼슨 카운티·덴버 원주민 문화유산의 달 2026 행사(공지 없음), 롱몬트 행사(2025 날짜), 포트콜린스 점등(다른 도시). 골든게이트 트리 추첨·주립공원 무료일은 10/28·11/1 에 이미 올림."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-02T15:37:18Z",
+   "origin": "scheduled",
+   "title": "Downtown Westminster Lighting Ceremony (City of Westminster event listing)",
+   "url": "https://westminsterco.gov/EventDetails/e/10623",
+   "location": "Downtown Westminster, CO",
+   "audience": "family",
+   "description": "City of Westminster event page for the Downtown Westminster holiday lighting ceremony with the Chamber and Downtown Westminster Business Association (2024 edition: Santa, tree lighting at 6 p.m., carolers). Year and date to confirm on the page.",
+   "recommend": "push",
+   "special_reason": "시가 1년에 한 번 여는 다운타운 점등식"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-02T15:37:18Z",
+   "origin": "scheduled",
+   "title": "City of Westminster holiday event listing (e=10630)",
+   "url": "https://westminsterco.gov/EventDetails?e=10630",
+   "location": "Westminster, CO",
+   "audience": "family",
+   "description": "City of Westminster event page returned for the holiday lighting search; details and year to confirm on the page.",
+   "recommend": "interest",
+   "special_reason": ""
+  }
+ ]
+}
