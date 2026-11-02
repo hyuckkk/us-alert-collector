@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-02T23:19:25Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Colorado State Youth Cross Country Championships",
+      "url": "https://runsignup.com/Race/CO/Aurora/ColoradoYouthXCChampionships",
+      "start_date": "2026-11-14",
+      "end_date": "2026-11-14",
+      "time": "9:40 AM–1:00 PM MST; age/sex-specific heats",
+      "location": "Aurora Sports Park, 19300 E Colfax Ave, Aurora, CO 80011",
+      "cost": "$28.80 per youth entrant including $2.81 registration fee; three youth runners $86.40. No spectator admission price stated by organizer, so five-person total cannot be verified.",
+      "age": "Youth ages 6–14 stated in organizer description; 8-and-under registration categories explicitly say ages 5–8 (verify younger eligibility); individual entrants allowed without USATF/AAU or club membership; adults may spectate but admission terms are not stated.",
+      "audience": "kids",
+      "description": "A one-day, open-entry Colorado statewide youth cross-country championship, not a routine school fixture or a generic paid training class. Youth compete individually or in teams in 2-km, 3-km and 4-km age divisions, with official timing and awards. Public registration is open through Nov 13, 2026, 5:00 PM MST; Nov 14 competition at Aurora Sports Park. For 2026 Colorado friends, not for the user's June 2027–Aug 2028 family stay. The event page specifies 6–14 generally but 5–8 for 8U registration; verify any age-five eligibility. Spectator admission and five-person total not published. Organizer's own race signup page is official event source."
+    }
+  ]
+}
