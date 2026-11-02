@@ -66,6 +66,18 @@ try {
     assert.ok(o.some(x=>x.status==="skipped"),JSON.stringify(o));
   });
 
+  await step("같은 행사에서 실제 비용이 바뀌면 기존 event_key의 새 판만 재알림",async()=>{
+    const n=E.calls.length;
+    const changed=await admin("/admin/enqueue",{events:[{...first,cost_text:"$45"}]});
+    assert.equal(changed.changed,1,JSON.stringify(changed));
+    await admin("/admin/dispatch",{ignoreQuiet:true});
+    const msgs=send(n);
+    assert.equal(msgs.length,1,"실제 비용 변경은 알릴 수 있어야 함");
+    assert.match(msgs[0].payload.text,/\\$45/);
+    await admin("/admin/dispatch",{ignoreQuiet:true});
+    assert.equal(send(n).length,1,"같은 변경을 재차 알리지 않음");
+  });
+
   await step("반복 실행 시 별도 소유자/봇의 기존 버튼은 유지",async()=>{
     assert.ok(E.calls.some(x=>x.method==="sendMessage"&&/골든게이트/.test(x.payload.text)&&x.payload.reply_markup?.inline_keyboard?.[0]?.length===2));
   });
