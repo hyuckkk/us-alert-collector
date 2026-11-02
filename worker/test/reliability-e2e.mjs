@@ -255,15 +255,20 @@ try {
     assert.equal((await admin("/admin/ai-health")).failing_since, null);
   });
 
-  await step("4 검증 전 정보 안내는 지인 발송 모드에서도 소유자에게만, 하루 1회", async () => {
+  await step("4 AI 중단 상태만 소유자에게 하루 1회, 검증 전 행사 원문은 절대 발송하지 않음", async () => {
     const n = E.calls.length;
     const items = Array.from({ length: 25 }, (_, i) => ({ title: `Raw ${i}`, url: `https://westminsterco.gov/e/${i}`, source_id: "westminster-calendar" }));
-    let r = await admin("/admin/unverified", { items, outage_hours: 40, pending: 25 });
-    assert.equal(r.sent, 2);
-    const s = sends(n, /검증 전 정보/);
-    assert.ok(s.every((c) => String(c.payload.chat_id) === OWNER));
-    r = await admin("/admin/unverified", { items, outage_hours: 41 });
-    assert.equal(r.sent, 0);
+    let r = await admin("/admin/unverified", { items, outage_hours: 40, pending: 197 });
+    assert.equal(r.sent, 1);
+    const msgs = sends(n, /미국 알림 AI 분석 일시 중단/);
+    assert.equal(msgs.length, 1);
+    assert.equal(String(msgs[0].payload.chat_id), OWNER);
+    assert.match(msgs[0].payload.text, /미분석 대기 197건/);
+    assert.match(msgs[0].payload.text, /중단 약 40시간/);
+    assert.ok(!msgs[0].payload.text.includes("westminsterco.gov/e"), "검증 전 25개 URL은 보내지 않는다");
+    assert.ok(!msgs[0].payload.text.includes("Raw 0"), "검증 전 제목도 보내지 않는다");
+    r = await admin("/admin/unverified", { items, outage_hours: 41, pending: 197 });
+    assert.equal(r.sent, 0, "같은 날 추가 경고 없음");
   });
 
   await step("8 사용액 50·80·100% 경고 각 1회(경고만, 멈추지 않음)", async () => {
