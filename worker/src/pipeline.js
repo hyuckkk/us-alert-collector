@@ -708,7 +708,10 @@ export async function dispatch(env, opts = {}) {
   for (const row of chosen) {
     if (!claimed.has(row.id)) continue; // 다른 실행이 이미 가져감
     // 서로 다른 event_key가 동시에 dispatch되어도 D1의 UNIQUE notices 키는 한 번만 확보 가능.
-    const groupClaim = noticeGroupClaimKey(row.chat_id, row.data);
+    // 실제로 검증된 비용·일정 변경은 같은 event_key의 새 판에서 알릴 수 있게 보존.
+    // 단순 접수 시작·마감 시점(⏰)은 같은 모집을 반복하지 않는다.
+    const materialUpdate = row.version > 1 && row.change_note && !row.change_note.startsWith("⏰");
+    const groupClaim = materialUpdate ? null : noticeGroupClaimKey(row.chat_id, row.data);
     if (groupClaim && !(await claimNotice(env, groupClaim))) {
       done.push({ id: row.id, status: "skipped", reason: "same-event-group-claimed" }); r.skipped++;
       continue;
@@ -767,7 +770,7 @@ export async function digest(env, opts = {}) {
     if (opts.force || (g.fresh > 0 && timeOk && (await claimNotice(env, `digest:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`)))) take = true;
     if (!take) { r.waiting++; continue; }
     const rows = await all(env.DB.prepare(
-      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, e.change_note, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
       "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? " +
       "AND o.status IN ('pending', 'failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?) " +
       "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 300").bind(g.chat_id, g.bot, now));
@@ -802,7 +805,8 @@ export async function digest(env, opts = {}) {
       if (calls >= DIGEST_CALLS || calls - groupStart >= perGroup) break;
       const claimed = await claimRows(env, [x.id]);
       if (!claimed.has(x.id)) continue;
-      const groupClaim = noticeGroupClaimKey(g.chat_id, x.data);
+      const materialUpdate = x.version > 1 && x.change_note && !x.change_note.startsWith("⏰");
+      const groupClaim = materialUpdate ? null : noticeGroupClaimKey(g.chat_id, x.data);
       if (groupClaim && !(await claimNotice(env, groupClaim))) {
         done.push({ id: x.id, status: "skipped", reason: "same-event-group-claimed" }); r.skipped++;
         continue;
