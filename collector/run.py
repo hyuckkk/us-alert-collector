@@ -697,7 +697,7 @@ class Run:
         self.report.update({"metrics": self.m, "alerts": self.alerts, "stages": self.stages, "completed": completed})
         self.api.run_log({"run_id": self.run_id, "started_at": self.started.isoformat(timespec="seconds"),
                           "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "completed": completed and full,
-                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "workload": self.report["workload"], "ai": {"ok": self.ai_ok, "error": "credit-exhausted" if ai.CREDIT["out"] else None} if self.ai_ok is not None else None,
+                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "workload": self.report["workload"], "ai": ({"ok": False, "error": "credit-exhausted"} if ai.CREDIT["out"] else {"ok": self.ai_ok}) if self.ai_ok is not None else None,
                           "sources": list(self.source_rows.values())})
         return self.report
 
