@@ -617,7 +617,7 @@ async function sentSeries(env, chatIds) {
   const since = new Date(Date.now() - 180 * 86400000).toISOString();
   const rows = await all(env.DB.prepare(
     "SELECT DISTINCT o.chat_id, o.event_key, e.source_id, e.url, json_extract(e.data, '$.title') AS title, json_extract(e.data, '$.title_ko') AS title_ko, " +
-    "json_extract(e.data, '$.start_date') AS start_date FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id IN (SELECT value FROM json_each(?1)) " +
+    "json_extract(e.data, '$.start_date') AS start_date, json_extract(e.data, '$.location') AS location FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id IN (SELECT value FROM json_each(?1)) " +
     "AND o.status IN ('sent', 'sending', 'uncertain') AND COALESCE(o.sent_at, o.created_at) >= ?2").bind(JSON.stringify(chatIds.map(String)), since));
   for (const r of rows) remember(out, r.chat_id, r.source_id, r, r.event_key);
   return out;
@@ -637,7 +637,7 @@ function remember(seen, chatId, sourceId, d, eventKey) {
   const group = eventNoticeGroup(d);
   if (group) add(seen.groups, `${chatId}|${group}`, { key: eventKey });
   if (d.url) add(seen.urls, `${chatId}|${normUrl(d.url)}`, { key: eventKey });
-  if (d.start_date) add(seen.dated, `${chatId}|${d.start_date}`, { key: eventKey, tokens: titleTokens(d) });
+  if (d.start_date) add(seen.dated, `${chatId}|${d.start_date}`, { key: eventKey, tokens: titleTokens(d), location: d.location });
 }
 // 이 사람이 이미 받은(또는 이번 실행에서 받기로 한) 것과 같은 행사면 사유를 돌려준다. 아니면 기록하고 null.
 // 1) 같은 정보원·같은 원제목의 다른 회차 2) 같은 공식 주소(다른 경로·정보원이 다른 키로 등록) 3) 같은 날짜 + 제목이 대부분 같음
@@ -652,6 +652,10 @@ function sameAsSent(seen, chatId, sourceId, d, eventKey) {
     const t = titleTokens(d);
     const hit = (seen.dated.get(`${chatId}|${d.start_date}`) || []).some((x) => {
       if (x.key === eventKey || t.size < 2 || x.tokens.size < 2) return false;
+      // 같은 날 '크리스마스 트리 벌목'이라도 서로 다른 공원이라면 다른 행사다.
+      const loc = v => String(v || "").toLowerCase().replace(/[^a-z가-힣0-9]+/g, " ").trim();
+      const la = loc(x.location), lb = loc(d.location);
+      if (la && lb && !la.includes(lb) && !lb.includes(la)) return false;
       const common = [...t].filter((w) => x.tokens.has(w)).length;
       return common / Math.min(t.size, x.tokens.size) >= 0.6;
     });
