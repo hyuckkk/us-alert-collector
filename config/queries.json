@@ -1,5 +1,5 @@
 {
-  "_comment": "무토큰 키워드 검색(Google News RSS). daily 는 분야별로 매일, weekday 는 요일별 심층(0=월 … 6=일). 뉴스에 잘 안 나오는 학교·시설·동호회 정보는 config/sources.json 의 공식 정보원과 AI 발굴로 보완한다.",
+  "_comment": "무토큰 키워드 검색(Google News RSS). daily 는 분야별로 매일, weekday 는 요일별 심층(0=월 … 6=일). 뉴스에 잘 안 나오는 학교·시설·동호회 정보는 config/sources.json 의 공식 정보원과 AI 발굴로 보완한다. seasonal: 덴버 현지 날짜 기준 한정 운영. 평시 주 2회, 행사 직전 기간 매일 검색. {year}는 그해로 교체. 2026 행사만 확인된 자료를 2027 확정으로 오인하지 않음.",
   "daily": {
     "kids": [
       "Westminster Colorado kids classes",
@@ -43,12 +43,111 @@
     ]
   },
   "weekday": {
-    "0": ["Denver kids after school program", "Colorado youth sports registration Westminster", "Denver kids art class"],
-    "1": ["Denver adult hobby class beginner", "Denver language exchange meetup", "Denver photography workshop"],
-    "2": ["Westminster Colorado city news recreation", "Adams 12 Five Star Schools family event", "Westminster Public Schools community event"],
-    "3": ["Colorado air show", "Buckley Space Force Base open house", "Air Force Academy public event", "Wings Over the Rockies event"],
-    "4": ["Great Sand Dunes event", "Colorado national park ranger program kids", "Colorado state park ranger program"],
-    "5": ["University of Denver hockey family", "Colorado State University open house", "Colorado School of Mines public event", "CU Boulder family event"],
-    "6": ["cruise kids sail free promotion", "Colorado family road trip event", "Denver airport new route deal"]
-  }
+    "0": [
+      "Denver kids after school program",
+      "Colorado youth sports registration Westminster",
+      "Denver kids art class"
+    ],
+    "1": [
+      "Denver adult hobby class beginner",
+      "Denver language exchange meetup",
+      "Denver photography workshop"
+    ],
+    "2": [
+      "Westminster Colorado city news recreation",
+      "Adams 12 Five Star Schools family event",
+      "Westminster Public Schools community event"
+    ],
+    "3": [
+      "Colorado air show",
+      "Buckley Space Force Base open house",
+      "Air Force Academy public event",
+      "Wings Over the Rockies event"
+    ],
+    "4": [
+      "Great Sand Dunes event",
+      "Colorado national park ranger program kids",
+      "Colorado state park ranger program"
+    ],
+    "5": [
+      "University of Denver hockey family",
+      "Colorado State University open house",
+      "Colorado School of Mines public event",
+      "CU Boulder family event"
+    ],
+    "6": [
+      "cruise kids sail free promotion",
+      "Colorado family road trip event",
+      "Denver airport new route deal"
+    ]
+  },
+  "seasonal": [
+    {
+      "id": "halloween_fall",
+      "start_year": 2027,
+      "end_year": 2027,
+      "start": "07-01",
+      "end": "10-31",
+      "weekdays": [
+        0,
+        3
+      ],
+      "daily_from": "10-15",
+      "ai_focus": "Westminster Westy Fest free family fall festival; actual 2027 schedule and included activities (do not copy 2026 drone show/balloon claims); Butterfly Pavilion Crawl-O-Ween ticket release; Halloween Trunk or Treat in Westminster, Broomfield, Thornton and Arvada. Prefer firsthand rare/large subsidized experience, not dozens of ordinary candy stops.",
+      "queries": {
+        "family": [
+          "Westminster Westy Fest {year} free fall festival date hot air balloons activities",
+          "Westminster Broomfield Thornton Arvada {year} Halloween trunk or treat free family festival",
+          "site:westminsterco.gov {year} Westy Fest special events Halloween",
+          "site:hylandhills.gov {year} fall festival Halloween family events",
+          "Denver Boulder {year} Halloween one day special family experience registration"
+        ],
+        "kids": [
+          "Butterfly Pavilion Crawl-O-Ween {year} tickets Halloween timed admission kids",
+          "Westminster Broomfield {year} Halloween science museum children free experience"
+        ]
+      }
+    },
+    {
+      "id": "winter_holidays",
+      "start_year": 2027,
+      "end_year": 2027,
+      "start": "09-01",
+      "end": "12-31",
+      "weekdays": [
+        1,
+        5
+      ],
+      "daily_from": "12-10",
+      "ai_focus": "2027 Westminster Broomfield Thornton free public Christmas tree lighting, holiday trains, seasonal special access, limited registration, community family winter festivals. Verify 2027 dates, fees and genuine unique experience; ordinary retail/sales are not special.",
+      "queries": {
+        "family": [
+          "Westminster Broomfield Thornton {year} Christmas tree lighting family holiday festival free",
+          "Denver Boulder {year} Christmas holiday lights free community special event",
+          "Westminster {year} holiday market Santa special family events admission",
+          "Denver {year} holiday train rides special tickets booking family"
+        ]
+      }
+    },
+    {
+      "id": "independence_day",
+      "start_year": 2027,
+      "end_year": 2028,
+      "start": "04-01",
+      "end": "07-05",
+      "weekdays": [
+        1,
+        4
+      ],
+      "daily_from": "06-20",
+      "ai_focus": "July 4 {year} Westminster Broomfield Thornton Arvada free fireworks or actual drone show, airshows, participatory family celebration, registration or reserved viewing. Verify the actual year and distinguish fireworks from drone-only events.",
+      "queries": {
+        "family": [
+          "Westminster Broomfield Thornton {year} July 4 fireworks city family festival",
+          "Arvada Westminster {year} Independence Day drone show fireworks celebration",
+          "Denver Boulder {year} Independence Day special family activities registration"
+        ]
+      }
+    }
+  ]
 }
