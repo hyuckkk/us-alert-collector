@@ -260,8 +260,11 @@ function targetKind(env, r, e, states, mutedTags, opts = {}) {
   const ref = e.end_date || e.start_date;
   let kind = opts.kind || (e.urgency === "now" ? "now" : "digest");
   if (from && ref && ref < from) {
+    // 해당 연도 모집이 이미 체류 전 종료되는 허가/추첨은 내년도 예고로 포장하지 않는다.
+    // 예: 2026 골든게이트 크리스마스 트리 추첨을 2027 입국 가족에게 '오늘 접수'라 알리면 안 된다.
+    if (eventNoticeGroup(e) && (e.registration_opens || e.deadline || e.signup === "lottery")) return [null, "before-available-registration"];
     if (!e.annual) return [null, "before-available"];
-    kind = "season"; // 참가 가능 시작일 이전의 연례행사: '내년에도 열릴 가능성' 예고
+    kind = "season"; // 단순 연례행사의 미래 시즌 예고 정책은 보존
   }
   return [kind, null];
 }
@@ -587,16 +590,34 @@ function timing(d, today, env) {
 // ---------------------------------------------------------------- 같은 회차 묶음은 한 번만
 // 같은 정보원·같은 원제목인데 날짜만 다른 행사(매주 금요일 투어, 시즌 열차의 여러 날짜 등)는 사람마다 한 번만 보낸다.
 // 같은 행사의 '변경'(같은 event_key 의 새 판)은 막지 않는다. 연례 행사가 내년에 다시 열리면 보낼 수 있게 180일 안만 본다.
+// 공식 경로·번역·행사일 표기가 달라도 동일한 한정 허가의 모집은 한 번만 보낸다.
+// 엄격히 확인 가능한 공원+프로그램+연도 조합만 사용해, 다른 공원·다음해 행사는 합치지 않는다.
+export function eventNoticeGroup(d) {
+  const text = [d.title, d.title_ko, d.location, d.org, d.url].filter(Boolean).join(" ").toLowerCase();
+  const park = /golden[\s-]*gate[\s-]*canyon|골든\s*게이트\s*캐(?:니언|년)/i.test(text);
+  const tree = /christmas[\s-]*tree|크리스마스\s*트리/i.test(text);
+  const permit = /cut(?:ting)?|draw|lotter|permit|벌목|벌채|추첨|허가/i.test(text);
+  const year = [d.start_date, d.end_date, d.deadline, d.registration_opens]
+    .find(x => /^20\d\d-/.test(String(x || "")))?.slice(0, 4);
+  return park && tree && permit && year ? `cpw:golden-gate:christmas-tree:${year}` : null;
+}
+function noticeGroupClaimKey(chatId, d) {
+  const group = eventNoticeGroup(d);
+  return group ? `event-group:${chatId}:${group}` : null;
+}
+async function releaseNoticeGroup(env, key) {
+  if (key) await env.DB.prepare("DELETE FROM notices WHERE key = ?").bind(key).run();
+}
 export function seriesKey(sourceId, d) {
   return `${sourceId || ""}|${String(d.title || d.title_ko || "").toLowerCase().replace(/\s+/g, " ").trim()}`;
 }
 async function sentSeries(env, chatIds) {
-  const out = { series: new Map(), urls: new Map(), dated: new Map() };
+  const out = { series: new Map(), urls: new Map(), dated: new Map(), groups: new Map() };
   if (!chatIds.length) return out;
   const since = new Date(Date.now() - 180 * 86400000).toISOString();
   const rows = await all(env.DB.prepare(
     "SELECT DISTINCT o.chat_id, o.event_key, e.source_id, e.url, json_extract(e.data, '$.title') AS title, json_extract(e.data, '$.title_ko') AS title_ko, " +
-    "json_extract(e.data, '$.start_date') AS start_date FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id IN (SELECT value FROM json_each(?1)) " +
+    "json_extract(e.data, '$.start_date') AS start_date, json_extract(e.data, '$.location') AS location FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id IN (SELECT value FROM json_each(?1)) " +
     "AND o.status IN ('sent', 'sending', 'uncertain') AND COALESCE(o.sent_at, o.created_at) >= ?2").bind(JSON.stringify(chatIds.map(String)), since));
   for (const r of rows) remember(out, r.chat_id, r.source_id, r, r.event_key);
   return out;
@@ -613,20 +634,28 @@ function titleTokens(d) {
 function remember(seen, chatId, sourceId, d, eventKey) {
   const add = (m, k, v) => { if (!m.has(k)) m.set(k, []); m.get(k).push(v); };
   add(seen.series, `${chatId}|${seriesKey(sourceId, d)}`, { key: eventKey });
+  const group = eventNoticeGroup(d);
+  if (group) add(seen.groups, `${chatId}|${group}`, { key: eventKey });
   if (d.url) add(seen.urls, `${chatId}|${normUrl(d.url)}`, { key: eventKey });
-  if (d.start_date) add(seen.dated, `${chatId}|${d.start_date}`, { key: eventKey, tokens: titleTokens(d) });
+  if (d.start_date) add(seen.dated, `${chatId}|${d.start_date}`, { key: eventKey, tokens: titleTokens(d), location: d.location });
 }
 // 이 사람이 이미 받은(또는 이번 실행에서 받기로 한) 것과 같은 행사면 사유를 돌려준다. 아니면 기록하고 null.
 // 1) 같은 정보원·같은 원제목의 다른 회차 2) 같은 공식 주소(다른 경로·정보원이 다른 키로 등록) 3) 같은 날짜 + 제목이 대부분 같음
 // 같은 행사의 변경 알림(같은 event_key)은 막지 않는다.
 function sameAsSent(seen, chatId, sourceId, d, eventKey) {
   const other = (list) => (list || []).some((x) => x.key !== eventKey);
+  const group = eventNoticeGroup(d);
+  if (group && other(seen.groups.get(`${chatId}|${group}`))) return "same-event-group";
   if (other(seen.series.get(`${chatId}|${seriesKey(sourceId, d)}`))) return "same-series";
   if (d.url && other(seen.urls.get(`${chatId}|${normUrl(d.url)}`))) return "same-url";
   if (d.start_date) {
     const t = titleTokens(d);
     const hit = (seen.dated.get(`${chatId}|${d.start_date}`) || []).some((x) => {
       if (x.key === eventKey || t.size < 2 || x.tokens.size < 2) return false;
+      // 같은 날 '크리스마스 트리 벌목'이라도 서로 다른 공원이라면 다른 행사다.
+      const loc = v => String(v || "").toLowerCase().replace(/[^a-z가-힣0-9]+/g, " ").trim();
+      const la = loc(x.location), lb = loc(d.location);
+      if (la && lb && !la.includes(lb) && !lb.includes(la)) return false;
       const common = [...t].filter((w) => x.tokens.has(w)).length;
       return common / Math.min(t.size, x.tokens.size) >= 0.6;
     });
@@ -678,11 +707,22 @@ export async function dispatch(env, opts = {}) {
   const now2 = nowIso();
   for (const row of chosen) {
     if (!claimed.has(row.id)) continue; // 다른 실행이 이미 가져감
+    // 서로 다른 event_key가 동시에 dispatch되어도 D1의 UNIQUE notices 키는 한 번만 확보 가능.
+    // 실제로 검증된 비용·일정 변경은 같은 event_key의 새 판에서 알릴 수 있게 보존.
+    // 단순 접수 시작·마감 시점(⏰)은 같은 모집을 반복하지 않는다.
+    const materialUpdate = row.version > 1 && row.change_note && !row.change_note.startsWith("⏰");
+    const groupClaim = materialUpdate ? null : noticeGroupClaimKey(row.chat_id, row.data);
+    if (groupClaim && !(await claimNotice(env, groupClaim))) {
+      done.push({ id: row.id, status: "skipped", reason: "same-event-group-claimed" }); r.skipped++;
+      continue;
+    }
     const note = row.version === row.cur_version ? row.change_note : null;
     let text = renderEvent(row.data, { kind: row.kind, version: row.version, note });
     if (row.resend) text = "🔁 재전송 (이전 전송의 성공 여부를 확인하지 못했습니다)\n" + text;
     const d = await sendHtml(env, row.bot, { chat_id: row.chat_id, text, reply_markup: keyboard(row.event_key, { state: row.state }, row.data.url) });
     const c = classify(d, { attempts: row.attempts + 1 }, now2);
+    // 명백한 발송 실패(HTTP 오류)는 독점 키를 풀어 재시도 허용. 성공 여부 불명은 중복 우려로 유지.
+    if (c.status === "failed" || c.status === "dead") await releaseNoticeGroup(env, groupClaim);
     done.push({ id: row.id, ...c, attempted: 1, bot: row.bot, chat_id: row.chat_id, event_key: row.event_key });
     if (c.status === "sent") r.sent++; else if (c.status === "uncertain") r.uncertain++; else r.failed++;
   }
@@ -730,7 +770,7 @@ export async function digest(env, opts = {}) {
     if (opts.force || (g.fresh > 0 && timeOk && (await claimNotice(env, `digest:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`)))) take = true;
     if (!take) { r.waiting++; continue; }
     const rows = await all(env.DB.prepare(
-      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, e.change_note, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
       "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? " +
       "AND o.status IN ('pending', 'failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?) " +
       "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 300").bind(g.chat_id, g.bot, now));
@@ -765,9 +805,16 @@ export async function digest(env, opts = {}) {
       if (calls >= DIGEST_CALLS || calls - groupStart >= perGroup) break;
       const claimed = await claimRows(env, [x.id]);
       if (!claimed.has(x.id)) continue;
+      const materialUpdate = x.version > 1 && x.change_note && !x.change_note.startsWith("⏰");
+      const groupClaim = materialUpdate ? null : noticeGroupClaimKey(g.chat_id, x.data);
+      if (groupClaim && !(await claimNotice(env, groupClaim))) {
+        done.push({ id: x.id, status: "skipped", reason: "same-event-group-claimed" }); r.skipped++;
+        continue;
+      }
       const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest" }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
       calls++;
       const c = classify(d, { attempts: x.attempts + 1 }, nowIso());
+      if (c.status === "failed" || c.status === "dead") await releaseNoticeGroup(env, groupClaim);
       done.push({ id: x.id, ...c, attempted: 1, bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
       if (c.status === "sent") { r.messages++; r.items++; sentNow++; } else r.failed++;
     }
@@ -808,17 +855,22 @@ export async function catchup(env, body = {}) {
   const heldIds = [];
   // 같은 정보원·같은 원제목(날짜만 다른 회차, 예: 시즌 열차의 여러 날짜)은 한 번만: 이미 받았거나 받을 예정이면 건너뛴다
   const series = (sid, d) => `${sid || ""}|${String(d.title || d.title_ko || "").toLowerCase().replace(/\s+/g, " ").trim()}`;
-  const seen = new Set((await all(env.DB.prepare(
+  const historical = await all(env.DB.prepare(
     "SELECT DISTINCT e.source_id, e.data FROM outbox o JOIN events e ON e.event_key = o.event_key WHERE o.chat_id = ? AND o.status IN ('sent', 'sending', 'pending', 'uncertain')")
-    .bind(owner))).map((r) => series(r.source_id, JSON.parse(r.data))));
+    .bind(owner));
+  const seen = new Set(historical.map(r => series(r.source_id, JSON.parse(r.data))));
+  const seenGroups = new Set(historical.map(r => eventNoticeGroup(JSON.parse(r.data))).filter(Boolean));
   const srcOf = new Map((await all(env.DB.prepare("SELECT event_key, source_id FROM events WHERE event_key IN (SELECT value FROM json_each(?))")
     .bind(JSON.stringify(cand.map((c) => c.event_key))))).map((r) => [r.event_key, r.source_id]));
   for (const ev of cand) {
     const e = { ...JSON.parse(ev.data), event_key: ev.event_key, bot: ev.bot };
     if (isExpired(e, "America/Denver")) { why.expired = (why.expired || 0) + 1; continue; }
     const sk = series(srcOf.get(ev.event_key), e);
+    const group = eventNoticeGroup(e);
+    if (group && seenGroups.has(group)) { why["same-event-group"] = (why["same-event-group"] || 0) + 1; continue; }
     if (seen.has(sk)) { why["same-series"] = (why["same-series"] || 0) + 1; continue; }
     seen.add(sk);
+    if (group) seenGroups.add(group);
     for (const r of owners) {
       const [kind, w] = targetKind(env, r, e, states, mutedTags, { skipAcked: true, kind: "digest" });
       if (w) why[w] = (why[w] || 0) + 1;
@@ -871,11 +923,19 @@ export async function more(env, chatId, bot, n = 5) {
   if (!pick.length) return { sent: 0, from };
   const claimed = await claimRows(env, pick.map((x) => x.id), true);
   const done = [];
+  const series = await sentSeries(env, [chat]);
   let sent = 0;
   for (const x of pick) {
     if (!claimed.has(x.id)) continue;
+    const duplicate = sameAsSent(series, chat, x.data.source_id, x.data, x.event_key);
+    const groupClaim = noticeGroupClaimKey(chat, x.data);
+    if (duplicate || (groupClaim && !(await claimNotice(env, groupClaim)))) {
+      done.push({ id: x.id, status: "skipped", reason: duplicate || "same-event-group-claimed" });
+      continue;
+    }
     const d = await sendHtml(env, bot, { chat_id: chat, text: renderEvent(x.data, { kind: "more" }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
     const c = classify(d, { attempts: (x.attempts || 0) + 1 }, nowIso());
+    if (c.status === "failed" || c.status === "dead") await releaseNoticeGroup(env, groupClaim);
     done.push({ id: x.id, ...c, attempted: 1, bot, chat_id: chat, event_key: x.event_key });
     if (c.status === "sent") sent++;
   }
