@@ -73,7 +73,7 @@ try {
     await admin("/admin/dispatch",{ignoreQuiet:true});
     const msgs=send(n);
     assert.equal(msgs.length,1,"실제 비용 변경은 알릴 수 있어야 함");
-    assert.match(msgs[0].payload.text,/\\$45/);
+    assert.match(msgs[0].payload.text,/\$45/);
     await admin("/admin/dispatch",{ignoreQuiet:true});
     assert.equal(send(n).length,1,"같은 변경을 재차 알리지 않음");
   });
