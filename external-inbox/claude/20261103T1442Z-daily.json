@@ -1,0 +1,25 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-03T14:42:00Z",
+  "finished_at": "2026-11-03T14:42:36Z",
+  "searches": 3,
+  "queries": [
+   "westminsterchamber.biz Downtown Westminster tree lighting holiday market November 2026",
+   "Arvada OR Northglenn OR Broomfield free holiday festival December 2026 city tree lighting parade date",
+   "Colorado free kids event November 2026 hands-on science aviation open house Denver area"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 5,
+  "excluded": 5,
+  "excluded_reasons": {
+   "already_submitted": 1,
+   "no_2026_date_found": 3,
+   "aggregator_only": 1
+  },
+  "notes": "Claude 독립 검색(예약). 새 교훈 항목은 없어 어제 항목(다운타운 웨스트민스터 점등식)을 다시 찾고 주변 도시 연말 행사와 어린이 과학·항공 행사를 찾았다. 새로 올릴 행사 없음. 제외: 브룸필드 점등식 12/4(10/27 이미 제출), 웨스트민스터 다운타운 점등·노스글렌·아바다 점등(2026 날짜 미공지, 아바다 11/20 은 집계 사이트만), 윙스 박물관 11월 무료일·어린이 과학 행사(2026 일정 없음)."
+ },
+ "events": []
+}
