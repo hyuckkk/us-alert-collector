@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-03T23:54:39.555Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Wings Over the Rockies Air & Space Museum — SCFD Free Day (November 19, 2026)",
+      "url": "https://wingsmuseum.org/events/scfd-free-day-nov-2026/",
+      "start_date": "2026-11-19",
+      "end_date": "2026-11-19",
+      "time": "10:00 AM–5:00 PM MST (local Denver time)",
+      "location": "Wings Over the Rockies Air & Space Museum, 7711 E Academy Blvd, Denver, CO 80230",
+      "cost": "Free general admission: $0 adult and $0 youth; $0 for a 2-adult/3-youth family. Regular official admission $19.95 adult/$12.95 youth; equivalent regular family admission $78.75, before any optional experiences.",
+      "age": "All ages; general public welcome; official zero-dollar adult and youth tickets; organizer offers pre-registration; capacity unconfirmed",
+      "audience": "family",
+      "description": "One-day SCFD-funded free admission is a real $78.75 savings for two adults and three youth. Guests see restored U.S. Air Force Thunderbirds F-16D fighter jet up close and other historic aircraft; museum family activities. Free adult/youth ticket categories for 2026-11-19 verified on official linked checkout https://56000.blackbaudhosting.com/56000/tickets?tab=2&txobjid=2d658ac8-5ff2-4d27-997a-346354c0db83 ; cockpit entry or flight is NOT promised. For local 2026 recipients, not the 2027-2028 stay."
+    },
+    {
+      "title": "Castle Rock Reindeer Games — Free Train and Hay Rides, Reindeer, Kids Obstacle Course (December 5, 2026)",
+      "url": "https://www.crgov.com/Calendar.aspx?EID=10956&calType=0&day=30&month=12&year=2026",
+      "start_date": "2026-12-05",
+      "end_date": "2026-12-05",
+      "time": "1:00 PM–4:00 PM MST (local time)",
+      "location": "Amphitheater at Philip S. Miller Park, 1375 W Plum Creek Pkwy, Castle Rock, CO 80109",
+      "cost": "Free admission and listed activities; $0 for family of five (optional purchases not included); ride capacity and queues unknown",
+      "age": "Public family event; especially children with adult caregivers; no age/ID limitation listed; registration not advertised",
+      "audience": "family",
+      "description": "Official Town of Castle Rock 2026 event calendar explicitly lists one-afternoon FREE public Reindeer Games with train and hay rides, outdoor obstacle course with prizes while supplies last, Santa and family activities. Official season page confirms Sat Dec 5, 1–4 PM, Philip S. Miller Park and live reindeer, crafts, hot chocolate: https://www.crgov.com/2622/Season-of-the-Star . Beyond ordinary paid holiday programs, time-limited free direct vehicle rides and interactive activities. Event calendar indexed by town official website; detailed event calendar endpoint returned an access restriction during external page reading. For local 2026 recipients, not the 2027-2028 stay."
+    }
+  ]
+}
