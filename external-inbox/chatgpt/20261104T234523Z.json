@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-04T23:45:23Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Steamboat Kids Ski Free Month — Free Lift Tickets Without Adult Purchase (Nov 21–Dec 15, 2026)",
+      "url": "https://www.steamboat.com/plan-your-trip/deals-and-packages/kids-ski-and-ride-free",
+      "start_date": "2026-11-21",
+      "end_date": "2026-12-15",
+      "time": "Daytime resort lift operations; actual open lifts and hours depend on snow conditions",
+      "location": "Steamboat Ski Resort, Steamboat Springs, Colorado",
+      "cost": "$0 per child aged 12 and under for lift tickets, NO adult ticket purchase required in this limited window; for 2 adults + 3 eligible children the 3 children's lift tickets total $0. Adult lift tickets, equipment, lessons, transport and lodging extra, full 5-person cost unknown.",
+      "age": "Children aged 12 or younger eligible for free individual-day lift tickets. Any age may accompany with appropriate paid lift ticket; no membership/residency or adult ticket purchase required for child offer.",
+      "audience": "kids",
+      "description": "Official resort promotion for November 21 through December 15, 2026 only: select '12 and Under Kids Ski Free Nov. 21 - Dec.15, 2026' on the resort's lift-ticket checkout to add a $0 child ticket; separate single-day tickets needed for more than one day. Different from the regular Kids Ski Free offer requiring 5+ paid adult days. Strong non-routine savings: three qualifying children receive $0 lift tickets without any adult-ticket purchase. Limited to 2026 local residents, outside the family's June 2027–August 2028 stay. Online checkout was inaccessible (HTTP 403) during this research, so remaining ticket inventory, adult pricing, weather-dependent opening, and final total are unverified. Official page FAQ mistakenly mentions year 2025 once, while promotion headline, instructions and purchase-eligibility FAQ explicitly say 2026."
+    }
+  ]
+}
