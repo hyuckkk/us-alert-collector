@@ -1,0 +1,39 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-04T14:42:00Z",
+  "finished_at": "2026-11-04T14:43:09Z",
+  "searches": 3,
+  "queries": [
+   "Colorado ski resort opening day 2026 free lift tickets kids pass deal 4th 5th grade passport Colorado Ski Country",
+   "Denver Thanksgiving weekend 2026 free family event November 27 28 parade OR lighting OR festival",
+   "Northglenn \"Noel Northglenn\" 2026 OR Arvada \"Olde Town\" tree lighting 2026 official city date"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 7,
+  "excluded": 6,
+  "excluded_reasons": {
+   "no_2026_date_found": 4,
+   "regular_paid_seasonal": 2
+  },
+  "notes": "Claude 독립 검색(예약). 새 교훈 항목 없음. 새 범위로 어린이 스키 할인 패스, 추수감사절 주말 무료 행사, 노스글렌·아바다 점등식을 찾았다. 공식 사이트 직접 열기는 이 환경에서 DNS 오류라 verified:false. 제외: 유니언역 Grand Illumination·스카이라인 무료 링크·Noel Northglenn·아바다 올드타운 점등(2026 날짜 미공지), 엘리치 가든 연말 전시·Blossoms of Light(정가 시즌 상품). 스키 패스는 2026-27 시즌(체류 전)이지만 매년 반복되는 아동 할인이라 올린다."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-04T14:43:09Z",
+   "origin": "scheduled",
+   "title": "Colorado Ski Country USA Ski Passport 2026-27 (kids K-6th grade)",
+   "url": "https://www.coloradoski.com/passes-and-deals/ski-passport/",
+   "location": "19 Colorado Ski Country member ski areas",
+   "cost": "$76 per child per 2026-27 release (a later article reports a $49 tier; confirm on the official page)",
+   "age": "유치원~6학년",
+   "audience": "kids",
+   "description": "Colorado Ski Country USA's Ski Passport: up to four days of skiing or snowboarding at each participating member ski area for students in kindergarten through 6th grade. Parents register the child online; blackout dates apply.",
+   "recommend": "push",
+   "special_reason": "스키장 협회가 아이에게 19개 스키장 각 4일을 $76에 주는 연례 할인 패스"
+  }
+ ]
+}
