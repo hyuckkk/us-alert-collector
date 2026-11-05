@@ -1,3 +1,4 @@
+import { recordRunHealth } from './run-health.js';
 // 수집기(GitHub Actions)와 사람별 발송 사이의 모든 상태를 D1 에 둔다.
 // 원칙: 수집한 정보는 처리 전까지 대기열(pending)에 보존하고, 발송은 선점(claim) 후 보내며 결과를 확실/불명/실패로 나눠 기록한다.
 // D1 무료 요금제의 호출당 쿼리 수 제한 때문에 여러 건은 json_each 로 한 번에 처리한다.
@@ -1038,23 +1039,8 @@ export async function runLog(env, body) {
   const now = nowIso();
   await env.DB.prepare("INSERT INTO runs (run_id, started_at, finished_at, data) VALUES (?, ?, ?, ?) ON CONFLICT(run_id) DO UPDATE SET finished_at = excluded.finished_at, data = excluded.data")
     .bind(String(body.run_id), body.started_at || now, body.finished_at || null, JSON.stringify({ ...(body.metrics || {}), stages: body.stages || {} })).run();
-  await kvSet(env, "last_run_at", now);
-  if (body.completed) await kvSet(env, "last_collect_ok_at", now);
   const alerts = (body.alerts || []).filter(Boolean).slice(0, 8);
-
-  // AI 상태: 성공 시 복구 알림, 실패 시 중단 시작 시각 유지
-  if (body.ai && typeof body.ai.ok === "boolean") {
-    const prev = JSON.parse((await kvGet(env, "ai_health")) || "{}");
-    if (body.ai.ok) {
-      if (prev.failing_since) {
-        const h = Math.round((Date.now() - Date.parse(prev.failing_since)) / 3600000);
-        alerts.push(`AI 분석 복구 (중단 약 ${h}시간, 실패 ${prev.consecutive || 0}회). 보존된 대기열부터 처리합니다.`);
-      }
-      await kvSet(env, "ai_health", { last_ok_at: now, failing_since: null, consecutive: 0 });
-    } else {
-      await kvSet(env, "ai_health", { ...prev, failing_since: prev.failing_since || now, consecutive: (prev.consecutive || 0) + 1, last_error: String(body.ai.error || "").slice(0, 200) });
-    }
-  }
+  await recordRunHealth(env, body, now, alerts);
   // 정보원 상태
   const src = (body.sources || []).filter((s) => s && s.id).slice(0, 200);
   if (src.length) {
@@ -1101,7 +1087,7 @@ export async function watchdog(env) {
   const stale = last !== null && hours > limit;
   let notified = false;
   if (stale && (await claimNotice(env, `watchdog:${localDate(env)}:${Math.floor(hourIn(ownerTz(env)) / 12)}`))) {
-    await notifyOwner(env, `⚠️ 매일 수집이 ${Math.floor(hours)}시간째 성공 기록이 없습니다 (기준 ${limit}시간).\n마지막 실행 시작: ${lastRun || "없음"}\nGitHub us-alert-collector 저장소 Actions 탭의 collect 실행을 확인해 주세요. 매시 감시가 살아 있으면 자동으로 다시 실행합니다.`);
+    await notifyOwner(env, `⚠️ 매일 수집이 ${Math.floor(hours)}시간째 성공 기록이 없습니다 (기준 ${limit}시간).\n마지막 실행 보고 수신: ${lastRun || "없음"}\nGitHub us-alert-collector 저장소 Actions 탭의 collect 실행을 확인해 주세요. 자동 재실행은 매시 감시와 GH_DISPATCH_TOKEN 설정이 모두 필요합니다. AI 오류 상태와는 별개입니다.`);
     notified = true;
   }
   return { ok: true, last_collect_ok_at: last, last_run_at: lastRun, hours_since: hours === null ? null : Math.round(hours * 10) / 10, stale, limit_hours: limit, notified };
@@ -1142,8 +1128,8 @@ export async function usage(env, method, body, url) {
   if (method === "POST" && ref > 0) {
     for (const pct of [50, 80, 100]) {
       if (usd >= (ref * pct) / 100 && (await claimNotice(env, `budget:${month}:${pct}`))) {
-        await notifyOwner(env, `💰 이번 달 미국 알림 API 사용액 $${usd.toFixed(2)} — 보유 크레딧 기준 $${ref}의 ${pct}%.\n` +
-          "시스템이 스스로 멈추지는 않습니다. 크레딧이 실제로 바닥나면 AI 분석만 멈추고 수집·발송은 계속합니다. 카드 등록·충전·자동 충전은 하지 않습니다.");
+        await notifyOwner(env, `💰 이번 달 미국 알림 API 사용액 $${usd.toFixed(2)} — 설정된 참고금액 $${ref}의 ${pct}%.\n` +
+          "시스템이 스스로 멈추지는 않습니다. 이 집계는 조직의 실제 잔액이나 결제 주기와 다를 수 있습니다. AI 접근 실패는 상태코드와 오류 종류로 별도 보고합니다. 카드 등록·충전·자동 충전은 하지 않습니다.");
       }
     }
   }

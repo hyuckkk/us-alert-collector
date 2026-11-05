@@ -509,7 +509,7 @@ async function status(env) {
   return {
     build: BUILD,
     delivery_mode: ownerOnly(env) ? "owner-only" : "all",
-    secrets: Object.fromEntries([...Object.values(BOTS).map((b) => b.secret), "OWNER_CHAT_ID", "ADMIN_KEY"].map((k) => [k, !!env[k]])),
+    secrets: Object.fromEntries([...Object.values(BOTS).map((b) => b.secret), "OWNER_CHAT_ID", "ADMIN_KEY", "GH_DISPATCH_TOKEN"].map((k) => [k, !!env[k]])),
     origin_set: !!(await kvGet(env, "origin")),
     recipients: recips,
     deliveries: await one("SELECT COUNT(*) AS n, SUM(ok) AS ok FROM deliveries"),
@@ -518,6 +518,7 @@ async function status(env) {
     outbox: (await env.DB.prepare("SELECT kind, status, COUNT(*) AS n FROM outbox GROUP BY kind, status").all()).results,
     expiries: (await env.DB.prepare("SELECT name, expires_on FROM key_expiry ORDER BY expires_on").all()).results,
     key_check: kc ? JSON.parse(kc) : null,
+    collection_clock: { started_at: await kvGet(env, "last_collect_started_at"), finished_at: await kvGet(env, "last_collect_finished_at"), report_received_at: await kvGet(env, "last_run_received_at") },
     last_run: await one("SELECT run_id, started_at, finished_at FROM runs ORDER BY started_at DESC LIMIT 1"),
     queue: await pipeline.queueStats(env),
     ai: (await pipeline.aiHealth(env)),
@@ -536,6 +537,10 @@ function formatStatus(s) {
   if (s.key_check) lines.push(`API 키 점검: ${s.key_check.ok ? "정상" : "실패 " + s.key_check.status} (${s.key_check.at.slice(0, 16)}Z)`);
   if (s.last_run && s.last_run.run_id) lines.push(`마지막 수집: ${s.last_run.run_id} (${String(s.last_run.started_at).slice(0, 16)}Z)`);
   lines.push(`처리 대기 ${s.queue.queued}건(가장 오래 ${s.queue.oldest_queued_hours}시간) · 보류 ${s.queue.stuck}건`);
+  lines.push(`수집 시작: ${s.collection_clock.started_at || "미확인"} · 종료: ${s.collection_clock.finished_at || "미확인"}`);
+  lines.push(`수집 보고 수신: ${s.collection_clock.report_received_at || "미확인"}`);
+  lines.push(`AI API 최종 성공 응답: ${s.ai?.last_api_success_at || "미확인(기존 보고 수신 시각과 구분)"}`);
+  if (s.ai?.diagnostic) lines.push(`AI 오류: ${s.ai.diagnostic.category} · HTTP ${s.ai.diagnostic.http_status ?? "미확인"} · ${s.ai.diagnostic.error_type}`);
   if (s.ai && s.ai.failing_since) lines.push(`AI 분석 중단 중 (${String(s.ai.failing_since).slice(0, 16)}Z부터)`);
   if (s.watchdog && s.watchdog.stale) lines.push(`⚠️ 매일 수집 ${Math.floor(s.watchdog.hours_since)}시간째 성공 기록 없음`);
   return lines.join("\n");

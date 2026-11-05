@@ -48,8 +48,8 @@ def test_1_2_failed_batch_keeps_earlier_batches_and_rate_limit_stops_rest():
     usage = ai.Usage(PRICES)
     out = ai.extract(FakeClient([ok, boom, ok]), CFG, entries, "2026-10-20", usage)
     assert sorted(out.results) == [0, 1]
-    assert out.failed == {2: "RateLimitError", 3: "RateLimitError", 4: "not-attempted: RateLimitError", 5: "not-attempted: RateLimitError"}
-    assert out.stopped == "RateLimitError" and usage.by_model["claude-haiku-5-5"]["errors"] == 1
+    assert out.failed == {2: "rate-limit", 3: "rate-limit", 4: "not-attempted: rate-limit", 5: "not-attempted: rate-limit"}
+    assert out.stopped == "rate-limit" and usage.by_model["claude-haiku-5-5"]["errors"] == 1
 
 
 def test_extract_refusal_marks_batch_failed():

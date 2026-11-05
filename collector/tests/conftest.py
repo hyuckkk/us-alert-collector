@@ -10,9 +10,9 @@ import pytest  # noqa: E402
 
 @pytest.fixture(autouse=True)
 def _reset_credit():
-    ai.CREDIT.update(out=False, error=None)
+    ai.CREDIT.update(out=False, error=None, blocked=False, diagnostic=None)
     yield
-    ai.CREDIT.update(out=False, error=None)
+    ai.CREDIT.update(out=False, error=None, blocked=False, diagnostic=None)
 
 
 def credit_error(*_):

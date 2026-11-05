@@ -21,6 +21,7 @@ from typing import Literal, Optional
 
 import anthropic
 from pydantic import BaseModel
+from api_errors import classify, HALT, safe_message
 
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
@@ -66,7 +67,12 @@ class Usage:
         return self.by_model.setdefault(model, {"input_tokens": 0, "output_tokens": 0, "cache_write_tokens": 0, "cache_read_tokens": 0,
                                                 "usd": 0.0, "calls": 0, "searches": 0, "errors": 0})
 
-    def add(self, model: str, usage, searches: int = 0) -> None:
+    last_success_at: str | None = None
+    last_error: dict | None = None
+
+    def add(self, model: str, usage, searches: int = 0, confirmed: bool = True) -> None:
+        if confirmed:
+            self.last_success_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
         m = self._m(model)
         p = self.prices.get(model, {})
         if isinstance(p, (list, tuple)):  # 예전 형식 [입력, 출력]
@@ -90,8 +96,17 @@ class Usage:
             with open(live, "w") as f:
                 json.dump({"usd": round(self.usd, 4), "calls": sum(x["calls"] for x in self.by_model.values()), "by_model": self.by_model}, f)
 
-    def error(self, model: str) -> None:
+    def error(self, model: str, error=None) -> None:
         self._m(model)["errors"] += 1
+        if error is not None:
+            self.last_error = classify(error)
+            credit_exhausted(error)
+
+    def health(self):
+        totals = self.totals()
+        attempted = bool(self.last_success_at or totals["errors"])
+        return {"attempted": attempted, "ok": bool(self.last_success_at) and not totals["errors"] and not ai_blocked(),
+                "last_success_at": self.last_success_at, "error": self.last_error, "errors": totals["errors"]} if attempted else None
 
     @property
     def usd(self) -> float:
@@ -210,14 +225,22 @@ def build_extract_prompt(entries: list, today: str, text_chars: int) -> str:
 STOP_ERRORS = (anthropic.RateLimitError, anthropic.AuthenticationError, anthropic.PermissionDeniedError)
 # API 선불 크레딧이 떨어지면 호출이 거부된다(카드·자동 충전이 없으면 추가 과금 없음). 그 실행에서는 AI 를 더 부르지 않고,
 # 비AI 수집·기존 알림 발송은 계속한다. 카드 등록·충전·자동 충전은 소유자 승인 없이 하지 않는다.
-CREDIT = {"out": False, "error": None}
+CREDIT = {"out": False, "error": None, "blocked": False, "diagnostic": None}
+
+
+def ai_blocked():
+    return bool(CREDIT["out"] or CREDIT.get("blocked"))
+
+
+def block_reason():
+    return (CREDIT.get("diagnostic") or {}).get("category", "credit-exhausted" if CREDIT["out"] else "api-blocked")
 
 
 def credit_exhausted(e: Exception) -> bool:
-    t = str(e).lower()
-    hit = isinstance(e, anthropic.APIStatusError) and ("credit balance" in t or "insufficient credit" in t or "billing" in t or "purchase credits" in t)
-    if hit:
-        CREDIT.update(out=True, error=str(e)[:200])
+    diagnostic = classify(e)
+    hit = diagnostic["category"] == "credit-exhausted"
+    if diagnostic["category"] in HALT:
+        CREDIT.update(out=CREDIT["out"] or hit, blocked=True, error=diagnostic["message"], diagnostic=diagnostic)
     return hit
 
 
@@ -271,17 +294,17 @@ def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> Extra
                 if truncated and len(chunk) > 1:
                     # SDK 가 잘린 JSON 에서 예외를 내면 응답 사용량을 받을 수 없다 → 입력(글자/4)·출력(한도) 추정치로 기록(개발비 과소 집계 방지)
                     usage.add(c["model"], resp.usage if resp is not None else SimpleNamespace(
-                        input_tokens=4000 + sum(min(len(e.text or ""), c["text_chars"]) for e in chunk) // 4, output_tokens=c["max_tokens"]))
+                        input_tokens=4000 + sum(min(len(e.text or ""), c["text_chars"]) for e in chunk) // 4, output_tokens=c["max_tokens"]), confirmed=resp is not None)
                     half = len(chunk) // 2
                     work += [(start, half), (start + half, len(chunk) - half)]
                     continue
                 if err is not None:
-                    usage.error(c["model"])
-                    if isinstance(err, STOP_ERRORS) or credit_exhausted(err):
-                        out.stopped = "credit-exhausted" if CREDIT["out"] else type(err).__name__
+                    usage.error(c["model"], err)
+                    if ai_blocked():
+                        out.stopped = block_reason()
                         out.failed.update({i: out.stopped for i in idx})
                     elif isinstance(err, (anthropic.APIError, ValueError)):
-                        out.failed.update({i: f"{type(err).__name__}: {str(err)[:120]}" for i in idx})
+                        out.failed.update({i: f"{type(err).__name__}: {safe_message(str(err))[:120]}" for i in idx})
                     else:
                         raise err
                     continue
@@ -334,8 +357,8 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
     for start in range(0, len(items), c["batch"]):
         chunk = items[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
-        if not usage.allows(c.get("reserve_usd", 0.4)) or CREDIT["out"]:
-            out.missing.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
+        if not usage.allows(c.get("reserve_usd", 0.4)) or ai_blocked():
+            out.missing.update({i: block_reason() if ai_blocked() else "run-cost-cap" for i in idx})
             continue
         body = "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 2000)}, ensure_ascii=False) for i, (ev, txt) in enumerate(chunk))
         try:
@@ -350,7 +373,7 @@ def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> Jud
                 fallbacks="default",
             )
         except (anthropic.APIError, ValueError) as e:
-            usage.error(c["model"])
+            usage.error(c["model"], e)
             credit_exhausted(e)
             out.missing.update({i: f"{type(e).__name__}" for i in idx})
             continue
@@ -465,8 +488,8 @@ def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usag
     for start in range(0, len(items), c["batch"]):
         chunk = items[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
-        if not usage.allows(c.get("reserve_usd", 0.5)) or CREDIT["out"]:
-            out.missing.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
+        if not usage.allows(c.get("reserve_usd", 0.5)) or ai_blocked():
+            out.missing.update({i: block_reason() if ai_blocked() else "run-cost-cap" for i in idx})
             continue
         body = f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500)}, ensure_ascii=False)
                                                  for i, (ev, txt) in enumerate(chunk))
@@ -477,7 +500,7 @@ def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usag
                 output_format=RecommendBatch, betas=[FALLBACK_BETA], fallbacks="default",
             )
         except (anthropic.APIError, ValueError) as e:
-            usage.error(c["model"])
+            usage.error(c["model"], e)
             credit_exhausted(e)
             out.missing.update({i: f"{type(e).__name__}" for i in idx})
             continue
@@ -539,14 +562,14 @@ Do NOT pick missing_source merely because the host is absent from registered_hos
 def gap_analysis(client, cfg: dict, items: list[dict], registered_hosts: list[str], usage: Usage) -> dict:
     """items: {index, title, url, found, start_date, description}. 반환: index → GapFix. 큰 모델(추천 판정과 같은 설정)."""
     c = cfg["recommend"]
-    if not items or not usage.allows(c.get("reserve_usd", 0.5)) or CREDIT["out"]:
+    if not items or not usage.allows(c.get("reserve_usd", 0.5)) or ai_blocked():
         return {}
     body = json.dumps({"registered_hosts": registered_hosts[:200], "events": items}, ensure_ascii=False)
     try:
         resp = client.beta.messages.parse(model=c["model"], max_tokens=c["max_tokens"], system=GAP_RULES, messages=[{"role": "user", "content": body}],
                                           output_config={"effort": c["effort"]}, output_format=GapBatch, betas=[FALLBACK_BETA], fallbacks="default")
     except (anthropic.APIError, ValueError) as e:
-        usage.error(c["model"])
+        usage.error(c["model"], e)
         credit_exhausted(e)
         return {}
     usage.add(c["model"], resp.usage)
@@ -645,7 +668,7 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_
     queries: list[str] = []
     text = ""
     for _ in range(3):  # pause_turn 이면 이어서 요청
-        if not usage.allows(c.get("reserve_usd", 1.2)) or CREDIT["out"]:
+        if not usage.allows(c.get("reserve_usd", 1.2)) or ai_blocked():
             break
         try:
             resp = client.beta.messages.create(
@@ -653,7 +676,7 @@ def discover(client, cfg: dict, theme: str, known: list[str], usage: Usage, max_
                 output_config={"effort": c["effort"]}, betas=[FALLBACK_BETA], fallbacks="default",
             )
         except anthropic.APIError as e:
-            credit_exhausted(e)
+            usage.error(c["model"], e)
             raise
         searches = 0
         for b in resp.content:

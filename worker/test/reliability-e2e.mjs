@@ -272,7 +272,7 @@ try {
     await u(0.6); await u(0.25); await u(0.2); await u(0.01);
     const t = sends(n, /💰/).map((c) => c.payload.text);
     assert.equal(t.length, 3);
-    assert.match(t[2], /크레딧 기준 \$1의 100%/);
+    assert.match(t[2], /설정된 참고금액 \$1의 100%/);
     assert.match(t[2], /스스로 멈추지는 않습니다/);
     const row = (await admin("/admin/usage")).rows.find((r) => r.model === "claude-opus-5-5");
     assert.equal(row.searches, 8);
