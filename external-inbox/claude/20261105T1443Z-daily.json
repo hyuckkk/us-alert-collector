@@ -1,0 +1,40 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-05T14:42:00Z",
+  "finished_at": "2026-11-05T14:43:09Z",
+  "searches": 3,
+  "queries": [
+   "Kukur Tihar Lafayette Colorado 2026 Nepali dog festival date",
+   "Westminster Colorado electric vehicle ride and drive 2026 speedway OR EV test drive event November",
+   "youth pollinator summit Boulder 2026 CU teen science summit 13-18"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 5,
+  "excluded": 4,
+  "excluded_reasons": {
+   "no_2026_listing_found": 3,
+   "already_submitted": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(쿠쿠르 티하르, 스피드웨이 전기차 체험, 청소년 꽃가루매개자 서밋, 9News 빛의 퍼레이드)을 찾았다. 이 환경은 공식 사이트 직접 열기가 안 되어 verified:false. 라파예트 행사는 못 찾고 이웃 Superior 시의 같은 축제(11/8)를 찾았다. 제외: 스피드웨이 전기차 체험·청소년 서밋(2026 공지 검색 안 됨, 2025 것만), 빛의 퍼레이드(10/26 이미 제출)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-05T14:43:09Z",
+   "origin": "scheduled",
+   "title": "Kukur Tihar \"Day of the Dog\" (Town of Superior)",
+   "url": "https://www.superiorcolorado.gov/Community/Calendars/Events/Kukur-Tihar-Day-of-the-Dog",
+   "start_date": "2026-11-08",
+   "time": "1:00 PM - 3:00 PM",
+   "location": "Town of Superior, CO",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Town of Superior community celebration of Kukur Tihar, the Nepali festival day honoring dogs (part of Tihar). Cost not stated.",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 열리는 네팔 '개의 날' 문화 축제"
+  }
+ ]
+}
