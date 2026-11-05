@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-05T23:39:00Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Denver Parks & Recreation Learn to Ski & Ride — $35 All-Inclusive Youth Winter Park Trips (Registration Nov 18–21)",
+      "url": "https://anc.apm.activecommunities.com/denver/activity/search?activity_keyword=harvey+park&activity_select_param=2&locale=en-US&onlineSiteId=0&viewMode=list",
+      "start_date": "2026-11-18",
+      "end_date": "2026-11-21",
+      "time": "Registration: Wed Nov 18 5:30–7:30 p.m. MST at Harvey Park; Sat Nov 21 10:00 a.m.–noon MST at Harvey Park, St. Charles or Cook Park; remaining spots/waitlist online after noon Nov 21. Example ski trip Fri Dec 18 6:45 a.m.–6:30 p.m.",
+      "location": "Harvey Park Recreation Center, 2120 S Tennyson Way, Denver, CO 80219 (registration/departure); Winter Park Resort (ski lesson)",
+      "cost": "$35 per eligible Denver-resident child for the Dec 18 trip; includes transportation, equipment rental, lift ticket, Winter Park group lesson, and optional borrowed winter clothing. Three eligible children: $105; adults not participants, so five-person family outing cost not applicable. Additional taxes or fees unverified.",
+      "age": "Denver residents ages 7–17 who are beginners/first-timers; parent/guardian must register in person first; non-Denver residents (e.g. Westminster 80234) not eligible under published terms.",
+      "audience": "kids",
+      "description": "City of Denver directly subsidizes a full-day introduction to skiing/snowboarding at Winter Park: bus ride, rentals, lift, professional group lesson and loaner warm clothing all included for $35, substantially below ordinary resort packages. Registration is in person Nov 18 5:30–7:30 p.m. for Harvey Park departures, extra all-program registration Nov 21 10 a.m.–noon and online residual/waitlist after noon Nov 21. Official Denver ActiveNet registration listing activity #120616 verifies Dec 18 2026 6:45 a.m.–6:30 p.m., $35, ages 7–17; organizer-authored ActiveKids listing spells out package/eligibility. Intended for eligible Denver-area 2026 local residents; NOT for Westminster 80234 nonresidents or user's 2027–28 stay. Vacancy not yet verified; ski trip is Dec 18, registration window Nov 18–21."
+    }
+  ]
+}
