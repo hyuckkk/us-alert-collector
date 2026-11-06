@@ -48,8 +48,9 @@ def link_map(client):
             old, new = normalize_url(href, page), normalize_url(href, base)
             if old != new and urllib.parse.urlsplit(new).hostname == 'www.northglenn.org':
                 if old in mapping and mapping[old] != new:
-                    raise RuntimeError('Ambiguous repair mapping')
-                mapping[old] = new
+                    mapping[old] = None  # Ambiguous anchors stay untouched.
+                else:
+                    mapping[old] = new
     return mapping
 
 def plan(rows, mapping, client):
