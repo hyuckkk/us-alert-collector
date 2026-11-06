@@ -424,7 +424,8 @@ class Run:
                 out.failed = {**{send[j]: v for j, v in out.failed.items()}, **no_detail}
                 self.m["ai_items"] = len(out.results)
                 self.m["ai_missing"] = sum(1 for v in out.failed.values() if v == "missing-in-output")
-                self.m["ai_failed"] = len(out.failed)
+                self.m["ai_deferred"] = sum(v.startswith("not-attempted: ") for v in out.failed.values())
+                self.m["ai_failed"] = len(out.failed) - self.m["ai_deferred"]
                 self.ai_ok = bool(out.results) or not out.failed
                 if out.stopped:
                     self.alerts.append(f"AI 추출 중단({out.stopped}) — 남은 {len(out.failed)}건은 대기열에 보존")
@@ -511,7 +512,11 @@ class Run:
                     if i in lost_idx:
                         continue
                     if i in out.failed:
-                        results.append({"key": r["key"], "status": "retry", "error": out.failed[i]})
+                        error = out.failed[i]
+                        # Unattempted batches have not failed: release their leases
+                        # without consuming the per-item retry allowance.
+                        status = "release" if error.startswith("not-attempted: ") else "retry"
+                        results.append({"key": r["key"], "status": status, "error": error})
                     elif i in held:
                         results.append({"key": r["key"], "status": "retry", "error": "judge-or-recommend-failed"})
                     else:
@@ -759,3 +764,4 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
 
 if __name__ == "__main__":
     main()
+

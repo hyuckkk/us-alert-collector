@@ -157,7 +157,15 @@ export async function queueStats(env) {
   const by = await all(env.DB.prepare("SELECT status, COUNT(*) AS n, MIN(first_seen) AS oldest FROM pending GROUP BY status"));
   const m = Object.fromEntries(by.map((r) => [r.status, r.n]));
   const q = by.find((r) => r.status === "queued");
-  return { counts: m, queued: m.queued || 0, extracted: m.extracted || 0, stuck: m.stuck || 0,
+  // Fixed categories only: never expose raw error text, URLs, or page bodies.
+  const stuckReasons = m.stuck ? await all(env.DB.prepare(
+    "SELECT CASE WHEN last_error LIKE 'not-attempted: %' THEN 'not-attempted' " +
+    "WHEN last_error LIKE 'detail-unavailable:%' THEN 'detail-unavailable' " +
+    "WHEN last_error = 'missing-in-output' THEN 'missing-in-output' " +
+    "WHEN last_error = 'judge-or-recommend-failed' THEN 'judge-or-recommend-failed' " +
+    "ELSE 'other' END AS reason, COUNT(*) AS n FROM pending WHERE status = 'stuck' GROUP BY reason ORDER BY n DESC, reason"
+  )) : [];
+  return { counts: m, queued: m.queued || 0, extracted: m.extracted || 0, stuck: m.stuck || 0, stuck_reasons: stuckReasons,
     oldest_queued_hours: q && q.oldest ? Math.round((Date.now() - Date.parse(q.oldest)) / 3600000) : 0 };
 }
 
@@ -1071,7 +1079,11 @@ export async function runLog(env, body) {
   }
   // 재시도 한도를 넘긴 대기열 항목
   const qs = await queueStats(env);
-  if (qs.stuck && (await claimNotice(env, `stuck:${qs.stuck}:${localDate(env)}`))) alerts.push(`처리하지 못한 항목 ${qs.stuck}건이 재시도 한도를 넘어 보류 중입니다(삭제하지 않음).`);
+  if (qs.stuck && (await claimNotice(env, `stuck:${qs.stuck}:${localDate(env)}`))) {
+    const labels = { "not-attempted": "AI 미실행", "detail-unavailable": "상세 조회 실패", "missing-in-output": "AI 결과 누락", "judge-or-recommend-failed": "판정 실패", other: "기타" };
+    const reasons = qs.stuck_reasons.map((r) => `${labels[r.reason] || "기타"} ${r.n}건`).join(", ");
+    alerts.push(`처리하지 못한 항목 ${qs.stuck}건이 재시도 한도를 넘어 보류 중입니다(삭제하지 않음). 사유: ${reasons}`);
+  }
   // 같은 경고(예: 접속이 계속 안 되는 핵심 정보원)는 하루 한 번만 알린다. 문구에서 실행 번호·숫자는 빼고 비교
   const fresh = [];
   for (const a of alerts) {
@@ -1441,3 +1453,4 @@ export async function weeklyReport(env, send = true) {
   await kvSet(env, "last_report", report);
   return { ok: true, report };
 }
+

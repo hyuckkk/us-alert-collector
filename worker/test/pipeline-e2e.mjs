@@ -18,6 +18,20 @@ try {
   const { admin, hook, msg, since } = E;
   const sends = (n, to) => since(n).filter((c) => c.method === "sendMessage" && (!to || String(c.payload.chat_id) === to));
 
+  await step("보류 사유 통계: 미실행·상세 실패 분류, 원문 오류 비공개", async () => {
+    const empty = await admin("/admin/queue", { op: "stats" });
+    assert.deepEqual(empty.stuck_reasons, []);
+    const errors = ["not-attempted: run-cost-cap", "detail-unavailable: private-error", "missing-in-output", "judge-or-recommend-failed", "private-error"];
+    const items = errors.map((error, i) => ({ key: `reason-test-${i}`, hash: `h${i}`, source_id: "test", url: `https://example.org/test-${i}`, title: "test", body: { text: "original" }, priority: 0 }));
+    await admin("/admin/queue", { op: "add", items });
+    for (let i = 0; i < errors.length; i++) E.sql(`UPDATE pending SET status='stuck', attempts=6, last_error='${errors[i]}' WHERE key='reason-test-${i}'`);
+    const stats = await admin("/admin/queue", { op: "stats" });
+    assert.equal(stats.stuck, 5);
+    assert.deepEqual(Object.fromEntries(stats.stuck_reasons.map(r => [r.reason, r.n])), { "not-attempted": 1, "detail-unavailable": 1, "missing-in-output": 1, "judge-or-recommend-failed": 1, other: 1 });
+    assert.ok(!JSON.stringify(stats).includes("private-error"));
+    E.sql("DELETE FROM pending WHERE key LIKE 'reason-test-%'");
+  });
+
   await step("준비: 소유자 life·kids 시작, 지인 kids 시작·승인, 정지 시간 끄기", async () => {
     await hook("life", msg(OWNER, "/start"));
     await hook("kids", msg(OWNER, "/start"));
@@ -219,3 +233,4 @@ try {
 
 if (failed()) { console.log("\n--- wrangler log (tail) ---\n" + E.log().slice(-3000)); process.exit(1); }
 console.log("\n모든 파이프라인 검사 통과");
+
