@@ -1,0 +1,40 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-06T14:42:00Z",
+  "finished_at": "2026-11-06T14:43:08Z",
+  "searches": 3,
+  "queries": [
+   "Colorado December 2026 free family event lottery OR limited tickets registration opens kids",
+   "Denver Union Station Grand Illumination 2026 OR Larimer Square holiday 2026 date free",
+   "Colorado state park First Day Hike January 1 2027 guided free"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 5,
+  "excluded": 4,
+  "excluded_reasons": {
+   "already_submitted": 1,
+   "no_2026_date_found": 3
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목은 골든게이트 트리 벌목 추첨뿐인데 10/30·11/1 에 이미 올렸다(같은 행사로 묶이지 않는 것으로 보임). 새 범위로 12월 한정 행사, 유니언역 점등, 1월 1일 주립공원 첫날 하이킹을 찾았다. 공식 사이트 직접 열기는 이 환경에서 안 되어 verified:false. 제외: 유니언역 Grand Illumination·라리머 스퀘어(2026 날짜 미공지), 콜로라도스프링스 박물관 연말 행사·제퍼슨 카운티 공예(지난 해 일정)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-06T14:43:08Z",
+   "origin": "scheduled",
+   "title": "First Day Hikes at Colorado State Parks (Jan. 1, 2027)",
+   "url": "https://cpw.state.co.us/FirstDayHikes",
+   "start_date": "2027-01-01",
+   "location": "Participating Colorado state parks",
+   "cost": "Free hike (valid state park pass required)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Annual CPW New Year's Day program: guided hikes (limited capacity, some need registration), self-guided hikes and scavenger hunts at about 26 state parks in 2026. 2027 park list not yet announced; confirm on the CPW page.",
+   "recommend": "push",
+   "special_reason": "1년에 하루 주립공원 해설사 동행 하이킹(정원 한정)"
+  }
+ ]
+}
