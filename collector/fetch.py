@@ -160,8 +160,11 @@ class _LinkParser(HTMLParser):
         self._href = None
         self._buf: list[str] = []
         self._skip = 0
+        self.base_href: str | None = None
 
     def handle_starttag(self, tag, attrs):
+        if tag == "base" and self.base_href is None and not self._skip:
+            self.base_href = dict(attrs).get("href")
         if tag in ("script", "style", "noscript", "svg"):
             self._skip += 1
         if tag == "a":
@@ -187,6 +190,7 @@ def parse_html(html: str, source: dict) -> list[Entry]:
     p = _LinkParser()
     p.feed(html)
     base = source["url"]
+    link_base = normalize_url(p.base_href, base) if p.base_href is not None else base
     page_text = clean_text(" ".join(p.text), 6000)
     if source.get("mode") == "page-change":
         # 페이지 본문 해시가 바뀌면 한 건으로 넘긴다. 같은 페이지 주소 + 본문 해시가 '이미 본' 판정 단위.
@@ -201,7 +205,7 @@ def parse_html(html: str, source: dict) -> list[Entry]:
         label = clean_text(label, 300)
         if not href or href.startswith(("mailto:", "tel:", "javascript:")) or len(label) < 8:
             continue
-        url = normalize_url(href, base)
+        url = normalize_url(href, link_base)
         if _host(url) != host or url in seen or url.rstrip("/") == normalize_url(base).rstrip("/"):
             continue
         if not pat.search(urllib.parse.urlsplit(url).path + "?" + urllib.parse.urlsplit(url).query):
