@@ -45,3 +45,5 @@ jobs:
           print(json.dumps({"samples": samples}))
           print(json.dumps({"total": len(rows), "by_host_error": [{"host": h, "error": e, "count": n} for (h,e),n in counts.most_common()], "with_body_400_chars": sum((r["text_chars"] or 0)>=400 for r in rows)}, ensure_ascii=False))
           PY
+
+# Recheck unresolved entries after audited Northglenn repair.
