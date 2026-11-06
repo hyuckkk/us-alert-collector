@@ -60,7 +60,7 @@ def test_full_run_queues_extracts_enqueues_and_marks_done(world, tmp_path):
     m = rep["metrics"]
     assert m["entries_new"] == 1 and m["events_out"] == 1 and m["usd"] > 0
     log = dict(api.log)["run_log"][0]
-    assert log["completed"] is True and log["ai"] == {"ok": True}
+    assert log["completed"] is True and log["ai"]["ok"] is True and log["ai"]["last_success_at"]
     assert {s["id"]: s for s in log["sources"]}["butterfly-pavilion"]["events"] == 1
     assert "chat_id" not in (tmp_path / "r.json").read_text()
 

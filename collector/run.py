@@ -16,6 +16,7 @@ import os
 import re
 import sys
 import traceback
+from api_errors import safe_message
 import zlib
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -120,9 +121,9 @@ class Run:
             r = fn()
             self.stages[name] = {"ok": True, **(r if isinstance(r, dict) else {})}
         except Exception as e:  # noqa: BLE001
-            self.stages[name] = {"ok": False, "error": f"{type(e).__name__}: {str(e)[:200]}"}
-            self.alerts.append(f"{name} 단계 오류: {type(e).__name__}: {str(e)[:150]}")
-            self.report.setdefault("tracebacks", {})[name] = traceback.format_exc()[-1500:]
+            self.stages[name] = {"ok": False, "error": f"{type(e).__name__}: {safe_message(str(e))[:200]}"}
+            self.alerts.append(f"{name} 단계 오류: {type(e).__name__}: {safe_message(str(e))[:150]}")
+            self.report.setdefault("tracebacks", {})[name] = safe_message(traceback.format_exc()[-1500:])
         self.stages[name]["seconds"] = round((datetime.now(timezone.utc) - t0).total_seconds())
         if getattr(self, "usage", None):  # 단계별 AI 사용액(운영비 추정·최적화 비교용)
             self.stages[name]["usd"] = round(self.usage.usd - u0, 4)
@@ -227,7 +228,7 @@ class Run:
             if not self.usage.allows(cfg.get("reserve_usd", 1.2)):
                 self.alerts.append(f"실행 비용 상한(${self.usage.cap}) — AI 발굴 '{bot}' 이후 생략")
                 break
-            if ai.CREDIT["out"]:
+            if ai.ai_blocked():
                 break
             u0 = self.usage.usd
             try:
@@ -359,7 +360,7 @@ class Run:
             # 소진되면 API 가 거부하고(카드·자동 충전 없으면 추가 과금 없음) 그 실행의 AI 단계만 멈춘다(ai.CREDIT).
             self.spent = self.api.month_usd()
         import ai
-        return not ai.CREDIT["out"]
+        return not ai.ai_blocked()
 
     def process_queue(self):
         cap = self.args.max or self.models["limits"]["max_ai_items_per_run"]
@@ -511,9 +512,12 @@ class Run:
                     if i in lost_idx:
                         continue
                     if i in out.failed:
-                        results.append({"key": r["key"], "status": "retry", "error": out.failed[i]})
+                        # Account-wide outages must not exhaust an item's retry budget.
+                        reason = str(out.failed[i])
+                        release = ai.ai_blocked() and (reason == ai.block_reason() or reason.startswith("not-attempted:"))
+                        results.append({"key": r["key"], "status": "release" if release else "retry", "error": reason})
                     elif i in held:
-                        results.append({"key": r["key"], "status": "retry", "error": "judge-or-recommend-failed"})
+                        results.append({"key": r["key"], "status": "release" if ai.ai_blocked() else "retry", "error": "judge-or-recommend-failed"})
                     else:
                         mine = [rules.for_worker(ev) for ev in by_entry.get(i, [])]
                         if mine:
@@ -580,7 +584,7 @@ class Run:
         since = h.get("failing_since")
         outage = (datetime.now(timezone.utc) - datetime.fromisoformat(since.replace("Z", "+00:00"))).total_seconds() / 3600 if since else 0
         import ai
-        blocked = ai.CREDIT["out"]
+        blocked = ai.ai_blocked()
         if not (blocked or outage >= OUTAGE_NOTICE_HOURS):
             return {"needed": False}
         rows = [r for r in self.api.queue_peek(200) if not str(r.get("source_id") or "").startswith(("gnews", "ai-discover"))]
@@ -670,9 +674,10 @@ class Run:
             self.m["usd"] = round(self.usage.usd, 4)
             self.report["usage"] = self.usage.by_model
         import ai
-        if ai.CREDIT["out"]:
-            self.alerts.append("API 크레딧 소진 — AI 분석(발굴·추출·판정·추천)만 멈춤. 공식 정보원 수집과 기존 알림 발송은 계속하고, "
-                               "AI 대기 항목은 보존합니다. 카드 등록·충전·자동 충전은 소유자 승인 없이 하지 않습니다.")
+        if ai.ai_blocked():
+            from api_errors import notice
+            self.alerts.append(notice(ai.CREDIT["diagnostic"]))
+        self.report["ai"] = self.usage.health() if self.usage else None
         self.report["workload"] = self.workload()
         try:
             self.api.workload(self.report["workload"])
@@ -692,7 +697,7 @@ class Run:
         self.report.update({"metrics": self.m, "alerts": self.alerts, "stages": self.stages, "completed": completed})
         self.api.run_log({"run_id": self.run_id, "started_at": self.started.isoformat(timespec="seconds"),
                           "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "completed": completed and full,
-                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "workload": self.report["workload"], "ai": {"ok": self.ai_ok} if self.ai_ok is not None else None,
+                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "workload": self.report["workload"], "ai": self.report["ai"],
                           "sources": list(self.source_rows.values())})
         return self.report
 
@@ -753,7 +758,7 @@ def main(argv=None, client=None, api: WorkerAPI | None = None) -> dict:
     if args.out:
         Path(args.out).parent.mkdir(parents=True, exist_ok=True)
         Path(args.out).write_text(json.dumps(report, ensure_ascii=False, indent=1, default=str) + "\n")
-    print(json.dumps({"run_id": report["run_id"], "metrics": report["metrics"], "stages": report["stages"], "alerts": report["alerts"]}, ensure_ascii=False))
+    print(json.dumps({"run_id": report["run_id"], "metrics": report["metrics"], "stages": report["stages"], "alerts": report["alerts"], "ai": report.get("ai")}, ensure_ascii=False))
     return report
 
 

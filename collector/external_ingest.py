@@ -231,7 +231,7 @@ def ingest(raw: dict, api: WorkerAPI, client, models: dict, today: str, finder: 
                        for i in fetched if not fetched[i]]
         keep = [i for i in range(len(entries)) if fetched.get(i)]
         k_entries, k_items = [entries[i] for i in keep], [items[i] for i in keep]
-        if k_entries and not ai.CREDIT["out"]:
+        if k_entries and not ai.ai_blocked():
             out = ai.extract(client, models, k_entries, today, usage)
             extracted = [out.results[i] for i in sorted(out.results)]
             evs, dropped = rules.finalize(extracted, k_entries, datetime.fromisoformat(today).date())
@@ -268,7 +268,7 @@ def ingest(raw: dict, api: WorkerAPI, client, models: dict, today: str, finder: 
             except Exception as e:  # noqa: BLE001  대조가 실패해도 등록·발송은 그대로
                 report["gaps_error"] = f"{type(e).__name__}: {str(e)[:120]}"
         elif k_entries:
-            report["ai_skipped"] = "credit-exhausted"
+            report["ai_skipped"] = ai.block_reason()
         api.add_usage(usage.by_model, float(models.get("limits", {}).get("credit_reference_usd", 0)))
     levels = {lv: sum(1 for p in payload if p.get("rec_level") == lv) for lv in ("push", "interest", "none")}
     report.update({"unreachable": unreachable, "extracted_events": len(extracted), "dropped": dropped, "recommend_missing": ro_missing, "duplicates": dup,
