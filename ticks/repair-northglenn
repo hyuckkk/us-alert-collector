@@ -1,2 +1,2 @@
-plan
-# Recheck with ambiguous anchors excluded
+apply
+# Apply verified Northglenn mappings; archive originals; leave uncertain entries
