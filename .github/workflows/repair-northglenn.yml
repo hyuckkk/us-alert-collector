@@ -1,0 +1,29 @@
+name: repair-northglenn
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/repair-northglenn.yml", "ticks/repair-northglenn"]
+permissions:
+  contents: read
+concurrency:
+  group: collect-main
+  cancel-in-progress: false
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r collector/requirements.txt
+      - run: bash scripts/cf_env.sh
+      - name: Plan or apply audited queue repair
+        run: |
+          args=()
+          if [ -f ticks/repair-northglenn ] && [ "$(head -n1 ticks/repair-northglenn)" = "apply" ]; then args+=(--apply); fi
+          python scripts/repair_northglenn_queue.py "${args[@]}"
