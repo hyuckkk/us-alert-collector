@@ -19,6 +19,7 @@ from fetch import _LinkParser, EVENTISH, new_client, normalize_url, page_text
 REPAIR = 'northglenn-html-base-20261107'
 PAGES = [
     'https://www.northglenn.org/parks_rec/programs/index.php',
+    'https://www.northglenn.org/parks_rec/sports/index.php',
     'https://www.northglenn.org/parks_rec/programs/youth_teens/index.php',
 ]
 
