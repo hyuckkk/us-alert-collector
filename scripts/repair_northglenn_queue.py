@@ -61,6 +61,8 @@ def plan(rows, mapping, client):
         if not new:
             continue
         parts = urllib.parse.urlsplit(new)
+        if parts.path.lower().endswith(('.pdf', '.doc', '.docx', '.xls', '.xlsx', '.zip', '.ics')):
+            continue  # Binary documents need a separate parser; never treat them as HTML.
         if not EVENTISH.search(parts.path + '?' + parts.query):
             action = 'excluded'
         else:
