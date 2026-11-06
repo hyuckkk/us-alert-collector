@@ -1,0 +1,42 @@
+name: process-recovered-queue
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/process-recovered-queue.yml"]
+permissions:
+  contents: read
+concurrency:
+  group: collect-main
+  cancel-in-progress: false
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r collector/requirements.txt
+      - run: bash scripts/cf_env.sh
+      - name: Process at most 15 recovered items without direct dispatch
+        run: |
+          PYTHONPATH=collector python - <<'PY'
+          import json
+          from types import SimpleNamespace
+          from run import Run
+          r = Run(SimpleNamespace(mode="light",dry_run=False,no_ai=False,max=15,usd_cap=1.0,only=None))
+          assert not r.api.dry_run
+          before = r.api.queue_stats()
+          try:
+              extracted = r.process_queue()
+              enqueued = r.enqueue_events()
+          finally:
+              if r.usage:
+                  r.api.add_usage(r.usage.by_model,r.models["limits"].get("credit_reference_usd",0))
+          print(json.dumps({"before":before,"extraction":extracted,"enqueue":enqueued,"after":r.api.queue_stats(),"cost_usd":round(r.usage.usd,4) if r.usage else 0},ensure_ascii=False))
+          PY
