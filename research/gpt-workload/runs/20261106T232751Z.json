@@ -1,0 +1,353 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-06T23:27:51.770Z",
+  "finished_at_utc": "2026-11-06T23:33:22.804Z",
+  "search_requests": 60,
+  "queries": [
+    "site:colorado.edu \"November\" \"2026\" \"free\" \"hands-on\" families science festival",
+    "site:wingsmuseum.org/events/ November 2026 children free cockpit simulator special event",
+    "site:cpw.state.co.us 2026 November December special permit lottery ice fishing family free",
+    "Colorado \"November 2026\" \"free\" \"Young Eagles\" flights EAA",
+    "Colorado \"November 2026\" military base open house public aviation flight airfield",
+    "Colorado November December 2026 free public train rides carriage rides special event",
+    "Colorado 2027 registration free aviation youth space camp 2026 open",
+    "Colorado 2026 2027 free ski lesson scholarship youth applications opening November",
+    "Colorado 2027 special permit lottery Christmas tree park cave tours lottery tickets opens November",
+    "site:denvergov.org \"2026\" \"November\" \"free\" \"hands-on\" \"kids\" city event",
+    "Colorado 2026 November rocket launch club public launch day December hands on spectators",
+    "Colorado November December 2026 open house special facility tour airspace laboratory behind the scenes family",
+    "site:colorado.edu/events \"Nov\" \"2026\" \"interactive\" \"family\" \"free\" museum",
+    "site:denverlibrary.org/event \"November\" \"2026\" \"maker\" \"laser\" free",
+    "site:coloradosprings.gov \"November\" \"2026\" \"open house\" \"tour\" free",
+    "site:thorntonco.gov \"2026\" \"ride\" \"free\" WinterFest train wagon",
+    "site:erieco.gov 2026 December \"wagon rides\" free holiday",
+    "site:westminsterco.gov 2026 November 2026 STEM kids free build",
+    "site:denvergov.org 2026 \"Touch-a-Truck\" \"November\" December",
+    "site:cherrycreekschools.org 2026 November December community STEAM robotics hands on festival",
+    "site:boulderdowntown.com \"2026\" \"free\" train Snowflake Express Tebo",
+    "Colorado free train rides November December 2026 city town holiday miniature",
+    "Colorado 2026 November free public swimming ice skating sports try it clinics city",
+    "Colorado 2026 November 2026 free science museum nights Denver free entry hands on",
+    "\"November 2026\" \"free\" \"behind-the-scenes tour\" Colorado museum",
+    "\"November 2026\" \"free\" \"open hangar\" Colorado",
+    "\"November 2026\" \"open house\" \"fire station\" Colorado Denver",
+    "\"November 2026\" \"free\" \"flight simulator\" \"kids\" Denver",
+    "\"December 2026\" \"free\" \"train rides\" \"Colorado\" town",
+    "\"December 2026\" \"free\" \"wagon rides\" \"Colorado\"",
+    "site:cpw.state.co.us \"2026\" \"December\" \"free\" \"archery\"",
+    "site:coloradostateparks.reserveamerica.com 2027 lottery reserved program applications",
+    "site:recreation.gov \"2027\" \"Colorado\" \"lottery\" wilderness",
+    "Colorado \"November 2026\" \"free\" \"ski day\" kids beginner",
+    "site:schriever.spaceforce.mil \"November\" \"2026\" open house public",
+    "site:usafa.edu \"November\" \"2026\" \"tour\" \"public\" event",
+    "site:colorado.edu \"Nov 14, 2026\" family science hands-on public",
+    "site:colorado.edu \"Nov 21, 2026\" kids build activity free",
+    "site:coloradosprings.gov \"November 21, 2026\" free kids STEM",
+    "site:cpw.state.co.us \"November 2026\" \"registration\" \"free\" hands-on",
+    "site:coloradostateparks.com 2026 2027 youth free day ski equipment",
+    "Colorado astronomy 2026 November December observatory free telescope open house kids",
+    "2026 \"free\" \"aircraft\" \"cockpits\" \"Colorado\" November December",
+    "Colorado November December 2026 university robotics competition public free competition",
+    "Colorado November December 2026 \"robotics\" \"competition\" \"spectators\" Denver",
+    "Colorado 2027 summer astronomy star party registration November 2026 special camp",
+    "2026 November Colorado \"free\" \"ride\" \"balloon\" tethered",
+    "2026 November Colorado \"guided\" \"mine tour\" \"free\" special public",
+    "site:lakewood.org 2026 December free \"train\" ride",
+    "site:broomfield.org 2026 \"free\" \"rides\" December holiday",
+    "site:arvadaco.gov 2026 \"free\" \"carriage rides\" December",
+    "site:brightonco.gov December 2026 free trolley rides holiday",
+    "site:longmontcolorado.gov 2026 December free \"wagon\" ride",
+    "site:littletonco.gov 2026 December free \"train rides\"",
+    "site:greeleygov.com 2026 December free train rides",
+    "site:visitgolden.com 2026 holiday free train rides family",
+    "site:coloradosprings.gov 2026 2027 family \"behind the scenes\" public tours",
+    "site:ucdenver.edu November 2026 \"maker\" \"festival\" families free",
+    "Westminster CO 80234 to Pearl Street Mall Boulder distance driving miles",
+    "Boulder Downtown Pearl Street Mall Westminster Colorado driving distance miles"
+  ],
+  "search_request_batches": [
+    12,
+    12,
+    12,
+    12,
+    10,
+    2
+  ],
+  "url_read_attempts": 13,
+  "url_read_successes": 12,
+  "url_read_failures": 1,
+  "url_read_attempted_urls": [
+    "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/",
+    "https://monumentalimpact.org/events/open-robotics-competition-20261121/",
+    "https://wingsmuseum.org/events/cockpit-demo-day-nov26/",
+    "https://boulderdowntown.com/do/tebo-trains-snowflake-express",
+    "https://rmss.org/",
+    "https://www.colorado.edu/sbo/open-houses",
+    "https://www.colorado.edu/education/2026/10/30/boulders-childrens-book-festival-feature-acclaimed-authors-and-magic-books-nov-7",
+    "https://www.standleylakestargazing.com/attend-a-star-party",
+    "https://register.rmss.org/",
+    "https://rmss.org/fees/",
+    "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/",
+    "https://wingsmuseum.org/events/cockpit-demo-day-nov26/",
+    "https://boulderdowntown.com/do/tebo-trains-snowflake-express"
+  ],
+  "failed_page_details": [
+    {
+      "url": "https://register.rmss.org/",
+      "reason": "Website redirected to rmss.app, which web reader could not access; 2027 inventory and pricing not verified."
+    }
+  ],
+  "official_detail_verified": 9,
+  "official_detail_verified_urls": [
+    "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/",
+    "https://monumentalimpact.org/events/open-robotics-competition-20261121/",
+    "https://wingsmuseum.org/events/cockpit-demo-day-nov26/",
+    "https://boulderdowntown.com/do/tebo-trains-snowflake-express",
+    "https://rmss.org/",
+    "https://www.colorado.edu/sbo/open-houses",
+    "https://www.colorado.edu/education/2026/10/30/boulders-childrens-book-festival-feature-acclaimed-authors-and-magic-books-nov-7",
+    "https://www.standleylakestargazing.com/attend-a-star-party",
+    "https://rmss.org/fees/"
+  ],
+  "candidate_events": 39,
+  "duplicate_candidates": 14,
+  "duplicate_details": [
+    {
+      "title": "Wings Over the Rockies Cockpit Demo Day, Nov 21",
+      "reason": "Found in collector's 2026-10-22 fullsystem-run snapshot; limited cockpit access but normal paid museum admission"
+    },
+    {
+      "title": "Monumental Impact MITEE Gobble Squabble, Nov 21",
+      "reason": "Submitted to prior GPT inbox 20261024T232920Z.json"
+    },
+    {
+      "title": "MITEE Robot Chaos combat robotics, Nov 21",
+      "reason": "Submitted to prior GPT inbox 20261024T233201Z.json; same venue/day as MITEE"
+    },
+    {
+      "title": "Wings Denver Arts Week free museum night, Nov 7",
+      "reason": "Prior inbox, plus archived collector event snapshot"
+    },
+    {
+      "title": "Denver Museum of Nature & Science SCFD free day, Nov 16",
+      "reason": "Prior GPT inbox, plus archived collector snapshot"
+    },
+    {
+      "title": "Wings Over the Rockies SCFD free day, Nov 19",
+      "reason": "Prior GPT inbox 20261103T235439Z.json"
+    },
+    {
+      "title": "Golden Gate Canyon State Park tree cutting lottery, Dec 5",
+      "reason": "Prior GPT inbox 20261029T230740Z.json"
+    },
+    {
+      "title": "Cherry Creek STEAM-A-Palooza, Nov 7",
+      "reason": "Prior GPT inbox 20261029T230740Z.json"
+    },
+    {
+      "title": "Erie free carriage ride, Nov 28",
+      "reason": "Prior GPT inbox 20261031T232318Z.json"
+    },
+    {
+      "title": "Castle Rock Reindeer Games rides, Dec 5",
+      "reason": "Prior GPT inbox 20261103T235439Z.json"
+    },
+    {
+      "title": "Steamboat kids ski free November/December",
+      "reason": "Prior GPT inbox 20261104T234523Z.json"
+    },
+    {
+      "title": "Denver Botanic Gardens free day, Nov 27",
+      "reason": "Prior GPT inbox and 2026-10-22 collector snapshot"
+    },
+    {
+      "title": "Denver Museum of Nature & Science free night, Nov 7",
+      "reason": "Archived collector event snapshot"
+    },
+    {
+      "title": "Denver Art Museum free day, Nov 7",
+      "reason": "Archived collector event snapshot"
+    }
+  ],
+  "rejected_events": 17,
+  "rejected_details": [
+    {
+      "title": "Boulder Children's Book Festival, Nov 7",
+      "reason": "Mainly author talks, panels, reading sessions; interactive work is secondary and English-heavy"
+    },
+    {
+      "title": "CU Sommers-Bausch Observatory open house, Nov 20",
+      "reason": "Routine frequently repeated weekly free astronomy nights"
+    },
+    {
+      "title": "Standley Lake Stargazing, Nov 14",
+      "reason": "Ordinary public astronomy star party repeated on community calendar"
+    },
+    {
+      "title": "Western Colorado Astronomy Club open house, Nov 7",
+      "reason": "Ordinary free telescope viewing, not scarce enough to justify regional travel"
+    },
+    {
+      "title": "Elizabeth Library star party, Nov 14",
+      "reason": "Routine public telescope event"
+    },
+    {
+      "title": "Rabbit Mountain asteroid-belt astronomy, Nov 13",
+      "reason": "English astronomy talk and ordinary star viewing"
+    },
+    {
+      "title": "Colorado Railroad Museum Polar Express, Nov-Dec",
+      "reason": "Commercial annual train experience at normal ticket prices"
+    },
+    {
+      "title": "Wings Breakfast Fly-In, Nov 14",
+      "reason": "Regular monthly fly-in, normal admission"
+    },
+    {
+      "title": "USAFA planetarium special film, November",
+      "reason": "Predominantly film screening rather than direct facility access"
+    },
+    {
+      "title": "Englewood Holiday Express, Dec 4-12",
+      "reason": "Normal-price commercial holiday train tickets"
+    },
+    {
+      "title": "Winter Park Send'er November ski events",
+      "reason": "Participation tied to commercial mountain access, no broad special discount"
+    },
+    {
+      "title": "VEX Roosevelt Robot Rumble, Nov 21",
+      "reason": "Normal school robotics tournament, $100 team fee, no unusual public participation benefit"
+    },
+    {
+      "title": "VEX Rattler Roundup, Dec 11-12",
+      "reason": "Regular competitive school robotics team qualifier, paid team entry"
+    },
+    {
+      "title": "Longmont Library of Things",
+      "reason": "Ongoing year-round resident-card borrowing, not time-limited public event"
+    },
+    {
+      "title": "Eagle public ice skating",
+      "reason": "Regular paid municipal recreation session"
+    },
+    {
+      "title": "Wings Veterans Day museum admission, Nov 11",
+      "reason": "Free only for qualifying veterans/active duty; not rare direct access"
+    },
+    {
+      "title": "DMNS Magical Winter Nights, Nov-Jan",
+      "reason": "Regular paid seasonal museum exhibit without exceptional access"
+    }
+  ],
+  "held_events": 7,
+  "held_details": [
+    {
+      "title": "Rocky Mountain Star Stare Jun 30-Jul 4, 2027",
+      "reason": "Official 2027 dates confirmed; actual 2027 booking inventory/fees cannot be read due to registration redirect; fee page still says 2026"
+    },
+    {
+      "title": "Rocky Mountain Aero Group 2027 Build & Fly camp",
+      "reason": "Jul 26-30, 2027 official dates; Feb 1 registration start not yet open; paid commercial camp, value vs cost unresolved"
+    },
+    {
+      "title": "Tripoli Colorado Hartsel rocket launch Nov 22",
+      "reason": "Spectator public access and fee/weather go-no-go unconfirmed"
+    },
+    {
+      "title": "Powderhorn Bob Beverly beginner ski offer",
+      "reason": "Program confirmed in prior research, but no dated available 2026/27 sessions verified"
+    },
+    {
+      "title": "Littleton Holiday Bazaar Express train, Dec 19",
+      "reason": "Third-party schedule describes rides; official organizer direct verification and ride cost incomplete"
+    },
+    {
+      "title": "Galloping Goose free Santa train ride, Dolores Dec 2026",
+      "reason": "Third-party claim only; precise 2026 date, public access and organizer confirmation lacking"
+    },
+    {
+      "title": "Georgetown Christmas Market wagon rides, Dec 5-13",
+      "reason": "Event dates found, but explicit free ride terms and booking not verified from organizer"
+    }
+  ],
+  "qualified_events": 1,
+  "qualified_details": [
+    {
+      "title": "Tebo Train's Snowflake Express",
+      "url": "https://boulderdowntown.com/do/tebo-trains-snowflake-express",
+      "first_date": "2026-11-29",
+      "other_dates": [
+        "2026-12-06",
+        "2026-12-13"
+      ],
+      "time": "11 AM-2 PM local",
+      "location": "1242 Pearl St (boarding), Boulder, CO",
+      "eligibility": "Children 10 or younger plus accompanying adults; general public, no residency requirement stated",
+      "cost": "No mandatory charge; suggested $5 per group; five-person group $0 required / $5 suggested",
+      "distance": "Westminster-to-Boulder city-center road distance ~20 miles per external published estimates, not a verified 80234-to-door route",
+      "collector_status": "No Tebo/Snowflake Express match in searched public GitHub repo code, prior inbox, or 2026-10-22 collector snapshot. US external-inbox identity classified new=1 and source unregistered; live collector DB not comprehensively queried, hence verified_collector_misses=0.",
+      "submission": "external-inbox/chatgpt/20261106T233041Z.json"
+    }
+  ],
+  "known_by_collector": 6,
+  "known_by_collector_scope": "Distinct matching candidate events in archived 2026-10-22 fullsystem-run collector snapshot (Cockpit Demo Day, Wings free Nov 7, DMNS Nov 7 and Nov 16, Denver Art Museum Nov 7, Denver Botanic Gardens Nov 27); not current live DB.",
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "failed_page_reads": 1,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://boulderdowntown.com/do/tebo-trains-snowflake-express"
+  ],
+  "submission_path": "external-inbox/chatgpt/20261106T233041Z.json",
+  "submission_commit": "ce6518f3ec81b983a2a027f22093821a3b0a9f75",
+  "submission_reread_verified": true,
+  "collector_comparison": {
+    "source_config_read": true,
+    "sources_count": 71,
+    "queries_config_read": true,
+    "archived_run": "reports/fullsystem-run.json",
+    "archived_run_timestamp": "20261022T004300Z",
+    "archived_event_count": 632,
+    "prior_inbox_searched": true,
+    "git_search_terms": [
+      "Tebo",
+      "boulderdowntown",
+      "Snowflake",
+      "Pearl Street Train",
+      "2026-11-29",
+      "cockpit-demo-day-nov26",
+      "Gobble Squabble",
+      "monumentalimpact"
+    ],
+    "live_worker_db_full_access": false,
+    "novelty_confirmation": "Worker classified submitted Tebo event identity.new=1 but source status unregistered is not evidence of a verified collector miss."
+  },
+  "delivery_verification": {
+    "workflow_url": "https://github.com/hyuckkk/us-alert-collector/actions/runs/42312381804",
+    "workflow_status": "completed",
+    "workflow_conclusion": "success",
+    "inbox_received": 1,
+    "inbox_valid": 1,
+    "inbox_unreachable": 0,
+    "extracted_events": 1,
+    "inbox_enqueued": 1,
+    "worker_new": 1,
+    "recommendation_push": 1,
+    "immediate_dispatch_sent": 0,
+    "immediate_dispatch_failed": 0,
+    "verified_event_deliveries": 0,
+    "source": "GitHub workflow job 128216724032 decoded logs (inbox.py notice + dispatch JSON)",
+    "do_not_interpret_enqueued_as_sent": true
+  },
+  "improvement_notes": [
+    "Downtown Boulder Partnership's Snowflake Express (https://boulderdowntown.com/do/tebo-trains-snowflake-express) was classified 'unregistered' by US inbox gap report. This does NOT verify a miss in current US worker DB. Claude can evaluate the official Downtown Boulder event calendar as source and searches 'Tebo Train Snowflake Express', 'Pearl Street holiday train ride kids Boulder', 'Downtown Boulder holiday events families'.",
+    "The inbox gap report returned sources_added=1 and queries_added=3 as suggestions; config/sources.json and config/queries.json were reread after workflow with the same blob SHAs as initially; neither contains Tebo or boulderdowntown. No collector code/config edits made here.",
+    "RMSS 2027 event dates are officially posted but 2027 fees and real registration state remain unknown; old 2026 prices must not be used as a current 2027 quote.",
+    "Frequent routine observatory nights and paid seasonal train packages excluded under strict rarity/discount policy."
+  ],
+  "notes": "Independent Colorado research. One qualifying 2026-for-local-friends holiday three-Sunday electric child train ride; first date submitted as a single representative event; subsequent Sundays spelled out in time/description to avoid implying a continuous daily event. User family will be in Westminster only Jun 2027–Aug 2028, so 2026 event is not applicable to their stay. 60 individual web search records in 6 actual batches; 13 web.open/click reads (12 success, 1 failed); 9 distinct organizer pages directly opened; 39 individual screened candidates with full ledger. Exact 80234-to-Pearl Street driving distance is unknown; 20mi is general Westminster–Boulder published driving distance. GitHub workflow accepted new source event and queued 1 push but worker dispatch reported sent=0. No direct Telegram or alternate relay calls."
+}
