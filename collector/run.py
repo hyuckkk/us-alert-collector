@@ -583,10 +583,12 @@ class Run:
         blocked = ai.CREDIT["out"]
         if not (blocked or outage >= OUTAGE_NOTICE_HOURS):
             return {"needed": False}
-        rows = [r for r in self.api.queue_peek(200) if not str(r.get("source_id") or "").startswith(("gnews", "ai-discover"))]
-        items = [{"title": r.get("title"), "url": r["url"], "source_id": r.get("source_id")} for r in rows[:40]]
-        res = self.api.unverified(items, int(outage) if outage else 0, len(rows))
-        return {"needed": True, "items": len(items), "sent": res.get("sent")}
+        # AI 없이 추천할 수 없는 원문 링크 40개를 임의로 나열하지 않는다.
+        # 정보는 대기열에 보관하고, 소유자에게는 개수만 한 통으로 안내한다.
+        stats = self.api.queue_stats()
+        pending = stats.get("queued", 0) + stats.get("extracted", 0)
+        res = self.api.unverified([], int(outage), pending)
+        return {"needed": True, "pending": pending, "sent": res.get("sent")}
 
     def verify_candidates(self):
         todo = self.api.candidates_unverified()
@@ -671,6 +673,9 @@ class Run:
             self.report["usage"] = self.usage.by_model
         import ai
         if ai.CREDIT["out"]:
+            # 수집 자체는 성공해도 AI 실패 시각을 Worker에 반드시 남긴다.
+            # ai.ok=None 이면 기록되지 않아 다음 실행에도 중단 경과시간이 '?'로 남는다.
+            self.ai_ok = False
             self.alerts.append("API 크레딧 소진 — AI 분석(발굴·추출·판정·추천)만 멈춤. 공식 정보원 수집과 기존 알림 발송은 계속하고, "
                                "AI 대기 항목은 보존합니다. 카드 등록·충전·자동 충전은 소유자 승인 없이 하지 않습니다.")
         self.report["workload"] = self.workload()
@@ -692,7 +697,7 @@ class Run:
         self.report.update({"metrics": self.m, "alerts": self.alerts, "stages": self.stages, "completed": completed})
         self.api.run_log({"run_id": self.run_id, "started_at": self.started.isoformat(timespec="seconds"),
                           "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "completed": completed and full,
-                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "workload": self.report["workload"], "ai": {"ok": self.ai_ok} if self.ai_ok is not None else None,
+                          "metrics": self.m, "stages": self.stages, "alerts": self.alerts, "workload": self.report["workload"], "ai": ({"ok": False, "error": "credit-exhausted"} if ai.CREDIT["out"] else {"ok": self.ai_ok}) if self.ai_ok is not None else None,
                           "sources": list(self.source_rows.values())})
         return self.report
 

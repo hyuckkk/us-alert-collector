@@ -1107,19 +1107,22 @@ export async function watchdog(env) {
   return { ok: true, last_collect_ok_at: last, last_run_at: lastRun, hours_since: hours === null ? null : Math.round(hours * 10) / 10, stale, limit_hours: limit, notified };
 }
 
-// AI 가 오래 막혔을 때: 공식 정보원 새 글 제목·링크를 '검증 전 정보'로 소유자에게만 (1차 검증 4)
+// AI 가 막혔을 때 소유자에게만 하루 한 번 상태 안내.
+// 검증되지 않은 수백 건의 행사 링크·제목은 일반 행사 알림으로 오해될 수 있으므로 발송하지 않는다.
 export async function unverified(env, body) {
-  const items = (body.items || []).filter((x) => x && /^https?:\/\//.test(x.url || "")).slice(0, 60);
-  if (!items.length) return { ok: true, sent: 0 };
+  const pending = Math.max(0, Math.floor(Number(body.pending) || 0));
+  if (!pending) return { ok: true, sent: 0, reason: "no-pending" };
   if (!(await claimNotice(env, `unverified:${localDate(env)}`))) return { ok: true, sent: 0, reason: "already today" };
-  let sent = 0;
-  for (let i = 0; i < items.length; i += 20) {
-    const part = items.slice(i, i + 20);
-    const head = `⚠️ 검증 전 정보 (AI 분석 ${body.outage_hours || "?"}시간째 중단, 대기 ${body.pending || items.length}건)\n날짜·대상·비용·자격은 확인되지 않았습니다. 원문 링크로 직접 확인해 주세요. 지인에게는 보내지 않습니다.`;
-    const d = await notifyOwner(env, [head, "", ...part.map((x, j) => `${i + j + 1}. ${String(x.title || "").slice(0, 90)}\n   ${x.url}`)].join("\n"));
-    if (d.ok) sent++;
-  }
-  return { ok: true, sent };
+  const hours = Number(body.outage_hours);
+  const duration = Number.isFinite(hours) && hours > 0 ? `중단 약 ${Math.floor(hours)}시간` : "중단 시작 시각 확인 중";
+  const message = [
+    "미국 알림 AI 분석 일시 중단",
+    `${duration} · 미분석 대기 ${pending}건`,
+    "확인되지 않은 행사 정보는 발송하지 않고 보관합니다.",
+    "공식 정보원 수집과 기존 검증 완료 알림 발송은 계속됩니다.",
+  ].join("\n");
+  const result = await notifyOwner(env, message);
+  return { ok: true, sent: result.ok ? 1 : 0 };
 }
 
 // ---------------------------------------------------------------- 사용량·예산
