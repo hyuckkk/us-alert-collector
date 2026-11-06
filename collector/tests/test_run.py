@@ -194,3 +194,22 @@ def test_light_mode_skips_source_collection(world):
     api = FakeAPI()
     rep = run.main(["--mode", "light"], client=FakeClient([]), api=api)
     assert "sources" not in rep["stages"] and rep["stages"]["watch"]["ok"]
+
+
+
+@pytest.mark.parametrize("reason", ["run-cost-cap", "credit-exhausted", "RateLimitError"])
+def test_unattempted_batches_preserve_retry_allowance(world, monkeypatch, reason):
+    api = FakeAPI()
+    monkeypatch.setattr(ai, "extract", lambda *a, **k: ai.ExtractOutcome(
+        failed={0: "not-attempted: " + reason}, stopped=reason))
+    for _ in range(8):
+        rep = run.main([], client=FakeClient([]), api=api)
+    assert len(api._mem) == 1
+    row = next(iter(api._mem.values()))
+    assert row["status"] == "queued"
+    assert row["attempts"] == 0
+    assert row["body"]
+    assert row["lease_id"] is None
+    assert rep["metrics"]["ai_deferred"] == 1
+    assert rep["metrics"]["ai_failed"] == 0
+    assert not api.enqueued
