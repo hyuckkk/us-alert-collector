@@ -40,3 +40,5 @@ jobs:
                   r.api.add_usage(r.usage.by_model,r.models["limits"].get("credit_reference_usd",0))
           print(json.dumps({"before":before,"extraction":extracted,"enqueue":enqueued,"after":r.api.queue_stats(),"cost_usd":round(r.usage.usd,4) if r.usage else 0},ensure_ascii=False))
           PY
+
+# Process the final verified sports-page recovery batch.
