@@ -1,2 +1,2 @@
-apply
-# Apply proven remaining HTML links only; preserve PDF entries
+plan
+# Recovery applied; future invocations default to read-only inspection
