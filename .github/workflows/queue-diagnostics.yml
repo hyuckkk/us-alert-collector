@@ -38,5 +38,10 @@ jobs:
               match = re.search(r"HTTP [0-9]{3}|[A-Za-z]+Error|TimeoutException", row.get("last_error") or "")
               error = match.group(0) if match else "unclassified"
               counts[(host,error)] += 1
+          samples = []
+          for host,error in counts:
+              candidates = [r for r in rows if urllib.parse.urlsplit(r["url"]).hostname == host and ((re.search(r"HTTP [0-9]{3}|[A-Za-z]+Error|TimeoutException", r.get("last_error") or "").group(0) if re.search(r"HTTP [0-9]{3}|[A-Za-z]+Error|TimeoutException", r.get("last_error") or "") else "unclassified") == error)]
+              samples.extend({"host": host, "path": urllib.parse.urlsplit(r["url"]).path, "error": error} for r in candidates[:3])
+          print(json.dumps({"samples": samples}))
           print(json.dumps({"total": len(rows), "by_host_error": [{"host": h, "error": e, "count": n} for (h,e),n in counts.most_common()], "with_body_400_chars": sum((r["text_chars"] or 0)>=400 for r in rows)}, ensure_ascii=False))
           PY
