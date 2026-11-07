@@ -1,0 +1,371 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-07T23:33:40Z",
+  "finished_at_utc": "2026-11-07T23:41:26Z",
+  "search_requests": 82,
+  "queries": [
+    "site:colorado.gov OR site:cpw.state.co.us 2026 November December free day permit lottery special events Colorado",
+    "site:usafa.edu November December 2026 public open house cadet demonstration falconry Colorado Springs",
+    "Colorado 2026 November 2027 unique public tour military base museum hangar special open house Denver",
+    "Colorado 2027 balloon hot air balloon ride festival tethered free 2027 dates",
+    "site:colorado.edu 2026 November free family STEM hands-on robotics engineering open house",
+    "site:denvergov.org 2026 November December 2026 free public family special events rides",
+    "site:adams12.org OR site:jeffcopublicschools.org 2026 November STEAM fair expo students community public",
+    "site:spacefoundation.org OR site:spacecenter.org Colorado Springs 2026 2027 space hands-on events free",
+    "site:wingsmuseum.org/events/ \"Cockpit Demo Day\" \"November\" \"2026\" admission",
+    "site:wingsmuseum.org/events/ \"Cockpit Demo Day\" 2026 Nov 21 aircraft free day",
+    "site:colorado.edu \"November\" \"2026\" \"hands-on\" \"family\" \"free\" Boulder",
+    "site:coloradosprings.gov 2026 November family free military interactive open house",
+    "site:denver.org 2026 November free hands on \"train\" \"ride\" \"workshop\" children",
+    "site:fortcollins.gov OR site:fcgov.com 2026 Nov 2026 holiday free carriage rides 2026",
+    "site:coloradomesa.edu OR site:csu.edu \"November\" \"2026\" \"open house\" \"public\" science",
+    "2026 November December Denver Colorado free introductory flight kids EAA young eagles registration",
+    "November 2026 December 2026 Colorado \"touch a truck\" free community kids Westminster",
+    "November 2026 \"open house\" \"fire station\" Colorado Denver family",
+    "2026 November December \"rocket launch\" \"public\" Colorado NCR Tripoli club",
+    "site:ncrclub.org launch calendar November December 2026 model rockets spectators",
+    "Colorado free flight 2027 Young Eagles Boulder Longmont Erie registration date",
+    "2026 November Denver Boulder teen free build workshop makerspace solder robotics one day",
+    "site:blm.gov Colorado 2027 special recreation permit lottery cave tours open",
+    "Colorado 2027 2028 camping reservations lottery guided cave tour restricted access special park",
+    "site:calendar.boulderlibrary.org \"BLDG 61\" \"Laser Engrave Ornaments\" November 19 2026",
+    "site:boulderlibrary.org \"Laser Engrave Ornaments\" \"November 19\" 2026",
+    "site:events.boulderlibrary.org \"laser engrave\" \"Nov 19\" 2026",
+    "2026 \"November\" \"free\" \"train rides\" \"Colorado\" museum Boulder Denver",
+    "2026 November Colorado free \"flight simulator\" \"hands-on\" \"kids\" aviation",
+    "site:usafa.edu \"Nov\" \"2026\" \"public\" \"cadet\" \"concert\" 2026",
+    "site:colorado.com 2027 rocket launches northern Colorado \"spectators\"",
+    "site:coloradogives.org OR site:denvergov.org November 2026 free children skiing lessons local recreation",
+    "site:usafa.edu/events \"Come From Away\" November 2026 \"free\" tickets public",
+    "site:usafa.edu/events \"Holly & Ivy\" 2026 reserve tickets free",
+    "site:wingsmuseum.org/events \"Breakfast Fly-In: Food Drive\" Nov 14 2026 admission aircraft",
+    "site:denverzoo.org/free-days/ 2026 \"November 11\" \"November 14\" \"November 22\" reservation",
+    "site:calendar.boulderlibrary.org 2026 \"Laser Engrave Ornaments\"",
+    "site:boulderlibrary.org/events \"Laser Engrave Ornaments\" 2026",
+    "site:colorado.gov \"2027\" \"contest\" \"lottery\" \"January\" park campsite",
+    "Colorado November 2026 free specialized manufacturing factory tour hands on kids open house maker event",
+    "site:denverzoo.org \"November 22, 2026\" free day",
+    "site:denverzoo.org \"November 11\" \"2026\" free day",
+    "site:denverzoo.org \"November 14\" \"2026\" tickets free",
+    "2026 November December 2026 Denver Aquarium free entry ticket special school kids",
+    "site:coloradogives.org Colorado museum free 2026 November military open cockpit",
+    "2027 Colorado air show official dates August Colorado Springs Wings Over Rockies Colorado",
+    "2027 Rocky Mountain airshow 2027 official tickets Colorado dates",
+    "2027 Colorado motorsports drag racing public special event Thunder on the Mountain 2027 tickets schedule",
+    "2027 Colorado Monster Jam Denver 2027 tickets June July August",
+    "2027 Denver stock show rodeo special kids events unique registration free 2027 July August",
+    "2027 Colorado historical railroad train engineer for a day special 2027 reservation",
+    "2027 Denver Colorado special free museum behind scenes open house laboratory family science June July August",
+    "site:nps.gov/romo 2027 timed entry reservation release date 2027",
+    "Boulder Public Library BLDG61 Laser Engrave Ornaments November 19 2026 official program link",
+    "Colorado November 2026 free unique family experience special facility tours equipment children registration university STEM",
+    "2027 July August Colorado free military base open house public rides tours family US Air Force Academy",
+    "Colorado November 2026 youth robotics competition spectator free public November 14 21 28 school",
+    "November December 2026 Denver military demonstration armored vehicles tank museum free open house",
+    "2026 November school district theater concert student-led free community Denver Broomfield special festival",
+    "2027 June July August Colorado teen youth sailing kayak rafting free beginner day recreation city",
+    "2027 Colorado 2028 special free outdoor camp registration lotteries children National Forest",
+    "2026 Denver Westminster Broomfield \"free\" \"November 14\" \"make\" \"robot\" hands on",
+    "Colorado 2026 November \"open cockpit\" \"free\" school museum",
+    "2027 Colorado race car \"ride along\" free festival Colorado 2027 June July",
+    "site:twinpeaksbiblecamp.org \"Free Sledding Day\" \"2027\" registration",
+    "\"Free Sledding Day\" \"February 13\" 2027 Colorado \"Twin Peaks\" all ages",
+    "site:colorado 2026 November free \"ice skating\" \"rental\" opening family city",
+    "Colorado November 2026 free skate rentals family special ice rink holiday event government",
+    "site:boulderlibrary.org \"Laser Engrave Ornaments\" \"2026\"",
+    "\"Laser Engrave Ornaments\" \"Nov 19\" Boulder Library official calendar",
+    "Colorado 2026 November free fire truck tour ride 21 28 2026 public",
+    "site:denvergov.org December 2026 free \"learn to ski\" kids Denver registration $35 Harvey Park",
+    "Twin Peaks Bible Camp Free Sledding Day February 13 2027 registration Colorado event",
+    "November 14 2026 Castle Rock Outlets tree lighting drone show official schedule",
+    "site:ssprd.org \"Holiday Ice Show\" 2026 free \"Holidays on Ice\" December",
+    "South Platte Park Geminids Meteor Shower Star Party December 14 2026 cost ages South Suburban registration",
+    "2026 Geminids Meteor Shower Star Party South Platte Park South Suburban fee 12/14 2026",
+    "site:ssprd.org/Facilities \"Family Sports Center\" \"6901\" \"Peoria\" Centennial address",
+    "site:ssprd.org \"South Suburban Sports Complex\" 4810 East County Line Road address",
+    "site:ssprd.org \"Holiday Ice Show\" Dec 11 Dec 12 Dec 13 2026 free tickets public ages",
+    "Westminster Colorado 80234 to Outlets at Castle Rock 5050 Factory Shops Blvd driving miles",
+    "Westminster CO 80234 Castle Rock outlets distance miles"
+  ],
+  "url_read_attempts": 18,
+  "url_read_successes": 15,
+  "failed_page_reads": 3,
+  "official_detail_verified": 9,
+  "official_detail_verified_urls": [
+    "https://wingsmuseum.org/events/cockpit-demo-day-nov26/",
+    "https://www.usafa.edu/event-single/bluebards-theatre-troupe-come-from-away/",
+    "https://www.usafa.edu/event-single/holly-ivy-concert/",
+    "https://denverzoo.org/free-days/",
+    "https://cpw.state.co.us/events",
+    "https://www.ssprd.org/News-And-Events/Post/20750",
+    "https://downtownfortcollins.org/winter-in-downtown/",
+    "https://twinpeaksbiblecamp.org/retreats/sledding-days/",
+    "https://www.outletsatcastlerock.com/event/44699-tree-lighting-celebration"
+  ],
+  "url_read_failure_details": [
+    "https://calendar.boulderlibrary.org/event/17462556 — HTTP 403; only third-party copy accessible",
+    "https://www.crgov.com/Calendar.aspx?EID=11037&calType=0&day=14&month=11&year=2026 — restricted, used direct event organizer instead",
+    "South Suburban online Geminids registration URL via register.ssprd.org — HTTP 403"
+  ],
+  "candidate_events": 44,
+  "duplicate_candidates": 12,
+  "rejected_events": 21,
+  "held_events": 10,
+  "qualified_events": 1,
+  "known_by_collector": 3,
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://www.outletsatcastlerock.com/event/44699-tree-lighting-celebration"
+  ],
+  "duplicate_details": [
+    {
+      "title": "Wings Over the Rockies Cockpit Demo Day 2026-11-21",
+      "reason": "Found in collector 2026-10-22 fullsystem snapshot; monthly normal-price program"
+    },
+    {
+      "title": "USAFA Bluebards Come From Away 2026-11-21–22",
+      "reason": "Present in eval/ground_truth and recommend_backfill; English-heavy theater"
+    },
+    {
+      "title": "USAFA Holly & Ivy Concert 2026-12-04–06",
+      "reason": "Already in reports/dry-run and eval records; tickets now published"
+    },
+    {
+      "title": "Denver Zoo Community Free Days 2026-11-11/14/22",
+      "reason": "Previously submitted external-inbox/chatgpt/20261023T235915Z.json"
+    },
+    {
+      "title": "Colorado CPW Fresh Air Friday 2026-11-27",
+      "reason": "Previously submitted by ChatGPT and in research records"
+    },
+    {
+      "title": "Erie Balloon Festival 2027-07-09–11",
+      "reason": "Previously submitted Oct 31; family-stay candidate already known"
+    },
+    {
+      "title": "Golden Gate Canyon Christmas Tree Cutting Draw 2026",
+      "reason": "Previously submitted Oct 29; official date wording deserves recheck"
+    },
+    {
+      "title": "EAA Chapter 72 Young Eagles Rally 2026-11-14",
+      "reason": "Previously submitted 20261025T235925Z.json"
+    },
+    {
+      "title": "MITEE Gobble Squabble combat robotics 2026-11-21",
+      "reason": "Previously submitted Oct 27; avoid repeat"
+    },
+    {
+      "title": "Wings SCFD Free Day 2026-11-19",
+      "reason": "Previously submitted 20261103T235439Z.json"
+    },
+    {
+      "title": "Steamboat Kids Ski Free 2026-11-21–12-15",
+      "reason": "Previously submitted 20261104T234523Z.json"
+    },
+    {
+      "title": "Wings Denver Arts Week Free Night 2026-11-07",
+      "reason": "Previously present in external inbox and collector event records"
+    }
+  ],
+  "rejected_details": [
+    {
+      "title": "Factory Two family maker/STEM day",
+      "reason": "Official site places facility in Flint, Michigan, not Colorado"
+    },
+    {
+      "title": "Fort Collins Old Town Square free synthetic skating + rentals",
+      "reason": "Season-long normal operation, no scarce admission window, despite genuine subsidy"
+    },
+    {
+      "title": "Commerce City Winter Wonderland Ice Rink 2026-27",
+      "reason": "Ordinary seasonal ice rink $6–8 with rental"
+    },
+    {
+      "title": "Erie outdoor ice rink 2026-27",
+      "reason": "Routine public skating at seasonal normal prices"
+    },
+    {
+      "title": "Longmont Recreation Ice Pavilion 2026-27",
+      "reason": "Routine public skating with admission"
+    },
+    {
+      "title": "Parker Ice Trail Skate With Santa 2026-12-12",
+      "reason": "Routine seasonal commercial-style special $22–24 per participant"
+    },
+    {
+      "title": "South Suburban Holidays on Ice 2026-12-11–13",
+      "reason": "Free figure-skating holiday shows but seasonal recreational exhibition, not strong enough for rare-opportunity push"
+    },
+    {
+      "title": "South Suburban 7-day Recreation Center Trial December 2026",
+      "reason": "Fitness/wellness promotion excluded despite being free"
+    },
+    {
+      "title": "South Suburban 39th Annual Craft Fair 2026-12-05",
+      "reason": "Regular vendor market, free entry alone insufficient"
+    },
+    {
+      "title": "South Suburban Frozen Slam Pickleball Tournament 2027-01-09–10",
+      "reason": "Regular competition restricted to ages 50+"
+    },
+    {
+      "title": "Outlets at Castle Rock Black Friday free pancakes 2026-11-27",
+      "reason": "Retail promotion, not a special hands-on opportunity"
+    },
+    {
+      "title": "Castle Rock Starlighting 2026-11-21",
+      "reason": "Routine annual civic tree lighting/fireworks festival"
+    },
+    {
+      "title": "Twin Peaks Bible Camp free Sled Day 2027-02-13",
+      "reason": "Free sleds/tubes/snowshoes but remote Collbran, routine snow play and no rare-access value for Denver metro"
+    },
+    {
+      "title": "South Suburban Chaos Christmas 2026-12-06",
+      "reason": "Standard ticketed theater presentation"
+    },
+    {
+      "title": "Slush Motorsports Colorado commercial ride-along May 2027",
+      "reason": "Regular paid commercial activity and before planned family arrival"
+    },
+    {
+      "title": "Legacy High School holiday craft fair 2026-11-21",
+      "reason": "Regular school-linked seasonal vendor fair"
+    },
+    {
+      "title": "Overland Expo 2027 Colorado Aug 20–22",
+      "reason": "Ordinary commercial expo, standard-price tickets and no verified special rare access"
+    },
+    {
+      "title": "Wings museum breakfast fly-in 2026 November",
+      "reason": "Ordinary recurring museum event at normal admission"
+    },
+    {
+      "title": "South Suburban Fireside Beethoven/Tchaikovsky 2027-02-27",
+      "reason": "Regular paid classical performance, explicitly excluded"
+    },
+    {
+      "title": "South Suburban Santa Workshop holiday crafts 2026 December",
+      "reason": "Regular holiday craft program rather than scarce high-value experiential opportunity"
+    },
+    {
+      "title": "WOW! Children’s Museum STEAM to the MAX 2026-11-19",
+      "reason": "Included with ordinary admission, normal after-school class"
+    }
+  ],
+  "held_details": [
+    {
+      "title": "BLDG61 Boulder Library laser-engraved ornaments 2026-11-19",
+      "reason": "Third-party listing states free/all ages, but official single-event calendar URL returned HTTP 403; official date and public terms not directly verified"
+    },
+    {
+      "title": "South Platte Park Geminids meteor party 2026-12-14",
+      "reason": "Official district listing confirms date and campfire/smores; actual booking prices and ages behind 403"
+    },
+    {
+      "title": "Fox Run Park Geminids viewing 2026-12-13",
+      "reason": "Astronomy society confirms 40-attendee limit but organizer registration price and eligibility not verified"
+    },
+    {
+      "title": "2027 Colorado EAA Young Eagles summer flights",
+      "reason": "No confirmed 2027 July/August date and public registration"
+    },
+    {
+      "title": "Rocky Mountain National Park 2027 timed entry release",
+      "reason": "2027 release dates/conditions not newly established"
+    },
+    {
+      "title": "Rocky Mountain Star Stare 2027-06-30–07-04",
+      "reason": "Next-season registration and actual current fees/availability not established"
+    },
+    {
+      "title": "Roosevelt Robot Rumble school robotics 2026-11-21",
+      "reason": "School-age competition located but public spectator eligibility/price not verified"
+    },
+    {
+      "title": "Colorado School of Mines Discover Mines 2026-11-21",
+      "reason": "Student recruitment open house; lab access/age, public access and exceptional value not established"
+    },
+    {
+      "title": "Denver Art Museum Untitled Artist Takeover 2027-07-30",
+      "reason": "Date appears during family stay but special program ticket/capacity details not verified"
+    },
+    {
+      "title": "Windsor FIRST Tech Challenge robotics scrimmage 2026-11-14",
+      "reason": "Public spectators and admission terms not verified; routine sports-like robotics event"
+    }
+  ],
+  "qualified_details": [
+    {
+      "title": "Outlets at Castle Rock Tree Lighting — Free Holiday Drone Show",
+      "url": "https://www.outletsatcastlerock.com/event/44699-tree-lighting-celebration",
+      "start_date": "2026-11-14",
+      "audience": "family",
+      "cost": "$0 for 5, optional purchases extra",
+      "special_value": "Single-evening drone formation light show beyond ordinary mall event; free and open to public; drone exact time unpublished",
+      "submitted_path": "external-inbox/chatgpt/20261107T233932Z.json"
+    }
+  ],
+  "existing_collector_evidence": {
+    "sources_sha": "cccb6669198f22679b7b3d70ea090500988bc336",
+    "queries_sha": "107e43181f5667fcec91d79d8ff4f5293d87bd5c",
+    "reviewed_files": [
+      "config/sources.json",
+      "config/queries.json",
+      "docs/SEARCH_WORKLOAD_METRICS.md",
+      "reports/dry-run.json (GitHub code search excerpts)",
+      "eval/ground_truth.json (GitHub code search excerpts)",
+      "eval/recommend_backfill_all.json (GitHub code search excerpts)",
+      "external-inbox/chatgpt/20261023T235915Z.json (GitHub search excerpts)",
+      "external-inbox/LESSONS.md (GitHub search excerpts)"
+    ],
+    "real_time_worker_database": "unknown / inaccessible",
+    "github_code_search_no_hit_not_proof_of_collector_miss": true
+  },
+  "source_improvements": [
+    {
+      "host": "outletsatcastlerock.com",
+      "monitor_url": "https://www.outletsatcastlerock.com/events",
+      "keywords": [
+        "Castle Rock free drone show",
+        "Outlets at Castle Rock holiday drone show",
+        "free public light drone show",
+        "tree lighting drone event"
+      ],
+      "reason": "November 14 drone performance from operator's retail event listing; no matching currently indexed prior collector/event record, but full Worker DB not available"
+    },
+    {
+      "host": "calendar.boulderlibrary.org",
+      "monitor_url": "https://calendar.boulderlibrary.org/event/17462556",
+      "keywords": [
+        "BLDG 61 laser engrave ornaments Boulder",
+        "Boulder public library special maker workshop"
+      ],
+      "reason": "Specific free one-day maker activity visible in secondary event mirror, primary calendar returns 403; need public feed or API fallback"
+    },
+    {
+      "host": "register.ssprd.org",
+      "monitor_url": "https://www.ssprd.org/News-And-Events/Post/20750",
+      "keywords": [
+        "South Suburban Geminids Meteor Shower Star Party",
+        "South Platte Park 2026 meteor shower registration"
+      ],
+      "reason": "Official listing exists, booking terms unavailable due 403; keep on hold, not in inbox"
+    },
+    {
+      "host": "usafa.edu",
+      "monitor_url": "https://www.usafa.edu/event-single/holly-ivy-concert/",
+      "keywords": [
+        "Holly and Ivy free ticket distribution",
+        "Air Force Academy base access passes"
+      ],
+      "reason": "Ticket/base access conditions changed from TBD to issued, existing event should be updated through collector's existing pipeline"
+    }
+  ],
+  "notes": "Independent research separate from Claude and scheduled US collector. Event newness checked against current config sources/queries, accessible repo event snapshots/prior ChatGPT submissions and GitHub code search; missing a match in repository is NOT verified Worker miss. Public 2026 friend event is separate from planned family residence 2027-06 to 2028-08. For Castle Rock, official mall operator confirms 2026-11-14 4–7 PM event, free/open all ages, aerial drone display after lighting, exact drone launch time unavailable. City-to-city Westminster–Castle Rock approximately 39–40 road miles based on public route pages; exact 80234 address route not verified. Submission commit 61c2de8dd394302eb9233ccfe8fe51139d7ea26b created and content refetched. US external-inbox.yml only, no other bot/service or code/settings change. Event-specific Telegram successful delivery receipt not available, so delivered_events=0. Account remaining usage unknown; no personal tokens/IDs/secrets stored."
+}
