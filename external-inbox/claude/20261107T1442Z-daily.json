@@ -1,0 +1,57 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-07T14:42:00Z",
+  "finished_at": "2026-11-07T14:42:23Z",
+  "searches": 3,
+  "queries": [
+   "Pearl Street Snowflake Express train Boulder 2026 free kids holiday",
+   "Downtown Boulder holiday events kids 2026 Lights on Pearl tree lighting date",
+   "Golden Colorado Olde Golden Christmas candlelight walk parade 2026 date free"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 5,
+  "excluded": 3,
+  "excluded_reasons": {
+   "no_2026_date_found": 2,
+   "regular_paid_seasonal": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(펄스트리트 스노우플레이크 익스프레스 기차)과 볼더·골든 연말 행사를 찾았다. 공식 사이트 직접 열기는 이 환경에서 안 되어 verified:false. 제외: 볼더 Switch on the Holidays 점등 시각·골든 촛불 행진·퍼레이드(2026 날짜 미공지), 산타 방문(상시 성격)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-07T14:42:23Z",
+   "origin": "scheduled",
+   "title": "Tebo Train's Snowflake Express (Pearl Street holiday kids train)",
+   "url": "https://boulderdowntown.com/do/tebo-trains-snowflake-express",
+   "start_date": "2026-11-29",
+   "end_date": "2026-12-13",
+   "time": "Sundays Nov 29, Dec 6, Dec 13 · 11am - 2pm",
+   "location": "1242 Pearl St (in front of Wells Fargo), Boulder",
+   "cost": "Suggested donation $5 per group",
+   "age": "10세 이하 어린이와 보호자",
+   "audience": "kids",
+   "description": "Electric kids' train rides along the Pearl Street Mall on three Sundays in the holiday season; does not run in wet weather.",
+   "recommend": "push",
+   "special_reason": "연말 일요일 3번만 운행하는 어린이 기차(기부금 $5)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-07T14:42:23Z",
+   "origin": "scheduled",
+   "title": "Downtown Boulder Cookie Crawl and Switch on the Holidays 2026",
+   "url": "https://www.boulderdowntown.com/light-up-the-holidays",
+   "start_date": "2026-11-22",
+   "time": "Cookie Crawl 11am-2pm, Switch on the Holidays 2-7pm",
+   "location": "Pearl Street Mall, Boulder",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Downtown Boulder holiday kickoff: lights switched on along Pearl Street Mall, Civic Area and courthouse; free Santa visits for kids (suggested donation).",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 볼더 도심 점등 행사"
+  }
+ ]
+}
