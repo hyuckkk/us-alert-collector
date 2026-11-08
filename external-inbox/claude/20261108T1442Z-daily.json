@@ -1,0 +1,23 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-08T14:42:00Z",
+  "finished_at": "2026-11-08T14:42:11Z",
+  "searches": 2,
+  "queries": [
+   "\"Downtown Westminster\" holiday lighting 2026 westminsterco.gov tree lighting market date",
+   "Children's Museum of Denver free night 2026 November December free admission evening"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 4,
+  "excluded": 4,
+  "excluded_reasons": {
+   "already_submitted": 2,
+   "no_2026_date_found": 2
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목 4건 중 펄스트리트 기차(11/7)·박물관의 밤(10/29)은 이미 올렸는데도 누락으로 기록됨(같은 행사 묶음 확인 필요). 다운타운 웨스트민스터 점등식·마켓은 2026 날짜가 공식 페이지 외부에 안 보이고(11/2 시 페이지 2곳을 올렸으나 GitHub 재확인 실패), 어린이박물관 11~12월 무료 야간은 확인 안 됨. 새로 올릴 행사 없음."
+ },
+ "events": []
+}
