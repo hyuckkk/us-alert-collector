@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-08T23:45:39Z",
+  "finished_at_utc": "2026-11-08T23:52:19Z",
+  "search_requests": 59,
+  "queries": [
+    "Colorado 2026 November 2026 December free military base open house public flight simulator children veterans airport museum",
+    "Denver 2026 November 14 15 21 22 free hands-on STEM kids maker workshop festival",
+    "Colorado 2026 November 2027 registration free youth ski ski school program application",
+    "Colorado 2026 holiday free train carriage rides hands on activities unusual November December",
+    "Colorado 2027 kids camp registration opening January 2027 outdoor robotics aviation",
+    "Colorado 2026 November rocket launch public viewing launch club",
+    "Colorado Springs 2026 November Air Force Academy public community open house STEM demonstration",
+    "Colorado 2026 November December national park special access permits lottery tree cutting",
+    "Colorado Denver November 2026 train ride free admission aviation museum SCFD",
+    "Denver 2026 November December school district student festival STEAM free robotics competition public",
+    "site:colorado.gov 2026 november December free kids outdoor event state park archery fishing clinic",
+    "site:colorado.edu/events November 2026 hands-on family open house space robotics science",
+    "site:usafa.edu 2026 November December open house public cadet parade airfield",
+    "site:wingsmuseum.org/events/ Nov 2026 November aviation cockpit simulator hands on",
+    "site:denvergov.org 2026 November free kids ride ski snowshoe camp",
+    "site:denverlibrary.org 2026 November free repair cafe tool workshop makerspace 3D printing",
+    "site:cpw.state.co.us 2026 November 2027 limited registration fishing ice climbing archery workshop",
+    "site:coloradosprings.gov 2026 November December free historic trolley ride children",
+    "site:scfd.org 2026 November December free days children aviation museum railroad",
+    "site:coloradorailroadmuseum.org 2026 November 2027 free admission days train rides",
+    "2026 November 2026 Colorado \"free\" \"simulator\" \"open house\" aviation family",
+    "2026 November 2026 Colorado \"ride\" \"free\" \"fire truck\" kids",
+    "2026 November \"free\" \"train rides\" \"Colorado\" Santa",
+    "2026 November December 2026 Colorado \"drone\" \"show\" \"free\"",
+    "2026 November Colorado \"aircraft\" \"cockpit\" \"November 21\" admission",
+    "2026 November 2026 colorado \"model rocket\" \"launch\" public family",
+    "site:coloradosprings.gov \"2026\" \"free\" \"holiday\" \"ride\"",
+    "site:usafa.edu 2026 \"November\" \"public\" \"open house\"",
+    "site:denvergov.org 2026 2027 \"free\" \"ski\" kids registration",
+    "site:nps.gov/romo 2027 2026 \"timed entry\" reservation 2027 release",
+    "2026 November 2026 Colorado \"free\" \"touch a truck\" \"Saturday\"",
+    "Colorado November 2026 \"free\" \"climb aboard\" vehicles kids",
+    "Colorado November 2026 \"free\" \"flight\" children pilots airplane",
+    "Colorado November 2026 \"open house\" \"behind the scenes\" kids free",
+    "Colorado November 2026 \"free\" \"robot\" \"build\" kids event",
+    "Colorado November 2026 \"free\" \"rocket\" \"launch\" family",
+    "Colorado November 2026 \"free\" \"archery\" kids intro special event",
+    "Colorado November 2026 \"free\" \"train\" \"ride\" family 2026",
+    "Colorado November 2026 \"free\" \"skate\" \"lessons\" kids day",
+    "Colorado November 2026 \"free\" \"maker\" \"festival\" hands-on",
+    "2026 November 2026 Colorado youth BMX novice race free try day registration",
+    "2026 November Colorado kids free bike race tournament open public",
+    "2026 November 2026 Colorado robot combat arena free spectator youth",
+    "2026 November 2026 Colorado school robotics tournament public spectators free",
+    "2026 November 2026 Colorado rocket launch Hartsel public spectator free",
+    "2026 November 2026 Colorado public \"science\" \"factory tour\" \"free\"",
+    "2026 November 2026 Colorado free helicopter aircraft simulator workshop youth hands on",
+    "2026 November 2026 Colorado open house special access firefighters training facility Denver",
+    "2026 November 2026 Colorado public \"hands-on\" \"camp\" sponsored free kids",
+    "2026 November 2026 Colorado aviation 'free' 'Nov 14' '2026' open",
+    "COFA 2026 paper target turkey shoot November 14 archery climbing free registration Colorado Adventure Point age 8 15",
+    "COFA kids turkey shoot November 14 2026 participant faith agreement eligibility non-members",
+    "Nightbots Take Over Stanley free November 15 2026 robots",
+    "Bots & Brunch Nightbots free",
+    "Nightbots Take Over Stanley November 2026 admission cost 11am",
+    "site:stanleymarketplace.com/all-events/nightbots-take-over-stanley",
+    "\"Nightbots Take Over Stanley\" \"free\" November 15 2026",
+    "\"Nightbots Take Over Stanley\" 2026 robot activities admission",
+    "COFA annual free kids paper target turkey shoot November 14 2026 signup cost faith"
+  ],
+  "url_read_attempts": 25,
+  "successful_page_reads": 25,
+  "failed_page_reads": 0,
+  "official_detail_verified": 10,
+  "official_detail_verified_urls": [
+    "https://cofausa.org/event/cofas-annual-free-kids-paper-target-turkey-shoot-nov-14-2026/",
+    "https://cofausa.org/civicrm/event/register/?id=393&reset=1",
+    "https://www.stanleymarketplace.com/all-events/nightbots-take-over-stanley",
+    "https://monumentalimpact.org/events/mitee-gobble-squabble-2026/",
+    "https://wingsmuseum.org/events/cockpit-demo-day-nov26/",
+    "https://visitdenver.com/milehighholidays/drone-shows/",
+    "https://www.rockymountainaerogroup.com/summercamp",
+    "https://www.tripolicolorado.org/launch-info/launch-info.html",
+    "https://www.eaa301.org/young-eagles",
+    "https://coloradorailroadmuseum.org/timetable/train-rides/"
+  ],
+  "candidate_events": 19,
+  "duplicate_candidates": 6,
+  "rejected_events": 5,
+  "held_events": 7,
+  "qualified_events": 1,
+  "known_by_collector": 1,
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://cofausa.org/event/cofas-annual-free-kids-paper-target-turkey-shoot-nov-14-2026/"
+  ],
+  "candidate_assessments": [
+    {
+      "title": "COFA Annual FREE Kids' Paper Target Turkey Shoot",
+      "status": "qualified",
+      "reason": "Official date, hours, specialized hands-on activities, free group signup, age bands and ministry eligibility restriction verified; submitted."
+    },
+    {
+      "title": "MITEE Gobble Squabble robotics event Nov 21",
+      "status": "duplicate",
+      "reason": "Already in an earlier ChatGPT inbox submission."
+    },
+    {
+      "title": "EAA Chapter 72 Young Eagles free flights Nov 14",
+      "status": "duplicate",
+      "reason": "Existing external-inbox/chatgpt/20261025T235925Z.json."
+    },
+    {
+      "title": "Wings Over the Rockies SCFD Free Day Nov 19",
+      "status": "duplicate",
+      "reason": "Existing ChatGPT inbox submission, Nov 3."
+    },
+    {
+      "title": "Tebo Trains Snowflake Express Boulder",
+      "status": "duplicate",
+      "reason": "Existing ChatGPT inbox submission, Nov 6."
+    },
+    {
+      "title": "Erie free horse-drawn carriage rides Nov 28",
+      "status": "duplicate",
+      "reason": "Existing ChatGPT inbox submission, Oct 31."
+    },
+    {
+      "title": "Castle Rock Tree Lighting drone show Nov 14",
+      "status": "duplicate",
+      "reason": "Existing ChatGPT inbox submission, Nov 7."
+    },
+    {
+      "title": "Wings Cockpit Demo Day Nov 21",
+      "status": "rejected",
+      "reason": "Previously found in 2026-10-22 collector dry-run report; recurring museum-access event at normal admission price."
+    },
+    {
+      "title": "Visit Denver nightly Mile High drone show Nov 20–Dec 31",
+      "status": "rejected",
+      "reason": "Repeating nightly free display, not rare single-time access; already discussed in previous GPT research."
+    },
+    {
+      "title": "Colorado Railroad Museum Polar Express holiday ride",
+      "status": "rejected",
+      "reason": "Recurring commercial performance/ride at normal ticket pricing."
+    },
+    {
+      "title": "Wings Over the Rockies breakfast fly-in Nov 14",
+      "status": "rejected",
+      "reason": "Museum regular-admission/breakfast fly-in, no unusually valuable new access demonstrated."
+    },
+    {
+      "title": "Colorado Railroad Museum routine Saturday diesel train rides",
+      "status": "rejected",
+      "reason": "Regular paid admission and rides ($17 adults/$7 children online), not a special discount or unique opportunity."
+    },
+    {
+      "title": "Nightbots Take Over Stanley Nov 15",
+      "status": "held",
+      "reason": "Official high-value all-age hands-on robot driving, but neither entry fee nor activity fee clearly stated; five-person total not confirmed."
+    },
+    {
+      "title": "Tripoli Colorado high-power launch Hartsel Nov 22",
+      "status": "held",
+      "reason": "Official site and launch info inspected, but event-specific spectator access, public admission charge and go/no-go not all verified."
+    },
+    {
+      "title": "Rocky Mountain Aero Group Build & Fly Camp July 26–30 2027",
+      "status": "held",
+      "reason": "Official camp dates found; approximately $475 per camper and future Feb 2027 registration opening; normal paid program and inventory unconfirmed."
+    },
+    {
+      "title": "Epic SchoolKids free ski program 2027–28",
+      "status": "held",
+      "reason": "2027–28 registration schedule, age/grade verification and precise availability not yet officially announced."
+    },
+    {
+      "title": "Rocky Mountain National Park 2027 summer timed-entry release",
+      "status": "held",
+      "reason": "Exact 2027 release calendar and eligibility not yet posted; ordinary reservation system, not a verified newly opened scarce opportunity."
+    },
+    {
+      "title": "EAA Chapter 301 Young Eagles 2027 season",
+      "status": "held",
+      "reason": "Official chapter says 2026 season completed; no confirmed upcoming flight date/registration for 2027."
+    },
+    {
+      "title": "Colorado Railroad Museum 2027 SCFD Free Admission Days",
+      "status": "held",
+      "reason": "Official site verifies free general admission by advance ticket and optional $5 adult/$2 child ride, but all 2027 specific dates still TBA."
+    }
+  ],
+  "collector_comparison": "Read current config/sources.json and config/queries.json, prior GitHub inbox items, 2026-10-22 dry-run reports/fullsystem-run.json, and GitHub code-search for COFA, Paper Target Turkey Shoot, Nightbots. No matches to COFA/Nightbots in indexed files but this does not establish a live Worker DB miss. Wings Cockpit Demo Day present in the older collector snapshot. Existing inbox duplicates classified separately. Current Worker event DB and per-event delivery receipts not accessible.",
+  "source_and_keyword_improvements": [
+    {
+      "topic": "Free hands-on BB target event, climbing, archery, leather-crafts under faith-based COFA group",
+      "proposed_queries": [
+        "site:cofausa.org/event/ free kids target turkey shoot Colorado November",
+        "Colorado Adventure Point free open family archery climbing activity Lakewood"
+      ],
+      "proposed_official_source": "https://cofausa.org/civicrm/event/list/?reset=1",
+      "caveat": "Not a confirmed collector miss; COFA explicitly limits participation to persons agreeing with Statement of Faith and Code of Conduct."
+    },
+    {
+      "topic": "School team hands-on robot driving retail common area",
+      "proposed_queries": [
+        "Nightbots Take Over Stanley hands-on drive robot",
+        "Denver Aurora free robotics team hands-on demo mall"
+      ],
+      "proposed_official_source": "https://www.stanleymarketplace.com/all-events",
+      "caveat": "Robotics activity price for Nov 15 not stated; hold pending verified cost."
+    },
+    {
+      "topic": "2027 family-stay free train experience",
+      "proposed_official_source": "https://coloradorailroadmuseum.org/timetable/train-rides/",
+      "caveat": "Museum SCFD Free Days 2027 dates TBA; optional rides $5 adult/$2 child, family five $16."
+    }
+  ],
+  "submitted_files": [
+    "external-inbox/chatgpt/20261108T235058Z.json"
+  ],
+  "verified_delivery_evidence": "No per-event Worker dispatch/Telegram success record inspected for this submission; actual delivered events 0 proven (not necessarily zero eventually dispatched).",
+  "notes": "Independent search centered on Westminster/Denver and Colorado 2026 local contacts versus 2027-06–2028-08 family stay. Strict exclusion of recurring normal-price events. Registration capacity/deadline unknown for COFA; official free signup confirms $0. Source specifies ages 8–15 for competition; younger children only noncompetitive and subject to safe BB-gun handling. Official faith-based agreement/restriction explicitly included. Total 19 individually reviewed candidate opportunities; 6 pre-existing submissions, 5 low-value rejected, 7 held, 1 high-value qualified. No collector code, settings, or direct Telegram changes made."
+}
