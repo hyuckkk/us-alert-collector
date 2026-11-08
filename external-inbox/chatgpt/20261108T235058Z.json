@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-08T23:50:58Z",
+  "test": false,
+  "events": [
+    {
+      "title": "COFA Annual FREE Kids' Paper Target Turkey Shoot and Hands-on Outdoor Activities",
+      "url": "https://cofausa.org/event/cofas-annual-free-kids-paper-target-turkey-shoot-nov-14-2026/",
+      "start_date": "2026-11-14",
+      "end_date": "2026-11-14",
+      "time": "9:00 AM–1:00 PM Mountain Standard Time; arrive by 12:15 PM for competitive target shooting",
+      "location": "Colorado Adventure Point, 10455 W 6th Ave, Suite 150, Lakewood, CO 80215",
+      "cost": "$0 registration and activities; $0 total for two adults and three children if admitted. Food and beverages optional, extra.",
+      "age": "BB-gun paper-target competition ages 8–15; younger children may try noncompetition BB target shooting only if safely able to handle a BB gun; climbing, archery, leather craft and outdoor education for children. Parents/guardians attend. Open registration, but COFA is a faith-based private ministry and expressly makes participation subject to agreement with its Statement of Faith and Code of Conduct; it may restrict admission.",
+      "audience": "kids",
+      "description": "One-day no-charge specialized Colorado Adventure Point experience combines organizer-supplied BB paper-target competition (no live animals), climbing wall, archery, leather crafts and outdoor education. Participants register at https://cofausa.org/civicrm/event/register/?id=393&reset=1. Official page states date, hours, ages, free price and faith-based eligibility restriction; signup page confirms free group registration. Specific registration deadline and remaining capacity not published. This is for 2026 Colorado residents, not the household's 2027–28 planned stay. GitHub text search found no existing references, but live Worker/collector DB comparison was not available; do not infer a proven collector miss."
+    }
+  ]
+}
