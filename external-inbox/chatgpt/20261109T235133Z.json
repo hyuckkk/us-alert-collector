@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-09T23:51:33Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Golden Makers Harvest — Free Family Make-and-Take",
+      "url": "https://www.visitgolden.com/event/golden-makers-harvest/",
+      "start_date": "2026-11-14",
+      "end_date": "2026-11-14",
+      "time": "5:00 PM–8:00 PM (Colorado MST)",
+      "location": "Foothills Art Center Creative Campus, 809 15th Street, Golden, CO 80401",
+      "cost": "Free ($0 entry for five people); maker-led make-and-take activities advertised within free community event; optional Maker Market purchases extra. Separate activity supplies fee not stated.",
+      "age": "All ages, public community event. Event directs visitors to organizer for RSVP; mandatory RSVP/remaining places not confirmed.",
+      "audience": "family",
+      "description": "Nov 14 one-evening special gathering offering hands-on create-and-take craft experiences for all ages led by local makers at Foothills Art Center, unlike routine paid classes. City destination calendar states free, gives exact venue/date/hours, and identifies organizer Golden Makers. RSVP link advertised but organizer site inaccessible during research, so no guaranteed spot. Useful to 2026 Colorado residents, not 2027-2028 visiting family. Reference official local event calendar."
+    }
+  ]
+}
