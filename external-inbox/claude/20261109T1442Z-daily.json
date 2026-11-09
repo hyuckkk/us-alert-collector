@@ -1,0 +1,39 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-09T14:42:00Z",
+  "finished_at": "2026-11-09T14:42:53Z",
+  "searches": 2,
+  "queries": [
+   "Denver Art Museum free days 2026 December free general admission date",
+   "SCFD free days Denver December 2026 museum zoo gardens list"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 6,
+  "excluded": 5,
+  "excluded_reasons": {
+   "aggregator_only_or_date_conflict": 4,
+   "no_2026_date_found": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(덴버 미술관 SCFD 무료일, Día del Niño)과 12월 SCFD 무료일을 찾았다. 공식 사이트 직접 열기는 이 환경에서 안 되어 verified:false. 제외: 식물원 12월(12/8·12/10 충돌), 어린이박물관 12/2·포마일 역사공원 12/5·역사박물관 12/18(지역 안내 블로그만), Día del Niño(2026 날짜 검색 안 됨)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-09T14:42:53Z",
+   "origin": "scheduled",
+   "title": "Free Day at the Denver Art Museum (Dec. 8, 2026)",
+   "url": "https://www.denverartmuseum.org/en/calendar/free-day-dec-8-2026",
+   "start_date": "2026-12-08",
+   "location": "Denver Art Museum",
+   "cost": "Free general admission (ticketed exhibitions not included; advance registration encouraged)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD-supported free general admission day at the Denver Art Museum; ticketed exhibitions excluded.",
+   "recommend": "push",
+   "special_reason": "공공기금(SCFD) 지원 미술관 무료 입장일"
+  }
+ ]
+}
