@@ -1,0 +1,37 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-10T14:42:00Z",
+  "finished_at": "2026-11-10T14:42:35Z",
+  "searches": 2,
+  "queries": [
+   "free Nutcracker performance Denver area December 2026 city free holiday ballet",
+   "Westminster Colorado park grand reopening celebration 2026 Sheridan Green"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 5,
+  "excluded": 4,
+  "excluded_reasons": {
+   "already_submitted": 1,
+   "regular_paid": 1,
+   "date_unverified": 2
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(셰리던 그린 공원 재개장, 덴버 동물원 무료일, 손턴 무료 호두까기 발레)을 찾았다. 동물원 무료일은 10/31 에 올렸으나 '마감'으로 제외된 바 있음(이미 발송된 것으로 확인). 손턴 무료 발레는 수집기가 이미 발송. 제외: 콜로라도 발레 호두까기(정가), 하이랜즈랜치 도서관 무료 공연(연도 미확인). 셰리던 그린 공원 재개장 축하는 날짜 미정이지만 웨스트민스터(거주 예정지) 시 공식 페이지라 감시용으로 올린다."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-10T14:42:35Z",
+   "origin": "scheduled",
+   "title": "Sheridan Green Park (formerly Stratford Park) expansion grand opening",
+   "url": "https://www.westminsterco.gov/1040/Sheridan-Green-and-Stratford-Park",
+   "location": "Sheridan Green Park, Westminster, CO",
+   "audience": "family",
+   "description": "City of Westminster park expansion from 6 to 12 acres with a new playground; construction through fall 2026 and a grand opening celebration planned later in 2026. Date to confirm on the city page.",
+   "recommend": "push",
+   "special_reason": "거주 예정지 웨스트민스터의 새 공원 개장 기념 행사(한 번뿐)"
+  }
+ ]
+}
