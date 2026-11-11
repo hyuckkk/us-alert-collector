@@ -2,7 +2,7 @@
   "schema": 1,
   "actor": "chatgpt",
   "started_at_utc": "2026-11-11T23:13:18Z",
-  "finished_at_utc": "2026-11-11T23:20:08Z",
+  "finished_at_utc": "2026-11-11T23:22:14Z",
   "search_requests": 125,
   "queries": [
     "Colorado November December 2026 free airplane rides Young Eagles children EAA chapters Colorado upcoming 2026",
@@ -131,9 +131,9 @@
     "site:usskiandsnowboard.org/news 2026 \"Grand Prix\" \"free\" Breckenridge",
     "site:breckenridge.com \"Toyota U.S. Grand Prix\" 2026 December event schedule"
   ],
-  "url_read_attempts": 21,
+  "url_read_attempts": 22,
   "url_read_successes": 21,
-  "failed_page_reads": 0,
+  "failed_page_reads": 1,
   "official_detail_verified": 15,
   "official_verified_details": [
     {
@@ -372,5 +372,11 @@
     "Update 2027/28 Epic SchoolKids spring enrollment watch; official 2026/27 enrollment closed October 7. Do not send stale application alert.",
     "Thornton WinterFest appears in GitHub stored collector evaluation outputs; this means known historically, not necessarily confirmed in live Worker operational DB."
   ],
-  "notes": "125 actual fast web search requests across ten groups (results count does not alter request count); 21 successful page open/click attempts (find does not count). Official organizer details verified for 15 distinct URLs across investigated themes; 15 clearly attributable organizer-source URLs listed above, although some details also appeared in earlier HTML source review. Candidate audit contains exactly 30 unique event/opportunity concepts (10 duplicate, 10 rejected, 8 held, 2 qualified); duplicates are from prior ChatGPT inbox plus archived collector evaluation, not evidence all reached recipients. GitHub current config/sources.json, config/queries.json, docs/SEARCH_WORKLOAD_METRICS.md, .github/workflows/external-inbox.yml and prior GPT workload read. Code-search has no matching submitted event titles; no access to current live Worker event DB, so verified_collector_misses=0 does NOT assert no misses. Prior collector Thornton example counted known_by_collector=1 via archived evaluation, not live current state. Qualified events are for 2026 Colorado resident/friends only, before household planned arrival June 2027. Both free to enter for five, optional upgrades/travel extra. Sender logs not accessible; zero delivered events proven. No collector code, settings or Telegram API used, and no personal secrets recorded."
+  "notes": "125 actual fast web search requests across ten groups (results count does not alter request count); 22 page open/click attempts (21 success and one browser DisabledError on the GitHub Actions workflow URL; find does not count). Official organizer details verified for 15 distinct URLs across investigated themes; 15 clearly attributable organizer-source URLs listed above, although some details also appeared in earlier HTML source review. Candidate audit contains exactly 30 unique event/opportunity concepts (10 duplicate, 10 rejected, 8 held, 2 qualified); duplicates are from prior ChatGPT inbox plus archived collector evaluation, not evidence all reached recipients. GitHub current config/sources.json, config/queries.json, docs/SEARCH_WORKLOAD_METRICS.md, .github/workflows/external-inbox.yml and prior GPT workload read. Code-search has no matching submitted event titles; no access to current live Worker event DB, so verified_collector_misses=0 does NOT assert no misses. Prior collector Thornton example counted known_by_collector=1 via archived evaluation, not live current state. Qualified events are for 2026 Colorado resident/friends only, before household planned arrival June 2027. Both free to enter for five, optional upgrades/travel extra. Sender logs not accessible; zero delivered events proven. No collector code, settings or Telegram API used, and no personal secrets recorded.",
+  "failed_page_read_urls": [
+    {
+      "url": "https://github.com/hyuckkk/us-alert-collector/actions/workflows/external-inbox.yml",
+      "reason": "web browser DisabledError; could not check run-specific delivery status"
+    }
+  ]
 }
