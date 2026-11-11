@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-11T00:04:15Z",
+  "test": false,
+  "events": [
+    {
+      "title": "2026 Mile High Drone Shows — 600-Drone Free Nightly Spectacle",
+      "url": "https://visitdenver.com/milehighholidays/drone-shows/",
+      "start_date": "2026-11-20",
+      "end_date": "2026-12-31",
+      "time": "Nightly 7:00 PM MST; show lasts 10–15 minutes",
+      "location": "Tivoli Quad, Auraria Campus, 1000 Larimer Street, Denver, CO 80204 (official free public viewing area)",
+      "cost": "Free; admission for five $0. Optional campus parking $10 surface/$15 garage/$30 Tivoli garage",
+      "age": "Open to public of all ages; no residency or booking restriction stated",
+      "audience": "family",
+      "description": "Visit Denver confirms 42 winter nights and 600 synchronized aircraft creating outdoor animated scenes, with free viewing at Tivoli Quad. A rare large-scale aviation/light spectacle, different from previously submitted one-night Castle Rock drone show on Nov 14. Weather-dependent; check organizer after 4 PM day-of. Applies to 2026 Colorado-local friends; before planned summer 2027 family arrival."
+    },
+    {
+      "title": "2027 National Western Stock Show — One-Day Free Grounds Admission, Animal Encounters and Behind-the-Scenes Tour",
+      "url": "https://nationalwestern.com/frequently-asked-questions/",
+      "start_date": "2027-01-12",
+      "end_date": "2027-01-12",
+      "time": "9:00 AM–8:00 PM MST (Sunday–Thursday grounds hours; confirm free-day access)",
+      "location": "National Western Complex, 4655 Humboldt St, Denver, CO 80216",
+      "cost": "Grounds admission $0 for five; regular grounds tickets adults $5–$37 and kids ages 3–11 $2–$9 depending on day; separate ticketed shows/animal feed extra, free event parking offered",
+      "age": "All ages, public; regular grounds rules",
+      "audience": "family",
+      "description": "Official 2027 FAQ specifically identifies Jan 12 as the one free public grounds admission day. Distinct limited subsidy versus daily paid admission. Included grounds attractions list CSU Ag Adventure hands-on agriculture, interactive horse/grooming displays, petting farm, and on-site registration for free stock-show behind-the-scenes FFA tours (9:30–4:30, schedule subject to availability); paid rodeos not included. January 2027 is prior to family arrival, useful to local contacts."
+    },
+    {
+      "title": "2027 National Western Stock Show — Inaugural Skijoring Horse-and-Skier Invitational",
+      "url": "https://nationalwestern.com/skiing-the-western-way/",
+      "start_date": "2027-01-18",
+      "end_date": "2027-01-18",
+      "time": "11:00 AM–2:00 PM MST",
+      "location": "Betty Cram Drive, between The Legacy and CSU Spur buildings, National Western grounds, Denver, CO 80216",
+      "cost": "Included in day-specific NWSS grounds ticket: adults $31 and children $10; 2 adults + 3 children total $92 before any optional purchases; extra ticketing fees not separately specified",
+      "age": "Public spectators all ages; no residency restrictions stated; 50 teams are invited competitors, spectators do not participate",
+      "audience": "family",
+      "description": "Official host announces the FIRST-ever NWSS skijoring invitational, Jan 18 2027, with 50 horse-and-rider/skier teams negotiating jumps and gates; audience can watch trackside and meet competitors after awards. Exceptional new, non-routine Colorado winter sport, not an ordinary professional season game. Venue is on Stock Show grounds; tickets currently offered. Before arriving family stay, useful to local Colorado friends."
+    },
+    {
+      "title": "2027 Rocky Mountain Aero Group Build & Fly Youth Aviation Camp — Summer Session and Future Registration",
+      "url": "https://www.rockymountainaerogroup.com/summercamp",
+      "start_date": "2027-07-26",
+      "end_date": "2027-07-30",
+      "time": "9:00 AM–4:00 PM MDT each of 5 days; registration scheduled to open 2027-02-01",
+      "location": "KGWS Sumers Airpark, 1172 Airport Center Road, Glenwood Springs, CO 81601",
+      "cost": "$475 per eligible youth for five days; enrollment restricted to ages 10–16, so 5-person all-participant total not applicable; transport/lodging extra; scholarships may be available",
+      "age": "Ages 10–16, no experience needed, limited enrollment; no resident-only rule stated",
+      "audience": "kids",
+      "description": "Five-day small-team hands-on program at an active airport, not a classroom-only hobby course: students build, program, test and fly large RC aircraft and use aviation simulators. Organizer confirms Jul 26–30 2027 session during family stay, $475 per youth, registration not yet open (Feb 1 2027) and limited seats; this is an early opportunity to note the date, not an assertion of current availability. Separate earlier Jun 21–25 session precedes the late-June family arrival."
+    }
+  ]
+}
