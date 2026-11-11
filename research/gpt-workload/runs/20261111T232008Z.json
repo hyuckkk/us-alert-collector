@@ -2,8 +2,8 @@
   "schema": 1,
   "actor": "chatgpt",
   "started_at_utc": "2026-11-11T23:13:18Z",
-  "finished_at_utc": "2026-11-11T23:22:14Z",
-  "search_requests": 125,
+  "finished_at_utc": "2026-11-11T23:24:01Z",
+  "search_requests": 128,
   "queries": [
     "Colorado November December 2026 free airplane rides Young Eagles children EAA chapters Colorado upcoming 2026",
     "Colorado November 2026 special public military base open house aircraft tours Buckley Peterson Schriever",
@@ -129,12 +129,15 @@
     "2026 Breckenridge US Grand Prix admission free 2026 official Breckenridge resort spectators",
     "site:breckenridge.com \"U.S. Grand Prix\" \"free to watch\" 2026",
     "site:usskiandsnowboard.org/news 2026 \"Grand Prix\" \"free\" Breckenridge",
-    "site:breckenridge.com \"Toyota U.S. Grand Prix\" 2026 December event schedule"
+    "site:breckenridge.com \"Toyota U.S. Grand Prix\" 2026 December event schedule",
+    "[image search] Copper Mountain Stifel Copper Cup alpine men's World Cup ski race East Village 2026 official",
+    "site:bcworldcup.com 2026 Dec 3 13 2026 women's world cup free tickets watching public schedule giant slalom",
+    "site:bcworldcup.com \"women\" \"December\" \"2026\" \"FREE\""
   ],
-  "url_read_attempts": 22,
-  "url_read_successes": 21,
+  "url_read_attempts": 26,
+  "url_read_successes": 25,
   "failed_page_reads": 1,
-  "official_detail_verified": 15,
+  "official_detail_verified": 19,
   "official_verified_details": [
     {
       "url": "https://www.coppercolorado.com/copper-cup/event-experience/tickets/",
@@ -195,20 +198,41 @@
     {
       "url": "https://www.tripolicolorado.org/launch-info/launch-info.html",
       "finding": "Private-site visitor constraints and child restrictions hold rocket launch recommendation"
+    },
+    {
+      "url": "https://bcworldcup.com/",
+      "finding": "Record 7 races Dec 3–13 2026 free public racing, festival official overview"
+    },
+    {
+      "url": "https://bcworldcup.com/birds-of-prey-menswomens/",
+      "finding": "Exact Dec 3–6 and Dec 11–13 seven World Cup race start times, 2026 biggest festival, free spectator access and five-minute snow walk after free shuttle"
+    },
+    {
+      "url": "https://bcworldcup.com/plan-your-visit/race-day-info/",
+      "finding": "Elk/Bear parking free on race days for vehicles carrying at least 5; free race shuttles; Red Tail Stadium access"
+    },
+    {
+      "url": "https://bcworldcup.com/illenium-nathaniel-rateliff-headliners-2026/",
+      "finding": "Record 2026 edition and free live-music schedule; explicitly separates paid big-name concerts from free outdoor music"
     }
   ],
-  "candidate_events": 30,
+  "candidate_events": 31,
   "duplicate_candidates": 10,
   "rejected_events": 10,
   "held_events": 8,
-  "qualified_events": 2,
+  "qualified_events": 3,
   "known_by_collector": 1,
   "verified_collector_misses": 0,
-  "submitted_events": 2,
+  "submitted_events": 3,
   "delivered_events": 0,
   "failed_searches": 0,
   "account_remaining_usage": "unknown",
   "candidate_audit": [
+    {
+      "title": "Stifel Birds of Prey 2026 Dec3–13 Beaver Creek record seven free World Cup races",
+      "status": "qualified",
+      "reason": "Official Vail Valley Foundation organizer confirms unique seven-race season, free public grandstands and shuttle, 5+ occupant free parking and separately priced premium concerts"
+    },
     {
       "title": "Stifel Copper Cup Audi FIS Men's Alpine World Cup Nov 28-29",
       "status": "qualified",
@@ -362,7 +386,8 @@
   ],
   "qualified_urls": [
     "https://www.coppercolorado.com/copper-cup/event-experience/race-info-and-schedules/",
-    "https://news.vailresorts.com/RSEOBreck"
+    "https://news.vailresorts.com/RSEOBreck",
+    "https://bcworldcup.com/birds-of-prey-menswomens/"
   ],
   "inbox_file": "external-inbox/chatgpt/20261111T231917Z.json",
   "source_gaps": [
@@ -370,13 +395,18 @@
     "Add discovery terms: Rockstar Energy Open, ParkStyle, snowboarding festival, free music/art Breckenridge. The current indexed files had no exact event name; do not claim Worker DB omission.",
     "Separate Nov28-29 Copper Cup alpine (free and verified) from Dec17-20 Copper Toyota Grand Prix snowboard/freeski halfpipe (public spectator fee not officially established).",
     "Update 2027/28 Epic SchoolKids spring enrollment watch; official 2026/27 enrollment closed October 7. Do not send stale application alert.",
-    "Thornton WinterFest appears in GitHub stored collector evaluation outputs; this means known historically, not necessarily confirmed in live Worker operational DB."
+    "Thornton WinterFest appears in GitHub stored collector evaluation outputs; this means known historically, not necessarily confirmed in live Worker operational DB.",
+    "Add official Vail Valley Foundation Birds of Prey bcworldcup.com for Dec3–13 2026 free record seven-race World Cup festival and 5-passenger free parking, distinct from Copper Stifel Cup. Current GitHub code-search has no Birds of Prey exact title; still no Worker DB miss proven."
   ],
-  "notes": "125 actual fast web search requests across ten groups (results count does not alter request count); 22 page open/click attempts (21 success and one browser DisabledError on the GitHub Actions workflow URL; find does not count). Official organizer details verified for 15 distinct URLs across investigated themes; 15 clearly attributable organizer-source URLs listed above, although some details also appeared in earlier HTML source review. Candidate audit contains exactly 30 unique event/opportunity concepts (10 duplicate, 10 rejected, 8 held, 2 qualified); duplicates are from prior ChatGPT inbox plus archived collector evaluation, not evidence all reached recipients. GitHub current config/sources.json, config/queries.json, docs/SEARCH_WORKLOAD_METRICS.md, .github/workflows/external-inbox.yml and prior GPT workload read. Code-search has no matching submitted event titles; no access to current live Worker event DB, so verified_collector_misses=0 does NOT assert no misses. Prior collector Thornton example counted known_by_collector=1 via archived evaluation, not live current state. Qualified events are for 2026 Colorado resident/friends only, before household planned arrival June 2027. Both free to enter for five, optional upgrades/travel extra. Sender logs not accessible; zero delivered events proven. No collector code, settings or Telegram API used, and no personal secrets recorded.",
+  "notes": "127 actual fast web search requests and one additional web image-search request across ten text-query groups and an image lookup (results count does not alter request count); 26 page open/click attempts (25 success and one browser DisabledError on the GitHub Actions workflow URL; find does not count). Official organizer details verified for 19 distinct URLs across investigated themes; 19 clearly attributable organizer-source URLs listed above, although some details also appeared in earlier HTML source review. Candidate audit contains exactly 31 unique event/opportunity concepts (10 duplicate, 10 rejected, 8 held, 3 qualified); duplicates are from prior ChatGPT inbox plus archived collector evaluation, not evidence all reached recipients. GitHub current config/sources.json, config/queries.json, docs/SEARCH_WORKLOAD_METRICS.md, .github/workflows/external-inbox.yml and prior GPT workload read. Code-search has no matching submitted event titles; no access to current live Worker event DB, so verified_collector_misses=0 does NOT assert no misses. Prior collector Thornton example counted known_by_collector=1 via archived evaluation, not live current state. Qualified events are for 2026 Colorado resident/friends only, before household planned arrival June 2027. All three free to enter for five, optional upgrades/travel extra. Sender logs not accessible; zero delivered events proven. No collector code, settings or Telegram API used, and no personal secrets recorded.",
   "failed_page_read_urls": [
     {
       "url": "https://github.com/hyuckkk/us-alert-collector/actions/workflows/external-inbox.yml",
       "reason": "web browser DisabledError; could not check run-specific delivery status"
     }
+  ],
+  "inbox_files": [
+    "external-inbox/chatgpt/20261111T231917Z.json",
+    "external-inbox/chatgpt/20261111T232323Z.json"
   ]
 }
