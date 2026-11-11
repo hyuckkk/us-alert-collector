@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-11T23:19:17Z",
+  "test": false,
+  "events": [
+    {
+      "title": "2026 Stifel Copper Cup — Free Audi FIS Men's Alpine World Cup Races and Festival",
+      "url": "https://www.coppercolorado.com/copper-cup/event-experience/race-info-and-schedules/",
+      "start_date": "2026-11-28",
+      "end_date": "2026-11-29",
+      "time": "Sat Nov 28 11:45 AM Super-G; Sun Nov 29 10:00 AM and 1:00 PM giant slalom (MST); festival times vary",
+      "location": "Copper Mountain East Village (races) and Center Village (festival), Copper Mountain, CO, USA",
+      "cost": "Race and festival general admission $0 per person, $0 for 5; free Alpine/Far East lot parking with free shuttles. Optional paid grandstand $45/day and premium parking $75/day; travel, food, skiing separate.",
+      "age": "General public, all ages; no residency restriction or spectator membership/registration stated.",
+      "audience": "family",
+      "description": "Exceptional international Audi FIS Men's Ski World Cup alpine races, not an ordinary professional league fixture: Super-G Sat and giant slalom Sun, first domestic men's stop; free festival including free O.A.R. headline music Nov 28, fireworks, giant-slalom bib draw. Official Copper host FAQ explicitly confirms FREE race/festival entry and free shuttle from free lots: https://www.coppercolorado.com/copper-cup/faq/ ; official race times on linked URL; festive schedule https://www.coppercolorado.com/copper-cup/event-experience/festivities-info-and-schedule/ . Distinct from Dec 17–20 Toyota Grand Prix at Copper and other Colorado holiday drone shows. 2026 Colorado residents/friends; before user's summer 2027 family arrival. Drive from Westminster 80234 not measured; host says 100 miles west of DEN."
+    },
+    {
+      "title": "2026 Rockstar Energy Open Breckenridge — Free ParkStyle Snowboard and Music Festival",
+      "url": "https://news.vailresorts.com/RSEOBreck",
+      "start_date": "2026-12-18",
+      "end_date": "2026-12-20",
+      "time": "Three-day festival Dec 18–20, 2026; precise daily schedule to be announced (MST)",
+      "location": "Breckenridge Ski Resort, Breckenridge, CO, USA",
+      "cost": "General festival and snowboard competition admission FREE; family of 5 admission $0. Optional VIP, lift tickets, ski rentals, transportation, parking and lodging extra or unverified.",
+      "age": "General public spectators, all ages; no age or residency restriction specified in resort's public announcement.",
+      "audience": "family",
+      "description": "Rare three-day free spectacle: international pro men's/women's rider-designed ParkStyle snowboarding where competitors improvise creative lines, plus live music, art installations and interactive festival activations; resort press specifically confirms no entry charge, VIP optional. Dec 18–20 2026; full hourly schedule and performer lineup pending. Different from Toyota U.S. Grand Prix Dec 10–13 at Breckenridge. 2026 Colorado residents/friends, before family's summer 2027 arrival. Westminster 80234 driving distance not yet measured. Official host Vail Resorts press release dated Oct 7, 2026."
+    }
+  ]
+}
