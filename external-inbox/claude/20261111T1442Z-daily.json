@@ -1,0 +1,62 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-11T14:42:00Z",
+  "finished_at": "2026-11-11T14:42:24Z",
+  "searches": 3,
+  "queries": [
+   "National Western Stock Show 2027 free admission day",
+   "Chautauqua Winterfest Boulder 2026 date free",
+   "Olde Golden Holidays 2026 parade carriage rides dates visitgolden"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 4,
+  "excluded": 1,
+  "excluded_reasons": {
+   "permanent_offer_not_event": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(스톡쇼 무료 입장일, 샤토콰 윈터페스트, 올드 골든 퍼레이드·무료 마차, 어린이박물관 무료 저녁)을 찾았다. 세 행사 모두 2026/2027 날짜가 검색 결과에는 없어 날짜를 비우고 공식 페이지를 올린다(GitHub 쪽에서 원문 재확인, 날짜가 있으면 등록). 제외: 어린이박물관 무료 저녁(할인 안내 상시 페이지, 11~12월 날짜 없음)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-11T14:42:24Z",
+   "origin": "scheduled",
+   "title": "National Western Stock Show 2027 Free Grounds Admission Day",
+   "url": "https://nationalwestern.com/frequently-asked-questions/",
+   "location": "National Western Complex, Denver",
+   "cost": "Free grounds admission (one day)",
+   "audience": "family",
+   "description": "The Stock Show (Jan. 9-24, 2027) offers one free grounds admission day each year (2025: Jan. 14, 2026: Jan. 13, both Tuesdays). 2027 date to confirm on the official page.",
+   "recommend": "push",
+   "special_reason": "1년에 하루 가축 박람회장 무료 입장"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-11T14:42:24Z",
+   "origin": "scheduled",
+   "title": "Chautauqua WinterFest 2026 (Boulder)",
+   "url": "https://www.chautauqua.com/events/",
+   "location": "Colorado Chautauqua, Boulder",
+   "audience": "family",
+   "description": "Annual mid-December winter festival with free activities (Festival of Lights, history tours, market) and some ticketed events. 2025: Dec. 12-13. 2026 dates to confirm.",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 샤토콰 겨울 축제(무료 체험 다수)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-11T14:42:24Z",
+   "origin": "scheduled",
+   "title": "Olde Golden Holidays 2026: holiday parade and free carriage rides",
+   "url": "https://www.visitgolden.com/olde-golden-holidays/",
+   "location": "Washington Avenue, downtown Golden",
+   "cost": "Free parade; free carriage rides",
+   "audience": "family",
+   "description": "Golden's month-long holiday celebration with a Saturday-morning holiday parade (2025: Dec. 13, 10:30 a.m.) and free horse-drawn carriage rides on weekends. 2026 dates to confirm.",
+   "recommend": "push",
+   "special_reason": "연말 주말 무료 마차와 1년 한 번 퍼레이드"
+  }
+ ]
+}
