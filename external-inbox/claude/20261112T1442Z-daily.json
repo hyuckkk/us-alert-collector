@@ -1,0 +1,40 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-12T14:42:00Z",
+  "finished_at": "2026-11-12T14:42:34Z",
+  "searches": 2,
+  "queries": [
+   "Wreaths Across America 2026 USAFA cemetery Air Force Academy December 19 wreath laying public",
+   "Copper Mountain FIS alpine World Cup 2026 dates free spectators November"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 3,
+  "excluded": 2,
+  "excluded_reasons": {
+   "military_foreign_access_unverified": 1,
+   "no_official_page_found": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(공군사관학교 묘지 헌화, 코퍼 마운틴 FIS 월드컵 무료 관람, 스톡쇼 무료일은 어제 제출)을 찾았다. 공식 사이트 직접 열기는 이 환경에서 안 되어 verified:false. 제외: 공군사관학교 묘지 헌화(군 시설, 외국인 출입 공식 확인 없음 — #43 정책상 보류), 포트 로건 국립묘지 헌화 12/19(행사 공식 페이지 주소 확인 안 됨)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-12T14:42:34Z",
+   "origin": "scheduled",
+   "title": "Stifel Copper Cup - FIS Alpine Ski World Cup (men's super-G and giant slalom)",
+   "url": "https://www.coppercolorado.com/copper-cup/event-experience/race-info-and-schedules/",
+   "start_date": "2026-11-28",
+   "end_date": "2026-11-29",
+   "location": "Copper Mountain, CO (East Village race venue)",
+   "cost": "Free to watch (paid grandstand/VIP optional); free parking and shuttles",
+   "age": "All ages",
+   "audience": "family",
+   "description": "World Cup alpine ski races at Copper Mountain over Thanksgiving weekend; spectating is free, with festivities in Center Village.",
+   "recommend": "push",
+   "special_reason": "세계 최정상 스키 월드컵을 무료로 관람(콜로라도에서 1년에 한 번)"
+  }
+ ]
+}
