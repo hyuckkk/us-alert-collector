@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-13T23:52:39Z",
+  "test": false,
+  "events": [
+    {
+      "title": "It's a RiNo-FUL Life: Free Artist-Led Printmaking, Zine & Button Making and Light Installations",
+      "url": "https://rinoartdistrict.org/visit/its-a-rino-ful-life",
+      "start_date": "2026-12-04",
+      "end_date": "2026-12-06",
+      "time": "Fri Dec 4, 5:00-9:00 PM (free printmaking 5:00-8:30 PM); Sat Dec 5 and Sun Dec 6, 11:00 AM-4:00 PM (free DIY art labs), MST",
+      "location": "RiNo ArtPark Welcome Center (check-in), 1900 35th St, Denver, CO 80216; hands-on workshops in Truss House, 3400 Arkins Ct, Denver, CO",
+      "cost": "Admission and hands-on printmaking/button/zine activities $0; family of 5 $0 mandatory admission; optional paid food/market and separate Santa Stroll adult $25 plus fees not included",
+      "age": "All ages, public, no residency restriction; free RSVP requested per attendance day at https://rinoartdistrict.multipass.com/rinoful-life-2026",
+      "audience": "family",
+      "description": "Free three-day community arts event with unusually substantive direct make-and-take: named artist Lucy Holtsnider teaches printmaking holiday cards Friday 5–8:30 PM, Yeastie Boys lead drop-in DIY zines/buttons on Saturday and Sunday 11 AM–4 PM, plus custom light sculptures, silo/mural projection installations and free Saturday photographer-backed family portrait station. Organizer and ticket portal explicitly confirm free all-age access, admission $0 for five, RSVP for each day; paid Santa Stroll is a distinct optional run, not part of free workshop; 2026 local-friends-only, outside 2027–28 family travel dates. Not found in currently accessible GitHub submitted/research records, but no live Worker DB checked and collector miss cannot be asserted."
+    }
+  ]
+}
