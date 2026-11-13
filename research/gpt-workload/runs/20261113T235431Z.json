@@ -2,8 +2,8 @@
   "schema": 1,
   "actor": "chatgpt",
   "started_at_utc": "2026-11-13T23:47:01Z",
-  "finished_at_utc": "2026-11-13T23:54:31Z",
-  "search_requests": 90,
+  "finished_at_utc": "2026-11-13T23:55:46Z",
+  "search_requests": 91,
   "queries": [
     "Colorado November 2026 free open house special hands on aerospace military museum family upcoming November December",
     "Colorado November December 2026 kids free behind scenes airfield cockpit aircraft open house Denver",
@@ -94,7 +94,8 @@
     "site:colostate.edu \"2026\" \"December\" \"open house\" \"hands-on\" children",
     "Colorado 2026 \"free\" \"ride\" \"sleigh\" \"December\" public holiday",
     "site:colorado.edu 2027 \"summer\" \"free\" \"science\" \"camp\" \"scholarship\" kids",
-    "site:nps.gov/romo 2027 timed entry reservation 2027 schedule release"
+    "site:nps.gov/romo 2027 timed entry reservation 2027 schedule release",
+    "IMAGE_QUERY: RiNo ArtPark Truss House Denver It's a RiNo-FUL Life art printmaking winter festival 2026"
   ],
   "url_read_attempts": 21,
   "url_read_successes": 18,
@@ -310,5 +311,6 @@
     "Investigate Colorado FIRST campus tour weekday/date contradiction (Dec3 2026 is Thursday but published 'Saturday') before considering announcements.",
     "Broomfield library Compass calendar exposes working water treatment facility tours, but regular monthly recurrence should suppress exceptional alerts; verify admission charges before recommendation."
   ],
-  "notes": "No extra alerts/status notifications requested for no new items. One 2026 local-friends free three-day RiNo hands-on arts opportunity submitted to the existing US external inbox; not applicable to 2027-28 family visit. 21 explicit web open/click URL read attempts incl repeated reopens; a separate find within an already opened page not counted; URL reads: 18 success, 1 inaccessible Colorado FIRST source plus 2 web GitHub DisabledError. 12 distinct organizer original detail URLs opened, even when revisited. 0 proven delivered; usage limits unknown. No Telegram direct sends, no Korean relay, no code edits. Search count includes 90 actual fast search queries; one search call can bundle many. Dates are America/Denver local for events."
+  "notes": "No extra alerts/status notifications requested for no new items. One 2026 local-friends free three-day RiNo hands-on arts opportunity submitted to the existing US external inbox; not applicable to 2027-28 family visit. 21 explicit web open/click URL read attempts incl repeated reopens; a separate find within an already opened page not counted; URL reads: 18 success, 1 inaccessible Colorado FIRST source plus 2 web GitHub DisabledError. 12 distinct organizer original detail URLs opened, even when revisited. 0 proven delivered; usage limits unknown. No Telegram direct sends, no Korean relay, no code edits. Search count includes 90 actual fast search queries plus 1 image_query for venue illustration (rejected for use because image was an outdated 2024 poster); one search call can bundle many. Dates are America/Denver local for events.",
+  "image_search_requests": 1
 }
