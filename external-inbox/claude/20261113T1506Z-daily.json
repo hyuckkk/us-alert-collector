@@ -1,0 +1,53 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-13T15:06:00Z",
+  "finished_at": "2026-11-13T15:06:04Z",
+  "searches": 2,
+  "queries": [
+   "Highlands Ranch Mansion holiday celebration 2026 free date",
+   "Denver area historic mansion holiday open house free December 2026 Molly Brown OR Four Mile OR Littleton Museum"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 4,
+  "excluded": 2,
+  "excluded_reasons": {
+   "already_submitted": 2
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(하이랜즈랜치 맨션 홀리데이 축제)과 역사 저택 연말 공개 행사를 찾았다. 코퍼 월드컵(11/12)·덴버 미술관 무료일(11/9)은 이미 올림. 공식 사이트 직접 열기는 이 환경에서 안 되어 verified:false. 주지사 관저 연말 무료 공개는 2026 날짜 미공지라 날짜를 비우고 공식 페이지를 올린다."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-13T15:06:04Z",
+   "origin": "scheduled",
+   "title": "Holiday Celebration at the Highlands Ranch Mansion 2026",
+   "url": "https://highlandsranchmansion.com/2026/01/14/holiday-celebration-dec2026/",
+   "start_date": "2026-12-05",
+   "time": "10 a.m. - 3 p.m.",
+   "location": "Highlands Ranch Mansion, Highlands Ranch",
+   "cost": "Free in past years (refreshments for purchase); confirm 2026",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Annual community holiday celebration at the historic Highlands Ranch Mansion run by the Highlands Ranch Community Association.",
+   "recommend": "push",
+   "special_reason": "1년에 한 번 역사 저택을 여는 무료 연말 축제"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-13T15:06:04Z",
+   "origin": "scheduled",
+   "title": "Governor's Residence at Boettcher Mansion - free holiday tours",
+   "url": "https://www.coloradoshome.org/visit/holiday-tours",
+   "location": "Governor's Residence, 400 E 8th Ave, Denver",
+   "cost": "Free; walk-ins welcome (2025)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Free public holiday tours of the decorated Colorado Governor's Residence (2025: Dec. 12-13, 10 a.m.-2 p.m.). 2026 dates to confirm on the official page.",
+   "recommend": "push",
+   "special_reason": "평소 닫힌 주지사 관저를 연말에만 무료 공개"
+  }
+ ]
+}
