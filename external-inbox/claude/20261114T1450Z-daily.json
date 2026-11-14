@@ -1,0 +1,105 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-14T14:42:00Z",
+  "finished_at": "2026-11-14T14:50:00Z",
+  "searches": 6,
+  "queries": [
+   "Breakfast with Santa Thornton 2026",
+   "It's a RiNo-ful Life Denver 2026 holiday",
+   "Denver Art Museum Friendship Powwow 2026",
+   "Thornton WinterFest 2026 date",
+   "RiNo-Ful Life Holiday Market ArtPark Tree Lighting December 2026",
+   "Denver Art Museum free days 2027 SCFD"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 7,
+  "excluded": 2,
+  "excluded_reasons": {
+   "past_event": 1,
+   "date_not_posted": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(손튼 산타 아침, RiNo 연말 축제, 미술관 파우와우·무료일)을 검색했다. 파우와우 2026은 9/12로 지나 제외, 손튼 산타 아침 2026 날짜 미공지라 제외(윈터페스트에 설명). 공식 페이지 직접 열기는 이 환경에서 안 되어 verified:false."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-14T14:50:00Z",
+   "origin": "scheduled",
+   "title": "Denver Art Museum SCFD Free Day (January 2027)",
+   "url": "https://www.denverartmuseum.org/en/free-days-dam",
+   "start_date": "2027-01-12",
+   "location": "Denver Art Museum, 100 W 14th Ave Pkwy, Denver",
+   "cost": "Free general admission (special exhibitions ticketed separately)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD Free Day at the Denver Art Museum; the museum's free-days page lists Jan 12, Feb 9 and Mar 9, 2027.",
+   "recommend": "push",
+   "special_reason": "연 몇 회뿐인 미술관 전체 무료 관람일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-14T14:50:00Z",
+   "origin": "scheduled",
+   "title": "Denver Art Museum SCFD Free Day (February 2027)",
+   "url": "https://www.denverartmuseum.org/en/free-days-dam",
+   "start_date": "2027-02-09",
+   "location": "Denver Art Museum, 100 W 14th Ave Pkwy, Denver",
+   "cost": "Free general admission (special exhibitions ticketed separately)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD Free Day at the Denver Art Museum; the museum's free-days page lists Jan 12, Feb 9 and Mar 9, 2027.",
+   "recommend": "push",
+   "special_reason": "연 몇 회뿐인 미술관 전체 무료 관람일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-14T14:50:00Z",
+   "origin": "scheduled",
+   "title": "Denver Art Museum SCFD Free Day (March 2027)",
+   "url": "https://www.denverartmuseum.org/en/free-days-dam",
+   "start_date": "2027-03-09",
+   "location": "Denver Art Museum, 100 W 14th Ave Pkwy, Denver",
+   "cost": "Free general admission (special exhibitions ticketed separately)",
+   "age": "All ages",
+   "audience": "family",
+   "description": "SCFD Free Day at the Denver Art Museum; the museum's free-days page lists Jan 12, Feb 9 and Mar 9, 2027.",
+   "recommend": "push",
+   "special_reason": "연 몇 회뿐인 미술관 전체 무료 관람일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-14T14:50:00Z",
+   "origin": "scheduled",
+   "title": "It's a RiNo-Ful Life Holiday Market & ArtPark Tree Lighting Festival 2026",
+   "url": "https://visitdenver.com/articles/post/mile-high-holidays-brings-seasonal-cheer-for-the-whole-family/",
+   "start_date": "2026-12-04",
+   "end_date": "2026-12-05",
+   "location": "RiNo Art Park, Denver",
+   "cost": "",
+   "age": "All ages",
+   "audience": "family",
+   "description": "RiNo Art District's annual holiday market and tree lighting (Visit Denver lists Dec. 4-5, 2026 at RiNo Art Park). Past editions had free kids crafts (printmaking, button making). Official page: https://rinoartdistrict.org/visit/its-a-rino-ful-life",
+   "recommend": "push",
+   "special_reason": "연 1회 RiNo 연말 축제·점등식, 예년 아이 무료 만들기"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-14T14:50:00Z",
+   "origin": "scheduled",
+   "title": "Thornton WinterFest 2026",
+   "url": "https://www.thorntonco.gov/node/600",
+   "start_date": "2026-12-11",
+   "end_date": "2026-12-13",
+   "location": "Carpenter Park, Thornton",
+   "cost": "",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Thornton's annual winter festival with Santa's Village; WinterFest 5K & Fun Run (kids) on Sat Dec 12, 2026, 10:15 a.m. (runsignup.com/Race/CO/Thornton/ThorntonWinterFest). Breakfast with Santa is usually tied to WinterFest; 2026 date not posted yet.",
+   "recommend": "push",
+   "special_reason": "연 1회 시 주최 겨울 축제(산타 마을)"
+  }
+ ]
+}
