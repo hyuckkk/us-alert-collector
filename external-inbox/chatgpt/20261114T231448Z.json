@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-14T23:14:48Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Space Foundation Family Star Party — Voyager 1 One-Light-Day Anniversary",
+      "url": "https://discoverspace.org/event/family-star-party-voyager-anniversary/",
+      "start_date": "2026-11-18",
+      "end_date": "2026-11-18",
+      "time": "6:00–8:00 PM MST (America/Denver)",
+      "location": "Space Foundation Discovery Center, 4425 Arrowswest Drive, Colorado Springs, CO 80907, USA",
+      "cost": "Organizer confirms FREE admission and FREE telescope viewing; mandatory admission for two adults and three children $0. Transport/parking, if any, not established; ordinary daytime museum admission is separate.",
+      "age": "All ages/families, public; no membership requirement or registration requirement stated in the official November 18 event notice; space is not guaranteed.",
+      "audience": "family",
+      "description": "Special one-evening after-hours public astronomy gathering commemorating the Voyager 1 spacecraft reaching approximately one light-day from Earth, unlike routine lectures. Hands-on activity about the spacecraft's Golden Record inside the Discovery Center plus direct outdoor telescope observing with Colorado Springs Astronomical Society; the actual Voyager spacecraft is not visible through the telescopes. Official organizer confirms Wednesday Nov 18 2026 6–8 PM, general-public free entry and telescope use. 2026 Colorado-resident friends only (before prospective Jun 2027 family arrival). Telescope observations are weather dependent. Event-specific RSVP/maximum occupancy and parking fee are not stated. Not found in accessible GitHub indexed inbox/search records; no assertion about live Worker DB or delivery."
+    }
+  ]
+}
