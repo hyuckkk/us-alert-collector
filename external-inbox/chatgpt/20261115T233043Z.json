@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-15T23:30:43Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Grand Nordic 2027 Free Friday Kids Nordic Ski Lessons (Gear and Trail Pass Included)",
+      "url": "https://skigrandnordic.org/school-programs/",
+      "start_date": "2027-01-08",
+      "end_date": "2027-02-26",
+      "time": "Fridays, 1:00–2:30 PM MST; arrive 30–45 minutes early",
+      "location": "YMCA of the Rockies Snow Mountain Ranch Nordic Center, Granby, Colorado, USA",
+      "cost": "FREE for children ages 5–10: instruction, ski equipment and trail pass included. Three children: $0. Parent volunteers/helping receive free equipment and trail pass; two adults' charges if not helping and travel are unknown.",
+      "age": "Children 5–10; beginner to experienced; 25–30 total spots per Friday. Public registration, no stated residency requirement. Parents may assist.",
+      "audience": "kids",
+      "description": "Limited-capacity subsidized hands-on cross-country skiing with real professional instruction and included trail access/equipment. Classic, skate and first-timer groups, games, final Nordic festival. Fridays Jan 8–Feb 26, 2027 only; advance online signup required, signup page exists but live inventory not confirmed. 2026/27 local Colorado residents' opportunity, before visiting family's June 2027 arrival. Official organizer page documents dates and eligibility; clarify parent entry if not volunteering."
+    },
+    {
+      "title": "2026–27 Howelsen Hill Ski Free Sundays — Free Alpine Lift and Nordic Access",
+      "url": "https://www.steamboatsprings.net/619/Ski-Free-Sundays",
+      "start_date": "2026-11-29",
+      "end_date": "2027-03-28",
+      "time": "Sundays only, normally 10:00 AM–4:00 PM MST for alpine skiing; weather/terrain permitting",
+      "location": "Howelsen Hill Ski Area, 845 Howelsen Parkway, Steamboat Springs, Colorado, USA",
+      "cost": "FREE Sunday lift/Nordic tickets: $0 for 5 people (2 adults + 3 kids), compared with normal $230 total ($55 adult x2 + $40 youth x3). Equipment rentals, transport and meals extra; rental totals unknown.",
+      "age": "All ages and general public; official city program lists no residency restriction. Free tickets must be collected at ticket office; no advance reservation.",
+      "audience": "family",
+      "description": "Exceptional city-funded access to historic ski area: all five can use lifts or Nordic trails for free every Sunday during 2026/27 operating season, subject to snow and competitions. First expected Sunday Nov 29 after planned Nov 28 opening; do not interpret date range as daily availability. Tubing not free. Estimated $230 normal lift-ticket saving for five, subject to official rates and open terrain. Distant Steamboat Springs; 2026/27 local contacts only, before family's June 2027 arrival. Official city details: https://www.steamboatsprings.net/298/Lift-Tickets and https://steamboatsprings.net/131/Howelsen-Hill-Ski-Area"
+    },
+    {
+      "title": "Jingle Bells & Pines — Original Schoolchildren's Songs with Ars Nova Singers (Free One-Day Concert)",
+      "url": "https://arsnovasingers.org/education/jingle-bells-and-pines/",
+      "start_date": "2026-12-06",
+      "end_date": "2026-12-06",
+      "time": "3:00 PM MST, approximately 45 minutes",
+      "location": "Boulder Museum of Contemporary Art (BMoCA), 1750 13th Street, Boulder, Colorado, USA",
+      "cost": "FREE for all ages; five-person family $0; complimentary tickets by reservation, walk-ins welcome if capacity.",
+      "age": "All ages; public, not limited to performers' families. Approximately 150 seats, advance free ticket reservation advised.",
+      "audience": "family",
+      "description": "Unusual one-off collaboration, not a routine orchestra concert: Bear Creek and Superior elementary pupils perform original songs they composed through EDEN Colorado school workshops alongside professional Ars Nova Singers. Free public premiere, limited ~150 seats; original student performance with no language-intensive talk. 2026 local contacts, before family's June 2027 arrival."
+    }
+  ]
+}
