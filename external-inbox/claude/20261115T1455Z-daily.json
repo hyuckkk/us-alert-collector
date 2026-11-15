@@ -1,0 +1,43 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-15T14:42:00Z",
+  "finished_at": "2026-11-15T14:55:00Z",
+  "searches": 5,
+  "queries": [
+   "Colorado School of Mines International Day 2027 I-Day Golden",
+   "Arapaho Roosevelt National Forest Christmas tree permit 2026 Fort Collins cutting dates",
+   "Jefferson County Public Library teen Native American beading workshop November December 2026",
+   "\"International Day\" Mines 2026 Green Center November",
+   "Jefferson County Library Colorado teen beading jeffcolibrary bibliocommons Native"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 3,
+  "excluded": 2,
+  "excluded_reasons": {
+   "date_not_found_or_past": 1,
+   "not_found": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목 3건(광업대 국제의 날, 포트콜린스 국유림 트리 베기, 제퍼슨 도서관 청소년 비즈공예)을 검색했다. 국제의 날은 매년 11월 중순이고 2026 공지를 찾지 못해 제외(이미 지났을 가능성), 도서관 비즈공예는 2026 일정을 찾지 못해 제외. 공식 페이지 직접 열기는 이 환경에서 안 되어 verified:false."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-15T14:55:00Z",
+   "origin": "scheduled",
+   "title": "Cut-your-own Christmas tree - Canyon Lakes Ranger District (Arapaho & Roosevelt National Forests) 2026",
+   "url": "https://www.fs.usda.gov/r02/arp/permits/christmas-trees",
+   "start_date": "2026-11-21",
+   "end_date": "2027-01-06",
+   "location": "Canyon Lakes Ranger District, west of Fort Collins (Larimer County)",
+   "cost": "Permit required (Recreation.gov); 2026 price not confirmed",
+   "age": "All ages",
+   "audience": "family",
+   "description": "Forest Service Christmas tree cutting season: permits on Recreation.gov from Oct 8, 2026; cutting Nov 21, 2026 - Jan 6, 2027; info stations Nov 27-29 and Dec 5-6 at Arrowhead Lodge Visitor Center. Stump 6 inches or less. Elk Creek area walk-in only. Seasonal road gates close Nov 15.",
+   "recommend": "push",
+   "special_reason": "연 1회 국유림에서 가족이 직접 크리스마스 트리를 베는 체험"
+  }
+ ]
+}
