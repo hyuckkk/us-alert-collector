@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-16T23:59:16Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Breck Sky Fest 2026 — Inaugural Free Public Telescope Stargazing in Frisco and Breckenridge",
+      "url": "https://breckskyfest.com/program/",
+      "start_date": "2026-11-27",
+      "end_date": "2026-11-28",
+      "time": "Friday November 27, 5:30–7:30 PM MST (Frisco); Saturday November 28, 6:00–7:30 PM MST (Breckenridge); each session requires its own free RSVP.",
+      "location": "Nov 27: Frisco Historic Park, 120 E Main St, Frisco, Colorado; Nov 28: Breckenridge Ski Resort, Quicksilver chair base area, Breckenridge, Colorado, USA",
+      "cost": "Free telescope sessions, $0 per person, $0 for family of five; separate RSVP required for each night. Parking, transport, food extra and not confirmed. Separate VIP stargazing at Beaver Run costs $57/person and is not included.",
+      "age": "General public, families and visitors of all ages; children remain with accompanying adult, no residency or membership prerequisite stated; RSVP required with group size, live capacity not confirmed.",
+      "audience": "family",
+      "description": "First-edition Breck Sky Fest organized by AstroTours.org with Town of Breckenridge grant support; an unusual limited festival, not the organizer's regular paid $57 astronomy tour. Public astronomer-led direct telescope viewing, constellation pointing and only brief talks, free and flexible drop-in. Two confirmed public nights at distinct locations Nov27 and Nov28; each has its own $0 RSVP at https://breckskyfest.com/rsvp/frisco/ and https://breckskyfest.com/rsvp/breck/. Organizer confirms $0 admission, exact times and venues and first-year grant in https://breckskyfest.com/about/. Dates apply to 2026 local Colorado friends; not 2027–2028 visiting family. Weather postponement or cancellation possible. No proof of subscriber delivery or of collector database miss."
+    }
+  ]
+}
