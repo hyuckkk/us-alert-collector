@@ -1,0 +1,88 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-16T14:42:00Z",
+  "finished_at": "2026-11-16T15:00:00Z",
+  "searches": 5,
+  "queries": [
+   "Denver Botanic Gardens free days Chatfield Farms Plains Conservation Center December 2026 2027",
+   "Ars Nova Singers kids compose free family holiday concert 2026 Boulder",
+   "CU Art Museum free family workshop December 2026 Boulder",
+   "Howelsen Hill free ski Sundays 2026-27 season Steamboat",
+   "Ars Nova Singers \"Jingle Bells and Pines\" 2026"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 6,
+  "excluded": 2,
+  "excluded_reasons": {
+   "date_not_found": 1,
+   "affiliation_required": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목 5건(보태닉 가든 두 곳 무료일, CU 미술관 워크숍, 하웰센 무료 스키 일요일, Ars Nova 어린이 작곡 콘서트)을 검색했다. CU 미술관 12월 워크숍은 2026 날짜 미확인·CU 소속 요건이라 제외. Ars Nova 12/6은 예비 일정표 기준. 공식 페이지 직접 열기는 이 환경에서 안 되어 verified:false."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-16T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "title": "Denver Botanic Gardens Free Day at Plains Conservation Center (Dec 10, 2026)",
+   "url": "https://www.botanicgardens.org/events/free-days",
+   "start_date": "2026-12-10",
+   "location": "Plains Conservation Center, 21901 E Hampden Ave, Aurora",
+   "cost": "Free (free-day tickets/registration may be required)",
+   "description": "SCFD free day at the Plains Conservation Center listed for Thursday Dec 10, 2026 (event listing; confirm on the official free-days page).",
+   "recommend": "push",
+   "special_reason": "연 몇 회뿐인 보태닉 가든 초원 보존센터 무료일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-16T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "title": "Denver Botanic Gardens Free Day at Chatfield Farms (Nov 27, 2026)",
+   "url": "https://www.botanicgardens.org/events/free-days",
+   "start_date": "2026-11-27",
+   "location": "Chatfield Farms, 8500 W Deer Creek Canyon Rd, Littleton",
+   "cost": "Free (free-day tickets/registration may be required)",
+   "description": "Day-after-Thanksgiving free day listed for Chatfield Farms and York Street (event listing; confirm on the official free-days page).",
+   "recommend": "push",
+   "special_reason": "추수감사절 다음날 보태닉 가든 무료일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-16T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "title": "Howelsen Hill Ski Free Sundays 2026-27",
+   "url": "https://www.steamboatsprings.net/619/Ski-Free-Sundays",
+   "start_date": "2026-11-29",
+   "end_date": "2027-03-28",
+   "location": "Howelsen Hill, 845 Howelsen Pkwy, Steamboat Springs",
+   "cost": "Free lift ticket on Sundays (pick up at ticket office, no reservation)",
+   "description": "City-owned Howelsen Hill plans to open Nov 28, 2026 through Mar 28, 2027 (conditions permitting); every Sunday is Ski Free Sunday. Some Sundays may have limited terrain for events or club training.",
+   "recommend": "push",
+   "special_reason": "시즌 내내 일요일 리프트 무료인 콜로라도 유일급 스키장"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-16T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "title": "Ars Nova Singers free family holiday concert with kid composers (2026)",
+   "url": "https://arsnovasingers.org/education/jingle-bells-and-pines/",
+   "start_date": "2026-12-06",
+   "location": "Boulder area (location TBD)",
+   "cost": "",
+   "description": "Ars Nova Singers' preliminary 2026-27 season outline lists a Sunday Dec 6 all-ages concert (location TBD, subject to revision). Confirm the date and that this is the free kid-composer family program on the official page.",
+   "recommend": "push",
+   "special_reason": "어린이가 작곡한 곡을 부르는 무료 가족 연말 합창"
+  }
+ ]
+}
