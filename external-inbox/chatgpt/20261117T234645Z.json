@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-17T23:46:45Z",
+  "test": false,
+  "events": [
+    {
+      "title": "2027 Little Shop of Physics Open House — 300+ Hands-On Science Experiences",
+      "url": "https://www.lsop.colostate.edu/open-house/",
+      "start_date": "2027-03-07",
+      "end_date": "2027-03-07",
+      "time": "10:00 AM–4:00 PM MST (America/Denver)",
+      "location": "Colorado State University Lory Student Center, 1101 Center Ave Mall, Fort Collins, CO 80521, USA",
+      "cost": "Free public admission; five-person admission total $0. Parking is usually free on weekends subject to lot signage; travel and purchases extra.",
+      "age": "All ages (pre-K through adults), open to general public; no CSU affiliation required. No advance registration deadline published.",
+      "audience": "family",
+      "description": "One-day CSU science open house with over 300 original interactive experiments and demonstrations including rockets, build-and-test activities, lasers, robotics, human-anatomy VR, race cars, electric demonstrations. Official 2027 March 7 date, time, venue, free public access and all-age eligibility confirmed. Exceptional concentrated hands-on opportunity, not a lecture or normal paid class. For Colorado resident contacts before household arrival in late June 2027."
+    },
+    {
+      "title": "Littleton Museum 2027 Sheep to Shawl — Live Sheep Shearing and Wool Making",
+      "url": "https://www.museum.littletonco.gov/Events-Programs",
+      "start_date": "2027-05-01",
+      "end_date": "2027-05-01",
+      "time": "10:00 AM–3:00 PM MDT (America/Denver)",
+      "location": "Littleton Museum, 6028 S Gallup Street, Littleton, CO 80120, USA",
+      "cost": "Free admission; five-person admission total $0. Travel and incidental purchases extra.",
+      "age": "All ages/families; general public; official museum calendar does not publish a registration requirement or deadline.",
+      "audience": "family",
+      "description": "Once-yearly working-farm event showing live spring shearing and wool transformed from freshly shorn fleece into finished woolen objects, unlike the museum's regular free visits. Museum organizer confirms Saturday May 1, 2027 10am–3pm and open, free family admission. Exact 2027 visitor hands-on craft lineup not specified; demonstration/observation is confirmed. For Colorado residents before household arrival in late June 2027."
+    }
+  ]
+}
