@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-16T23:52:39Z",
+  "finished_at_utc": "2026-11-16T23:59:44Z",
+  "search_requests": 71,
+  "queries": [
+    "Colorado 2026 November 21 22 free behind scenes tours open house kids aircraft museum",
+    "Colorado 2026 November December free family interactive science open house special event",
+    "Denver 2026 December free kids ski lessons day sign up registration",
+    "Colorado 2026 November December public military base open house aircraft flight line tours",
+    "Colorado 2027 summer 2027 air show dates tickets free family",
+    "Colorado 2027 youth STEM aviation space camp registration opens 2026 November",
+    "Colorado 2026 November science night family hands on experiments free university",
+    "Colorado 2026 December museum free hands-on makers day special workshop children",
+    "Colorado 2026 Thanksgiving weekend railroad train rides free kids",
+    "Colorado 2026 2027 national park special permits lottery opening application dates",
+    "Denver Colorado December 2026 free holiday ice skating lesson kids sponsored",
+    "Colorado 2026 November December outdoor special event ski jumps fireworks drone racing free",
+    "site:wingsmuseum.org \"SCFD Free Day\" \"2026\" November December",
+    "site:wingsmuseum.org \"Cockpit Demo Day\" \"November 21, 2026\" price",
+    "site:wingsmuseum.org \"Astronomy Night\" \"November 21, 2026\" price",
+    "site:denvergov.org 2026 \"Learn to Ski\" \"November 16\" \"35\" youth",
+    "site:denvergov.org 2026 \"Learn to Ski & Ride\" \"registration\" December 2026 recreation",
+    "Colorado November 2026 November 21 December 5 free aircraft cockpit climb cockpit",
+    "Colorado 2026 December free \"behind the scenes\" \"tour\" kids museum",
+    "Colorado 2027 2028 National Park free entrance pass days 2027 official",
+    "Colorado December 2026 \"free\" \"fire station\" \"open house\" children",
+    "2026 \"Rocky Mountain National Park\" 2027 timed entry reservation ticket dates",
+    "2027 Colorado summer camps \"registration opens\" \"November\" 2026 free",
+    "2027 Colorado high school musical performances free festival unusual competitive robotics public",
+    "2026 Colorado \"November 21\" \"open house\" \"aviation\" free",
+    "2026 Colorado \"November 21\" \"free\" \"hands-on\" kids STEM expo",
+    "2026 Colorado \"November 19\" Wings \"SCFD Free Day\" regular admission price",
+    "2026 Colorado \"November 28\" \"STEAM Saturday\" \"Breck Sky Fest\" activities",
+    "site:breckskyfest.com \"STEAM Saturday\" 2026",
+    "site:wingsmuseum.org 2026 \"Astronomy Night\" \"November 21\" price tickets",
+    "site:winterparkresort.com \"Deck the Slopes\" \"trackless train\" November 2026 schedule",
+    "2026 Colorado December 2026 \"free\" \"open hangar\" \"flight\" children",
+    "site:coloradomesa.edu December 2026 family robotics expo 2026",
+    "site:colorado.edu 2026 \"Dec\" \"Design Expo\" demos interactive public",
+    "2026 November Denver Broomfield Westminster 2026 \"free\" \"fire engine\" ride Christmas",
+    "2026 Colorado November \"robotics competition\" spectators \"free\" event Denver",
+    "2026 November 2027 January Colorado free children \"train rides\" \"wagon\" public special",
+    "2026 Colorado December 2026 free \"steam locomotive\" ride museum",
+    "2026 Colorado \"November 28\" \"December 5\" \"open house\" \"airport\" children",
+    "2026 Colorado December 2026 \"open house\" \"firefighters\" \"hands-on\" family",
+    "2026 November December 2026 Colorado special \"underground\" \"tour\" \"free\"",
+    "2026 December Colorado sponsored \"free\" \"horse-drawn\" \"carriage rides\" Thornton Arvada Broomfield",
+    "2027 Colorado free \"learn to ski\" lessons kids city \"registration\" 2026",
+    "2026 Denver November 2026 \"robotics day camp\" Nightbots cost",
+    "2026 \"Breck Sky Fest\" \"Frisco\" \"free\" site:github.com/hyuckkk/us-alert-collector",
+    "2026 December 2026 \"Ski Bus\" \"free\" kids lessons Adams County Colorado",
+    "2027 registration \"Colorado\" \"Young Eagles\" free flight 2027 youth",
+    "2026 November 2026 \"free\" \"flight simulator\" \"hands on\" aviation Denver museum",
+    "site:denvergov.org \"November 17\" \"Learn to Ski & Ride\" 2026 2027 \"35\"",
+    "site:denvergov.org \"Outdoor Recreation\" \"Learn to Ski & Ride\" \"2026\" \"2027\"",
+    "site:denvergov.org \"ski and ride\" \"2026\" \"November 17\" registration centers",
+    "2026 Denver Parks Recreation learn to ski ride $35 November 17 2026 tuition gear lift transport youth",
+    "2026 2027 Denver Parks and Recreation Learn to Ski and Ride flyer PDF registration November 17",
+    "site:activekids.com \"ODR: Learn to Ski & Ride\" \"Nov 17\" 2026 March 2027",
+    "site:github.com/hyuckkk/us-alert-collector \"Learn to Ski & Ride\"",
+    "2026 Denver recreation \"Learn to Ski\" \"who can register\" fee \"gear\"",
+    "Colorado 2027 \"free\" \"camp\" \"aviation\" kids registration 2027",
+    "Colorado 2027 2028 \"open house\" \"Air Force\" \"space\" public",
+    "2027 \"Colorado\" \"Rocky Mountain\" \"Space Symposium\" public free family",
+    "2027 Colorado \"summer\" \"Young Eagles\" \"free flights\" EAA chapter schedule",
+    "2026 November 2026 Colorado rocket launch schedule spectator NCRS Northern Colorado Rocketry",
+    "Colorado 2027 \"State Forest\" lottery \"permit\" opens November 2026",
+    "Colorado 2026 December \"reservations open\" \"January 2027\" ice climbing festival free",
+    "Colorado 2027 \"free\" \"ranch tour\" \"fire\" \"kids\" city event",
+    "2026 December \"free\" \"simulator\" \"ride\" transportation museum open house Colorado",
+    "Colorado 2026 November 2027 February public \"open lab\" \"hands on\" national laboratory",
+    "site:tripolicolorado.org \"spectators\" \"free\" launch",
+    "site:ncrocketry.club \"spectators\" \"free\" \"launch\"",
+    "2026 November 22 tripoli Hartsel Colorado rocket free watching spectator parking",
+    "2026 December 5 Northern Colorado Rocketry Atlas launch spectating admission fee",
+    "site:breckskyfest.com/rsvp/frisco/ 2026 November 27 free age ticket"
+  ],
+  "url_read_attempts": 25,
+  "url_read_successes": 25,
+  "url_read_failures": 0,
+  "official_detail_verified": 18,
+  "official_detail_verified_urls": [
+    "https://breckskyfest.com/",
+    "https://breckskyfest.com/visit/",
+    "https://breckskyfest.com/program/",
+    "https://breckskyfest.com/rsvp/breck/",
+    "https://breckskyfest.com/rsvp/frisco/",
+    "https://breckskyfest.com/about/",
+    "https://breckskyfest.com/program/frisco-historic-park-stargazing/",
+    "https://wingsmuseum.org/events/scfd-free-day-nov-2026/",
+    "https://wingsmuseum.org/events/cockpit-demo-day-nov26/",
+    "https://ncrocketry.club/calendar/upcoming-events/",
+    "https://ncrocketry.club/about-us/locations/",
+    "https://ncrocketry.club/about-us/frequently-asked-questions/",
+    "https://ncrocketry.club/about-us/locations/atlas-site/",
+    "https://www.tripolicolorado.org/",
+    "https://www.tripolicolorado.org/launch-info/launch-info.html",
+    "https://chapters.eaa.org/eaa1627",
+    "https://www.rockymountainaerogroup.com/youngeagles",
+    "https://nightbots.org/"
+  ],
+  "candidate_events": 17,
+  "duplicate_candidates": 4,
+  "rejected_events": 6,
+  "held_events": 6,
+  "qualified_events": 1,
+  "known_by_collector": 1,
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "failed_page_reads": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://breckskyfest.com/program/"
+  ],
+  "submitted_file": "external-inbox/chatgpt/20261116T235916Z.json",
+  "candidate_assessments": [
+    {
+      "title": "Breck Sky Fest: Frisco Nov 27 & Breckenridge Nov 28 free stargazing",
+      "status": "qualified",
+      "url": "https://breckskyfest.com/program/",
+      "reason": "First annual town-grant-supported festival, two unique free direct telescope sessions; organizer confirms dates, RSVP, all ages and cost ($0 for five); bundled as one festival submission."
+    },
+    {
+      "title": "Monumental Impact MITEE Gobble Squabble robotics Nov 21",
+      "status": "duplicate",
+      "reason": "GPT inbox submitted 20261024T232920Z.json and robot-combat subevent 20261024T233201Z.json"
+    },
+    {
+      "title": "Wings Over the Rockies SCFD Free Day Nov 19",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261103T235439Z.json"
+    },
+    {
+      "title": "Wings Over the Rockies Cockpit Demo Day Nov 21",
+      "status": "duplicate",
+      "reason": "Confirmed in existing collector 2026-10-22 fullsystem snapshot, museum normal paid admission"
+    },
+    {
+      "title": "Denver Parks and Recreation $35 subsidized Learn to Ski & Ride winter registration",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261105T233900Z.json"
+    },
+    {
+      "title": "Colorado Railroad Museum Polar Express paid holiday train",
+      "status": "rejected",
+      "reason": "Ordinary annual ticketed commercial seasonal attraction, not special access or significant discount"
+    },
+    {
+      "title": "Nightbots Denver student-run Thanksgiving robotics camp Nov23–25",
+      "status": "rejected",
+      "reason": "$100/day each child standard paid camp; no compelling verified special public subsidy"
+    },
+    {
+      "title": "Glass Elephant commercial winter arts camp",
+      "status": "rejected",
+      "reason": "Normal $490/week commercial camp, no special discount or facility access"
+    },
+    {
+      "title": "Breck Sky Fest Celestial Sound Journey Nov21",
+      "status": "rejected",
+      "reason": "$40/person sound bath, explicitly excluded ordinary commercial wellness"
+    },
+    {
+      "title": "Breck Sky Fest separate VIP Astronomy Nov28",
+      "status": "rejected",
+      "reason": "$57/person usual guided astronomy price, distinct from $0 public festival events"
+    },
+    {
+      "title": "Breck Sky Fest $40 paint/mosaic craft Nov29",
+      "status": "rejected",
+      "reason": "Normal $40/person commercial workshop despite festival affiliation"
+    },
+    {
+      "title": "Tripoli Colorado high-power rocket event Nov22 near Hartsel",
+      "status": "held",
+      "url": "https://www.tripolicolorado.org/launch-info/launch-info.html",
+      "reason": "Official welcomes non-flying guests under safety code but does not publish spectators' cost / five-person total, event conditional on weather; not child-oriented"
+    },
+    {
+      "title": "Northern Colorado Rocketry Dec5 Atlas rocket launches",
+      "status": "held",
+      "url": "https://ncrocketry.club/calendar/upcoming-events/",
+      "reason": "Organizer publishes Dec5 schedule and says visitors welcome, but spectator pricing and five-person cost not stated; monthly recurring not clear exceptional value"
+    },
+    {
+      "title": "Rocky Mountain Aero Group Young Eagles aviation access",
+      "status": "held",
+      "url": "https://www.rockymountainaerogroup.com/youngeagles",
+      "reason": "$30 annual membership, possible flights/tours, no confirmed dated flight slot or guaranteed availability"
+    },
+    {
+      "title": "Winter Park Deck the Slopes trackless train and winter event",
+      "status": "held",
+      "url": "https://www.winterparkresort.com/things-to-do/events/deck-the-slopes",
+      "reason": "Specific free ride schedule, age and price not independently confirmed; ordinary winter season event"
+    },
+    {
+      "title": "Rocky Mountain National Park 2027 timed-entry reservations",
+      "status": "held",
+      "url": "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm",
+      "reason": "Future 2027 on-sale dates not officially announced or verified; do not invent"
+    },
+    {
+      "title": "Steamboat Springs history museum collections backstage tour",
+      "status": "held",
+      "reason": "Possible restricted collections tour but remote venue and organizer/date/fee/eligibility details not all independently verified"
+    }
+  ],
+  "collector_comparison": {
+    "checked": [
+      "config/sources.json",
+      "config/queries.json",
+      "docs/SEARCH_WORKLOAD_METRICS.md",
+      "research/gpt-workload/runs/ latest and prior logs",
+      "external-inbox/chatgpt/ listing and prior submissions",
+      ".github/workflows/external-inbox.yml",
+      "GitHub code search for Breck Sky Fest, Gobble Squabble, SCFD, Cockpit Demo, Learn to Ski, rockets"
+    ],
+    "known_by_collector_detail": "Wings Cockpit Demo Nov21 explicitly in prior 2026-10-22 collector snapshot (past research log)",
+    "submitted_not_in_accessible_history": "Breck Sky Fest appeared only as an earlier search query, not an event submitted in accessible GPT inbox. The live Worker state and complete automated collector event database were unavailable; cannot assert a verified miss.",
+    "delivery_evidence": "None. Submission commit is not proof of worker acceptance or Telegram delivery."
+  },
+  "source_and_keyword_improvements": [
+    {
+      "monitor_url": "https://breckskyfest.com/program/",
+      "queries": [
+        "Breck Sky Fest 2026 free public telescope November 27 28",
+        "AstroTours Summit County town grant free stargazing RSVP"
+      ],
+      "reason": "First-year subsidized free public astronomy sessions are interleaved with routine $57 paid stargazing and paid sound baths; filter by session-level cost, organizer grant, public RSVP. Do not assume source absent means collector miss."
+    },
+    {
+      "monitor_url": "https://ncrocketry.club/calendar/upcoming-events/",
+      "queries": [
+        "Northern Colorado Rocketry Atlas Dec 2026 spectator launch"
+      ],
+      "reason": "Launch calendars need spectator cost, safety rules and weather verification before submitting."
+    },
+    {
+      "monitor_url": "https://www.tripolicolorado.org/launch-info/launch-info.html",
+      "queries": [
+        "Tripoli Colorado Hartsel launch public spectators November 2026"
+      ],
+      "reason": "Non-flying visitors explicitly welcome yet price not published; hold until price clarified."
+    }
+  ],
+  "notes": "Web search counted as 71 actual web search query records; 25 webpage open/click read actions succeeded. 17 concretely screened event candidates account for 4 prior duplicate, 6 rejected regular-price/low-value, 6 held eligibility/cost/date uncertainty, 1 verified qualifying festival. 18 opened official organizer pages include 2026 public and undated/held leads; this is a page-read tally, not a claim every candidate fully verified. No matching new official dated 2027 Jun to 2028 Aug experience established. Existing collector source lists are not proof of runtime ingestion; worker DB access unavailable. No secret, token, recipient ID, bot API, code or delivery setting accessed or modified. Single verified event submitted through public US GitHub external-inbox only."
+}
