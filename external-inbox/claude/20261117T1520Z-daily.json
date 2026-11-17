@@ -1,0 +1,65 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-17T15:15:00Z",
+  "finished_at": "2026-11-17T15:20:00Z",
+  "searches": 0,
+  "queries": [],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 3,
+  "excluded": 1,
+  "excluded_reasons": {
+   "official_page_blocked": 1
+  },
+  "notes": "같은 날 앞선 제출(20261117T1455Z)이 공식 페이지 403·429로 전부 처리되지 않아 재제출. 어린이박물관·역사박물관은 기관 자체 페이지로 바꾸고, 공룡 능선은 429(일시 제한)라 같은 주소로 재시도. 포 마일 공원은 대체 공식 페이지가 없어 제외."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-17T15:20:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "SCFD Free Day at Dinosaur Ridge (Nov 22, 2026)",
+   "url": "https://dinoridge.org/event/scfd-free-day-at-dinosaur-ridge/",
+   "start_date": "2026-11-22",
+   "location": "Dinosaur Ridge Main Visitor Center, 16831 W Alameda Pkwy, Morrison",
+   "cost": "Free exhibit hall entry and/or $4 off guided bus tours; free-day tickets released Nov 8",
+   "description": "SCFD Free Day at Dinosaur Ridge (Colorado sesquicentennial edition). Listing gives Sunday Nov 22 with tickets released Nov 8; confirm on the official page.",
+   "special_reason": "연 몇 회뿐인 공룡 능선 무료 입장일(주 150주년 기념)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-17T15:20:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Children's Museum of Denver SCFD Free Day (Dec 2, 2026)",
+   "url": "https://www.mychildsmuseum.org/events/",
+   "start_date": "2026-12-02",
+   "location": "Children's Museum of Denver at Marsico Campus, 2121 Children's Museum Dr, Denver",
+   "cost": "Free",
+   "description": "SCFD free day at the Children's Museum listed for Wednesday Dec 2, 2026 (secondary listing; confirm with the museum).",
+   "special_reason": "어린이박물관 SCFD 무료일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-17T15:20:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "History Colorado Center SCFD Free Day (Dec 18, 2026)",
+   "url": "https://www.historycolorado.org/history-colorado-center",
+   "start_date": "2026-12-18",
+   "location": "History Colorado Center, 1200 Broadway, Denver",
+   "cost": "Free",
+   "description": "SCFD free day at History Colorado Center listed for Friday Dec 18, 2026 (secondary listing; confirm on historycolorado.org).",
+   "special_reason": "주 역사박물관 연 몇 회 무료일"
+  }
+ ]
+}
