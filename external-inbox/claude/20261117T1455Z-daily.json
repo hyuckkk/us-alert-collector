@@ -1,0 +1,86 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-17T14:42:00Z",
+  "finished_at": "2026-11-17T14:55:00Z",
+  "searches": 3,
+  "queries": [
+   "Dinosaur Ridge SCFD free day 2026 December 2027",
+   "SCFD free days December 2026 Denver Museum of Nature and Science Children's Museum Wings Over the Rockies",
+   "free kids holiday event Denver metro December 2026 tree lighting parade new this year"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 8,
+  "excluded": 4,
+  "excluded_reasons": {
+   "already_submitted": 2,
+   "past_event": 1,
+   "date_not_posted": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(공룡 능선 SCFD 무료일, Ars Nova 무료 합창은 어제 제출)을 바탕으로 SCFD 무료일을 넓혀 찾았다. 퍼레이드 오브 라이츠·덴버 미술관 12/8은 이미 제출, 공룡 능선 11/14는 지남, DMNS 12월은 날짜 미확인. 공식 페이지 직접 열기는 이 환경에서 안 되어 verified:false."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-17T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "SCFD Free Day at Dinosaur Ridge (Nov 22, 2026)",
+   "url": "https://dinoridge.org/event/scfd-free-day-at-dinosaur-ridge/",
+   "start_date": "2026-11-22",
+   "location": "Dinosaur Ridge Main Visitor Center, 16831 W Alameda Pkwy, Morrison",
+   "cost": "Free exhibit hall entry and/or $4 off guided bus tours; free-day tickets released Nov 8",
+   "description": "SCFD Free Day at Dinosaur Ridge (Colorado sesquicentennial edition). Listing gives Sunday Nov 22 with tickets released Nov 8; confirm on the official page.",
+   "special_reason": "연 몇 회뿐인 공룡 능선 무료 입장일(주 150주년 기념)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-17T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Children's Museum of Denver SCFD Free Day (Dec 2, 2026)",
+   "url": "https://scfd.org/find-culture/free-days/",
+   "start_date": "2026-12-02",
+   "location": "Children's Museum of Denver at Marsico Campus, 2121 Children's Museum Dr, Denver",
+   "cost": "Free",
+   "description": "SCFD free day at the Children's Museum listed for Wednesday Dec 2, 2026 (secondary listing; confirm with the museum).",
+   "special_reason": "어린이박물관 SCFD 무료일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-17T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Four Mile Historic Park SCFD Free Admission Day (Dec 18, 2026)",
+   "url": "https://www.fourmilepark.org/event/scfd-free-admission-day/2026-12-18/",
+   "start_date": "2026-12-18",
+   "location": "Four Mile Historic Park, 715 S Forest St, Denver",
+   "cost": "Free admission",
+   "description": "SCFD free admission day at Denver's oldest standing home and living-history farm.",
+   "special_reason": "역사 농장 공원 연 몇 회 무료일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-17T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "History Colorado Center SCFD Free Day (Dec 18, 2026)",
+   "url": "https://scfd.org/find-culture/free-days/",
+   "start_date": "2026-12-18",
+   "location": "History Colorado Center, 1200 Broadway, Denver",
+   "cost": "Free",
+   "description": "SCFD free day at History Colorado Center listed for Friday Dec 18, 2026 (secondary listing; confirm on historycolorado.org).",
+   "special_reason": "주 역사박물관 연 몇 회 무료일"
+  }
+ ]
+}
