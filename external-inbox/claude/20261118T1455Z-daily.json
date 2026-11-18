@@ -1,0 +1,58 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-18T14:42:00Z",
+  "finished_at": "2026-11-18T14:55:00Z",
+  "searches": 4,
+  "queries": [
+   "Boulder Downtown Light Up the Holidays 2026 tree lighting Pearl Street date",
+   "Olde Golden Holidays 2026 Candlelight Walk date",
+   "Little Shop of Physics open house 2027 CSU Fort Collins",
+   "CU Boulder Italian tombola holiday 2026 calendar.colorado.edu"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 5,
+  "excluded": 3,
+  "excluded_reasons": {
+   "date_not_posted": 2,
+   "already_submitted": 1
+  },
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목(볼더 점등식, 골든 캔들라이트 워크, CSU 과학 오픈하우스, CU 톰볼라, 국유림 트리 허가증)을 검색했다. 골든 캔들라이트 워크·CU 톰볼라는 2026 날짜 미공지, 국유림 트리 베기는 11/15에 이미 제출. 공식 페이지 직접 열기는 이 환경에서 안 되어 verified:false."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-18T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Switch on the Holidays - Downtown Boulder Light Up the Holidays 2026",
+   "url": "https://boulderdowntown.com/light-up-the-holidays/events/switch-on-the-holidays",
+   "start_date": "2026-11-22",
+   "time": "11 a.m. - 7 p.m.; illumination 5 p.m.",
+   "location": "Pearl Street Mall & Boulder County Courthouse, Boulder",
+   "cost": "",
+   "description": "Kickoff of Downtown Boulder's Light Up the Holidays season (Nov 22 - Dec 12, 2026) with the grand illumination of the courthouse and Pearl Street Mall at 5 p.m.",
+   "special_reason": "연 1회 펄 스트리트 연말 점등식"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-18T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "33rd Annual Little Shop of Physics Open House",
+   "url": "https://www.lsop.colostate.edu/cns-announcement/lsop-annual-open-house/",
+   "start_date": "2027-03-07",
+   "time": "10 a.m. - 4 p.m.",
+   "location": "Colorado State University (Lory Student Center, 2026 venue), Fort Collins",
+   "cost": "Free, open to the public",
+   "description": "CSU's annual hands-on science open house with 300+ experiments run by students; nearly 8,000 visitors in 2026.",
+   "special_reason": "연 1회 300여 개 과학 실험을 아이가 직접 해 보는 무료 행사"
+  }
+ ]
+}
