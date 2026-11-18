@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-18T23:57:36.873Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Wheat Ridge Holiday Celebration 2026 — Horse-Drawn Carriage, Trackless Train and Hands-On Holiday Crafts",
+      "url": "https://www.rootedinfun.com/369/Holiday-Celebration",
+      "start_date": "2026-12-05",
+      "end_date": "2026-12-05",
+      "time": "3:00–6:30 p.m. MST; free first-come Santa photo tickets distributed starting 2:45 p.m.; tree lighting 6:15 p.m.",
+      "location": "The Green at 38th and surrounding businesses, 7101 W 38th Ave, Wheat Ridge, CO 80033, USA",
+      "cost": "City-sponsored event with free public admission; 2 adults + 3 children $0 entry. Free seated Santa photos with limited first-come tickets. Individual hayride/carriage/trackless train charges, if any, not specified on official event page; meals/purchases extra.",
+      "age": "All-age family community event; open public attendance with no residency requirement stated; limited first-come Santa tickets.",
+      "audience": "family",
+      "description": "One afternoon of actual horse-drawn carriage/hay rides, trackless mini-train rides, cookie and ornament craft activities, s'mores with firefighters, family photos, and student choir at a city-hosted public celebration; these are in the official 2026 activity listing, not just ordinary markets or performances. Public municipal volunteer page confirms event is free. Arrive before 2:45 p.m. if interested in limited free Santa photo ticket, not an event-entry ticket. 2026 event for local Colorado contacts. Official event page does not itemize ride fees; do not claim all rides free. Relevant official source also https://rootedinfun.com/162/Volunteer."
+    },
+    {
+      "title": "Littleton 2026 Candlelight Walk — One-Night Free Parade, Drone Show and Santa/Reindeer Visits",
+      "url": "https://visitlittleton.org/events-and-programs/candlelight-walk/knowbeforeyougo/",
+      "start_date": "2026-11-27",
+      "end_date": "2026-11-27",
+      "time": "5:00–8:00 p.m. MST; parade 6:30 p.m.; drone show approximately 7:00–7:15 p.m.; Santa photos 5:00–6:00 and 7:15–8:00 p.m.",
+      "location": "Downtown Main Street, between Bega Park and The Melting Pot, Littleton, CO 80120, USA",
+      "cost": "No admission ticket or required attendee registration for public Main Street parade/drone viewing; estimated mandatory admission for family of five $0; official page explicitly offers free Santa photos, complimentary cocoa/cider, and free parking at Littleton Center or Arapahoe Community College. Optional food/keepsakes additional.",
+      "age": "Open public street celebration for all ages; no residency condition or restricted credential published.",
+      "audience": "family",
+      "description": "A single evening 2026 downtown celebration featuring an organized evening parade, Santa and real reindeer visits, city-supported music-synchronized drone show after the 6:30 p.m. parade, free Santa photos, and complimentary hot cocoa/cider. Drone show is weather-dependent; the official host gives exact parade/show timing, public street venue and free parking. Different from the existing daily Denver 600-drone show, and has uniquely combined parade/reindeer activities. 2026-only Colorado local contact opportunity, not a 2027 event; no ticket purchase or on-site paid ride required."
+    }
+  ]
+}
