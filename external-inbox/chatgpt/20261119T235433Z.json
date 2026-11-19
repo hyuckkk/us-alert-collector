@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-19T23:54:33.462Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Challenger Colorado Second Saturday Science — The Season of Lights: Build & Launch Rockets and Northern Lights Take-Home STEM",
+      "url": "https://www.challengercolorado.org/news-events/event-calendar.html/event/2026/12/12/second-saturday-science/583030",
+      "start_date": "2026-12-12",
+      "end_date": "2026-12-12",
+      "time": "Saturday 9:00 AM–12:00 PM MST; planetarium timed ticket options 9:15, 9:45, 10:15, 10:45, 11:15 AM",
+      "location": "Challenger Learning Center of Colorado, 8717 Wolf Valley Drive, Colorado Springs, CO 80924",
+      "cost": "FREE admission and planetarium tickets; $0 for five family members. Transport and parking costs not confirmed.",
+      "age": "School-age students with parents/guardians; family/general public welcome; precise minimum age not stated.",
+      "audience": "family",
+      "description": "Official Dec 12 2026 special collaborative hands-on event with Colorado Springs Utilities and Space Foundation Discovery Center: assemble and potentially launch a 3D-printed rocket, construct a portable Northern Lights display to take home, and experience an aurora planetarium presentation. Separate date/topic and take-home build from Nov 14 Mars event previously submitted. RSVP required to guarantee planetarium places/materials; ticketing page currently lists free spots. Register by Fri Dec 11 2026, 4 PM MST; walk-ins possible without guarantee. Rocket launch subject to fire restrictions/weather. For 2026 Colorado-based friends; before planned family stay."
+    }
+  ]
+}
