@@ -1,0 +1,52 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-19T14:42:00Z",
+  "finished_at": "2026-11-19T14:55:00Z",
+  "searches": 2,
+  "queries": [
+   "Colorado Parks and Wildlife free day state parks 2026 November December Black Friday Fresh Air Friday",
+   "9NEWS Parade of Lights 2026 dates December 4 5 route"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 2,
+  "excluded": 0,
+  "excluded_reasons": {},
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목 2건(주립공원 무료 입장의 날, 9NEWS 퍼레이드 오브 라이츠)을 검색해 2026 일정을 확인했다. 공식 페이지 직접 열기는 이 환경에서 안 되어 verified:false."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-19T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Fresh Air Friday - free entry to all Colorado state parks (Nov 27, 2026)",
+   "url": "https://cpw.state.co.us/event/2026/11/free-state-park-entry-fresh-air-friday",
+   "start_date": "2026-11-27",
+   "location": "All Colorado state parks (e.g., Chatfield, Cherry Creek, Golden Gate Canyon, Staunton)",
+   "cost": "Free day-use entry",
+   "description": "CPW waives state park day-use entry on Black Friday, Nov 27, 2026 (Fresh Air Friday). Camping/reservations not stated as included.",
+   "special_reason": "연 2회뿐인 주립공원 전체 무료 입장일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-19T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "9NEWS Parade of Lights 2026",
+   "url": "https://www.downtowndenver.com/parade-of-lights",
+   "start_date": "2026-12-05",
+   "time": "6 p.m.",
+   "location": "Downtown Denver, starting at Denver City & County Building",
+   "cost": "Free to watch (grandstand/VIP tickets optional)",
+   "description": "Denver's 52nd annual holiday night parade with lighted floats and balloons; about 2-mile route through downtown, ~1 hour.",
+   "special_reason": "연 1회 덴버 대표 연말 야간 퍼레이드, 무료 관람"
+  }
+ ]
+}
