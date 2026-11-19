@@ -1,0 +1,268 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-18T23:48:29Z",
+  "finished_at_utc": "2026-11-19T00:00:36.180Z",
+  "search_requests": 122,
+  "queries": [
+    "Colorado November 2026 December 2026 \"free\" \"behind the scenes\" aviation hangar public open house",
+    "site:westminsterco.gov \"November 21\" \"2026\" \"train\" downtown Westminster",
+    "Colorado Nov 2026 \"touch a truck\" \"free\" fire department",
+    "Colorado 2027 \"permit lottery\" \"application\" \"November 2026\" river rafting launch",
+    "site:colorado.edu \"2027\" \"summer\" \"free\" \"camp\" \"STEM\"",
+    "November 2026 December 2026 \"free ski lessons\" \"Colorado\" \"kids\" city",
+    "site:powderhorn.com/bob-beverly-free-learn-to-ski-ride-program 2026 2027 reservations 19 deposit",
+    "site:powderhorn.com \"Bob Beverly\" \"2026\" \"2027\" \"Dec\"",
+    "site:powderhorn.com \"2026-27\" \"Bob Beverly\" lessons \"December\"",
+    "site:powderhorn.com \"Bob Beverly\" \"three\" \"19\" \"reservation\" \"season\"",
+    "site:powderhorn.com \"2026-2027\" opening day closing day ski resort",
+    "site:powderhorn.axess.shop \"Bob Beverly\" 2026 2027 dates",
+    "2026 Colorado December free new mountain outdoor beginner winter sports lessons equipment registration",
+    "2027 Colorado airshow spectacular free public May 2027 schedule tickets age",
+    "Colorado 2027 open house aerospace family public January February 2027 free tours",
+    "site:powderhorn.com \"Bob Beverly\" \"December 2026\" booking dates",
+    "site:powderhorn.com \"Bob Beverly\" \"December\" \"2026\" \"reservation\"",
+    "\"Bob Beverly\" \"2026-27\" \"Dec 12\" Powderhorn",
+    "\"Bob Beverly\" \"2026\" \"opening\" \"closing\" lessons 2027",
+    "2027 Colorado \"permit lottery\" \"application\" \"November 2026\" river rafting launch",
+    "2027 \"Dinosaur National Monument\" river permit lottery apply December 2026 dates",
+    "2027 \"Gates of Lodore\" lottery applications December January recreation.gov 2027",
+    "site:recreation.gov/permits Colorado 2027 \"Lottery\" \"Dec\" \"2026\"",
+    "2027 Rocky Mountain National Park climbing Longs Peak group permit opening 2026 lottery",
+    "site:fs.usda.gov Colorado 2027 \"cave\" \"reservation\" free tour limited",
+    "2027 Colorado family free unique tour Federal Laboratory open house science",
+    "Colorado 2027 aviation open house airplane tours airport free summer scheduled",
+    "site:coloradosprings.gov 2027 military open house July family free",
+    "site:cpw.state.co.us 2027 youth fishing \"Free\" reservations \"June\" clinic",
+    "Colorado 2026 \"December\" \"free\" \"touch a truck\" Denver fire airport 2026",
+    "2026 November December \"hangar tour\" \"public\" \"Colorado\" free",
+    "Colorado December 2026 \"cockpit\" \"free\" \"open\" aircraft museum",
+    "2026 November \"manufacturing\" \"factory tour\" \"public\" Colorado children free",
+    "2026 November December \"open house\" \"aerospace\" \"hands on\" \"free\" Denver Colorado",
+    "Colorado 2027 January February free \"free flight\" Young Eagles rally airport",
+    "2026 December \"robotics tournament\" Colorado open to public free students",
+    "2026 Nov 21 22 28 29 Colorado free science maker festival interactive kids",
+    "2027 Colorado \"Free Fishing Weekend\" June 2027 June dates official",
+    "2027 Colorado July military public \"open house\" air force museum hangar",
+    "site:adams12.org \"December\" \"2026\" \"STEAM\" \"families\" free",
+    "site:adams12.org \"November\" \"2026\" \"robotics\" \"community\" free",
+    "site:svvsd.org \"2026\" \"December\" \"open house\" robotics community",
+    "site:svvsd.org \"2026\" \"December\" \"Innovation Center\" \"public\" \"free\"",
+    "site:colorado.edu \"2026\" \"December\" \"open\" \"lab\" \"tour\" robotics",
+    "site:mines.edu \"December 2026\" \"makers\" \"public\" open house",
+    "Colorado free \"December 5, 2026\" \"maker\" \"craft\" \"take home\" special city",
+    "Colorado December 2026 \"free\" \"ride\" \"horse drawn\" \"train\" event municipality",
+    "Colorado December 2026 \"fire engine\" \"rides\" holiday kids free",
+    "Colorado 2027 \"free admission\" \"NATIONAL WESTERN\" \"stock show\" 2027",
+    "site:ci.wheatridge.co.us \"2026\" \"Holiday Celebration\" \"carriage rides\" December 5",
+    "site:rootedinfun.com \"Holiday Celebration\" \"2026\" carriage",
+    "site:whre.gov Wheat Ridge Holiday Celebration Dec 5 2026 horse drawn carriage",
+    "\"Wheat Ridge\" \"December 5, 2026\" \"Holiday Celebration\" carriage rides",
+    "\"The Green at 38th\" \"2026\" \"Holiday Celebration\" \"carriage\"",
+    "\"Santa photos\" \"Wheat Ridge Cyclery\" \"2026\" 2:45",
+    "site:littletonco.gov \"Candlelight Walk\" \"2026\" \"drone\" Nov 27",
+    "site:downtownlittleton.com \"2026\" \"Candlelight Walk\" \"drone\"",
+    "site:littletonco.gov \"2026\" \"November 27\" \"Candlelight Walk\"",
+    "\"Littleton\" \"Candlelight Walk\" \"Nov 27, 2026\" drone show",
+    "\"2026\" \"Littleton\" \"Candlelight Walk\" \"drone show\" public free",
+    "site:visitlittleton.org/events-and-programs/candlelight-walk \"free\" \"2026\" admission",
+    "site:littletonco.gov \"Candlelight Walk\" \"2026\" \"free\" drone",
+    "site:downtownlittleton.com \"Candlelight Walk\" \"2026\" \"FREE\"",
+    "site:visitlittleton.org \"Candlelight Walk\" \"2026\" \"free\"",
+    "site:littletonco.gov/Events-programs \"Candlelight Walk\" \"Free\" 2026"
+  ],
+  "query_texts_recovered": 65,
+  "query_texts_unavailable": 57,
+  "url_read_attempts": 29,
+  "url_read_successes": 26,
+  "url_read_failures": 3,
+  "official_detail_verified": 12,
+  "official_detail_verified_urls": [
+    "https://rmss.org/",
+    "https://rmss.org/fees/",
+    "https://www.powderhorn.com/bob-beverly-free-learn-to-ski-ride-program/",
+    "https://powderhorn.axess.shop/en/ComplexPackagesSelection",
+    "https://www.powderhorn.com/mission-affordable-at-powderhorn/",
+    "https://www.rootedinfun.com/369/Holiday-Celebration",
+    "https://rootedinfun.com/162/Volunteer",
+    "https://www.nps.gov/dino/planyourvisit/boating-and-rafting.htm",
+    "https://www.recreation.gov/permits/250014",
+    "https://visitlittleton.org/events-and-programs/candlelight-walk/knowbeforeyougo/",
+    "https://events.vex.com/robot-competitions/vex-iq-competition/VE-IQ-26-66954.html",
+    "https://coloradocrosscountry.com/events/868"
+  ],
+  "candidate_events": 20,
+  "duplicate_candidates": 8,
+  "rejected_events": 4,
+  "held_events": 6,
+  "qualified_events": 2,
+  "known_by_collector": 1,
+  "verified_collector_misses": 0,
+  "submitted_events": 2,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "failed_page_reads": 3,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://www.rootedinfun.com/369/Holiday-Celebration",
+    "https://visitlittleton.org/events-and-programs/candlelight-walk/knowbeforeyougo/"
+  ],
+  "submitted_file": "external-inbox/chatgpt/20261118T235736Z.json",
+  "candidate_assessments": [
+    {
+      "title": "Wheat Ridge 2026 Holiday Celebration horse-drawn carriage, trackless train, crafts",
+      "status": "qualified",
+      "url": "https://www.rootedinfun.com/369/Holiday-Celebration",
+      "reason": "City-sponsored family event Dec 5 3-6:30pm Wheat Ridge, public free admission for five ($0 entry), hands-on train/hayride/carriage and crafts; free Santa photo tickets limited first-come from 2:45pm. Individual ride price not itemized; disclosed rather than claiming rides are free. No prior GPT inbox exact instance."
+    },
+    {
+      "title": "Littleton 2026 Candlelight Walk, parade, public reindeer visit, one-night drone show",
+      "status": "qualified",
+      "url": "https://visitlittleton.org/events-and-programs/candlelight-walk/knowbeforeyougo/",
+      "reason": "Organizer directly verifies Nov 27 5-8pm public street parade 6:30, music synchronized drone show circa 7, free Santa photos, free parking, complimentary drinks; no admission ticket or paid activity required. Previous-year organizer explicitly states admission free and 2026 public no ticket. Distinct from prior submitted recurring Denver drone light show."
+    },
+    {
+      "title": "Monumental Impact MITEE Gobble Squabble Nov21 free combat robotics expo",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261024T232920Z and 20261024T233201Z."
+    },
+    {
+      "title": "Wings Over Rockies Nov19 2026 SCFD free day",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261103T235439Z."
+    },
+    {
+      "title": "Denver Parks $35 all-in youth ski trips registration Nov18 and Nov21",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261105T233900Z; Denver-resident eligibility."
+    },
+    {
+      "title": "National Western Stock Show Jan12 2027 free grounds admission",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261111T000415Z."
+    },
+    {
+      "title": "CSU Little Shop of Physics Open House March7 2027",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261117T234645Z."
+    },
+    {
+      "title": "Howelsen Hill Free Ski Sundays 2026-27",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261115T233043Z."
+    },
+    {
+      "title": "EAA Chapter72 Young Eagles Nov14 2026",
+      "status": "duplicate",
+      "reason": "Past event already in GPT inbox 20261025T235925Z."
+    },
+    {
+      "title": "Rocky Mountain Aero Group 2027 July26-30 Build and Fly camp",
+      "status": "duplicate",
+      "reason": "Prior GPT inbox 20261111T000415Z."
+    },
+    {
+      "title": "Powderhorn Bob Beverly first-time ski or snowboard lessons winter 2026-27",
+      "status": "held",
+      "url": "https://www.powderhorn.com/bob-beverly-free-learn-to-ski-ride-program/",
+      "reason": "Official describes ages 8+, up to 3 group lessons including lift and gear, booking storefront lists $19 deposit, but individual bookable lesson dates and seats not obtainable from searchable official page. No invented start or end date. Previously researched and held; still not an independently verified newly bookable dated slot."
+    },
+    {
+      "title": "2027 June30-July4 Rocky Mountain Star Stare dark sky gathering",
+      "status": "held",
+      "url": "https://rmss.org/",
+      "reason": "Dates appear on event home but 2027-specific fees and accessible registration not confirmed (fees page still gives 2026 instructions)."
+    },
+    {
+      "title": "Grand Nordic Dec13 2026 Free Lesson Sunday",
+      "status": "held",
+      "url": "https://coloradocrosscountry.com/events/868",
+      "reason": "Nordic group lesson free but rental/trail free only for Grand Nordic members, nonmember family five-person cost and actual booking not confirmed."
+    },
+    {
+      "title": "St Vrain Dec5 2026 elementary VEX IQ robotics tournament",
+      "status": "held",
+      "url": "https://events.vex.com/robot-competitions/vex-iq-competition/VE-IQ-26-66954.html",
+      "reason": "Organizing body event page confirms date/venue and $40 team price but zero remaining team slots at live check; spectator eligibility/free price and hands-on ability unverified."
+    },
+    {
+      "title": "Longmont Airport 2027 Sep11 airshow & expo",
+      "status": "held",
+      "url": "https://www.longmontairportcommunity.com/",
+      "reason": "Specific date but official public ticket price and direct access/activities still unpublished."
+    },
+    {
+      "title": "2027 Dinosaur National Monument Green/Yampa private whitewater permit lottery",
+      "status": "held",
+      "url": "https://www.nps.gov/dino/planyourvisit/boating-and-rafting.htm",
+      "reason": "NPS confirms annually Dec1-Jan31 applications and $15 application/$185 noncommercial permit, yet route is class III-IV, not novice family-safe; 2027 launch logistics, required experienced boater and gear costs not established for five-person household."
+    },
+    {
+      "title": "Wings Over the Rockies Cockpit Demo Day 2026 Nov21",
+      "status": "rejected",
+      "reason": "Regular-price recurring museum program, not special public subsidy; independently located in verified collector 2026-10-22 reports/fullsystem-run.json snapshot with date."
+    },
+    {
+      "title": "Colorado Mountain Club 2026 winter camp day rock climbing and basecamp",
+      "status": "rejected",
+      "url": "https://www.cmc.org/youth/course-templates/winter-camp-day-expeditions-basecamp-cmc-state/winter-camp-day-expeditions-basecamp-cmc-state-2026",
+      "reason": "Routine commercial youth camp $108 per nonmember child, normal access, not unusually discounted."
+    },
+    {
+      "title": "Colorado Chautauqua WinterFest 2026",
+      "status": "rejected",
+      "reason": "Routine annual festive market, separately charged carriage and craft extras, no unusual direct facility access."
+    },
+    {
+      "title": "Colorado Railroad Museum Polar Express 2026",
+      "status": "rejected",
+      "reason": "Normal-price annual commercial seasonal train, no scarce discount or exceptional special access."
+    }
+  ],
+  "collector_comparison": {
+    "checked": [
+      "config/sources.json (71 total; 16 disabled)",
+      "config/queries.json",
+      "docs/SEARCH_WORKLOAD_METRICS.md",
+      ".github/workflows/external-inbox.yml",
+      "reports/fullsystem-run.json (2026-10-22 collector historical snapshot; Cockpit Demo Day indexed)",
+      "GitHub indexed search over past external-inbox/chatgpt and research/gpt-workload runs for Wheat Ridge, Littleton, powderhorn, prior recurring events"
+    ],
+    "known_by_collector_detail": "Positive same-instance collector discovery: 2026-11-21 Wings Over the Rockies Cockpit Demo Day in reports/fullsystem-run.json dated 2026-10-22, source wings-museum-api; rejected as ordinary regular admission. Other past GPT inbox entries are duplicates, NOT independent proof collector found them.",
+    "verified_collector_misses_detail": "Live Worker event DB and contemporary collector reports not available; zero proven misses, not assertion either new event was missed by collector.",
+    "delivered_event_evidence": "No verified per-recipient Worker/Telegram delivery receipts. Inbox GitHub create_file and read-back prove submission of two events only."
+  },
+  "source_and_keyword_improvements": [
+    {
+      "monitor_url": "https://www.rootedinfun.com/369/Holiday-Celebration",
+      "queries": [
+        "Wheat Ridge Holiday Celebration 2026 horse-drawn carriage free Santa photo tickets",
+        "Wheat Ridge December 5 2026 trackless train hayride crafts official"
+      ],
+      "reason": "Official Wheat Ridge Parks & Rec city-owned source not in 71 direct source list; city page details special family rides and capped Santa photos; complement nearby Westminster source."
+    },
+    {
+      "monitor_url": "https://visitlittleton.org/events-and-programs/candlelight-walk/knowbeforeyougo/",
+      "queries": [
+        "Littleton candlelight walk 2026 drone show 7pm free Santa reindeer",
+        "Littleton downtown special parade drone 2027"
+      ],
+      "reason": "Seasonal organizer detail has one-night exact parade/show time and municipal free parking, more grounded than third party listings; monitor without conflating with daily Denver drone shows."
+    },
+    {
+      "monitor_url": "https://www.powderhorn.com/bob-beverly-free-learn-to-ski-ride-program/",
+      "queries": [
+        "Bob Beverly Learn to Ski 2026 2027 $19 deposit available dates Powderhorn"
+      ],
+      "reason": "Program remains highly subsidized and new 2026-27 booking product listing is visible, but individual bookable class dates cannot yet be verified via accessible pages; monitor time-specific registration."
+    },
+    {
+      "monitor_url": "https://www.nps.gov/dino/planyourvisit/boating-and-rafting.htm",
+      "queries": [
+        "Dinosaur National Monument 2027 Dec 1 river lottery application inexperienced beginner suitable"
+      ],
+      "reason": "NPS publishes annual Dec 1-Jan31 river permit lottery, but Class III-IV experience required and no affordable safe unguided five-person participation verified; do not conflate permit sale with family-suitable experience."
+    }
+  ],
+  "notes": "Independent broad discovery including military/aviation, unusual interactive programs, city holiday special rides, elementary robotics, ski subsidy, special park lotteries, 2027/28 timing, and schools. Candidate classifications are strict screened distinct opportunities, not every raw web hit. 122 actual fast search request records, not result counts; 29 actual URL open/click reads excluding text-find; 26 success and 3 failures. Query text limitation: first 64 search requests were performed before a context compression; exact text for 57 of those requests was no longer available when writing this report, so 65 exact known queries are recorded with honest unavailability disclosure rather than reconstructed guesses. Official-detail count is conservative 12 distinct official/primary pages reliably identifiable as successfully read, not all results merely indexed. Both qualified 2026 events are for Colorado-local residents, not 2027 late-June to 2028 August planned residence; no new high-value confirmed event within latter stay. Rye/Wheat Ridge entrance $0; optional ride surcharges not itemized and explicitly unverified; Littleton open street spectacle $0 entry without ticket, free Santa/parking. No code, Worker delivery-mode, subscriber permissions or bot settings changed; no Korean relay or direct Telegram calls. Public research file contains no API keys, Telegram recipient IDs, personal identity or secrets."
+}
