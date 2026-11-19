@@ -1,0 +1,296 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-19T23:47:33Z",
+  "finished_at_utc": "2026-11-19T23:57:11.518Z",
+  "search_requests": 85,
+  "queries": [
+    "Colorado December 2026 free hands-on science engineering workshop families special open house",
+    "Denver November 2026 one day free maker workshop children unusual hands on special event",
+    "Colorado 2026 2027 military base open house public tours Buckley Air Force Academy",
+    "Colorado 2027 airshow airport open house cockpit kids free airport",
+    "Colorado Springs Space Force museum open house family 2026 November December",
+    "Denver metro 2026 December fire station open house touch a truck free",
+    "Colorado December 2026 free train rides special kids local city",
+    "Colorado park 2027 lottery applications special ranger cave tour 2027",
+    "Denver Colorado 2027 free ski gear lessons children registration sponsored",
+    "2027 Colorado rocket launch public spectator schedule Tripoli Colorado",
+    "Colorado public university science open house 2027 hands-on family free",
+    "Westminster Thornton Broomfield 2026 holiday festival free carriage ice skating fireworks interactive",
+    "Denver 2026 November December free children construction workshop special event engineering",
+    "2027 Colorado summer camp scholarship free registration youth aviation aviation museum aerospace",
+    "Colorado free zoo museum special access 2027 volunteer family free day",
+    "Colorado 2026 school university student performances free December open to public dance",
+    "site:denvergov.org \"Learn to Ski & Ride\" \"November 21\" 2026 $35",
+    "site:denvergov.org \"Learn to Ski & Ride\" \"November 18\" 2026",
+    "site:denvergov.org 2026 Denver Outdoor Recreation learn ski ride winter park $35 2027",
+    "site:activekids.com/denver-co/winter-sports/skiing-classes/odr-learn-to-ski-and-ride \"Nov 21\" \"Denver\"",
+    "site:englewoodco.gov events December 2026 behind scenes water treatment tour family",
+    "site:littletonco.gov \"Holiday's Evening\" \"Dec 13\" 2026",
+    "site:museum.littletonco.gov \"Holiday's Evening\" 2026 December price",
+    "site:2026 \"free\" \"aviation\" \"workshop\" \"December\" \"Denver\" children",
+    "site:colorado.edu 2026 \"open house\" \"hands-on\" December family science free",
+    "site:2026 November \"Wings Over the Rockies\" \"Free\" \"cockpit\" special",
+    "Colorado 2026 November December special \"free\" train ride \"holiday\" government",
+    "site:denvergov.org \"Youth Outdoor Recreation\" ski snowboarding $35",
+    "site:wingsmuseum.org/events \"Santa in the Hangar\" \"December 5, 2026\" ticket helicopter",
+    "site:wingsmuseum.org/events \"Astronomy Night\" \"November 21, 2026\" ticket",
+    "site:littletonco.gov \"Holiday's Evening\" \"Dec 13\" 2026",
+    "site:museum.littletonco.gov \"Holiday's Evening\" 2026 December price",
+    "site:denvergov.org \"Learn to Ski & Ride\" 2026 2027",
+    "site:denverparks.org \"Learn to Ski & Ride\" 2026",
+    "site:coloradorailroadmuseum.org 2026 December \"free\" train rides special children",
+    "2027 Colorado \"free lift ticket\" \"ski lessons\" youth program grant",
+    "2026 November free hands on \"repair cafe\" \"maker\" \"Denver\"",
+    "site:denvergov.org \"Learn to Ski & Ride\" 2026",
+    "unknown — original request text not recoverable; counted as one actual web search, not reconstructed",
+    "site:cpw.state.co.us/event/ 2026 December \"free\" \"clinic\" archery ice fishing",
+    "site:cpw.state.co.us/event/ 2027 January \"ice fishing\" \"free\" equipment",
+    "site:cpw.state.co.us/event/ 2026 November \"ice fishing\" family first-time",
+    "site:cpw.state.co.us/event/ 2027 \"archery\" \"free\" \"registration\"",
+    "site:cpwconnect.state.co.us/ActivityRegistration 2026 December \"archery\" \"free\" youth",
+    "site:cpw.state.co.us 2027 \"fishing\" \"intro\" youth free clinic",
+    "site:cpw.state.co.us/event/ 2026 December tour \"behind the scenes\" \"family\"",
+    "Colorado 2026 December dam hydroelectric plant tours free rare special",
+    "Colorado 2026 November December \"fire\" \"burn\" \"forge\" \"blacksmith\" free family event",
+    "Colorado December 2026 family free ice fishing intro equipment provided",
+    "2027 January Colorado museum behind-the-scenes workshop youth free 2027 Colorado",
+    "Colorado 2026 December robotics FIRST Lego league state championship spectators free public school",
+    "Colorado December 2026 robotics tournament 2026 event visitors free Denver",
+    "2026 Colorado 2027 FIRST Robotics competition 2027 regional Denver public free",
+    "Colorado high school student dance performances winter 2026 free public festival Denver Boulder",
+    "site:coloradomesa.edu 2026 December free robotics tournament high school",
+    "site:colorado.edu 2027 February open house robotics maker free public \"children\"",
+    "site:schoolofmines.edu \"2027\" \"open house\" \"hands-on\" family",
+    "Colorado 2026 2027 youth rocketry launch public \"Littleton\" launch field \"December\"",
+    "site:tripolicolorado.org 2026 2027 launch calendar December November spectator",
+    "site:cosrocs.org 2026 \"launch\" November December spectator",
+    "2026 December Colorado \"Young Eagles\" \"free flight\" 2026 November",
+    "2027 \"EAA\" \"Young Eagles\" \"Colorado\" \"2027\" flight",
+    "site:usafa.edu/events/ November 2026 December 2026 public special flyover performance cadets academy",
+    "site:usafa.edu 2026 November 21 \"public\" \"concert\" \"cadet\"",
+    "site:schriever.spaceforce.mil \"open house\" 2026 November December families",
+    "site:buckley.spaceforce.mil 2026 November December \"public\" open house tours",
+    "site:coloradosprings.gov 2026 December \"planetarium\" \"free\" space STEM open house",
+    "site:spacefoundation.org 2027 January space free event family activity hands on",
+    "site:discoverspace.org December 2026 \"free\" family workshop astronomy",
+    "site:challengercolorado.org December 2026 \"Second Saturday Science\" rocketry free",
+    "2026 \"Colorado\" \"November\" \"open cockpit\" \"free\" aviation club airport",
+    "Colorado November 2026 Christmas free fire engine truck rides Denver metro",
+    "Colorado 2026 November \"CNC\" \"laser cutter\" \"free\" makerspace open house family",
+    "site:monumentalimpact.org \"2027\" \"Open House\" robotics free workshop",
+    "2026 \"Western Wonderland\" \"carriage\" \"free\" \"National Western Center\"",
+    "site:nationalwesterncenter.com \"Western Wonderland\" \"carriage\" \"2026\"",
+    "site:nationalwestern.com \"Western Wonderland\" 2026 horse drawn free",
+    "site:challengercolorado.org \"December 12\" \"registration\" 2026 Northern Lights rocket",
+    "site:challengercolorado.org \"Season of Lights\" 2026 rocket free \"sold out\"",
+    "2026 \"Holiday's Evening\" \"Littleton Museum\" \"tickets\" December 13 wagon",
+    "site:museum.littletonco.gov/Events-Programs \"Holiday's Evening\" 2026 ticket",
+    "2027 Colorado free summer 2027 2028 aviation airport kids Young Eagles flights open calendar",
+    "site:challengercolorado.org/news-events/event-calendar.html/event/2026/12/12/second-saturday-science/583030 \"Season of Lights\" registration deadline",
+    "site:challengercolorado.org \"2026\" \"December 12\" \"Season of Lights\" rocket",
+    "site:museum.littletonco.gov \"Holiday's Evening\" \"2026\" admission December 13"
+  ],
+  "queries_unrecoverable_count": 1,
+  "url_read_attempts": 19,
+  "url_read_successes": 17,
+  "official_detail_verified": 17,
+  "candidate_events": 24,
+  "duplicate_candidates": 8,
+  "rejected_events": 9,
+  "held_events": 6,
+  "qualified_events": 1,
+  "known_by_collector": 1,
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "failed_page_reads": 2,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://www.challengercolorado.org/news-events/event-calendar.html/event/2026/12/12/second-saturday-science/583030"
+  ],
+  "submission_path": "external-inbox/chatgpt/20261119T235433Z.json",
+  "candidate_details": [
+    {
+      "title": "Challenger Dec12 Season of Lights special aurora/rocket STEM",
+      "status": "qualified",
+      "reason": "Free take-home aurora and 3D rocket build plus planetarium, official Dec12 details and live free registration",
+      "url": "https://www.challengercolorado.org/news-events/event-calendar.html/event/2026/12/12/second-saturday-science/583030"
+    },
+    {
+      "title": "Denver Learn to Ski & Ride $35 subsidized youth",
+      "status": "duplicate",
+      "reason": "Earlier ChatGPT inbox 20261105T233900Z.json"
+    },
+    {
+      "title": "MITEE Gobble Squabble public combat robotics Nov21",
+      "status": "duplicate",
+      "reason": "Earlier ChatGPT inbox 20261024T232920Z.json and 20261024T233201Z.json"
+    },
+    {
+      "title": "Boulder Tebo free children's train rides",
+      "status": "duplicate",
+      "reason": "Earlier ChatGPT inbox 20261106T233041Z.json"
+    },
+    {
+      "title": "Colorado state parks Fresh Air Friday Nov27",
+      "status": "duplicate",
+      "reason": "Earlier ChatGPT inbox 20261025T235925Z.json"
+    },
+    {
+      "title": "CSU Little Shop of Physics open house Mar7 2027",
+      "status": "duplicate",
+      "reason": "Earlier ChatGPT inbox 20261117T234645Z.json"
+    },
+    {
+      "title": "2027 Glenwood Springs RC aviation camp",
+      "status": "duplicate",
+      "reason": "Earlier ChatGPT inbox 20261111T000415Z.json"
+    },
+    {
+      "title": "Denver Zoo special free days",
+      "status": "duplicate",
+      "reason": "Previous ChatGPT and collector records"
+    },
+    {
+      "title": "Wings Over the Rockies Cockpit Demo Day Nov21",
+      "status": "duplicate",
+      "reason": "Historical 20261022T004300Z fullsystem dry-run report includes event; confirms historical collector discovery, not delivery"
+    },
+    {
+      "title": "National Western Center Western Wonderland Nov28-Dec27",
+      "status": "held",
+      "reason": "Free entry but carriage ride exact price and 5-person total not established"
+    },
+    {
+      "title": "Littleton Museum Holiday's Evening Dec13",
+      "status": "held",
+      "reason": "Official date verified, event detail 403, current actual admission and hands-on scope unverified"
+    },
+    {
+      "title": "COSROCS December public model rocket launch",
+      "status": "held",
+      "reason": "Confirmed general club schedule but exact special public session date/price/value not independently verified"
+    },
+    {
+      "title": "Chatfield State Park First Day 5K Jan1 2027",
+      "status": "rejected",
+      "reason": "Free registration but ordinary 5K not exceptional experience; state park admission additional"
+    },
+    {
+      "title": "Cumbres & Toltec Antonito Santa Holiday Express Dec12-13",
+      "status": "rejected",
+      "reason": "One-off seasonal paid train ride, substantial travel and not demonstrated unique subsidized access"
+    },
+    {
+      "title": "USAF Academy recurring cadet concert",
+      "status": "rejected",
+      "reason": "Normal music performance rather than rare facility access or unusual student experience"
+    },
+    {
+      "title": "SVVSD Innovation Center youth robotics December VEX",
+      "status": "held",
+      "reason": "Public spectator access and spectator fee not stated at official listing; teams registration closed"
+    },
+    {
+      "title": "First Robotics Pikes Peak Regional Mar 2027",
+      "status": "held",
+      "reason": "Venue and verified ticket/entry conditions unresolved, placeholder event page"
+    },
+    {
+      "title": "International EAA Young Eagles Day 2027",
+      "status": "held",
+      "reason": "International date not sufficient to prove local Colorado volunteer flight slot or signups"
+    },
+    {
+      "title": "Air Force Academy ordinary daily visitor center",
+      "status": "rejected",
+      "reason": "Regular opening, no special access or rare interactive program"
+    },
+    {
+      "title": "Clyfford Still ordinary Maker Morning",
+      "status": "rejected",
+      "reason": "Regular commercial museum workshop, no distinct limited subsidy/experience"
+    },
+    {
+      "title": "Englewood Holiday Express seasonal ride",
+      "status": "rejected",
+      "reason": "Standard paid annual train activity, value threshold not met"
+    },
+    {
+      "title": "Wings Astronomy Night Nov21",
+      "status": "rejected",
+      "reason": "Ordinary museum event; special free or rare telescope access not demonstrated"
+    },
+    {
+      "title": "Space Foundation repeat family stargazing",
+      "status": "rejected",
+      "reason": "Ordinary recurring activity with no new uniquely verifiable hands-on feature"
+    },
+    {
+      "title": "Colorado January First Day Hikes",
+      "status": "rejected",
+      "reason": "Routine park walks, admission fees apply; no exclusive permit or rare facility"
+    }
+  ],
+  "official_primary_documents_verified": [
+    {
+      "url": "https://www.challengercolorado.org/news-events/event-calendar.html/event/2026/12/12/second-saturday-science/583030",
+      "verification": "date/time/site, free family, aurora craft and rocket, enrollment Dec11 4pm, cancellation caveat"
+    },
+    {
+      "url": "https://www.challengercolorado.org/news-events/event-calendar.html/event-form/registration-form/118179/tickets",
+      "verification": "free planetarium ticket options 9:15, 9:45, 10:15, 10:45, 11:15; live inventory at research time 37/37/30/23/3"
+    },
+    {
+      "url": "https://www.challengercolorado.org/what-we-do/public/second-saturday-science.html",
+      "verification": "school-aged students and guardian audience, recurring program framework"
+    },
+    {
+      "url": "https://www.museum.littletonco.gov/Events-Programs",
+      "verification": "Littleton Holiday Evening Dec13, Divine Bovine Mar27 2027, Sheep to Shawl May1 2027; price detail unresolved for evening"
+    },
+    {
+      "url": "https://nationalwesterncenter.com/western-wonderland/",
+      "verification": "2026 free season festival, parking $15, carriage fee not verified"
+    },
+    {
+      "url": "https://cumbrestoltec.com/unique-rail-experiences/antonito-holiday-express/",
+      "verification": "historic railroad seasonal public train offering"
+    },
+    {
+      "url": "https://wingsmuseum.org/events/cockpit-demo-day/",
+      "verification": "Nov21 public museum event; independent historical collector record"
+    }
+  ],
+  "official_primary_documents_list_note": "17 accessible directly opened source/detail/registration pages verified during run; these are representative confirmed URLs; some opened URLs were not recoverable as exact literal text for this log and were not invented.",
+  "reading_failures": [
+    {
+      "url": "https://www.museum.littletonco.gov/Events-Programs/Events/Holidays-Evening",
+      "status": "403 Forbidden"
+    },
+    {
+      "url": "https://www.museum.littletonco.gov/Events-Programs/Events/Divine-Bovine",
+      "status": "404 Not Found"
+    }
+  ],
+  "github_comparison": {
+    "sources_sha": "cccb6669198f22679b7b3d70ea090500988bc336",
+    "queries_sha": "107e43181f5667fcec91d79d8ff4f5293d87bd5c",
+    "metrics_doc_sha": "f6a954ff4bfab29fd2263193933e5154f3321f2b",
+    "historical_fullsystem_run_id": "20261022T004300Z",
+    "historical_run_is_dry_run": true,
+    "verified_historical_collector_find": "Cockpit Demo Day Nov21 from wings-museum-api",
+    "comparison_limit": "No current Worker D1 production DB or individual delivery receipts accessed; zero proven misses and zero confirmed deliveries. Absence in sources config is NOT evidence of a miss.",
+    "current_workflow_path": ".github/workflows/external-inbox.yml"
+  },
+  "improvement_suggestions": [
+    "Periodically search official Challenger Colorado calendar by monthly date and topic: site:challengercolorado.org/news-events/event-calendar.html/event/2026/ + Second Saturday Science, rockets, hands-on and take-home Northern Lights; previous Nov and new Dec programs differ.",
+    "Check event-specific live RSVP ticket page to distinguish available free planetarium places from general free walk-in admission; respect closing deadlines and fire/weather launch conditions.",
+    "Check CPW ActivityRegistration for explicitly subsidized first-time clinics; exclude routine First Day Hikes and regular park walks.",
+    "Monitor official Littleton Museum event links; 403/404 event pages require alternate source rather than guessed pricing.",
+    "Search new school/VEX youth robotics visitor eligibility and spectator admission directly instead of confusing team entry fee with spectators."
+  ],
+  "notes": "Independent search across Life, Family, Kids and all Colorado; 85 web search queries, of which 84 source strings retained exactly and one prior request string could not be recovered (marked unknown instead of fabricated). Counts refer only to executed actions; 19 web-page open/click read attempts, 17 succeeded, two failed. Reused or duplicated searches still count as requests. Official-detail count is opened successful primary organizer and registration pages, not search result snippets. All candidate status categories exclusive and sum to 24. Genuine high-value submitted event is for 2026 Colorado-based friends; planned family stay June 2027-August 2028 has no newly verified eligible event this run. Only one new inbox file created, then re-read; neither producer code nor worker settings touched; no direct Telegram call. Dispatch and subscriber-level delivery remain unverified. Current subscription usage is unknown."
+}
