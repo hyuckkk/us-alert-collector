@@ -1,0 +1,34 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-20T15:10:00Z",
+  "finished_at": "2026-11-20T15:15:00Z",
+  "searches": 0,
+  "queries": [],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 1,
+  "excluded": 0,
+  "excluded_reasons": {},
+  "notes": "같은 날 앞선 제출(20261120T1455Z)에서 littletondda.org 가 403이라 리틀턴 시 관광 공식 페이지로 재제출."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-20T15:15:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Candlelight Walk 2026 - Downtown Littleton",
+   "url": "https://visitlittleton.org/events-and-programs/candlelight-walk/",
+   "start_date": "2026-11-27",
+   "time": "5:30 p.m. - 7:00 p.m. (per DDA calendar)",
+   "location": "Main Street, Downtown Littleton",
+   "cost": "Free",
+   "description": "Littleton's annual candlelight procession down Main Street with tree lighting; the 2025 walk ended with a 200+ drone show (2026 drone show not yet confirmed).",
+   "special_reason": "연 1회 촛불 행진·점등식(예년 드론쇼)"
+  }
+ ]
+}
