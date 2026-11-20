@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-20T23:35:00Z",
+  "test": false,
+  "events": [
+    {
+      "title": "2027 Brickies Creation Festival — Free Family LEGO Building Competition and Hands-On Zones",
+      "url": "https://www.brickiescreationfestival.com/",
+      "start_date": "2027-07-17",
+      "end_date": "2027-07-17",
+      "time": "12:00 PM–5:30 PM MDT (Saturday)",
+      "location": "Old Town Square, Fort Collins, Colorado, USA",
+      "cost": "Free admission and activities for participants and spectators; family of five $0, optional vendor purchases extra.",
+      "age": "All ages welcome as spectators; 2027 competition age and team rules not yet confirmed; separate registration needed to compete.",
+      "audience": "family",
+      "description": "Official 2027 event lists games, four-hour LEGO building competition, building zones, LEGO art stations, displays and giveaways, not a routine paid class. Organizers say participation and spectator entry are free. Competition registration opens May 3, 2027 at 9 AM local, per https://www.brickiescreationfestival.com/registration; 2027 category capacity/rules need verification closer to opening. July date falls within 2027–28 family residence."
+    },
+    {
+      "title": "Greeley Festival of Trees — Limited-Date Horse-Drawn Wagon Rides Around Illuminated Lincoln Park",
+      "url": "https://greeleyco.gov/events/Festival-of-Trees/",
+      "start_date": "2026-11-28",
+      "end_date": "2026-12-04",
+      "time": "ONLY Saturday November 28 and Friday December 4, 2026, 5:00–8:00 PM MST each day (not daily)",
+      "location": "Union Colony Civic Center box office (701 10th Ave) and Lincoln Park, Greeley, Colorado, USA",
+      "cost": "Horse-drawn wagon ride $5 per person, family of five $25; optional separate indoor Festival of Trees admission $5 per adult and $3 per child age 12 or under (five people $19) at box office, or $44 for both.",
+      "age": "Public family activity, no age or residency restriction specified; simultaneous seating of all five not guaranteed.",
+      "audience": "family",
+      "description": "The City of Greeley advertises actual horse-and-wagon rides around illuminated Lincoln Park on only two 2026 evenings; tickets for the ride are available IN PERSON ONLY at the Union Colony Civic Center box office, $5 each. Distinct from previously submitted Wheat Ridge and Highlands Ranch free carriage events; relevant to 2026 local contacts, not the 2027–28 family stay."
+    }
+  ]
+}
