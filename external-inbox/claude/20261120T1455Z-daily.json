@@ -1,0 +1,51 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-20T14:42:00Z",
+  "finished_at": "2026-11-20T14:55:00Z",
+  "searches": 2,
+  "queries": [
+   "Golden Colorado holiday parade 2026 Olde Golden Holidays date",
+   "Littleton Candlelight Walk 2026 drone show November 27"
+  ],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "official_pages_checked": 0,
+  "candidates": 2,
+  "excluded": 0,
+  "excluded_reasons": {},
+  "notes": "Claude 독립 검색(예약). 교훈 파일 새 항목 2건(골든 홀리데이 퍼레이드, 리틀턴 캔들라이트 워크)을 검색했다. 골든 퍼레이드 2026 날짜는 검색 결과에 없어 비우고 공식 페이지를 올린다. 공식 페이지 직접 열기는 이 환경에서 안 되어 verified:false."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-20T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Candlelight Walk 2026 - Downtown Littleton",
+   "url": "https://littletondda.org/event/candlelight-walk-2/",
+   "start_date": "2026-11-27",
+   "time": "5:30 p.m. - 7:00 p.m. (per DDA calendar)",
+   "location": "Main Street, Downtown Littleton",
+   "cost": "Free",
+   "description": "Littleton's annual candlelight procession down Main Street with tree lighting; the 2025 walk ended with a 200+ drone show (2026 drone show not yet confirmed).",
+   "special_reason": "연 1회 촛불 행진·점등식(예년 드론쇼)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-20T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Olde Golden Holiday Parade 2026",
+   "url": "https://www.visitgolden.com/olde-golden-holidays/event-calendar/holiday-parades/",
+   "location": "Washington Ave (10th-13th St), Golden",
+   "cost": "Free",
+   "description": "Golden's annual holiday parade through historic downtown (2025: Dec 13, 10:30 a.m.). 2026 date not posted in search results; confirm on the official page.",
+   "special_reason": "연 1회 골든 구시가지 무료 연말 퍼레이드"
+  }
+ ]
+}
