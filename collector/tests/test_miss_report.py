@@ -42,3 +42,67 @@ def test_lessons_written_and_deduped_and_report(tmp_path, monkeypatch):
     assert "Claude 검색 실행 기록 없음" in text
     none = {**r, "missed": {"github_collector": [], "claude": [], "chatgpt": []}}
     assert mr.render(none, {}, [], "2026-10-23") is None, "누락이 없으면 보내지 않음"
+
+
+# ---------------------------------------------------------------- Claude 지난 제출 대조
+def test_norm_url_host_path_encoding_and_google_news():
+    assert mr.norm_url("https://www.Denverartmuseum.org/en/free-days/") == "denverartmuseum.org/en/free-days"
+    assert mr.norm_url("https://botanicgardens%2Eorg/events?x=1#y") == "botanicgardens.org/events"
+    assert mr.norm_url("https://news.google.com/rss/articles/abc?url=https%3A%2F%2Fwww.org.example%2Fe%2F") == "org.example/e"
+    assert mr.norm_url("https://news.google.com/rss/articles/CBMiXYZ?oc=5") is None, "원 주소를 모르면 비교하지 않음"
+
+
+def test_compute_does_not_count_claude_miss_when_claude_submitted_earlier():
+    e = ev("a", ["github_collector"])
+    e["finds"]["github_collector"]["url"] = "https://www.org.example/a/"
+    e["start_date"] = "2026-12-06"
+    workload = [{"path": "claude", "started_at": "2026-10-23T02:00:00Z"}, {"path": "github_collector", "started_at": "2026-10-23T02:00:00Z"}]
+    bundle = [{"key": "org.example/a", "start": "2026-12-01", "end": "2026-12-20", "title": "시즌 묶음"}]
+    r = mr.compute({"events": [e]}, workload, SINCE, bundle)
+    assert r["missed"]["claude"] == [] and r["found"]["claude"] == 1, "같은 페이지·날짜 범위 안 → 이미 제출"
+    other_dates = [{"key": "org.example/a", "start": "2027-01-10", "end": "2027-01-12"}]
+    assert len(mr.compute({"events": [e]}, workload, SINCE, other_dates)["missed"]["claude"]) == 1, "날짜가 다르면 다른 행사"
+    other_page = [{"key": "org.example/b", "start": "2026-12-01", "end": "2026-12-20"}]
+    assert len(mr.compute({"events": [e]}, workload, SINCE, other_page)["missed"]["claude"]) == 1
+
+
+def test_claude_submissions_reads_worktree_and_search_branches(tmp_path):
+    import json
+    import subprocess
+    run = lambda *a: subprocess.run(["git", "-C", str(tmp_path), *a], check=True, capture_output=True)
+    run("init", "-q", "-b", "main")
+    run("config", "user.email", "t@example.com"); run("config", "user.name", "t")
+    d = tmp_path / "external-inbox/claude"; d.mkdir(parents=True)
+    (d / "a.json").write_text(json.dumps({"events": [{"url": "https://x.example/a", "start_date": "2026-12-01"}]}))
+    run("add", "."); run("commit", "-qm", "a")
+    (d / "b.json").write_text(json.dumps({"events": [{"url": "https://x.example/b%2Ehtml", "start_date": "2026-12-02", "end_date": "2026-12-03"}]}))
+    run("add", "."); run("commit", "-qm", "b")
+    run("update-ref", "refs/remotes/origin/claude/search-20261121", "HEAD")
+    run("reset", "-q", "--hard", "HEAD~1")
+    keys = sorted(s["key"] for s in mr.claude_submissions(tmp_path))
+    assert keys == ["x.example/a", "x.example/b.html"]
+
+
+def lesson(path, url, monitor, date, q):
+    return {"path": path, "title": "t", "host": "h", "url": url, "found_by": ["github_collector"], "cause": "c",
+            "queries": [q], "monitor_url": monitor, "date": date}
+
+
+def test_lessons_merged_by_monitor_url_and_pruned_when_claude_submitted(tmp_path):
+    import json
+    f = tmp_path / "LESSONS.md"
+    old = [lesson("claude", "https://denverartmuseum.org/e1", "https://www.denverartmuseum.org/en/free-days", f"2026-11-1{i}", f"q{i}") for i in range(5)]
+    old += [lesson("chatgpt", "https://denverartmuseum.org/e9", "https://denverartmuseum.org/en/free-days/", "2026-11-19", "qc")]
+    old += [lesson("claude", "https://botanicgardens.org/x", "https://botanicgardens.org/events", "2026-11-12", "qb")]
+    f.write_text("\n".join(f"<!-- lesson {json.dumps(x)} -->" for x in old))
+    mr.write_lessons(f, [], "2026-11-21")
+    rows = [json.loads(m) for m in __import__("re").findall(r"<!-- lesson (\{.*?\}) -->", f.read_text())]
+    assert len(rows) == 2, "덴버 미술관 free-days 6건 → 1건"
+    dam = next(x for x in rows if "denverartmuseum" in x["monitor_url"])
+    assert dam["paths"] == ["claude", "chatgpt"] and dam["date"] == "2026-11-19" and "q4" in dam["queries"]
+    assert "Claude·ChatGPT 검색 누락" in f.read_text()
+    # Claude 가 보태닉 가든 페이지와 덴버 미술관 행사를 올림 → Claude 누락에서 지움(ChatGPT 누락은 남김)
+    subs = [{"key": "botanicgardens.org/x", "start": None, "end": None}, {"key": "denverartmuseum.org/e1", "start": None, "end": None}]
+    mr.write_lessons(f, [], "2026-11-21", subs)
+    rows = [json.loads(m) for m in __import__("re").findall(r"<!-- lesson (\{.*?\}) -->", f.read_text())]
+    assert [x["paths"] for x in rows] == [["chatgpt"]]

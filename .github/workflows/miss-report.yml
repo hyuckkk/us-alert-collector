@@ -30,6 +30,9 @@ jobs:
           bash scripts/cf_env.sh
           set -a; . "$GITHUB_ENV"; set +a
           bash scripts/worker_ready.sh
+      - name: Claude submission branches
+        # Claude 가 이미 제출한 행사를 'Claude 누락'으로 적지 않고 LESSONS.md 에서도 지우도록 지난 제출 브랜치를 가져온다
+        run: git fetch --quiet origin '+refs/heads/claude/search-*:refs/remotes/origin/claude/search-*' || true
       - name: Report
         if: env.READY == '1'
         run: python collector/miss_report.py
