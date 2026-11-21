@@ -180,14 +180,16 @@ def test_8_credit_exhausted_isolates_ai_keeps_items_and_alerts(world):
     assert [r["status"] for r in api._mem.values()] == ["queued"], "삭제하지 않고 보존"
     assert rep["stages"]["dispatch"]["ok"], "발송 단계는 계속"
     sent = [a for n, a in api.log if n == "unverified"]
-    assert sent and sent[0][0][0]["url"] == CLAY
+    assert sent and sent[0][0] == [] and sent[0][2] >= 1, "원문 링크 대신 대기 개수만 전달"
+    log = next(a[0] for n, a in api.log if n == "run_log")
+    assert log["ai"] == {"ok": False, "error": "credit-exhausted"}, "수집 성공과 AI 실패를 별도 기록"
 
 
-def test_4_long_ai_outage_sends_unverified_to_owner(world):
+def test_4_long_ai_outage_sends_only_summary_to_owner(world):
     api = FakeAPI(ai_health={"failing_since": "2026-01-01T00:00:00Z"})
     run.main(["--no-ai"], client=FakeClient([]), api=api)
     sent = [a for n, a in api.log if n == "unverified"]
-    assert sent and sent[0][1] > 36
+    assert sent and sent[0][0] == [] and sent[0][1] > 36, "장기 중단에도 검증 전 원문 링크는 보내지 않음"
 
 
 def test_light_mode_skips_source_collection(world):
