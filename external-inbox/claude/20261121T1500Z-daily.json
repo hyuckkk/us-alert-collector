@@ -1,0 +1,84 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-21T14:42:06Z",
+  "finished_at": "2026-11-21T15:00:00Z",
+  "searches": 8,
+  "queries": [
+   "free family events Denver this weekend November 28 29 2026",
+   "Westminster Colorado holiday tree lighting 2026",
+   "Broomfield Arvada Thornton free holiday event kids December 2026",
+   "Denver Museum of Nature and Science free day December 2026",
+   "Denver Zoo free day December 2026 OR January 2027",
+   "Colorado ski resort free kids day or free lift ticket December 2026 Front Range",
+   "Denver library free holiday kids event December 2026 registration",
+   "Boulder Longmont Lafayette free winter festival kids December 2026"
+  ],
+  "urls_attempted": 4,
+  "urls_ok": 0,
+  "urls": [
+   "https://broomfield.org/index.aspx?NID=2468",
+   "https://www.dmns.org/about-us/scfd-free-days",
+   "https://www.longmontcolorado.gov/longmontlights",
+   "https://westminsterco.gov/EventDetails?e=10629"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 9,
+  "excluded": 6,
+  "excluded_reasons": {
+   "date_not_posted_2026": 3,
+   "no_free_day_in_window": 1,
+   "outside_metro_or_conditional": 1,
+   "paid_or_ticketed": 1
+  },
+  "notes": "Claude 독립 검색(예약, 2026-11-21 개정 규칙: 8회 이상·6주 범위). WebFetch 4건은 이 실행 환경에서 모두 DNS 오류(getaddrinfo ENOTFOUND)로 실패해 verified:false. 제외: 웨스트민스터 점등식·손튼 윈터페스트·라파예트 축제(2026 날짜 미공지), 덴버 동물원(6주 안 무료일 없음), 스팀보트 어린이 무료 스키(원거리·초급 구역 한정), 허드슨 가든·엘리치 조명(유료)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-21T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Broomfield Holiday Tree Lighting Ceremony 2026",
+   "url": "https://broomfield.org/index.aspx?NID=2468",
+   "start_date": "2026-12-04",
+   "time": "5:30 p.m. - 8 p.m.",
+   "location": "Broomfield (city tree lighting site)",
+   "cost": "",
+   "description": "City of Broomfield's annual holiday tree lighting, Friday Dec 4, 2026, 5:30-8 p.m. (search listing; cost not stated).",
+   "special_reason": "연 1회 시 주최 연말 점등식"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-21T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Longmont Main Street Kids Mile & Longmont Lights Parade 2026",
+   "url": "https://www.longmontcolorado.gov/longmontlights",
+   "start_date": "2026-12-12",
+   "location": "Main St & Longs Peak Ave, downtown Longmont",
+   "cost": "Free (Kids Mile)",
+   "description": "Free one-mile kids run/walk/skip/dance kicking off the Longmont Lights Parade festivities on Saturday Dec 12, 2026; costumes and decorated strollers welcome. Longmont Lights also lists a free ice show at Roosevelt Park on Dec 12 (year not stated on the page snippet).",
+   "special_reason": "연 1회 아이 무료 달리기·연말 조명 퍼레이드"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-21T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Denver Museum of Nature & Science SCFD Free Day (Dec 17, 2026)",
+   "url": "https://www.dmns.org/about-us/scfd-free-days",
+   "start_date": "2026-12-17",
+   "location": "Denver Museum of Nature & Science, 2001 Colorado Blvd, Denver",
+   "cost": "Free general admission (SCFD free day)",
+   "description": "A third-party 2026 free-days guide lists a Thursday Dec 17 (holiday) free day at DMNS; not yet confirmed on the museum's own page.",
+   "special_reason": "연 몇 회뿐인 자연사박물관 무료일"
+  }
+ ]
+}
