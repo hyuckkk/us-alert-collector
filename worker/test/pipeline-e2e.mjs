@@ -62,7 +62,7 @@ try {
     const r = await admin("/admin/enqueue", {
       events: [
         ev("e1", { urgency: "now", start_date: SOON }),            // 소유자: 입국 전 → 제외, 지인: 즉시
-        ev("e2", { start_date: "2026-12-05", annual: true }),              // 소유자: 예고(season), 지인: 요약
+        ev("e2", { start_date: daysFromNow(14), annual: true }),              // 소유자: 예고(season), 지인: 요약
         ev("e3"),                                                          // 둘 다 요약
         ev("e4", { bot: "life", urgency: "now", start_date: "2027-08-01" }), // 소유자만(life 구독)
         { event_key: "bad", bot: "kids", title: "no url" },
@@ -141,7 +141,7 @@ try {
   await step("정지 시간대: 지금 시각이 정지 구간이면 미뤘다가, 풀리면 발송", async () => {
     const h = parseInt(new Intl.DateTimeFormat("en-US", { timeZone: "America/Denver", hour: "2-digit", hour12: false }).format(new Date()), 10) % 24;
     await hook("kids", msg(FRIEND, `/quiet ${h} ${(h + 1) % 24}`));
-    await admin("/admin/enqueue", { events: [ev("e5", { urgency: "now", start_date: "2026-12-20" })] });
+    await admin("/admin/enqueue", { events: [ev("e5", { urgency: "now", start_date: daysFromNow(29) })] });
     let r = await admin("/admin/dispatch", {});
     assert.equal(r.deferred, 1);
     assert.equal(r.sent, 0);
@@ -152,7 +152,7 @@ try {
 
   await step("이 태그 그만 → 같은 태그 새 행사는 대기열에 안 들어감", async () => {
     await hook("kids", E.cb(FRIEND, "tag:e5", 1));
-    const r = await admin("/admin/enqueue", { events: [ev("e6", { urgency: "now", start_date: "2026-12-21" })] });
+    const r = await admin("/admin/enqueue", { events: [ev("e6", { urgency: "now", start_date: daysFromNow(30) })] });
     assert.equal(r.skipped["muted-tag"], 1);
   });
 
