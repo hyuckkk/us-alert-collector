@@ -3,6 +3,11 @@ import assert from "node:assert/strict";
 import { startEnv, stepper, OWNER } from "./harness.mjs";
 
 const FRIEND = "222";
+// 고정 날짜는 시간이 지나면 '지난 행사(expired)'가 되어 실패한다 → 오늘 기준 상대 날짜(UTC, YYYY-MM-DD)
+const daysFromNow = (n) => new Date(Date.now() + n * 86400000).toISOString().slice(0, 10);
+const SOON = daysFromNow(10);
+const koDate = (iso) => { const d = new Date(iso + "T00:00:00Z"); return `${d.getUTCMonth() + 1}월 ${d.getUTCDate()}일(${"일월화수목금토"[d.getUTCDay()]})`; };
+// SOON: 소유자 참가 가능일(FAMILY_AVAILABLE_FROM) 전, 지인에게는 즉시 알림 대상
 const { step, failed } = stepper();
 
 const ev = (key, over = {}) => ({
@@ -56,7 +61,7 @@ try {
   await step("enqueue: 참가 가능 시작일·연례·구독 봇에 따라 사람별 대기열", async () => {
     const r = await admin("/admin/enqueue", {
       events: [
-        ev("e1", { urgency: "now", start_date: "2026-11-10" }),            // 소유자: 입국 전 → 제외, 지인: 즉시
+        ev("e1", { urgency: "now", start_date: SOON }),            // 소유자: 입국 전 → 제외, 지인: 즉시
         ev("e2", { start_date: "2026-12-05", annual: true }),              // 소유자: 예고(season), 지인: 요약
         ev("e3"),                                                          // 둘 다 요약
         ev("e4", { bot: "life", urgency: "now", start_date: "2027-08-01" }), // 소유자만(life 구독)
@@ -76,7 +81,7 @@ try {
     const s = sends(n);
     const friendE1 = s.find((x) => String(x.payload.chat_id) === FRIEND);
     // 행사 1건 = 1통: 제목(누르면 공식 안내) 굵게, 특징(선착순), 한국식 날짜, 확인된 항목만, 버튼은 [✅][🚫] 한 줄
-    assert.equal(friendE1.payload.text, '🆕 <b><a href="https://example.org/e1">행사 e1</a></b>\n🏃 선착순\n✨ <b>시험용 특별 근거</b>\n\n📅 11월 10일(화) 10:00\n📍 <a href="https://www.google.com/maps/search/?api=1&amp;query=Westminster%20Library%2C%20CO">Westminster Library</a> · Test Org\n💲 $20   👤 6-10세');
+    assert.equal(friendE1.payload.text, `🆕 <b><a href="https://example.org/e1">행사 e1</a></b>\n🏃 선착순\n✨ <b>시험용 특별 근거</b>\n\n📅 ${koDate(SOON)} 10:00\n📍 <a href="https://www.google.com/maps/search/?api=1&amp;query=Westminster%20Library%2C%20CO">Westminster Library</a> · Test Org\n💲 $20   👤 6-10세`);
     assert.equal(friendE1.payload.reply_markup.inline_keyboard.length, 1, "공식 안내 버튼 줄 없음");
     assert.equal(friendE1.payload.parse_mode, "HTML");
     assert.deepEqual(friendE1.payload.reply_markup.inline_keyboard[0].map((b) => b.text), ["✅ 확인", "🚫 관심없음"]);
@@ -85,7 +90,7 @@ try {
   });
 
   await step("같은 내용 재전송 → 변화 없음, 대기열 추가 없음", async () => {
-    const r = await admin("/admin/enqueue", { events: [ev("e1", { urgency: "now", start_date: "2026-11-10" }), ev("e3")] });
+    const r = await admin("/admin/enqueue", { events: [ev("e1", { urgency: "now", start_date: SOON }), ev("e3")] });
     assert.equal(r.same, 2);
     assert.equal(r.outbox, 0);
   });
@@ -94,7 +99,7 @@ try {
     await hook("kids", E.cb(FRIEND, "ack:e1", 1));
     await hook("life", E.cb(OWNER, "mute:e4", 1));
     const r = await admin("/admin/enqueue", {
-      events: [ev("e1", { urgency: "now", start_date: "2026-11-10", cost_text: "$25" }), ev("e4", { bot: "life", urgency: "now", start_date: "2027-08-01", location: "Denver" })],
+      events: [ev("e1", { urgency: "now", start_date: SOON, cost_text: "$25" }), ev("e4", { bot: "life", urgency: "now", start_date: "2027-08-01", location: "Denver" })],
     });
     assert.equal(r.changed, 2);
     assert.equal(r.skipped.muted, 1);
