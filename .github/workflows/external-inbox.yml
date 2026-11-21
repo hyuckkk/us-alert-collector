@@ -40,7 +40,7 @@ jobs:
           else
             git ls-tree -r --name-only "$AFTER" -- 'external-inbox/' > "$RUNNER_TEMP/inbox_paths.txt"
           fi
-          grep -E '^external-inbox/(chatgpt|claude)/[A-Za-z0-9._-]{1,100}\.json$' "$RUNNER_TEMP/inbox_paths.txt" > "$RUNNER_TEMP/inbox_ok.txt" || true
+          grep -E '^external-inbox/(chatgpt|claude|aside)/[A-Za-z0-9._-]{1,100}\.json$' "$RUNNER_TEMP/inbox_paths.txt" > "$RUNNER_TEMP/inbox_ok.txt" || true
           echo "count=$(wc -l < "$RUNNER_TEMP/inbox_ok.txt")" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-python@v5
         if: steps.files.outputs.count != '0'

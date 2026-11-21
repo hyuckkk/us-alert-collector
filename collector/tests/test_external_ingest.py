@@ -149,3 +149,61 @@ def test_excluded_by_our_recommendation_is_not_called_missed(monkeypatch):
     out = xi.check_gaps(evs, [{}], {}, api, None, {}, ai.Usage({}))
     assert sent["g"][0]["found"] == "excluded" and sent["g"][0]["cause_code"] == "outside_scope" and not called and sent["s"] == [] and sent["q"] == []
     assert out["causes"] == {"outside_scope": 1}
+
+
+# ---------------------------------------------------------------- Aside(맥북 실제 브라우저) 받은편지함
+_CFG = {"extract": {"model": "claude-haiku-5-5", "effort": "low", "batch": 12, "max_tokens": 1000, "text_chars": 4500}, "prices": {}, "limits": {"credit_reference_usd": 100}}
+
+
+def _blocked(monkeypatch, err):
+    def fd(e, c, chars=4000):
+        e.extra["detail_error"] = err
+        return False
+    monkeypatch.setattr(xi, "fetch_detail", fd)
+
+    class NC:
+        def __enter__(self): return None
+        def __exit__(self, *a): return False
+    monkeypatch.setattr(xi, "new_client", lambda: NC())
+
+
+def _aside_reply():
+    return ai.ExtractBatch(results=[ai.EntryResult(index=0, relevant=True, reason="", events=[ev(
+        title="Candlelight Walk", title_ko="캔들라이트 워크", bot="family", start_date="2026-12-04", url="https://visitlittleton.org/candlelight-walk",
+        org="Littleton", location="Main St", city="Littleton")])])
+
+
+def test_validate_keeps_evidence_and_https_source_url_only():
+    ok, _ = xi.validate({"events": [{"title": "A", "url": "https://a.org/x", "evidence": "Dec 4, 2026 6pm", "source_url": "https://a.org/x"},
+                                    {"title": "B", "url": "https://b.org/x", "evidence": "e" * 600, "source_url": "http://b.org/x"}]})
+    assert ok[0]["evidence"] == "Dec 4, 2026 6pm" and ok[0]["source_url"] == "https://a.org/x"
+    assert "evidence" not in ok[1] and "source_url" not in ok[1]
+
+
+def test_aside_item_passes_when_official_recheck_is_blocked_403_and_has_evidence(monkeypatch):
+    _blocked(monkeypatch, "HTTP 403")
+    api = FakeAPI()
+    raw = {"events": [{"title": "Candlelight Walk", "url": "https://visitlittleton.org/candlelight-walk",
+                       "evidence": "Candlelight Walk — Friday, December 4, 2026, 6 p.m., Main Street", "source_url": "https://visitlittleton.org/candlelight-walk"}]}
+    rep = xi.ingest(raw, api, FakeClient([_aside_reply()]), _CFG, "2026-11-21", finder="aside")
+    assert rep["unreachable"] == [] and rep["accepted_via_evidence"][0]["blocked"] == "HTTP 403"
+    assert rep["enqueued"] == 1 and api.enqueued[0]["found_by"] == "aside"
+
+
+def test_aside_timeout_and_429_also_pass_but_404_or_missing_evidence_do_not(monkeypatch):
+    for err in ("HTTP 429", "ReadTimeout"):
+        _blocked(monkeypatch, err)
+        raw = {"events": [{"title": "Candlelight Walk", "url": "https://visitlittleton.org/candlelight-walk", "evidence": "Dec 4 6pm", "source_url": "https://visitlittleton.org/candlelight-walk"}]}
+        assert xi.ingest(raw, FakeAPI(), FakeClient([_aside_reply()]), _CFG, "2026-11-21", finder="aside")["unreachable"] == [], err
+    _blocked(monkeypatch, "HTTP 404")
+    raw = {"events": [{"title": "X", "url": "https://visitlittleton.org/x", "evidence": "Dec 4 6pm", "source_url": "https://visitlittleton.org/x"}]}
+    assert len(xi.ingest(raw, FakeAPI(), FakeClient([]), _CFG, "2026-11-21", finder="aside")["unreachable"]) == 1, "404 는 막힘이 아님"
+    _blocked(monkeypatch, "HTTP 403")
+    raw = {"events": [{"title": "X", "url": "https://visitlittleton.org/x"}]}
+    assert len(xi.ingest(raw, FakeAPI(), FakeClient([]), _CFG, "2026-11-21", finder="aside")["unreachable"]) == 1, "원문·출처 없으면 통과 못 함"
+
+
+def test_other_finders_keep_strict_recheck_even_with_evidence(monkeypatch):
+    _blocked(monkeypatch, "HTTP 403")
+    raw = {"events": [{"title": "X", "url": "https://visitlittleton.org/x", "evidence": "Dec 4 6pm", "source_url": "https://visitlittleton.org/x"}]}
+    assert len(xi.ingest(raw, FakeAPI(), FakeClient([]), _CFG, "2026-11-21", finder="claude")["unreachable"]) == 1

@@ -1,0 +1,81 @@
+{
+ "version": 1,
+ "pages": [
+  {
+   "id": "littleton-museum-events",
+   "url": "https://www.museum.littletonco.gov/Events-Programs",
+   "want": "리틀턴 박물관 행사·프로그램 목록. 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "littleton-candlelight-walk",
+   "url": "https://visitlittleton.org/events-and-programs/candlelight-walk/",
+   "want": "리틀턴 캔들라이트 워크 날짜·시간·드론쇼·교통 안내"
+  },
+  {
+   "id": "littleton-dda-events",
+   "url": "https://www.littletondda.org/events",
+   "want": "리틀턴 다운타운 행사 목록(서버에서 403). 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "fourmile-events",
+   "url": "https://www.fourmilepark.org/events/",
+   "want": "Four Mile Historic Park 행사 목록(SCFD 무료일 포함). 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "dinoridge-events",
+   "url": "https://dinoridge.org/events/",
+   "want": "Dinosaur Ridge 행사 목록(박물관의 밤·가족 프로그램). 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "denver-zoo-events",
+   "url": "https://denverzoo.org/events/",
+   "want": "덴버 동물원 행사·무료 입장일(서버에서 403). 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "cpw-events",
+   "url": "https://cpw.state.co.us/events",
+   "want": "콜로라도 주립공원 행사·무료 입장일(서버에서 403). 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "anythink-events",
+   "url": "https://www.anythinklibraries.org/events",
+   "want": "Anythink 도서관 행사(서버에서 403). 어린이 대상 특별 행사만"
+  },
+  {
+   "id": "boulder-library-events",
+   "url": "https://boulderlibrary.org/events/",
+   "want": "볼더 도서관 행사(서버에서 403). 어린이 대상 특별 행사만"
+  },
+  {
+   "id": "adams-county-events",
+   "url": "https://adcogov.org/events",
+   "want": "애덤스 카운티 행사(서버에서 403). 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "usopm-events",
+   "url": "https://usopm.org/events/",
+   "want": "미국 올림픽·패럴림픽 박물관 행사(서버에서 403). 이번 주~앞으로 90일 안의 가족·어린이 행사(무료일·특별 개방·체험·축제): 제목, 날짜·시간, 장소, 비용, 연령, 신청 방법, 그 내용이 적힌 원문 한 줄"
+  },
+  {
+   "id": "ncar-visit",
+   "url": "https://scied.ucar.edu/visit",
+   "want": "NCAR 방문·공개 행사(서버에서 403). 일반 공개 행사·투어 날짜"
+  },
+  {
+   "id": "national-western",
+   "url": "https://nationalwestern.com/",
+   "want": "내셔널 웨스턴 스톡쇼(서버에서 403). 2027 일정·무료일·어린이 행사"
+  },
+  {
+   "id": "westminster-library-events",
+   "url": "https://westminsterco.librarycalendar.com/events/list",
+   "want": "웨스트민스터 도서관 행사(서버에서 403). 어린이 대상 특별 행사만"
+  },
+  {
+   "id": "golden-makers",
+   "url": "https://goldenmakers.org/",
+   "want": "Golden Makers 무료 체험 행사(서버에서 읽기 실패). 날짜·RSVP·재료비"
+  }
+ ],
+ "searches": []
+}

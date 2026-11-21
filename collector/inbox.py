@@ -24,7 +24,7 @@ import external_ingest as xi  # noqa: E402
 from worker_api import WorkerAPI  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-PATH_RE = re.compile(r"^external-inbox/(chatgpt|claude)/([A-Za-z0-9._-]{1,100})\.json$")
+PATH_RE = re.compile(r"^external-inbox/(chatgpt|claude|aside)/([A-Za-z0-9._-]{1,100})\.json$")
 MAX_BYTES = 200_000
 MAX_FILES = 10
 

@@ -43,3 +43,8 @@ def test_inbox_caps_file_count(tmp_path, monkeypatch):
     _files(tmp_path, {p: {"events": []} for p in paths})
     res = inbox.process(paths, FakeAPI(), None, {}, "2026-10-23", root=tmp_path)
     assert sum(r["status"] == "done" for r in res) == 10 and sum(r["status"] == "rejected" for r in res) == 2
+
+
+def test_aside_folder_is_accepted_path():
+    assert inbox.PATH_RE.match("external-inbox/aside/20261121T1200Z-littleton.json").group(1) == "aside"
+    assert not inbox.PATH_RE.match("external-inbox/aside/../x.json")

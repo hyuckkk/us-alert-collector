@@ -10,7 +10,7 @@ import * as pipeline from "./pipeline.js";
 import { kvGet, kvSet, nowIso, claimNotice, notifyOwner, localDate } from "./common.js";
 
 const MINUTE_OF_HOUR = 35;        // 매시 35분(GitHub dispatch 의 20분과 겹치지 않게)
-const LIGHT_LATE_HOURS = 6;       // 가벼운 수집은 4시간 간격 → 6시간 넘게 실행 기록이 없으면 지연
+const LIGHT_LATE_HOURS = 4;       // 가벼운 수집은 4시간 간격 → 4시간 넘게 실행 기록이 없으면 지연(2026-11-21: GitHub 예약이 5시간 넘게 빠지는 일이 잦아 6→4)
 const FULL_LATE_HOURS = 26;       // 전체 수집은 하루 1회 → 26시간 넘게 성공 기록이 없으면 지연
 
 export function nextSlot(now = Date.now()) {

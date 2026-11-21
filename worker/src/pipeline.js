@@ -392,7 +392,7 @@ export async function enqueue(env, body) {
   return { ok: true, ...stats };
 }
 
-export const FINDERS = ["github_collector", "claude", "chatgpt"];
+export const FINDERS = ["github_collector", "claude", "chatgpt", "aside"];  // aside: 맥북 실제 브라우저 에이전트(서버에서 막히는 사이트 대신 읽기)
 // 발견 경로: 외부 입력은 수집기가 found_by 를 붙여 보낸다. 표시가 없는 예전 외부 입력은 chatgpt(이 경로만 있었음), 나머지는 GitHub 수집기.
 function finderOf(e) {
   if (FINDERS.includes(e.found_by)) return e.found_by;
@@ -1273,7 +1273,7 @@ export async function workload(env, method, body, url) {
 // 외부 입력 파일 선점: 같은 경로·같은 내용(sha)이 이미 처리됐거나 처리 중이면 거절 → 재실행·중복 push 에도 한 번만 처리
 export async function inbox(env, body) {
   const path = String(body.path || "");
-  if (!/^external-inbox\/(chatgpt|claude)\/[A-Za-z0-9._-]{1,100}\.json$/.test(path)) return { ok: false, error: "bad path" };
+  if (!/^external-inbox\/(chatgpt|claude|aside)\/[A-Za-z0-9._-]{1,100}\.json$/.test(path)) return { ok: false, error: "bad path" };
   const finder = path.split("/")[1];
   const now = nowIso();
   if (body.op === "claim") {

@@ -67,6 +67,15 @@ try {
     assert.equal(r.collect.late, false);
     assert.equal(B.calls.slice(n).filter((c) => c.method === "github").length, 0);
   });
+
+  await step("가벼운 수집이 4시간 넘게 없으면 light 실행을 요청한다", async () => {
+    B.sql(`UPDATE kv SET v = '${hoursAgo(4.5)}' WHERE k = 'last_run_at'`);
+    const n = B.calls.length;
+    const r = await B.admin("/admin/heartbeat", {});
+    assert.equal(r.collect.mode, "light", JSON.stringify(r.collect));
+    assert.ok(["requested", "already-requested"].includes(r.collect.action), JSON.stringify(r.collect));
+    if (r.collect.action === "requested") assert.deepEqual(B.calls.slice(n).filter((c) => c.method === "github")[0].payload, { ref: "main", inputs: { mode: "light", dry_run: "false" } });
+  });
 } finally {
   A.stop(); B.stop();
 }
