@@ -44,3 +44,17 @@ jobs:
             echo "::warning::collect stale — re-running collect (full)"
             gh workflow run collect.yml -f mode=full -f dry_run=false
           fi
+      - name: Light collect gap watchdog
+        # GitHub 예약 실행은 1~3시간 밀리거나 통째로 빠진다(collect 가 cron 하루 6회 중 3~4회만 돎, 실패·취소는 0건).
+        # main 의 collect 가 5시간 넘게 시작되지 않았고 진행·대기 중인 것도 없으면 light 를 한 번 대신 실행한다.
+        if: github.event_name == 'schedule' && env.READY == '1'
+        run: |
+          runs=$(gh run list --workflow collect.yml --branch main --limit 5 --json createdAt,status 2>/dev/null) || exit 0
+          active=$(echo "$runs" | python3 -c "import json,sys;print(sum(r['status']!='completed' for r in json.load(sys.stdin)))")
+          last=$(echo "$runs" | python3 -c "import json,sys;r=json.load(sys.stdin);print(r[0]['createdAt'] if r else '')")
+          [ -n "$last" ] && [ "$active" = "0" ] || exit 0
+          age=$(( $(date -u +%s) - $(date -u -d "$last" +%s) ))
+          if [ "$age" -gt 18000 ]; then
+            echo "::warning::collect 마지막 시작 ${age}s 전 — light 대신 실행"
+            gh workflow run collect.yml --ref main -f mode=light -f dry_run=false
+          fi
