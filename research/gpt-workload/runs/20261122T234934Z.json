@@ -1,0 +1,265 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-22T23:44:38Z",
+  "finished_at_utc": "2026-11-22T23:49:34.143Z",
+  "search_requests": 68,
+  "queries": [
+    "Colorado 2027 air force base public open house air show 2027 Buckley Peterson Schriever public",
+    "Colorado 2027 military air show flight museum cockpit ride free 2027 events",
+    "Colorado 2027 rocket launch model rocket public event 2027 launch day family",
+    "Denver Colorado special behind the scenes facility tour December 2026 free public water plant fire training center",
+    "Colorado 2027 summer family maker festival hands on robotics free July 2027",
+    "Colorado 2027 historic rail free special ride family Colorado museums",
+    "Colorado 2027 kids free fishing day clinic stock trout ice fishing December 2026 January 2027",
+    "Colorado 2027 free first day hikes state parks registration Jan 1 2027 guided",
+    "Denver 2026 November December rare open house tour government laboratory family public",
+    "Colorado 2027 campground lottery opening application reservation ranger overnight",
+    "Denver 2027 public elementary school carnival community festival science night February 2027",
+    "Colorado 2027 free indoor skydiving BMX skate competition kids registration",
+    "Broomfield Thornton Westminster free family make and take workshops November December 2026",
+    "CSU CU Boulder Colorado School Mines 2027 public science demonstration 2027 outreach festival",
+    "Denver 2027 4th of July military historical reenactment free cannon firing family",
+    "Colorado 2027 public free flight simulator open house aerospace March April 2027",
+    "site:rmrRF.com 2027 Rocky Mountain RepRap Festival April 17 18 free admission schedule activities",
+    "Rocky Mountain RepRap Festival 2027 official website death racers tickets April 2027 Loveland",
+    "site:colorado.edu 2027 science festival \"free\" \"hands-on\" July August",
+    "Colorado July 2027 public space day star party free children space festival",
+    "Colorado 2027 balloon festival free July August dates Hot Air Balloon Rodeo Steamboat",
+    "Colorado 2027 national lab open house NREL public tours free",
+    "site:energy.gov colorado 2027 \"open house\" laboratory family public",
+    "site:af.mil Colorado 2027 \"open house\" public Buckley Peterson Schriever",
+    "site:usafa.edu 2027 \"public\" STEM camp cadets family demonstration",
+    "site:denverlibrary.org 2026 12 \"build\" \"robot\" \"free\" kids one time",
+    "site:broomfield.org \"2027\" \"July\" free workshop children",
+    "site:cpw.state.co.us/events 2027 \"ice fishing\" clinic registration free",
+    "site:cpw.state.co.us/event \"2027\" \"fish\" \"clinic\" kids",
+    "Colorado December 2026 free public historic steam engine ride behind the scenes train",
+    "Colorado special observatory public viewing free December 2026 observatory night",
+    "2026 December Colorado airport free fly in children airplane ride EAA young eagles registration",
+    "site:chapters.eaa.org 2026 December young eagles rally Colorado free ages 8-17",
+    "site:youreaa.com 2026 Dec Colorado young eagles registration free flights",
+    "December 2026 Colorado Springs free hands-on space lab day family 2026",
+    "2027 Colorado July free children airplane rides Young Eagles EAA date",
+    "2026 Colorado kids free open cockpit military aircraft museum \"December\" 2026",
+    "2026 December Colorado \"fire truck rides\" \"free\" holiday",
+    "2026 December Denver holiday \"train rides\" \"free\" city",
+    "2026 December free \"horse drawn\" \"rides\" \"make\" Colorado city",
+    "2026 December Colorado \"gingerbread\" \"build\" \"free\" \"library\" workshop",
+    "2027 Colorado \"July\" \"free\" \"interactive\" \"science\" kids festival",
+    "2027 Colorado \"August\" \"free\" \"hands-on\" engineering event",
+    "2027 Colorado historical reenactment fort children hands on events July 2027",
+    "Colorado summer 2027 NASA space foundation discovery center free public open house",
+    "2027 Colorado interactive dinosaur dig kids fossil guided excavation event July 2027",
+    "site:museumsofwesternco.com 2027 \"Paleo\" \"Field\" \"Age\" June July August",
+    "site:altru118995.sky.blackbaud.com/118995/ 2027 \"Dinosaur\" \"Full Day\" \"Minimum Age\" 2027",
+    "2027 family kids 8 9 11 fossil excavation Fruita Colorado field dig museum 2027 July",
+    "2027 colorado August kids 8 fossil dig paleo field excavation dinosaur museum children",
+    "2027 colorado space camp kids family free enrollment 2027 summer",
+    "Colorado school of mines 2027 July outdoor rockhounding free special geology family",
+    "site:colorado.com \"2027\" \"special\" \"ride\" \"free\" \"July\" \"Colorado\"",
+    "2027 Colorado state parks park special free archery clinic family July 2027",
+    "site:cpw.state.co.us/event \"2027\" \"archery\" \"July\"",
+    "site:cpw.state.co.us/event \"2027\" \"boat\" \"family\" \"June\"",
+    "site:colorado.edu \"2027\" \"July\" \"robotics\" \"open\"",
+    "site:denver.org 2027 \"July\" \"free\" \"aircraft\" \"festival\"",
+    "site:museumsofwesternco.org 2027 Dinosaur Journey summer expeditions tickets Mygatt Moore 2027",
+    "site:museumsofwesternco.org \"Dino Digs\" \"Blackbaud\" buy tickets",
+    "site:altru118995.sky.blackbaud.com/118995 \"July 19\" \"2027\" \"Dino Dig\"",
+    "site:altru118995.sky.blackbaud.com/118995 \"Douglas Pass\" \"2027\"",
+    "site:altru118995.sky.blackbaud.com/118995 \"2027\" \"Fruita\" \"Dino Dig\"",
+    "2027 EAA Denver airport Young Eagles kids free flight registration 2027 July Boulder",
+    "2027 July historic Colorado state highway rocket festival \"launch\" kids free",
+    "2026 December 2027 colorado free military aircraft fly in aviation STEM kids direct participation",
+    "Westminster Colorado to Fruita Colorado driving distance miles",
+    "Westminster Colorado to Loveland Colorado driving distance miles"
+  ],
+  "failed_searches": 0,
+  "url_read_attempts": 29,
+  "url_read_successes": 27,
+  "url_read_failures": 2,
+  "failed_page_reads": 2,
+  "url_read_failed_details": [
+    "RMSS 2027 registration link redirects to rmss.app blocked (HTTP 500)",
+    "Organizer RMRRF link redirects to Eventbrite affiliate URL blocked (HTTP 500); canonical organizer Eventbrite detail URL separately opened successfully"
+  ],
+  "official_detail_verified": 14,
+  "official_detail_verified_urls": [
+    "https://rockymountainreprapfestival.com/",
+    "https://www.eventbrite.com/e/rocky-mountain-reprap-festival-2027-tickets-2003421086400",
+    "https://erieballoonfestival.com/",
+    "https://erieballoonfestival.com/faqs/",
+    "https://rmss.org/",
+    "https://rmss.org/fees/",
+    "https://cpw.state.co.us/event/events-and-festivals/2027/01/first-day-5k",
+    "https://altru118995.sky.blackbaud.com/118995/0719-Half-Day-Dino-Dig-MMQ",
+    "https://altru118995.sky.blackbaud.com/118995/721-Full-Day-Dino-Dig-MMQ",
+    "https://altru118995.sky.blackbaud.com/118995/86-Full-Day-Dino-Dig-MMQ",
+    "https://altru118995.sky.blackbaud.com/118995/Douglas-Pass-Full-Day-Adventure---713",
+    "https://altru118995.sky.blackbaud.com/118995/Paleo-Lab-Full-Day-Adventure---722",
+    "https://csuspur.org/camps/",
+    "https://museumsofwesternco.org/dino-digs-and-adventures/"
+  ],
+  "candidate_events": 25,
+  "duplicate_candidates": 6,
+  "rejected_events": 10,
+  "held_events": 5,
+  "qualified_events": 4,
+  "known_by_collector": 1,
+  "verified_collector_misses": 0,
+  "submitted_events": 4,
+  "delivered_events": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://www.eventbrite.com/e/rocky-mountain-reprap-festival-2027-tickets-2003421086400",
+    "https://altru118995.sky.blackbaud.com/118995/Douglas-Pass-Full-Day-Adventure---713",
+    "https://altru118995.sky.blackbaud.com/118995/0719-Half-Day-Dino-Dig-MMQ",
+    "https://altru118995.sky.blackbaud.com/118995/Paleo-Lab-Full-Day-Adventure---722"
+  ],
+  "candidates": [
+    {
+      "title": "Rocky Mountain RepRap Festival Apr 17–18 2027",
+      "status": "qualified",
+      "url": "https://www.eventbrite.com/e/rocky-mountain-reprap-festival-2027-tickets-2003421086400",
+      "reason": "Organizer 2027 event listing confirms unique live 3D-printing maker robot competitions, no-cost public entry and age rules; April precedes family visit; local friends only; $0 for five general spectators; general-admission free tickets announced as coming soon, exact tickets inventory unknown."
+    },
+    {
+      "title": "Douglas Pass Fossil Field Expedition Jul 13 2027",
+      "status": "qualified",
+      "url": "https://altru118995.sky.blackbaud.com/118995/Douglas-Pass-Full-Day-Adventure---713",
+      "reason": "Museum-operated authorized ticket page: hands-on shale splitting for Eocene fossils and keep specimens; ages 7+, 8AM–3:30PM, $145 each/$725 five, cap16; live remaining seats unknown. Family-visit period; ~256-mile long drive."
+    },
+    {
+      "title": "Mygatt-Moore Quarry Guided Half-Day Dino Dig Jul 19 2027",
+      "status": "qualified",
+      "url": "https://altru118995.sky.blackbaud.com/118995/0719-Half-Day-Dino-Dig-MMQ",
+      "reason": "Actual Jurassic quarry access, excavation tools, paleontologist and behind-scenes lab; minimum age5 max12, $115 each/$575 family, 8AM–12:30PM; child accompanying adults required, live inventory unknown; family-visit period."
+    },
+    {
+      "title": "Dinosaur Journey Real Fossil Paleo Lab Full-Day Adventure Jul 22 2027",
+      "status": "qualified",
+      "url": "https://altru118995.sky.blackbaud.com/118995/Paleo-Lab-Full-Day-Adventure---722",
+      "reason": "Actual fossil conservation lab prep, molding, casting with experts; July22 2027, age12+ strict max10; $105 each, two adults $210; younger children cannot attend. Life only, not five-person family alert."
+    },
+    {
+      "title": "Erie Balloon Festival Jul 9–11 2027",
+      "status": "duplicate",
+      "url": "https://erieballoonfestival.com/",
+      "reason": "Already submitted in external-inbox/chatgpt/20261031T232318Z.json including $20 tethered balloon rides."
+    },
+    {
+      "title": "Brickies Creation Festival Fort Collins Jul 17 2027",
+      "status": "duplicate",
+      "reason": "Already submitted in external-inbox/chatgpt/20261120T233500Z.json."
+    },
+    {
+      "title": "CSU Little Shop of Physics Open House Mar 7 2027",
+      "status": "duplicate",
+      "reason": "Already submitted in external-inbox/chatgpt/20261117T234645Z.json."
+    },
+    {
+      "title": "Challenger Colorado Second Saturday Science Dec 12 2026",
+      "status": "duplicate",
+      "reason": "Already submitted in external-inbox/chatgpt/20261119T235433Z.json."
+    },
+    {
+      "title": "Erie Shop Small free carriage rides Nov 28 2026",
+      "status": "duplicate",
+      "reason": "Already submitted in external-inbox/chatgpt/20261031T232318Z.json."
+    },
+    {
+      "title": "Wings Over the Rockies Cockpit Demo Day Nov 21 2026",
+      "status": "duplicate",
+      "reason": "Present in October 22 existing collector reports/fullsystem-run.json historical dry-run, also past by this run; known found by collector, not delivery proof."
+    },
+    {
+      "title": "Chatfield State Park First Day 5K Jan 1 2027",
+      "status": "rejected",
+      "url": "https://cpw.state.co.us/event/events-and-festivals/2027/01/first-day-5k",
+      "reason": "Ordinary 5km race; park entry additional; no extraordinary hands-on access."
+    },
+    {
+      "title": "Colorado State Parks First Day Hikes Jan 1 2027",
+      "status": "rejected",
+      "reason": "Common annual guided hike; public park recreation not scarce or exceptional."
+    },
+    {
+      "title": "CU Boulder Sommers-Bausch Observatory weekly public open house Dec 2026",
+      "status": "rejected",
+      "reason": "Regularly repeated normal observatory session, no exceptional access or time-limited opportunity."
+    },
+    {
+      "title": "Colorado Railroad Museum routine daily train rides 2026/27",
+      "status": "rejected",
+      "reason": "Normal regular-price heritage railroad attraction; no special ride or steep discount verified."
+    },
+    {
+      "title": "Colorado Railroad Museum Polar Express 2026",
+      "status": "rejected",
+      "reason": "Ordinary seasonal commercial full-price program."
+    },
+    {
+      "title": "Park Hill Fourth of July parade Jul 4 2027",
+      "status": "rejected",
+      "reason": "Ordinary community parade; no direct rare participation demonstrated."
+    },
+    {
+      "title": "Littleton Western Welcome Week Maker/Crafter Fair Aug 21 2027",
+      "status": "rejected",
+      "reason": "Normal maker/vendor fair, limited exceptional direct participation and outside family 2027 summer period."
+    },
+    {
+      "title": "Denver Civic Center winter public stargazing 2026",
+      "status": "rejected",
+      "reason": "Normal relatively frequent paid astronomy experience; limited special access beyond routine viewing."
+    },
+    {
+      "title": "Summit County library free gingerbread making Dec 5 2026",
+      "status": "rejected",
+      "reason": "Standard free small seasonal library craft event, no unusual value."
+    },
+    {
+      "title": "Denver regional science fair Feb 19 2027",
+      "status": "rejected",
+      "reason": "Mostly student presentations and explanation, no confirmed public unusually valuable practical activity."
+    },
+    {
+      "title": "Rocky Mountain Star Stare Jun 30–Jul 4 2027",
+      "status": "held",
+      "url": "https://rmss.org/",
+      "reason": "Official 2027 dates published, but linked fee page is for 2026; 2027 registration redirects to inaccessible rmss.app, so live eligibility/fees/5-person total unknown."
+    },
+    {
+      "title": "EAA Chapter 1627 Boulder Young Eagles free flight 2027",
+      "status": "held",
+      "url": "https://chapters.eaa.org/eaa1627/young-eagles",
+      "reason": "Rare free airplane rides children 8–17 but published chapter calendar is 2026 only; no independently confirmed 2027 date/slots."
+    },
+    {
+      "title": "CSU Spur summer 2027 hands-on youth camps",
+      "status": "held",
+      "url": "https://csuspur.org/camps/",
+      "reason": "Jan 2027 registration opening indicated; 2027 specific dated camp, price, eligibility not yet verified."
+    },
+    {
+      "title": "Colorado Railroad Museum SCFD 2027 special free admission days",
+      "status": "held",
+      "reason": "Organizer promotes occasional free-access days but 2027 dates/qualifying riding arrangements not yet published."
+    },
+    {
+      "title": "GoPro Mountain Games Vail June 10–13 2027 special free kid participation",
+      "status": "held",
+      "url": "https://mountaingames.com/",
+      "reason": "Large sport festival outside family visit, but specific exceptional free publicly bookable activity and price not independently verified; no active alert."
+    }
+  ],
+  "collector_comparison": "Fetched current config/sources.json (71 sources, 55 enabled), config/queries.json and docs/SEARCH_WORKLOAD_METRICS.md, current external-inbox/chatgpt directory (35 existing files before this run), latest ChatGPT run logs including 20261121T234705Z and 2026-10-22 historical reports/fullsystem-run.json evidence. GitHub code searches for 'RepRap', 'RMRRF', 'Mygatt-Moore', 'Paleo Lab', 'Dinosaur Journey', 'Fruita', '2027-07-19', '2027-07-13', '2027-04-17' returned no past indexed results, so events appear new to accessible ChatGPT submission/history; this does NOT prove a collector or live Worker database miss. Erie Balloon 2027 & Erie carriage 2026 confirmed existing 20261031T232318Z.json; other duplicates verified via existing path/log records. Only collector-discovered item evidenced is Wings cockpit 2026 in an older dry-run report; no individual dispatch receipts accessible, so delivered count=0. Four qualified events submitted and fetch_file read-back matched exact content at external-inbox/chatgpt/20261122T234846Z.json; workflow `.github/workflows/external-inbox.yml` remains unchanged.",
+  "source_and_keyword_improvements": [
+    "Follow the official Museums of Western Colorado Altru Blackbaud ticket catalog by year and day-specific URLs: https://altru118995.sky.blackbaud.com/118995/ and https://museumsofwesternco.org/dino-digs-and-adventures/; tickets show actual July 2027 dig dates/ages/costs while museum overview still discusses 2026, so date-scoped parsing and season mismatch handling matter. Avoid falsely treating 2026 overview as cancellation of newly published 2027 ticket listings.",
+    "Add independent official event discovery keywords for 'Fruita paleo quarry dig 2027', 'Mygatt-Moore quarry fossil excavation', 'Douglas Pass fossil expedition July', 'Paleo Lab hands-on fossil preparation', with minimum age, child chaperone, and five-person total calculations. Preserve distance/western Colorado rare-experience exceptions.",
+    "Monitor organizer's https://rockymountainreprapfestival.com/ and official eventbrite organizer listings for public maker/battlebot festival dated announcements, but verify interactive access and avoid routine commercial trade shows.",
+    "Monitor rmss.org 2027 fee/registration opening separately and EAA Chapter 1627 2027 Young Eagles rally with actually public seats and age, avoiding premature alert on old fee pages.",
+    "Do not change existing collector code or DELIVERY_MODE=all, owner approval, per-person place/period filters, US Worker/TG routing; Claude retains code improvements."
+  ],
+  "notes": "This independent run began 2026-11-22T23:44:38Z. 68 web search requests comprising exactly the listed 68 text queries, 0 known failed web search calls. 29 explicit web open/click attempts (27 usable, 2 failed redirects); searches/grep/find/GitHub file accesses are not counted as page-read opens. 14 distinct event or relevant organizer detailed pages opened and verified as listed. Counts cover 25 explicitly screened named candidate opportunities, not all keyword result snippets. 4 unusually valuable, officially dated 2027 opportunities filed; 3 during anticipated summer 2027 Colorado family visit, 1 April 2027 for local friends. One Life event ages12+ should not be sent as all-five child-eligible. Fuel, travel, lodging extra and paid-event available slots unknown. No US Worker subscriber-level acceptance or Telegram send receipt verified; 0 delivered proved. Historical collector finding does not equal proof of live database. Subscription remaining usage unknown. No code changes and no direct Telegram API."
+}
