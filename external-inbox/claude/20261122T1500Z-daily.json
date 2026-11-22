@@ -1,0 +1,101 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-22T14:41:55Z",
+  "finished_at": "2026-11-22T15:00:00Z",
+  "searches": 8,
+  "queries": [
+   "Aurora Colorado holiday lighting festival 2026 free",
+   "Lakewood Colorado holiday event kids free December 2026 Belmar",
+   "Northglenn Federal Heights Brighton holiday parade tree lighting 2026",
+   "Children's Museum of Denver free day January 2027 OR December 2026",
+   "Butterfly Pavilion Westminster free day 2026 December",
+   "Rocky Mountain Arsenal National Wildlife Refuge winter program kids December 2026 free",
+   "Denver New Year's Eve fireworks family early 2026 free kids noon year's eve",
+   "Colorado sledding ice skating free rink Denver metro 2026-27 season opening"
+  ],
+  "urls_attempted": 4,
+  "urls_ok": 0,
+  "urls": [
+   "https://www.auroragov.org/lights",
+   "https://www.lakewoodco.gov/Local-Government/Departments/Community-Resources/Parks-Forestry-and-Open-Space/Park-Programs-and-Events/Winter-Solstice-Celebration",
+   "https://lodo.org/event/mcgregor-skate-grand-opening-tree-lighting/",
+   "https://www.denver.org/milehighholidays/holiday-weekends/new-years-eve/"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 10,
+  "excluded": 6,
+  "excluded_reasons": {
+   "date_not_posted_2026": 3,
+   "no_free_day_found": 2,
+   "paid_or_ticketed": 1
+  },
+  "notes": "Claude 독립 검색(예약, 개정 규칙). WebFetch 4건 모두 이 환경의 DNS 오류(getaddrinfo ENOTFOUND)로 실패해 verified:false. 제외: 브라이튼 점등·퍼레이드·레이크우드 라이츠·스카이라인 무료 링크(2026 날짜 미공지), 어린이박물관·나비관(6주 안 무료일 없음), 벨마 트리 점등(유료 표기)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-22T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Aurora Holiday Tree Lighting & Merry Makers Market 2026",
+   "url": "https://www.auroragov.org/lights",
+   "start_date": "2026-12-08",
+   "time": "Market 4-8 p.m.; tree lighting 5-7 p.m.",
+   "location": "Aurora Municipal Center Great Lawn, 15151 E Alameda Pkwy, Aurora",
+   "cost": "Free",
+   "description": "City of Aurora's free holiday tree lighting with activities, treats, performances, Santa and Anna & Elsa appearances, plus a free makers market (2026 date from event-platform listing; confirm on the city page).",
+   "special_reason": "연 1회 오로라 시 무료 연말 점등식(산타·엘사 등장)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-22T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Winter Solstice Celebration 2026 - Bear Creek Lake Park",
+   "url": "https://www.lakewoodco.gov/Local-Government/Departments/Community-Resources/Parks-Forestry-and-Open-Space/Park-Programs-and-Events/Winter-Solstice-Celebration",
+   "start_date": "2026-12-21",
+   "time": "6-8 p.m.",
+   "location": "Bear Creek Lake Park, Lakewood",
+   "cost": "",
+   "description": "City of Lakewood's winter solstice evening celebration at Bear Creek Lake Park (cost not stated in search results).",
+   "special_reason": "연 1회 동지 야간 공원 축제"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-22T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "McGregor Skate Grand Opening & Tree Lighting 2026",
+   "url": "https://lodo.org/event/mcgregor-skate-grand-opening-tree-lighting/",
+   "start_date": "2026-11-27",
+   "time": "1-8 p.m.",
+   "location": "McGregor Square, 1901 Wazee St, Denver (LoDo)",
+   "cost": "Free to attend; skate rental extra",
+   "description": "Season opening of the McGregor Square ice rink with a tree lighting.",
+   "special_reason": "연 1회 도심 스케이트장 개장·점등식"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-22T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "New Year's Eve fireworks on 16th Street, Downtown Denver (Dec 31, 2026)",
+   "url": "https://www.denver.org/milehighholidays/holiday-weekends/new-years-eve/",
+   "start_date": "2026-12-31",
+   "time": "9 p.m. and midnight",
+   "location": "16th Street, Downtown Denver",
+   "cost": "Free",
+   "description": "Downtown Denver's two annual New Year's Eve fireworks shows; the 9 p.m. show suits families with kids. 2026 schedule to confirm on the official page.",
+   "special_reason": "연 1회 도심 무료 새해 불꽃놀이(9시 회차 가족용)"
+  }
+ ]
+}
