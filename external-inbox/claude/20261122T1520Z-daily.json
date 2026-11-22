@@ -1,0 +1,35 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-22T15:15:00Z",
+  "finished_at": "2026-11-22T15:20:00Z",
+  "searches": 0,
+  "queries": [],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "urls": [],
+  "official_pages_checked": 0,
+  "candidates": 1,
+  "excluded": 0,
+  "excluded_reasons": {},
+  "notes": "재제출: 같은 날 20261122T1500Z 제출의 denver.org 페이지가 처리 단계에서 403이라 같은 기관(Visit Denver)의 다른 공식 주소로 다시 낸다. 새 검색 없음."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-22T15:20:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "New Year's Eve fireworks on 16th Street, Downtown Denver (Dec 31, 2026)",
+   "url": "https://visitdenver.com/milehighholidays/holiday-weekends/new-years-eve/",
+   "start_date": "2026-12-31",
+   "time": "9 p.m. and midnight",
+   "location": "16th Street, Downtown Denver",
+   "cost": "Free",
+   "description": "Downtown Denver's two annual New Year's Eve fireworks shows; the 9 p.m. show suits families with kids. 2026 schedule to confirm on the official page.",
+   "special_reason": "연 1회 도심 무료 새해 불꽃놀이(9시 회차 가족용)"
+  }
+ ]
+}
