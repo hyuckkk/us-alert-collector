@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-22T23:48:46.126Z",
+  "test": false,
+  "events": [
+    {
+      "title": "Rocky Mountain RepRap Festival 2027 – Live 3D Printing and Robot Competitions",
+      "url": "https://www.eventbrite.com/e/rocky-mountain-reprap-festival-2027-tickets-2003421086400",
+      "start_date": "2027-04-17",
+      "end_date": "2027-04-18",
+      "time": "Saturday April 17 9:00 AM–5:00 PM; Sunday April 18 9:00 AM–4:00 PM MDT",
+      "location": "Pedersen Toyota Center, The Ranch Events Complex, 5280 Arena Circle, Loveland, CO 80538, USA",
+      "cost": "General public admission FREE: $0 for five; maker exhibitor table price TBA, food and travel extra; organizer says general-admission tickets coming soon, so live booking cannot be claimed",
+      "age": "General public, including children, under 16 with adult supervision; no public admission residency requirement stated",
+      "audience": "family",
+      "description": "Unusual annual maker gathering with live demonstrations of many kinds of 3D printers and community builds, live 3D-printed Death Racers/TF Dragsters/BotRumble/PLAnt robot competitions, and show-only exhibits across 36,000 sq ft. Unlike routine commercial maker lessons; free spectator entry. Official organizer site https://rockymountainreprapfestival.com/ confirms Apr 17–18 2027; official Eventbrite listing verifies hours/age/free general admission. Individual guest hands-on workshop access not promised. Near Westminster (~46 road miles to Loveland). This April 2027 date precedes family's late-June 2027 arrival; local friends in Colorado only. Not found in accessible past ChatGPT inbox/research search, but Worker DB miss unproven."
+    },
+    {
+      "title": "Douglas Pass Full-Day Fossil Field Expedition – Discover and Keep Plant/Insect Fossils",
+      "url": "https://altru118995.sky.blackbaud.com/118995/Douglas-Pass-Full-Day-Adventure---713",
+      "start_date": "2027-07-13",
+      "end_date": "2027-07-13",
+      "time": "Tuesday July 13, 8:00 AM–3:30 PM MDT; 8:00 AM check-in at Dinosaur Journey Museum",
+      "location": "Dinosaur Journey Museum departure, 550 Jurassic Court, Fruita, CO 81521, USA; field expedition to Douglas Pass, Colorado",
+      "cost": "$145 per paid participant, 2 adults + 3 eligible children = $725 for five; transportation/lodging/optional meals extra; no discount advertised and live five-ticket inventory not verified",
+      "age": "Ages 7+; those 16 and under must be accompanied by an adult; minimum 4/maximum 16 total participants, open to public through organizer ticket page",
+      "audience": "family",
+      "description": "Rare actual paleontological field activity instead of museum viewing: split 50-million-year Eocene shale for fossils of leaves and insects at remote high-altitude Douglas Pass, keep up to five found plant/invertebrate specimens per participant, fossil preparation lab tour. Organizing Museums of Western Colorado ticket page specifies 2027 weekday matching Jul 13 2027, 8AM–3:30PM, 7+ and $145 each. Family visit period July 2027; long trip from Westminster (~256 road miles to Fruita), outdoor at ~8,000ft with no shade. Registration page exists, but completed purchase and remaining capacity not independently verified."
+    },
+    {
+      "title": "Mygatt–Moore Quarry Half-Day Dino Dig – Guided Real Jurassic Fossil Excavation",
+      "url": "https://altru118995.sky.blackbaud.com/118995/0719-Half-Day-Dino-Dig-MMQ",
+      "start_date": "2027-07-19",
+      "end_date": "2027-07-19",
+      "time": "Monday July 19, 8:00 AM–12:30 PM MDT; 8:00 AM museum orientation",
+      "location": "Dinosaur Journey Museum departure, 550 Jurassic Court, Fruita, CO 81521, USA; Mygatt–Moore Quarry excavation site, Colorado",
+      "cost": "$115 per paid participant, 2 adults + 3 eligible children = $575 for five; travel/lodging extra, no advertised discount; live five-ticket inventory unverified",
+      "age": "Ages 5+; those 16 and under must be accompanied by an adult; minimum 3/maximum 12 total participants, public ticketing",
+      "audience": "family",
+      "description": "Direct access to genuine Mygatt–Moore Jurassic fossil excavation with professional paleontologists, field tools and training, potentially uncovering Apatosaurus or Allosaurus bones, plus behind-the-scenes fossil preparation laboratory tour. Distinct from routine museum admissions or paid pretend fossil dig; capped at only 12 participants. Museum's authorized 2027 ticket page gives date, 8AM–12:30PM, ages 5+, $115 per person, but does not certify five seats still available. For family visit July 2027, long road trip (~256 mi each way Westminster–Fruita); shade tarps offered but outdoor rocky/hot area. Other separate sessions exist, avoid duplicating same program."
+    },
+    {
+      "title": "Dinosaur Journey Paleo Lab Full-Day Adventure – Work with Real Fossil Preparation Tools",
+      "url": "https://altru118995.sky.blackbaud.com/118995/Paleo-Lab-Full-Day-Adventure---722",
+      "start_date": "2027-07-22",
+      "end_date": "2027-07-22",
+      "time": "Thursday July 22, 8:00 AM–3:00 PM MDT",
+      "location": "Dinosaur Journey Fossil Preparation Laboratory, Dinosaur Journey Museum, 550 Jurassic Court, Fruita, CO 81521, USA",
+      "cost": "$105 per eligible participant; two qualifying adults = $210; hypothetical five eligible people $525, but under-12 children cannot join, so a family-five visit may NOT be booked for all. Travel/lodging extra and live capacity unknown",
+      "age": "Strict minimum age 12; participants 16 and under must attend with a paying adult; minimum 3/maximum 10 participants, open through public museum ticket page",
+      "audience": "life",
+      "description": "Rare specialist working-laboratory access and practical fossil conservation under paleontologists: mechanical prep of authentic fossil bone, mold/casting, painting replicas and careful cleaning for an entire day. Official museum ticket page explicitly dated July 22, 2027, 8AM–3PM with $105 per person and strict ages 12+. Not appropriate for younger children; Life/adult activity, do not market as a five-person children's family event. Small max 10 places; min 3 group size to run. July 2027 visit period; Westminster to Fruita ~256 road miles. Availability unproven."
+    }
+  ]
+}
