@@ -2,7 +2,7 @@
   "schema": 1,
   "actor": "chatgpt",
   "started_at_utc": "2026-11-22T23:44:38Z",
-  "finished_at_utc": "2026-11-22T23:49:34.143Z",
+  "finished_at_utc": "2026-11-22T23:50:03.281Z",
   "search_requests": 68,
   "queries": [
     "Colorado 2027 air force base public open house air show 2027 Buckley Peterson Schriever public",
@@ -75,13 +75,14 @@
     "Westminster Colorado to Loveland Colorado driving distance miles"
   ],
   "failed_searches": 0,
-  "url_read_attempts": 29,
+  "url_read_attempts": 30,
   "url_read_successes": 27,
-  "url_read_failures": 2,
-  "failed_page_reads": 2,
+  "url_read_failures": 3,
+  "failed_page_reads": 3,
   "url_read_failed_details": [
     "RMSS 2027 registration link redirects to rmss.app blocked (HTTP 500)",
-    "Organizer RMRRF link redirects to Eventbrite affiliate URL blocked (HTTP 500); canonical organizer Eventbrite detail URL separately opened successfully"
+    "Organizer RMRRF link redirects to Eventbrite affiliate URL blocked (HTTP 500); canonical organizer Eventbrite detail URL separately opened successfully",
+    "Attempted unsupported guessed Blackbaud category alias /Dino-Digs-and-Adventures returned HTTP 500; actual official catalog had been previously opened successfully using source link"
   ],
   "official_detail_verified": 14,
   "official_detail_verified_urls": [
@@ -261,5 +262,5 @@
     "Monitor rmss.org 2027 fee/registration opening separately and EAA Chapter 1627 2027 Young Eagles rally with actually public seats and age, avoiding premature alert on old fee pages.",
     "Do not change existing collector code or DELIVERY_MODE=all, owner approval, per-person place/period filters, US Worker/TG routing; Claude retains code improvements."
   ],
-  "notes": "This independent run began 2026-11-22T23:44:38Z. 68 web search requests comprising exactly the listed 68 text queries, 0 known failed web search calls. 29 explicit web open/click attempts (27 usable, 2 failed redirects); searches/grep/find/GitHub file accesses are not counted as page-read opens. 14 distinct event or relevant organizer detailed pages opened and verified as listed. Counts cover 25 explicitly screened named candidate opportunities, not all keyword result snippets. 4 unusually valuable, officially dated 2027 opportunities filed; 3 during anticipated summer 2027 Colorado family visit, 1 April 2027 for local friends. One Life event ages12+ should not be sent as all-five child-eligible. Fuel, travel, lodging extra and paid-event available slots unknown. No US Worker subscriber-level acceptance or Telegram send receipt verified; 0 delivered proved. Historical collector finding does not equal proof of live database. Subscription remaining usage unknown. No code changes and no direct Telegram API."
+  "notes": "This independent run began 2026-11-22T23:44:38Z. 68 web search requests comprising exactly the listed 68 text queries, 0 known failed web search calls. 30 explicit web open/click attempts (27 usable, 3 failed including guessed incorrect category URL); searches/grep/find/GitHub file accesses are not counted as page-read opens. 14 distinct event or relevant organizer detailed pages opened and verified as listed. Counts cover 25 explicitly screened named candidate opportunities, not all keyword result snippets. 4 unusually valuable, officially dated 2027 opportunities filed; 3 during anticipated summer 2027 Colorado family visit, 1 April 2027 for local friends. One Life event ages12+ should not be sent as all-five child-eligible. Fuel, travel, lodging extra and paid-event available slots unknown. No US Worker subscriber-level acceptance or Telegram send receipt verified; 0 delivered proved. Historical collector finding does not equal proof of live database. Subscription remaining usage unknown. No code changes and no direct Telegram API."
 }
