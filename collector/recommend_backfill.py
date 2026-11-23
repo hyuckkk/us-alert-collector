@@ -47,6 +47,8 @@ def main(argv=None) -> int:
     ap.add_argument("--bots", default="life,family,kids")
     ap.add_argument("--only-sent", action="store_true")
     ap.add_argument("--skip-done", action="store_true", help="이미 판정이 있는 행사는 건너뜀")
+    ap.add_argument("--upcoming", action="store_true", help="오늘 이후 날짜가 남은 행사만(지난 행사·이미 보낸 옛 알림 재평가 생략)")
+    ap.add_argument("--chunk", type=int, default=60, help="이만큼 판정할 때마다 DB 에 바로 반영(시간 초과돼도 앞부분은 남게)")
     a = ap.parse_args(argv)
     cfg = json.loads((ROOT / "config/models.json").read_text())
     usage = ai.Usage(cfg.get("prices", {}), cap=a.usd_cap if a.usd_cap and a.usd_cap > 0 else None)  # 0 이하 = 상한 없음
@@ -56,6 +58,10 @@ def main(argv=None) -> int:
     for bot in a.bots.split(","):
         events += dump(api, bot, sent=a.only_sent)
     # 실제로 보냈던 일상 봇 알림을 먼저(예산이 모자라도 재평가표는 완성되게), 그다음 가까운 날짜순
+    today = datetime.now(ZoneInfo("America/Denver")).date().isoformat()
+    if a.upcoming:
+        sent_life = {}
+        events = [e for e in events if max(str(e.get(k) or "") for k in ("end_date", "start_date", "registration_opens", "deadline")) >= today]
     seen = set()
     ordered = []
     for e in list(sent_life.values()) + sorted(events, key=lambda x: x.get("start_date") or x.get("registration_opens") or "9999"):
@@ -72,29 +78,34 @@ def main(argv=None) -> int:
             x.text = ""
         return x.text or ""
 
-    with new_client() as hc, ThreadPoolExecutor(8) as ex:
-        texts = list(ex.map(page, ordered))
     client = ai.get_client()
-    items = [({k: e.get(k) for k in SHOW}, t) for e, t in zip(ordered, texts)]
-    today = datetime.now(ZoneInfo("America/Denver")).date().isoformat()
-    ro = ai.recommend(client, cfg, items, today, usage) if items else ai.RecommendOutcome()
-    updates, rows = [], []
-    for j, e in enumerate(ordered):
-        r = ro.recs.get(j)
-        if not r:
-            continue
-        # 수집기와 같은 규칙으로 적용(특별 근거가 없으면 적극 알림으로 두지 않음)
-        x = ai.apply_recommendation({k: e.get(k) for k in SHOW}, r, texts[j] or "")
-        updates.append({"event_key": e["event_key"], **{k: x.get(k) for k in ("rec_level", "bot", "category", "rec_score", "summary_ko", "highlights",
+    updates, rows, missing = [], [], 0
+    for c0 in range(0, len(ordered), max(1, a.chunk)):
+        part = ordered[c0:c0 + max(1, a.chunk)]
+        with new_client() as hc, ThreadPoolExecutor(8) as ex:
+            texts = list(ex.map(page, part))
+        items = [({k: e.get(k) for k in SHOW}, t) for e, t in zip(part, texts)]
+        ro = ai.recommend(client, cfg, items, today, usage) if items else ai.RecommendOutcome()
+        missing += len(ro.missing)
+        new = []
+        for j, e in enumerate(part):
+            r = ro.recs.get(j)
+            if not r:
+                continue
+            # 수집기와 같은 규칙으로 적용(특별 근거가 없으면 적극 알림으로 두지 않음)
+            x = ai.apply_recommendation({k: e.get(k) for k in SHOW}, r, texts[j] or "")
+            new.append({"event_key": e["event_key"], **{k: x.get(k) for k in ("rec_level", "bot", "category", "rec_score", "summary_ko", "highlights",
                                                                               "rec_reason", "special_reason", "title_ko", "special_basis", "evidence_quote",
                                                                               "usual_alternative", "rec_blockers", "push_blocked")}})
-        rows.append({"event_key": e["event_key"], "was_bot": e.get("bot"), "was_title": e.get("title_ko") or e.get("title"), "source_id": e.get("source_id"),
-                     "sent_life": e["event_key"] in sent_life, **updates[-1]})
-    for i in range(0, len(updates), 100):
-        api._post("/admin/recommend-update", {"items": updates[i:i + 100]})
+            rows.append({"event_key": e["event_key"], "was_bot": e.get("bot"), "was_title": e.get("title_ko") or e.get("title"), "source_id": e.get("source_id"),
+                         "sent_life": e["event_key"] in sent_life, **new[-1]})
+        for i in range(0, len(new), 100):
+            api._post("/admin/recommend-update", {"items": new[i:i + 100]})
+        updates += new
+        print(f"chunk {c0 // max(1, a.chunk) + 1}: {len(new)}/{len(part)} judged, push so far {sum(1 for r in rows if r['rec_level'] == 'push')}, usd {usage.usd:.2f}", flush=True)
     life_rows = [r for r in rows if r["sent_life"]]
     summary = {
-        "events_total": len(ordered), "judged": len(rows), "missing": len(ro.missing), "usd": round(usage.usd, 4),
+        "events_total": len(ordered), "judged": len(rows), "missing": missing, "usd": round(usage.usd, 4),
         "by_level": dict(Counter(r["rec_level"] for r in rows)), "by_bot": dict(Counter(r["bot"] for r in rows)),
         "by_category": dict(Counter(r["category"] for r in rows)),
         "moved_bot": sum(1 for r in rows if r["bot"] != r["was_bot"]),
