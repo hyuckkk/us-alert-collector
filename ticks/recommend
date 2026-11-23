@@ -1,2 +1,2 @@
-recommend 5 (2026-11-23 소유자 기준: 연례·시즌 행사는 유료·비용 미상이어도 적극 알림)
-args=--bots life,family,kids --out eval/recommend_backfill_v5.json
+recommend 5b (2026-11-23 소유자 기준 재판정, 다가오는 행사만·나눠 저장)
+args=--bots life,family,kids --upcoming --out eval/recommend_backfill_v5.json
