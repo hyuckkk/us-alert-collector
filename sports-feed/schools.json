@@ -1,0 +1,14 @@
+{
+ "version": 1,
+ "note": "Westminster 근처 고교 GoFan 학교 페이지. 맥북 ~/work/scripts/aside_sports.py 가 매일 읽어 gofan.json 을 만든다. 중학교는 2026-11-23 확인 때 GoFan 경기 없음, 초등학교는 학교 대항 경기가 사실상 없음.",
+ "schools": [
+  {"id": "standley-lake", "name": "Standley Lake High School", "level": "high", "city": "Westminster", "url": "https://gofan.co/app/school/CO16384"},
+  {"id": "westminster", "name": "Westminster High School", "level": "high", "city": "Westminster", "url": "https://gofan.co/app/school/CO5684"},
+  {"id": "legacy", "name": "Legacy High School", "level": "high", "city": "Broomfield", "url": "https://gofan.co/app/school/CO68954"},
+  {"id": "mountain-range", "name": "Mountain Range High School", "level": "high", "city": "Westminster", "url": "https://gofan.co/app/school/CO68951"},
+  {"id": "northglenn", "name": "Northglenn High School", "level": "high", "city": "Northglenn", "url": "https://gofan.co/app/school/CO11707"},
+  {"id": "horizon", "name": "Horizon High School", "level": "high", "city": "Thornton", "url": "https://gofan.co/app/school/CO16331"},
+  {"id": "pomona", "name": "Pomona High School", "level": "high", "city": "Arvada", "url": "https://gofan.co/app/school/CO16361"},
+  {"id": "thornton", "name": "Thornton High School", "level": "high", "city": "Thornton", "url": "https://gofan.co/app/school/CO5346"}
+ ]
+}

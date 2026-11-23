@@ -105,6 +105,47 @@ function rowAsCalendar(e, r) {
     special: !!e.sports_special_verified
   };
 }
+export const SCHOOL_FEED_URL = "https://raw.githubusercontent.com/hyuckkk/us-alert-collector/main/sports-feed/gofan.json";
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const s = (v, n = 200) => String(v ?? "").replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, n);
+export async function schoolFeed(env, fetcher = fetch) {
+  try {
+    const r = await fetcher(env.SCHOOL_FEED_URL || SCHOOL_FEED_URL, { cf: { cacheTtl: 900, cacheEverything: true } });
+    if (!r.ok) return { games: [], error: `HTTP ${r.status}` };
+    const d = await r.json();
+    const games = (Array.isArray(d.games) ? d.games : []).filter((g) => g && DATE_RE.test(String(g.date)) && g.home && g.away).slice(0, 3000);
+    return { games, updated: d.updated || null };
+  } catch (e) {
+    return { games: [], error: String(e && e.message || e).slice(0, 120) };
+  }
+}
+export function feedAsCalendar(g) {
+  const level = /^(elementary|middle|high)$/.test(g.level) ? g.level : "high";
+  const team = s(g.team_level, 60);
+  const sportRaw = s(g.sport, 60);
+  const e = { title: sportRaw, tags: [] };
+  const home = s(g.home, 80), away = s(g.away, 80);
+  const url = /^https:\/\//.test(String(g.url || "")) ? s(g.url, 500) : "";
+  return {
+    id: "gofan:" + [g.date, home, away, sportRaw, team].join("|").toLowerCase().replace(/\s+/g, "-").slice(0, 180),
+    date: g.date,
+    end_date: DATE_RE.test(String(g.end_date || "")) ? g.end_date : g.date,
+    grade: level,
+    sport: sportName(e),
+    title: `${home} vs ${away}${sportRaw ? " · " + sportRaw : ""}${team ? " " + team : ""}`,
+    home, away,
+    time: s(g.time, 40) || "시간 미확인",
+    location: s(g.location) || s(g.school) || "장소 미확인",
+    city: s(g.city, 60),
+    cost: s(g.cost, 80) || "입장료 미확인",
+    price: costClass(g.cost),
+    url,
+    org: s(g.school, 120),
+    source: "gofan",
+    verification: "GoFan 학교 페이지(Aside 확인)",
+    special: false
+  };
+}
 export async function sportsEvents(env, url) {
   const now = denverToday();
   const start = url.searchParams.get("month") || now.slice(0, 7);
@@ -127,6 +168,18 @@ export async function sportsEvents(env, url) {
     seen.add(key);
     events.push(rec);
   }
+  // 초·중·고 경기: 맥북 Aside 가 GoFan 학교 페이지를 매일 읽어 저장소 sports-feed/gofan.json 에 올린다(학교 사이트·GoFan 은 서버에서 403·빈 화면).
+  const feed = await schoolFeed(env);
+  for (const g of feed.games) {
+    if (!g.date || g.date < start + "-01" || g.date >= end) continue;
+    const rec = feedAsCalendar(g);
+    const key = [rec.date, rec.title.toLowerCase(), rec.location.toLowerCase()].join("|");
+    const pair = [rec.date, ...[rec.home, rec.away].map((x) => x.toLowerCase()).sort(), rec.sport].join("|");
+    if (seen.has(key) || seen.has(pair)) continue;
+    seen.add(key); seen.add(pair);
+    events.push(rec);
+  }
+  events.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
   return new Response(JSON.stringify({ ok: true, month: start, through: monthShift(start, 1), generated_at: new Date().toISOString(), events, inspected: rows.length, latest_record_changed: rows.map((x) => x.last_changed).filter(Boolean).sort().pop() || null,
     limit_reached: rows.length >= 3500, coverage: "현재 수집된 공식 일정 중 날짜·학교·종목·경기로 식별되는 항목만 표시됩니다. 전체 초·중·고 경기 수집을 보장하지 않습니다." }), { headers: CORS });
 }
@@ -147,7 +200,7 @@ dialog{border:0;border-radius:18px;width:min(520px,94vw);padding:24px;box-shadow
 <section class="filters" aria-label="경기 필터"><fieldset><legend>학교급</legend><div class="chips" id="grades"></div></fieldset><fieldset><legend>종목</legend><select id="sports"><option value="all">모든 종목</option></select></fieldset><fieldset><legend>입장료</legend><div class="chips" id="prices"></div></fieldset></section>
 <div class="toolbar"><div><strong id="status">경기 자료 불러오는 중…</strong><div class="muted" id="source-note"></div></div><div class="nav"><button id="prev" aria-label="이전 달">‹</button><span id="period"></span><button id="next" aria-label="다음 달">›</button><button id="reset">이번 달</button></div></div>
 <div id="months" class="months"></div><section class="day-panel" id="details"><h3>날짜를 선택해 주세요</h3><p class="subtitle">달력의 날짜를 누르면 해당 경기의 팀·시각·장소를 볼 수 있습니다.</p></section>
-<p class="notice">* 공개된 공식 일정 중 경기로 식별할 수 있는 자료만 보여줍니다. 수집되지 않은 학교·종목은 빈 날짜로 보일 수 있습니다. 무료/유료가 확인되지 않은 경기는 ‘요금 미확인’으로 구분합니다. 경기 시간·장소·입장료는 변경될 수 있으므로 방문 전에 공식 링크를 확인해 주세요.</p>
+<p class="notice">* 공개된 공식 일정 중 경기로 식별할 수 있는 자료만 보여줍니다. 고교 경기는 Westminster 근처 고교 8곳의 GoFan 홈경기입니다(매일 갱신). 수집되지 않은 학교·종목은 빈 날짜로 보일 수 있습니다. 무료/유료가 확인되지 않은 경기는 ‘요금 미확인’으로 구분합니다. 경기 시간·장소·입장료는 변경될 수 있으므로 방문 전에 공식 링크를 확인해 주세요.</p>
 </main><dialog id="modal"><div id="modal-body"></div><div class="actions"><button id="close">닫기</button><a id="official" target="_blank" rel="noopener noreferrer" href="#">공식 일정 확인 ↗</a></div></dialog><script>
 (function(){
 "use strict";
