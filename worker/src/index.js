@@ -560,7 +560,7 @@ export default {
     const p = url.pathname;
 
     if (p === "/health") return json({ ok: true, build: BUILD });
-    if (p === "/sports" && request.method === "GET") return sportsPage();
+    if (p === "/sports" && request.method === "GET") return sportsPage(env);
     if (p === "/sports/events" && request.method === "GET") return sportsEvents(env, url);
 
     const hook = p.match(/^\/hook\/(life|family|kids)$/);
