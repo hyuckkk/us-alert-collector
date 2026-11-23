@@ -413,6 +413,7 @@ This editorial policy is the purpose of the service and applies to all three cha
 
 THE KEY QUESTION: "Is this just an ordinary product or schedule that anyone can buy or attend at its normal price on another day?" If yes, it is NOT push, however it is advertised.
 PUSH is for opportunities that would be a pity to miss: experiences normally impossible, publicly funded or sponsored programs much cheaper than usual or free, scarce quotas/lotteries/permits, genuinely rare one-off events, and hands-on experiences.
+OWNER STANDARD (same as the owner's Korean alerts): the owner loves events. Annual or seasonal EVENTS are wanted - a city/town/county/park district/library/school/university festival, parade, fireworks, tree lighting, holiday market, county fair, rodeo, Halloween or holiday community event, cultural day - and also annual seasonal events by museums, zoos, gardens or heritage railways (holiday light festivals, a holiday train that runs a few weeks a year). Free or paid does not matter for these, and an unstated price is NOT a reason to withhold push. What is NOT wanted is the routine product of a commercial business or studio, sold the same way week after week (classes, drop-ins, workshops, ordinary shows).
 Prefer direct participation (riding, making, trying, entering a closed facility, joining a community event) over passive listening. The audience does not follow long spoken English well.
 
 Fill these fields for every item:
@@ -421,7 +422,7 @@ Fill these fields for every item:
     public_subsidy_price - a city/county/state/school/public agency/university funds it so it is free or far below the usual market price for the same thing;
     free_limited - free tickets/admission days with limited supply (e.g. museum or zoo free days, first-come free tickets);
     scarce_quota_or_lottery - permits, lotteries, timed-entry or registrations with a small quota or a short window;
-    rare_one_off - a genuinely rare event (once a year or less, short season, pop-up) whose core is an experience you cannot normally get;
+    rare_one_off - a genuinely rare event (once a year or less, short season, pop-up) whose core is an experience you cannot normally get; this INCLUDES every annual/seasonal event in the OWNER STANDARD (a public body's yearly festival, parade, lighting, fair or holiday event; a yearly light festival or holiday train), paid or free - quote the words that show it is that event (e.g. "Annual", "WinterFest", "Parade of Lights", "holiday lighting");
     school_community_nonregular - a non-regular school/university community event the public can join or watch (e.g. district/regional tournament, school field day, student-run festival, community engagement day);
     none - no such basis.
 - evidence_quote: a short phrase copied EXACTLY (verbatim, original language) from the source text that proves special_basis (e.g. "free admission", "open to the public for one day only", "limited to 30 participants", "funded by SCFD"). Empty if none. Never paraphrase; never invent.
@@ -435,7 +436,7 @@ Fill these fields for every item:
     civic_admin - council/board/commission meetings, hearings, administrative services, drug take-back, recycling drop-off;
     age_or_eligibility_mismatch - toddler/baby-only, senior-only, members/staff/students-only, residents-only that the audience cannot join, or ages that do not fit the household;
     ordinary_open_facility - a facility, museum, park or gallery that is simply open as usual;
-    promo_wording_only - the only "special" claim is marketing wording ("special", "one time", "limited", "exclusive", "reservation required", "small group") with no verified scarcity, price advantage or access;
+    promo_wording_only - the only "special" claim is marketing wording ("special", "one time", "limited", "exclusive", "reservation required", "small group") with no verified scarcity, price advantage or access; never use it for an annual/seasonal event in the OWNER STANDARD;
     recurring_series - one date of a weekly or monthly recurring program (e.g. a tour every Friday).
 - level:
     push - ONLY when special_basis is not none, evidence_quote is verbatim in the source, and blockers is empty. Free alone is not enough (a library's always-free weekly meetup is not push); paid is fine if the experience itself is rare (e.g. a holiday train ride that runs only a few weeks a year).
@@ -443,7 +444,7 @@ Fill these fields for every item:
     none - not worth alerting (items such as civic_admin, pro_sports, school_sports_regular, english_listening_core, mismatched age).
     When in doubt, do not push.
 - special_reason: for push, ONE short Korean sentence stating the verified reason (e.g. "평소 비공개인 공군기지 비행장을 하루만 개방", "시 지원으로 무료, 선착순 30명"). Empty otherwise. It must follow from evidence_quote.
-- Consider the total cost for a family of five, age/residency eligibility for a stay from late June 2027 to August 2028, travel from Westminster, and pre-registration. Far places are push only when the experience is truly rare. If eligibility or total cost is unclear, say so in reason and do not push.
+- Consider the total cost for a family of five, age/residency eligibility for a stay from late June 2027 to August 2028, travel from Westminster, and pre-registration. Far places are push only when the experience is truly rare. If eligibility is unclear, say so in reason and do not push. If only the cost is unclear, an annual/seasonal event in the OWNER STANDARD is still push (say "비용 미확인" in reason); other items with unclear total cost are not push.
 - Any venue is judged on the event itself: a famous place is not a reason, and a genuinely free, publicly sponsored or restricted-access event at a famous place can still be push.
 - bot: the channel whose audience fits best. category: best fit. score 0-100 within its level.
 - title_ko: concise natural Korean title (max ~30 characters).
