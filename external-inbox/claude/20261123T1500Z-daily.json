@@ -1,0 +1,99 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-23T14:42:00Z",
+  "finished_at": "2026-11-23T15:00:00Z",
+  "searches": 8,
+  "queries": [
+   "Golden Colorado Candlelight Walk 2026 date Olde Golden Christmas",
+   "Arvada Olde Town holiday tree lighting 2026 free",
+   "Highlands Ranch Douglas County free holiday event kids December 2026",
+   "History Colorado Center free day January 2027 OR December 2026",
+   "Denver free Santa visit kids December 2026 photos free",
+   "Colorado first day hike January 1 2027 state park guided free",
+   "Commerce City Englewood Littleton holiday festival December 2026 free family",
+   "Kwanzaa Hanukkah Lunar New Year family celebration Denver free December 2026 January 2027"
+  ],
+  "urls_attempted": 3,
+  "urls_ok": 0,
+  "urls": [
+   "https://cpw.state.co.us/event/events-and-festivals/2027/01/first-day-hikes",
+   "https://cpw.state.co.us/event/guided-hike-or-walk/2027/01/first-day-hike-carpenter-peak",
+   "https://hrcaonline.org/Events/Holidays"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 12,
+  "excluded": 8,
+  "excluded_reasons": {
+   "already_submitted": 3,
+   "date_not_posted_2026": 4,
+   "adults_only": 1
+  },
+  "notes": "Claude 독립 검색(예약, 개정 규칙). WebFetch 3건 모두 이 환경의 DNS 오류(getaddrinfo ENOTFOUND)로 실패해 verified:false. 제외: 하이랜즈랜치 맨션·역사박물관 12/18·리틀턴 촛불행진(이미 제출), 골든 캔들라이트·아바다 점등·유니언역 산타·커머스시티(2026 날짜 미공지), 체리크릭 첫날 하이킹(16세 이상)."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-23T15:00:00Z",
+   "origin": "scheduled",
+   "audience": "family",
+   "recommend": "push",
+   "title": "First Day Hikes 2027 - Colorado State Parks (Jan 1, 2027)",
+   "url": "https://cpw.state.co.us/event/events-and-festivals/2027/01/first-day-hikes",
+   "start_date": "2027-01-01",
+   "location": "Colorado state parks statewide (Denver area: Roxborough, Cherry Creek, Barr Lake and others)",
+   "cost": "Hikes free in past years; state park entry pass required",
+   "age": "All ages (varies by hike)",
+   "description": "CPW's annual New Year's Day guided hikes at state parks, listed for Friday Jan 1, 2027 on CPW's events calendar.",
+   "special_reason": "연 1회 새해 첫날 주립공원 가이드 하이킹"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-23T15:00:00Z",
+   "origin": "scheduled",
+   "audience": "family",
+   "recommend": "push",
+   "title": "First Day Hike: Carpenter Peak - Roxborough State Park (Jan 1, 2027)",
+   "url": "https://cpw.state.co.us/event/guided-hike-or-walk/2027/01/first-day-hike-carpenter-peak",
+   "start_date": "2027-01-01",
+   "time": "9 a.m. - 1 p.m.",
+   "location": "Roxborough State Park, Littleton",
+   "cost": "State park entry pass required",
+   "age": "",
+   "description": "Volunteer-guided New Year's Day hike to Carpenter Peak; registration required.",
+   "special_reason": "새해 첫날 가이드 동반 산 정상 하이킹"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-23T15:00:00Z",
+   "origin": "scheduled",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Barr Lake First Day 5K run/walk (Jan 1, 2027)",
+   "url": "https://cpw.state.co.us/event/events-and-festivals/2027/01/first-day-5k",
+   "start_date": "2027-01-01",
+   "time": "10 a.m. - 12 p.m.",
+   "location": "Barr Lake State Park, Brighton",
+   "cost": "State park entry pass required",
+   "age": "All ages",
+   "description": "New Year's Day 5K run/walk around Barr Lake, open to all ages.",
+   "special_reason": "새해 첫날 가족 걷기 행사"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-23T15:00:00Z",
+   "origin": "scheduled",
+   "audience": "family",
+   "recommend": "push",
+   "title": "HRCA Hometown Holiday 2026",
+   "url": "https://hrcaonline.org/Events/Holidays",
+   "start_date": "2026-12-12",
+   "time": "noon - 5 p.m.",
+   "location": "Highlands Ranch",
+   "cost": "",
+   "age": "All ages",
+   "description": "Highlands Ranch Community Association's annual holiday festival with music and activities (cost not confirmed).",
+   "special_reason": "연 1회 하이랜즈랜치 주민 연말 축제"
+  }
+ ]
+}
