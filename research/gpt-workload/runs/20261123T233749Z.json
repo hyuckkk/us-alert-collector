@@ -1,0 +1,449 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-23T23:35:05Z",
+  "finished_at_utc": "2026-11-23T23:37:49.421Z",
+  "search_requests": 68,
+  "queries": [
+    "Colorado 2027 airshow open house airport fly in public flights July August September",
+    "Colorado 2027 summer public military open house air force academy aviation festival",
+    "Colorado December 2026 airport open house cockpit free flight Young Eagles",
+    "Colorado 2027 summer rocket launch public spectators Tripoli NAR launch",
+    "Colorado 2027 special tour power plant dam mine open house public registration",
+    "Denver Colorado December 2026 January 2027 free hands on engineering maker event kids",
+    "Colorado 2027 kids free outdoor skills camp fishing archery registration",
+    "Colorado 2027 national park lottery permit special tours Mesa Verde cliff dwelling",
+    "Colorado 2027 summer junior ranger special event reservation Great Sand Dunes",
+    "Colorado 2027 summer free youth sports clinic family registration",
+    "Colorado 2027 special train ride steam locomotive cab ride registration summer",
+    "Colorado 2027 summer festival hands on blacksmith farm heritage demonstrations free",
+    "Colorado air show 2027 schedule Colorado airport July August",
+    "Colorado 2027 airshow Pikes Peak Northern Colorado Grand Junction",
+    "Colorado 2027 rocket launch schedule public Tripoli Colorado SCORE",
+    "Denver Colorado 2027 free family open house fire station public works airport",
+    "Colorado 2027 summer open house research laboratory public tour NCAR NOAA NREL",
+    "Colorado 2027 summer festival unusual event sheepdog rodeo burro race free spectators",
+    "Colorado 2027 July August kids fishing derby free registration",
+    "Colorado 2027 July August youth aviation camp scholarship free",
+    "Colorado 2027 winter free ski clinic children December 2026",
+    "Colorado December 2026 free special museum event hands on kids Denver",
+    "Colorado December 2026 January 2027 public open house university robotics competition free spectators",
+    "Colorado 2027 summer steam locomotive special excursion engineer experience",
+    "site:denvergov.org \"Learn to Ski\" 2026 2027 Denver recreation $35",
+    "site:apm.activecommunities.com/denver \"Learn to Ski\" 2026",
+    "SCORE Southern Colorado rocketry spectators free launch Pueblo 2027",
+    "Colorado rocketry club 2027 launch spectators free NCR Mile High Mayhem",
+    "Colorado 2027 aviation camp Rocky Mountain Aero Group tuition price build fly",
+    "Colorado 2027 free youth aviation camp airport scholarship flight registration summer Denver",
+    "Colorado 2027 student robotics competition public free regional Denver FIRST",
+    "Colorado 2027 summer rodeo sheepdog trial burro race official dates free",
+    "Colorado 2027 July August special events steam train narrow gauge railroad anniversary",
+    "Colorado 2027 free outdoor skills festival kids hands on Denver camping",
+    "Denver parks recreation outdoor recreation learn to ski ride winter park 2026 2027 registration Denver residents",
+    "Denver recreation \"Learn to Ski & Ride\" \"2026\" \"35\"",
+    "SCORE rocketry Pueblo spectators welcome free launch site southern colorado rocketeers",
+    "site:score.pueblo.org spectators launch rocketry",
+    "site:score-rocketry.org spectators launch",
+    "site:ncrocketry.club spectators free FAQ launch",
+    "Colorado 2027 free flight young eagles rally site:youngeaglesday.org",
+    "Colorado 2027 free youth fishing clinic site:cpw.state.co.us",
+    "Colorado 2027 summer events free sheepdog trials official",
+    "Colorado 2027 free aviation museum open cockpit event summer",
+    "Colorado \"2027\" \"free\" \"open house\" aviation museum festival kids",
+    "Colorado \"2027\" \"free\" \"hands-on\" festival July August science",
+    "Colorado \"2027\" \"free\" \"rodeo\" July August county fair kids",
+    "Colorado \"2027\" \"free\" \"demonstrations\" July August heritage festival",
+    "Colorado 2027 free kids camp registration outdoor adventure city recreation July",
+    "Denver Colorado free special hands on events December 2026 January 2027 maker festival",
+    "Colorado 2027 July August free event public competition lumberjack mining sheepdog official festival",
+    "Colorado 2027 summer hot air balloon festival free tethered rides official",
+    "Colorado 2027 July August free kids hands on festival county fair touch a truck",
+    "Colorado 2027 summer archaeology dig public volunteer registration historic site",
+    "Colorado 2027 summer special tour wildlife bison roundup public dates",
+    "Colorado December 2026 free hands on aviation event kids airport Santa flight",
+    "Denver December 2026 January 2027 free public robotics tournament spectators Colorado school",
+    "Colorado 2027 public open house tunnel dam hydroelectric facility tour registration",
+    "Colorado Denver \"2027\" \"free\" \"robotics\" competition spectator regional FIRST official",
+    "Colorado 2027 summer festivals \"free\" \"hands-on\" kids air water science official dates",
+    "Colorado 2027 July August \"free\" \"kids\" rodeo mutton bustin registration",
+    "Colorado 2027 summer free museum admission special day railroad zoo dates",
+    "Colorado 2027 summer \"open house\" \"public\" dam mine airport",
+    "Colorado 2027 July August \"registration\" \"free\" kids outdoor festival mountain bike",
+    "LDRS 45 2027 Colorado spectator admission price public San Luis Valley rocketry",
+    "Colorado 2027 special steam train engineer for a day Cumbres Toltec railroad dates prices",
+    "Colorado 2027 national park special lottery overnight Black Canyon ranger permit 2027",
+    "Colorado 2027 public free student robotics competition Denver Colorado FIRST spectator registration"
+  ],
+  "url_read_attempts": 35,
+  "successful_page_reads": 34,
+  "failed_page_reads": 1,
+  "official_detail_verified": 27,
+  "official_detail_urls": [
+    "https://www.activekids.com/denver-co/winter-sports/skiing-classes/odr-learn-to-ski-and-ride-harvey-park-2026-110943697",
+    "https://tripolisoutherncolorado.com/tra-so-col-info-pages",
+    "https://scronline.net/",
+    "https://ncrocketry.club/about-us/launch-schedule/",
+    "https://www.rockymountainaerogroup.com/summercamp",
+    "https://www.nps.gov/meve/planyourvisit/cliff_dwelling_tours.htm",
+    "https://coloradotu.org/youthcamp/",
+    "https://ncrocketry.club/about-us/frequently-asked-questions/",
+    "https://scronline.net/flying-site/",
+    "https://scronline.net/events/",
+    "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/",
+    "https://k12summer.colostate.edu/",
+    "https://www.rockymountainaerogroup.com/youngeagles",
+    "https://bouldercounty.gov/news/left-hand-outdoor-challenge-now-accepting-applications/",
+    "https://rinoartdistrict.multipass.com/rinoful-life-2026",
+    "https://www.dmns.org/exhibitions/temporary-exhibitions/magical",
+    "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation/Activities-Programs/ARCHIVE-Activities-and-Programs/ARCHIVE-Summer-Activities/Youth-Summer-Camps/Summer-Rec-Kidz?lang_update=639295589723809895",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-exploration-of-flight/",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/",
+    "https://www.denverartmuseum.org/en/free-days-dam",
+    "https://www.dmns.org/programs-and-events/freedays/",
+    "https://coloradorailroadmuseum.org/timetable/train-rides/",
+    "https://www.lsop.colostate.edu/open-house/",
+    "https://www.slvmodelers.org/rocketry/ldrs-45",
+    "https://coloradorailroadmuseum.org/colorado-railroad-heritage-week/",
+    "https://coloradorailroadmuseum.org/colorado-crossings/",
+    "https://www.lsop.colostate.edu/sse/"
+  ],
+  "candidate_events": 53,
+  "duplicate_candidates": 4,
+  "rejected_events": 21,
+  "held_events": 28,
+  "qualified_events": 0,
+  "known_by_collector": 2,
+  "verified_collector_misses": 0,
+  "submitted_events": 0,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [],
+  "candidates": [
+    {
+      "title": "Denver Learn to Ski & Ride",
+      "status": "duplicate",
+      "reason": "Prior inbox 20261105T233900Z; subsidized youth trip, $35 per eligible Denver resident; registration listing now unavailable.",
+      "url": "https://www.activekids.com/denver-co/winter-sports/skiing-classes/odr-learn-to-ski-and-ride-harvey-park-2026-110943697"
+    },
+    {
+      "title": "Rocky Mountain Aero Group Build & Fly July 26–30 2027",
+      "status": "duplicate",
+      "reason": "Prior inbox 20261111T000415Z; current organizer page does not restate price.",
+      "url": "https://www.rockymountainaerogroup.com/summercamp"
+    },
+    {
+      "title": "RiNo-FUL Life Dec 4–6 2026",
+      "status": "duplicate",
+      "reason": "Prior inbox 20261113T235239Z.",
+      "url": "https://rinoartdistrict.multipass.com/rinoful-life-2026"
+    },
+    {
+      "title": "CSU Little Shop of Physics March 7 2027",
+      "status": "duplicate",
+      "reason": "Prior inbox 20261117T234645Z.",
+      "url": "https://www.lsop.colostate.edu/open-house/"
+    },
+    {
+      "title": "DMNS Magical Winter Nights",
+      "status": "rejected",
+      "reason": "Paid routine seasonal program; exact event already present in historical collector dry run.",
+      "url": "https://www.dmns.org/exhibitions/temporary-exhibitions/magical"
+    },
+    {
+      "title": "DAM SCFD Free Day Dec 8 2026",
+      "status": "rejected",
+      "reason": "Ordinary free museum day with no distinctive added experience confirmed; historical collector record exists.",
+      "url": "https://www.denverartmuseum.org/en/free-days-dam"
+    },
+    {
+      "title": "Santa in the Hangar Exploration of Flight",
+      "status": "rejected",
+      "reason": "Routine paid holiday museum event; no visitor aircraft ride or unusual access confirmed.",
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-exploration-of-flight/"
+    },
+    {
+      "title": "Santa in the Hangar Air & Space Museum",
+      "status": "rejected",
+      "reason": "Routine paid holiday museum event; no visitor aircraft ride or unusual access confirmed.",
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/"
+    },
+    {
+      "title": "Golden blacksmith demonstration",
+      "status": "rejected",
+      "reason": "Recurring observational demonstration; no exceptional hands-on access."
+    },
+    {
+      "title": "Cheesman Park Art Fest",
+      "status": "rejected",
+      "reason": "Ordinary art vendor festival."
+    },
+    {
+      "title": "Foxy and Shmoxy",
+      "status": "rejected",
+      "reason": "Routine museum program."
+    },
+    {
+      "title": "Create & Play",
+      "status": "rejected",
+      "reason": "Routine preschool activity."
+    },
+    {
+      "title": "Miniature holiday trees workshop",
+      "status": "rejected",
+      "reason": "Ordinary paid craft workshop."
+    },
+    {
+      "title": "Miniature holiday decorations workshop",
+      "status": "rejected",
+      "reason": "Ordinary paid craft workshop."
+    },
+    {
+      "title": "Mad Science NASA academy",
+      "status": "rejected",
+      "reason": "Ordinary paid commercial camp."
+    },
+    {
+      "title": "Mini Meisters",
+      "status": "rejected",
+      "reason": "Regular-price ski program."
+    },
+    {
+      "title": "Skyhawks trial",
+      "status": "rejected",
+      "reason": "Commercial trial, no confirmed distinctive opportunity."
+    },
+    {
+      "title": "Denver Winter Market",
+      "status": "rejected",
+      "reason": "Ordinary vendor market."
+    },
+    {
+      "title": "Cumbres anniversary 2026",
+      "status": "rejected",
+      "reason": "Past event."
+    },
+    {
+      "title": "Douglas County Fall Festival 2026",
+      "status": "rejected",
+      "reason": "Past event."
+    },
+    {
+      "title": "Great Sand Dunes Junior Ranger",
+      "status": "rejected",
+      "reason": "Routine year-round activity."
+    },
+    {
+      "title": "ENOR environmental discovery camp 2027",
+      "status": "rejected",
+      "reason": "Regular-priced outdoor day camp, grade 4–8; $350/week; sibling discount does not establish extraordinary access.",
+      "url": "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/"
+    },
+    {
+      "title": "DMNS 2027 free days",
+      "status": "rejected",
+      "reason": "Routine admission offer without distinct event verified.",
+      "url": "https://www.dmns.org/programs-and-events/freedays/"
+    },
+    {
+      "title": "Colorado Railroad Museum routine train rides",
+      "status": "rejected",
+      "reason": "Regular paid ride.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "DAM Aug 10 2027 free day",
+      "status": "rejected",
+      "reason": "Routine admission offer.",
+      "url": "https://www.denverartmuseum.org/en/free-days-dam"
+    },
+    {
+      "title": "Mesa Verde 2027 cliff dwelling tours",
+      "status": "held",
+      "reason": "2027 dates and availability not published; permits released on rolling schedule in prior season.",
+      "url": "https://www.nps.gov/meve/planyourvisit/cliff_dwelling_tours.htm"
+    },
+    {
+      "title": "RMAG June 21–25 2027 aviation camp",
+      "status": "held",
+      "reason": "Earlier session; current tuition not stated; before family-window.",
+      "url": "https://www.rockymountainaerogroup.com/summercamp"
+    },
+    {
+      "title": "Colorado Trout Unlimited youth camp June 13–19 2027",
+      "status": "held",
+      "reason": "Ages 14–18, limited places; current tuition and registration details incomplete; before family-window.",
+      "url": "https://coloradotu.org/youthcamp/"
+    },
+    {
+      "title": "SCORE July/August 2027 launches",
+      "status": "held",
+      "reason": "Schedule found; spectator fee and public access terms not sufficiently explicit.",
+      "url": "https://scronline.net/events/"
+    },
+    {
+      "title": "SCORE Chili Blaster 2027",
+      "status": "held",
+      "reason": "2027 dates and spectator terms not verified.",
+      "url": "https://scronline.net/events/"
+    },
+    {
+      "title": "NCR Dec 5 2026 launch / 2027 schedule",
+      "status": "held",
+      "reason": "Spectator price not confirmed; 2027 calendar not verified. Prior Nov 7 inbox does not establish Dec 5 duplicate.",
+      "url": "https://ncrocketry.club/about-us/launch-schedule/"
+    },
+    {
+      "title": "FIRST Pikes Peak regional 2027",
+      "status": "held",
+      "reason": "Conflicting dates, official detail returned access error; admission terms unverified."
+    },
+    {
+      "title": "FIRST Denver regional 2027",
+      "status": "held",
+      "reason": "Public spectator eligibility and fee unverified."
+    },
+    {
+      "title": "CSU Spur summer camps 2027",
+      "status": "held",
+      "reason": "Specific dates and eligibility still incomplete."
+    },
+    {
+      "title": "CSU youth sports camps",
+      "status": "held",
+      "reason": "No specific exceptional subsidized event verified.",
+      "url": "https://k12summer.colostate.edu/"
+    },
+    {
+      "title": "Colorado Railroad Museum SCFD free dates 2027",
+      "status": "held",
+      "reason": "Specific dates and special ride fee not verified.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Colorado Railroad Museum Wild West Days 2027",
+      "status": "held",
+      "reason": "Dates and price not verified.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Colorado Railroad Heritage Week 2027",
+      "status": "held",
+      "reason": "Official detail is for previous season.",
+      "url": "https://coloradorailroadmuseum.org/colorado-railroad-heritage-week/"
+    },
+    {
+      "title": "Colorado Crossings 2027",
+      "status": "held",
+      "reason": "Official detail is for previous season.",
+      "url": "https://coloradorailroadmuseum.org/colorado-crossings/"
+    },
+    {
+      "title": "LDRS 45 June 10–14 2027",
+      "status": "held",
+      "reason": "Location and public admission not confirmed; before family-window.",
+      "url": "https://www.slvmodelers.org/rocketry/ldrs-45"
+    },
+    {
+      "title": "RMAG Young Eagles",
+      "status": "held",
+      "reason": "No dated rally and current participant terms confirmed.",
+      "url": "https://www.rockymountainaerogroup.com/youngeagles"
+    },
+    {
+      "title": "DAM Untitled Artist Takeover July 30 2027",
+      "status": "held",
+      "reason": "Specific free hands-on program not confirmed.",
+      "url": "https://www.denverartmuseum.org/en/free-days-dam"
+    },
+    {
+      "title": "CSU Spring Science Extravaganza 2027",
+      "status": "held",
+      "reason": "Official page old; no 2027 event confirmed.",
+      "url": "https://www.lsop.colostate.edu/sse/"
+    },
+    {
+      "title": "VEX Grizzly Grapple Feb 6 2027",
+      "status": "held",
+      "reason": "Team fee is not spectator fee; public access unclear."
+    },
+    {
+      "title": "Pikes Peak airshow 2027",
+      "status": "held",
+      "reason": "No new dated official 2027 opportunity verified."
+    },
+    {
+      "title": "Boulder County Left Hand Outdoor Challenge",
+      "status": "held",
+      "reason": "2026–27 applications closed; next cycle not announced.",
+      "url": "https://bouldercounty.gov/news/left-hand-outdoor-challenge-now-accepting-applications/"
+    },
+    {
+      "title": "CPW youth fishing 2027",
+      "status": "held",
+      "reason": "Specific current dates not verified."
+    },
+    {
+      "title": "Colorado State Fair 2027",
+      "status": "held",
+      "reason": "Specific exceptional discount/activity not verified."
+    },
+    {
+      "title": "Leadville Boom Days 2027",
+      "status": "held",
+      "reason": "Official dates and special activity details not verified."
+    },
+    {
+      "title": "Colorado Tartan Day 2027",
+      "status": "held",
+      "reason": "Third-party dates; official terms not fully verified."
+    },
+    {
+      "title": "Eagle rodeo 2027",
+      "status": "held",
+      "reason": "No official current special youth/public opportunity verified."
+    },
+    {
+      "title": "Boulder Creek Festival 2027",
+      "status": "held",
+      "reason": "Forecast dates rather than verified rare activity."
+    },
+    {
+      "title": "DMNS girls science March 5",
+      "status": "held",
+      "reason": "Specific public program and participation terms unverified."
+    }
+  ],
+  "comparison": {
+    "sources": 71,
+    "enabled_sources": 55,
+    "config_paths": [
+      "config/sources.json",
+      "config/queries.json"
+    ],
+    "historical_collector_report": "reports/fullsystem-run.json (20261022T004300Z dry run)",
+    "known_titles": [
+      "DMNS Magical Winter Nights",
+      "DAM SCFD Free Day Dec 8"
+    ],
+    "collector_recommendation_status": "unknown",
+    "current_operational_db": "unknown",
+    "actual_missed_count": "unknown",
+    "workflow": "external-inbox.yml",
+    "prior_inbox_files_checked": [
+      "20261105T233900Z.json",
+      "20261111T000415Z.json",
+      "20261113T235239Z.json",
+      "20261117T234645Z.json",
+      "20261026T235649Z.json"
+    ]
+  },
+  "improvements": [
+    "Watch SCORE and NCR club schedule and spectator policy together; do not infer free spectator admission from launch fee or schedule.",
+    "Monitor NPS Mesa Verde cliff dwelling tour 2027 seasonal updates and recreation.gov booking release.",
+    "Watch FIRST regional host spectator/volunteer information and venue confirmations rather than only team registration.",
+    "Watch RMAG dated Build & Fly and Young Eagles official registration/tuition updates; avoid duplicate July camp.",
+    "Monitor Colorado Railroad Museum special event schedules rather than ordinary ride calendar."
+  ],
+  "notes": "68 text search requests. Explicit web open/click attempts counted separately from in-page find and GitHub reads. Official detail count is distinct substantive organizer/authorized pages opened, not full candidate verification; two repeat reads and five non-detail/navigation/third-party pages excluded. One failed official FIRST page (403). Candidate count is deduplicated reviewed opportunities/programs, including held and rejected; group recurring schedules. No new candidate satisfies full novelty/value/eligibility/price/public-access gate. No submission or delivery attempted. Historical dry run proves two events were collected, not that they were recommended or delivered. No verified new collector miss. No code or delivery settings changed. Distances not verified for held candidates; no estimated distances or unverified costs submitted. Finish time is research completion immediately before log creation."
+}
