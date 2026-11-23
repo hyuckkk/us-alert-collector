@@ -1,14 +1,25 @@
 {
- "version": 1,
- "note": "Westminster 근처 고교 GoFan 학교 페이지. 맥북 ~/work/scripts/aside_sports.py 가 매일 읽어 gofan.json 을 만든다. 중학교는 2026-11-23 확인 때 GoFan 경기 없음, 초등학교는 학교 대항 경기가 사실상 없음.",
- "schools": [
-  {"id": "standley-lake", "name": "Standley Lake High School", "level": "high", "city": "Westminster", "url": "https://gofan.co/app/school/CO16384"},
-  {"id": "westminster", "name": "Westminster High School", "level": "high", "city": "Westminster", "url": "https://gofan.co/app/school/CO5684"},
-  {"id": "legacy", "name": "Legacy High School", "level": "high", "city": "Broomfield", "url": "https://gofan.co/app/school/CO68954"},
+ "version": 2,
+ "note": "집(북쪽 Westminster, 120th Ave 근처, Adams 12 학군) 가까운 학교 경기. 맥북 ~/work/scripts/aside_sports.py 가 매일 읽어 games.json 을 만든다. 2026-11-23 기준.",
+ "gofan_high": [
   {"id": "mountain-range", "name": "Mountain Range High School", "level": "high", "city": "Westminster", "url": "https://gofan.co/app/school/CO68951"},
+  {"id": "legacy", "name": "Legacy High School", "level": "high", "city": "Broomfield", "url": "https://gofan.co/app/school/CO68954"},
   {"id": "northglenn", "name": "Northglenn High School", "level": "high", "city": "Northglenn", "url": "https://gofan.co/app/school/CO11707"},
-  {"id": "horizon", "name": "Horizon High School", "level": "high", "city": "Thornton", "url": "https://gofan.co/app/school/CO16331"},
-  {"id": "pomona", "name": "Pomona High School", "level": "high", "city": "Arvada", "url": "https://gofan.co/app/school/CO16361"},
-  {"id": "thornton", "name": "Thornton High School", "level": "high", "city": "Thornton", "url": "https://gofan.co/app/school/CO5346"}
- ]
+  {"id": "thornton", "name": "Thornton High School", "level": "high", "city": "Thornton", "url": "https://gofan.co/app/school/CO5346"},
+  {"id": "standley-lake", "name": "Standley Lake High School", "level": "high", "city": "Westminster", "url": "https://gofan.co/app/school/CO16384"},
+  {"id": "horizon", "name": "Horizon High School", "level": "high", "city": "Thornton", "url": "https://gofan.co/app/school/CO16331"}
+ ],
+ "calendar_middle": [
+  {"id": "silver-hills-ms", "name": "Silver Hills Middle School", "level": "middle", "city": "Northglenn", "url": "https://silverhills.adams12.org/our-school/calendar"},
+  {"id": "westlake-ms", "name": "Westlake Middle School", "level": "middle", "city": "Broomfield", "url": "https://westlake.adams12.org/our-school/calendar"},
+  {"id": "northglenn-ms", "name": "Northglenn Middle School", "level": "middle", "city": "Northglenn", "url": "https://northglennm.adams12.org/our-school/calendar"},
+  {"id": "stem-lab", "name": "STEM Lab", "level": "middle", "city": "Northglenn", "url": "https://stem.adams12.org/our-school/calendar"},
+  {"id": "shadow-ridge-ms", "name": "Shadow Ridge Middle School", "level": "middle", "city": "Thornton", "url": "https://shadowridge.adams12.org/our-school/calendar"}
+ ],
+ "csal": {
+  "note": "가톨릭 학교 리그(3~8학년). Widget=3·4학년, JV=5·6학년, Varsity=7·8학년. 서버에서 바로 받는 JSON.",
+  "page": "https://www.csaldenver.org/sports/2026-27-basketball/games/0/0/0",
+  "feed": "https://doodlio.com/Home/GetLeagueGamesOptimized?leagueID=8&masterSportID=1495&conferenceID=0&divisionID=0&teamID=0&start=0&end=2483895000&placeID=0&visibility=2&mySchoolTeamsOnly=false&bracketGames=false&communityGroupID=71b627f7-a2a4-4fe1-b169-4a14137b7438&bracketID=0&scoreReports=false",
+  "near_addresses": ["900 W Midway Blvd", "3952 Cottonwood Lakes Blvd", "3050 W 76th Ave", "7320 Grant Pl"]
+ }
 }

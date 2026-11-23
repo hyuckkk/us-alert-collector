@@ -105,7 +105,7 @@ function rowAsCalendar(e, r) {
     special: !!e.sports_special_verified
   };
 }
-export const SCHOOL_FEED_URL = "https://raw.githubusercontent.com/hyuckkk/us-alert-collector/main/sports-feed/gofan.json";
+export const SCHOOL_FEED_URL = "https://raw.githubusercontent.com/hyuckkk/us-alert-collector/main/sports-feed/games.json";
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const s = (v, n = 200) => String(v ?? "").replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, n);
 export async function schoolFeed(env, fetcher = fetch) {
@@ -141,8 +141,8 @@ export function feedAsCalendar(g) {
     price: costClass(g.cost),
     url,
     org: s(g.school, 120),
-    source: "gofan",
-    verification: "GoFan 학교 페이지(Aside 확인)",
+    source: s(g.source, 30) || "gofan",
+    verification: ({ gofan: "GoFan 학교 페이지", "school-calendar": "학교 공식 달력", csal: "CSAL 가톨릭 학교 리그 일정" })[g.source] || "학교 공식 일정",
     special: false
   };
 }
@@ -168,7 +168,7 @@ export async function sportsEvents(env, url) {
     seen.add(key);
     events.push(rec);
   }
-  // 초·중·고 경기: 맥북 Aside 가 GoFan 학교 페이지를 매일 읽어 저장소 sports-feed/gofan.json 에 올린다(학교 사이트·GoFan 은 서버에서 403·빈 화면).
+  // 초·중·고 경기: 맥북이 매일 GoFan(고교)·Adams 12 학교 달력(중학)·CSAL 가톨릭 리그(3~8학년)를 읽어 sports-feed/games.json 에 올린다.
   const feed = await schoolFeed(env);
   for (const g of feed.games) {
     if (!g.date || g.date < start + "-01" || g.date >= end) continue;
@@ -200,7 +200,7 @@ dialog{border:0;border-radius:18px;width:min(520px,94vw);padding:24px;box-shadow
 <section class="filters" aria-label="경기 필터"><fieldset><legend>학교급</legend><div class="chips" id="grades"></div></fieldset><fieldset><legend>종목</legend><select id="sports"><option value="all">모든 종목</option></select></fieldset><fieldset><legend>입장료</legend><div class="chips" id="prices"></div></fieldset></section>
 <div class="toolbar"><div><strong id="status">경기 자료 불러오는 중…</strong><div class="muted" id="source-note"></div></div><div class="nav"><button id="prev" aria-label="이전 달">‹</button><span id="period"></span><button id="next" aria-label="다음 달">›</button><button id="reset">이번 달</button></div></div>
 <div id="months" class="months"></div><section class="day-panel" id="details"><h3>날짜를 선택해 주세요</h3><p class="subtitle">달력의 날짜를 누르면 해당 경기의 팀·시각·장소를 볼 수 있습니다.</p></section>
-<p class="notice">* 공개된 공식 일정 중 경기로 식별할 수 있는 자료만 보여줍니다. 고교 경기는 Westminster 근처 고교 8곳의 GoFan 홈경기입니다(매일 갱신). 수집되지 않은 학교·종목은 빈 날짜로 보일 수 있습니다. 무료/유료가 확인되지 않은 경기는 ‘요금 미확인’으로 구분합니다. 경기 시간·장소·입장료는 변경될 수 있으므로 방문 전에 공식 링크를 확인해 주세요.</p>
+<p class="notice">* 공개된 공식 일정 중 경기로 식별할 수 있는 자료만 보여줍니다. 초·중·고 경기는 북쪽 Westminster 근처 학교의 홈경기입니다: 고교 GoFan, 중학 Adams 12 학교 달력, 초등(3~6학년)·중학 CSAL 가톨릭 학교 리그(매일 갱신). 수집되지 않은 학교·종목은 빈 날짜로 보일 수 있습니다. 무료/유료가 확인되지 않은 경기는 ‘요금 미확인’으로 구분합니다. 경기 시간·장소·입장료는 변경될 수 있으므로 방문 전에 공식 링크를 확인해 주세요.</p>
 </main><dialog id="modal"><div id="modal-body"></div><div class="actions"><button id="close">닫기</button><a id="official" target="_blank" rel="noopener noreferrer" href="#">공식 일정 확인 ↗</a></div></dialog><script>
 (function(){
 "use strict";
