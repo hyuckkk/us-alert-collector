@@ -105,6 +105,11 @@ function rowAsCalendar(e, r) {
     special: !!e.sports_special_verified
   };
 }
+export const VENUES_URL = "https://raw.githubusercontent.com/hyuckkk/us-alert-collector/main/sports-feed/venues.json";
+export const venueKey = (loc, city) => `${loc || ""}|${city || ""}`.trim().toLowerCase().replace(/\s+/g, " ");
+async function venues(env, fetcher = fetch) {
+  try { const r = await fetcher(env.VENUES_URL || VENUES_URL, { cf: { cacheTtl: 900, cacheEverything: true } }); return r.ok ? await r.json() : {}; } catch { return {}; }
+}
 export const SCHOOL_FEED_URL = "https://raw.githubusercontent.com/hyuckkk/us-alert-collector/main/sports-feed/games.json";
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const s = (v, n = 200) => String(v ?? "").replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, n);
@@ -180,10 +185,12 @@ export async function sportsEvents(env, url) {
     events.push(rec);
   }
   events.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+  const geo = await venues(env);
+  for (const e of events) { const c = geo[venueKey(e.location, e.city)]; if (Array.isArray(c) && c.length === 2) { e.lat = c[0]; e.lng = c[1]; } }
   return new Response(JSON.stringify({ ok: true, month: start, through: monthShift(start, 1), generated_at: new Date().toISOString(), events, inspected: rows.length, latest_record_changed: rows.map((x) => x.last_changed).filter(Boolean).sort().pop() || null,
     limit_reached: rows.length >= 3500, coverage: "현재 수집된 공식 일정 중 날짜·학교·종목·경기로 식별되는 항목만 표시됩니다. 전체 초·중·고 경기 수집을 보장하지 않습니다." }), { headers: CORS });
 }
-const PAGE = String.raw`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Colorado | 학교·대학 스포츠 경기 달력</title><style>
+const PAGE = String.raw`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><title>Colorado | 학교·대학 스포츠 경기 달력</title><style>
 :root{font-family:system-ui,-apple-system,Segoe UI,Apple SD Gothic Neo,sans-serif;color:#172234;background:#f4f6fa}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1170px;margin:0 auto;padding:26px 18px 50px}
 h1{font-size:27px;letter-spacing:-.9px;margin:5px 0}p{margin:5px 0;line-height:1.6}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:18px}
 .eyebrow{font-size:12px;letter-spacing:1.5px;font-weight:800;color:#275899}.subtitle{color:#66738a;font-size:13px}.share{background:#fff;border:1px solid #d9e2ef;padding:10px 15px;border-radius:11px;font-size:13px;cursor:pointer}
@@ -194,12 +201,12 @@ fieldset{border:0;margin:0;padding:0;min-width:0}legend{font-size:12px;font-weig
 .day{border:1px solid transparent;background:#f6f8fb;border-radius:9px;min-height:75px;padding:6px;cursor:pointer;text-align:left;color:#364458;display:flex;flex-direction:column;gap:4px;overflow:hidden}.day:not(:disabled):hover{border-color:#96badb}.day.out{opacity:.3;cursor:default}.day.today{border-color:#a9d0f6}.day.chosen{border-color:#2c80c5;background:#ecf5ff}.day .num{font-size:12px;font-weight:750}.day .events{font-size:10px;color:#23639a;background:#dbeaf9;padding:4px;border-radius:5px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;max-width:100%}.day .more{font-size:10px;color:#6a7180}.day.noevents .num{color:#aab4c2}
 .day-panel{background:#fff;border:1px solid #dce4ef;border-radius:16px;margin-top:15px;padding:17px}.day-panel h3{margin:0 0 11px;font-size:16px}.item{border:1px solid #e2e8f0;border-radius:11px;padding:13px;margin:8px 0;cursor:pointer;display:flex;gap:12px;justify-content:space-between}.item:hover{border-color:#94bfe5;background:#fafcff}.item strong{font-size:14px}.item p{font-size:12px;color:#647286;margin-top:5px}.tag{font-size:11px;color:#275b95;background:#e9f2fc;border-radius:6px;padding:3px 7px;display:inline-block;margin-right:5px}.free{color:#20764b;background:#e5f6ed}.paid{color:#aa6320;background:#fcf0e1}.unknown{color:#727a88;background:#eff1f4}
 .notice{color:#697991;font-size:12px;line-height:1.65;margin-top:12px}.empty{color:#78879c;background:#f7f9fc;padding:25px;text-align:center;border-radius:10px;font-size:13px}
-.map{width:100%;height:240px;border:0;border-radius:12px;margin-top:16px;background:#eef2f7}.maplink{display:inline-block;margin-top:8px;font-size:13px;color:#246eac;font-weight:700}dialog{border:0;border-radius:18px;width:min(520px,94vw);padding:24px;box-shadow:0 24px 80px #142a4b55}dialog::backdrop{background:#15284690}dialog h3{margin:8px 0 18px;font-size:21px}dialog dl{display:grid;grid-template-columns:80px 1fr;gap:11px 10px;font-size:14px}dt{color:#718096}dd{margin:0;overflow-wrap:anywhere}.actions{display:flex;justify-content:flex-end;gap:9px;margin-top:22px}.actions button,.actions a{background:#eaf0f7;color:#254666;border:0;text-decoration:none;padding:10px 12px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer}.actions a{background:#246eac;color:white}
+.map{width:100%;height:240px;border:0;border-radius:12px;margin-top:16px;background:#eef2f7}.maplink{display:inline-block;margin-top:8px;font-size:13px;color:#246eac;font-weight:700}.map-panel{background:#fff;border:1px solid #dce4ef;border-radius:16px;margin-top:15px;padding:15px}.map-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}.map-head button{border:1px solid #d7e0ed;background:#f8fafc;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:13px}#gmap{height:420px;border-radius:12px;z-index:0}.map-note{color:#697991;font-size:12px;margin:8px 0 0}.pin{display:flex;align-items:center;justify-content:center;border-radius:50%;color:#fff;font-weight:800;font-size:12px;border:2px solid #fff;box-shadow:0 1px 4px #0006}.pop b{display:block;margin-bottom:4px}.pop li{margin:2px 0}.pop ul{padding-left:16px;margin:4px 0}@media(max-width:730px){#gmap{height:320px}}dialog{border:0;border-radius:18px;width:min(520px,94vw);padding:24px;box-shadow:0 24px 80px #142a4b55}dialog::backdrop{background:#15284690}dialog h3{margin:8px 0 18px;font-size:21px}dialog dl{display:grid;grid-template-columns:80px 1fr;gap:11px 10px;font-size:14px}dt{color:#718096}dd{margin:0;overflow-wrap:anywhere}.actions{display:flex;justify-content:flex-end;gap:9px;margin-top:22px}.actions button,.actions a{background:#eaf0f7;color:#254666;border:0;text-decoration:none;padding:10px 12px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer}.actions a{background:#246eac;color:white}
 @media(max-width:730px){.top{flex-direction:column}.filters{grid-template-columns:1fr}.months{grid-template-columns:1fr}.month{padding:13px}.day{min-height:64px}.day .events{font-size:9px}.wrap{padding:18px 12px}}
 </style></head><body><main class="wrap"><div class="top"><div><div class="eyebrow">COLORADO · COMMUNITY SPORTS</div><h1>학교·대학 스포츠 경기 달력</h1><p class="subtitle">초·중·고·대학 경기 | 이번 달·다음 달 | 미국 콜로라도 현지시간</p></div><button class="share" id="share">달력 링크 복사 ↗</button></div>
 <section class="filters" aria-label="경기 필터"><fieldset><legend>학교급</legend><div class="chips" id="grades"></div></fieldset><fieldset><legend>종목</legend><select id="sports"><option value="all">모든 종목</option></select></fieldset><fieldset><legend>입장료</legend><div class="chips" id="prices"></div></fieldset></section>
 <div class="toolbar"><div><strong id="status">경기 자료 불러오는 중…</strong><div class="muted" id="source-note"></div></div><div class="nav"><button id="prev" aria-label="이전 달">‹</button><span id="period"></span><button id="next" aria-label="다음 달">›</button><button id="reset">이번 달</button></div></div>
-<div id="months" class="months"></div><section class="day-panel" id="details"><h3>날짜를 선택해 주세요</h3><p class="subtitle">달력의 날짜를 누르면 해당 경기의 팀·시각·장소를 볼 수 있습니다.</p></section>
+<div id="months" class="months"></div><section class="map-panel"><div class="map-head"><strong id="map-title">경기 장소 지도</strong><button id="locate" type="button">📍 내 위치 표시</button></div><div id="gmap"></div><p class="map-note" id="map-note"></p></section><section class="day-panel" id="details"><h3>날짜를 선택해 주세요</h3><p class="subtitle">달력의 날짜를 누르면 해당 경기의 팀·시각·장소를 볼 수 있습니다.</p></section>
 <p class="notice">* 공개된 공식 일정 중 경기로 식별할 수 있는 자료만 보여줍니다. 초·중·고 경기는 북쪽 Westminster 근처 학교의 홈경기입니다: 고교 GoFan, 중학 Adams 12 학교 달력, 초등(3~6학년)·중학 CSAL 가톨릭 학교 리그(매일 갱신). 수집되지 않은 학교·종목은 빈 날짜로 보일 수 있습니다. 무료/유료가 확인되지 않은 경기는 ‘요금 미확인’으로 구분합니다. 경기 시간·장소·입장료는 변경될 수 있으므로 방문 전에 공식 링크를 확인해 주세요.</p>
 </main><dialog id="modal"><div id="modal-body"></div><div class="actions"><button id="close">닫기</button><a id="official" target="_blank" rel="noopener noreferrer" href="#">공식 일정 확인 ↗</a></div></dialog><script>
 (function(){
@@ -242,11 +249,25 @@ function show(v){var body=node("modal-body");body.replaceChildren();body.appendC
  var dl=el("dl");[["대진",v.home&&v.away?v.home+" vs "+v.away:"공식 제목에서 상대팀 미확인"],["날짜",v.date],["시간",v.time],["장소",v.location],["학교급",({elementary:"초등",middle:"중등",high:"고등",university:"대학",unknown:"미분류"})[v.grade]],["입장료",v.cost],["주최",v.org||"미확인"],["검증",v.verification]].forEach(function(a){dl.appendChild(el("dt","",a[0]));dl.appendChild(el("dd","",a[1]))});body.appendChild(dl);
  var place=(v.location&&!/미확인/.test(v.location))?v.location:(v.home||v.org||"");if(place){var q=place+(/,\s*(CO|Colorado)\b/i.test(place)?"":", Colorado");var f=el("iframe","map");f.src="https://maps.google.com/maps?q="+encodeURIComponent(q)+"&z=14&output=embed";f.loading="lazy";f.title="경기 장소 지도";f.setAttribute("referrerpolicy","no-referrer-when-downgrade");body.appendChild(f);var g=el("a","maplink","구글지도에서 열기 ↗");g.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);g.target="_blank";g.rel="noopener noreferrer";body.appendChild(g)}
  var link=node("official");link.href=v.url||"#";link.hidden=!v.url;node("modal").showModal()}
+var gmap=null,glayer=null,COLORS={elementary:"#e8833a",middle:"#8e44ad",high:"#2c6fd1",university:"#2e9e5b",unknown:"#7f8c8d"},GL={elementary:"초등",middle:"중등",high:"고등",university:"대학",unknown:"미분류"};
+function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function paintMap(items){if(!window.L){node("map-note").textContent="지도를 불러오지 못했습니다.";return}
+ if(!gmap){gmap=L.map("gmap",{scrollWheelZoom:false}).setView([39.9,-105.0],10);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(gmap);glayer=L.layerGroup().addTo(gmap)}
+ glayer.clearLayers();var list=state.selected?items.filter(function(a){return a.date===state.selected}):items;var groups={},off=0;
+ list.forEach(function(v){if(typeof v.lat!=="number"||v.lat<37||v.lat>41.1||v.lng<-109.1||v.lng>-102){off++;return}var k=v.lat+","+v.lng;(groups[k]=groups[k]||[]).push(v)});
+ var pts=[];Object.keys(groups).forEach(function(k){var g=groups[k],v=g[0],n=g.length,size=Math.min(22+n*2,44);pts.push([v.lat,v.lng]);
+  var html='<div class="pop"><b>'+esc(v.location)+'</b><ul>'+g.slice(0,8).map(function(x){return"<li>"+esc(x.date.slice(5)+" "+x.time+" · "+GL[x.grade]+" · "+x.title)+"</li>"}).join("")+"</ul>"+(n>8?"외 "+(n-8)+"경기<br>":"")+'<a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(v.location+(/colorado|, co\b/i.test(v.location)?"":", Colorado"))+'">구글지도에서 열기 ↗</a></div>';
+  var icon=L.divIcon({className:"",iconSize:[size,size],html:'<div class="pin" style="width:'+size+'px;height:'+size+'px;background:'+COLORS[v.grade]+'">'+n+"</div>"});
+  L.marker([v.lat,v.lng],{icon:icon,title:v.location}).bindPopup(html,{maxWidth:320}).addTo(glayer)});
+ if(pts.length)gmap.fitBounds(pts,{padding:[30,30],maxZoom:13});
+ node("map-title").textContent=(state.selected?state.selected+" ":"")+"경기 장소 "+pts.length+"곳 · "+(list.length-off)+"경기";
+ node("map-note").textContent="숫자는 그 장소의 경기 수입니다. 핀을 누르면 경기 목록과 구글지도 링크가 나옵니다."+(off?" 지도 밖(콜로라도 밖 원정·장소 미확인) "+off+"경기는 빠져 있습니다.":"")}
+node("locate").onclick=function(){if(!navigator.geolocation||!gmap)return;navigator.geolocation.getCurrentPosition(function(p){var c=[p.coords.latitude,p.coords.longitude];L.circleMarker(c,{radius:9,color:"#fff",weight:3,fillColor:"#e0245e",fillOpacity:1}).bindPopup("내 위치").addTo(gmap);gmap.setView(c,11)},function(){node("map-note").textContent="위치 권한이 없어 내 위치를 표시하지 못했습니다."})};
 function render(){
  var items=filtered().sort(function(a,b){return a.date.localeCompare(b.date)||a.time.localeCompare(b.time)});
  node("status").textContent=state.loading?"경기 일정 확인 중…":"현재 필터: "+items.length+"경기";
  node("period").textContent=label(state.month)+" — "+label(monthAdd(state.month,1));
- var root=node("months");root.replaceChildren();root.appendChild(monthView(state.month,items));root.appendChild(monthView(monthAdd(state.month,1),items));paintList(items)}
+ var root=node("months");root.replaceChildren();root.appendChild(monthView(state.month,items));root.appendChild(monthView(monthAdd(state.month,1),items));paintList(items);paintMap(items)}
 async function load(){state.loading=true;render();try{
  var res=await fetch("/sports/events?month="+encodeURIComponent(state.month),{cache:"no-store"});if(!res.ok)throw Error("HTTP "+res.status);
  var payload=await res.json();if(!payload.ok)throw Error(payload.error||"자료 조회 실패");
