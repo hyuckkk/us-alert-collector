@@ -252,7 +252,7 @@ function show(v){var body=node("modal-body");body.replaceChildren();body.appendC
 var gmap=null,glayer=null,COLORS={elementary:"#e8833a",middle:"#8e44ad",high:"#2c6fd1",university:"#2e9e5b",unknown:"#7f8c8d"},GL={elementary:"초등",middle:"중등",high:"고등",university:"대학",unknown:"미분류"};
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function paintMap(items){if(!window.L){node("map-note").textContent="지도를 불러오지 못했습니다.";return}
- if(!gmap){gmap=L.map("gmap",{scrollWheelZoom:false}).setView([39.9,-105.0],10);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(gmap);glayer=L.layerGroup().addTo(gmap)}
+ if(!gmap){gmap=L.map("gmap",{scrollWheelZoom:false}).setView([39.9,-105.0],10);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,referrerPolicy:"strict-origin-when-cross-origin",attribution:"© OpenStreetMap"}).addTo(gmap);glayer=L.layerGroup().addTo(gmap)}
  glayer.clearLayers();var list=state.selected?items.filter(function(a){return a.date===state.selected}):items;var groups={},off=0;
  list.forEach(function(v){if(typeof v.lat!=="number"||v.lat<37||v.lat>41.1||v.lng<-109.1||v.lng>-102){off++;return}var k=v.lat+","+v.lng;(groups[k]=groups[k]||[]).push(v)});
  var pts=[];Object.keys(groups).forEach(function(k){var g=groups[k],v=g[0],n=g.length,size=Math.min(22+n*2,44);pts.push([v.lat,v.lng]);
