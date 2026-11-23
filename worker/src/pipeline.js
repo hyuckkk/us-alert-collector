@@ -16,6 +16,9 @@ const MAX_EVENTS_PER_CALL = 30;
 const SEND_LIMIT = 20;            // 무료 요금제 하위 요청 50개 한도 안에서 여유
 const DIGEST_SINGLES = Infinity;  // 소유자 지시(2026-10-22): 하루 건수 제한 없이 추천된 행사는 모두 한 통씩. 한 번 실행에서 못 다 보낸 것은 다음 매시 실행에서 이어 보냄
 const DIGEST_CALLS = 25;          // 한 번 실행에서 보내는 요약 메시지 최대 수(넘으면 다음 매시 실행에서 이어 보냄)
+// 보충 발송(밀린 적극 알림)은 며칠에 걸쳐 조금씩, 급한 순으로(소유자 지시 2026-11-24: 한꺼번에 오면 보기 힘들다)
+const CATCHUP_PER_RUN = 2;        // 매시 실행에서 봇마다
+const CATCHUP_PER_DAY = 15;       // 한 사람에게 24시간 동안(모든 봇 합계)
 const MAX_SEND_ATTEMPTS = 6;
 const BACKOFF_MIN = [5, 30, 120, 360, 720];
 const STALE_SENDING_MIN = 10;     // 'sending' 으로 이 시간 넘게 남으면 결과 불명으로 본다
@@ -778,7 +781,7 @@ export async function digest(env, opts = {}) {
     if (opts.force || (g.fresh > 0 && timeOk && (await claimNotice(env, `digest:${g.chat_id}:${g.bot}:${dateIn(p.tz)}`)))) take = true;
     if (!take) { r.waiting++; continue; }
     const rows = await all(env.DB.prepare(
-      "SELECT o.id, o.event_key, o.version, o.attempts, e.data, e.version AS cur_version, e.change_note, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+      "SELECT o.id, o.event_key, o.version, o.attempts, o.reason, e.data, e.version AS cur_version, e.change_note, e.source_id, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
       "LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key WHERE o.kind = 'digest' AND o.chat_id = ? AND o.bot = ? " +
       "AND o.status IN ('pending', 'failed', 'uncertain') AND (o.next_attempt_at IS NULL OR o.next_attempt_at <= ?) " +
       "ORDER BY COALESCE(e.start_date, '9999'), o.id LIMIT 300").bind(g.chat_id, g.bot, now));
@@ -808,9 +811,14 @@ export async function digest(env, opts = {}) {
     live.sort((a, b) => digestRank(a.data, today) - digestRank(b.data, today) || (Number(b.data.rec_score) || 0) - (Number(a.data.rec_score) || 0)
       || String(firstDate(a.data)).localeCompare(String(firstDate(b.data))));
     const singles = live.slice(0, DIGEST_SINGLES), rest = live.slice(DIGEST_SINGLES);
-    let sentNow = 0;
+    let sentNow = 0, catchupNow = 0;
+    const catchupDay = (await env.DB.prepare("SELECT COUNT(*) AS n FROM outbox WHERE chat_id = ? AND reason = 'catchup' AND status = 'sent' AND sent_at >= ?")
+      .bind(g.chat_id, new Date(Date.now() - 24 * 3600e3).toISOString()).first())?.n || 0;
+    const catchupMax = Math.max(0, Math.min(CATCHUP_PER_RUN, CATCHUP_PER_DAY - catchupDay));
     for (const x of singles) {
       if (calls >= DIGEST_CALLS || calls - groupStart >= perGroup) break;
+      if (x.reason === "catchup" && catchupNow >= catchupMax) continue; // 남은 보충분은 pending 그대로 → 다음 매시 실행
+      if (x.reason === "catchup") catchupNow++;
       const claimed = await claimRows(env, [x.id]);
       if (!claimed.has(x.id)) continue;
       const materialUpdate = x.version > 1 && x.change_note && !x.change_note.startsWith("⏰");
@@ -823,7 +831,8 @@ export async function digest(env, opts = {}) {
       calls++;
       const c = classify(d, { attempts: x.attempts + 1 }, nowIso());
       if (c.status === "failed" || c.status === "dead") await releaseNoticeGroup(env, groupClaim);
-      done.push({ id: x.id, ...c, attempted: 1, bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
+      // 보충분은 보낸 뒤에도 reason=catchup 을 남겨 하루 상한(CATCHUP_PER_DAY)을 셀 수 있게
+      done.push({ id: x.id, ...c, ...(x.reason === "catchup" && c.status === "sent" ? { reason: "catchup" } : {}), attempted: 1, bot: g.bot, chat_id: g.chat_id, event_key: x.event_key });
       if (c.status === "sent") { r.messages++; r.items++; sentNow++; } else r.failed++;
     }
     // 나머지는 보내지 않고 보관. 하루 한 번 짧은 개수 안내(버튼·주소 없음)만
