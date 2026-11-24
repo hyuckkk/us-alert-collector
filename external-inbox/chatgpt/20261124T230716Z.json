@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-24T23:07:16Z",
+  "test": false,
+  "events": [
+    {
+      "title": "32nd Annual Ouray Ice Festival — free elite mixed climbing competition viewing",
+      "url": "https://ourayicepark.com/festival/about",
+      "start_date": "2027-01-30",
+      "end_date": "2027-01-30",
+      "time": "Saturday daytime; exact competition hours not yet published (MST)",
+      "location": "Ouray Ice Park, Scottish Gullies, Ouray, Colorado",
+      "cost": "Free rim spectator viewing ($0 for five); optional clinics advertised $40 per registration; gear, travel, lodging and other passes extra",
+      "age": "Public spectator viewing; no spectator minimum age stated; clinic age/gear/registration details not yet published",
+      "audience": "family",
+      "description": "Rare annual elite mixed climbing competition on natural rock, vertical ice and overhanging competition tower. Organizer explicitly confirms free rim viewing and Saturday Jan 30 centerpiece competition; festival Jan 28–31. Spectator booking not stated. Optional guided clinics and equipment demos are not included in free viewing; full terms pending. Free town shuttle Fri–Sun; city-to-city road distance from Westminster approximately 337 miles (542 km), winter travel/lodging required. For current local residents, before 2027 summer family arrival."
+    }
+  ]
+}
