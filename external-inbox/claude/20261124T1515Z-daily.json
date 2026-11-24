@@ -1,0 +1,35 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-24T15:10:00Z",
+  "finished_at": "2026-11-24T15:15:00Z",
+  "searches": 0,
+  "queries": [],
+  "urls_attempted": 0,
+  "urls_ok": 0,
+  "urls": [],
+  "official_pages_checked": 0,
+  "candidates": 1,
+  "excluded": 0,
+  "excluded_reasons": {},
+  "notes": "재제출: 같은 날 20261124T1455Z 제출의 잉글우드 시 페이지가 처리 단계에서 403이라 같은 기관의 다른 공식 주소로 다시 낸다. 새 검색 없음."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-24T15:15:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Englewood Holiday Market & Tree Lighting 2026",
+   "url": "https://englewoodco.gov/our-city/events/upcoming/holiday-market-tree-lighting",
+   "start_date": "2026-12-05",
+   "time": "Market 9 a.m. - 2 p.m.; tree lighting 3 - 6 p.m. (third-party listing)",
+   "location": "Englewood Civic Center, 1000 Englewood Pkwy, Englewood",
+   "cost": "",
+   "description": "City of Englewood's holiday market and tree lighting with live performances and Santa visits; 2026 date from a third-party listing (city page showed 2025 in search).",
+   "special_reason": "연 1회 시 주최 연말 점등식·마켓"
+  }
+ ]
+}
