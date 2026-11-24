@@ -1,0 +1,67 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-24T14:41:31Z",
+  "finished_at": "2026-11-24T14:55:00Z",
+  "searches": 8,
+  "queries": [
+   "Westminster CO holiday lighting ceremony December 2026 City Hall date",
+   "Union Station Denver tree lighting 2026 date Santa at the Station 2026",
+   "Englewood Colorado holiday tree lighting 2026",
+   "Denver Botanic Gardens free day January 2027",
+   "Wings Over the Rockies free day December 2026 OR January 2027",
+   "Colorado Railroad Museum free day OR Polar Express kids event December 2026 Golden",
+   "Evergreen Lake ice skating opening 2026 Evergreen holiday parade Christmas",
+   "Denver Public Library winter break kids program December 2026 free"
+  ],
+  "urls_attempted": 2,
+  "urls_ok": 0,
+  "urls": [
+   "https://www.westminsterco.gov/995/Special-Events",
+   "https://www.englewoodco.gov/our-city/events/upcoming/holiday-tree-lighting"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 9,
+  "excluded": 7,
+  "excluded_reasons": {
+   "date_not_posted_2026": 5,
+   "paid_or_ticketed": 1,
+   "no_free_day_in_window": 1
+  },
+  "notes": "Claude 독립 검색(예약, 개정 규칙). WebFetch 2건 모두 이 환경의 DNS 오류(getaddrinfo ENOTFOUND)로 실패해 verified:false. 제외: 유니언역 점등·보태닉 1월 무료일·윙스 무료일·에버그린 호수 스케이트·도서관 방학 프로그램(2026·2027 날짜 미공지), 폴라 익스프레스(유료), 철도박물관 무료일 없음."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-24T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Westminster Holiday Lighting Ceremony 2026",
+   "url": "https://www.westminsterco.gov/995/Special-Events",
+   "start_date": "2026-12-05",
+   "time": "5:30 p.m. - 8 p.m.",
+   "location": "Westminster City Hall, 4800 W 92nd Ave, Westminster",
+   "cost": "",
+   "description": "City of Westminster's annual holiday lighting ceremony at City Hall, listed on the city's 2026 schedule of events for Saturday Dec 5; past years included holiday music, food vendors and a visit with Santa.",
+   "special_reason": "거주 도시의 연 1회 연말 점등식(산타 방문)"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-24T14:55:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Englewood Holiday Market & Tree Lighting 2026",
+   "url": "https://www.englewoodco.gov/our-city/events/upcoming/holiday-tree-lighting",
+   "start_date": "2026-12-05",
+   "time": "Market 9 a.m. - 2 p.m.; tree lighting 3 - 6 p.m. (third-party listing)",
+   "location": "Englewood Civic Center, 1000 Englewood Pkwy, Englewood",
+   "cost": "",
+   "description": "City of Englewood's holiday market and tree lighting with live performances and Santa visits; 2026 date from a third-party listing (city page showed 2025 in search).",
+   "special_reason": "연 1회 시 주최 연말 점등식·마켓"
+  }
+ ]
+}
