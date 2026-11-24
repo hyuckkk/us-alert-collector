@@ -167,7 +167,7 @@ Rules:
 - url must be exactly one of the URLs given for that item. Never invent or edit URLs.
 - Dates as YYYY-MM-DD. year_basis says where the year came from: stated (the item states the year), published (taken from the item's page date, posting date or a year heading), assumed (no year anywhere, you assumed the next occurrence after today), none (no date). Never present an assumed year as certain — set year_basis=assumed. If there is no date at all, null.
 - Which date: if the item is about ONE session (its title or the first date right after the title names one date or one location), use that session's date even when the page also lists other sessions of a series. For a continuous run (e.g. "October 2-25", "on view until December"), use the stated first and last dates even if the start is already past; "until/through <month> [year]" without a day means end_date = the last day of that month, and a run that started before today keeps its real start_date (never replace it with a single performance or today). Only when the item itself covers several separate dates (e.g. weekly tours) use the earliest upcoming date as start_date and the last listed date as end_date.
-- event_tz: IANA zone of the event location (America/Denver for Colorado). time_text: local time in Korean, e.g. "오전 10시–낮 12시", "매주 토 오후 2시".
+- event_tz: IANA zone of the event location (America/Denver for Colorado). time_text: local time in Korean, e.g. "오전 10시–낮 12시", "매주 토 오후 2시". Times only — no notes like "(차량 관람)" that the title or summary already say.
 - Korean for people: cost_text in Korean (e.g. "무료", "$25 (주민 $20)", "입장료 별도"), age_text in Korean (e.g. "6–10세", "성인", "초등 3–5학년", "보호자 동반 시 전 연령"). Keep amounts, dates and numbers exactly as stated. Keep location, org and proper nouns in their original English so they can be searched on a map.
 - title_ko: short natural Korean title. Keep proper nouns in English in parentheses if useful.
 - english: pick only attributes the text supports — 초보 가능 (beginners welcome), 보호자 동반 (parent accompanies), 시범 중심 (demonstration-based), 반복 만남 (recurring sessions with the same group).
@@ -450,6 +450,10 @@ Fill these fields for every item:
 - title_ko: concise natural Korean title (max ~30 characters).
 - summary_ko: one or two short Korean sentences on what you actually do or get there. No dates, prices or addresses.
 - highlights: only those the item supports: 선착순, 무료, 예약 필요, 추첨, 접수 예정, 마감 임박, 특별 체험, 허가 필요, 연례 행사. Use 무료 only if the source states it is free.
+- NO REPETITION (owner complaint 2026-11-25): the alert shows title_ko, highlight badges, special_reason, summary_ko, then date/time, place, cost and registration lines. Each piece must add something new.
+    special_reason: only the rarity/access fact (e.g. "12월 몇 주간만 운영", "평소 닫힌 구역을 하루만 개방"). Do not restate what the event is, the venue name, or a highlight already chosen (연례 행사, 예약 필요, 무료 ...).
+    summary_ko: what you actually do there, in words not already in title_ko or special_reason. Do not repeat the venue or the event type from the title.
+    Example of what NOT to write: title "레드락스 크리스마스 인 컬러 드라이브", special_reason "연말 몇 주간만 레드락스에서 열리는 홀리데이 조명 드라이브 행사", summary "레드락스 공원 안을 차로 지나며 … 조명 쇼". Better: special_reason "연말 몇 주간만 운영", summary "차 안에서 캐럴에 맞춰 바뀌는 대형 조명을 봅니다."
 - reason: one short Korean sentence explaining the level (for interest/none, name the main blocker or the missing basis)."""
 
 

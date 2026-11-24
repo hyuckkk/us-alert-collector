@@ -619,11 +619,20 @@ function noticeGroupClaimKey(chatId, d) {
 async function releaseNoticeGroup(env, key) {
   if (key) await env.DB.prepare("DELETE FROM notices WHERE key = ?").bind(key).run();
 }
+// 회차 표시는 제목에서 뗀다: "Christmas in Color (Dec 1 session)", "… - Nov 28", "… 12/2" → 같은 회차 묶음
+const MONTH = "jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec|january|february|march|april|june|july|august|september|october|november|december";
+export function baseTitle(t) {
+  return String(t || "").toLowerCase()
+    .replace(/\([^)]*(session|night|show|performance|회차|\d)[^)]*\)/g, " ")
+    .replace(new RegExp(`\\b(${MONTH})\\.?\\s+\\d{1,2}(st|nd|rd|th)?(,?\\s*\\d{4})?\\b`, "g"), " ")
+    .replace(/\b\d{1,2}\/\d{1,2}(\/\d{2,4})?\b|\b20\d\d-\d\d-\d\d\b|\d{1,2}월\s*\d{1,2}일/g, " ")
+    .replace(/[\s\-–—:|,·]+$/g, "").replace(/\s+/g, " ").trim();
+}
 export function seriesKey(sourceId, d) {
-  return `${sourceId || ""}|${String(d.title || d.title_ko || "").toLowerCase().replace(/\s+/g, " ").trim()}`;
+  return `${sourceId || ""}|${baseTitle(d.title || d.title_ko)}`;
 }
 async function sentSeries(env, chatIds) {
-  const out = { series: new Map(), urls: new Map(), dated: new Map(), groups: new Map() };
+  const out = { series: new Map(), urls: new Map(), dated: new Map(), groups: new Map(), places: new Map() };
   if (!chatIds.length) return out;
   const since = new Date(Date.now() - 180 * 86400000).toISOString();
   const rows = await all(env.DB.prepare(
@@ -634,13 +643,17 @@ async function sentSeries(env, chatIds) {
   return out;
 }
 function normUrl(u) {
-  return String(u || "").toLowerCase().replace(/^https?:\/\/(www\.)?/, "").replace(/[?#].*$/, "").replace(/\/+$/, "");
+  // 같은 행사 회차 주소(…/christmas-in-color-2/, -3/)는 하나로 본다
+  return String(u || "").toLowerCase().replace(/^https?:\/\/(www\.)?/, "").replace(/[?#].*$/, "").replace(/\/+$/, "").replace(/([a-z])-\d{1,2}$/, "$1");
 }
-const WEAK = new Set(["with", "from", "free", "night", "event", "events", "무료", "행사", "체험", "개방", "야간"]);
+const WEAK = new Set(["with", "from", "free", "night", "event", "events", "무료", "행사", "체험", "개방", "야간", "공연", "콘서트", "concert", "show", "live", "tour"]);
+function locKey(v) { return String(v || "").toLowerCase().replace(/\b(the|park|amphitheatre|amphitheater|center|centre)\b/g, " ").replace(/[^a-z가-힣0-9]+/g, " ").trim(); }
 function titleTokens(d) {
-  const en = String(d.title || "").toLowerCase().match(/[a-z0-9]{4,}/g) || [];
+  const en = baseTitle(d.title).match(/[a-z0-9]{4,}/g) || [];
   const ko = String(d.title_ko || "").match(/[가-힣]{2,}/g) || [];
-  return new Set([...en, ...ko].filter((w) => !WEAK.has(w)));
+  // 장소 이름(레드락스 등)은 같은 장소의 서로 다른 공연을 같은 행사로 보지 않게 뺀다
+  const place = locKey(d.location) + " " + String(d.location || "");
+  return new Set([...en, ...ko].filter((w) => !WEAK.has(w) && !place.includes(w) && !/^레드락스|^red$|^rocks$/.test(w)));
 }
 function remember(seen, chatId, sourceId, d, eventKey) {
   const add = (m, k, v) => { if (!m.has(k)) m.set(k, []); m.get(k).push(v); };
@@ -649,11 +662,13 @@ function remember(seen, chatId, sourceId, d, eventKey) {
   if (group) add(seen.groups, `${chatId}|${group}`, { key: eventKey });
   if (d.url) add(seen.urls, `${chatId}|${normUrl(d.url)}`, { key: eventKey });
   if (d.start_date) add(seen.dated, `${chatId}|${d.start_date}`, { key: eventKey, tokens: titleTokens(d), location: d.location });
+  const lk = locKey(d.location);
+  if (lk && d.start_date) add(seen.places, `${chatId}|${lk}`, { key: eventKey, tokens: titleTokens(d), start: d.start_date });
 }
 // 이 사람이 이미 받은(또는 이번 실행에서 받기로 한) 것과 같은 행사면 사유를 돌려준다. 아니면 기록하고 null.
 // 1) 같은 정보원·같은 원제목의 다른 회차 2) 같은 공식 주소(다른 경로·정보원이 다른 키로 등록) 3) 같은 날짜 + 제목이 대부분 같음
 // 같은 행사의 변경 알림(같은 event_key)은 막지 않는다.
-function sameAsSent(seen, chatId, sourceId, d, eventKey) {
+export function sameAsSent(seen, chatId, sourceId, d, eventKey) {
   const other = (list) => (list || []).some((x) => x.key !== eventKey);
   const group = eventNoticeGroup(d);
   if (group && other(seen.groups.get(`${chatId}|${group}`))) return "same-event-group";
@@ -671,6 +686,15 @@ function sameAsSent(seen, chatId, sourceId, d, eventKey) {
       return common / Math.min(t.size, x.tokens.size) >= 0.6;
     });
     if (hit) return "same-event-other-source";
+    // 같은 장소에서 날짜만 다른 같은 행사(시즌 내내 매일 밤 하는 조명 쇼를 정보원마다 회차별로 올림): 60일 안, 제목 대부분 같음
+    const lk = locKey(d.location);
+    const near = lk && (seen.places.get(`${chatId}|${lk}`) || []).some((x) => {
+      if (x.key === eventKey || t.size < 2 || x.tokens.size < 2) return false;
+      if (Math.abs(Date.parse(x.start) - Date.parse(d.start_date)) > 60 * 86400000) return false;
+      const common = [...t].filter((w) => x.tokens.has(w)).length;
+      return common / Math.min(t.size, x.tokens.size) >= 0.6;
+    });
+    if (near) return "same-event-other-date";
   }
   remember(seen, chatId, sourceId, d, eventKey);
   return null;
