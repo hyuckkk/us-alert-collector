@@ -303,8 +303,7 @@ export function sportsPage(env = {}) {
   const raw = String(env.GMAPS_BROWSER_KEY || "").trim();
   const m = raw.match(/AIza[0-9A-Za-z_-]{35}/);
   const key = m ? m[0] : "";
-  const shape = `len=${raw.length};aiza=${raw.indexOf("AIza")}`;
-  return new Response(PAGE.replace("__GMAPS_KEY__", JSON.stringify(key)), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", "X-Gkey-Shape": shape } });
+  return new Response(PAGE.replace("__GMAPS_KEY__", JSON.stringify(key)), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin" } });
 }
 export async function sportsWeekly(env, origin) {
   const parts = new Intl.DateTimeFormat("en-US", { timeZone: ZONE, weekday: "long", hour: "2-digit", hour12: false }).formatToParts(new Date());
