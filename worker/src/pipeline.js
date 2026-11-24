@@ -1377,7 +1377,7 @@ export async function sentRecent(env, url) {
 // 미발송 대기열 미리 보기(읽기 전용): 지금 기준(추천 재판정·차단 사유·회차 묶음·지난 행사)으로 실제로 나갈 것과 걸러질 것
 export async function outboxPreview(env) {
   const rows = await all(env.DB.prepare(
-    "SELECT o.chat_id, o.event_key, o.kind, o.status, e.source_id, e.data, p.interests, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+    "SELECT o.chat_id, o.event_key, o.kind, o.status, o.reason, o.bot, e.source_id, e.data, p.interests, s.state FROM outbox o JOIN events e ON e.event_key = o.event_key " +
     "LEFT JOIN people p ON p.chat_id = o.chat_id LEFT JOIN item_state s ON s.chat_id = o.chat_id AND s.item_key = o.event_key " +
     "WHERE o.status IN ('pending', 'failed', 'uncertain', 'held') ORDER BY o.id"));
   const series = await sentSeries(env, [...new Set(rows.map((r) => r.chat_id))]);
@@ -1389,7 +1389,8 @@ export async function outboxPreview(env) {
     if (!why) { const tm = timing(d, dateIn(DENVER), env); if (tm.skip) why = tm.skip; else if (tm.defer) why = "scheduled"; }
     if (!why) why = sameAsSent(series, r.chat_id, r.source_id, d, r.event_key);
     if (why) { const k = String(why).split(":")[0] + (String(why).includes(":") ? ":" + String(why).split(":")[1].split(",")[0] : ""); out.skipped[k] = (out.skipped[k] || 0) + 1; }
-    else out.would_send.push({ owner: isOwner(env, r.chat_id), kind: r.kind, title: d.title_ko || d.title, special_reason: d.special_reason });
+    else out.would_send.push({ owner: isOwner(env, r.chat_id), kind: r.kind, reason: r.reason || null, bot: r.bot, title: d.title_ko || d.title, special_reason: d.special_reason,
+      start_date: d.start_date || null, end_date: d.end_date || null, registration_opens: d.registration_opens || null, deadline: d.deadline || null, rank: digestRank(d, dateIn(DENVER)), score: Number(d.rec_score) || 0 });
   }
   return { ok: true, ...out };
 }
