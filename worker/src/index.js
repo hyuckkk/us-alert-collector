@@ -42,7 +42,7 @@
 import { BUILD, BOTS, botToken, isOwner, nowIso, json, tg, kvGet, kvSet, claimNotice, notifyOwner, localStamp, localDate, daysBetween, ensurePerson, getPerson, validTz, ownerOnly } from "./common.js";
 import { keyboard, rebuildKeyboard } from "./render.js";
 import * as pipeline from "./pipeline.js";
-import { sportsEvents, sportsPage, sportsWeekly, sportsUsage } from "./sports.js";
+import { sportsEvents, sportsPage, sportsWeekly, sportsUsage, sportsAccess, sportsDenied, sportsLink, sportsRevoke, sportsVenues } from "./sports.js";
 import { Heartbeat, ensureHeartbeat, beatNow } from "./heartbeat.js";
 import { normCity, CITIES } from "./geo.js";
 
@@ -335,7 +335,7 @@ async function handleMessage(env, bot, m) {
   if (["/settings", "/quiet", "/tz", "/city", "/from", "/digest"].includes(cmd)) { await reply(await personCommand(env, fromId, cmd, args)); return; }
   if (cmd === "/sports") {
     const origin = await kvGet(env, "public_worker_origin");
-    await reply(origin ? `🏟️ 학교·대학 스포츠 경기 달력\n\n이번 달·다음 달 / 학교급·종목·요금별 검색\n${origin}/sports` : "달력 사이트 주소 등록을 확인하는 중입니다.");
+    await reply(origin ? `🏟️ 학교·대학 스포츠 경기 달력 (내 개인 링크)\n\n${await sportsLink(env, origin, fromId)}\n\n즐겨찾기해 두셔도 됩니다. 본인 전용 링크이니 다른 사람에게 보내지 마세요. 다른 가족은 봇에서 /sports 를 보내면 자기 링크를 받습니다.` : "달력 사이트 주소 등록을 확인하는 중입니다.");
     return;
   }
   if (cmd === "/interests") { await reply(await interestsCommand(env, fromId, args)); return; }
@@ -560,9 +560,14 @@ export default {
     const p = url.pathname;
 
     if (p === "/health") return json({ ok: true, build: BUILD });
-    if (p === "/sports" && request.method === "GET") return sportsPage(env);
-    if (p === "/sports/events" && request.method === "GET") return sportsEvents(env, url);
-    if (p === "/sports/usage" && (request.method === "GET" || request.method === "POST")) return sportsUsage(env, request, url);
+    if (p === "/robots.txt") return new Response("User-agent: *\nDisallow: /\n", { headers: { "Content-Type": "text/plain" } });
+    if (p === "/sports" && request.method === "GET") return sportsPage(env, url);
+    if (p === "/sports/venues" && request.method === "GET") return sportsVenues(env);
+    if (p.startsWith("/sports/") && (request.method === "GET" || request.method === "POST")) {
+      if (!isAdmin(env, request) && !(await sportsAccess(env, url))) return sportsDenied();
+      if (p === "/sports/events" && request.method === "GET") return sportsEvents(env, url);
+      if (p === "/sports/usage") return sportsUsage(env, request, url);
+    }
 
     const hook = p.match(/^\/hook\/(life|family|kids)$/);
     if (hook && request.method === "POST") {
@@ -596,6 +601,8 @@ export default {
           const limit = Math.min(Math.max(parseInt(url.searchParams.get("limit") || "20", 10) || 20, 1), 200);
           return json({ ok: true, clicks: (await env.DB.prepare("SELECT * FROM clicks ORDER BY id DESC LIMIT ?").bind(limit).all()).results });
         }
+        if (p === "/admin/sports-link" && POST) return json({ ok: true, link: await sportsLink(env, url.origin, body.chat_id || env.OWNER_CHAT_ID) });
+        if (p === "/admin/sports-revoke" && POST) return json(await sportsRevoke(env, body.chat_id));
         if (p === "/admin/status") return json({ ok: true, ...(await status(env)) });
         if (p === "/admin/expiry" && POST) return json(await setExpiry(env, body.name, body.expires_on, body.note || null));
         if (p === "/admin/key-check" && POST) return json(await keyCheckReport(env, body));

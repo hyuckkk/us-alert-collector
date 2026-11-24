@@ -13,7 +13,7 @@ const GRADE = {
 };
 const SCHOOL_LABEL = { elementary: "초등", middle: "중등", high: "고등", university: "대학", unknown: "학교급 미확인" };
 const MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
-const CORS = { "Access-Control-Allow-Origin": "*", "Cache-Control": "public, max-age=600", "Content-Type": "application/json; charset=utf-8", "X-Content-Type-Options": "nosniff" };
+const CORS = { "X-Robots-Tag": "noindex, nofollow, noarchive", "Cache-Control": "private, max-age=300", "Content-Type": "application/json; charset=utf-8", "X-Content-Type-Options": "nosniff" };
 function monthShift(m, by) {
   const [y, n] = m.split("-").map(Number);
   const d = new Date(Date.UTC(y, n - 1 + by, 1));
@@ -110,6 +110,47 @@ export const venueKey = (loc, city) => `${loc || ""}|${city || ""}`.trim().toLow
 async function venues(env, fetcher = fetch) {
   try { const r = await fetcher(env.VENUES_URL || VENUES_URL, { cf: { cacheTtl: 900, cacheEverything: true } }); return r.ok ? await r.json() : {}; } catch { return {}; }
 }
+// ---- 개인 링크(사람별 출입 번호). 텔레그램 봇 수신자(활성)와 소유자만 열린다.
+const NOINDEX = { "X-Robots-Tag": "noindex, nofollow, noarchive" };
+const TOKEN_RE = /^[A-Za-z0-9_-]{20,40}$/;
+function newToken() { const b = new Uint8Array(18); crypto.getRandomValues(b); return btoa(String.fromCharCode(...b)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+export async function sportsToken(env, chatId) {
+  const id = String(chatId);
+  let t = await kvGet(env, "sports-token-by:" + id);
+  if (!t) { t = newToken(); await kvSet(env, "sports-token:" + t, id); await kvSet(env, "sports-token-by:" + id, t); }
+  return t;
+}
+export async function sportsLink(env, origin, chatId) { return `${origin}/sports?k=${await sportsToken(env, chatId)}`; }
+export async function sportsRevoke(env, chatId) {
+  const id = String(chatId || ""), t = await kvGet(env, "sports-token-by:" + id);
+  if (t) await env.DB.prepare("DELETE FROM kv WHERE k = ? OR k = ?").bind("sports-token:" + t, "sports-token-by:" + id).run();
+  return { ok: true, revoked: !!t };
+}
+export async function sportsAccess(env, url) {
+  const k = url.searchParams.get("k") || "";
+  if (!TOKEN_RE.test(k)) return null;
+  const id = await kvGet(env, "sports-token:" + k);
+  if (!id) return null;
+  if (isOwner(env, id)) return id;
+  const r = await env.DB.prepare("SELECT 1 FROM recipients WHERE chat_id = ? AND status = 'active' LIMIT 1").bind(id).first();
+  return r ? id : null;
+}
+async function logVisit(env, id) {
+  try { const key = "sports-visits:" + pacificDate(); const v = JSON.parse((await kvGet(env, key)) || "{}"); v[id] = (v[id] | 0) + 1; await kvSet(env, key, v); } catch {}
+}
+export function sportsDenied() {
+  const html = '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>경기 달력</title><style>body{font-family:system-ui,sans-serif;background:#f4f6fa;color:#172234;margin:0;padding:40px 18px}.b{max-width:440px;margin:auto;background:#fff;border-radius:16px;padding:24px;border:1px solid #dce4ef}</style></head><body><div class="b"><h2>개인 링크로 열어 주세요</h2><p>이 경기 달력은 가족 텔레그램 봇 사용자만 볼 수 있습니다. 봇에서 <b>/sports</b> 를 보내면 본인 전용 링크가 옵니다. 그 링크는 즐겨찾기해 두셔도 됩니다.</p></div></body></html>';
+  return new Response(html, { status: 403, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", ...NOINDEX } });
+}
+// 맥 좌표 스크립트용: 장소 이름만(날짜·팀 없음)
+export async function sportsVenues(env) {
+  const now = denverToday().slice(0, 7), seen = {};
+  for (const m of [now, monthShift(now, 2)]) {
+    const d = await (await sportsEvents(env, new URL("https://x/sports/events?month=" + m))).json();
+    for (const e of d.events || []) if (e.location && !/미확인/.test(e.location)) seen[e.location + "|" + (e.city || "")] = { location: e.location, city: e.city || "" };
+  }
+  return new Response(JSON.stringify({ ok: true, venues: Object.values(seen) }), { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...NOINDEX } });
+}
 export const SCHOOL_FEED_URL = "https://raw.githubusercontent.com/hyuckkk/us-alert-collector/main/sports-feed/games.json";
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const s = (v, n = 200) => String(v ?? "").replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, n);
@@ -190,7 +231,7 @@ export async function sportsEvents(env, url) {
   return new Response(JSON.stringify({ ok: true, month: start, through: monthShift(start, 1), generated_at: new Date().toISOString(), events, inspected: rows.length, latest_record_changed: rows.map((x) => x.last_changed).filter(Boolean).sort().pop() || null,
     limit_reached: rows.length >= 3500, coverage: "현재 수집된 공식 일정 중 날짜·학교·종목·경기로 식별되는 항목만 표시됩니다. 전체 초·중·고 경기 수집을 보장하지 않습니다." }), { headers: CORS });
 }
-const PAGE = String.raw`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><title>Colorado | 학교·대학 스포츠 경기 달력</title><style>
+const PAGE = String.raw`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><meta name="robots" content="noindex,nofollow,noarchive"><title>Colorado | 학교·대학 스포츠 경기 달력</title><style>
 :root{font-family:system-ui,-apple-system,Segoe UI,Apple SD Gothic Neo,sans-serif;color:#172234;background:#f4f6fa}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1170px;margin:0 auto;padding:26px 18px 50px}
 h1{font-size:27px;letter-spacing:-.9px;margin:5px 0}p{margin:5px 0;line-height:1.6}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:18px}
 .eyebrow{font-size:12px;letter-spacing:1.5px;font-weight:800;color:#275899}.subtitle{color:#66738a;font-size:13px}.share{background:#fff;border:1px solid #d9e2ef;padding:10px 15px;border-radius:11px;font-size:13px;cursor:pointer}
@@ -203,7 +244,7 @@ fieldset{border:0;margin:0;padding:0;min-width:0}legend{font-size:12px;font-weig
 .notice{color:#697991;font-size:12px;line-height:1.65;margin-top:12px}.empty{color:#78879c;background:#f7f9fc;padding:25px;text-align:center;border-radius:10px;font-size:13px}
 .map{width:100%;height:240px;border:0;border-radius:12px;margin-top:16px;background:#eef2f7}.pop-act{display:flex;gap:6px;margin:8px 0 6px;flex-wrap:wrap}.pop-act a{padding:7px 10px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none}.btn1{background:#e8f0fe;color:#1a56b8}.btn2{background:#1a73e8;color:#fff}.pop li a{color:#172234;text-decoration:none}.pop li a:hover{text-decoration:underline}.maplink{display:inline-block;margin-top:8px;font-size:13px;color:#246eac;font-weight:700}.map-panel{background:#fff;border:1px solid #dce4ef;border-radius:16px;margin-top:15px;padding:15px}.map-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}.map-head button{border:1px solid #d7e0ed;background:#f8fafc;border-radius:9px;padding:7px 10px;cursor:pointer;font-size:13px}#gmap{height:420px;border-radius:12px;z-index:0}.map-note{color:#697991;font-size:12px;margin:8px 0 0}.pin{display:flex;align-items:center;justify-content:center;border-radius:50%;color:#fff;font-weight:800;font-size:12px;border:2px solid #fff;box-shadow:0 1px 4px #0006}.pop b{display:block;margin-bottom:4px}.pop li{margin:2px 0}.pop ul{padding-left:16px;margin:4px 0}@media(max-width:730px){#gmap{height:320px}}dialog{border:0;border-radius:18px;width:min(520px,94vw);padding:24px;box-shadow:0 24px 80px #142a4b55}dialog::backdrop{background:#15284690}dialog h3{margin:8px 0 18px;font-size:21px}dialog dl{display:grid;grid-template-columns:80px 1fr;gap:11px 10px;font-size:14px}dt{color:#718096}dd{margin:0;overflow-wrap:anywhere}.actions{display:flex;justify-content:flex-end;gap:9px;margin-top:22px}.actions button,.actions a{background:#eaf0f7;color:#254666;border:0;text-decoration:none;padding:10px 12px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer}.actions a{background:#246eac;color:white}
 @media(max-width:730px){.top{flex-direction:column}.filters{grid-template-columns:1fr}.months{grid-template-columns:1fr}.month{padding:13px}.day{min-height:64px}.day .events{font-size:9px}.wrap{padding:18px 12px}}
-</style></head><body><main class="wrap"><div class="top"><div><div class="eyebrow">COLORADO · COMMUNITY SPORTS</div><h1>학교·대학 스포츠 경기 달력</h1><p class="subtitle">초·중·고·대학 경기 | 이번 달·다음 달 | 미국 콜로라도 현지시간</p></div><button class="share" id="share">달력 링크 복사 ↗</button></div>
+</style></head><body><main class="wrap"><div class="top"><div><div class="eyebrow">COLORADO · COMMUNITY SPORTS</div><h1>학교·대학 스포츠 경기 달력</h1><p class="subtitle">초·중·고·대학 경기 | 이번 달·다음 달 | 미국 콜로라도 현지시간</p></div><span class="share" id="share" style="cursor:default">🔒 개인 링크 · 다른 사람에게 보내지 마세요</span></div>
 <section class="filters" aria-label="경기 필터"><fieldset><legend>학교급</legend><div class="chips" id="grades"></div></fieldset><fieldset><legend>종목</legend><div class="chips" id="sports"></div></fieldset><fieldset><legend>입장료</legend><div class="chips" id="prices"></div></fieldset></section>
 <div class="toolbar"><div><strong id="status">경기 자료 불러오는 중…</strong><div class="muted" id="source-note"></div></div><div class="nav"><button id="prev" aria-label="이전 달">‹</button><span id="period"></span><button id="next" aria-label="다음 달">›</button><button id="reset">이번 달</button></div></div>
 <div id="months" class="months"></div><section class="map-panel"><div class="map-head"><strong id="map-title">경기 장소 지도</strong><button id="locate" type="button">📍 내 위치 표시</button></div><div id="gmap"></div><p class="map-note" id="map-note"></p></section><section class="day-panel" id="details"><h3>날짜를 선택해 주세요</h3><p class="subtitle">달력의 날짜를 누르면 해당 경기의 팀·시각·장소를 볼 수 있습니다.</p></section>
@@ -251,9 +292,9 @@ function show(v){var body=node("modal-body");body.replaceChildren();body.appendC
  var link=node("official");link.href=v.url||"#";link.hidden=!v.url;node("modal").showModal()}
 var gmap=null,glayer=null,COLORS={elementary:"#e8833a",middle:"#8e44ad",high:"#2c6fd1",university:"#2e9e5b",unknown:"#7f8c8d"},GL={elementary:"초등",middle:"중등",high:"고등",university:"대학",unknown:"미분류"};
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-var GKEY=__GMAPS_KEY__,GUSE=__GMAPS_USE__,gm=null,gmMarks=[],gmInfo=null,gmState="none",lastItems=[],gmWhy="";
+var KEYK=__SPORTS_K__,GKEY=__GMAPS_KEY__,GUSE=__GMAPS_USE__,gm=null,gmMarks=[],gmInfo=null,gmState="none",lastItems=[],gmWhy="";
 var GSAFE=GUSE.limit-5;if(GKEY&&GUSE.map>=GSAFE){gmState="failed";gmWhy="오늘 구글지도 사용량("+GUSE.map+"/"+GUSE.limit+")이 한도에 가까워 기본 지도로 표시합니다."}
-function useBeacon(kind){GUSE[kind]=(GUSE[kind]||0)+1;try{navigator.sendBeacon("/sports/usage",kind)}catch(e){}var n=node("map-note");if(n&&n.textContent)n.textContent=n.textContent.replace(/ 오늘 구글지도 사용:.*$/,"")+useText()}
+function useBeacon(kind){GUSE[kind]=(GUSE[kind]||0)+1;try{navigator.sendBeacon("/sports/usage?k="+encodeURIComponent(KEYK),kind)}catch(e){}var n=node("map-note");if(n&&n.textContent)n.textContent=n.textContent.replace(/ 오늘 구글지도 사용:.*$/,"")+useText()}
 function useText(){return GKEY?" 오늘 구글지도 사용: 지도 "+GUSE.map+"/"+GUSE.limit+" · 장소 찾기 "+GUSE.place+"/"+GUSE.limit+".":""}
 window.gm_authFailure=function(){gmState="failed";gmWhy="구글지도가 오늘 막혀(한도 초과 등) 기본 지도로 바꿨습니다.";gm=null;gmMarks=[];node("gmap").replaceChildren();paintMap(lastItems)};
 function loadGoogle(){if(!GKEY||gmState!=="none")return;gmState="loading";window.__gmReady=function(){gmState="ready";useBeacon("map");paintMap(lastItems)};var sc=document.createElement("script");sc.src="https://maps.googleapis.com/maps/api/js?key="+encodeURIComponent(GKEY)+"&v=weekly&loading=async&callback=__gmReady";sc.async=true;sc.onerror=function(){gmState="failed";paintMap(lastItems)};document.head.appendChild(sc)}
@@ -297,17 +338,16 @@ function render(){
  node("period").textContent=label(state.month)+" — "+label(monthAdd(state.month,1));
  var root=node("months");root.replaceChildren();root.appendChild(monthView(state.month,items));root.appendChild(monthView(monthAdd(state.month,1),items));paintList(items);paintMap(items)}
 async function load(){state.loading=true;render();try{
- var res=await fetch("/sports/events?month="+encodeURIComponent(state.month),{cache:"no-store"});if(!res.ok)throw Error("HTTP "+res.status);
+ var res=await fetch("/sports/events?k="+encodeURIComponent(KEYK)+"&month="+encodeURIComponent(state.month),{cache:"no-store"});if(!res.ok)throw Error("HTTP "+res.status);
  var payload=await res.json();if(!payload.ok)throw Error(payload.error||"자료 조회 실패");
  state.data=payload.events||[];state.kinds=Array.from(new Set(state.data.map(a=>a.sport).filter(Boolean))).sort();state.sports=state.sports.filter(function(x){return state.kinds.indexOf(x)>=0});paintSports();
  node("source-note").textContent=payload.limit_reached?"자료가 많아 일부만 표시됨 · 업데이트 "+payload.generated_at.slice(0,10):"수집된 경기 "+state.data.length+"건 · "+payload.generated_at.slice(0,10)+" 조회";
  }catch(e){state.data=[];node("source-note").textContent="자료 불러오기 실패: "+e.message+" · 새로고침 후 다시 시도해 주세요";}finally{state.loading=false;render()}}
 function paintSports(){var root=node("sports");root.replaceChildren();var all=el("button","chip"+(state.sports.length?"":" selected"),"전체");all.type="button";all.onclick=function(){state.sports=[];paintSports();render()};root.appendChild(all);(state.kinds||[]).forEach(function(k){var on=state.sports.indexOf(k)>=0,b=el("button","chip"+(on?" selected":""),k);b.type="button";b.setAttribute("aria-pressed",on);b.onclick=function(){var i=state.sports.indexOf(k);if(i>=0)state.sports.splice(i,1);else state.sports.push(k);paintSports();render()};root.appendChild(b)})}
-node("prev").onclick=function(){state.month=monthAdd(state.month,-1);state.selected="";history.replaceState(null,"","?month="+state.month);load()};
-node("next").onclick=function(){state.month=monthAdd(state.month,1);state.selected="";history.replaceState(null,"","?month="+state.month);load()};
-node("reset").onclick=function(){state.month=currentMonth();state.selected="";history.replaceState(null,"",location.pathname);load()};
+node("prev").onclick=function(){state.month=monthAdd(state.month,-1);state.selected="";history.replaceState(null,"","?k="+encodeURIComponent(KEYK)+"&month="+state.month);load()};
+node("next").onclick=function(){state.month=monthAdd(state.month,1);state.selected="";history.replaceState(null,"","?k="+encodeURIComponent(KEYK)+"&month="+state.month);load()};
+node("reset").onclick=function(){state.month=currentMonth();state.selected="";history.replaceState(null,"","?k="+encodeURIComponent(KEYK));load()};
 node("close").onclick=function(){node("modal").close()};
-node("share").onclick=function(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(location.href).then(function(){node("share").textContent="복사됐습니다 ✓"})}else{node("share").textContent="주소창에서 링크를 복사해 주세요"}};
 setChips("grades",grades,"grade");setChips("prices",prices,"price");
 var urlMonth=new URLSearchParams(location.search).get("month");state.month=/^\d{4}-(0[1-9]|1[0-2])$/.test(urlMonth||"")?urlMonth:currentMonth();load();
 })();
@@ -332,12 +372,15 @@ export async function sportsUsage(env, request, url) {
   for (let i = 0; i < days; i++) out.push(await gmapsUsage(env, new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Date.now() - i * 86400000))));
   return new Response(JSON.stringify({ ok: true, limit: GMAPS_DAILY_LIMIT, days: out }), { headers: H });
 }
-export async function sportsPage(env = {}) {
+export async function sportsPage(env = {}, url = null) {
+  const who = url ? await sportsAccess(env, url) : null;
+  if (!who) return sportsDenied();
+  await logVisit(env, who);
   const raw = String(env.GMAPS_BROWSER_KEY || "").trim();
   const m = raw.match(/AIza[0-9A-Za-z_-]{35}/);
   const key = m ? m[0] : "";
   const use = key ? await gmapsUsage(env) : { map: 0, place: 0 };
-  return new Response(PAGE.replace("__GMAPS_KEY__", JSON.stringify(key)).replace("__GMAPS_USE__", JSON.stringify({ map: use.map, place: use.place, limit: GMAPS_DAILY_LIMIT })), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin" } });
+  return new Response(PAGE.replace("__SPORTS_K__", JSON.stringify(url.searchParams.get("k"))).replace("__GMAPS_KEY__", JSON.stringify(key)).replace("__GMAPS_USE__", JSON.stringify({ map: use.map, place: use.place, limit: GMAPS_DAILY_LIMIT })), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", ...NOINDEX } });
 }
 export async function sportsWeekly(env, origin) {
   const parts = new Intl.DateTimeFormat("en-US", { timeZone: ZONE, weekday: "long", hour: "2-digit", hour12: false }).formatToParts(new Date());
@@ -354,7 +397,7 @@ export async function sportsWeekly(env, origin) {
     if (env.DELIVERY_MODE === "owner-only" && !isOwner(env, p.chat_id)) { skipped++; continue; }
     if (p.available_from && p.available_from > monthShift(month,2)+"-01") { skipped++; continue; }
     if (!(await claimNotice(env, "sports-calendar-weekly:" + stamp + ":" + p.chat_id))) { skipped++; continue; }
-    const text = "🏒⚽ 학교·대학 스포츠 정기경기 달력\n\n이번 달·다음 달 경기 " + events.length + "건이 등록돼 있습니다.\n초·중·고·대학, 종목, 무료·유료를 골라 확인하세요.\n\n📅 경기 달력: " + origin + "/sports\n\n일반 정기경기는 개별 알림으로 보내지 않습니다.";
+    const text = "🏒⚽ 학교·대학 스포츠 정기경기 달력\n\n이번 달·다음 달 경기 " + events.length + "건이 등록돼 있습니다.\n초·중·고·대학, 종목, 무료·유료를 골라 확인하세요.\n\n📅 내 경기 달력(개인 링크): " + (await sportsLink(env, origin, p.chat_id)) + "\n\n일반 정기경기는 개별 알림으로 보내지 않습니다.";
     const response = await tg(env, "family", "sendMessage", { chat_id: p.chat_id, text, disable_web_page_preview: true });
     if (response.ok) sent++; else failed++;
   }
