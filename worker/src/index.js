@@ -42,7 +42,7 @@
 import { BUILD, BOTS, botToken, isOwner, nowIso, json, tg, kvGet, kvSet, claimNotice, notifyOwner, localStamp, localDate, daysBetween, ensurePerson, getPerson, validTz, ownerOnly } from "./common.js";
 import { keyboard, rebuildKeyboard } from "./render.js";
 import * as pipeline from "./pipeline.js";
-import { sportsEvents, sportsPage, sportsWeekly } from "./sports.js";
+import { sportsEvents, sportsPage, sportsWeekly, sportsUsage } from "./sports.js";
 import { Heartbeat, ensureHeartbeat, beatNow } from "./heartbeat.js";
 import { normCity, CITIES } from "./geo.js";
 
@@ -562,6 +562,7 @@ export default {
     if (p === "/health") return json({ ok: true, build: BUILD });
     if (p === "/sports" && request.method === "GET") return sportsPage(env);
     if (p === "/sports/events" && request.method === "GET") return sportsEvents(env, url);
+    if (p === "/sports/usage" && (request.method === "GET" || request.method === "POST")) return sportsUsage(env, request, url);
 
     const hook = p.match(/^\/hook\/(life|family|kids)$/);
     if (hook && request.method === "POST") {

@@ -1,4 +1,4 @@
-import { tg, claimNotice, isOwner } from "./common.js";
+import { tg, claimNotice, isOwner, kvGet, kvSet } from "./common.js";
 
 // Read-only public school/club sports calendar. Do NOT export people, chat ids, or admin data.
 const ZONE = "America/Denver";
@@ -251,8 +251,12 @@ function show(v){var body=node("modal-body");body.replaceChildren();body.appendC
  var link=node("official");link.href=v.url||"#";link.hidden=!v.url;node("modal").showModal()}
 var gmap=null,glayer=null,COLORS={elementary:"#e8833a",middle:"#8e44ad",high:"#2c6fd1",university:"#2e9e5b",unknown:"#7f8c8d"},GL={elementary:"초등",middle:"중등",high:"고등",university:"대학",unknown:"미분류"};
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-var GKEY=__GMAPS_KEY__,gm=null,gmMarks=[],gmInfo=null,gmState="none",lastItems=[];
-function loadGoogle(){if(!GKEY||gmState!=="none")return;gmState="loading";window.__gmReady=function(){gmState="ready";paintMap(lastItems)};var sc=document.createElement("script");sc.src="https://maps.googleapis.com/maps/api/js?key="+encodeURIComponent(GKEY)+"&v=weekly&loading=async&callback=__gmReady";sc.async=true;sc.onerror=function(){gmState="failed";paintMap(lastItems)};document.head.appendChild(sc)}
+var GKEY=__GMAPS_KEY__,GUSE=__GMAPS_USE__,gm=null,gmMarks=[],gmInfo=null,gmState="none",lastItems=[],gmWhy="";
+var GSAFE=GUSE.limit-5;if(GKEY&&GUSE.map>=GSAFE){gmState="failed";gmWhy="오늘 구글지도 사용량("+GUSE.map+"/"+GUSE.limit+")이 한도에 가까워 기본 지도로 표시합니다."}
+function useBeacon(kind){GUSE[kind]=(GUSE[kind]||0)+1;try{navigator.sendBeacon("/sports/usage",kind)}catch(e){}}
+function useText(){return GKEY?" 오늘 구글지도 사용: 지도 "+GUSE.map+"/"+GUSE.limit+" · 장소 찾기 "+GUSE.place+"/"+GUSE.limit+".":""}
+window.gm_authFailure=function(){gmState="failed";gmWhy="구글지도가 오늘 막혀(한도 초과 등) 기본 지도로 바꿨습니다.";gm=null;gmMarks=[];var box=node("gmap");box.replaceChildren();if(window.gmap){}paintMap(lastItems)};
+function loadGoogle(){if(!GKEY||gmState!=="none")return;gmState="loading";window.__gmReady=function(){gmState="ready";useBeacon("map");paintMap(lastItems)};var sc=document.createElement("script");sc.src="https://maps.googleapis.com/maps/api/js?key="+encodeURIComponent(GKEY)+"&v=weekly&loading=async&callback=__gmReady";sc.async=true;sc.onerror=function(){gmState="failed";paintMap(lastItems)};document.head.appendChild(sc)}
 function paintMap(items){lastItems=items;if(GKEY&&gmState!=="failed"){loadGoogle();if(gmState==="ready"){paintGoogle(items);return}if(gmState==="loading")return}
  if(!window.L){node("map-note").textContent="지도를 불러오지 못했습니다.";return}
  if(!gmap){gmap=L.map("gmap",{scrollWheelZoom:false}).setView([39.9,-105.0],10);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,referrerPolicy:"strict-origin-when-cross-origin",attribution:"© OpenStreetMap"}).addTo(gmap);glayer=L.layerGroup().addTo(gmap)}
@@ -264,12 +268,12 @@ function paintMap(items){lastItems=items;if(GKEY&&gmState!=="failed"){loadGoogle
   L.marker([v.lat,v.lng],{icon:icon,title:v.location}).bindPopup(html,{maxWidth:320}).addTo(glayer)});
  if(pts.length)gmap.fitBounds(pts,{padding:[30,30],maxZoom:13});
  node("map-title").textContent=(state.selected?state.selected+" ":"")+"경기 장소 "+pts.length+"곳 · "+(list.length-off)+"경기";
- node("map-note").textContent="숫자는 그 장소의 경기 수입니다. 핀을 누르면 경기 목록과 구글지도 링크가 나옵니다."+(off?" 지도 밖(콜로라도 밖 원정·장소 미확인) "+off+"경기는 빠져 있습니다.":"")}
+ node("map-note").textContent=(gmWhy?gmWhy+" ":"")+"숫자는 그 장소의 경기 수입니다. 핀을 누르면 경기 목록과 구글지도 링크가 나옵니다."+(off?" 지도 밖(콜로라도 밖 원정·장소 미확인) "+off+"경기는 빠져 있습니다.":"")+useText()}
 var placeCache={};
 function placeQ(loc){loc=String(loc||"").replace(/^[A-Z]{2,6}\s+(?=[A-Z])/,"").replace(/\s+Main(?=,)/,"");return loc+(/colorado|,\s*co\b/i.test(loc)?"":", CO")}
 function searchUrl(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)}
 function dirUrl(q,p){return "https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(p?p.name+", "+p.addr:q)+(p?"&destination_place_id="+encodeURIComponent(p.id):"")}
-async function placeFor(v){var q=placeQ(v.location);if(q in placeCache)return placeCache[q];if(!(window.google&&google.maps&&google.maps.importLibrary))return null;
+async function placeFor(v){var q=placeQ(v.location);if(q in placeCache)return placeCache[q];if(gmState!=="ready"||!(window.google&&google.maps&&google.maps.importLibrary)||GUSE.place>=GSAFE)return null;useBeacon("place");
  try{var lib=await google.maps.importLibrary("places");var req={textQuery:q,fields:["id","displayName","formattedAddress","googleMapsURI"],maxResultCount:1};if(typeof v.lat==="number")req.locationBias={lat:v.lat,lng:v.lng};
   var r=await lib.Place.searchByText(req);var x=r&&r.places&&r.places[0];placeCache[q]=x?{id:x.id,name:x.displayName,addr:x.formattedAddress,url:x.googleMapsURI}:null}catch(e){placeCache[q]=null}return placeCache[q]}
 function linkPlace(root,v){var q=placeQ(v.location);root.querySelectorAll(".to-place").forEach(function(a){a.href=searchUrl(q)});root.querySelectorAll(".to-dir").forEach(function(a){a.href=dirUrl(q)});
@@ -278,7 +282,7 @@ function mapGroups(items){var list=state.selected?items.filter(function(a){retur
  list.forEach(function(v){if(typeof v.lat!=="number"||v.lat<37||v.lat>41.1||v.lng<-109.1||v.lng>-102){off++;return}var k=v.lat+","+v.lng;(groups[k]=groups[k]||[]).push(v)});return {list:list,groups:groups,off:off}}
 function popHtml(g){var v=g[0],n=g.length,A='target="_blank" rel="noopener noreferrer"';return '<div class="pop"><b class="place-name">'+esc(v.location)+'</b><div class="pop-act"><a class="to-place btn1" '+A+' href="#">📍 구글지도에서 보기</a><a class="to-dir btn2" '+A+' href="#">🚗 길찾기</a></div><ul>'+g.slice(0,8).map(function(x){return'<li><a class="to-place" '+A+' href="#">'+esc(x.date.slice(5)+" "+x.time+" · "+GL[x.grade]+" · "+x.title)+"</a></li>"}).join("")+"</ul>"+(n>8?"외 "+(n-8)+"경기":"")+"</div>"}
 function mapNote(pts,m){node("map-title").textContent=(state.selected?state.selected+" ":"")+"경기 장소 "+pts+"곳 · "+(m.list.length-m.off)+"경기";
- node("map-note").textContent="숫자는 그 장소의 경기 수입니다. 핀을 누르면 경기 목록과 구글지도 링크가 나옵니다."+(m.off?" 지도 밖(콜로라도 밖 원정·장소 미확인) "+m.off+"경기는 빠져 있습니다.":"")}
+ node("map-note").textContent="숫자는 그 장소의 경기 수입니다. 핀을 누르면 경기 목록과 구글지도 링크가 나옵니다."+(m.off?" 지도 밖(콜로라도 밖 원정·장소 미확인) "+m.off+"경기는 빠져 있습니다.":"")+useText()}
 function paintGoogle(items){var G=google.maps;if(!gm){var box=node("gmap");box.replaceChildren();gm=new G.Map(box,{center:{lat:39.92,lng:-105.0},zoom:10,mapTypeControl:false,streetViewControl:false,gestureHandling:"cooperative"});gmInfo=new G.InfoWindow()}
  gmMarks.forEach(function(m){m.setMap(null)});gmMarks=[];var m=mapGroups(items),b=new G.LatLngBounds(),n=0;
  Object.keys(m.groups).forEach(function(k){var g=m.groups[k],v=g[0];n++;b.extend({lat:v.lat,lng:v.lng});
@@ -308,11 +312,32 @@ setChips("grades",grades,"grade");setChips("prices",prices,"price");
 var urlMonth=new URLSearchParams(location.search).get("month");state.month=/^\d{4}-(0[1-9]|1[0-2])$/.test(urlMonth||"")?urlMonth:currentMonth();load();
 })();
 </script></body></html>`;
-export function sportsPage(env = {}) {
+// 구글지도 데모 키 사용량(하루 API당 100번, 미국 태평양시 기준으로 셈). 페이지가 실제로 쓴 횟수를 브라우저가 알려 준다.
+export const GMAPS_DAILY_LIMIT = 100;
+const pacificDate = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+export async function gmapsUsage(env, date = pacificDate()) {
+  try { const v = JSON.parse((await kvGet(env, "gmaps-usage:" + date)) || "{}"); return { date, map: v.map | 0, place: v.place | 0 }; } catch { return { date, map: 0, place: 0 }; }
+}
+export async function sportsUsage(env, request, url) {
+  const H = { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" };
+  if (request.method === "POST") {
+    const kind = (await request.text()).trim().slice(0, 10);
+    if (kind !== "map" && kind !== "place") return new Response(JSON.stringify({ ok: false }), { status: 400, headers: H });
+    const u = await gmapsUsage(env);
+    u[kind] = Math.min(u[kind] + 1, 100000);
+    await kvSet(env, "gmaps-usage:" + u.date, { map: u.map, place: u.place });
+    return new Response(JSON.stringify({ ok: true, ...u, limit: GMAPS_DAILY_LIMIT }), { headers: H });
+  }
+  const days = Math.min(Math.max(Number(url.searchParams.get("days")) || 1, 1), 31), out = [];
+  for (let i = 0; i < days; i++) out.push(await gmapsUsage(env, new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Date.now() - i * 86400000))));
+  return new Response(JSON.stringify({ ok: true, limit: GMAPS_DAILY_LIMIT, days: out }), { headers: H });
+}
+export async function sportsPage(env = {}) {
   const raw = String(env.GMAPS_BROWSER_KEY || "").trim();
   const m = raw.match(/AIza[0-9A-Za-z_-]{35}/);
   const key = m ? m[0] : "";
-  return new Response(PAGE.replace("__GMAPS_KEY__", JSON.stringify(key)), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin" } });
+  const use = key ? await gmapsUsage(env) : { map: 0, place: 0 };
+  return new Response(PAGE.replace("__GMAPS_KEY__", JSON.stringify(key)).replace("__GMAPS_USE__", JSON.stringify({ map: use.map, place: use.place, limit: GMAPS_DAILY_LIMIT })), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin" } });
 }
 export async function sportsWeekly(env, origin) {
   const parts = new Intl.DateTimeFormat("en-US", { timeZone: ZONE, weekday: "long", hour: "2-digit", hour12: false }).formatToParts(new Date());
