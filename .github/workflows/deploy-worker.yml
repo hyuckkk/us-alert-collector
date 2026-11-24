@@ -77,8 +77,6 @@ jobs:
           bash ../scripts/run.sh bash ../scripts/admin_call.sh setup || echo "::warning::webhook setup incomplete - add BOT_TOKEN_* secrets in GitHub and re-run deploy-worker, then run the 'admin' workflow with action=setup"
 
       - name: Verify sports calendar routes (personal link)
-        env:
-          US_ADMIN_KEY: ${{ secrets.US_ADMIN_KEY }}
         run: |
           set -euo pipefail
           code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$US_WORKER_URL/sports"); test "$code" = 403 && echo "sports without personal link: 403 OK"
