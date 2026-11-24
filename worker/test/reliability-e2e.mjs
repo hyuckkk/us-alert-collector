@@ -157,7 +157,7 @@ try {
 
   await step("7 아주 긴 행사 30건: 한 통 4,096자 이하, 버튼은 그 행사에 연결, 한 번에 못 보낸 것은 다음 실행에서 이어 보내 모두 발송", async () => {
     const long = "아주 긴 행사 설명 ".repeat(40);
-    await admin("/admin/enqueue", { events: Array.from({ length: 30 }, (_, i) => ev(`L${i}`, { urgency: "weekly", tags: ["dgL"], start_date: plus(120 + i),
+    await admin("/admin/enqueue", { events: Array.from({ length: 30 }, (_, i) => ev(`L${i}`, { urgency: "weekly", tags: ["dgL"], start_date: plus(120 + i), location: `Hall ${i}`, // 서로 다른 행사(같은 장소·같은 제목이면 한 번만 감)
       title_ko: `행사 L${i} ${long}`, cost_text: long, summary_ko: long, url: `https://example.org/${"x".repeat(300)}/L${i}` })) });
     sql(`UPDATE outbox SET status = 'skipped' WHERE kind = 'digest' AND chat_id = '${FRIEND}'`);
     const n = E.calls.length;
