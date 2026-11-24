@@ -300,7 +300,8 @@ var urlMonth=new URLSearchParams(location.search).get("month");state.month=/^\d{
 })();
 </script></body></html>`;
 export function sportsPage(env = {}) {
-  const key = /^[A-Za-z0-9_-]{20,60}$/.test(String(env.GMAPS_BROWSER_KEY || "")) ? env.GMAPS_BROWSER_KEY : "";
+  const raw = String(env.GMAPS_BROWSER_KEY || "").trim();
+  const key = /^[A-Za-z0-9_-]{20,60}$/.test(raw) ? raw : "";
   return new Response(PAGE.replace("__GMAPS_KEY__", JSON.stringify(key)), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin" } });
 }
 export async function sportsWeekly(env, origin) {
