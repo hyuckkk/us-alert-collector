@@ -253,9 +253,9 @@ var gmap=null,glayer=null,COLORS={elementary:"#e8833a",middle:"#8e44ad",high:"#2
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 var GKEY=__GMAPS_KEY__,GUSE=__GMAPS_USE__,gm=null,gmMarks=[],gmInfo=null,gmState="none",lastItems=[],gmWhy="";
 var GSAFE=GUSE.limit-5;if(GKEY&&GUSE.map>=GSAFE){gmState="failed";gmWhy="오늘 구글지도 사용량("+GUSE.map+"/"+GUSE.limit+")이 한도에 가까워 기본 지도로 표시합니다."}
-function useBeacon(kind){GUSE[kind]=(GUSE[kind]||0)+1;try{navigator.sendBeacon("/sports/usage",kind)}catch(e){}}
+function useBeacon(kind){GUSE[kind]=(GUSE[kind]||0)+1;try{navigator.sendBeacon("/sports/usage",kind)}catch(e){}var n=node("map-note");if(n&&n.textContent)n.textContent=n.textContent.replace(/ 오늘 구글지도 사용:.*$/,"")+useText()}
 function useText(){return GKEY?" 오늘 구글지도 사용: 지도 "+GUSE.map+"/"+GUSE.limit+" · 장소 찾기 "+GUSE.place+"/"+GUSE.limit+".":""}
-window.gm_authFailure=function(){gmState="failed";gmWhy="구글지도가 오늘 막혀(한도 초과 등) 기본 지도로 바꿨습니다.";gm=null;gmMarks=[];var box=node("gmap");box.replaceChildren();if(window.gmap){}paintMap(lastItems)};
+window.gm_authFailure=function(){gmState="failed";gmWhy="구글지도가 오늘 막혀(한도 초과 등) 기본 지도로 바꿨습니다.";gm=null;gmMarks=[];node("gmap").replaceChildren();paintMap(lastItems)};
 function loadGoogle(){if(!GKEY||gmState!=="none")return;gmState="loading";window.__gmReady=function(){gmState="ready";useBeacon("map");paintMap(lastItems)};var sc=document.createElement("script");sc.src="https://maps.googleapis.com/maps/api/js?key="+encodeURIComponent(GKEY)+"&v=weekly&loading=async&callback=__gmReady";sc.async=true;sc.onerror=function(){gmState="failed";paintMap(lastItems)};document.head.appendChild(sc)}
 function paintMap(items){lastItems=items;if(GKEY&&gmState!=="failed"){loadGoogle();if(gmState==="ready"){paintGoogle(items);return}if(gmState==="loading")return}
  if(!window.L){node("map-note").textContent="지도를 불러오지 못했습니다.";return}
