@@ -1,0 +1,311 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-24T23:06:15Z",
+  "finished_at_utc": "2026-11-24T23:07:27Z",
+  "search_requests": 40,
+  "queries": [
+    "Colorado 2027 summer public airshow air force academy open house airport fly in 2027 dates",
+    "Colorado 2027 summer free kids camp fishing clinic registration Colorado Parks Wildlife 2027",
+    "Denver Colorado 2027 summer public open house laboratory research facility tour special event",
+    "Colorado December 2026 public open house fire station airport train hands on kids free event",
+    "Colorado 2027 summer national park lottery permit reservation opening 2027 special tours",
+    "Colorado 2027 summer university public hands on science engineering festival July August",
+    "Colorado 2027 summer free youth sports clinic adaptive sports public registration Denver",
+    "Colorado December 2026 January 2027 free kids engineering workshop special event library Denver Westminster",
+    "Colorado 2027 summer rodeo free kids mutton bustin registration event",
+    "Colorado 2027 summer train special event roundhouse tour steam locomotive ride",
+    "site:recreation.gov Dinosaur Green Yampa High Use Permits 2027 lottery application dates fee",
+    "site:nps.gov dinosaur 2027 river permit lottery dates fee children",
+    "Colorado 2027 airshow July August 2027 official Colorado airport",
+    "Colorado 2027 July August public rocket launch club launch schedule",
+    "Colorado 2027 July August free aviation youth flight event EAA young eagles",
+    "Colorado 2027 summer free festival hands on archaeology public dig 2027",
+    "Colorado 2027 July August national park special event ranger night sky festival dates",
+    "Colorado 2027 July August mine rescue competition public tour open house",
+    "Colorado 2027 July August free kids bike rodeo festival official",
+    "Colorado 2027 summer open house research facility NOAA NCAR NREL public science event",
+    "Cowboys Forever Foundation rodeo Eagle 2027 July 2 tickets calf scramble age official",
+    "site:auroraco.libnet.info \"DeLaney\" \"December\" 2026 open days",
+    "Colorado 2027 summer \"free\" \"registration\" \"camp\" aviation aerospace elementary July 2027",
+    "Colorado 2027 \"July\" \"free\" \"hands-on\" heritage festival blacksmith",
+    "Colorado 2027 \"August\" \"free\" \"hands-on\" festival kids county fair",
+    "Colorado 2027 \"July\" \"open house\" public airport",
+    "Colorado 2027 January February free ice climbing clinic demo Ouray ice festival kids registration",
+    "Colorado 2027 February free kids snow sports festival learn ski ice skate official",
+    "Colorado December 2026 free public special facility tour open house Colorado Denver wastewater fire station",
+    "Colorado 2027 July August free public international competition unusual festival sheepdog trials official",
+    "Colorado 2027 summer free kids hands on train engineer museum special event July August 2027",
+    "Colorado 2027 summer \"July\" \"2027\" \"free\" \"demonstrations\" festival Colorado",
+    "Colorado 2027 summer \"August\" \"2027\" \"free\" \"demonstrations\" festival Colorado",
+    "Colorado 2027 \"free\" \"kids\" \"July\" \"registration\" outdoor adventure festival",
+    "Colorado 2027 summer special permit lottery Maroon Bells overnight 2027 dates reservation",
+    "Colorado December 2026 January 2027 free public robotics tournament spectators Colorado official event",
+    "site:ourayicepark.com 2027 ice festival clinics beginner kids minimum age spectator free demo registration",
+    "Ouray Ice Festival 2027 spectator free competition January 30 31",
+    "Ouray Ice Fest 2027 clinic registration opens price beginner climbing age 2027",
+    "Westminster Colorado to Ouray Colorado driving distance miles"
+  ],
+  "url_read_attempts": 18,
+  "successful_page_reads": 16,
+  "failed_page_reads": 2,
+  "official_detail_verified": 11,
+  "official_detail_urls": [
+    "https://www.recreation.gov/permits/250014",
+    "https://www.nps.gov/dino/planyourvisit/boating-and-rafting.htm",
+    "https://nationalwestern.com/rodeos/mutton-bustin/",
+    "https://www.colorado.edu/sciencediscovery/programs/stem-research-experience",
+    "https://www.colorado.edu/sciencediscovery/stem-pathfinder-programs-high-school-students",
+    "https://www.skihistampede.com/general-1",
+    "https://www.highcountrystampederodeo.com/kids-events",
+    "https://ourayicepark.com/festival/about",
+    "https://events.vex.com/robot-competitions/vex-iq-competition/VE-IQ-26-65711.html",
+    "https://www.fourmilepark.org/event/scfd-free-admission-day/2026-12-18/",
+    "https://www.cowboysforeverfoundation.org/rodeo-info"
+  ],
+  "candidate_events": 33,
+  "duplicate_candidates": 1,
+  "rejected_events": 11,
+  "held_events": 20,
+  "qualified_events": 1,
+  "known_by_collector": 0,
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://ourayicepark.com/festival/about"
+  ],
+  "candidates": [
+    {
+      "title": "Florence Pioneer Museum Model Train Open House Dec 19",
+      "status": "held",
+      "reason": "Tourism listing gives donation admission; organizer direct event page not opened.",
+      "url": "https://www.colorado.com/events/florence-pioneer-museum-annual-model-train-open-house"
+    },
+    {
+      "title": "Colorado Railroad Museum Wild West Days 2027",
+      "status": "held",
+      "reason": "2027 date TBA.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Colorado Railroad Museum Harvest Haunt 2027",
+      "status": "held",
+      "reason": "Date TBA; regular pricing.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "National Western in-rodeo Mutton Bustin Jan 9–24",
+      "status": "held",
+      "reason": "Registration open; age 5–7 under 55 lb; actual participant/required ticket price and assigned slot not confirmed.",
+      "url": "https://nationalwestern.com/rodeos/mutton-bustin/"
+    },
+    {
+      "title": "DeLaney Farm holiday open days Dec 5 and 13",
+      "status": "held",
+      "reason": "Only third-party listing retrieved; official direct page not located.",
+      "url": "https://www.rallytakesthetrain.com/christmas-events/delaney-farm-open-days-aurora-co"
+    },
+    {
+      "title": "Cowboys Forever Stars Stripes Rodeo July 2 2027",
+      "status": "held",
+      "reason": "Date and 6 pm kids signup on regional calendar; organizer still labels prices and age rules 2026, not 2027.",
+      "url": "https://www.cowboysforeverfoundation.org/rodeo-info"
+    },
+    {
+      "title": "CU STEM Research Experience June 2–July 30 2027",
+      "status": "rejected",
+      "reason": "High school only, starts before family window; not relevant to elementary family, extended research curriculum.",
+      "url": "https://www.colorado.edu/sciencediscovery/programs/stem-research-experience"
+    },
+    {
+      "title": "CU STEM Pathfinders Engineering June 21–July 2",
+      "status": "rejected",
+      "reason": "High school only and begins before family arrival.",
+      "url": "https://www.colorado.edu/sciencediscovery/stem-pathfinder-programs-high-school-students"
+    },
+    {
+      "title": "CU STEM Pathfinders Bioscience July 12–23",
+      "status": "rejected",
+      "reason": "High school only; extended education program not relevant to elementary family.",
+      "url": "https://www.colorado.edu/sciencediscovery/stem-pathfinder-programs-high-school-students"
+    },
+    {
+      "title": "Denver Summer Rec Kidz",
+      "status": "held",
+      "reason": "Aggregator conflates summer camp with adaptive fall/winter sessions; no reliable 2027 summer dates.",
+      "url": "https://projectkids.io/denver-co/camps/summer-rec-kidz"
+    },
+    {
+      "title": "Sam Gary Kids Create Dec 13",
+      "status": "rejected",
+      "reason": "Ordinary library craft activity.",
+      "url": "https://grassyknees.com/denver/activities/kids-create-sam-gary--listing-f9a023393bdf4eeeeee1505e"
+    },
+    {
+      "title": "Ski Hi Stampede Mutton Busting July 2027",
+      "status": "rejected",
+      "reason": "Requires San Luis Valley residency, age 5–7, under 50 lb; old registration date text.",
+      "url": "https://www.skihistampede.com/general-1"
+    },
+    {
+      "title": "High Country Stampede rodeo kids events",
+      "status": "held",
+      "reason": "2027 dates and pricing not verified.",
+      "url": "https://www.highcountrystampederodeo.com/kids-events"
+    },
+    {
+      "title": "Englewood Holiday Express Dec 4–12",
+      "status": "held",
+      "reason": "Direct official URL returned 403; cannot independently confirm ticket availability; $15/person snippet.",
+      "url": "https://www.englewoodco.gov/our-city/events/upcoming/holiday-express"
+    },
+    {
+      "title": "CPW Cherry Creek public fishing clinic",
+      "status": "rejected",
+      "reason": "2025 past date.",
+      "url": "https://cpwconnect.state.co.us/ActivityRegistration/4740e831-80ef-44fa-ac7d-ac434ce42ee7"
+    },
+    {
+      "title": "Wings Santa in Hangar Centennial Dec 5",
+      "status": "rejected",
+      "reason": "Prior Nov 24 log rejected routine paid holiday museum admission, no visitor flight.",
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-exploration-of-flight/"
+    },
+    {
+      "title": "Wings Santa in Hangar Denver Dec 19",
+      "status": "rejected",
+      "reason": "Prior Nov 24 log rejected routine paid holiday museum admission; no special aircraft access.",
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/"
+    },
+    {
+      "title": "Dinosaur Green/Yampa 2027 private rafting lottery",
+      "status": "held",
+      "reason": "Dec 1–Jan 31 application, $15 application + $185 permit; self-guided technical whitewater, not beginner guided family experience; equipment cost unknown. Prior research Nov 19 also held.",
+      "url": "https://www.recreation.gov/permits/250014"
+    },
+    {
+      "title": "Monte Vista Crane Festival Mar 5–7 2027",
+      "status": "held",
+      "reason": "Date found; individual tour price/registration not verified.",
+      "url": "https://mvcranefest.org/"
+    },
+    {
+      "title": "Buena Vista Contin-Tail gem fossil show 2027",
+      "status": "held",
+      "reason": "2027 dates not updated.",
+      "url": "https://festivalnet.com/100659/Buena-Vista-Colorado/Gem-Jewelry-Bead-Shows/Buena-Vista-Contin-Tail-Gem%2C-Mineral-Fossil-Show"
+    },
+    {
+      "title": "NLR HOPE photovoltaic workshop July 11–16 2027",
+      "status": "rejected",
+      "reason": "Restricted graduate student/faculty participants.",
+      "url": "https://nrel.sitefinity.cloud/pv/hands-on-photovoltaic-experience"
+    },
+    {
+      "title": "EAA Boulder Young Eagles",
+      "status": "held",
+      "reason": "No newly dated 2027 rally; old May 10 closed listing.",
+      "url": "https://chapters.eaa.org/eaa1627"
+    },
+    {
+      "title": "EAA Chapter 301 Young Eagles",
+      "status": "held",
+      "reason": "2026 season ended; 2027 dates not published.",
+      "url": "https://www.eaa301.org/young-eagles"
+    },
+    {
+      "title": "Arapahoe County Fair Heritage Hall",
+      "status": "held",
+      "reason": "Only 2026 details; 2027 program and fair admission not verified.",
+      "url": "https://www.arapahoecountyfair.com/p/plan-your-trip/heritage-hall"
+    },
+    {
+      "title": "Walker Ranch Summer Heritage Morning",
+      "status": "rejected",
+      "reason": "2026 past and canceled; no 2027 event.",
+      "url": "https://bouldercounty.gov/news/summer-heritage-morning-at-walker-ranch-homestead-on-sunday-july-19/"
+    },
+    {
+      "title": "Grand Nordic Free Friday Kids Lessons",
+      "status": "duplicate",
+      "reason": "Previous ChatGPT submission 20261115T233043Z.json already covers same series.",
+      "url": "https://skigrandnordic.org/school-programs/"
+    },
+    {
+      "title": "Frisco Gold Rush Feb 13 2027",
+      "status": "held",
+      "reason": "Race entry fees not confirmed; spectator program unclear.",
+      "url": "https://coloradocrosscountry.com/events/674"
+    },
+    {
+      "title": "Colorado Railroad Museum Spring Break 2027",
+      "status": "held",
+      "reason": "2027 dates TBA.",
+      "url": "https://coloradorailroadmuseum.org/youth-and-families/"
+    },
+    {
+      "title": "Eagle Crest Elementary VEX IQ Dec 12",
+      "status": "held",
+      "reason": "Official open returned DisabledError; team fee is not spectator admission.",
+      "url": "https://events.vex.com/robot-competitions/vex-iq-competition/VE-IQ-26-67312.html"
+    },
+    {
+      "title": "Stargate School VEX IQ Jan 16 2027",
+      "status": "held",
+      "reason": "Team event full; public spectator access and admission not verified.",
+      "url": "https://events.vex.com/robot-competitions/vex-iq-competition/VE-IQ-26-65711.html"
+    },
+    {
+      "title": "Colorado Dragon Boat Festival 2027",
+      "status": "held",
+      "reason": "2027 dates not announced.",
+      "url": "https://www.epiceventscolorado.com/annual/colorado-dragon-boat-festival/"
+    },
+    {
+      "title": "Four Mile Historic Park SCFD Dec 18",
+      "status": "rejected",
+      "reason": "Monthly recurring free admission; no one-time exclusive activity. Prior Nov 18 log rejected November equivalent.",
+      "url": "https://www.fourmilepark.org/event/scfd-free-admission-day/2026-12-18/"
+    },
+    {
+      "title": "Ouray Ice Festival Jan 30 2027 public competition",
+      "status": "qualified",
+      "reason": "Official event Jan 28–31; Saturday daytime mixed competition; free rim viewing, five spectators $0; 337 miles by city-to-city road distance. Exact start time, age restriction and optional clinic terms not posted. Current residents before family arrival. No exact prior match returned by GitHub search.",
+      "url": "https://ourayicepark.com/festival/about"
+    }
+  ],
+  "submission": {
+    "path": "external-inbox/chatgpt/20261124T230716Z.json",
+    "commit_sha": "803d34edfd4a0ac6f95d54560c3b3dea7780dc59",
+    "readback_verified": true
+  },
+  "collector_comparison": {
+    "sources_sha": "cccb6669198f22679b7b3d70ea090500988bc336",
+    "sources_total": 71,
+    "sources_active": 55,
+    "queries_sha": "107e43181f5667fcec91d79d8ff4f5293d87bd5c",
+    "historic_report_sha": "80a072221cd1ea261d76815926681fab1a26375f",
+    "historic_report_events": 632,
+    "github_search_terms": [
+      "Ouray Ice Fest",
+      "Dinosaur Green Yampa",
+      "Mutton Bustin",
+      "Cowboys Forever",
+      "DeLaney Farm",
+      "Four Mile Historic Park",
+      "VEX IQ",
+      "STEM Pathfinder"
+    ],
+    "current_worker_db": "unknown",
+    "notes": "Historic fullsystem-run report is not current DB. Exact Ouray title search returned no matches, not proof of missed event. Prior research logs and aside records checked where relevant. No live delivery evidence."
+  },
+  "improvements": [
+    "Consider official Ouray Ice Park festival page, EAA chapter events/registration pages, Recreation.gov upcoming lotteries and Dinosaur permit page (DINO omitted from current NPS API park codes).",
+    "Search specific terms: ice climbing competition free viewing, youth flight rally, private river permit lottery, rodeo calf scramble, regional robotics public spectators. Existing daily queries emphasize generic classes; avoid treating missing source as proof of missed event.",
+    "National Western source disabled; monitor official mutton bustin page and confirm admission/participation cost. For robotics distinguish team registration from public spectators."
+  ],
+  "notes": "Count each actual web query record once; URL reads count open actions including repeated line-range opens. 11 distinct organizer/government official pages opened successfully; tourism partner page separately read. Candidate count counts distinct event/opportunity rows actually screened, not all search hits. 2027 summer family window candidates held or rejected; Ouray is current-resident opportunity. Existing workflow external-inbox.yml verified; no code or delivery settings changed. No live Worker DB or recipient delivery receipts available."
+}
