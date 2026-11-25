@@ -77,8 +77,9 @@ export function renderEvent(d, opts = {}) {
   if (d.special_reason) lines.push(`✨ <b>${esc(cut(d.special_reason, 160))}</b>`); // 왜 특별한지 한 문장
   if (d.summary_ko) lines.push(esc(cut(d.summary_ko, 240)));
   lines.push("");
-  const when = [dateRange(d), d.time_text].filter(Boolean).join(" ");
-  if (when) lines.push(`📅 ${esc(cut(when, 160))}`);
+  // 같은 장소·같은 행사의 여러 날짜는 한 통에 모아 보여 준다(opts.dates)
+  const when = opts.dates || [dateRange(d), d.time_text].filter(Boolean).join(" ");
+  if (when) lines.push(`📅 ${esc(cut(when, 300))}`);
   const org = d.org && !String(d.location || "").includes(d.org) ? d.org : null;
   if (d.location) lines.push(`📍 <a href="${esc(mapUrl(d))}">${esc(cut(d.location, 140))}</a>${org ? ` · ${esc(cut(org, 60))}` : ""}`);
   else if (org) lines.push(`📍 ${esc(cut(org, 160))}`);

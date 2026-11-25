@@ -3,7 +3,7 @@
 // D1 무료 요금제의 호출당 쿼리 수 제한 때문에 여러 건은 json_each 로 한 번에 처리한다.
 
 import { BOTS, isOwner, nowIso, ownerOnly, tg, sendHtml, claimNotice, notifyOwner, kvGet, kvSet, defaultPerson, ensurePerson, hourIn, weekdayIn, dateIn, inQuiet, localDate, ownerTz } from "./common.js";
-import { renderEvent, renderCount, keyboard } from "./render.js";
+import { renderEvent, renderCount, keyboard, krDate } from "./render.js";
 import { isRoutineSportsMatch } from "./sports.js";
 import { tooFar } from "./geo.js";
 
@@ -668,6 +668,51 @@ function remember(seen, chatId, sourceId, d, eventKey) {
 // 이 사람이 이미 받은(또는 이번 실행에서 받기로 한) 것과 같은 행사면 사유를 돌려준다. 아니면 기록하고 null.
 // 1) 같은 정보원·같은 원제목의 다른 회차 2) 같은 공식 주소(다른 경로·정보원이 다른 키로 등록) 3) 같은 날짜 + 제목이 대부분 같음
 // 같은 행사의 변경 알림(같은 event_key)은 막지 않는다.
+// 같은 행사의 다른 회차인가: 같은 정보원·같은 원제목(회차 표시 뗀 것), 같은 주소, 또는 같은 장소 + 제목 대부분 같음
+export function sameEvent(a, aSrc, b, bSrc) {
+  if (seriesKey(aSrc, a) === seriesKey(bSrc, b) && baseTitle(a.title || a.title_ko)) return true;
+  if (a.url && b.url && normUrl(a.url) === normUrl(b.url)) return true;
+  const la = locKey(a.location), lb = locKey(b.location);
+  if (!la || la !== lb) return false;
+  const t = titleTokens(a), u = titleTokens(b);
+  if (t.size < 2 || u.size < 2) return false;
+  return [...t].filter((w) => u.has(w)).length / Math.min(t.size, u.size) >= 0.6;
+}
+// 날짜 목록을 짧게: 이어지는 날은 "~ 매일"로 묶고, 너무 많으면 "외 N회"
+export function formatDates(ranges, today) {
+  const days = new Set();
+  for (const [a, b] of ranges) for (let x = a; x <= (b || a) && days.size < 400; x = plusDays(x, 1)) if (x >= today) days.add(x);
+  const list = [...days].sort();
+  if (list.length < 2) return null;
+  const segs = [];
+  for (const x of list) { const last = segs[segs.length - 1]; if (last && plusDays(last[1], 1) === x) last[1] = x; else segs.push([x, x]); }
+  const y = Number(today.slice(0, 4));
+  const show = segs.slice(0, 6).map(([a, b]) => a === b ? krDate(a, y) : `${krDate(a, y)} ~ ${krDate(b, y)} 매일`);
+  const more = segs.slice(6).reduce((n, [a, b]) => n + (Date.parse(b) - Date.parse(a)) / 86400000 + 1, 0);
+  return show.join(", ") + (more ? ` 외 ${more}일` : "");
+}
+// 이 행사와 같은 행사의 다른 날짜를 모아 "📅" 줄 하나로(오늘 이후, 90일 안). 하나뿐이면 null
+export async function siblingDates(env, d, sourceId, eventKey) {
+  if (!d.start_date) return null;
+  const today = dateIn(DENVER);
+  const rows = await all(env.DB.prepare("SELECT event_key, source_id, data FROM events WHERE event_key != ? AND start_date >= ? AND start_date <= ? LIMIT 3000")
+    .bind(eventKey, plusDays(d.start_date, -90), plusDays(d.start_date, 90)));
+  const ranges = [[d.start_date, d.end_date]];
+  const times = new Set([d.time_text || ""]);
+  for (const r of rows) {
+    const o = JSON.parse(r.data);
+    if (o.registration_status === "cancelled" || !o.start_date || !sameEvent(d, sourceId, o, r.source_id)) continue;
+    ranges.push([o.start_date, o.end_date]); times.add(o.time_text || "");
+  }
+  if (ranges.length < 2) return null;
+  const dates = formatDates(ranges, today);
+  if (!dates) return null;
+  const tt = [...times].filter(Boolean);
+  return tt.length === 1 ? `${dates} ${tt[0]}` : tt.length ? `${dates} (시간은 날짜마다 다름 — 원문 확인)` : dates;
+}
+async function datesOpt(env, d, sourceId, eventKey) {
+  try { const dates = await siblingDates(env, d, sourceId, eventKey); return dates ? { dates } : {}; } catch { return {}; }
+}
 export function sameAsSent(seen, chatId, sourceId, d, eventKey) {
   const other = (list) => (list || []).some((x) => x.key !== eventKey);
   const group = eventNoticeGroup(d);
@@ -687,10 +732,11 @@ export function sameAsSent(seen, chatId, sourceId, d, eventKey) {
     });
     if (hit) return "same-event-other-source";
     // 같은 장소에서 날짜만 다른 같은 행사(시즌 내내 매일 밤 하는 조명 쇼를 정보원마다 회차별로 올림): 60일 안, 제목 대부분 같음
+    // (이미 보낸 한 통에 다른 날짜가 모두 들어가므로 따로 보내지 않는다)
     const lk = locKey(d.location);
     const near = lk && (seen.places.get(`${chatId}|${lk}`) || []).some((x) => {
       if (x.key === eventKey || t.size < 2 || x.tokens.size < 2) return false;
-      if (Math.abs(Date.parse(x.start) - Date.parse(d.start_date)) > 60 * 86400000) return false;
+      if (Math.abs(Date.parse(x.start) - Date.parse(d.start_date)) > 90 * 86400000) return false;
       const common = [...t].filter((w) => x.tokens.has(w)).length;
       return common / Math.min(t.size, x.tokens.size) >= 0.6;
     });
@@ -752,7 +798,7 @@ export async function dispatch(env, opts = {}) {
       continue;
     }
     const note = row.version === row.cur_version ? row.change_note : null;
-    let text = renderEvent(row.data, { kind: row.kind, version: row.version, note });
+    let text = renderEvent(row.data, { kind: row.kind, version: row.version, note, ...(await datesOpt(env, row.data, row.source_id, row.event_key)) });
     if (row.resend) text = "🔁 재전송 (이전 전송의 성공 여부를 확인하지 못했습니다)\n" + text;
     const d = await sendHtml(env, row.bot, { chat_id: row.chat_id, text, reply_markup: keyboard(row.event_key, { state: row.state }, row.data.url) });
     const c = classify(d, { attempts: row.attempts + 1 }, now2);
@@ -851,7 +897,7 @@ export async function digest(env, opts = {}) {
         done.push({ id: x.id, status: "skipped", reason: "same-event-group-claimed" }); r.skipped++;
         continue;
       }
-      const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest" }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
+      const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest", ...(await datesOpt(env, x.data, x.source_id, x.event_key)) }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
       calls++;
       const c = classify(d, { attempts: x.attempts + 1 }, nowIso());
       if (c.status === "failed" || c.status === "dead") await releaseNoticeGroup(env, groupClaim);
