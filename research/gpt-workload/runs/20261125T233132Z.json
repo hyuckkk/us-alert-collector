@@ -1,0 +1,618 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-25T23:31:32.801Z",
+  "finished_at_utc": "2026-11-25T23:34:07.586Z",
+  "search_requests": 67,
+  "queries": [
+    "Colorado 2027 air show public dates Colorado Springs Grand Junction Loveland airshow 2027",
+    "Colorado 2027 July August free youth aviation flights EAA young eagles schedule Colorado",
+    "Colorado 2027 summer public open house research laboratory tours dam power plant Colorado",
+    "Colorado 2027 summer special event free family hands on engineering festival July August",
+    "Colorado 2027 June July August free kids outdoor fishing festival archery state park",
+    "Colorado 2027 July August national park lottery permit special tour reservation Colorado",
+    "Denver December 2026 free family hands on science event special open house",
+    "Colorado December 2026 aviation museum open cockpit special event free",
+    "Colorado 2027 robotics competition public free spectators regional FIRST Colorado",
+    "Colorado 2027 summer youth rodeo mutton bustin registration July August",
+    "Colorado 2027 summer steam locomotive special event public rail festival",
+    "Colorado 2027 July August hot air balloon festival free tethered rides",
+    "Colorado 2027 summer university open house public hands on festival engineering",
+    "Colorado 2027 summer kids free camp registration outdoor adventure Denver Westminster",
+    "Colorado 2027 July August military base public air force academy special event",
+    "Colorado December 2026 free family special behind the scenes tour Denver water facility",
+    "site:coloradofirst.org 2027 Colorado regional spectators free admission robotics Denver",
+    "site:thorntonco.gov \"Dino Fest\" free 2027 Thornton",
+    "site:extension.colostate.edu ENOR camp 2027 fees grades registration",
+    "Colorado 2027 summer \"free\" \"July\" festival hands-on kids Colorado 2027",
+    "Colorado 2027 \"open house\" airport public airshow 2027 Colorado",
+    "Colorado 2027 \"free\" \"August\" youth fishing derby registration Colorado",
+    "Colorado 2027 \"July\" \"free\" public mine tour Colorado special event",
+    "Colorado 2027 \"August\" \"free\" public observatory star party festival",
+    "Colorado 2027 \"July\" \"free\" Colorado dragon boat festival family",
+    "Colorado 2027 summer \"free\" \"camp\" aviation youth Colorado registration",
+    "Colorado 2027 \"July\" \"August\" Colorado county fair free demolition derby tractor pull",
+    "Denver December 2026 \"free\" \"open house\" hands-on family Colorado special event",
+    "Colorado 2027 airshow official schedule Colorado Springs Pikes Peak airshow 2027",
+    "Colorado 2027 summer special event public steam engine festival Durango Chama railfest 2027",
+    "Colorado 2027 \"July\" \"registration\" \"free\" kids rodeo county fair official",
+    "Colorado 2027 \"July\" \"August\" \"open house\" airport fly-in Colorado official",
+    "Colorado 2027 summer \"free\" \"hands-on\" festival science museum 2027 Colorado",
+    "Colorado 2027 summer \"tour\" \"registration\" dam public special event 2027 Colorado",
+    "Colorado 2027 summer youth outdoor camp scholarship free conservation district registration",
+    "Colorado 2027 July August \"festival\" \"free\" \"competition\" lumberjack Colorado",
+    "Colorado 2027 \"July\" \"August\" \"public\" \"rocket\" launch model rocketry",
+    "Colorado 2027 \"July\" \"August\" \"free\" \"tethered\" balloon festival Colorado",
+    "Colorado 2027 \"July\" \"August\" \"free\" \"fly-in\" airport Colorado",
+    "Colorado 2027 \"July\" \"August\" \"free\" \"archery\" festival wildlife Colorado",
+    "Colorado 2027 trout unlimited youth camp cost June 13 19 application deadline 2027 Almont",
+    "Colorado Westminster 80234 to Golden Jefferson County Fairgrounds distance Westminster to Almont Colorado driving distance",
+    "2027 Colorado FIRST robotics regional free admission spectators FIRST official Colorado Denver March 2027",
+    "site:erieco.gov \"2027\" \"Fishing Derby\"",
+    "site:cpw.state.co.us/event 2027 fishing clinic youth Colorado",
+    "Colorado 2027 July August \"free\" \"kids\" \"rodeo\" official county fair 2027",
+    "Colorado 2027 public festival July August 2027 \"free\" \"demonstrations\" Colorado heritage",
+    "Colorado 2027 \"free\" \"July\" \"2027\" \"hands-on\" archaeology festival",
+    "Colorado 2027 \"free\" \"August\" \"2027\" \"hands-on\" aerospace festival",
+    "Colorado 2027 July \"free\" train rides festival Colorado town",
+    "Colorado 2027 July August \"competition\" \"free spectators\" Colorado championship",
+    "site:frc-events.firstinspires.org/2027 Colorado regional Pikes Peak 2027",
+    "site:firstinspires.org FIRST robotics competition spectators free events public admission",
+    "site:coloradofirst.org \"2027\" \"spectators welcome\" festival Lafayette Lopez elementary",
+    "site:arapahoecountyfair.com 2027 fair tickets prices unlimited rides",
+    "site:ridgwayrailroadmuseum.org train rides free Saturday 2027 Ridgway",
+    "Colorado 2027 July August rare public special event \"2027\" \"free\" \"championship\" colorado outdoor",
+    "Colorado 2027 January February free public skijoring competition spectator Leadville Silverton Pagosa official",
+    "Colorado 2027 January February free kids ice fishing tournament clinic registration Colorado",
+    "Colorado 2027 winter special free public snowcat rides avalanche rescue demo festival",
+    "Colorado 2027 summer public \"championship\" \"free\" lumberjack log rolling competition Colorado",
+    "Colorado 2027 winter free public \"sled dog\" race Colorado",
+    "Colorado 2027 summer \"open house\" \"free\" \"airport\" Colorado fly in dates",
+    "Colorado 2027 \"July\" \"free\" \"demonstration\" \"competition\" rodeo festival Colorado",
+    "Colorado 2027 summer special public \"tour\" \"limited\" Colorado power plant dam",
+    "Westminster Colorado to Leadville driving distance Westminster Colorado Telluride driving distance",
+    "Westminster Colorado Breckenridge driving distance"
+  ],
+  "url_read_attempts": 30,
+  "successful_page_reads": 27,
+  "failed_page_reads": 3,
+  "official_detail_verified": 17,
+  "official_detail_verified_urls": [
+    "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/",
+    "https://www.coloradospringssports.org/events/rockymountainstategames/",
+    "https://coloradotu.org/youthcamp/",
+    "https://www.dmns.org/about/teen-science-scholars",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/",
+    "https://wingsmuseum.org/visit/locations/air-space-museum/",
+    "https://www.leadvilleskijoring.com/",
+    "https://www.leadvilleskijoring.com/spectators",
+    "https://www.tellurideskijoring.com/",
+    "https://gobreck.com/event/international-snow-sculpture-championships/",
+    "https://rmsdc.org/events/",
+    "https://www.grandlakeskijor.com/",
+    "https://www.ridgwayrendezvous.com/about",
+    "https://frc-events.firstinspires.org/2027/cosp",
+    "https://frc-events.firstinspires.org/2027/code",
+    "https://www.leadvilleskijoring.com/competitors",
+    "https://rmsdc.org/events/camp-hale-veterans-memorial-2027/"
+  ],
+  "url_read_records": [
+    {
+      "url": "https://coloradofirst.org/programs/frc/frc-regional-event-information/",
+      "ok": false,
+      "error": "403"
+    },
+    {
+      "url": "https://coloradofirst.org/event/stem-school-highlands-ranch-first-lego-league-explore-festival-2027/",
+      "ok": false,
+      "error": "403"
+    },
+    {
+      "url": "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/",
+      "ok": true
+    },
+    {
+      "url": "https://www.coloradospringssports.org/events/rockymountainstategames/",
+      "ok": true
+    },
+    {
+      "url": "https://www.thorntonco.gov/community-culture/festivals-events/dino-fest-2027",
+      "ok": false,
+      "error": "DisabledError"
+    },
+    {
+      "url": "https://coloradotu.org/youthcamp/",
+      "ok": true
+    },
+    {
+      "url": "https://www.dmns.org/about/teen-science-scholars",
+      "ok": true
+    },
+    {
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/",
+      "ok": true
+    },
+    {
+      "url": "https://wingsmuseum.org/visit/locations/air-space-museum/",
+      "ok": true
+    },
+    {
+      "url": "https://coloradotu.org/youthcamp/",
+      "ok": true
+    },
+    {
+      "url": "https://www.dmns.org/about/teen-science-scholars",
+      "ok": true
+    },
+    {
+      "url": "https://wingsmuseum.org/visit/locations/air-space-museum/",
+      "ok": true
+    },
+    {
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/",
+      "ok": true
+    },
+    {
+      "url": "https://www.leadvilleskijoring.com/",
+      "ok": true
+    },
+    {
+      "url": "https://www.leadvilleskijoring.com/spectators",
+      "ok": true
+    },
+    {
+      "url": "https://www.tellurideskijoring.com/",
+      "ok": true
+    },
+    {
+      "url": "https://gobreck.com/event/international-snow-sculpture-championships/",
+      "ok": true
+    },
+    {
+      "url": "https://rmsdc.org/events/",
+      "ok": true
+    },
+    {
+      "url": "https://www.grandlakeskijor.com/",
+      "ok": true
+    },
+    {
+      "url": "https://www.ridgwayrendezvous.com/about",
+      "ok": true
+    },
+    {
+      "url": "https://www.ridgwayrailroadmuseum.org/",
+      "ok": true
+    },
+    {
+      "url": "https://frc-events.firstinspires.org/2027/cosp",
+      "ok": true
+    },
+    {
+      "url": "https://frc-events.firstinspires.org/2027/code",
+      "ok": true
+    },
+    {
+      "url": "https://www.leadvilleskijoring.com/spectators",
+      "ok": true
+    },
+    {
+      "url": "https://gobreck.com/event/international-snow-sculpture-championships/",
+      "ok": true
+    },
+    {
+      "url": "https://www.tellurideskijoring.com/",
+      "ok": true
+    },
+    {
+      "url": "https://www.leadvilleskijoring.com/competitors",
+      "ok": true
+    },
+    {
+      "url": "https://gobreck.com/event/international-snow-sculpture-championships/",
+      "ok": true
+    },
+    {
+      "url": "https://rmsdc.org/events/camp-hale-veterans-memorial-2027/",
+      "ok": true
+    },
+    {
+      "url": "https://rmsdc.org/events/camp-hale-veterans-memorial-2027/",
+      "ok": true
+    }
+  ],
+  "in_page_find_requests": 2,
+  "failed_searches": 0,
+  "candidate_events": 60,
+  "duplicate_candidates": 3,
+  "rejected_events": 21,
+  "held_events": 34,
+  "qualified_events": 2,
+  "known_by_collector": 1,
+  "verified_collector_misses": 0,
+  "submitted_events": 2,
+  "delivered_events": 0,
+  "account_remaining_usage": "unknown",
+  "notes": "Counts: one search query record = one web search request. Explicit open/click counted even repeat; two in-page find operations reported separately, not URL read attempts. Official detail verified counts distinct opened official event pages/listings with meaningful event facts, not necessarily fully qualified. Search snippets alone not counted as successful page reads. Candidate unit is event or event series, with repeated search hits merged. Historical report dated Oct 21 dry run has Nov 21 Cockpit Demo Day only, not proof for Dec 19. Repository search is incomplete, not live Worker DB. Current config 71 entries, 55 enabled; sources SHA cccb6669198f22679b7b3d70ea090500988bc336, queries SHA 107e43181f5667fcec91d79d8ff4f5293d87bd5c. Existing external-inbox.yml verified; no code or settings changed. Two new submissions verified by exact content reread; no actual delivery evidence. Distances are city-to-city road references, not exact 80234 origin. Public record contains no personal identifiers. Finished timestamp reflects end of research and submission before log write.",
+  "qualified_urls": [
+    "https://www.leadvilleskijoring.com/spectators",
+    "https://gobreck.com/event/international-snow-sculpture-championships/"
+  ],
+  "candidates": [
+    {
+      "title": "Wild West Days 2027",
+      "status": "held",
+      "reason": "2027 dates TBA",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Harvest Haunt Express 2027",
+      "status": "held",
+      "reason": "2027 dates TBA",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Cockpit Demo Day Nov 21 2026",
+      "status": "duplicate",
+      "reason": "Past event, exact title/start date in historical reports/fullsystem-run.json; not evidence about December edition",
+      "url": "https://wingsmuseum.org/events/cockpit-demo-day/"
+    },
+    {
+      "title": "Cockpit Demo Day Dec 19 2026",
+      "status": "rejected",
+      "reason": "Rotating monthly regular museum program; no special subsidy verified",
+      "url": "https://wingsmuseum.org/visit/locations/air-space-museum/"
+    },
+    {
+      "title": "Veterans Coffee Hour Dec 12",
+      "status": "rejected",
+      "reason": "Restricted to veterans/support networks, ordinary museum social hour",
+      "url": "https://wingsmuseum.org/visit/locations/air-space-museum/"
+    },
+    {
+      "title": "Santa in the Hangar Dec 5",
+      "status": "rejected",
+      "reason": "Previously rejected regular paid holiday museum event, not a public flight",
+      "url": "https://wingsmuseum.org/"
+    },
+    {
+      "title": "Santa in the Hangar Dec 19",
+      "status": "rejected",
+      "reason": "Previously rejected regular paid holiday museum event, no visitor flight; inconsistent landing hour in index and opened page",
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/"
+    },
+    {
+      "title": "CSU Little Shop of Physics Open House Mar 7 2027",
+      "status": "duplicate",
+      "reason": "Already submitted 20261117T234645Z.json",
+      "url": "https://www.lsop.colostate.edu/open-house/"
+    },
+    {
+      "title": "Pikes Peak FIRST Regional March 2027",
+      "status": "held",
+      "reason": "Local organizer page 403; official FIRST dates Mar 4–7 include load-in, public schedule and spectator admission not confirmed",
+      "url": "https://frc-events.firstinspires.org/2027/cosp"
+    },
+    {
+      "title": "Denver FIRST Regional April 2027",
+      "status": "held",
+      "reason": "Official dates April 7–10 include load-in; public hours and spectator pricing unknown",
+      "url": "https://frc-events.firstinspires.org/2027/code"
+    },
+    {
+      "title": "Routt County mutton busting Aug 15–16",
+      "status": "rejected",
+      "reason": "2026 dates, not 2027",
+      "url": "https://www.routtcountyfair.org/p/about/enter-events-here"
+    },
+    {
+      "title": "Thornton Dino Fest Aug 7 2027",
+      "status": "held",
+      "reason": "Official search excerpt confirms date and hands-on STEM; 2027 fee not stated and direct page read failed; 2026 free does not establish 2027 fee",
+      "url": "https://www.thorntonco.gov/community-culture/festivals-events/dino-fest-2027"
+    },
+    {
+      "title": "ENOR Environmental Discovery Camp 2027",
+      "status": "rejected",
+      "reason": "Previously screened as regular $350/week camp with $50 sibling discount; scholarship individual, no verified exceptional discount",
+      "url": "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/"
+    },
+    {
+      "title": "EAA Young Eagles local flight",
+      "status": "held",
+      "reason": "General 8–17 free flight program, no new local dated rally identified",
+      "url": "https://www.eaa.org/eaa/youth/free-ye-flights/eaa-young-eagles-flight-plan"
+    },
+    {
+      "title": "CU Wizards Speed Dec 5 2026",
+      "status": "held",
+      "reason": "Third-party listing; official date/conditions not independently opened",
+      "url": null
+    },
+    {
+      "title": "Brickies Creation Festival July 17 2027",
+      "status": "duplicate",
+      "reason": "Prior submission 20261120T233500Z.json",
+      "url": "https://www.brickiescreationfestival.com/"
+    },
+    {
+      "title": "Boys & Girls Clubs Metro Denver summer camp",
+      "status": "held",
+      "reason": "$25/week K–8 shown but specific 2027 dates and eligibility not established",
+      "url": "https://www.bgcmd.org/summercamp/"
+    },
+    {
+      "title": "Delta County junior rodeo",
+      "status": "rejected",
+      "reason": "July 31 2026 past",
+      "url": "https://deltacountyco.gov/1258/Junior-Rodeo-Presented-by-Cowboy-at-the-"
+    },
+    {
+      "title": "Denver Summer Rec Kidz",
+      "status": "held",
+      "reason": "Archived registration page not 2027 confirmation",
+      "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation/Activities-Programs/ARCHIVE-Activities-and-Programs/ARCHIVE-Summer-Activities/Youth-Summer-Camps"
+    },
+    {
+      "title": "Carbondale Mountain Fair 2027",
+      "status": "held",
+      "reason": "2027 dates unannounced; unusual contests not confirmed",
+      "url": null
+    },
+    {
+      "title": "Adams County Fair 2027",
+      "status": "held",
+      "reason": "Third-party dates not updated; special activity pricing unknown",
+      "url": null
+    },
+    {
+      "title": "Mines Museum regular visits",
+      "status": "rejected",
+      "reason": "Ordinary year-round access",
+      "url": null
+    },
+    {
+      "title": "Ridgway State Park star party Aug 15 2026",
+      "status": "rejected",
+      "reason": "Past",
+      "url": "https://cpw.state.co.us/event/stargazing/2026/08/celestial-secrets-star-party-ridgway-night-under-stars"
+    },
+    {
+      "title": "Cherry Creek Arts Festival July 2–4 2027",
+      "status": "rejected",
+      "reason": "Regular art/vendor/music festival; no extraordinary access or specific new hands-on opportunity established",
+      "url": "https://cherryarts.org/events/cherry-creek-arts-festival/faq/"
+    },
+    {
+      "title": "Colorado Dragon Boat Festival",
+      "status": "held",
+      "reason": "Search results old; 2027 date and participation not verified",
+      "url": null
+    },
+    {
+      "title": "Buffalo Bill Days 2027",
+      "status": "held",
+      "reason": "Specific 2027 dates/program not announced",
+      "url": null
+    },
+    {
+      "title": "Bronc Day July 30 2027",
+      "status": "rejected",
+      "reason": "Ordinary parade/community festival; no distinct rare access confirmed",
+      "url": "https://www.buildingutepasscommunity.org/bronc-day-faq"
+    },
+    {
+      "title": "Edgewater Library Holiday Open House Dec 2",
+      "status": "rejected",
+      "reason": "Routine library music/face painting",
+      "url": null
+    },
+    {
+      "title": "STEM School Highlands Ranch FIRST LEGO League Apr 17 2027",
+      "status": "held",
+      "reason": "Official excerpt says free spectators subject to local restrictions; direct page 403, public access confirmation needed",
+      "url": "https://coloradofirst.org/event/stem-school-highlands-ranch-first-lego-league-explore-festival-2027/"
+    },
+    {
+      "title": "Railroad Museum Friday Tour July 16/23 2027 (series)",
+      "status": "rejected",
+      "reason": "Routine paid weekly walking tour",
+      "url": null
+    },
+    {
+      "title": "Erie Youth Fishing Derby",
+      "status": "held",
+      "reason": "General FAQ free and first 100 poles but no 2027 date",
+      "url": "https://erieco.gov/m/FAQ"
+    },
+    {
+      "title": "Durango Ragtime Train Mar 31 2027",
+      "status": "rejected",
+      "reason": "Paid music excursion; not rare operational access, before household arrival",
+      "url": "https://durangotrain.com/events/ragtime-train-2027/"
+    },
+    {
+      "title": "Durango Blues Train Aug 19–21 2027",
+      "status": "rejected",
+      "reason": "Music excursion; age/price uncertain, not priority",
+      "url": "https://www.durangobluestrain.com/"
+    },
+    {
+      "title": "Durango Bluegrass Train June 3–5 2027",
+      "status": "held",
+      "reason": "Ticket pricing not announced, before arrival, music-focused",
+      "url": "https://www.durangobluegrasstrain.com/"
+    },
+    {
+      "title": "Camp Rocky",
+      "status": "held",
+      "reason": "Scholarship listing refers to 2026/2025; no 2027 details",
+      "url": "https://www.wgcd.org/camp-rocky-scholarships/"
+    },
+    {
+      "title": "Pikes Peak Regional Airshow",
+      "status": "held",
+      "reason": "Official 2026 schedule already past; no 2027 date",
+      "url": "https://www.pprairshow.org/home/"
+    },
+    {
+      "title": "Model A National Tour June 13–18 2027",
+      "status": "held",
+      "reason": "Registration closed; public access to car games/display unverified",
+      "url": "https://www.mafcc.org/2027-mafca-national-tour.html"
+    },
+    {
+      "title": "Left Hand Outdoor Challenge 2026–27",
+      "status": "rejected",
+      "reason": "Applications closed Aug 2026, teen only",
+      "url": "https://bouldercounty.gov/news/left-hand-outdoor-challenge-now-accepting-applications/"
+    },
+    {
+      "title": "Colorado Trout Unlimited youth fishing camp June 13–19 2027",
+      "status": "held",
+      "reason": "2027 tuition pending; 14–18, limited selection, pre-arrival",
+      "url": "https://coloradotu.org/youthcamp/"
+    },
+    {
+      "title": "Rocky Mountain State Games July 16–18 2027",
+      "status": "held",
+      "reason": "Official main date, 35+ sports; 2027 individual sport schedules/fees not yet verified (page 2026 sport list)",
+      "url": "https://www.coloradospringssports.org/events/rockymountainstategames/"
+    },
+    {
+      "title": "DMNS Teen Science Scholars 2027",
+      "status": "held",
+      "reason": "Application dates announced but detailed session dates appear prior-year (June 2–26), eligibility and current session details need confirmation; high school only",
+      "url": "https://www.dmns.org/about/teen-science-scholars"
+    },
+    {
+      "title": "Colorado State Fair Aug 27–Sep 6 2027",
+      "status": "held",
+      "reason": "2027 date known; current page mixes 2026 pricing and program; specific high-value opportunities TBD",
+      "url": "https://coloradostatefair.com/plan-your-visit/"
+    },
+    {
+      "title": "CPW Cherry Creek fishing clinics Aug/Oct/Nov 2025 (series)",
+      "status": "rejected",
+      "reason": "Past dates",
+      "url": "https://cpw.state.co.us/event/2025/11/kids-fishing-clinic"
+    },
+    {
+      "title": "CPW Mueller Learn to Fish July 16 2026",
+      "status": "rejected",
+      "reason": "Past",
+      "url": "https://cpw.state.co.us/event/fishing/2026/07/learn-fish-clinic"
+    },
+    {
+      "title": "CPW Reel Success Kids Fishing Aug 2026",
+      "status": "rejected",
+      "reason": "Past",
+      "url": "https://cpw.state.co.us/event/fishing/2026/08/reel-success-kids-fishing-clinic"
+    },
+    {
+      "title": "Arapahoe County Fair July 29–Aug 1 2027",
+      "status": "held",
+      "reason": "Save the date, but 2027 specific fair pricing and activities unverified",
+      "url": "https://www.arapahoecountyfair.com/"
+    },
+    {
+      "title": "Railroad Museum Spring Break 2027",
+      "status": "held",
+      "reason": "Dates and themes TBA",
+      "url": "https://coloradorailroadmuseum.org/youth-and-families/"
+    },
+    {
+      "title": "Ridgway Rendezvous Aug 14–15 2027",
+      "status": "rejected",
+      "reason": "Free craft festival; railway museum's summer Saturday rides are regularly available, not unique event access; long distance",
+      "url": "https://www.ridgwayrendezvous.com/about"
+    },
+    {
+      "title": "Broadmoor Cycle to the Summit Aug 8 2027",
+      "status": "held",
+      "reason": "Date confirmed by search result but 2027 registration and fees not verified",
+      "url": "https://www.coloradospringssports.org/events/cycletothesummit/"
+    },
+    {
+      "title": "San Juan Skijoring Jan 8–10 2027",
+      "status": "held",
+      "reason": "Tourism article only; official organizer admission and schedule not opened",
+      "url": null
+    },
+    {
+      "title": "Silverton Skijoring Feb 13–14 2027",
+      "status": "held",
+      "reason": "Third-party free spectator listing only; official event site not opened",
+      "url": null
+    },
+    {
+      "title": "Pagosa Skijoring Feb 20–21 2027",
+      "status": "held",
+      "reason": "Official organizer price not verified",
+      "url": null
+    },
+    {
+      "title": "Leadville Ski Joring March 6–7 2027",
+      "status": "qualified",
+      "reason": "Official public free admission and noon competition both days; 102 road miles Westminster city reference. Saturday kids event waiver, age/fee unknown; spectator only. Before household arrival.",
+      "url": "https://www.leadvilleskijoring.com/spectators"
+    },
+    {
+      "title": "Grand Lake Skijoring Jan 29–31 2027",
+      "status": "held",
+      "reason": "Official dates, ticket link but price and age conditions not read",
+      "url": "https://www.grandlakeskijor.com/"
+    },
+    {
+      "title": "Telluride Skijoring March 13–14 2027",
+      "status": "held",
+      "reason": "Official free family event; detailed daily hours not published on opened page and 364 miles, prioritize closer confirmed Leadville",
+      "url": "https://www.tellurideskijoring.com/"
+    },
+    {
+      "title": "Grand Mesa Summit Challenge Jan 30–31 2027",
+      "status": "held",
+      "reason": "Race dates official, spectator access/price unverified",
+      "url": "https://rmsdc.org/events/"
+    },
+    {
+      "title": "Camp Hale Veterans Memorial Sled Dog Race Feb 20–21 2027",
+      "status": "held",
+      "reason": "Official date, course map not posted and spectator entry conditions unknown",
+      "url": "https://rmsdc.org/events/camp-hale-veterans-memorial-2027/"
+    },
+    {
+      "title": "Grand Mesa Summit Challenge 2 Mar 13–14 2027",
+      "status": "held",
+      "reason": "Race dates official, spectator access/price unverified",
+      "url": "https://rmsdc.org/events/"
+    },
+    {
+      "title": "Durango Nordic Ski-A-Thon Jan 2 2027",
+      "status": "rejected",
+      "reason": "Fundraising activity with sponsor pledges, no distinct access/discount established",
+      "url": "https://www.durangonordic.org/events"
+    },
+    {
+      "title": "Breckenridge International Snow Sculpture Championships Jan 23–Feb 2 2027",
+      "status": "qualified",
+      "reason": "Official general public free; live carving nearly 100 hours, 25-ton blocks, 12 teams, illuminated viewing, no reservation; city-to-city 83 road miles. Before household arrival.",
+      "url": "https://gobreck.com/event/international-snow-sculpture-championships/"
+    }
+  ],
+  "submission_path": "external-inbox/chatgpt/20261125T233315Z.json",
+  "submission_commit": "677f1e2387441fb37a3ea709fb6b7d60ef29b9e8",
+  "github_comparison": {
+    "historical_report": "reports/fullsystem-run.json",
+    "report_sha": "80a072221cd1ea261d76815926681fab1a26375f",
+    "known_event": "Cockpit Demo Day 2026-11-21",
+    "worker_live_db": "unknown",
+    "actual_rejected_by_collector": "unknown",
+    "source_improvement_suggestions": [
+      "Monitor https://www.leadvilleskijoring.com/spectators and https://gobreck.com/event/international-snow-sculpture-championships/ for 2028 season schedules, public hours, and children participation requirements.",
+      "Monitor https://rmsdc.org/events/ individual event pages and distinguish spectator admission from competitor registration.",
+      "Monitor Colorado FIRST official FRC event API and state organizer schedule for public spectator conditions; direct Colorado FIRST pages returned 403.",
+      "Track Thornton official Dino Fest date changes but do not infer 2027 fee from historical year. Existing Thornton source already registered."
+    ]
+  }
+}
