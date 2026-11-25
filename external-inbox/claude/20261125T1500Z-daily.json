@@ -1,0 +1,85 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-25T14:42:31Z",
+  "finished_at": "2026-11-25T15:00:00Z",
+  "searches": 10,
+  "queries": [
+   "Thornton Colorado holiday events December 2026 WinterFest dates",
+   "Northglenn holiday celebration 2026 E.B. Rains park free",
+   "Parker Colorado Christmas Carnival parade 2026 date",
+   "Castle Rock Starlighting 2026 Festival of Lights date",
+   "Denver Museum of Nature and Science free day 2027 January schedule",
+   "Morrison Red Rocks free winter event kids December 2026 OR Hiwan Museum holiday open house 2026",
+   "Louisville Superior Erie Colorado tree lighting parade of lights December 2026",
+   "Denver Martin Luther King Jr Day Marade January 2027 family",
+   "Town of Parker Mayor's Holiday Lighting O'Brien Park 2026 parkeronline",
+   "Erie Chamber Parade of Lights 2026 Erie Colorado official"
+  ],
+  "urls_attempted": 3,
+  "urls_ok": 0,
+  "urls": [
+   "https://frederickco.gov/237/Festival-of-Lights",
+   "https://www.eriechamber.org/",
+   "https://www.parkeronline.org/"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 11,
+  "excluded": 8,
+  "excluded_reasons": {
+   "already_submitted": 1,
+   "past_event": 1,
+   "date_not_posted_2026": 5,
+   "paid_or_ticketed": 1
+  },
+  "notes": "Claude 독립 검색(예약, 개정 규칙). WebFetch 3건 모두 이 환경의 DNS 오류(getaddrinfo ENOTFOUND)로 실패해 verified:false. 제외: 손튼 윈터페스트(11/14 제출), 캐슬록 점등(11/21 지남), 노스글렌·히완 박물관·루이빌·자연사박물관 1월·MLK 행진(2026·2027 날짜 미공지), 레드록스 조명(유료). 파커 공식 페이지 주소를 찾지 못해 America250 행사 목록 주소를 쓴다."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-25T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Frederick Festival of Lights 2026",
+   "url": "https://frederickco.gov/237/Festival-of-Lights",
+   "start_date": "2026-12-05",
+   "location": "Frederick",
+   "cost": "",
+   "description": "Town of Frederick's annual Festival of Lights, listed for Saturday Dec 5, 2026.",
+   "special_reason": "연 1회 소도시 연말 조명 축제"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-25T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Erie Parade of Lights 2026",
+   "url": "https://www.eriechamber.org/",
+   "start_date": "2026-12-04",
+   "location": "Historic Downtown Erie & Coal Creek Park, Erie",
+   "cost": "Free",
+   "description": "Erie Chamber's annual Parade of Lights (third-party calendar: Dec 4, 2026, free). Past years ran 4-9 p.m. with school choirs, carriage rides, Santa visits and open skating.",
+   "special_reason": "연 1회 무료 야간 조명 퍼레이드"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-25T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Town of Parker Mayor's Holiday Lighting 2026",
+   "url": "https://america250.org/event/town-of-parker-mayors-holiday-lighting",
+   "start_date": "2026-11-27",
+   "time": "Lighting ~6 p.m. (one listing 5:30 p.m.)",
+   "location": "O'Brien Park, Parker",
+   "cost": "",
+   "description": "Parker's annual town tree and park lighting led by the Mayor, 'Carol Through Time' theme with history booths for US 250 / Colorado 150; kicks off Hometown Holiday Experience (Nov 28 - Dec 20).",
+   "special_reason": "연 1회 파커 시 연말 점등식(미국 250주년 기념)"
+  }
+ ]
+}
