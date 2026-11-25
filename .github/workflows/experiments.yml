@@ -4,12 +4,13 @@ name: experiments
 #  ticks/reference push → 기준 목록 후보(공식 게시판 패널, AI 없음)               — 무료
 #  ticks/groundtruth push → 기준 목록 원문 문장 수집 + 감시 정보원 목록 대조(AI 없음) — 무료
 #  ticks/coverage    push → 정보원 보강 전후 수집 범위 + 키워드 검색 대조(AI 없음)     — 무료
+#  ticks/sample    push → Codex 판정 시험용 표본(최근 Opus 판정 + 원문, AI 없음) — 무료
 #  ticks/effort    push → 추천 판정 effort 낮춤 비교(배치, DB 쓰기 없음) — 유료(상한 기본 $5, 1회 약 $1)
 #  ticks/fullsystem  push → 전체 수집 성능(정보원·검색·AI 발굴·AI 추출·판정, 건식) + 기준 행사별 단계 평가 — 유료(상한 usd_cap 기본 $5, 승인 후에만)
 on:
   push:
     branches-ignore: [main]
-    paths: ["ticks/recommend", "ticks/audit", "ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent", "ticks/sourceprobe", "ticks/effort"]
+    paths: ["ticks/recommend", "ticks/audit", "ticks/compare", "ticks/reference", "ticks/groundtruth", "ticks/coverage", "ticks/fullsystem", "ticks/independent", "ticks/sourceprobe", "ticks/effort", "ticks/sample"]
 permissions:
   contents: write
 concurrency:
@@ -39,6 +40,7 @@ jobs:
           echo "FULLSYSTEM=$(echo "$changed" | grep -q ticks/fullsystem && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "AUDIT=$(echo "$changed" | grep -q ticks/audit && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "RECOMMEND=$(echo "$changed" | grep -q ticks/recommend && echo 1 || echo 0)" >> "$GITHUB_ENV"
+          echo "SAMPLE=$(echo "$changed" | grep -q ticks/sample && echo 1 || echo 0)" >> "$GITHUB_ENV"
           echo "EFFORT=$(echo "$changed" | grep -q ticks/effort && echo 1 || echo 0)" >> "$GITHUB_ENV"
       - name: Model comparison
         if: env.COMPARE == '1'
@@ -135,6 +137,16 @@ jobs:
       - name: Record recommendation AI spend
         if: always() && env.REC_STARTED == '1'
         run: python3 scripts/dev_budget.py record --run "$GITHUB_RUN_ID" --kind recommend --cap "$REC_CAP" --usage reports/usage-recommend.json --status "${{ job.status }}"
+      - name: Judge sample for Codex trial (no AI)
+        if: env.SAMPLE == '1'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          bash scripts/cf_env.sh
+          set -a; . "$GITHUB_ENV"; set +a
+          ARGS=$(grep -oE '^args=.*' ticks/sample | cut -d= -f2-)
+          python collector/sample_dump.py $ARGS
       - name: Effort comparison for recommendation (paid AI, batch — no DB writes)
         if: env.EFFORT == '1'
         timeout-minutes: 58
@@ -154,6 +166,6 @@ jobs:
         run: |
           git config user.name "us-alert-collector[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/audit_sample.json eval/recommend_backfill*.json eval/effort_compare.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
+          for f in reports/model-compare*.json eval/reference_candidates.json eval/ground_truth_pages.json eval/coverage.json eval/independent_pages.json eval/source_candidates_result.json eval/source_candidates2_result.json eval/source_candidates3_result.json eval/audit_sample.json eval/recommend_backfill*.json eval/effort_compare.json eval/judge_sample.json eval/life_sent_review.md eval/ai_inputs.json eval/stages.json eval/dev_ai_spend.jsonl reports/fullsystem-run.json reports/fullsystem-trace.json reports/fullsystem-progress.jsonl; do [ -e "$f" ] && git add "$f"; done
           git commit -q -m "experiment results [skip ci]" || exit 0
           git pull -q --rebase origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME"
