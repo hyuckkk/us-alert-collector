@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-25T23:33:15.751Z",
+  "test": false,
+  "events": [
+    {
+      "title": "79th Leadville Ski Joring — Free Spectator Weekend",
+      "url": "https://www.leadvilleskijoring.com/spectators",
+      "start_date": "2027-03-06",
+      "end_date": "2027-03-07",
+      "time": "12:00 noon open division daily; sport ~1:30 PM, novice ~3:30 PM; Saturday kids event ~5:00 PM MST",
+      "location": "Historic Harrison Avenue, downtown Leadville, CO 80461",
+      "cost": "Free public spectator admission; 5 spectators $0; transport/food separate",
+      "age": "Public spectators of all ages; no stated age restriction; children's participation age/fee not specified",
+      "audience": "family",
+      "description": "Rare Western winter competition: horses pull skiers over jumps and through gates. Official https://www.leadvilleskijoring.com/ confirms 79th annual March 6–7, 2027; spectator schedule confirms free admission and daily competition starting noon. No spectator reservation indicated; street parking, no dogs or drones. Saturday children’s snowmobile-pulled skijoring is listed, with on-site registration and parental waiver (https://www.leadvilleskijoring.com/competitors); age/equipment/fee not verified, so only spectator opportunity recommended. Westminster city-to-city road distance about 102 miles; not a routine sports fixture. Before late June 2027 arrival, suitable for current Colorado residents."
+    },
+    {
+      "title": "36th International Snow Sculpture Championships — Live Carving and Free Outdoor Exhibition",
+      "url": "https://gobreck.com/event/international-snow-sculpture-championships/",
+      "start_date": "2027-01-23",
+      "end_date": "2027-02-02",
+      "time": "Live carving Jan 23 10 AM–Jan 27 9 AM; viewing Jan 27 9 AM–Feb 2 10 PM MST; illuminated until 10 PM nightly",
+      "location": "Breckenridge Riverwalk Center, 150 West Adams Avenue, Breckenridge, CO",
+      "cost": "Free public viewing; 5 people $0; free offsite parking/shuttle options; downtown parking and food extra",
+      "age": "General public, all ages; no stated age restrictions",
+      "audience": "family",
+      "description": "International teams hand-carve 25-ton snow blocks during nearly 100 hours of live sculpting; public can watch the rare process and see illuminated finished sculptures. Official tourism organizer confirms dates, free public entry, no Saturday reservation required, and live carving schedule. Team registration closed; this is spectator viewing, not hands-on carving. Weather may shorten display. Westminster city-to-city road distance about 83 miles. Before late June 2027 arrival; suitable for current Colorado residents."
+    }
+  ]
+}
