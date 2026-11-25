@@ -1,51 +1,40 @@
 {
  "schema": "school-sports-feed/1",
- "updated": "2026-11-24T22:18:46Z",
+ "updated": "2026-11-25T21:56:33Z",
  "sources_read": [
   "csal",
   "horizon",
   "legacy",
-  "mountain-range",
   "northglenn",
+  "silver-hills-ms",
   "standley-lake",
-  "thornton"
+  "thornton",
+  "westlake-ms"
  ],
  "errors": [
   {
    "ids": [
-    "silver-hills-ms"
-   ],
-   "error": "Cloudflare 차단: You are unable to access finalsitecdn.com; 경기 목록은 동일 URL의 텍스트 대체 경로로 확인"
-  },
-  {
-   "ids": [
-    "westlake-ms"
-   ],
-   "error": "Cloudflare 차단: You are unable to access finalsitecdn.com; 경기 목록은 동일 URL의 텍스트 대체 경로로 확인"
-  },
-  {
-   "ids": [
     "northglenn-ms"
    ],
-   "error": "Cloudflare blocked direct browser page; calendar checked via text proxy"
+   "error": "Cloudflare blocked the specified calendar URL; calendar checked via text proxy."
   },
   {
    "ids": [
     "stem-lab"
    ],
-   "error": "Cloudflare blocked direct browser page; calendar checked via text proxy"
+   "error": "Cloudflare blocked the specified calendar URL; calendar checked via text proxy."
   },
   {
    "ids": [
     "shadow-ridge-ms"
    ],
-   "error": "지정 페이지가 실제 브라우저에서 Cloudflare에 차단됨. 브라우저로 연 텍스트 미러에서 2026년 11월·12월 및 2027년 1월 달력을 확인함."
+   "error": "지정 URL이 Cloudflare(finalsitecdn.com)에 차단되어 브라우저 텍스트 프록시로 달력 화면을 확인함."
   }
  ],
  "count": {
   "elementary": 114,
   "middle": 41,
-  "high": 61
+  "high": 58
  },
  "games": [
   {
@@ -64,7 +53,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7007577?schoolId=CO68954",
-   "evidence": "Home Tue Dec 1 4:00 PM Legacy Lightning vs Fort Collins Lambkins Swimming and Diving Girls Varsity"
+   "evidence": "Home Tue Dec 1 4:00 PM Legacy Lightning vs Fort Collins Lambkins Swimming and Diving Girls Varsity Buy tickets Veteran's Memorial Aquatic Center (Thronton, CO)"
   },
   {
    "source": "csal",
@@ -326,8 +315,8 @@
    "city": "Northglenn",
    "date": "2026-12-03",
    "end_date": "",
-   "time": "5:30 PM (A), 6:30 PM (B)",
-   "home": "Silver Hills Middle School",
+   "time": "5:30 PM / 6:30 PM",
+   "home": "Silver Hills",
    "away": "Shadow Ridge",
    "sport": "Basketball",
    "team_level": "7th Grade Boys",
@@ -752,24 +741,6 @@
   },
   {
    "source": "gofan",
-   "school_id": "standley-lake",
-   "school": "Standley Lake High School",
-   "level": "high",
-   "city": "Westminster",
-   "date": "2026-12-08",
-   "end_date": "",
-   "time": "4:00 PM",
-   "home": "Standley Lake Boys",
-   "away": "Silver Creek, Girls vs Denver East",
-   "sport": "Basketball",
-   "team_level": "Boys JV/Varsity & Girls Varsity",
-   "location": "Standley Lake High School, Westminster",
-   "cost": "",
-   "url": "https://gofan.co/event/6973572?schoolId=CO16384",
-   "evidence": "Home Tue Dec 8 4:00 PM Double Header Standley Lake Boys vs Silver Creek, Girls vs Denver East Basketball Boys JV/Varsity & Girls Varsity"
-  },
-  {
-   "source": "gofan",
    "school_id": "horizon",
    "school": "Horizon High School",
    "level": "high",
@@ -784,7 +755,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011600?schoolId=CO16331",
-   "evidence": "Home Tue Dec 8 7:00 PM Horizon Hawks vs Mountain Range Mustangs Basketball Boys Varsity"
+   "evidence": "Home Tue Dec 8 7:00 PM Horizon Hawks vs Mountain Range Mustangs Basketball Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -803,24 +774,6 @@
    "cost": "",
    "url": "https://gofan.co/event/7035421?schoolId=CO11707",
    "evidence": "Home Tue Dec 8 7:00 PM Northglenn Norse vs Longmont Trojans Basketball Boys Varsity"
-  },
-  {
-   "source": "gofan",
-   "school_id": "horizon",
-   "school": "Horizon High School",
-   "level": "high",
-   "city": "Thornton",
-   "date": "2026-12-09",
-   "end_date": "",
-   "time": "4:00 PM",
-   "home": "Horizon Hawks",
-   "away": "Fort Collins Lambkins & Boulder Panthers",
-   "sport": "Swimming and Diving",
-   "team_level": "Girls Varsity",
-   "location": "Horizon High School, Thornton",
-   "cost": "",
-   "url": "https://gofan.co/event/7007725?schoolId=CO16331",
-   "evidence": "Home Wed Dec 9 4:00 PM Horizon Hawks vs Fort Collins Lambkins & Boulder Panthers Swimming and Diving Girls Varsity"
   },
   {
    "source": "csal",
@@ -1000,7 +953,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011601?schoolId=CO16331",
-   "evidence": "Home Thu Dec 10 6:00 PM Horizon Hawks vs Holy Family Tigers Basketball Boys Varsity"
+   "evidence": "Home Thu Dec 10 6:00 PM Horizon Hawks vs Holy Family Tigers Basketball Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -1090,7 +1043,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6973322?schoolId=CO16384",
-   "evidence": "Home Fri Dec 11 4:00 PM Double Header Standley Lake Gators vs Arapahoe Warriors Basketball Girls Varsity & Boys Varsity/JV"
+   "evidence": "Home Fri Dec 11 4:00 PM Double Header Standley Lake Gators vs Arapahoe Warriors Basketball Girls Varsity & Boys Varsity/JV Standley Lake High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -1180,7 +1133,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6966274?schoolId=CO16384",
-   "evidence": "Home Dec 11 Dec 12 Multiday Standley Lake Gators vs Castle View Sabercats Hockey Boys Varsity Starts at 8:00 PM"
+   "evidence": "Home Dec 11 Dec 12 Multiday Standley Lake Gators vs Castle View Sabercats Hockey Boys Varsity Ice Centre at the Promenade (Westminster, CO) Starts at 8:00 PM"
   },
   {
    "source": "csal",
@@ -1450,7 +1403,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7004316?schoolId=CO68954",
-   "evidence": "Home Mon Dec 14 7:00 PM Legacy Lightning vs Prairie View Thunderhawks Basketball Girls Varsity"
+   "evidence": "Home Mon Dec 14 7:00 PM Legacy Lightning vs Prairie View Thunderhawks Basketball Girls Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -1540,7 +1493,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011620?schoolId=CO16331",
-   "evidence": "Home Tue Dec 15 6:00 PM Horizon Hawks vs Thunderridge Grizzlies Basketball Girls Varsity"
+   "evidence": "Home Tue Dec 15 6:00 PM Horizon Hawks vs Thunderridge Grizzlies Basketball Girls Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "csal",
@@ -1576,7 +1529,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7101776?schoolId=CO68954",
-   "evidence": "Home Tue Dec 15 7:00 PM Legacy Lightning vs Castle View Sabercats Basketball Boys Varsity"
+   "evidence": "Home Tue Dec 15 7:00 PM Legacy Lightning vs Castle View Sabercats Basketball Boys Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -1612,7 +1565,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7007829?schoolId=CO16331",
-   "evidence": "Home Wed Dec 16 4:00 PM Horizon Hawks vs Rocky Mountain Lobos Swimming and Diving Girls Varsity"
+   "evidence": "Home Wed Dec 16 4:00 PM Horizon Hawks vs Rocky Mountain Lobos Swimming and Diving Girls Varsity Veteran's Memorial Aquatic Center (Thornton, CO)"
   },
   {
    "source": "csal",
@@ -1738,7 +1691,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7101854?schoolId=CO68954",
-   "evidence": "Home Wed Dec 16 7:00 PM Legacy Lightning vs Montview High School Basketball Girls Varsity"
+   "evidence": "Home Wed Dec 16 7:00 PM Legacy Lightning vs Montview High School Basketball Girls Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -1918,7 +1871,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7101777?schoolId=CO68954",
-   "evidence": "Home Fri Dec 18 7:00 PM Legacy Lightning vs Mountain Range Mustangs Basketball Boys Varsity"
+   "evidence": "Home Fri Dec 18 7:00 PM Legacy Lightning vs Mountain Range Mustangs Basketball Boys Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -1954,25 +1907,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6966275?schoolId=CO16384",
-   "evidence": "Home Dec 18 Dec 19 Multiday Standley Lake Gators vs Ralston Valley Senior Mustangs Hockey Boys Varsity Starts at 8:00 PM"
-  },
-  {
-   "source": "gofan",
-   "school_id": "northglenn",
-   "school": "Northglenn High School",
-   "level": "high",
-   "city": "Northglenn",
-   "date": "2026-12-19",
-   "end_date": "2026-12-20",
-   "time": "11:30 PM",
-   "home": "Northglenn Norse",
-   "away": "Niwot Cougars",
-   "sport": "Basketball",
-   "team_level": "Girls Varsity",
-   "location": "Northglenn High School, Northglenn",
-   "cost": "",
-   "url": "https://gofan.co/event/7035638?schoolId=CO11707",
-   "evidence": "Home Dec 19 Dec 20 Multiday Northglenn Norse vs Niwot Cougars Basketball Girls Varsity Starts at 11:30 PM"
+   "evidence": "Home Dec 18 Dec 19 Multiday Standley Lake Gators vs Ralston Valley Senior Mustangs Hockey Boys Varsity Ice Centre at the Promenade (Westminster, CO) Starts at 8:00 PM"
   },
   {
    "source": "gofan",
@@ -1990,7 +1925,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011602?schoolId=CO16331",
-   "evidence": "Home Sat Jan 2 2027 7:00 PM Horizon Hawks vs Chaparral Wolverines Basketball Boys Varsity"
+   "evidence": "Home Sat Jan 2 2027 7:00 PM Horizon Hawks vs Chaparral Wolverines Basketball Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -2062,7 +1997,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011621?schoolId=CO16331",
-   "evidence": "Home Tue Jan 5 2027 5:30 PM Horizon Hawks vs Fort Collins Lambkins Basketball Girls Varsity"
+   "evidence": "Home Tue Jan 5 2027 5:30 PM Horizon Hawks vs Fort Collins Lambkins Basketball Girls Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -2080,7 +2015,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7004317?schoolId=CO68954",
-   "evidence": "Home Tue Jan 5 2027 5:30 PM Legacy Lightning vs Rocky Mountain Lobos Basketball Girls Varsity"
+   "evidence": "Home Tue Jan 5 2027 5:30 PM Legacy Lightning vs Rocky Mountain Lobos Basketball Girls Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -2152,7 +2087,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011603?schoolId=CO16331",
-   "evidence": "Home Tue Jan 5 2027 7:00 PM Horizon Hawks vs Fort Collins Lambkins Basketball Boys Varsity"
+   "evidence": "Home Tue Jan 5 2027 7:00 PM Horizon Hawks vs Fort Collins Lambkins Basketball Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -2170,7 +2105,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7101778?schoolId=CO68954",
-   "evidence": "Home Tue Jan 5 2027 7:00 PM Legacy Lightning vs Rocky Mountain Lobos Basketball Boys Varsity"
+   "evidence": "Home Tue Jan 5 2027 7:00 PM Legacy Lightning vs Rocky Mountain Lobos Basketball Boys Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "gofan",
@@ -2206,7 +2141,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7007926?schoolId=CO68954",
-   "evidence": "Home Wed Jan 6 2027 4:00 PM Legacy Lightning vs Rocky Mountain Lobos Swimming and Diving Girls Varsity"
+   "evidence": "Home Wed Jan 6 2027 4:00 PM Legacy Lightning vs Rocky Mountain Lobos Swimming and Diving Girls Varsity Buy tickets Veteran's Memorial Aquatic Center (Thronton, CO)"
   },
   {
    "source": "gofan",
@@ -2278,7 +2213,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6973573?schoolId=CO16384",
-   "evidence": "Home Fri Jan 8 2027 4:00 PM Double Header Standley Lake Gators vs Columbine Rebels Basketball Boys JV/Varsity & Girls Varsity"
+   "evidence": "Home Fri Jan 8 2027 4:00 PM Double Header Standley Lake Gators vs Columbine Rebels Basketball Boys JV/Varsity & Girls Varsity Standley Lake High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -2512,7 +2447,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6966279?schoolId=CO16384",
-   "evidence": "Home Jan 8 Jan 9 Multiday Standley Lake Gators vs Poudre Impalas Hockey Boys Varsity Starts at 8:00 PM"
+   "evidence": "Home Jan 8 Jan 9 Multiday Standley Lake Gators vs Poudre Impalas Hockey Boys Varsity Ice Centre at the Promenade (Westminster, CO) Starts at 8:00 PM"
   },
   {
    "source": "csal",
@@ -2800,7 +2735,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6973574?schoolId=CO16384",
-   "evidence": "Home Tue Jan 12 2027 4:00 PM Double Header Standley Lake Gators vs Loveland Indians Basketball Boys JV/Varsity & Girls Varsity"
+   "evidence": "Home Tue Jan 12 2027 4:00 PM Double Header Standley Lake Gators vs Loveland Indians Basketball Boys JV/Varsity & Girls Varsity Standley Lake High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -2980,7 +2915,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7008139?schoolId=CO16331",
-   "evidence": "Home Wed Jan 13 2027 4:00 PM Horizon Hawks vs Broomfield Senior Eagles Swimming and Diving Girls Varsity"
+   "evidence": "Home Wed Jan 13 2027 4:00 PM Horizon Hawks vs Broomfield Senior Eagles Swimming and Diving Girls Varsity Veteran's Memorial Aquatic Center (Thornton, CO)"
   },
   {
    "source": "csal",
@@ -3034,7 +2969,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011632?schoolId=CO16331",
-   "evidence": "Home Wed Jan 13 2027 6:30 PM Horizon Hawks vs Fort Collins Lambkins Wrestling Boys Varsity"
+   "evidence": "Home Wed Jan 13 2027 6:30 PM Horizon Hawks vs Fort Collins Lambkins Wrestling Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "csal",
@@ -3070,7 +3005,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7101878?schoolId=CO68954",
-   "evidence": "Home Wed Jan 13 2027 7:00 PM Legacy Lightning vs Centaurus Warriors Wrestling Boys Varsity"
+   "evidence": "Home Wed Jan 13 2027 7:00 PM Legacy Lightning vs Centaurus Warriors Wrestling Boys Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -3124,7 +3059,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011633?schoolId=CO16331",
-   "evidence": "Home Thu Jan 14 2027 6:00 PM Horizon Hawks vs Broomfield Senior Eagles Wrestling Boys Varsity"
+   "evidence": "Home Thu Jan 14 2027 6:00 PM Horizon Hawks vs Broomfield Senior Eagles Wrestling Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "csal",
@@ -3214,7 +3149,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011622?schoolId=CO16331",
-   "evidence": "Home Fri Jan 15 2027 5:30 PM Horizon Hawks vs Erie Tigers Basketball Girls Varsity"
+   "evidence": "Home Fri Jan 15 2027 5:30 PM Horizon Hawks vs Erie Tigers Basketball Girls Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -3232,7 +3167,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7004318?schoolId=CO68954",
-   "evidence": "Home Fri Jan 15 2027 5:30 PM Legacy Lightning vs Fossil Ridge Sabercats Basketball Girls Varsity"
+   "evidence": "Home Fri Jan 15 2027 5:30 PM Legacy Lightning vs Fossil Ridge Sabercats Basketball Girls Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -3322,7 +3257,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011604?schoolId=CO16331",
-   "evidence": "Home Fri Jan 15 2027 7:00 PM Horizon Hawks vs Erie Tigers Basketball Boys Varsity"
+   "evidence": "Home Fri Jan 15 2027 7:00 PM Horizon Hawks vs Erie Tigers Basketball Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -3340,7 +3275,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7101779?schoolId=CO68954",
-   "evidence": "Home Fri Jan 15 2027 7:00 PM Legacy Lightning vs Fossil Ridge Sabercats Basketball Boys Varsity"
+   "evidence": "Home Fri Jan 15 2027 7:00 PM Legacy Lightning vs Fossil Ridge Sabercats Basketball Boys Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "csal",
@@ -3790,7 +3725,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011634?schoolId=CO16331",
-   "evidence": "Home Thu Jan 21 2027 6:30 PM Horizon Hawks vs Mountain Range Mustangs Wrestling Boys Varsity"
+   "evidence": "Home Thu Jan 21 2027 6:30 PM Horizon Hawks vs Mountain Range Mustangs Wrestling Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -3826,7 +3761,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011623?schoolId=CO16331",
-   "evidence": "Home Fri Jan 22 2027 5:30 PM Horizon Hawks vs Fairview Knights Basketball Girls Varsity"
+   "evidence": "Home Fri Jan 22 2027 5:30 PM Horizon Hawks vs Fairview Knights Basketball Girls Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -3844,7 +3779,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7004319?schoolId=CO68954",
-   "evidence": "Home Fri Jan 22 2027 5:30 PM Legacy Lightning vs Broomfield Senior Eagles Basketball Girls Varsity"
+   "evidence": "Home Fri Jan 22 2027 5:30 PM Legacy Lightning vs Broomfield Senior Eagles Basketball Girls Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "gofan",
@@ -3862,7 +3797,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011605?schoolId=CO16331",
-   "evidence": "Home Fri Jan 22 2027 7:00 PM Horizon Hawks vs Fairview Knights Basketball Boys Varsity"
+   "evidence": "Home Fri Jan 22 2027 7:00 PM Horizon Hawks vs Fairview Knights Basketball Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
@@ -3880,7 +3815,7 @@
    "location": "Legacy High School, Broomfield",
    "cost": "",
    "url": "https://gofan.co/event/7101780?schoolId=CO68954",
-   "evidence": "Home Fri Jan 22 2027 7:00 PM Legacy Lightning vs Broomfield Senior Eagles Basketball Boys Varsity"
+   "evidence": "Home Fri Jan 22 2027 7:00 PM Legacy Lightning vs Broomfield Senior Eagles Basketball Boys Varsity Buy tickets Legacy High School (Broomfield, CO)"
   },
   {
    "source": "gofan",
@@ -3898,7 +3833,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6966280?schoolId=CO16384",
-   "evidence": "Home Fri Jan 22 2027 7:45 PM Standley Lake Gators vs Pine Creek Eagles Hockey Boys Varsity"
+   "evidence": "Home Fri Jan 22 2027 7:45 PM Standley Lake Gators vs Pine Creek Eagles Hockey Boys Varsity Ice Centre at the Promenade (Westminster, CO)"
   },
   {
    "source": "gofan",
@@ -3916,7 +3851,7 @@
    "location": "Horizon High School, Thornton",
    "cost": "",
    "url": "https://gofan.co/event/7011606?schoolId=CO16331",
-   "evidence": "Home Sat Jan 23 2027 1:00 PM Horizon Hawks vs Denver East Angels Basketball Boys Varsity"
+   "evidence": "Home Sat Jan 23 2027 1:00 PM Horizon Hawks vs Denver East Angels Basketball Boys Varsity Horizon High School (Thornton, CO)"
   },
   {
    "source": "gofan",
