@@ -236,3 +236,18 @@ def default_recommendation(request, monkeypatch):
 
 def pytest_configure(config):
     config.addinivalue_line("markers", "real_recommend: 추천 판정 단계를 가짜로 바꾸지 않고 시험")
+
+
+@pytest.fixture(autouse=True)
+def claude_recommend_by_default(monkeypatch):
+    """운영 설정은 맥북 Codex 추천 판정(recommend_codex.enabled)이 켜져 있다. 다른 시험은 기존 경로(수집 실행이 바로 추천 판정)로 돌린다.
+    Codex 경로는 test_rec_codex.py 가 따로 켜서 시험한다."""
+    import run
+    real = run.load
+
+    def load(name):
+        d = real(name)
+        if name == "models.json" and "recommend_codex" in d:
+            d = {**d, "recommend_codex": {**d["recommend_codex"], "enabled": False}}
+        return d
+    monkeypatch.setattr(run, "load", load)
