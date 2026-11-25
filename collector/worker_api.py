@@ -14,8 +14,10 @@ UA = "us-alert-collector/run"
 
 
 class WorkerAPI:
-    def __init__(self, url: str | None, key: str | None, dry_run: bool = False, client: httpx.Client | None = None):
+    def __init__(self, url: str | None, key: str | None, dry_run: bool = False, client: httpx.Client | None = None, prefix: str = "/admin"):
+        """prefix="/rec": 맥북 추천 판정기 전용 키(REC_RUNNER_KEY)로 대기열(take_rec·extend·result)과 행사 등록만 쓴다."""
         self.dry_run = dry_run or not (url and key)
+        self.prefix = prefix
         self.url = (url or "").rstrip("/")
         self.client = client or httpx.Client(timeout=60, headers={"authorization": f"Bearer {key}", "user-agent": UA})
         self._mem: dict[str, dict] = {}  # dry-run 대기열
@@ -24,6 +26,10 @@ class WorkerAPI:
     @classmethod
     def from_env(cls, dry_run: bool = False) -> "WorkerAPI":
         return cls(os.environ.get("US_WORKER_URL"), os.environ.get("US_ADMIN_KEY"), dry_run)
+
+    @classmethod
+    def rec_runner_from_env(cls) -> "WorkerAPI":
+        return cls(os.environ.get("US_WORKER_URL"), os.environ.get("REC_RUNNER_KEY"), prefix="/rec")
 
     def _post(self, path: str, body: dict) -> dict:
         r = self.client.post(f"{self.url}{path}", json=body)
@@ -90,6 +96,32 @@ class WorkerAPI:
             out += got
         return out
 
+    def queue_take_rec(self, limit: int, lease_minutes: int = 30, older_than_minutes: int = 0) -> list[dict]:
+        """추천 판정만 남은 항목(await_rec)을 임대해 가져온다. older_than_minutes>0 이면 그만큼 기다린 것만(대체 경로)."""
+        if self.dry_run:
+            now = datetime.now(timezone.utc)
+            cut = now - timedelta(minutes=older_than_minutes)
+            rows = [r for r in self._mem.values() if r["status"] == "await_rec" and not (r.get("lease_until") and r["lease_until"] > now)
+                    and (older_than_minutes <= 0 or r.get("updated_at", now) <= cut)][:limit]
+            lease_id = uuid.uuid4().hex
+            for r in rows:
+                r["lease_until"], r["lease_id"] = now + timedelta(minutes=lease_minutes), lease_id
+                self._leases[r["key"]] = {"lease_id": lease_id, "hash": r["hash"]}
+            return rows
+        out: list[dict] = []
+        seen: set[str] = set()
+        while len(out) < limit:
+            got = self._post(f"{self.prefix}/queue", {"op": "take_rec", "limit": min(60, limit - len(out)), "lease_minutes": lease_minutes,
+                                                      "older_than_minutes": older_than_minutes})["items"]
+            got = [g for g in got if g["key"] not in seen]
+            if not got:
+                break
+            seen.update(g["key"] for g in got)
+            for g in got:
+                self._leases[g["key"]] = {"lease_id": g.get("lease_id"), "hash": g.get("hash")}
+            out += got
+        return out
+
     def queue_extend(self, keys: list[str], minutes: int = 60) -> set[str]:
         """처리가 길어질 때 자기 임대를 연장. 이미 잃은(만료 후 다른 실행이 가져간) 항목 key 를 돌려준다 — 그 항목은 처리하지 않는다."""
         mine = [{"key": k, "lease_id": self._leases[k]["lease_id"]} for k in dict.fromkeys(keys) if k in self._leases]
@@ -104,7 +136,7 @@ class WorkerAPI:
                     lost.add(x["key"])
         else:
             for i in range(0, len(mine), 400):
-                lost.update(self._post("/admin/queue", {"op": "extend", "minutes": minutes, "items": mine[i:i + 400]}).get("lost", []))
+                lost.update(self._post(f"{self.prefix}/queue", {"op": "extend", "minutes": minutes, "items": mine[i:i + 400]}).get("lost", []))
         for k in lost:
             self._leases.pop(k, None)
         return lost
@@ -141,9 +173,10 @@ class WorkerAPI:
                     r["status"] = "stuck" if r["attempts"] >= 6 else "queued"
                 else:
                     r["status"], r["result"] = x["status"], x.get("result")
+                    r["updated_at"] = now
         else:
             for i in range(0, len(items), 100):
-                rejected.update(self._post("/admin/queue", {"op": "result", "items": items[i:i + 100]}).get("rejected", []))
+                rejected.update(self._post(f"{self.prefix}/queue", {"op": "result", "items": items[i:i + 100]}).get("rejected", []))
         for x in items:
             if x["key"] in rejected or x["status"] != "extracted":
                 self._leases.pop(x["key"], None)
@@ -164,7 +197,7 @@ class WorkerAPI:
         if self.dry_run:
             return {**tot, "dry_run": True, "accepted": len(events)}
         for i in range(0, len(events), 10):
-            r = self._post("/admin/enqueue", {"events": events[i:i + 10]})
+            r = self._post(f"{self.prefix}/enqueue", {"events": events[i:i + 10]})
             for k in ("new", "changed", "same", "outbox", "accepted", "watch"):
                 tot[k] += r.get(k, 0)
             for k, v in r.get("skipped", {}).items():

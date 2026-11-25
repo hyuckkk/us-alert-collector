@@ -580,6 +580,101 @@ def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usag
     return out
 
 
+
+# ---------------------------------------------------------------- 추천 판정을 맥북 Codex(ChatGPT 구독)로
+# 소유자 결정(2026-11-25): API 크레딧 대신 남는 ChatGPT 구독 사용량으로 추천 판정. 같은 규칙·입력으로 Opus 대비 적극 알림 여부 28/30 일치
+# (gpt-6.2-sol, effort low). Luna 는 연말 행사를 놓쳐 제외. 공개 저장소라 GitHub 에서는 돌리지 않고 맥북(collector/rec_runner.py)에서만.
+CODEX_BIN = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex"
+CODEX_PREAMBLE = ("You are acting as a classification function, not a coding agent. Do not run any commands or read any files. "
+                  "Follow the SYSTEM rules below and return one item per input index as JSON matching the output schema.\n\n")
+
+
+def codex_prompt(system: str, body: str) -> str:
+    return CODEX_PREAMBLE + "=== SYSTEM ===\n" + system + "\n\n=== INPUT ===\n" + body
+
+
+def _codex_call(c: dict, prompt: str, schema_path: str, run=None) -> str:
+    import subprocess
+    import tempfile
+    run = run or subprocess.run
+    with tempfile.TemporaryDirectory() as d:
+        out = os.path.join(d, "out.json")
+        cmd = [c.get("bin") or CODEX_BIN, "exec", "--ephemeral", "--skip-git-repo-check", "-s", "read-only", "-C", d,
+               "-m", c["model"], "-c", f'model_reasoning_effort="{c["effort"]}"', "--output-schema", schema_path, "-o", out, "-"]
+        p = run(cmd, input=prompt, capture_output=True, text=True, timeout=c.get("timeout_sec", 900))
+        if p.returncode != 0 or not os.path.exists(out):
+            raise RuntimeError(f"codex exit {p.returncode}: {(p.stderr or p.stdout or '')[-300:]}")
+        return open(out).read()
+
+
+def recommend_codex(cfg: dict, items: list[tuple[dict, str]], today: str, run=None) -> RecommendOutcome:
+    """recommend() 와 같은 규칙·입력·결과 형식. cfg["recommend_codex"]: model, effort, batch, parallel, bin, timeout_sec."""
+    import tempfile
+    c = cfg["recommend_codex"]
+    out = RecommendOutcome()
+    system = RECOMMEND_RULES + "\n\n" + household_profile()
+    starts = list(range(0, len(items), c["batch"]))
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+        json.dump(_schema_format(RecommendBatch)["schema"], f)
+        schema_path = f.name
+
+    def one(start):
+        chunk = items[start:start + c["batch"]]
+        body = f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500)}, ensure_ascii=False)
+                                              for i, (ev, txt) in enumerate(chunk))
+        try:
+            return start, RecommendBatch.model_validate_json(_codex_call(c, codex_prompt(system, body), schema_path, run)), None
+        except Exception as e:  # noqa: BLE001  실패한 묶음은 누락으로(다음에 다시)
+            return start, None, e
+
+    try:
+        with ThreadPoolExecutor(max(int(c.get("parallel", 2)), 1)) as ex:
+            for start, parsed, err in ex.map(one, starts):
+                chunk = items[start:start + c["batch"]]
+                if parsed is None:
+                    out.missing.update({start + j: f"codex: {type(err).__name__}: {str(err)[:120]}" for j in range(len(chunk))})
+                    continue
+                for r in parsed.items:
+                    if 0 <= r.index < len(chunk) and start + r.index not in out.recs:
+                        out.recs[start + r.index] = r.model_copy(update={"index": start + r.index, "score": max(0, min(100, r.score))})
+                for j in range(len(chunk)):
+                    if start + j not in out.recs:
+                        out.missing[start + j] = "missing-recommendation"
+    finally:
+        os.unlink(schema_path)
+    return out
+
+
+# ---------------------------------------------------------------- 추천 대기(await_rec) 항목 처리: 맥북 Codex 판정기와 GitHub 대체 경로가 같이 쓴다
+def process_await_rec(api, rows: list[dict], recommend_fn, run_id: str | None = None, found_by: str = "github_collector") -> dict:
+    """rows: take_rec 로 받은 대기열 항목(result = 추천 전 행사 목록, body.text = 원문).
+    판정된 항목은 Worker 에 등록하고 done, 판정이 빠진 항목은 돌려놓는다(대기 상태 유지, 나중에 다시)."""
+    from rules import for_worker
+    items, owner = [], []
+    for r in rows:
+        txt = (r.get("body") or {}).get("text") or ""
+        for ev in r.get("result") or []:
+            items.append((ev, txt))
+            owner.append(r["key"])
+    ro = recommend_fn(items) if items else RecommendOutcome()
+    bad = {owner[j] for j in ro.missing}
+    evs, ev_owner = [], []
+    for j, (ev, txt) in enumerate(items):
+        if owner[j] in bad or j not in ro.recs:
+            continue
+        x = for_worker(apply_recommendation(dict(ev), ro.recs[j], txt))
+        x["found_by"] = x.get("found_by") or found_by
+        x["run_id"] = x.get("run_id") or run_id
+        evs.append(x)
+        ev_owner.append(owner[j])
+    good = sorted({r["key"] for r in rows} - bad)
+    enq = api.enqueue(evs) if evs else {}
+    rejected = api.queue_result([{"key": k, "status": "done"} for k in good] + [{"key": k, "status": "release"} for k in sorted(bad)]) or set()
+    levels = {}
+    for x in evs:
+        levels[x["rec_level"]] = levels.get(x["rec_level"], 0) + 1
+    return {"rows": len(rows), "events": len(evs), "missing_rows": len(bad), "levels": levels, "outbox": enq.get("outbox", 0), "rejected": len(rejected)}
+
 # ---------------------------------------------------------------- 놓친 검색 분석: 외부 검색이 찾은 행사를 우리 수집이 왜 못 찾았나, 다음부터 찾으려면
 CAUSE_CODES = ("missing_source", "query_gap", "scrape_or_js_failure", "freshness_or_schedule", "extraction_error",
                "eligibility_or_recommendation_error", "identity_duplicate_error", "delivery_error", "outside_scope", "uncertain")

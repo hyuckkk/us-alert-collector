@@ -493,7 +493,9 @@ class Run:
                 if dup:
                     self.report["dropped"]["duplicate"] = dup
                 # 추천 판정(큰 모델): 모든 발송 후보에 적용. 판정이 빠지거나 실패한 항목은 보내지 않고 다음 실행에서 다시
-                if evs:
+                # 맥북 Codex 판정 모드(recommend_codex.enabled): 여기서는 판정하지 않고 '추천 대기(await_rec)'로 넘긴다(아래 결과 보고)
+                codex_rec = bool(self.models.get("recommend_codex", {}).get("enabled"))
+                if evs and not codex_rec:
                     u0 = self.usage.usd
                     try:
                         ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in evs],
@@ -532,7 +534,10 @@ class Run:
                         results.append({"key": r["key"], "status": "retry", "error": "judge-or-recommend-failed"})
                     else:
                         mine = [rules.for_worker(ev) for ev in by_entry.get(i, [])]
-                        if mine:
+                        if mine and codex_rec:
+                            results.append({"key": r["key"], "status": "await_rec", "result": mine})
+                            self.m["await_rec"] = self.m.get("await_rec", 0) + 1
+                        elif mine:
                             results.append({"key": r["key"], "status": "extracted", "result": mine})
                             for ev in mine:
                                 owners[len(events)] = r["key"]
@@ -583,6 +588,23 @@ class Run:
             # 등록은 끝났다. 다른 실행이 같은 결과를 다시 등록해도 내용 해시·알림 대기열 UNIQUE 로 중복 발송되지 않는다.
             self.alerts.append(f"'done' 보고가 거부된 항목 {len(rejected)}건(임대 만료) — 다음 실행이 같은 결과로 다시 등록(중복 발송 없음)")
         return {"events": len(evs), "done": len(done)}
+
+    def rec_fallback(self):
+        """맥북 Codex 판정기가 오래(fallback_minutes) 처리하지 못한 추천 대기 항목을 Claude(배치)로 대신 판정해 등록한다."""
+        c = self.models.get("recommend_codex", {})
+        if not c.get("enabled") or not self.ai_ready():
+            return {"skipped": True}
+        import ai
+        rows = self.api.queue_take_rec(60, lease_minutes=LEASE_EXTEND_MIN, older_than_minutes=int(c.get("fallback_minutes", 180)))
+        if not rows:
+            return {"rows": 0}
+        u0 = self.usage.usd
+        out = ai.process_await_rec(self.api, rows, lambda items: ai.recommend(self.client, self.models, items, self.today.isoformat(), self.usage,
+                                                                            batch_wait_min=self.models["recommend"].get("batch_wait_min")),
+                                   run_id=self.run_id)
+        self.work["cost_usd"]["recommend"] += self.usage.usd - u0
+        self.alerts.append(f"맥북 판정기가 {c.get('fallback_minutes', 180)}분 넘게 처리 못 한 {len(rows)}건을 Claude 로 대신 판정")
+        return out
 
     def annual(self):
         evs = annual.due_items(load("annual.json"), self.today, self.checked_at)
@@ -666,6 +688,7 @@ class Run:
         self.stage("queue", self.enqueue_raw)
         self.stage("ai", self.process_queue)
         self.stage("enqueue", self.enqueue_events)
+        self.stage("rec_fallback", self.rec_fallback)
         if full:
             self.stage("annual", self.annual)
             self.stage("candidates", self.verify_candidates)

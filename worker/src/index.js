@@ -28,7 +28,8 @@
  *   GET|POST /admin/usage       월별 AI 사용량
  *   POST /admin/candidates      정보원 후보(op 없음: 추가, unverified: 검증할 후보, verify: 검증 결과 → 소유자 질문)
  *   GET  /admin/sources-extra   승격된 정보원
- *   POST /admin/queue           수집기 처리 대기열 {op: check|add|take|result|stats}
+ *   POST /admin/queue           수집기 처리 대기열 {op: check|add|take|take_rec|result|stats}
+ *   POST /rec/queue, /rec/enqueue  맥북 추천 판정기 전용(REC_RUNNER_KEY): await_rec 꺼내기·연장·결과, 판정된 행사 등록
  *   GET  /admin/event-index     같은 행사 판별용 최근 행사 목록
  *   POST /admin/watch           상세 페이지 재검사 {op: due|update|stats}
  *   GET  /admin/ai-health       AI 중단 여부 · POST /admin/unverified  AI 장기 중단 시 검증 전 정보(소유자만)
@@ -72,6 +73,11 @@ function timingSafeEqual(a, b) {
 function isAdmin(env, request) {
   const h = request.headers.get("authorization") || "";
   return !!env.ADMIN_KEY && timingSafeEqual(h, `Bearer ${env.ADMIN_KEY}`);
+}
+// 맥북 추천 판정기(Codex, ChatGPT 구독) 전용 키. /rec/ 경로만 쓸 수 있다(관리 키를 맥북에 두지 않기 위해, 2026-11-25)
+function isRecRunner(env, request) {
+  const h = request.headers.get("authorization") || "";
+  return !!env.REC_RUNNER_KEY && env.REC_RUNNER_KEY.length >= 32 && timingSafeEqual(h, `Bearer ${env.REC_RUNNER_KEY}`);
 }
 
 async function itemStateFor(env, chatId, itemKey) {
@@ -583,6 +589,20 @@ export default {
         console.log("handler error", String((e && e.stack) || e));
       }
       return new Response("ok"); // 텔레그램이 같은 update 를 무한 재전송하지 않도록 항상 200
+    }
+
+    // 추천 판정 대기(await_rec) 항목만: 꺼내기·임대 연장·결과 보고·판정된 행사 등록
+    if (p.startsWith("/rec/") && request.method === "POST") {
+      if (!isRecRunner(env, request) && !isAdmin(env, request)) return json({ ok: false, error: "unauthorized" }, 401);
+      let body = {};
+      try { body = await request.json(); } catch { body = {}; }
+      if (p === "/rec/queue") {
+        if (!["take_rec", "extend", "result"].includes(body.op)) return json({ ok: false, error: "op not allowed" }, 400);
+        if (body.op === "result") body.items = (body.items || []).filter((x) => x && ["done", "release"].includes(x.status));
+        return json(await pipeline.queue(env, body));
+      }
+      if (p === "/rec/enqueue") return json(await pipeline.enqueue(env, body));
+      return json({ ok: false, error: "not found" }, 404);
     }
 
     if (p.startsWith("/admin/")) {

@@ -109,6 +109,20 @@ export async function queue(env, body) {
     rows.sort((a, b) => (a.status === "extracted" ? 0 : 1) - (b.status === "extracted" ? 0 : 1) || b.priority - a.priority || (a.first_seen < b.first_seen ? -1 : 1));
     return { ok: true, items: rows.map((r) => ({ ...r, body: JSON.parse(r.body || "{}"), result: r.result ? JSON.parse(r.result) : null })), lease_until: until };
   }
+  // take_rec: 추천 판정만 남은 항목(await_rec). 맥북 Codex 판정기가 가져가고, 오래 남은 것은 GitHub 실행이 Claude 로 대신 판정한다.
+  // older_than_minutes 를 주면 그보다 오래 기다린 것만(맥북이 꺼져 있을 때의 대체 경로)
+  if (op === "take_rec") {
+    const limit = Math.min(Math.max(body.limit | 0, 1), 60);
+    const until = addMin(now, Math.min(Math.max(body.lease_minutes | 0 || 30, 5), 180));
+    const older = body.older_than_minutes | 0;
+    const cutoff = older > 0 ? addMin(now, -older) : "9999-12-31T00:00:00Z";
+    const rows = await all(env.DB.prepare(
+      "UPDATE pending SET lease_id = ?1, lease_until = ?2 WHERE key IN (SELECT key FROM pending WHERE status = 'await_rec' " +
+      "AND (lease_until IS NULL OR lease_until < ?3) AND updated_at <= ?4 ORDER BY priority DESC, updated_at LIMIT ?5) " +
+      "RETURNING key, hash, lease_id, source_id, url, title, body, hint, priority, status, attempts, result, first_seen, updated_at").bind(crypto.randomUUID(), until, now, cutoff, limit));
+    rows.sort((a, b) => b.priority - a.priority || (a.updated_at < b.updated_at ? -1 : 1));
+    return { ok: true, items: rows.map((r) => ({ ...r, body: JSON.parse(r.body || "{}"), result: r.result ? JSON.parse(r.result) : null })), lease_until: until };
+  }
   // peek: 임대 없이 보기만(검증 전 정보 안내용)
   if (op === "peek") {
     const rows = await all(env.DB.prepare(
@@ -129,18 +143,19 @@ export async function queue(env, body) {
   // result: 임대 소유자만 보고할 수 있다(3차 검증 2). 꺼낼 때 받은 lease_id·hash 가 지금 값과 같고 임대가 아직 유효해야 반영하고,
   // 아니면(임대 만료 후 다른 실행이 가져감, 처리 중 내용이 바뀌어 다시 들어옴, 임대 없이 보고) 거부해 다른 실행의 상태를 지킨다.
   if (op === "result") {
-    const items = (body.items || []).filter((x) => x && x.key && ["done", "extracted", "retry", "release"].includes(x.status)).slice(0, 100)
+    const items = (body.items || []).filter((x) => x && x.key && ["done", "extracted", "await_rec", "retry", "release"].includes(x.status)).slice(0, 100)
       .map((x) => ({ key: x.key, status: x.status, lease_id: x.lease_id || null, hash: x.hash || null,
         result: x.result ? JSON.stringify(x.result) : null, error: x.error ? String(x.error).slice(0, 300) : null }));
     if (!items.length) return { ok: true, updated: 0, rejected: [] };
     const rows = await all(env.DB.prepare(
-      "UPDATE pending SET updated_at = ?1, " +
+      // release 는 대기 시작 시각(updated_at)을 바꾸지 않는다: await_rec 가 맥북 쪽 실패로 계속 돌려놓여도 대체 경로(오래 기다린 것)가 막히지 않게
+      "UPDATE pending SET updated_at = CASE json_extract(j.value,'$.status') WHEN 'release' THEN pending.updated_at ELSE ?1 END, " +
       // release: 처리하지 못하고 돌려놓기(상태·결과·시도 횟수 그대로, 임대만 해제)
-      "status = CASE json_extract(j.value,'$.status') WHEN 'done' THEN 'done' WHEN 'extracted' THEN 'extracted' WHEN 'release' THEN pending.status " +
+      "status = CASE json_extract(j.value,'$.status') WHEN 'done' THEN 'done' WHEN 'extracted' THEN 'extracted' WHEN 'await_rec' THEN 'await_rec' WHEN 'release' THEN pending.status " +
       "  ELSE CASE WHEN pending.attempts + 1 >= ?3 THEN 'stuck' ELSE 'queued' END END, " +
       "attempts = CASE json_extract(j.value,'$.status') WHEN 'retry' THEN pending.attempts + 1 ELSE pending.attempts END, " +
       "last_error = COALESCE(json_extract(j.value,'$.error'), pending.last_error), " +
-      "result = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN json_extract(j.value,'$.result') WHEN 'done' THEN NULL ELSE pending.result END, " +
+      "result = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN json_extract(j.value,'$.result') WHEN 'await_rec' THEN json_extract(j.value,'$.result') WHEN 'done' THEN NULL ELSE pending.result END, " +
       "body = CASE json_extract(j.value,'$.status') WHEN 'done' THEN '{}' ELSE pending.body END, " + // 끝난 항목은 본문을 비워 공간 절약(키·해시는 남겨 중복 방지)
       // extracted 는 같은 실행이 Worker 등록 후 done 을 보고할 수 있게 임대를 유지한다
       "lease_id = CASE json_extract(j.value,'$.status') WHEN 'extracted' THEN pending.lease_id ELSE NULL END, " +
@@ -168,7 +183,7 @@ export async function queueStats(env) {
     "WHEN last_error = 'judge-or-recommend-failed' THEN 'judge-or-recommend-failed' " +
     "ELSE 'other' END AS reason, COUNT(*) AS n FROM pending WHERE status = 'stuck' GROUP BY reason ORDER BY n DESC, reason"
   )) : [];
-  return { counts: m, queued: m.queued || 0, extracted: m.extracted || 0, stuck: m.stuck || 0, stuck_reasons: stuckReasons,
+  return { counts: m, queued: m.queued || 0, extracted: m.extracted || 0, await_rec: m.await_rec || 0, stuck: m.stuck || 0, stuck_reasons: stuckReasons,
     oldest_queued_hours: q && q.oldest ? Math.round((Date.now() - Date.parse(q.oldest)) / 3600000) : 0 };
 }
 

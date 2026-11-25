@@ -102,6 +102,13 @@ class FakeAPI(WorkerAPI):
         finally:
             self.dry_run = False
 
+    def queue_take_rec(self, limit, lease_minutes=30, older_than_minutes=0):
+        self.dry_run = True
+        try:
+            return [dict(r) for r in super().queue_take_rec(limit, lease_minutes, older_than_minutes)]
+        finally:
+            self.dry_run = False
+
     def queue_peek(self, limit):
         self.dry_run = True
         try:
