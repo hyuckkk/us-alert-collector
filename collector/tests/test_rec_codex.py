@@ -1,5 +1,7 @@
 """맥북 Codex 추천 판정 경로: 수집 실행은 추천 대기(await_rec)로 넘기고, 판정기가 판정·등록·완료한다. 오래 남으면 Claude 가 대신."""
 import json
+
+import pytest
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 
@@ -90,3 +92,54 @@ def test_fallback_uses_claude_for_old_await_rec(world, monkeypatch, tmp_path):
     assert rep["stages"]["rec_fallback"]["events"] == 1
     assert api.enqueued[-1]["rec_level"] == "interest"
     assert [r["status"] for r in api._mem.values()] == ["done"]
+
+
+@pytest.mark.real_recommend
+def test_mac_runner_extracts_queued_with_codex_client(world, monkeypatch, tmp_path):
+    """크레딧 소진 기간: 맥북 판정기가 추출 전 항목을 같은 수집 코드 + Codex 대역으로 처리(추출 → 추천 → 등록)."""
+    import rec_runner
+    from conftest import ev
+    api = FakeAPI()
+    # 수집 실행이 크레딧 소진으로 추출 못 하고 대기열에 둔 상태를 만든다(--no-ai)
+    run.main(["--out", str(tmp_path / "r.json"), "--no-ai"], client=FakeClient([]), api=api)
+    assert [r["status"] for r in api._mem.values()] == ["queued"]
+    calls = []
+
+    def fake_run(cmd, input, **k):
+        out = cmd[cmd.index("-o") + 1]
+        if "You turn raw web items" in input:
+            calls.append("extract")
+            body = {"results": [json.loads(ai.EntryResult(index=0, relevant=True, reason="", events=[ev(title="Kids Clay Workshop", url=CLAY)]).model_dump_json())]}
+        else:
+            calls.append("recommend")
+            body = json.loads(rec_json(1))
+        open(out, "w").write(json.dumps(body))
+        return SimpleNamespace(returncode=0, stdout="", stderr="")
+    cfg = json.loads((rec_runner.ROOT / "config/models.json").read_text())
+    client = ai.CodexClient(cfg["recommend_codex"], run=fake_run)
+    rep = rec_runner.extract_queued(cfg, api, client, 60)
+    client.close()
+    assert calls == ["extract", "recommend"]
+    assert rep["metrics"]["ai_items"] == 1 and rep["metrics"]["events_out"] == 1
+    assert api.enqueued[-1]["url"] == CLAY and api.enqueued[-1]["rec_level"] == "push"
+    assert [r["status"] for r in api._mem.values()] == ["done"]
+
+
+def test_codex_failure_in_extract_retries_item_not_crash(world, monkeypatch, tmp_path):
+    import rec_runner
+    api = FakeAPI()
+    run.main(["--out", str(tmp_path / "r.json"), "--no-ai"], client=FakeClient([]), api=api)
+    bad = lambda cmd, input, **k: SimpleNamespace(returncode=1, stdout="", stderr="rate limit")  # noqa: E731
+    cfg = json.loads((rec_runner.ROOT / "config/models.json").read_text())
+    rep = rec_runner.extract_queued(cfg, api, ai.CodexClient(cfg["recommend_codex"], run=bad), 60)
+    assert rep["stages"]["ai"]["ok"] and rep["metrics"]["ai_failed"] == 1
+    assert [r["status"] for r in api._mem.values()] == ["queued"]
+
+
+def test_credit_exhausted_releases_without_using_retry(world, monkeypatch, tmp_path):
+    from conftest import credit_error
+    api = FakeAPI()
+    c = FakeClient([credit_error])
+    run.main(["--out", str(tmp_path / "r.json")], client=c, api=api)
+    r = list(api._mem.values())[0]
+    assert r["status"] == "queued" and r["attempts"] == 0, "크레딧 소진은 시도 횟수를 쓰지 않음"

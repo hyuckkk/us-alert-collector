@@ -84,7 +84,7 @@ class WorkerAPI:
         out: list[dict] = []
         seen: set[str] = set()
         while len(out) < limit:
-            got = self._post("/admin/queue", {"op": "take", "limit": min(60, limit - len(out)), "lease_minutes": lease_minutes})["items"]
+            got = self._post(f"{self.prefix}/queue", {"op": "take", "limit": min(60, limit - len(out)), "lease_minutes": lease_minutes})["items"]
             if not got:
                 break
             dup = [g["key"] for g in got if g["key"] in seen]
@@ -190,7 +190,7 @@ class WorkerAPI:
 
     # ------------------------------------------------ 행사·감시·상태
     def event_index(self) -> list[dict]:
-        return [] if self.dry_run else self._get("/admin/event-index").get("events", [])
+        return [] if self.dry_run else self._get(f"{self.prefix}/event-index").get("events", [])
 
     def enqueue(self, events: list[dict]) -> dict:
         tot: dict = {"new": 0, "changed": 0, "same": 0, "outbox": 0, "accepted": 0, "watch": 0, "skipped": {}}
@@ -233,7 +233,7 @@ class WorkerAPI:
         return {"dry_run": True} if self.dry_run else self._post("/admin/digest", {})
 
     def month_usd(self) -> float:
-        return 0.0 if self.dry_run else float(self._get("/admin/usage").get("usd", 0))
+        return 0.0 if self.dry_run or self.prefix != "/admin" else float(self._get("/admin/usage").get("usd", 0))
 
     def add_usage(self, by_model: dict, budget: float) -> None:
         if self.dry_run:

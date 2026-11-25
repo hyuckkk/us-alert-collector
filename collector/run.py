@@ -528,7 +528,8 @@ class Run:
                         error = out.failed[i]
                         # Unattempted batches have not failed: release their leases
                         # without consuming the per-item retry allowance.
-                        status = "release" if error.startswith("not-attempted: ") else "retry"
+                        # 크레딧 소진도 항목 탓이 아니므로 시도 횟수를 쓰지 않는다(6번 넘으면 보류로 빠져 맥북 Codex 판정기도 못 가져감)
+                        status = "release" if error.startswith("not-attempted: ") or error == "credit-exhausted" else "retry"
                         results.append({"key": r["key"], "status": status, "error": error})
                     elif i in held:
                         results.append({"key": r["key"], "status": "retry", "error": "judge-or-recommend-failed"})

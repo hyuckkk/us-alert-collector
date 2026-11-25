@@ -42,8 +42,11 @@ try {
     assert.equal((await rec("/rec/queue", { op: "take_rec" }, "wrong-key".repeat(5))).status, 401);
     const g = await rec("/rec/queue", { op: "take_rec", limit: 5 });
     const a2 = g.items.find((x) => x.key === "a2");
-    const r = await rec("/rec/queue", { op: "result", items: [{ key: "a2", status: "extracted", result: [], ...lease(a2) }] });
-    assert.equal(r.updated, 0, "extracted 같은 상태 바꾸기는 판정기에 허용하지 않음");
+    const r = await rec("/rec/queue", { op: "result", items: [{ key: "a2", status: "await_rec", result: [], ...lease(a2) }] });
+    assert.equal(r.updated, 0, "추천 대기로 되돌리기 같은 상태 바꾸기는 판정기에 허용하지 않음");
+    assert.equal((await rec("/rec/queue", { op: "stats" })).status, 400);
+    const ix = await fetch(`${E.W}/rec/event-index`, { headers: { authorization: `Bearer ${REC}` } });
+    assert.equal(ix.status, 200, "행사 목록 조회(같은 행사 판별용)는 허용");
     await rec("/rec/queue", { op: "result", items: [{ key: "a2", status: "release", ...lease(a2) }] });
   });
 

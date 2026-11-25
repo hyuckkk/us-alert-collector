@@ -593,6 +593,10 @@ def codex_prompt(system: str, body: str) -> str:
     return CODEX_PREAMBLE + "=== SYSTEM ===\n" + system + "\n\n=== INPUT ===\n" + body
 
 
+class CodexError(ValueError):
+    """Codex 호출 실패(종료 코드·시간 초과·사용 한도). ValueError 라서 추출·판정의 '이 묶음만 실패' 처리에 그대로 걸린다."""
+
+
 def _codex_call(c: dict, prompt: str, schema_path: str, run=None) -> str:
     import subprocess
     import tempfile
@@ -601,9 +605,12 @@ def _codex_call(c: dict, prompt: str, schema_path: str, run=None) -> str:
         out = os.path.join(d, "out.json")
         cmd = [c.get("bin") or CODEX_BIN, "exec", "--ephemeral", "--skip-git-repo-check", "-s", "read-only", "-C", d,
                "-m", c["model"], "-c", f'model_reasoning_effort="{c["effort"]}"', "--output-schema", schema_path, "-o", out, "-"]
-        p = run(cmd, input=prompt, capture_output=True, text=True, timeout=c.get("timeout_sec", 900))
+        try:
+            p = run(cmd, input=prompt, capture_output=True, text=True, timeout=c.get("timeout_sec", 900))
+        except subprocess.TimeoutExpired as e:
+            raise CodexError(f"codex timeout {c.get('timeout_sec', 900)}s") from e
         if p.returncode != 0 or not os.path.exists(out):
-            raise RuntimeError(f"codex exit {p.returncode}: {(p.stderr or p.stdout or '')[-300:]}")
+            raise CodexError(f"codex exit {p.returncode}: {(p.stderr or p.stdout or '')[-300:]}")
         return open(out).read()
 
 
@@ -644,6 +651,39 @@ def recommend_codex(cfg: dict, items: list[tuple[dict, str]], today: str, run=No
         os.unlink(schema_path)
     return out
 
+
+
+class CodexClient:
+    """anthropic 클라이언트 대신 쓰는 맥북 Codex 대역. messages.parse / beta.messages.parse 만 흉내 낸다(추출·정밀 판정·추천).
+    배치(messages.batches)가 없으므로 structured_calls 는 즉시 호출 경로로 간다. 사용량은 0(구독)으로 기록된다.
+    크레딧 소진 기간에 추출까지 맥북에서 돌리기 위한 것(2026-11-25 소유자 결정). 공개 실행 환경(GitHub)에서는 쓰지 않는다."""
+
+    def __init__(self, c: dict, run=None):
+        self.c, self.run = c, run
+        self._schemas: dict = {}
+        self.messages = SimpleNamespace(parse=self.parse)
+        self.beta = SimpleNamespace(messages=SimpleNamespace(parse=self.parse))
+
+    def _schema(self, out_type) -> str:
+        import tempfile
+        if out_type not in self._schemas:
+            with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+                json.dump(_schema_format(out_type)["schema"], f)
+                self._schemas[out_type] = f.name
+        return self._schemas[out_type]
+
+    def parse(self, *, system, messages, output_format, **_ignored):
+        body = "\n\n".join(m["content"] if isinstance(m["content"], str) else json.dumps(m["content"], ensure_ascii=False) for m in messages)
+        parsed = output_format.model_validate_json(_codex_call(self.c, codex_prompt(system if isinstance(system, str) else json.dumps(system), body),
+                                                               self._schema(output_format), self.run))
+        return SimpleNamespace(parsed_output=parsed, stop_reason="end_turn", usage=SimpleNamespace(input_tokens=0, output_tokens=0))
+
+    def close(self):
+        for path in self._schemas.values():
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
 
 # ---------------------------------------------------------------- 추천 대기(await_rec) 항목 처리: 맥북 Codex 판정기와 GitHub 대체 경로가 같이 쓴다
 def process_await_rec(api, rows: list[dict], recommend_fn, run_id: str | None = None, found_by: str = "github_collector") -> dict:

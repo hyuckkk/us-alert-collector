@@ -3,7 +3,7 @@
   "extract": {"model": "claude-haiku-5-5", "effort": "low", "batch": 12, "max_tokens": 16000, "text_chars": 4500, "reserve_usd": 0.02, "parallel": 4},
   "judge": {"model": "claude-opus-5-5", "effort": "medium", "batch": 8, "max_tokens": 16000, "reserve_usd": 0.4, "batch_wait_min": 15},
   "recommend": {"model": "claude-opus-5-5", "effort": "high", "batch": 8, "max_tokens": 16000, "reserve_usd": 0.5, "batch_wait_min": 15},
-  "recommend_codex": {"enabled": true, "model": "gpt-6.2-sol", "effort": "low", "batch": 30, "parallel": 2, "timeout_sec": 900, "fallback_minutes": 180},
+  "recommend_codex": {"enabled": true, "mac_extract": true, "extract_batch": 15, "model": "gpt-6.2-sol", "effort": "low", "batch": 30, "parallel": 2, "timeout_sec": 900, "fallback_minutes": 180},
   "discover": {"enabled": true, "daily_per_bot": true, "model": "claude-opus-5-5", "effort": "medium", "max_searches": 4, "max_searches_deep": 5, "max_tokens": 16000, "reserve_usd": 1.2},
   "limits": {"max_ai_items_per_run": 300, "credit_reference_usd": 100},
   "prices": {

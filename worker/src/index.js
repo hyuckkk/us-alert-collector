@@ -592,13 +592,16 @@ export default {
     }
 
     // 추천 판정 대기(await_rec) 항목만: 꺼내기·임대 연장·결과 보고·판정된 행사 등록
-    if (p.startsWith("/rec/") && request.method === "POST") {
+    // 크레딧 소진 기간(2026-11-25~)에는 추출·정밀 판정까지 맥북 Codex 가 맡으므로 일반 대기(take)·추출 결과 보고·행사 목록 조회도 허용
+    if (p.startsWith("/rec/")) {
       if (!isRecRunner(env, request) && !isAdmin(env, request)) return json({ ok: false, error: "unauthorized" }, 401);
+      if (p === "/rec/event-index" && request.method === "GET") return json(await pipeline.eventIndex(env));
+      if (request.method !== "POST") return json({ ok: false, error: "not found" }, 404);
       let body = {};
       try { body = await request.json(); } catch { body = {}; }
       if (p === "/rec/queue") {
-        if (!["take_rec", "extend", "result"].includes(body.op)) return json({ ok: false, error: "op not allowed" }, 400);
-        if (body.op === "result") body.items = (body.items || []).filter((x) => x && ["done", "release"].includes(x.status));
+        if (!["take", "take_rec", "extend", "result"].includes(body.op)) return json({ ok: false, error: "op not allowed" }, 400);
+        if (body.op === "result") body.items = (body.items || []).filter((x) => x && ["done", "release", "retry", "extracted"].includes(x.status));
         return json(await pipeline.queue(env, body));
       }
       if (p === "/rec/enqueue") return json(await pipeline.enqueue(env, body));
