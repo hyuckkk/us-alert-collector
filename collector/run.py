@@ -361,6 +361,16 @@ class Run:
         import ai
         return not ai.CREDIT["out"]
 
+    def _batch_wait(self, stage: str, todo: list[dict], lost_idx: set[int]) -> float | None:
+        """배치(반값)로 보낼 때 기다릴 최대 분. 기다리는 동안 대기열 임대가 끊기지 않게 먼저 연장한다."""
+        wait = self.models.get(stage, {}).get("batch_wait_min")
+        if wait:
+            keys = [r["key"] for i, r in enumerate(todo) if i not in lost_idx]
+            lost = self.api.queue_extend(keys, max(LEASE_EXTEND_MIN, int(wait) + 30))
+            if lost:
+                self.alerts.append(f"배치 대기 전 임대 연장 실패 {len(lost)}건")
+        return wait
+
     def process_queue(self):
         cap = self.args.max or self.models["limits"]["max_ai_items_per_run"]
         rows = self.api.queue_take(cap)
@@ -439,7 +449,8 @@ class Run:
                     # 판정이 빠지거나 실패한 행사는 보내지 않고, 그 항목 전체를 다음 실행에서 다시(2차 재검증 D)
                     u0 = self.usage.usd
                     try:
-                        jo = ai.judge(self.client, self.models, [(rules.for_worker(evs[i]), entries[evs[i]["_entry_index"]].text or "") for i in review_idx], self.usage)
+                        jo = ai.judge(self.client, self.models, [(rules.for_worker(evs[i]), entries[evs[i]["_entry_index"]].text or "") for i in review_idx], self.usage,
+                                      batch_wait_min=self._batch_wait("judge", todo, lost_idx))
                     except Exception as e:  # noqa: BLE001
                         jo = ai.JudgeOutcome(missing={j: type(e).__name__ for j in range(len(review_idx))})
                     self.work["cost_usd"]["judge"] += self.usage.usd - u0
@@ -486,7 +497,7 @@ class Run:
                     u0 = self.usage.usd
                     try:
                         ro = ai.recommend(self.client, self.models, [(rules.for_worker(ev), entries[ev["_entry_index"]].text or "") for ev in evs],
-                                          self.today.isoformat(), self.usage)
+                                          self.today.isoformat(), self.usage, batch_wait_min=self._batch_wait("recommend", todo, lost_idx))
                     except Exception as e:  # noqa: BLE001
                         ro = ai.RecommendOutcome(missing={j: type(e).__name__ for j in range(len(evs))})
                     self.work["cost_usd"]["recommend"] += self.usage.usd - u0

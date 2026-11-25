@@ -15,12 +15,14 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 import os
 import re
+import time
 from dataclasses import dataclass, field
 from types import SimpleNamespace
 from typing import Literal, Optional
 
 import anthropic
-from pydantic import BaseModel
+from pydantic import BaseModel, TypeAdapter
+from anthropic.lib._parse._transform import transform_schema
 
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
@@ -64,9 +66,10 @@ class Usage:
 
     def _m(self, model: str) -> dict:
         return self.by_model.setdefault(model, {"input_tokens": 0, "output_tokens": 0, "cache_write_tokens": 0, "cache_read_tokens": 0,
-                                                "usd": 0.0, "calls": 0, "searches": 0, "errors": 0})
+                                                "usd": 0.0, "calls": 0, "searches": 0, "errors": 0, "batch_calls": 0})
 
-    def add(self, model: str, usage, searches: int = 0) -> None:
+    def add(self, model: str, usage, searches: int = 0, rate: float = 1.0) -> None:
+        """rate: 가격 배율. 배치(Message Batches) 응답은 모든 토큰이 반값이라 0.5."""
         m = self._m(model)
         p = self.prices.get(model, {})
         if isinstance(p, (list, tuple)):  # 예전 형식 [입력, 출력]
@@ -82,8 +85,9 @@ class Usage:
         m["cache_read_tokens"] += cr
         m["output_tokens"] += out
         m["calls"] += 1
+        m["batch_calls"] += int(rate != 1.0)
         m["searches"] += searches
-        m["usd"] += (inp * p.get("input", 0) + cw * p.get("cache_write", 0) + cr * p.get("cache_read", 0) + out * p.get("output", 0)) / 1e6 \
+        m["usd"] += (inp * p.get("input", 0) + cw * p.get("cache_write", 0) + cr * p.get("cache_read", 0) + out * p.get("output", 0)) / 1e6 * rate \
             + searches * self.web_search_usd
         live = os.environ.get("USAGE_LIVE_FILE")
         if live:  # 실행이 중간에 끊겨도 그때까지의 사용액이 남도록 호출마다 기록(개발 비용 집계용)
@@ -300,6 +304,86 @@ def extract(client, cfg: dict, entries: list, today: str, usage: Usage) -> Extra
     return out
 
 
+# ---------------------------------------------------------------- 배치 호출(Message Batches): 같은 요청을 반값에
+# 판정·추천은 몇 분 늦어도 되는 일이라 묶어서 배치로 보낸다(소유자 결정 2026-11-25: API 크레딧 월 $100 안에서 끊기지 않게).
+# 배치는 보통 몇 분, 길면 1시간 넘게 걸린다. wait_min 분까지만 기다리고, 그때까지 안 끝난 요청은 취소한 뒤 기존 방식(즉시 호출)으로
+# 처리한다 → 최악이어도 지금과 같은 비용·결과. 배치는 서버측 대체 모델(fallbacks)을 못 쓰므로 거절(refusal)된 요청도 즉시 호출로 다시 보낸다.
+BATCH_POLL_SEC = 15
+
+
+def _schema_format(out_type) -> dict:
+    return {"type": "json_schema", "schema": transform_schema(TypeAdapter(out_type).json_schema())}
+
+
+def _parsed_from_message(msg, out_type):
+    text = "".join(b.text for b in msg.content if getattr(b, "type", "") == "text")
+    try:
+        return out_type.model_validate_json(text)
+    except Exception:  # noqa: BLE001  형식이 깨지면 판정 없음 → 호출한 쪽이 '누락'으로 다음 실행에 다시
+        return None
+
+
+def structured_calls(client, c: dict, system: str, bodies: list[str], out_type, usage: Usage, wait_min: float | None = None,
+                     sleep=time.sleep, clock=time.monotonic) -> list[tuple]:
+    """bodies 마다 (응답, 오류) 를 같은 순서로 돌려준다. 응답은 stop_reason·usage·parsed_output 을 가진다.
+    wait_min 이 있으면 먼저 배치로 보내고(반값), 없거나 배치를 못 쓰면 하나씩 즉시 호출(서버측 대체 모델 포함)한다."""
+    res: list = [None] * len(bodies)
+    pending = list(range(len(bodies)))
+    batches = getattr(getattr(client, "messages", None), "batches", None)
+    if wait_min and bodies and batches is not None and not CREDIT["out"]:
+        fmt = _schema_format(out_type)
+        reqs = [{"custom_id": f"r{i}", "params": {
+            "model": c["model"], "max_tokens": c["max_tokens"], "system": system,
+            "messages": [{"role": "user", "content": body}], "output_config": {"effort": c["effort"], "format": fmt}}}
+            for i, body in enumerate(bodies)]
+        b = None
+        try:
+            b = batches.create(requests=reqs)
+        except anthropic.APIError as e:
+            usage.error(c["model"])
+            if credit_exhausted(e) or isinstance(e, STOP_ERRORS):
+                return [(None, e)] * len(bodies)
+            # 배치 접수만 실패: 즉시 호출로 진행
+        if b is not None:
+            deadline = clock() + wait_min * 60
+            while b.processing_status != "ended" and clock() < deadline:
+                sleep(BATCH_POLL_SEC)
+                b = batches.retrieve(b.id)
+            if b.processing_status != "ended":
+                batches.cancel(b.id)   # 이미 끝난 요청의 결과는 남고(반값 청구), 나머지는 즉시 호출로
+                stop = clock() + 180
+                while b.processing_status != "ended" and clock() < stop:
+                    sleep(5)
+                    b = batches.retrieve(b.id)
+            if b.processing_status == "ended":
+                for r in batches.results(b.id):
+                    i = int(r.custom_id[1:])
+                    if r.result.type != "succeeded":
+                        continue           # 오류·취소·만료 → 즉시 호출로
+                    msg = r.result.message
+                    usage.add(c["model"], msg.usage, rate=0.5)
+                    if msg.stop_reason == "refusal":
+                        continue           # 대체 모델로 다시
+                    res[i] = (SimpleNamespace(stop_reason=msg.stop_reason, usage=msg.usage,
+                                              parsed_output=_parsed_from_message(msg, out_type) if msg.stop_reason != "max_tokens" else None), None)
+                pending = [i for i in pending if res[i] is None]
+    for i in pending:
+        if CREDIT["out"]:
+            res[i] = (None, RuntimeError("credit-exhausted"))
+            continue
+        try:
+            res[i] = (client.beta.messages.parse(
+                model=c["model"], max_tokens=c["max_tokens"], system=system,
+                messages=[{"role": "user", "content": bodies[i]}], output_config={"effort": c["effort"]},
+                output_format=out_type, betas=[FALLBACK_BETA], fallbacks="default",
+            ), None)
+        except (anthropic.APIError, ValueError) as e:
+            usage.error(c["model"])
+            credit_exhausted(e)
+            res[i] = (None, e)
+    return res
+
+
 # ---------------------------------------------------------------- 판단(큰 모델)
 class Verdict(BaseModel):
     index: int
@@ -326,35 +410,40 @@ class JudgeOutcome:
     duplicates: int = 0
 
 
-def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage) -> JudgeOutcome:
-    """items: (event dict, source text). 큰 모델 + 서버측 대체 모델(거절 시).
+def _plan_chunks(c: dict, n: int, usage: Usage, default_reserve: float) -> tuple[list[int], dict]:
+    """보낼 묶음의 시작 위치와, 비용 상한·크레딧 때문에 못 보내는 항목(index → 사유)."""
+    starts, skipped = [], {}
+    reserve = c.get("reserve_usd", default_reserve)
+    for start in range(0, n, c["batch"]):
+        idx = range(start, min(start + c["batch"], n))
+        if CREDIT["out"] or not usage.allows(reserve * (len(starts) + 1)):
+            skipped.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
+        else:
+            starts.append(start)
+    return starts, skipped
+
+
+def _missing_reason(err) -> str:
+    return "credit-exhausted" if str(err) == "credit-exhausted" else type(err).__name__
+
+
+def judge(client, cfg: dict, items: list[tuple[dict, str]], usage: Usage, batch_wait_min: float | None = None) -> JudgeOutcome:
+    """items: (event dict, source text). 큰 모델 + 서버측 대체 모델(거절 시). batch_wait_min 이 있으면 배치(반값)로 먼저 보낸다.
     추출과 같이 입력·출력 인덱스를 대조한다(2차 재검증 D): 빠지거나 실패한 항목은 missing, 중복 인덱스는 첫 판정만."""
     c = cfg["judge"]
     out = JudgeOutcome()
-    for start in range(0, len(items), c["batch"]):
+    starts, out.missing = _plan_chunks(c, len(items), usage, 0.4)
+    bodies = ["\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 2000)}, ensure_ascii=False)
+                         for i, (ev, txt) in enumerate(items[start:start + c["batch"]])) for start in starts]
+    replies = structured_calls(client, c, JUDGE_RULES + "\n\n" + household_profile(), bodies, JudgeBatch, usage, batch_wait_min)
+    for start, (resp, err) in zip(starts, replies):
         chunk = items[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
-        if not usage.allows(c.get("reserve_usd", 0.4)) or CREDIT["out"]:
-            out.missing.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
+        if err is not None:
+            out.missing.update({i: _missing_reason(err) for i in idx})
             continue
-        body = "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 2000)}, ensure_ascii=False) for i, (ev, txt) in enumerate(chunk))
-        try:
-            resp = client.beta.messages.parse(
-                model=c["model"],
-                max_tokens=c["max_tokens"],
-                system=JUDGE_RULES + "\n\n" + household_profile(),
-                messages=[{"role": "user", "content": body}],
-                output_config={"effort": c["effort"]},
-                output_format=JudgeBatch,
-                betas=[FALLBACK_BETA],
-                fallbacks="default",
-            )
-        except (anthropic.APIError, ValueError) as e:
-            usage.error(c["model"])
-            credit_exhausted(e)
-            out.missing.update({i: f"{type(e).__name__}" for i in idx})
-            continue
-        usage.add(c["model"], resp.usage)
+        if not isinstance(resp, SimpleNamespace):   # 즉시 호출 응답(배치 응답은 structured_calls 에서 반값으로 기록)
+            usage.add(c["model"], resp.usage)
         if resp.stop_reason in ("refusal", "max_tokens") or resp.parsed_output is None:
             out.missing.update({i: f"stop_reason={resp.stop_reason}" for i in idx})
             continue
@@ -463,30 +552,22 @@ class RecommendOutcome:
     missing: dict = field(default_factory=dict)   # 입력 index → 사유(판정이 없으면 보내지 않고 다음 실행에서 다시)
 
 
-def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usage: Usage) -> RecommendOutcome:
-    """items: (event dict, source text). 모든 발송 후보에 적용한다(애매한 것만이 아니라)."""
+def recommend(client, cfg: dict, items: list[tuple[dict, str]], today: str, usage: Usage, batch_wait_min: float | None = None) -> RecommendOutcome:
+    """items: (event dict, source text). 모든 발송 후보에 적용한다(애매한 것만이 아니라). batch_wait_min 이 있으면 배치(반값)로 먼저 보낸다."""
     c = cfg["recommend"]
     out = RecommendOutcome()
-    for start in range(0, len(items), c["batch"]):
+    starts, out.missing = _plan_chunks(c, len(items), usage, 0.5)
+    bodies = [f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500)}, ensure_ascii=False)
+                                              for i, (ev, txt) in enumerate(items[start:start + c["batch"]])) for start in starts]
+    replies = structured_calls(client, c, RECOMMEND_RULES + "\n\n" + household_profile(), bodies, RecommendBatch, usage, batch_wait_min)
+    for start, (resp, err) in zip(starts, replies):
         chunk = items[start:start + c["batch"]]
         idx = range(start, start + len(chunk))
-        if not usage.allows(c.get("reserve_usd", 0.5)) or CREDIT["out"]:
-            out.missing.update({i: "credit-exhausted" if CREDIT["out"] else "run-cost-cap" for i in idx})
+        if err is not None:
+            out.missing.update({i: _missing_reason(err) for i in idx})
             continue
-        body = f"Today: {today}\n" + "\n".join(json.dumps({"index": i, "event": ev, "source_text": _clip(txt, 1500)}, ensure_ascii=False)
-                                                 for i, (ev, txt) in enumerate(chunk))
-        try:
-            resp = client.beta.messages.parse(
-                model=c["model"], max_tokens=c["max_tokens"], system=RECOMMEND_RULES + "\n\n" + household_profile(),
-                messages=[{"role": "user", "content": body}], output_config={"effort": c["effort"]},
-                output_format=RecommendBatch, betas=[FALLBACK_BETA], fallbacks="default",
-            )
-        except (anthropic.APIError, ValueError) as e:
-            usage.error(c["model"])
-            credit_exhausted(e)
-            out.missing.update({i: f"{type(e).__name__}" for i in idx})
-            continue
-        usage.add(c["model"], resp.usage)
+        if not isinstance(resp, SimpleNamespace):   # 즉시 호출 응답(배치 응답은 structured_calls 에서 반값으로 기록)
+            usage.add(c["model"], resp.usage)
         if resp.stop_reason in ("refusal", "max_tokens") or resp.parsed_output is None:
             out.missing.update({i: f"stop_reason={resp.stop_reason}" for i in idx})
             continue

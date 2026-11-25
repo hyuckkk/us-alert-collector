@@ -35,7 +35,7 @@ jobs:
     # 강제 push(이력 재작성 등)는 GitHub 가 '모든 파일 변경'으로 보아 경로 조건이 다 걸린다 → 실행하지 않음(2026-10-21 사고 재발 방지)
     if: github.event_name != 'push' || !github.event.forced
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 75   # 판정·추천 배치 대기(각 최대 15분 + 취소 3분) 포함. 공개 저장소라 실행 시간 비용 없음
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       HOUSEHOLD_PROFILE: ${{ secrets.HOUSEHOLD_PROFILE }}

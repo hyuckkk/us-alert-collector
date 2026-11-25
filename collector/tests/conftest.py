@@ -216,7 +216,7 @@ def default_recommendation(request, monkeypatch):
     if request.node.get_closest_marker("real_recommend"):
         return
 
-    def fake(client, cfg, items, today, usage):
+    def fake(client, cfg, items, today, usage, batch_wait_min=None):
         out = ai.RecommendOutcome()
         for i, (e, _) in enumerate(items):
             out.recs[i] = ai.Recommendation(index=i, level="push", bot=e.get("bot") or "family", category="other", score=50,
