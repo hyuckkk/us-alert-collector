@@ -1,0 +1,569 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-26T23:53:14.842Z",
+  "finished_at_utc": "2026-11-26T23:55:00.456Z",
+  "search_requests": 42,
+  "queries": [
+    "Colorado 2027 July August free public aviation open house fly in airport kids Colorado dates",
+    "Colorado 2027 summer festival free hands on public special event mining logging train July August Colorado",
+    "Colorado 2027 summer free youth outdoor camp registration fishing conservation Colorado",
+    "Colorado 2027 summer military air show public Colorado July August 2027",
+    "Colorado 2027 July August special public tour power plant dam research laboratory Colorado",
+    "Denver December 2026 January 2027 free special event hands on engineering kids public open house",
+    "Colorado 2027 July August free spectator championship unusual sports Colorado public festival",
+    "Colorado 2027 national park special permit lottery reservation summer Colorado 2027",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"demonstrations\" heritage festival blacksmith steam engines",
+    "Colorado 2027 \"August\" \"2027\" \"free\" \"rides\" festival miniature train",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"hands-on\" festival archaeology",
+    "Colorado 2027 \"August\" \"2027\" \"free\" \"competition\" festival outdoor lumberjack rodeo",
+    "Colorado 2027 \"July\" \"2027\" \"open house\" observatory public",
+    "Colorado 2027 summer \"2027\" \"free\" \"kids\" \"fishing derby\" Colorado",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"air show\" Colorado",
+    "Colorado 2027 \"August\" \"2027\" \"rocket launch\" public model rocket",
+    "Denver Colorado December 2026 \"free\" \"hands-on\" museum special event December science",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"rodeo\" kids mutton bustin",
+    "2027 Colorado \"free\" \"July\" \"2027\" \"festival\" \"balloon\" tethered rides official",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"train rides\" festival official",
+    "Colorado 2027 \"August\" \"2027\" \"free\" \"fly-in\" aviation airport",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"open house\" fire department public",
+    "Colorado 2027 summer \"2027\" \"free\" \"demo\" \"festival\" mountain bike kids",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"race\" soap box derby family spectators",
+    "Colorado 2027 \"August\" \"2027\" \"free\" \"tractor\" show antique engines",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"powwow\" public festival",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"championship\" burro racing spectators",
+    "Colorado 2027 \"August\" \"2027\" \"free\" \"kids\" \"outdoor\" festival wildlife",
+    "site:coloradoscca.org \"2027 Freedom Sprints\" High Plains Raceway",
+    "Westminster Colorado to High Plains Raceway driving distance",
+    "Colorado 2027 \"July\" \"2027\" public \"pits\" race free spectators Colorado hill climb",
+    "Colorado 2027 \"August\" \"2027\" public \"pits\" race free spectators Colorado",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"tours\" historic ranch special event",
+    "Colorado 2027 July August \"2027\" \"free\" \"open house\" Colorado science lab",
+    "Colorado 2027 Pikes Peak International Hill Climb fan fest date free 2027",
+    "Colorado 2027 July August special motorsports free public pit access race historic festival",
+    "Colorado 2027 July August air museum open cockpit free public \"2027\" Colorado",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"family\" \"archery\" Colorado festival",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"hands-on\" \"festival\" Colorado science kids",
+    "Westminster CO to Byers CO driving distance",
+    "Colorado 2027 \"July\" \"2027\" \"free\" \"race\" burro Fairplay official",
+    "site:mvcranefest.org 2027 guided tours prices registration March"
+  ],
+  "url_read_attempts": 26,
+  "successful_page_reads": 25,
+  "failed_page_reads": 1,
+  "official_detail_verified": 22,
+  "official_detail_verified_urls": [
+    "https://www.coloradoscca.org/calendar/spectator-info/",
+    "https://mvcranefest.org/festival/",
+    "https://burrisandsonsbuckingbulls.com/rodeo-series/pagosa-rodeo",
+    "https://www.ridgwayrendezvous.com/about",
+    "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/",
+    "https://wingsmuseum.org/education/winter-camp-2026/",
+    "https://www.goldenbuffalobilldays.com/",
+    "https://www.buildingutepasscommunity.org/bronc-day-faq",
+    "https://www.coloradoscca.org/event/2027-freedom-sprints/",
+    "https://www.highplainsraceway.com/track-info/",
+    "https://chapters.eaa.org/eaa1627/young-eagles",
+    "https://coloradotu.org/youthcamp/",
+    "https://www.coloradospringssports.org/events/rockymountainstategames/",
+    "https://coloradorailroadmuseum.org/timetable/train-rides/",
+    "https://coloradostatefair.com/things-to-do/",
+    "https://www.recreation.gov/lottery/available",
+    "https://ppihc.org/fan-fest/",
+    "https://totalarcherychallenge.com/pages/sunlight-mtn-resort-colorado",
+    "https://www.dmns.org/learn/onsite/",
+    "https://erieballoonfestival.com/erie-balloon-festival-guide/",
+    "https://www.lsop.colostate.edu/open-house/",
+    "https://www.erieco.gov/m/faq"
+  ],
+  "url_read_records": [
+    {
+      "url": "https://www.coloradoscca.org/calendar/spectator-info/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://mvcranefest.org/festival/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://burrisandsonsbuckingbulls.com/rodeo-series/pagosa-rodeo",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.ridgwayrendezvous.com/about",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://wingsmuseum.org/education/winter-camp-2026/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.goldenbuffalobilldays.com/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.buildingutepasscommunity.org/bronc-day-faq",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.coloradoscca.org/event/2027-freedom-sprints/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.highplainsraceway.com/track-info/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://chapters.eaa.org/eaa1627/young-eagles",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://coloradotu.org/youthcamp/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.coloradospringssports.org/events/rockymountainstategames/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://coloradostatefair.com/things-to-do/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.recreation.gov/lottery/available",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.mapsof.net/distance/westminster-to-byers",
+      "ok": true,
+      "official": false
+    },
+    {
+      "url": "https://ppihc.org/fan-fest/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://ppihc.org/save-the-date-race-to-the-clouds-set-for-june-27-2027/",
+      "ok": false,
+      "official": false,
+      "note": "verification challenge"
+    },
+    {
+      "url": "https://totalarcherychallenge.com/pages/sunlight-mtn-resort-colorado",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.dmns.org/learn/onsite/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://erieballoonfestival.com/erie-balloon-festival-guide/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.lsop.colostate.edu/open-house/",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.erieco.gov/m/faq",
+      "ok": true,
+      "official": true
+    },
+    {
+      "url": "https://www.coloradoscca.org/event/2027-freedom-sprints/",
+      "ok": true,
+      "official": true,
+      "note": "repeat detail read at line 100"
+    },
+    {
+      "url": "https://www.coloradoscca.org/calendar/spectator-info/",
+      "ok": true,
+      "official": true,
+      "note": "repeat detail read at line 87"
+    }
+  ],
+  "candidate_events": 49,
+  "duplicate_candidates": 2,
+  "rejected_events": 20,
+  "held_events": 26,
+  "qualified_events": 1,
+  "known_by_collector": 0,
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "account_remaining_usage": "unknown",
+  "qualified_urls": [
+    "https://www.coloradoscca.org/event/2027-freedom-sprints/"
+  ],
+  "candidate_details": [
+    {
+      "title": "Freedom Sprints July 3–4 2027",
+      "status": "qualified",
+      "reason": "Free SCCA Majors/Regionals/Time Trials, explicitly public pit access and driver/crew interaction; exact timetable pending; family stay.",
+      "url": "https://www.coloradoscca.org/event/2027-freedom-sprints/"
+    },
+    {
+      "title": "Erie Balloon Festival July 9–11 2027",
+      "status": "duplicate",
+      "reason": "Prior ChatGPT inbox 20261031T232318Z.json; no resend.",
+      "url": "https://erieballoonfestival.com/erie-balloon-festival-guide/"
+    },
+    {
+      "title": "CSU Little Shop of Physics March 7 2027",
+      "status": "duplicate",
+      "reason": "Prior ChatGPT inbox 20261117T234645Z.json.",
+      "url": "https://www.lsop.colostate.edu/open-house/"
+    },
+    {
+      "title": "Monte Vista Crane Festival March 5–7 2027",
+      "status": "held",
+      "reason": "Prior research held; field trip cost and booking details not established. Free craft fair alone insufficient.",
+      "url": "https://mvcranefest.org/festival/"
+    },
+    {
+      "title": "Pagosa Night Rodeo July 2027",
+      "status": "rejected",
+      "reason": "Weekly commercial rodeo series; $83 advance for two adults/three youths plus $5 parking; calf scramble is interesting but long distance and repeated normal-price event.",
+      "url": "https://burrisandsonsbuckingbulls.com/rodeo-series/pagosa-rodeo"
+    },
+    {
+      "title": "Ridgway Rendezvous Aug 14–15 2027",
+      "status": "rejected",
+      "reason": "Prior research rejected; free railway rides also regularly available on summer Saturdays, long distance.",
+      "url": "https://www.ridgwayrendezvous.com/about"
+    },
+    {
+      "title": "ENOR Environmental Discovery Camp June–July 2027",
+      "status": "held",
+      "reason": "January 1 registration; exact grade fees and availability not established.",
+      "url": "https://extension.colostate.edu/jefferson/offering/enor-environmental-discovery-camp/"
+    },
+    {
+      "title": "Wings Winter Chill Camp Dec 21–23 and Dec 28–30 2026",
+      "status": "rejected",
+      "reason": "Standard paid $239 three-day camp; prior research rejected.",
+      "url": "https://wingsmuseum.org/education/winter-camp-2026/"
+    },
+    {
+      "title": "Golden Buffalo Bill Days July 23–25 2027",
+      "status": "held",
+      "reason": "Event dates posted but detailed 2027 activities and individual cost not verified; page parade year inconsistent.",
+      "url": "https://www.goldenbuffalobilldays.com/"
+    },
+    {
+      "title": "Bronc Day July 2027",
+      "status": "rejected",
+      "reason": "Ordinary community festival with traditional kids games and free pool; weekday/date inconsistency (July 30 2027 is Friday).",
+      "url": "https://www.buildingutepasscommunity.org/bronc-day-faq"
+    },
+    {
+      "title": "EAA Boulder Young Eagles",
+      "status": "held",
+      "reason": "Free flights age 8–17, but chapter only lists 2026 dates, not 2027 rally dates.",
+      "url": "https://chapters.eaa.org/eaa1627/young-eagles"
+    },
+    {
+      "title": "Colorado TU River Conservation and Fly Fishing Camp June 13–19 2027",
+      "status": "held",
+      "reason": "Age 14–18, before family stay and 2027 pricing pending.",
+      "url": "https://coloradotu.org/youthcamp/"
+    },
+    {
+      "title": "Rocky Mountain State Games July 16–18 2027",
+      "status": "held",
+      "reason": "Prior research held; individual sport times, entry conditions and cost pending.",
+      "url": "https://www.coloradospringssports.org/events/rockymountainstategames/"
+    },
+    {
+      "title": "Colorado Railroad Museum Wild West Days 2027",
+      "status": "held",
+      "reason": "Specific 2027 dates TBA.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Colorado Railroad Museum SCFD free days 2027",
+      "status": "held",
+      "reason": "Dates TBA; free admission with required advance reservation, train ride fee.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Colorado Railroad Museum Spring Break 2027",
+      "status": "held",
+      "reason": "Specific dates and programs TBA, ordinary admission/ride fee.",
+      "url": "https://coloradorailroadmuseum.org/youth-and-families/"
+    },
+    {
+      "title": "Colorado State Fair Aug 27–Sep 6 2027",
+      "status": "held",
+      "reason": "Special event schedule and 2027 admission/discount details not confirmed.",
+      "url": "https://coloradostatefair.com/things-to-do/"
+    },
+    {
+      "title": "Dinosaur Green and Yampa high-use permits 2027",
+      "status": "held",
+      "reason": "Listed upcoming lottery, prior held; technical self-guided rafting not a simple family outing.",
+      "url": "https://www.recreation.gov/lottery/available"
+    },
+    {
+      "title": "Pikes Peak Hill Climb June 27 2027",
+      "status": "held",
+      "reason": "Tickets open Dec 1 2026; 2027 price unconfirmed and official news page open blocked.",
+      "url": "https://ppihc.org/save-the-date-race-to-the-clouds-set-for-june-27-2027/"
+    },
+    {
+      "title": "Pikes Peak Hill Climb Fan Fest June 2027",
+      "status": "held",
+      "reason": "Free motorsport displays and FMX; event page says June 26 while prior official press announcement says Friday before June 27 (June 25); conflicting date must resolve.",
+      "url": "https://ppihc.org/fan-fest/"
+    },
+    {
+      "title": "Total Archery Challenge July 9–11 2027",
+      "status": "held",
+      "reason": "Special 3D mountain archery course; registration opens TBA; full age, price and equipment eligibility not established.",
+      "url": "https://totalarcherychallenge.com/pages/sunlight-mtn-resort-colorado"
+    },
+    {
+      "title": "DMNS Home School Day Dec 1 2026 / Jan 13 2027",
+      "status": "rejected",
+      "reason": "Restricted to homeschool families; December date not special activation; not general-public access.",
+      "url": "https://www.dmns.org/learn/onsite/"
+    },
+    {
+      "title": "Erie Youth Fishing Derby 2027",
+      "status": "held",
+      "reason": "Town FAQ confirms free ages 5–12 but specific 2027 date absent.",
+      "url": "https://www.erieco.gov/m/faq"
+    },
+    {
+      "title": "Pikes Peak Regional Airshow",
+      "status": "held",
+      "reason": "Official result still Sept 19–20 2026, no new date established.",
+      "url": "https://www.pprairshow.org/home/"
+    },
+    {
+      "title": "Wings National Aviation Day",
+      "status": "held",
+      "reason": "August 2026 $1.50 child promotion expired; 2027 edition not confirmed.",
+      "url": "https://wingsmuseum.org/resources/press-releases/wings-over-the-rockies-celebrates-aviation-day-with-dollar-fifty-kids-admission/"
+    },
+    {
+      "title": "Buena Vista Contin-Tail Mineral Show 2027",
+      "status": "held",
+      "reason": "Official search result describes 2026; new specific dates and special hands-on program unconfirmed.",
+      "url": "https://bvrockshow.com/"
+    },
+    {
+      "title": "Mad Science NASA Academy December 3 2026",
+      "status": "rejected",
+      "reason": "Paid recurring commercial instruction $75; third-party result only.",
+      "url": "https://bloomcircle.io/denver-co/events/bbc5e893-bca9-42ea-aa70-5c3068d1c05e"
+    },
+    {
+      "title": "RMSEL prospective family open house",
+      "status": "rejected",
+      "reason": "School admissions tour and talks, not special public experience.",
+      "url": "https://www.rmsel.org/Prospective-Families/Open-House-Schedule/"
+    },
+    {
+      "title": "Rooftop Rodeo Estes Park 2027",
+      "status": "held",
+      "reason": "2027 dates and prices not announced in retrieved result.",
+      "url": "https://www.epiceventscolorado.com/annual/rooftop-rodeo/"
+    },
+    {
+      "title": "Platteville Harvest Daze 2027",
+      "status": "held",
+      "reason": "Third-party listing explicitly dates not updated; no special 2027 activity verified.",
+      "url": "https://festivalnet.com/76854/Platteville-Colorado/Festivals/Platteville-Harvest-Daze"
+    },
+    {
+      "title": "Garfield County Fair 2027",
+      "status": "held",
+      "reason": "Third-party listing dates not updated; special arena pricing unknown.",
+      "url": "https://festivalnet.com/49640/Rifle-Colorado/State-Fairs/Garfield-County-Fair-Rodeo"
+    },
+    {
+      "title": "Boulder County Fair 2027",
+      "status": "held",
+      "reason": "Prior-year fair ticket page and dates not updated; pit passes limited and 2027 price unknown.",
+      "url": "https://www.bouldercountyfair.org/p/boulder-county-fair-tickets"
+    },
+    {
+      "title": "DMNS Magical Winter Nights Nov 25–Jan 2",
+      "status": "rejected",
+      "reason": "Separate regular commercial seasonal ticket; no verified extraordinary discount/access.",
+      "url": "https://www.dmns.org/exhibitions/temporary-exhibitions/magical/"
+    },
+    {
+      "title": "Denver Night at the Museums Nov 7 2026",
+      "status": "rejected",
+      "reason": "Past date.",
+      "url": "https://visitdenver.com/denver-arts-week/free-night-at-the-museums/"
+    },
+    {
+      "title": "DMNS teacher workshop December 5 2026",
+      "status": "rejected",
+      "reason": "Teacher-only professional development, language-intensive.",
+      "url": "https://www.dmns.org/learn/tpd/museum-sponsored-workshops-courses/"
+    },
+    {
+      "title": "SCCA Last Chance Majors Aug 21–22 2027",
+      "status": "held",
+      "reason": "Similar access to submitted Freedom Sprints at same venue; avoid redundant alerts; later separate event can be revisited.",
+      "url": "https://www.coloradoscca.org/venue/high-plains-raceway/"
+    },
+    {
+      "title": "SCCA Ice Breaker April 9–11 2027",
+      "status": "held",
+      "reason": "Before family stay; same general race access; no specific extra experience verified.",
+      "url": "https://www.coloradoscca.org/calendar/spectator-info/"
+    },
+    {
+      "title": "SCCA Home of Heroes Grand Prix May 22–23 2027",
+      "status": "held",
+      "reason": "Before family stay; similar race access and no separate event detail opened.",
+      "url": "https://www.coloradoscca.org/calendar/spectator-info/"
+    },
+    {
+      "title": "Colorado Railroad Museum regular Friday tours July 2027",
+      "status": "rejected",
+      "reason": "Weekly standard paid tour, not rare access.",
+      "url": "https://www.visitgolden.com/event/the-friday-tour-at-colorado-railroad-museum-2/2027-07-23/"
+    },
+    {
+      "title": "Muddy Dash Dacono Aug 14 2027",
+      "status": "held",
+      "reason": "Third-party date only; actual age and total price not verified.",
+      "url": "https://running.life/en/event/muddy-dash-denver"
+    },
+    {
+      "title": "Aspen Ideas Festival June 25–July 1 2027",
+      "status": "rejected",
+      "reason": "Language-intensive talks and panels.",
+      "url": "https://www.colorado.bz/events/july-2027"
+    },
+    {
+      "title": "Cherry Creek Arts Festival July 2–4 2027",
+      "status": "rejected",
+      "reason": "Ordinary arts browsing festival; no exceptional hands-on experience verified.",
+      "url": "https://www.colorado.bz/events/july-2027"
+    },
+    {
+      "title": "RockyGrass July 23–25 2027",
+      "status": "rejected",
+      "reason": "Regular commercial music festival; no special direct-access opportunity verified.",
+      "url": "https://www.colorado.bz/events/july-2027"
+    },
+    {
+      "title": "Oakley Gymkhana Youth Rodeo July 2027",
+      "status": "rejected",
+      "reason": "Outside Colorado (Idaho), despite search result relevance.",
+      "url": "https://oakleypioneerdays.com/gymkhana-youth-rodeo/"
+    },
+    {
+      "title": "Mount Rushmore Rodeo 2027",
+      "status": "rejected",
+      "reason": "South Dakota, outside scope.",
+      "url": "https://www.palmergulch.com/events/rodeo/"
+    },
+    {
+      "title": "Roar Over the Rockies Aug 2027",
+      "status": "rejected",
+      "reason": "Great Falls Montana outside scope.",
+      "url": "https://aeropattern.com/airshows/roar-over-the-rockies-mt"
+    },
+    {
+      "title": "Badger Steam and Gas Engine Show Aug 2027",
+      "status": "rejected",
+      "reason": "Wisconsin outside scope.",
+      "url": "https://badgersteamandgas.com/"
+    },
+    {
+      "title": "Northern Cheyenne Chiefs Pow Wow July 2027",
+      "status": "rejected",
+      "reason": "Montana outside scope and date not organizer confirmed.",
+      "url": "https://www.festivalsinamerica.com/festival/northern-cheyenne-chiefs-powwow-lame-deer"
+    },
+    {
+      "title": "Empire Ranch docent tour July 10 2027",
+      "status": "rejected",
+      "reason": "Arizona outside scope.",
+      "url": "https://santacruzheritage.org/event/docent-led-tour/2027-07-10/"
+    }
+  ],
+  "repository_comparison": {
+    "sources_sha": "cccb6669198f22679b7b3d70ea090500988bc336",
+    "queries_sha": "107e43181f5667fcec91d79d8ff4f5293d87bd5c",
+    "sources_count": 71,
+    "active_sources": 55,
+    "reviewed_records": [
+      "reports/fullsystem-run.json (2026-10-21 dry run, not current)",
+      "eval/recommend_backfill_all.json",
+      "external-inbox/aside/20261126T2113Z-daily.json",
+      "research/gpt-workload/runs/20261125T233132Z.json",
+      "GitHub code search for Freedom Sprints, High Plains Raceway, Monte Vista Crane Festival, Pagosa Night Rodeo, Ridgway Rendezvous, Pikes Peak International Hill Climb, Fan Fest, Total Archery Challenge, Erie Balloon Festival, Little Shop of Physics, Winter Chill Camp"
+    ],
+    "collector_operational_db": "unknown",
+    "collector_current_run_artifacts": "unknown",
+    "candidate_collector_rejection_status": "unknown",
+    "known_by_collector_basis": "0 affirmative matches in inspected records; actual total unknown",
+    "verified_miss_basis": "0 proven; absent code search results not evidence of actual miss",
+    "prior_external_duplicates": 2,
+    "workflow": ".github/workflows/external-inbox.yml",
+    "workflow_sha": "a6d496638630a3bd620413ab585a1b46287f4c20",
+    "submission": "external-inbox/chatgpt/20261126T235417Z.json",
+    "submission_commit": "4d4d78805aeaab1dd783734d8287d57875ddb34b",
+    "submission_readback": "exact match",
+    "actual_delivery": "unknown"
+  },
+  "improvement_suggestions": [
+    {
+      "url": "https://www.coloradoscca.org/calendar/spectator-info/",
+      "calendar": "https://www.coloradoscca.org/calendar/rmdiv-schedule/",
+      "reason": "Track source and public-pit-access policy not present in current sources; monitor named major races, free admission, public paddock/pit access; not proof of collector miss."
+    },
+    {
+      "url": "https://ppihc.org/fan-fest/",
+      "reason": "Monitor date conflict resolution and Dec 1 Hill Climb ticket release; verify actual price and age terms before submission."
+    },
+    {
+      "url": "https://totalarcherychallenge.com/pages/sunlight-mtn-resort-colorado",
+      "reason": "Monitor dated 2027 event for registration and eligibility/fees."
+    },
+    {
+      "url": "https://mvcranefest.org/festival/",
+      "reason": "Monitor actual guided field trip fees and dates instead of generic festival pass."
+    }
+  ],
+  "notes": "42 individual web search requests (five batches); no failed search requests observed. Explicit web opens only counted as page-read attempts; repeated line-range opens counted as attempts but not duplicate official pages. Official-detail verification means organizer pages directly opened and inspected, not every condition was verified. Candidate count includes individually considered search results, not every unreviewed result. One high-value race weekend submitted, exact content read back. Published spectator policy gives free access and pit interaction; exact event timetable pending. No verified delivery or actual collector misses; operational DB unavailable. No code/settings changes. Finish timestamp taken at end of research/submission before workload log write and readback."
+}
