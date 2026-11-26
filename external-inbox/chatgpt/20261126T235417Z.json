@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "created_at_utc": "2026-11-26T23:54:17.634Z",
+  "test": false,
+  "events": [
+    {
+      "title": "2027 Freedom Sprints — Free SCCA Road Racing and Public Paddock Access",
+      "url": "https://www.coloradoscca.org/event/2027-freedom-sprints/",
+      "start_date": "2027-07-03",
+      "end_date": "2027-07-04",
+      "time": "MDT; event-specific timetable not yet published; typical SCCA practice from 8 AM, racing around 1–5 PM",
+      "location": "High Plains Raceway, 93301 East US Highway 36, Deer Trail, CO 80105",
+      "cost": "Free spectator admission, no tickets; $0 for five; food/transport separate",
+      "age": "Children and adults welcome as spectators; no membership or ticket required under published spectator policy; no driving included",
+      "audience": "family",
+      "description": "Annual Independence Day weekend SCCA Majors, Regionals and Time Trials. Unlike ordinary grandstand-only sports, the host explicitly permits spectators to visit the pits, see racing cars close up and talk to drivers and crews. Official policy: https://www.coloradoscca.org/calendar/spectator-info/ . Specific race timetable still pending; ear protection advised. Approx. 65 miles from Westminster city via Byers (46.8 miles to Byers plus roughly 18 miles along US36; ZIP-specific route unverified). Venue directions: https://www.highplainsraceway.com/track-info/ ."
+    }
+  ]
+}
