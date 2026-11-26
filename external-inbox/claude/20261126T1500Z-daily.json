@@ -1,0 +1,49 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-26T14:42:01Z",
+  "finished_at": "2026-11-26T15:00:00Z",
+  "searches": 8,
+  "queries": [
+   "Denver Zoo Lights 2026 free night OR discount family",
+   "Golden Colorado Olde Golden Christmas 2026 schedule candlelight walk parade dates",
+   "Lakewood Lights 2026 Heritage Lakewood Belmar Park date",
+   "Arvada Center free family holiday event December 2026",
+   "Denver Art Museum free day December 8 2026 family activities",
+   "Colorado state park winter event kids December 2026 Chatfield Cherry Creek Barr Lake free",
+   "Brighton Colorado Festival of Lights parade 2026 date tree lighting",
+   "Denver Christkindlmarket 2026 free kids activities lantern parade"
+  ],
+  "urls_attempted": 1,
+  "urls_ok": 0,
+  "urls": [
+   "https://www.lakewoodco.gov/City-News-Media-Contacts/Lakewood-Lights"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 8,
+  "excluded": 7,
+  "excluded_reasons": {
+   "paid_or_ticketed": 3,
+   "date_not_posted_2026": 3,
+   "already_submitted": 1
+  },
+  "notes": "Claude 독립 검색(예약, 개정 규칙). WebFetch 1건 DNS 오류(getaddrinfo ENOTFOUND)로 verified:false. 제외: 동물원 조명·아바다센터 공연·크리스트킨들 어린이 활동(유료), 골든 촛불행진·브라이튼 점등·주립공원 12월 행사(2026 날짜 미공지), 미술관 12/8(이미 제출). 참고: 11/24 22시 UTC 이후 처리 단계 크레딧 소진 상태."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-26T15:00:00Z",
+   "origin": "scheduled",
+   "title": "Lakewood Lights 2026",
+   "url": "https://www.lakewoodco.gov/City-News-Media-Contacts/Lakewood-Lights",
+   "start_date": "2026-12-03",
+   "location": "Heritage Lakewood Belmar Park, 801 S Yarrow St, Lakewood",
+   "cost": "",
+   "age": "All ages",
+   "audience": "family",
+   "description": "City of Lakewood's annual holiday lighting at Heritage Lakewood Belmar Park, listed for Dec 3 in the city's April 9, 2026 season announcement (2025 edition: 5-8:30 p.m. with free Santa visits).",
+   "recommend": "push",
+   "special_reason": "연 1회 시 주최 연말 점등 행사(예년 산타 무료)"
+  }
+ ]
+}
