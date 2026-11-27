@@ -670,6 +670,22 @@ function titleTokens(d) {
   const place = locKey(d.location) + " " + String(d.location || "");
   return new Set([...en, ...ko].filter((w) => !WEAK.has(w) && !place.includes(w) && !/^레드락스|^red$|^rocks$/.test(w)));
 }
+// 제목 겹침 정도: 영어 제목·한글 제목을 따로도 비교해 큰 값을 쓴다
+// (같은 행사인데 한글 제목만 정보원마다 다르게 지어져 합친 비율이 낮아지는 것 방지 — 11-27 주립공원 무료입장 3통 사고)
+function overlap(a, b) {
+  let best = 0;
+  const ratio = (x, y) => { if (x.size < 2 || y.size < 2) return 0; return [...x].filter((w) => y.has(w)).length / Math.min(x.size, y.size); };
+  best = ratio(a, b);
+  for (const ko of [false, true]) {
+    const part = (s) => new Set([...s].filter((w) => /[가-힣]/.test(w) === ko));
+    best = Math.max(best, ratio(part(a), part(b)));
+  }
+  return best;
+}
+// 같은 날·같은 장소(장소 열쇠가 같음)면 핵심 낱말 2개만 겹쳐도 같은 행사로 본다
+function samePlaceDay(t, u, la, lb) {
+  return !!la && la === lb && [...t].filter((w) => u.has(w)).length >= 2;
+}
 function remember(seen, chatId, sourceId, d, eventKey) {
   const add = (m, k, v) => { if (!m.has(k)) m.set(k, []); m.get(k).push(v); };
   add(seen.series, `${chatId}|${seriesKey(sourceId, d)}`, { key: eventKey });
@@ -691,7 +707,7 @@ export function sameEvent(a, aSrc, b, bSrc) {
   if (!la || la !== lb) return false;
   const t = titleTokens(a), u = titleTokens(b);
   if (t.size < 2 || u.size < 2) return false;
-  return [...t].filter((w) => u.has(w)).length / Math.min(t.size, u.size) >= 0.6;
+  return overlap(t, u) >= 0.6;
 }
 // 날짜 목록을 짧게: 이어지는 날은 "~ 매일"로 묶고, 너무 많으면 "외 N회"
 export function formatDates(ranges, today) {
@@ -742,8 +758,8 @@ export function sameAsSent(seen, chatId, sourceId, d, eventKey) {
       const loc = v => String(v || "").toLowerCase().replace(/[^a-z가-힣0-9]+/g, " ").trim();
       const la = loc(x.location), lb = loc(d.location);
       if (la && lb && !la.includes(lb) && !lb.includes(la)) return false;
-      const common = [...t].filter((w) => x.tokens.has(w)).length;
-      return common / Math.min(t.size, x.tokens.size) >= 0.6;
+      if (samePlaceDay(t, x.tokens, locKey(x.location), locKey(d.location))) return true;
+      return overlap(t, x.tokens) >= 0.6;
     });
     if (hit) return "same-event-other-source";
     // 같은 장소에서 날짜만 다른 같은 행사(시즌 내내 매일 밤 하는 조명 쇼를 정보원마다 회차별로 올림): 60일 안, 제목 대부분 같음
@@ -752,8 +768,7 @@ export function sameAsSent(seen, chatId, sourceId, d, eventKey) {
     const near = lk && (seen.places.get(`${chatId}|${lk}`) || []).some((x) => {
       if (x.key === eventKey || t.size < 2 || x.tokens.size < 2) return false;
       if (Math.abs(Date.parse(x.start) - Date.parse(d.start_date)) > 90 * 86400000) return false;
-      const common = [...t].filter((w) => x.tokens.has(w)).length;
-      return common / Math.min(t.size, x.tokens.size) >= 0.6;
+      return overlap(t, x.tokens) >= 0.6;
     });
     if (near) return "same-event-other-date";
   }
