@@ -1,40 +1,24 @@
 {
  "schema": "school-sports-feed/1",
- "updated": "2026-11-26T21:56:33Z",
+ "updated": "2026-11-27T21:54:24Z",
  "sources_read": [
   "csal",
   "horizon",
   "legacy",
   "northglenn",
+  "northglenn-ms",
+  "shadow-ridge-ms",
   "silver-hills-ms",
   "standley-lake",
+  "stem-lab",
   "thornton",
   "westlake-ms"
  ],
- "errors": [
-  {
-   "ids": [
-    "northglenn-ms"
-   ],
-   "error": "Cloudflare 차단으로 지정 URL의 달력 화면은 직접 열리지 않음; 공식 iCal 대체 화면으로 확인"
-  },
-  {
-   "ids": [
-    "stem-lab"
-   ],
-   "error": "Cloudflare 차단으로 지정 URL의 달력 화면은 직접 열리지 않음; 공식 iCal 대체 화면으로 확인"
-  },
-  {
-   "ids": [
-    "shadow-ridge-ms"
-   ],
-   "error": "Cloudflare 차단 화면(finalsitecdn.com)으로 지정 페이지 직접 확인 불가. 대체 렌더링으로 확인함."
-  }
- ],
+ "errors": [],
  "count": {
   "elementary": 114,
-  "middle": 41,
-  "high": 56
+  "middle": 43,
+  "high": 63
  },
  "games": [
   {
@@ -143,7 +127,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7007605?schoolId=CO11707",
-   "evidence": "Home Wed Dec 2 4:00 PM Northglenn Norse vs Rocky Mountain Lobos Swimming and Diving Girls Varsity Veteran's Memorial Aquatic Center (Thornton, CO)"
+   "evidence": "Home Wed Dec 2 4:00 PM Northglenn Norse vs Rocky Mountain Lobos Swimming and Diving Girls Varsity"
   },
   {
    "source": "csal",
@@ -304,8 +288,62 @@
    "team_level": "8th Grade Boys",
    "location": "Shadow Ridge Middle School, Thornton",
    "cost": "",
-   "url": "https://shadowridge.adams12.org/our-school/calendar?cal_date=2026-12-22",
-   "evidence": "8th Grade Boys Basketball Home Game Vs Silver Hills MS"
+   "url": "https://shadowridge.adams12.org/our-school/calendar",
+   "evidence": "Thursday, December 3 — 8th Grade Boys Basketball Home Game Vs Silver Hills MS — 5:30 PM - 7:30 PM — Shadow Ridge Middle School, 12551 Holly St, Thornton, CO 80241, USA"
+  },
+  {
+   "source": "school-calendar",
+   "school_id": "silver-hills-ms",
+   "school": "Silver Hills Middle School",
+   "level": "middle",
+   "city": "Northglenn",
+   "date": "2026-12-03",
+   "end_date": "",
+   "time": "5:30 PM / 6:30 PM",
+   "home": "Silver Hills",
+   "away": "Shadow Ridge",
+   "sport": "Basketball",
+   "team_level": "7th Grade Boys",
+   "location": "Silver Hills Middle School, Northglenn",
+   "cost": "",
+   "url": "https://silverhills.adams12.org/our-school/calendar",
+   "evidence": "Thursday, December 3 | 7th Grade Boys Basketball Game @ Silver Hills vs. Shadow Ridge (A Team-5:30, B Team-6:30)"
+  },
+  {
+   "source": "school-calendar",
+   "school_id": "northglenn-ms",
+   "school": "Northglenn Middle School",
+   "level": "middle",
+   "city": "Northglenn",
+   "date": "2026-12-03",
+   "end_date": "",
+   "time": "6:00 PM",
+   "home": "Northglenn Middle School",
+   "away": "Stem Launch",
+   "sport": "Basketball",
+   "team_level": "8th Grade Boys",
+   "location": "Northglenn Middle School, Northglenn",
+   "cost": "",
+   "url": "https://northglennm.adams12.org/our-school/calendar",
+   "evidence": "NGM: All School Calendar 8th grade boys' basketball vs stem launch | 6 : 00 PM - 7 : 00 PM"
+  },
+  {
+   "source": "school-calendar",
+   "school_id": "stem-lab",
+   "school": "STEM Lab",
+   "level": "middle",
+   "city": "Northglenn",
+   "date": "2026-12-03",
+   "end_date": "",
+   "time": "6:00 PM",
+   "home": "STEM Lab",
+   "away": "Hulstrom",
+   "sport": "Basketball",
+   "team_level": "7th Grade Boys A/B",
+   "location": "STEM Lab, Northglenn",
+   "cost": "",
+   "url": "https://stem.adams12.org/our-school/calendar",
+   "evidence": "SLAB: All School Calendar 7th Grade Boys Basketball Game | 6 : 00 PM - 7 : 00 PM | STEM Lab 11700 Irma Drive Northglenn CO 80233-2198 | STEM Lab vs Hulstrom | 7th Grade A Team game starts @ 6pm | 7th Grade B Team game starts approximately 15 minutes after A team game ends"
   },
   {
    "source": "gofan",
@@ -324,24 +362,6 @@
    "cost": "",
    "url": "https://gofan.co/event/7090448?schoolId=CO68951",
    "evidence": "Home Thu Dec 3 7:00 PM Mountain Range Mustangs vs Northglenn Norse Wrestling Boys Varsity"
-  },
-  {
-   "source": "school-calendar",
-   "school_id": "silver-hills-ms",
-   "school": "Silver Hills Middle School",
-   "level": "middle",
-   "city": "Northglenn",
-   "date": "2026-12-03",
-   "end_date": "",
-   "time": "A Team 5:30 / B Team 6:30",
-   "home": "Silver Hills",
-   "away": "Shadow Ridge",
-   "sport": "Basketball",
-   "team_level": "7th Boys",
-   "location": "Silver Hills Middle School, Northglenn",
-   "cost": "",
-   "url": "https://silverhills.adams12.org/our-school/calendar",
-   "evidence": "7th Grade Boys Basketball Game @ Silver Hills vs. Shadow Ridge (A Team-5:30, B Team-6:30)"
   },
   {
    "source": "csal",
@@ -737,7 +757,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7007674?schoolId=CO11707",
-   "evidence": "Home Tue Dec 8 4:00 PM Northglenn Norse vs Fossil Ridge Sabercats Swimming and Diving Girls Varsity Veteran's Memorial Aquatic Center (Thornton, CO)"
+   "evidence": "Home Tue Dec 8 4:00 PM Northglenn Norse vs Fossil Ridge Sabercats Swimming and Diving Girls Varsity"
   },
   {
    "source": "gofan",
@@ -754,7 +774,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/6987247?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011600?schoolId=CO16331",
    "evidence": "Home Tue Dec 8 7:00 PM Horizon Hawks vs Mountain Range Mustangs Basketball Boys Varsity"
   },
   {
@@ -773,7 +793,25 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035421?schoolId=CO11707",
-   "evidence": "Home Tue Dec 8 7:00 PM Northglenn Norse vs Longmont Trojans Basketball Boys Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Tue Dec 8 7:00 PM Northglenn Norse vs Longmont Trojans Basketball Boys Varsity"
+  },
+  {
+   "source": "gofan",
+   "school_id": "horizon",
+   "school": "Horizon High School",
+   "level": "high",
+   "city": "Thornton",
+   "date": "2026-12-09",
+   "end_date": "",
+   "time": "4:00 PM",
+   "home": "Horizon Hawks",
+   "away": "Fort Collins Lambkins & Boulder Panthers",
+   "sport": "Swimming and Diving",
+   "team_level": "Girls Varsity",
+   "location": "Horizon High School, Thornton",
+   "cost": "",
+   "url": "https://gofan.co/event/7007725?schoolId=CO16331",
+   "evidence": "Home Wed Dec 9 4:00 PM Horizon Hawks vs Fort Collins Lambkins & Boulder Panthers Swimming and Diving Girls Varsity"
   },
   {
    "source": "csal",
@@ -952,7 +990,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/6973561?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011601?schoolId=CO16331",
    "evidence": "Home Thu Dec 10 6:00 PM Horizon Hawks vs Holy Family Tigers Basketball Boys Varsity"
   },
   {
@@ -971,7 +1009,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035422?schoolId=CO11707",
-   "evidence": "Home Thu Dec 10 6:00 PM Northglenn Norse vs Aurora Central Trojans Basketball Boys Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Thu Dec 10 6:00 PM Northglenn Norse vs Aurora Central Trojans Basketball Boys Varsity"
   },
   {
    "source": "csal",
@@ -1026,6 +1064,24 @@
    "cost": "",
    "url": "https://www.csaldenver.org/sports/2026-27-basketball/games/0/0/0",
    "evidence": "CSAL Varsity FCA Barnes vs SJB Lynch"
+  },
+  {
+   "source": "gofan",
+   "school_id": "standley-lake",
+   "school": "Standley Lake High School",
+   "level": "high",
+   "city": "Westminster",
+   "date": "2026-12-11",
+   "end_date": "",
+   "time": "4:00 PM",
+   "home": "Standley Lake Gators",
+   "away": "Arapahoe Warriors",
+   "sport": "Basketball",
+   "team_level": "Girls Varsity & Boys Varsity/JV",
+   "location": "Standley Lake High School, Westminster",
+   "cost": "",
+   "url": "https://gofan.co/event/6973322?schoolId=CO16384",
+   "evidence": "Home Fri Dec 11 4:00 PM Double Header Standley Lake Gators vs Arapahoe Warriors Basketball Girls Varsity & Boys Varsity/JV"
   },
   {
    "source": "csal",
@@ -1115,7 +1171,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6966274?schoolId=CO16384",
-   "evidence": "Home Dec 11 Dec 12 Multiday Standley Lake Gators vs Castle View Sabercats Hockey Boys Varsity; Starts at 8:00 PM"
+   "evidence": "Home Dec 11 Dec 12 Multiday Standley Lake Gators vs Castle View Sabercats Hockey Boys Varsity"
   },
   {
    "source": "csal",
@@ -1474,7 +1530,7 @@
    "team_level": "Girls Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011602?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011620?schoolId=CO16331",
    "evidence": "Home Tue Dec 15 6:00 PM Horizon Hawks vs Thunderridge Grizzlies Basketball Girls Varsity"
   },
   {
@@ -1546,7 +1602,7 @@
    "team_level": "Girls Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011621?schoolId=CO16331",
+   "url": "https://gofan.co/event/7007829?schoolId=CO16331",
    "evidence": "Home Wed Dec 16 4:00 PM Horizon Hawks vs Rocky Mountain Lobos Swimming and Diving Girls Varsity"
   },
   {
@@ -1889,7 +1945,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6966275?schoolId=CO16384",
-   "evidence": "Home Dec 18 Dec 19 Multiday Standley Lake Gators vs Ralston Valley Senior Mustangs Hockey Boys Varsity; Starts at 8:00 PM"
+   "evidence": "Home Dec 18 Dec 19 Multiday Standley Lake Gators vs Ralston Valley Senior Mustangs Hockey Boys Varsity"
   },
   {
    "source": "gofan",
@@ -1907,7 +1963,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035638?schoolId=CO11707",
-   "evidence": "Home Dec 19 Dec 20 Multiday Northglenn Norse vs Niwot Cougars Basketball Girls Varsity Northglenn High School (Northglenn, CO) Starts at 11:30 PM"
+   "evidence": "Home Dec 19 Dec 20 Multiday Northglenn Norse vs Niwot Cougars Basketball Girls Varsity Starts at 11:30 PM"
   },
   {
    "source": "gofan",
@@ -1924,7 +1980,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011603?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011602?schoolId=CO16331",
    "evidence": "Home Sat Jan 2 2027 7:00 PM Horizon Hawks vs Chaparral Wolverines Basketball Boys Varsity"
   },
   {
@@ -1996,7 +2052,7 @@
    "team_level": "Girls Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/6987236?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011621?schoolId=CO16331",
    "evidence": "Home Tue Jan 5 2027 5:30 PM Horizon Hawks vs Fort Collins Lambkins Basketball Girls Varsity"
   },
   {
@@ -2086,7 +2142,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7079087?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011603?schoolId=CO16331",
    "evidence": "Home Tue Jan 5 2027 7:00 PM Horizon Hawks vs Fort Collins Lambkins Basketball Boys Varsity"
   },
   {
@@ -2123,7 +2179,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035423?schoolId=CO11707",
-   "evidence": "Home Tue Jan 5 2027 7:00 PM Northglenn Norse vs Riverdale Ridge High School Basketball Boys Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Tue Jan 5 2027 7:00 PM Northglenn Norse vs Riverdale Ridge High School Basketball Boys Varsity"
   },
   {
    "source": "gofan",
@@ -2177,7 +2233,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035639?schoolId=CO11707",
-   "evidence": "Home Thu Jan 7 2027 6:00 PM Northglenn Norse vs Prairie View Thunderhawks Basketball Girls Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Thu Jan 7 2027 6:00 PM Northglenn Norse vs Prairie View Thunderhawks Basketball Girls Varsity"
   },
   {
    "source": "gofan",
@@ -2196,6 +2252,24 @@
    "cost": "",
    "url": "https://gofan.co/event/6989547?schoolId=CO68951",
    "evidence": "Home Thu Jan 7 2027 7:00 PM Mountain Range Mustangs vs Brighton Bulldogs Basketball Boys Varsity"
+  },
+  {
+   "source": "gofan",
+   "school_id": "standley-lake",
+   "school": "Standley Lake High School",
+   "level": "high",
+   "city": "Westminster",
+   "date": "2027-01-08",
+   "end_date": "",
+   "time": "4:00 PM",
+   "home": "Standley Lake Gators",
+   "away": "Columbine Rebels",
+   "sport": "Basketball",
+   "team_level": "Boys JV/Varsity & Girls Varsity",
+   "location": "Standley Lake High School, Westminster",
+   "cost": "",
+   "url": "https://gofan.co/event/6973573?schoolId=CO16384",
+   "evidence": "Home Fri Jan 8 2027 4:00 PM Double Header Standley Lake Gators vs Columbine Rebels Basketball Boys JV/Varsity & Girls Varsity"
   },
   {
    "source": "csal",
@@ -2429,7 +2503,7 @@
    "location": "Standley Lake High School, Westminster",
    "cost": "",
    "url": "https://gofan.co/event/6966279?schoolId=CO16384",
-   "evidence": "Home Jan 8 Jan 9 Multiday Standley Lake Gators vs Poudre Impalas Hockey Boys Varsity; Starts at 8:00 PM"
+   "evidence": "Home Jan 8 Jan 9 Multiday Standley Lake Gators vs Poudre Impalas Hockey Boys Varsity"
   },
   {
    "source": "csal",
@@ -2519,7 +2593,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035424?schoolId=CO11707",
-   "evidence": "Home Sat Jan 9 2027 1:00 PM Northglenn Norse vs Wheat Ridge Farmers Basketball Boys Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Sat Jan 9 2027 1:00 PM Northglenn Norse vs Wheat Ridge Farmers Basketball Boys Varsity"
   },
   {
    "source": "csal",
@@ -2702,6 +2776,24 @@
    "evidence": "CSAL JV Boys Group 3 NAT Aksamit vs GS Turman"
   },
   {
+   "source": "gofan",
+   "school_id": "standley-lake",
+   "school": "Standley Lake High School",
+   "level": "high",
+   "city": "Westminster",
+   "date": "2027-01-12",
+   "end_date": "",
+   "time": "4:00 PM",
+   "home": "Standley Lake Gators",
+   "away": "Loveland Indians",
+   "sport": "Basketball",
+   "team_level": "Boys JV/Varsity & Girls Varsity",
+   "location": "Standley Lake High School, Westminster",
+   "cost": "",
+   "url": "https://gofan.co/event/6973574?schoolId=CO16384",
+   "evidence": "Home Tue Jan 12 2027 4:00 PM Double Header Standley Lake Gators vs Loveland Indians Basketball Boys JV/Varsity & Girls Varsity"
+  },
+  {
    "source": "csal",
    "school_id": "csal",
    "school": "Frassati Catholic Academy",
@@ -2789,7 +2881,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035640?schoolId=CO11707",
-   "evidence": "Home Tue Jan 12 2027 6:00 PM Northglenn Norse vs Brighton Bulldogs Basketball Girls Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Tue Jan 12 2027 6:00 PM Northglenn Norse vs Brighton Bulldogs Basketball Girls Varsity"
   },
   {
    "source": "csal",
@@ -2878,7 +2970,7 @@
    "team_level": "Girls Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011633?schoolId=CO16331",
+   "url": "https://gofan.co/event/7008139?schoolId=CO16331",
    "evidence": "Home Wed Jan 13 2027 4:00 PM Horizon Hawks vs Broomfield Senior Eagles Swimming and Diving Girls Varsity"
   },
   {
@@ -2932,7 +3024,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011622?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011632?schoolId=CO16331",
    "evidence": "Home Wed Jan 13 2027 6:30 PM Horizon Hawks vs Fort Collins Lambkins Wrestling Boys Varsity"
   },
   {
@@ -3022,7 +3114,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011604?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011633?schoolId=CO16331",
    "evidence": "Home Thu Jan 14 2027 6:00 PM Horizon Hawks vs Broomfield Senior Eagles Wrestling Boys Varsity"
   },
   {
@@ -3077,7 +3169,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035425?schoolId=CO11707",
-   "evidence": "Home Thu Jan 14 2027 7:00 PM Northglenn Norse vs Westminster Wolves Basketball Boys Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Thu Jan 14 2027 7:00 PM Northglenn Norse vs Westminster Wolves Basketball Boys Varsity"
   },
   {
    "source": "csal",
@@ -3112,7 +3204,7 @@
    "team_level": "Girls Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/6969241?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011622?schoolId=CO16331",
    "evidence": "Home Fri Jan 15 2027 5:30 PM Horizon Hawks vs Erie Tigers Basketball Girls Varsity"
   },
   {
@@ -3220,7 +3312,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7008693?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011604?schoolId=CO16331",
    "evidence": "Home Fri Jan 15 2027 7:00 PM Horizon Hawks vs Erie Tigers Basketball Boys Varsity"
   },
   {
@@ -3563,7 +3655,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035641?schoolId=CO11707",
-   "evidence": "Home Tue Jan 19 2027 6:00 PM Northglenn Norse vs Mountain Range Mustangs Basketball Girls Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Tue Jan 19 2027 6:00 PM Northglenn Norse vs Mountain Range Mustangs Basketball Girls Varsity"
   },
   {
    "source": "gofan",
@@ -3671,7 +3763,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035642?schoolId=CO11707",
-   "evidence": "Home Thu Jan 21 2027 5:30 PM Northglenn Norse vs Boulder Panthers Basketball Girls Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Thu Jan 21 2027 5:30 PM Northglenn Norse vs Boulder Panthers Basketball Girls Varsity"
   },
   {
    "source": "gofan",
@@ -3688,7 +3780,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011605?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011634?schoolId=CO16331",
    "evidence": "Home Thu Jan 21 2027 6:30 PM Horizon Hawks vs Mountain Range Mustangs Wrestling Boys Varsity"
   },
   {
@@ -3707,7 +3799,7 @@
    "location": "Northglenn High School, Northglenn",
    "cost": "",
    "url": "https://gofan.co/event/7035426?schoolId=CO11707",
-   "evidence": "Home Thu Jan 21 2027 7:00 PM Northglenn Norse vs Boulder Panthers Basketball Boys Varsity Northglenn High School (Northglenn, CO)"
+   "evidence": "Home Thu Jan 21 2027 7:00 PM Northglenn Norse vs Boulder Panthers Basketball Boys Varsity"
   },
   {
    "source": "gofan",
@@ -3724,7 +3816,7 @@
    "team_level": "Girls Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7011606?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011623?schoolId=CO16331",
    "evidence": "Home Fri Jan 22 2027 5:30 PM Horizon Hawks vs Fairview Knights Basketball Girls Varsity"
   },
   {
@@ -3760,7 +3852,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7004320?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011605?schoolId=CO16331",
    "evidence": "Home Fri Jan 22 2027 7:00 PM Horizon Hawks vs Fairview Knights Basketball Boys Varsity"
   },
   {
@@ -3814,7 +3906,7 @@
    "team_level": "Boys Varsity",
    "location": "Horizon High School, Thornton",
    "cost": "",
-   "url": "https://gofan.co/event/7101781?schoolId=CO16331",
+   "url": "https://gofan.co/event/7011606?schoolId=CO16331",
    "evidence": "Home Sat Jan 23 2027 1:00 PM Horizon Hawks vs Denver East Angels Basketball Boys Varsity"
   },
   {
@@ -3834,6 +3926,60 @@
    "cost": "",
    "url": "https://gofan.co/event/6989550?schoolId=CO68951",
    "evidence": "Home Sat Jan 23 2027 3:00 PM Mountain Range Mustangs vs Monarch Coyotes Basketball Boys Varsity"
+  },
+  {
+   "source": "gofan",
+   "school_id": "legacy",
+   "school": "Legacy High School",
+   "level": "high",
+   "city": "Broomfield",
+   "date": "2027-01-26",
+   "end_date": "",
+   "time": "5:30 PM",
+   "home": "Legacy Lightning",
+   "away": "Horizon Hawks",
+   "sport": "Basketball",
+   "team_level": "Girls Varsity",
+   "location": "Legacy High School, Broomfield",
+   "cost": "",
+   "url": "https://gofan.co/event/7004320?schoolId=CO68954",
+   "evidence": "Home Tue Jan 26 2027 5:30 PM Legacy Lightning vs Horizon Hawks Basketball Girls Varsity"
+  },
+  {
+   "source": "gofan",
+   "school_id": "legacy",
+   "school": "Legacy High School",
+   "level": "high",
+   "city": "Broomfield",
+   "date": "2027-01-26",
+   "end_date": "",
+   "time": "7:00 PM",
+   "home": "Legacy Lightning",
+   "away": "Horizon Hawks",
+   "sport": "Basketball",
+   "team_level": "Boys Varsity",
+   "location": "Legacy High School, Broomfield",
+   "cost": "",
+   "url": "https://gofan.co/event/7101781?schoolId=CO68954",
+   "evidence": "Home Tue Jan 26 2027 7:00 PM Legacy Lightning vs Horizon Hawks Basketball Boys Varsity"
+  },
+  {
+   "source": "gofan",
+   "school_id": "northglenn",
+   "school": "Northglenn High School",
+   "level": "high",
+   "city": "Northglenn",
+   "date": "2027-01-26",
+   "end_date": "",
+   "time": "7:00 PM",
+   "home": "Northglenn Norse",
+   "away": "Thornton Trojans",
+   "sport": "Basketball",
+   "team_level": "Boys Varsity",
+   "location": "Northglenn High School, Northglenn",
+   "cost": "",
+   "url": "https://gofan.co/event/7035427?schoolId=CO11707",
+   "evidence": "Home Tue Jan 26 2027 7:00 PM Northglenn Norse vs Thornton Trojans Basketball Boys Varsity"
   }
  ]
 }
