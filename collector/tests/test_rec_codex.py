@@ -143,3 +143,42 @@ def test_credit_exhausted_releases_without_using_retry(world, monkeypatch, tmp_p
     run.main(["--out", str(tmp_path / "r.json")], client=c, api=api)
     r = list(api._mem.values())[0]
     assert r["status"] == "queued" and r["attempts"] == 0, "크레딧 소진은 시도 횟수를 쓰지 않음"
+
+
+class _PeekAPI:
+    def __init__(self, rows):
+        self.rows, self.sent = rows, []
+
+    def ai_health(self):
+        return {"failing_since": (datetime.now(timezone.utc) - timedelta(hours=40)).isoformat()}
+
+    def queue_peek(self, limit):
+        return self.rows
+
+    def unverified(self, items, outage_hours, pending):
+        self.sent.append(items)
+        return {"sent": 1}
+
+
+def _fallback(rows, mac=True):
+    api = _PeekAPI(rows)
+    me = SimpleNamespace(api=api, models={"recommend_codex": {"enabled": mac, "mac_extract": mac, "fallback_minutes": 180}})
+    return run.Run.fallback(me), api
+
+
+def test_no_unverified_notice_while_mac_codex_keeps_up():
+    fresh = (datetime.now(timezone.utc) - timedelta(minutes=20)).isoformat()
+    rows = [{"source_id": "jeffco", "url": "https://x.org/e/1", "title": "[상세 변경] a", "first_seen": fresh}]
+    out, api = _fallback(rows)
+    assert out == {"needed": False, "reason": "mac_codex_keeping_up"} and not api.sent
+    out, api = _fallback(rows, mac=False)
+    assert out["needed"] and api.sent, "맥북 판정기를 안 쓰면 예전처럼 보냄"
+
+
+def test_unverified_notice_resumes_when_queue_gets_old():
+    old = (datetime.now(timezone.utc) - timedelta(hours=5)).isoformat()
+    fresh = (datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat()
+    rows = [{"source_id": "s", "url": "https://x.org/1", "title": "old", "first_seen": old},
+            {"source_id": "s", "url": "https://x.org/2", "title": "new", "first_seen": fresh}]
+    out, api = _fallback(rows)
+    assert out["needed"] and [i["title"] for i in api.sent[0]] == ["old"]

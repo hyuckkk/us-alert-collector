@@ -623,6 +623,20 @@ class Run:
         if not (blocked or outage >= OUTAGE_NOTICE_HOURS):
             return {"needed": False}
         rows = [r for r in self.api.queue_peek(200) if not str(r.get("source_id") or "").startswith(("gnews", "ai-discover"))]
+        # 맥북 판정기(Codex)가 추출을 맡고 있으면 Claude API 가 막혀도 대기열은 처리된다.
+        # 대기 항목이 모두 fallback_minutes 보다 새것이면 맥북이 따라잡는 중이므로 '검증 전 정보'를 보내지 않는다.
+        # 맥북이 꺼져 항목이 오래 쌓이면 다시 보낸다.
+        c = self.models.get("recommend_codex", {})
+        if c.get("enabled") and c.get("mac_extract") and rows:
+            cutoff = datetime.now(timezone.utc) - timedelta(minutes=int(c.get("fallback_minutes", 180)))
+            def _old(r):
+                try:
+                    return datetime.fromisoformat(str(r.get("first_seen")).replace("Z", "+00:00")) < cutoff
+                except ValueError:
+                    return True
+            rows = [r for r in rows if _old(r)]
+            if not rows:
+                return {"needed": False, "reason": "mac_codex_keeping_up"}
         items = [{"title": r.get("title"), "url": r["url"], "source_id": r.get("source_id")} for r in rows[:40]]
         res = self.api.unverified(items, int(outage) if outage else 0, len(rows))
         return {"needed": True, "items": len(items), "sent": res.get("sent")}
