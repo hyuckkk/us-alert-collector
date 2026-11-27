@@ -1,0 +1,291 @@
+{
+  "schema": 1,
+  "actor": "chatgpt",
+  "started_at_utc": "2026-11-27T23:44:18Z",
+  "finished_at_utc": "2026-11-27T23:45:10Z",
+  "search_requests": 26,
+  "queries": [
+    "Colorado 2027 July August free public festival vintage aircraft airshow fly-in aviation dates",
+    "Colorado 2027 July August train special event steam locomotive heritage festival ride official",
+    "Colorado 2027 summer junior ranger archaeology dig public hands on camp registration official",
+    "Colorado 2027 July August free outdoor family event dam power plant tour open house",
+    "Colorado December 2026 free public special hands on science aviation event Denver kids",
+    "Colorado 2027 July August youth rodeo free kids competition fair registration official",
+    "Colorado 2027 July August historic mining competition festival free public demonstrations",
+    "Colorado 2027 July August free public student engineering robotics competition event",
+    "Colorado 2027 summer national park lottery permit special ranger tour reservations",
+    "Colorado 2027 summer free kids fishing derby outdoor skills camp registration",
+    "Colorado 2027 September Tribute to Aviation Montrose final countdown free aircraft tour hours",
+    "Colorado 2027 summer model airplane rally RC airshow public July August 2027",
+    "Colorado 2027 summer glider open house free rides youth airport 2027",
+    "Colorado 2027 July August \"2027\" \"free\" \"demonstrations\" festival ranch mining",
+    "Colorado 2027 July August \"2027\" \"free\" \"spectators\" championship unusual outdoor",
+    "Colorado 2027 September July August \"2027\" \"open house\" public research facility",
+    "Colorado 2027 \"2027\" \"free\" \"hands-on\" festival September October science engineering",
+    "Colorado 2027 \"2027\" \"free\" \"public\" \"air show\" September October",
+    "Westminster Colorado Montrose Colorado driving distance",
+    "Colorado 2027 \"2027\" \"free\" \"festival\" \"July\" \"steam\" tractor show",
+    "site:tributetoaviation.com \"2027\" \"9\" Montrose September final",
+    "Montrose county tribute to aviation 2027 final event September 18 19 free",
+    "Colorado 2027 July August \"2027\" \"free\" \"public\" model rocket launch club",
+    "Colorado 2027 July August national park special lottery \"2027\" ranger tour reservation",
+    "Colorado 2027 July August \"2027\" \"free\" \"public\" robotics competition school",
+    "Colorado 2027 September \"2027\" \"free\" \"open house\" aviation airport"
+  ],
+  "url_read_attempts": 18,
+  "successful_page_reads": 18,
+  "failed_page_reads": 0,
+  "official_detail_verified": 13,
+  "official_detail_verified_urls": [
+    "https://www.tributetoaviation.com/",
+    "https://www.rockymountainaerogroup.com/summercamp",
+    "https://wingsmuseum.org/education/winter-camp-2026/",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/",
+    "https://www.logancountyco.gov/232/Youth-Rodeo",
+    "https://coloradotu.org/youthcamp/",
+    "https://bouldercolorado.gov/services/junior-ranger-program",
+    "https://coloradorailroadmuseum.org/timetable/train-rides/",
+    "https://www.erieco.gov/460/Youth-Fishing-Derby",
+    "https://www.lsop.colostate.edu/open-house/",
+    "https://www.tributetoaviation.com/about-2/",
+    "https://www.tributetoaviation.com/aircraft/",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-exploration-of-flight/"
+  ],
+  "page_read_urls": [
+    "https://www.tributetoaviation.com/",
+    "https://www.rockymountainaerogroup.com/summercamp",
+    "https://wingsmuseum.org/education/winter-camp-2026/",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/",
+    "https://www.logancountyco.gov/232/Youth-Rodeo",
+    "https://coloradotu.org/youthcamp/",
+    "https://bouldercolorado.gov/services/junior-ranger-program",
+    "https://coloradorailroadmuseum.org/timetable/train-rides/",
+    "https://www.erieco.gov/460/Youth-Fishing-Derby",
+    "https://www.lsop.colostate.edu/open-house/",
+    "https://www.tributetoaviation.com/about-2/",
+    "https://www.tributetoaviation.com/aircraft/",
+    "https://www.rockymountainaerogroup.com/summercamp",
+    "https://coloradotu.org/youthcamp/",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/",
+    "https://wingsmuseum.org/events/santa-in-the-hangar-at-exploration-of-flight/",
+    "https://www.tributetoaviation.com/about-2/",
+    "https://www.tributetoaviation.com/aircraft/"
+  ],
+  "candidate_events": 24,
+  "duplicate_candidates": 2,
+  "rejected_events": 11,
+  "held_events": 10,
+  "qualified_events": 1,
+  "known_by_collector": 0,
+  "verified_collector_misses": 0,
+  "submitted_events": 1,
+  "delivered_events": 0,
+  "failed_searches": 0,
+  "account_remaining_usage": "unknown",
+  "notes": "One new qualifying event in September 2027; zero delivery successes independently evidenced. Search_requests counts actual web search records, not GitHub connector calls. Official_detail_verified counts distinct successfully opened official pages reviewed for event facts, including incomplete/older pages; snippets not counted. Candidate counts cover explicitly screened distinct opportunities, not every search hit. Current collector live DB and current delivery receipts unavailable; zero confirmed known/misses/delivery is not proof of absence. No source code or delivery settings changed.",
+  "qualified_urls": [
+    "https://www.tributetoaviation.com/"
+  ],
+  "candidates": [
+    {
+      "title": "2027 Tribute to Aviation — The Final Countdown",
+      "status": "qualified",
+      "reason": "Official dates Sept 18–19, free public admission and aircraft interior access; 2027 hours, aircraft roster, entry instructions not yet published. Family period; prior inbox search did not show a matching submission; collector live DB not accessible.",
+      "url": "https://www.tributetoaviation.com/"
+    },
+    {
+      "title": "RMAG Build & Fly July 26–30 2027",
+      "status": "duplicate",
+      "reason": "Prior inbox 20261111T000415Z directly verified; current page confirms age 10–16 and Feb 1 opening, no current tuition amount.",
+      "url": "https://www.rockymountainaerogroup.com/summercamp"
+    },
+    {
+      "title": "RMAG Build & Fly June 21–25 2027",
+      "status": "held",
+      "reason": "Pre-family period; price not posted on current page; registration Feb 1.",
+      "url": "https://www.rockymountainaerogroup.com/summercamp"
+    },
+    {
+      "title": "CSU Little Shop of Physics March 7 2027",
+      "status": "duplicate",
+      "reason": "Prior inbox 20261117T234645Z directly verified.",
+      "url": "https://www.lsop.colostate.edu/open-house/"
+    },
+    {
+      "title": "Wings Santa in Hangar Dec 19 2026",
+      "status": "rejected",
+      "reason": "Prior rejected; routine paid holiday museum admission, no visitor flight.",
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-air-space-musuem-2026/"
+    },
+    {
+      "title": "Wings Santa in Hangar Dec 5 2026",
+      "status": "rejected",
+      "reason": "Prior rejected; routine paid holiday museum admission, no visitor flight.",
+      "url": "https://wingsmuseum.org/events/santa-in-the-hangar-at-exploration-of-flight/"
+    },
+    {
+      "title": "Wings Winter Chill Sky Explorers Dec 21–23",
+      "status": "rejected",
+      "reason": "$239 normal commercial camp, drone practice rather than exceptional access or discount.",
+      "url": "https://wingsmuseum.org/education/winter-camp-2026/"
+    },
+    {
+      "title": "Wings Winter Chill Aerospace Makers Lab Dec 28–30",
+      "status": "rejected",
+      "reason": "$239 regular camp; no exceptional access or substantial discount demonstrated.",
+      "url": "https://wingsmuseum.org/education/winter-camp-2026/"
+    },
+    {
+      "title": "Logan County Youth Rodeo Aug 4 2027",
+      "status": "rejected",
+      "reason": "Competition restricted to local 4-H/FFA members exhibiting a project; public spectator fee unverified.",
+      "url": "https://www.logancountyco.gov/232/Youth-Rodeo"
+    },
+    {
+      "title": "Colorado Trout Unlimited youth camp June 13–19 2027",
+      "status": "held",
+      "reason": "Age 14–18, selective 20–24 participants; tuition and complete application conditions not verified in this run, before family window.",
+      "url": "https://coloradotu.org/youthcamp/"
+    },
+    {
+      "title": "Boulder Junior Ranger summer job 2027",
+      "status": "rejected",
+      "reason": "Paid job for 14–17, not a family activity; age and work eligibility issue.",
+      "url": "https://bouldercolorado.gov/services/junior-ranger-program"
+    },
+    {
+      "title": "Railroad Museum Wild West Days 2027",
+      "status": "held",
+      "reason": "2027 dates TBA; old 2026 pricing cannot be treated as current.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Railroad Museum Harvest Haunt 2027",
+      "status": "held",
+      "reason": "2027 dates TBA; standard pricing, not yet enough to qualify.",
+      "url": "https://coloradorailroadmuseum.org/timetable/train-rides/"
+    },
+    {
+      "title": "Railroad Museum Spring Break 2027",
+      "status": "held",
+      "reason": "Dates and themes TBA; snippet only.",
+      "url": "https://coloradorailroadmuseum.org/youth-and-families/"
+    },
+    {
+      "title": "Erie Youth Fishing Derby",
+      "status": "held",
+      "reason": "Current page describes May 30 2026, no 2027 date; free rods first 100 in 2026.",
+      "url": "https://www.erieco.gov/460/Youth-Fishing-Derby"
+    },
+    {
+      "title": "Leadville Boom Days 2027",
+      "status": "held",
+      "reason": "Secondary result only, 2027 date not announced.",
+      "url": "https://www.epiceventscolorado.com/annual/leadville-boom-days/"
+    },
+    {
+      "title": "Wings Warbird Weekend 2026",
+      "status": "rejected",
+      "reason": "Past Sept 5–6 2026; no new 2027 schedule.",
+      "url": "https://wingsmuseum.org/resources/press-releases/warbird-weekend-lets-visitors-fly-in-authentic-wwii-aircraft/"
+    },
+    {
+      "title": "Wings Scout Merit Badge Nov 21",
+      "status": "rejected",
+      "reason": "Past event and scouting focus; secondary snippet.",
+      "url": "https://denver.kidsoutandabout.com/content/scout-merit-badge-workshop-wings-over-rockies"
+    },
+    {
+      "title": "Colorado Railroad Heritage Week",
+      "status": "held",
+      "reason": "2026 offers only; 2027 specific promotions not verified.",
+      "url": "https://coloradorailroadmuseum.org/colorado-railroad-heritage-week/"
+    },
+    {
+      "title": "Pikes Peak youth fishing derby",
+      "status": "rejected",
+      "reason": "Past 2026 event; no new 2027 date.",
+      "url": "https://springsdaily.com/articles/free-youth-fishing-derby-on-pikes-peak-this-weekend-heres-what-cos-families-need-to-know"
+    },
+    {
+      "title": "Aspen Ready Together community open house Dec 16 2026",
+      "status": "rejected",
+      "reason": "Airport development information meeting, no special facility tour.",
+      "url": "https://www.aspenpublicradio.org/community-calendar/event/ready-together-community-open-house-13-11-2026-06-38-00"
+    },
+    {
+      "title": "Phantom Ranch lottery",
+      "status": "rejected",
+      "reason": "Arizona outside Colorado scope; ordinary lodging reservation rather than Colorado opportunity.",
+      "url": "https://secure.phantomranchlottery.com/phantom-ranch-lottery/availability"
+    },
+    {
+      "title": "Dinosaur Green & Yampa High Use Permits 2027",
+      "status": "held",
+      "reason": "Prior run held; upcoming lottery snippet only, self-guided technical whitewater unsuitable as straightforward family opportunity.",
+      "url": "https://www.recreation.gov/lottery/available"
+    },
+    {
+      "title": "Fly the Avenger in Montrose",
+      "status": "held",
+      "reason": "Organizer event snippet lacks explicit year and current ride price, not included in free display submission.",
+      "url": "https://commemorativeairforce.org/events/574"
+    }
+  ],
+  "collector_comparison": {
+    "sources_sha": "cccb6669198f22679b7b3d70ea090500988bc336",
+    "queries_sha": "107e43181f5667fcec91d79d8ff4f5293d87bd5c",
+    "sources_total": 71,
+    "sources_active": 55,
+    "checked_files": [
+      "config/sources.json",
+      "config/queries.json",
+      "docs/SEARCH_WORKLOAD_METRICS.md",
+      ".github/workflows/external-inbox.yml",
+      "reports/fullsystem-run.json",
+      "reports/probe.json",
+      "research/gpt-workload/runs/20261126T235314Z.json",
+      "research/gpt-workload/runs/20261027T231219Z.json",
+      "research/gpt-workload/runs/20261030T230644Z.json",
+      "external-inbox/chatgpt/20261111T000415Z.json",
+      "external-inbox/chatgpt/20261117T234645Z.json"
+    ],
+    "github_search_queries": [
+      "Tribute to Aviation",
+      "tributetoaviation.com",
+      "Build & Fly Summer Camp",
+      "Santa in the Hangar",
+      "Little Shop of Physics",
+      "Trout Unlimited"
+    ],
+    "historical_run": "20261022T004300Z dry-run, 632 events; no matching named event in events array for checked search terms",
+    "current_live_db": "unknown",
+    "prior_external_submissions_confirmed": 2,
+    "collector_rejected_events_verified": "unknown",
+    "finding": "Montrose event official domain absent from source list, existing generic air-show queries may miss static displays; no proof of actual collector miss. Search index not comprehensive."
+  },
+  "source_improvements": [
+    {
+      "url": "https://www.tributetoaviation.com/",
+      "suggestion": "Monitor annual announcement and aircraft roster changes; add terms 'static aircraft display', 'tour inside aircraft', 'airport open house', 'Montrose Tribute to Aviation'. Avoid counting previous-year aircraft as confirmed 2027."
+    },
+    {
+      "url": "https://www.rockymountainaerogroup.com/summercamp",
+      "suggestion": "Track Feb 1 registration and tuition changes, not repeat previous submission without material update."
+    },
+    {
+      "url": "https://coloradotu.org/youthcamp/",
+      "suggestion": "Monitor selective conservation camp cost and application dates for eligible older youth."
+    }
+  ],
+  "distance_evidence": [
+    "https://www.trippy.com/distance/Westminster-CO-to-Montrose-CO",
+    "https://www.distancecalculator.net/from-westminster-to-montrose"
+  ],
+  "submission": {
+    "path": "external-inbox/chatgpt/20261127T234459Z.json",
+    "commit_sha": "8f026a5dd99d1ff0b6b1b2f34db66c69841ad7d0",
+    "readback_exact_match": true,
+    "delivery_status": "unverified"
+  }
+}
