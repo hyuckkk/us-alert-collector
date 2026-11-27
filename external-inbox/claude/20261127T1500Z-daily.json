@@ -1,0 +1,99 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-27T14:42:11Z",
+  "finished_at": "2026-11-27T15:00:00Z",
+  "searches": 8,
+  "queries": [
+   "Denver things to do kids free December 5 6 2026 weekend",
+   "Wheat Ridge Edgewater holiday event 2026 tree lighting free",
+   "Boulder Museum of Contemporary Art OR Boulder library free kids holiday December 2026",
+   "Colorado Springs free family holiday event December 2026 Festival of Lights parade date",
+   "Four Mile Historic Park holiday event December 2026 free OR Littleton Museum holiday 2026",
+   "Molly Brown House Museum OR Byers-Evans House holiday free open house December 2026",
+   "Fort Collins free holiday event kids December 2026 Old Town lights",
+   "Denver winter solstice lantern walk OR free bird count kids December 2026 Colorado"
+  ],
+  "urls_attempted": 3,
+  "urls_ok": 0,
+  "urls": [
+   "https://coloradospringsfestivaloflights.com/",
+   "https://mollybrown.org/plan-your-visit/",
+   "https://mcadenver.org/"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 12,
+  "excluded": 8,
+  "excluded_reasons": {
+   "already_submitted": 4,
+   "date_not_posted_2026": 3,
+   "no_official_url": 1
+  },
+  "notes": "Claude 독립 검색(예약, 개정 규칙). WebFetch 3건 모두 DNS 오류(getaddrinfo ENOTFOUND)로 verified:false. 제외: RiNo·퍼레이드 오브 라이츠·크리스트킨들·레이크우드 동지(이미 제출), 휘트리지·포마일·포트콜린스 점등(2026 날짜 미공지), 맥그리거 메리마켓(공식 주소 미확인). 처리 단계 크레딧 소진은 11/26 기준 계속."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-27T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Festival of Lights Parade 2026 - Colorado Springs",
+   "url": "https://coloradospringsfestivaloflights.com/",
+   "start_date": "2026-12-05",
+   "time": "5:50 p.m.",
+   "location": "Tejon Street, downtown Colorado Springs",
+   "cost": "Free",
+   "description": "Annual free downtown night parade of floats covered in Christmas lights.",
+   "special_reason": "연 1회 무료 야간 조명 퍼레이드"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-27T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Molly Brown House Museum free First Thursday evening (Dec 3, 2026)",
+   "url": "https://mollybrown.org/plan-your-visit/",
+   "start_date": "2026-12-03",
+   "time": "4-7 p.m.",
+   "location": "Molly Brown House Museum, 1340 Pennsylvania St, Denver",
+   "cost": "Free for SCFD-district residents; no reservations, first-come first-served",
+   "description": "Monthly free evening on the first Thursday (Dec 3 by calendar; the page does not list December dates explicitly).",
+   "special_reason": "연말 장식된 역사 저택 무료 저녁 관람"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-27T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "MCA Denver free day (Dec 5, 2026)",
+   "url": "https://mcadenver.org/",
+   "start_date": "2026-12-05",
+   "location": "Museum of Contemporary Art Denver, 1485 Delgany St, Denver",
+   "cost": "Free (per third-party free-days guide)",
+   "description": "Free admission day at MCA Denver listed for Saturday Dec 5, 2026 in a 2026 free-days guide; confirm on the museum site.",
+   "special_reason": "현대미술관 무료 관람일"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-27T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Littleton Museum exhibit opening: Cover to Cover - The History and Craft of Books",
+   "url": "https://www.museum.littletonco.gov/Events-Programs",
+   "start_date": "2026-12-03",
+   "time": "5:30 p.m.",
+   "location": "Littleton Museum, 6028 S Gallup St, Littleton",
+   "cost": "Free museum (no RSVP required)",
+   "description": "Opening reception for a new book-history exhibit (runs from Dec 4, 2026); all ages welcome, no RSVP required.",
+   "special_reason": "무료 박물관 새 전시 개막 행사"
+  }
+ ]
+}
