@@ -99,7 +99,7 @@ try {
     await hook("kids", E.cb(FRIEND, "ack:e1", 1));
     await hook("life", E.cb(OWNER, "mute:e4", 1));
     const r = await admin("/admin/enqueue", {
-      events: [ev("e1", { urgency: "now", start_date: SOON, cost_text: "$25" }), ev("e4", { bot: "life", urgency: "now", start_date: "2027-08-01", location: "Denver" })],
+      events: [ev("e1", { urgency: "now", start_date: SOON, cost_text: "$25" }), ev("e4", { bot: "life", urgency: "now", start_date: "2027-08-01", location: "Denver", cost_text: "$40" })],
     });
     assert.equal(r.changed, 2);
     assert.equal(r.skipped.muted, 1);

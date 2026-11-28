@@ -45,14 +45,15 @@ function canon(k, v) {
 function materialDiff(oldD, newD) { return IMPORTANT.filter((k) => canon(k, oldD[k]) !== canon(k, newD[k])); }
 // 이미 받은 사람에게 '다시' 보낼 만한 바뀜만 고른다(2026-11-28 골든 리트리버 축제가 같은 내용으로 3번 감).
 // - 메모·자격·연령 글은 AI 가 매번 다르게 적어 숫자까지 달라지므로 알림 사유로 쓰지 않는다(내용은 조용히 갱신).
-// - 시간 글은 2주 안 행사만 다시 알린다(멀리 있는 행사는 원문 표현이 바뀌거나 시간이 보충된 것뿐인 경우가 대부분).
-// - 날짜·비용·장소·접수·마감·신청 방식은 바뀌거나 새로 확인되면 언제든 다시 알린다(신청 시기를 놓치지 않게).
+// - 시간·장소 글은 2주 안 행사만 다시 알린다(멀리 있는 행사는 원문 표현이 바뀌거나 보충된 것뿐인 경우가 대부분).
+// - 'unknown' 으로 바뀐 것은 바뀜이 아니다(기존 값 유지, enqueue 참고).
+// - 날짜·비용·접수·마감·신청 방식은 바뀌거나 새로 확인되면 언제든 다시 알린다(신청 시기를 놓치지 않게).
 const SILENT_FIELDS = new Set(["status_note", "eligibility", "age_text"]);
 export function notifyDiff(oldD, newD, today) {
   const near = !!newD.start_date && newD.start_date <= plusDays(today, 14);
   return materialDiff(oldD, newD).filter((k) => {
     if (SILENT_FIELDS.has(k)) return false;
-    if (k === "time_text") return near;
+    if (k === "time_text" || k === "location") return near; // 같은 곳을 다르게 적은 경우(Parfet Park ↔ Washington Avenue)가 대부분
     return true;
   });
 }
@@ -333,7 +334,9 @@ export async function enqueue(env, body) {
   for (const e0 of input) {
     const ex = existing.get(e0.event_key);
     // 새 추출에 값이 비어 있으면(그 페이지·입력에 그 정보가 이번엔 안 보였을 뿐) 기존 값을 지우지 않는다 → 정보가 사라진 것을 '변경'으로 알리지 않음
-    const e = ex ? { ...e0, ...Object.fromEntries(IMPORTANT.filter((k) => (e0[k] ?? "") === "" && (JSON.parse(ex.data)[k] ?? "") !== "").map((k) => [k, JSON.parse(ex.data)[k]])) } : e0;
+    // "unknown"(이번 페이지에선 모름)도 빈 값과 같다: open → unknown 을 '변경'으로 알리지 않는다(11-28 골든 리트리버 축제)
+    const blank = (v) => (v ?? "") === "" || v === "unknown";
+    const e = ex ? { ...e0, ...Object.fromEntries(IMPORTANT.filter((k) => blank(e0[k]) && !blank(JSON.parse(ex.data)[k])).map((k) => [k, JSON.parse(ex.data)[k]])) } : e0;
     const h = await sha(JSON.stringify(importantOf(e)));
     let version = 1, note = null;
     if (!ex) stats.new++;

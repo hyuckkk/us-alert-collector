@@ -14,3 +14,9 @@ d = notifyDiff(near, { ...near, age_text: "5세 이상" }, today); if (d.length)
 console.log("ok renotify-far-event");
 { const d = notifyDiff(v3, { ...v3, registration_opens: "2027-01-05" }, today); if (String(d) !== "registration_opens") fail("먼 행사라도 접수 시작일이 새로 확인되면 알림", d); }
 console.log("ok renotify-far-event (접수)");
+// 실제 11-27 바뀐 점: 장소 Parfet Park → Washington Avenue(같은 곳), 메모 추가 → 먼 행사면 조용히
+{ const a = { ...v3, location: "Parfet Park", signup: "open", registration_status: "open" };
+  const d = notifyDiff(a, { ...a, location: "Washington Avenue", status_note: "보통 2월 첫째 토요일" }, today); if (d.length) fail("먼 행사 장소 표현 차이는 조용히", d); }
+console.log("ok renotify-far-event (장소)");
+{ const d = notifyDiff(near, { ...near, location: "Denver Central Library" }, today); if (String(d) !== "location") fail("2주 안 행사 장소 변경은 알림", d); }
+console.log("ok renotify-far-event (가까운 장소)");
