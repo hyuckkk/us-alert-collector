@@ -1,22 +1,37 @@
-// 11-28 사고 재현: 2월 '골든 리트리버 축제'가 메모·시간 글만 달라져 11/20·11/24·11/27 세 번 나감 → 다시 보내지 않기
-import { notifyDiff } from "../src/pipeline.js";
+// 11-28 구조 정리 재현: 3주 109개 행사 중 19개가 2~4번 나감. 실제 '바뀐 점' 기록으로 다시 안 나가는지 확인
+import { significantDiff, resendGate } from "../src/pipeline.js";
 const today = "2026-11-28";
-const v2 = { start_date: "2027-02-06", cost_text: "무료", time_text: null, status_note: "보통 2월 첫째 토요일, 확정일 없음", age_text: null };
-const v3 = { ...v2, time_text: "오전 9시 시작 (오후 1시 행사 종료 언급)", status_note: "목줄을 한 사교적인 반려견만 · 2월 첫째 토요일" };
 const fail = (m, x) => { console.error("FAIL", m, x); process.exit(1); };
-let d = notifyDiff(v2, v3, today); if (d.length) fail("먼 행사 시간 보충·메모 변경은 조용히", d);
-d = notifyDiff(v3, { ...v3, time_text: "9 a.m. – 2 p.m." }, today); if (d.length) fail("먼 행사 시간 글 변경도 조용히", d);
-d = notifyDiff(v3, { ...v3, start_date: "2027-02-13" }, today); if (String(d) !== "start_date") fail("날짜가 바뀌면 다시 알림", d);
-d = notifyDiff(v3, { ...v3, cost_text: "$10" }, today); if (String(d) !== "cost_text") fail("비용이 바뀌면 다시 알림", d);
-const near = { ...v2, start_date: "2026-12-05" };
-d = notifyDiff(near, { ...near, time_text: "오전 10시" }, today); if (String(d) !== "time_text") fail("2주 안 행사의 시간 보충은 알림", d);
-d = notifyDiff(near, { ...near, age_text: "5세 이상" }, today); if (d.length) fail("연령 글은 알림 사유 아님", d);
-console.log("ok renotify-far-event");
-{ const d = notifyDiff(v3, { ...v3, registration_opens: "2027-01-05" }, today); if (String(d) !== "registration_opens") fail("먼 행사라도 접수 시작일이 새로 확인되면 알림", d); }
-console.log("ok renotify-far-event (접수)");
-// 실제 11-27 바뀐 점: 장소 Parfet Park → Washington Avenue(같은 곳), 메모 추가 → 먼 행사면 조용히
-{ const a = { ...v3, location: "Parfet Park", signup: "open", registration_status: "open" };
-  const d = notifyDiff(a, { ...a, location: "Washington Avenue", status_note: "보통 2월 첫째 토요일" }, today); if (d.length) fail("먼 행사 장소 표현 차이는 조용히", d); }
-console.log("ok renotify-far-event (장소)");
-{ const d = notifyDiff(near, { ...near, location: "Denver Central Library" }, today); if (String(d) !== "location") fail("2주 안 행사 장소 변경은 알림", d); }
-console.log("ok renotify-far-event (가까운 장소)");
+const none = (m, a, b) => { const d = significantDiff(a, b, today); if (d.length) fail(m, d); };
+const only = (m, a, b, k) => { const d = significantDiff(a, b, today); if (String(d) !== k) fail(m, d); };
+// 실제 사례(change_note 그대로)
+const golden = { start_date: "2027-02-06", location: "Parfet Park", signup: "open", registration_status: "open", status_note: null, cost_text: "무료" };
+none("골든 리트리버: 장소 표현·open→unknown·메모", golden, { ...golden, location: "Washington Avenue", signup: "unknown", registration_status: "unknown", status_note: "보통 2월 첫째 토요일" });
+const longmont = { start_date: "2026-12-12", registration_status: "open" };
+none("롱몬트 퍼레이드: 접수 상태 open→unknown", longmont, { ...longmont, registration_status: "unknown" });
+const holly = { start_date: "2026-12-04", location: "Arnold Hall", eligibility: "기지 출입 필요", status_note: "무료 티켓" };
+none("홀리 앤 아이비: 주소 덧붙임·자격·메모", holly, { ...holly, location: "Arnold Hall, 2308 Cadet Dr", eligibility: "전 연령 일반 공개", status_note: "무료 티켓, 남문 PRO" });
+const little = { start_date: "2026-11-30", time_text: "오후 5시–8시", signup: "none" };
+none("리틀턴 촛불 행진: 시간 표기·신청 방식", little, { ...little, time_text: "오후 5시", signup: "unknown" });
+const broom = { start_date: "2026-12-04", time_text: "오후 5시 30분–오후 11시 59분", location: "1 DesCombes Drive", signup: "unknown" };
+none("브룸필드 점등식: 끝 시각·건물 이름 덧붙임", broom, { ...broom, time_text: "오후 5시 30분–8시", location: "George Di Ciero City and County Building, One Des Combes Drive", signup: "none" });
+const brunch = { start_date: "2026-12-12", time_text: "오전 8:30–오후 3시" };
+none("브런치: 시간 표기만", brunch, { ...brunch, time_text: "오전 8시 30분–오후 3시" });
+const apex = { start_date: "2026-12-20", time_text: "13:00", location: null, signup: "unknown", registration_status: "unknown" };
+none("아펙스: 먼 행사 빈칸 채워짐", apex, { ...apex, time_text: "오후 1시–4시 30분", location: "Simms Street Recreation Center", signup: "open", registration_status: "open" });
+// 꼭 다시 알릴 것
+only("날짜가 바뀜", golden, { ...golden, start_date: "2027-02-13" }, "start_date");
+only("취소", golden, { ...golden, registration_status: "cancelled" }, "registration_status");
+only("비용이 바뀜", golden, { ...golden, cost_text: "$10" }, "cost_text");
+only("접수 시작이 2주 안으로 확인", golden, { ...golden, registration_opens: "2026-12-05" }, "registration_opens");
+none("접수 시작이 먼 날짜면 그날 ⏰로", golden, { ...golden, registration_opens: "2027-01-20" });
+only("2주 안 행사가 다른 곳으로", { start_date: "2026-12-05", location: "Westminster Library" }, { start_date: "2026-12-05", location: "Denver Central Library" }, "location");
+only("1주 안 행사의 시작 시각 변경", { start_date: "2026-12-01", time_text: "오전 10시" }, { start_date: "2026-12-01", time_text: "오후 2시" }, "time_text");
+// 관문: 다른 봇으로 같은 판, 3일 안 사소한 변경, ⏰·날짜 변경은 통과
+const L = new Map([["1|k", { v: 1, at: new Date().toISOString() }]]);
+if (resendGate(L, "1", "k", 1, "") !== "already-sent") fail("같은 판은 봇이 달라도 한 번");
+if (resendGate(L, "1", "k", 2, "시간 오전 10시 → 오후 2시") !== "recently-sent") fail("3일 안 시간만 바뀐 것은 막음");
+if (resendGate(L, "1", "k", 2, "⏰ 내일 신청 마감") !== null) fail("⏰은 통과");
+if (resendGate(new Map([["1|k", { v: 1, at: new Date().toISOString() }]]), "1", "k", 2, "시작일 a → b") !== null) fail("날짜 변경은 통과");
+const M = new Map(); if (resendGate(M, "1", "z", 1, "") !== null || resendGate(M, "1", "z", 1, "") !== "already-sent") fail("한 실행 안 두 봇");
+console.log("ok renotify (실제 사례 8건·관문)");

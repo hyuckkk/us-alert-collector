@@ -43,19 +43,41 @@ function canon(k, v) {
   return nums || t.replace(/[^a-z0-9가-힣]+/g, "").slice(0, 20);
 }
 function materialDiff(oldD, newD) { return IMPORTANT.filter((k) => canon(k, oldD[k]) !== canon(k, newD[k])); }
-// 이미 받은 사람에게 '다시' 보낼 만한 바뀜만 고른다(2026-11-28 골든 리트리버 축제가 같은 내용으로 3번 감).
-// - 메모·자격·연령 글은 AI 가 매번 다르게 적어 숫자까지 달라지므로 알림 사유로 쓰지 않는다(내용은 조용히 갱신).
-// - 시간·장소 글은 2주 안 행사만 다시 알린다(멀리 있는 행사는 원문 표현이 바뀌거나 보충된 것뿐인 경우가 대부분).
-// - 'unknown' 으로 바뀐 것은 바뀜이 아니다(기존 값 유지, enqueue 참고).
-// - 날짜·비용·접수·마감·신청 방식은 바뀌거나 새로 확인되면 언제든 다시 알린다(신청 시기를 놓치지 않게).
-const SILENT_FIELDS = new Set(["status_note", "eligibility", "age_text"]);
-export function notifyDiff(oldD, newD, today) {
-  const near = !!newD.start_date && newD.start_date <= plusDays(today, 14);
-  return materialDiff(oldD, newD).filter((k) => {
-    if (SILENT_FIELDS.has(k)) return false;
-    if (k === "time_text" || k === "location") return near; // 같은 곳을 다르게 적은 경우(Parfet Park ↔ Washington Avenue)가 대부분
-    return true;
-  });
+// ---- 다시 알릴지 판단(2026-11-28 구조 정리) ----
+// 문제: AI 가 같은 페이지를 읽을 때마다 표현을 조금씩 달리 적고(open↔unknown, "오후 5시–8시"↔"오후 5시", 주소 덧붙임, 메모),
+// 그 차이를 '직전에 읽은 값'과 비교해 바뀜으로 보아 같은 행사가 3~4번 나갔다(3주 109개 행사 중 19개).
+// 원칙: (1) 비교 기준은 '사람들이 마지막으로 받은 값'(_notified)이다 → 값이 왔다 갔다 해도 다시 나가지 않는다.
+//       (2) 다시 알리는 것은 받은 사람의 결정이 바뀌는 경우뿐이다: 날짜 변경, 취소, 비용 변경, 접수가 곧 열리거나 마감,
+//           2주 안 행사의 다른 장소·1주 안 행사의 다른 시작 시각. 메모·자격·연령·신청 방식·'모름'은 알림 사유가 아니다.
+const blank = (v) => v === null || v === undefined || v === "" || v === "unknown" || v === "미확인";
+const firstNum = (v) => (String(v || "").match(/\d+(?:[.:]\d+)?/) || [""])[0].replace(/^0+(?=\d)/, "");
+// 장소 비교: 고유 이름 낱말이 상대 주소(띄어쓰기 없앤 것)에 들어 있으면 같은 곳("1 DesCombes Drive" ↔ "…One Des Combes Drive")
+const PLACE_WEAK = new Set(["library", "park", "center", "centre", "recreation", "community", "building", "street", "drive", "avenue", "road", "hall", "room",
+  "city", "county", "museum", "school", "church", "downtown", "colorado", "north", "south", "east", "west", "main", "plaza", "square", "theatre", "theater"]);
+const placeWords = (v) => new Set((String(v || "").toLowerCase().match(/[a-z가-힣]{4,}/g) || []).filter((w) => !PLACE_WEAK.has(w)));
+const compact = (v) => String(v || "").toLowerCase().replace(/[^a-z가-힣0-9]/g, "");
+function samePlace(a, b) {
+  const wa = placeWords(a), wb = placeWords(b), ca = compact(a), cb = compact(b);
+  if (!wa.size || !wb.size) return true; // 고유 이름이 없으면 판단하지 않는다(알리지 않음)
+  return [...wa].some((w) => cb.includes(w)) || [...wb].some((w) => ca.includes(w));
+}
+export function significantDiff(oldD, newD, today) {
+  const within = (days) => !!newD.start_date && newD.start_date <= plusDays(today, days);
+  const soon = (ymd) => !blank(ymd) && ymd >= today && ymd <= plusDays(today, 14);
+  const out = [];
+  for (const k of ["start_date", "end_date"]) {
+    if (blank(newD[k])) continue;
+    if (blank(oldD[k]) ? k === "start_date" : String(oldD[k]) !== String(newD[k])) out.push(k);
+  }
+  if (newD.registration_status === "cancelled" && oldD.registration_status !== "cancelled") out.push("registration_status");
+  else if (newD.registration_status === "open" && ["upcoming", "closed", "full"].includes(oldD.registration_status)) out.push("registration_status");
+  for (const k of ["registration_opens", "deadline"]) if (soon(newD[k]) && String(oldD[k] ?? "") !== String(newD[k])) out.push(k);
+  if (!blank(oldD.cost_text) && !blank(newD.cost_text) && canon("cost_text", oldD.cost_text) !== canon("cost_text", newD.cost_text)) out.push("cost_text");
+  if (within(14) && !blank(oldD.location) && !blank(newD.location)) {
+    if (!samePlace(oldD.location, newD.location)) out.push("location");
+  }
+  if (within(7) && !blank(oldD.time_text) && !blank(newD.time_text) && firstNum(oldD.time_text) !== firstNum(newD.time_text)) out.push("time_text");
+  return out;
 }
 function diffNote(oldD, newD, fields = materialDiff(oldD, newD)) {
   return fields.map((k) => `${FIELD_KO[k]} ${oldD[k] ?? "미확인"} → ${newD[k] ?? "미확인"}`).join(", ");
@@ -334,16 +356,19 @@ export async function enqueue(env, body) {
   for (const e0 of input) {
     const ex = existing.get(e0.event_key);
     // 새 추출에 값이 비어 있으면(그 페이지·입력에 그 정보가 이번엔 안 보였을 뿐) 기존 값을 지우지 않는다 → 정보가 사라진 것을 '변경'으로 알리지 않음
-    // "unknown"(이번 페이지에선 모름)도 빈 값과 같다: open → unknown 을 '변경'으로 알리지 않는다(11-28 골든 리트리버 축제)
-    const blank = (v) => (v ?? "") === "" || v === "unknown";
-    const e = ex ? { ...e0, ...Object.fromEntries(IMPORTANT.filter((k) => blank(e0[k]) && !blank(JSON.parse(ex.data)[k])).map((k) => [k, JSON.parse(ex.data)[k]])) } : e0;
+    // "unknown"(이번 페이지에선 모름)도 빈 값과 같다: 이번에 안 보인 정보는 기존 값을 지우지 않는다
+    const e1 = ex ? { ...e0, ...Object.fromEntries(IMPORTANT.filter((k) => blank(e0[k]) && !blank(JSON.parse(ex.data)[k])).map((k) => [k, JSON.parse(ex.data)[k]])) } : e0;
+    const prev = ex ? JSON.parse(ex.data) : null;
+    const snap = prev ? (prev._notified || importantOf(prev)) : null; // 사람들이 마지막으로 받은 값
+    const e = { ...e1, _notified: snap || importantOf(e1) };
     const h = await sha(JSON.stringify(importantOf(e)));
     let version = 1, note = null;
     if (!ex) stats.new++;
     let changed = false;
     if (ex && ex.content_hash !== h) {
-      const nd = notifyDiff(JSON.parse(ex.data), e, today);
-      if (nd.length) { changed = true; version = ex.version + 1; note = diffNote(JSON.parse(ex.data), e, nd); stats.changed++; }
+      // 기준선 기간에 조용히 등록만 된 행사(아무도 받지 않음)는 바뀌면 그대로 알린다
+      const nd = prev._baseline === "silent" ? materialDiff(snap, e) : significantDiff(snap, e, today);
+      if (nd.length) { changed = true; version = ex.version + 1; note = diffNote(snap, e, nd); e._notified = importantOf(e); stats.changed++; }
       else { version = ex.version; stats.same++; stats.reworded = (stats.reworded || 0) + 1; } // 표현만 다름·멀리 있는 행사의 작은 보충: 내용 갱신, 알림 없음
     } else if (ex) { version = ex.version; stats.same++; }
     rows.push({
@@ -761,6 +786,25 @@ export async function siblingDates(env, d, sourceId, eventKey) {
 async function datesOpt(env, d, sourceId, eventKey) {
   try { const dates = await siblingDates(env, d, sourceId, eventKey); return dates ? { dates } : {}; } catch { return {}; }
 }
+// 사람별 받은 기록(봇 구분 없음): 같은 사람이 아이·가족 봇을 다 받으면 같은 행사가 봇마다 한 통씩 나가던 것(11-24 볼더 꼬마열차) 방지
+async function sentLedger(env, chatIds) {
+  const out = new Map();
+  if (!chatIds.length) return out;
+  const rows = await all(env.DB.prepare("SELECT chat_id, event_key, MAX(version) AS v, MAX(COALESCE(sent_at, created_at)) AS at FROM outbox " +
+    "WHERE chat_id IN (SELECT value FROM json_each(?1)) AND status IN ('sent', 'sending') GROUP BY chat_id, event_key").bind(JSON.stringify(chatIds.map(String))));
+  for (const r of rows) out.set(`${r.chat_id}|${r.event_key}`, { v: r.v, at: r.at });
+  return out;
+}
+// 보내기 직전 마지막 관문. 이미 받은 판 이상이면 안 보냄, 받은 지 3일 안의 장소·시간만 바뀐 알림은 막는다(날짜·취소·비용·접수·마감·⏰은 통과).
+export function resendGate(ledger, chatId, eventKey, version, note) {
+  const k = `${chatId}|${eventKey}`, L = ledger.get(k);
+  let why = null;
+  if (L && L.v >= version) why = "already-sent";
+  else if (L && !String(note || "").startsWith("⏰") && !/시작일|종료일|취소|비용|접수|마감/.test(note || "") && Date.now() - Date.parse(L.at) < 3 * 86400000) why = "recently-sent";
+  if (!why) ledger.set(k, { v: version, at: new Date().toISOString() });
+  return why;
+}
+
 export function sameAsSent(seen, chatId, sourceId, d, eventKey) {
   const other = (list) => (list || []).some((x) => x.key !== eventKey);
   const group = eventNoticeGroup(d);
@@ -811,6 +855,7 @@ export async function dispatch(env, opts = {}) {
   for (const row of rows) latest.set(`${row.chat_id}|${row.event_key}`, Math.max(latest.get(`${row.chat_id}|${row.event_key}`) || 0, row.version));
   const sendable = [];
   const series = await sentSeries(env, [...new Set(rows.map((x) => x.chat_id))]);
+  const ledger = await sentLedger(env, [...new Set(rows.map((x) => x.chat_id))]);
   for (const row of rows) {
     const data = JSON.parse(row.data);
     const p = { ...defaultPerson(env, row.chat_id), ...(row.tz ? { tz: row.tz, quiet_start: row.quiet_start, quiet_end: row.quiet_end } : {}) };
@@ -828,6 +873,8 @@ export async function dispatch(env, opts = {}) {
     { const dup = sameAsSent(series, row.chat_id, row.source_id, data, row.event_key);
       if (dup) { done.push({ id: row.id, status: "skipped", reason: dup }); r.skipped++; continue; } }
     if (!opts.ignoreQuiet && inQuiet(hourIn(p.tz), p.quiet_start, p.quiet_end)) { r.deferred++; continue; }
+    { const why = resendGate(ledger, row.chat_id, row.event_key, row.version, row.version === row.cur_version ? row.change_note : "");
+      if (why) { done.push({ id: row.id, status: "skipped", reason: why }); r.skipped++; continue; } }
     sendable.push({ ...row, data });
   }
   const chosen = sendable.slice(0, limit);
@@ -908,6 +955,7 @@ export async function digest(env, opts = {}) {
     const live = [];
     const seenKey = new Set();
     const series = await sentSeries(env, [g.chat_id]);
+    const ledger = await sentLedger(env, [g.chat_id]);
     // 같은 묶음이면 날짜가 가까운 회차 하나만(행은 시작일 순)
     for (const x of rows) {
       const data = JSON.parse(x.data);
@@ -920,6 +968,8 @@ export async function digest(env, opts = {}) {
         if (tm.defer) { done.push({ id: x.id, status: "pending", reason: "scheduled", next_attempt_at: tm.defer }); continue; } }
       { const dup = sameAsSent(series, g.chat_id, x.source_id, data, x.event_key);
         if (dup) { done.push({ id: x.id, status: "skipped", reason: dup }); continue; } }
+      { const why = resendGate(ledger, g.chat_id, x.event_key, x.version, x.version === x.cur_version ? x.change_note : "");
+        if (why) { done.push({ id: x.id, status: "skipped", reason: why }); continue; } }
       seenKey.add(x.event_key);
       live.push({ ...x, data });
     }
@@ -1568,7 +1618,11 @@ export async function weeklyReport(env, send = true) {
   const qs = await queueStats(env);
   const ob = await all(env.DB.prepare("SELECT status, COUNT(*) AS n FROM outbox WHERE created_at >= ? GROUP BY status").bind(since));
   const gapRows = await all(env.DB.prepare("SELECT found, COUNT(*) AS n FROM ext_gaps WHERE at >= ? GROUP BY found").bind(since));
+  // 같은 사람에게 같은 행사가 2통 이상(⏰ 접수·마감 알림 제외) — 다시 늘면 바로 보이게(11-28 중복 구조 정리)
+  const dupRows = (await all(env.DB.prepare("SELECT o.chat_id, o.event_key, COUNT(*) AS n, json_extract(e.data, '$.title_ko') AS title FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+    "WHERE o.status = 'sent' AND o.sent_at >= ? AND o.kind != 'season' GROUP BY o.chat_id, o.event_key HAVING n > 1").bind(since))).filter((r) => isOwner(env, r.chat_id));
   const report = { since: since.slice(0, 10), runs: runs.length, totals: sum, month_usd: Number(u.usd.toFixed(4)), deliveries: del, clicks, failing, queue: qs, outbox: ob,
+    repeats: dupRows.map((r) => ({ title: r.title, n: r.n })),
     external_gaps: Object.fromEntries(gapRows.map((x) => [x.found, x.n])) };
   if (send) {
     const t = (k) => sum[k] || 0;
@@ -1580,6 +1634,7 @@ export async function weeklyReport(env, send = true) {
       `대기열 ${qs.queued}건(가장 오래 ${qs.oldest_queued_hours}시간) · 보류 ${qs.stuck}건`,
       `AI 입력 ${t("input_tokens")} / 출력 ${t("output_tokens")} 토큰 · 검색 ${t("searches")}회 · 이번 달 $${report.month_usd}`,
       `발송 ${del.n || 0}건 (성공 ${del.ok || 0}) · 버튼 ${clicks.map((c) => `${c.action} ${c.n}`).join(", ") || "없음"}`,
+      dupRows.length ? `⚠️ 같은 행사 2통 이상: ${dupRows.slice(0, 5).map((r) => `${r.title}(${r.n})`).join(", ")}${dupRows.length > 5 ? ` 외 ${dupRows.length - 5}건` : ""} (⏰ 접수·마감 알림 포함)` : "같은 행사 2통 이상: 없음",
       failing.length ? `연속 실패 정보원: ${failing.map((f) => `${f.id}(${f.consecutive_failures})`).join(", ")}` : "연속 실패 정보원 없음",
       Object.keys(report.external_gaps).length
         ? `외부 검색 대조: ${Object.entries(report.external_gaps).map(([k, n]) => `${{ found: "우리도 찾음", queued: "수집 후 처리 대기", "registered-missed": "등록 정보원인데 놓침", unregistered: "정보원 없음" }[k] || k} ${n}`).join(" · ")} (놓친 것은 정보원·검색어 자동 보완)`

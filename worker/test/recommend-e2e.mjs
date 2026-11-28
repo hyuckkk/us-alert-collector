@@ -117,7 +117,7 @@ try {
     await admin("/admin/dispatch", { ignoreQuiet: true });
     const ch = to(n).filter((c) => /🔄 변경/.test(c.payload.text) && /행사 blossoms/.test(c.payload.text));
     assert.equal(ch.length, 1);
-    assert.match(ch[0].payload.text, /비용 \$25 per person → \$30/);
+    assert.match(ch[0].payload.text, /비용 \$25(?: per person)? → \$30/);
   });
 
   await step("소유자 시험 발송(/admin/preview): 실제 저장된 '적극 알림' 행사를 실제 형식으로, 버튼이 그 행사에 연결", async () => {

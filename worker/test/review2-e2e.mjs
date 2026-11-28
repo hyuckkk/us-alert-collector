@@ -81,7 +81,7 @@ try {
 
   await step("F 그 페이지에서 한 행사만 바뀌면 그 행사만 새 판, 다른 행사는 그대로", async () => {
     const url = "https://example.org/programs";
-    const r = await admin("/admin/enqueue", { events: [ev("pA", { url, registration_status: "upcoming", registration_opens: plus(5), cost_text: "$30" }),
+    const r = await admin("/admin/enqueue", { events: [ev("pA", { url, registration_status: "upcoming", registration_opens: plus(5), start_date: plus(31) }),
       ev("pB", { url, registration_status: "upcoming", registration_opens: plus(6) })] });
     assert.equal(r.changed, 1);
     assert.equal(r.same, 1);
