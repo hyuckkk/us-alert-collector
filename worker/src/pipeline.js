@@ -43,8 +43,21 @@ function canon(k, v) {
   return nums || t.replace(/[^a-z0-9가-힣]+/g, "").slice(0, 20);
 }
 function materialDiff(oldD, newD) { return IMPORTANT.filter((k) => canon(k, oldD[k]) !== canon(k, newD[k])); }
-function diffNote(oldD, newD) {
-  return materialDiff(oldD, newD).map((k) => `${FIELD_KO[k]} ${oldD[k] ?? "미확인"} → ${newD[k] ?? "미확인"}`).join(", ");
+// 이미 받은 사람에게 '다시' 보낼 만한 바뀜만 고른다(2026-11-28 골든 리트리버 축제가 같은 내용으로 3번 감).
+// - 메모·자격·연령 글은 AI 가 매번 다르게 적어 숫자까지 달라지므로 알림 사유로 쓰지 않는다(내용은 조용히 갱신).
+// - 시간 글은 2주 안 행사만 다시 알린다(멀리 있는 행사는 원문 표현이 바뀌거나 시간이 보충된 것뿐인 경우가 대부분).
+// - 날짜·비용·장소·접수·마감·신청 방식은 바뀌거나 새로 확인되면 언제든 다시 알린다(신청 시기를 놓치지 않게).
+const SILENT_FIELDS = new Set(["status_note", "eligibility", "age_text"]);
+export function notifyDiff(oldD, newD, today) {
+  const near = !!newD.start_date && newD.start_date <= plusDays(today, 14);
+  return materialDiff(oldD, newD).filter((k) => {
+    if (SILENT_FIELDS.has(k)) return false;
+    if (k === "time_text") return near;
+    return true;
+  });
+}
+function diffNote(oldD, newD, fields = materialDiff(oldD, newD)) {
+  return fields.map((k) => `${FIELD_KO[k]} ${oldD[k] ?? "미확인"} → ${newD[k] ?? "미확인"}`).join(", ");
 }
 const all = async (stmt) => (await stmt.all()).results;
 const addMin = (iso, min) => new Date(Date.parse(iso) + min * 60000).toISOString();
@@ -326,8 +339,9 @@ export async function enqueue(env, body) {
     if (!ex) stats.new++;
     let changed = false;
     if (ex && ex.content_hash !== h) {
-      if (materialDiff(JSON.parse(ex.data), e).length) { changed = true; version = ex.version + 1; note = diffNote(JSON.parse(ex.data), e); stats.changed++; }
-      else { version = ex.version; stats.same++; stats.reworded = (stats.reworded || 0) + 1; } // 표현만 다름: 내용 갱신, 알림 없음
+      const nd = notifyDiff(JSON.parse(ex.data), e, today);
+      if (nd.length) { changed = true; version = ex.version + 1; note = diffNote(JSON.parse(ex.data), e, nd); stats.changed++; }
+      else { version = ex.version; stats.same++; stats.reworded = (stats.reworded || 0) + 1; } // 표현만 다름·멀리 있는 행사의 작은 보충: 내용 갱신, 알림 없음
     } else if (ex) { version = ex.version; stats.same++; }
     rows.push({
       event_key: e.event_key, bot: e.bot, version, content_hash: h, data: JSON.stringify(e), urgency: e.urgency === "now" ? "now" : "weekly",
@@ -927,7 +941,7 @@ export async function digest(env, opts = {}) {
         done.push({ id: x.id, status: "skipped", reason: "same-event-group-claimed" }); r.skipped++;
         continue;
       }
-      const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest", ...(await datesOpt(env, x.data, x.source_id, x.event_key)) }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
+      const d = await sendHtml(env, g.bot, { chat_id: g.chat_id, text: renderEvent(x.data, { kind: "digest", version: x.version, note: x.change_note || "", ...(await datesOpt(env, x.data, x.source_id, x.event_key)) }), reply_markup: keyboard(x.event_key, { state: x.state }, x.data.url) });
       calls++;
       const c = classify(d, { attempts: x.attempts + 1 }, nowIso());
       if (c.status === "failed" || c.status === "dead") await releaseNoticeGroup(env, groupClaim);
@@ -1499,13 +1513,13 @@ export async function outboxPreview(env) {
 export async function eventLookup(env, url) {
   const q = String(url.searchParams.get("q") || "").slice(0, 80);
   if (q.length < 3) return { ok: false, error: "q (3자 이상) 필요" };
-  const evs = await all(env.DB.prepare("SELECT event_key, bot, version, source_id, url, first_seen, last_changed, data FROM events " +
+  const evs = await all(env.DB.prepare("SELECT event_key, bot, version, source_id, url, first_seen, last_changed, change_note, data FROM events " +
     "WHERE event_key = ?1 OR LOWER(json_extract(data, '$.title')) LIKE ?2 OR json_extract(data, '$.title_ko') LIKE ?2 ORDER BY first_seen LIMIT 20").bind(q, `%${q.toLowerCase()}%`));
   const out = [];
   for (const e of evs) {
     const d = JSON.parse(e.data);
     out.push({ event_key: e.event_key, bot: e.bot, version: e.version, source_id: e.source_id, url: e.url, first_seen: e.first_seen, last_changed: e.last_changed,
-      title: d.title, title_ko: d.title_ko, start_date: d.start_date, cost_text: d.cost_text, found_by: d.found_by, run_id: d.run_id,
+      title: d.title, title_ko: d.title_ko, start_date: d.start_date, cost_text: d.cost_text, change_note: e.change_note ?? null, found_by: d.found_by, run_id: d.run_id,
       rec: Object.fromEntries(REC_FIELDS.map((k) => [k, d[k]])),
       finds: await all(env.DB.prepare("SELECT finder, first_seen, found_at, rec_level, run_id FROM event_finds WHERE event_key = ?").bind(e.event_key)),
       outbox: await all(env.DB.prepare("SELECT chat_id, bot, version, kind, status, reason, created_at, sent_at FROM outbox WHERE event_key = ? ORDER BY id").bind(e.event_key)) });
