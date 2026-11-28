@@ -1481,6 +1481,16 @@ export async function missReport(env, body) {
   return { ok: true, sent: !!d.ok };
 }
 
+// 중복 발송 점검(읽기 전용): 소유자가 최근 N일 받은 알림 전부, 행사 키·판·바뀐 점·정보원·주소 포함(같은 행사 여러 번 원인 분석용)
+export async function sentAudit(env, url) {
+  const days = Math.min(Number(url.searchParams.get("days")) || 21, 60);
+  const since = new Date(Date.now() - days * 86400000).toISOString();
+  const rows = await all(env.DB.prepare("SELECT o.chat_id, o.bot, o.kind, o.version, o.reason, o.sent_at, o.event_key, e.version AS cur_version, e.change_note, e.source_id, e.url, e.start_date, " +
+    "json_extract(e.data, '$.title') AS title, json_extract(e.data, '$.title_ko') AS title_ko, json_extract(e.data, '$.location') AS location FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+    "WHERE o.status = 'sent' AND o.sent_at >= ? ORDER BY o.sent_at").bind(since));
+  return { ok: true, since, sends: rows.filter((r) => isOwner(env, r.chat_id)).map(({ chat_id, ...x }) => x) };
+}
+
 // 최근 발송 기록(읽기 전용): 소유자·지인 구분, 봇·시각·제목. 받는 사람 ID 는 내보내지 않는다
 export async function sentRecent(env, url) {
   const hours = Math.min(Number(url.searchParams.get("hours")) || 30, 240);
