@@ -1,0 +1,69 @@
+{
+ "schema": "us-alert-inbox/1",
+ "run": {
+  "started_at": "2026-11-28T14:42:17Z",
+  "finished_at": "2026-11-28T15:00:00Z",
+  "searches": 8,
+  "queries": [
+   "Denver free family event December 12 13 2026 weekend holiday",
+   "Wheat Ridge holiday celebration 2026 date tree lighting recreation center",
+   "Fort Collins Trolley holiday open house 2026 free",
+   "Clyfford Still Museum free day December 2026 OR Kirkland Museum free",
+   "Estes Park Catch the Glow parade 2026 date",
+   "Georgetown Christmas Market 2026 dates Colorado",
+   "Westminster Colorado Hometown Christmas Fireman Park 2026 tallest tree lighting",
+   "Denver Public Schools winter break 2026 free kids activities rec center free swim December 2026"
+  ],
+  "urls_attempted": 2,
+  "urls_ok": 0,
+  "urls": [
+   "https://historicgeorgetown.org/georgetown-christmas-market-2/",
+   "https://clyffordstillmuseum.org/events/december-pay-what-you-wish-day/"
+  ],
+  "official_pages_checked": 0,
+  "candidates": 10,
+  "excluded": 8,
+  "excluded_reasons": {
+   "past_event": 1,
+   "date_not_posted_2026": 4,
+   "no_official_url": 2,
+   "paid_or_ticketed": 1
+  },
+  "notes": "Claude 독립 검색(예약, 개정 규칙). WebFetch 2건 모두 DNS 오류(getaddrinfo ENOTFOUND)로 verified:false. 제외: 에스테스파크 퍼레이드(11/27 지남), 휘트리지·포트콜린스 트롤리·웨스트민스터 홈타운 크리스마스·덴버 방학 수영(2026 날짜 미공지), 맥그리거 메리마켓·데어리블록 마켓(공식 주소 미확인), 겨울마켓(유료 여부 불명). 처리 단계 크레딧 소진 지속."
+ },
+ "events": [
+  {
+   "verified": false,
+   "found_at": "2026-11-28T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Georgetown Christmas Market 2026 (66th annual)",
+   "url": "https://historicgeorgetown.org/georgetown-christmas-market-2/",
+   "start_date": "2026-12-05",
+   "end_date": "2026-12-13",
+   "time": "10 a.m. - 5 p.m. (Dec 5-6 and Dec 12-13)",
+   "location": "Historic downtown Georgetown",
+   "cost": "Free admission; free parking and shuttle",
+   "description": "66th annual European-style Christmas market in the historic mining town, two weekends: Dec 5-6 and Dec 12-13, 2026.",
+   "special_reason": "연 2주말뿐인 산악 마을 전통 크리스마스 마켓, 무료 입장"
+  },
+  {
+   "verified": false,
+   "found_at": "2026-11-28T15:00:00Z",
+   "origin": "scheduled",
+   "age": "All ages",
+   "audience": "family",
+   "recommend": "push",
+   "title": "Clyfford Still Museum December Pay-What-You-Wish Day",
+   "url": "https://clyffordstillmuseum.org/events/december-pay-what-you-wish-day/",
+   "start_date": "2026-12-04",
+   "time": "10 a.m. - 5 p.m.",
+   "location": "Clyfford Still Museum, 1250 Bannock St, Denver",
+   "cost": "Pay what you wish (as little as one cent); 18 and under always free",
+   "description": "December pay-what-you-wish day (museum event page lists Fri Dec 4, 2026; one page lists Thu Dec 3).",
+   "special_reason": "성인도 1센트부터 입장 가능한 미술관 할인일"
+  }
+ ]
+}
