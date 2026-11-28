@@ -53,7 +53,7 @@ const blank = (v) => v === null || v === undefined || v === "" || v === "unknown
 const firstNum = (v) => (String(v || "").match(/\d+(?:[.:]\d+)?/) || [""])[0].replace(/^0+(?=\d)/, "");
 // 장소 비교: 고유 이름 낱말이 상대 주소(띄어쓰기 없앤 것)에 들어 있으면 같은 곳("1 DesCombes Drive" ↔ "…One Des Combes Drive")
 const PLACE_WEAK = new Set(["library", "park", "center", "centre", "recreation", "community", "building", "street", "drive", "avenue", "road", "hall", "room",
-  "city", "county", "museum", "school", "church", "downtown", "colorado", "north", "south", "east", "west", "main", "plaza", "square", "theatre", "theater"]);
+  "city", "county", "state", "national", "boulder", "denver", "museum", "school", "church", "downtown", "colorado", "north", "south", "east", "west", "main", "plaza", "square", "theatre", "theater"]);
 const placeWords = (v) => new Set((String(v || "").toLowerCase().match(/[a-z가-힣]{4,}/g) || []).filter((w) => !PLACE_WEAK.has(w)));
 const compact = (v) => String(v || "").toLowerCase().replace(/[^a-z가-힣0-9]/g, "");
 function samePlace(a, b) {
@@ -816,9 +816,8 @@ export function sameAsSent(seen, chatId, sourceId, d, eventKey) {
     const hit = (seen.dated.get(`${chatId}|${d.start_date}`) || []).some((x) => {
       if (x.key === eventKey || t.size < 2 || x.tokens.size < 2) return false;
       // 같은 날 '크리스마스 트리 벌목'이라도 서로 다른 공원이라면 다른 행사다.
-      const loc = v => String(v || "").toLowerCase().replace(/[^a-z가-힣0-9]+/g, " ").trim();
-      const la = loc(x.location), lb = loc(d.location);
-      if (la && lb && !la.includes(lb) && !lb.includes(la)) return false;
+      // 장소는 고유 이름으로 대조("Pearl Street, downtown Boulder" ↔ "1242 Pearl St …, Boulder"는 같은 곳 — 11-24 테보 기차 2통)
+      if (x.location && d.location && !samePlace(x.location, d.location)) return false;
       if (samePlaceDay(t, x.tokens, locKey(x.location), locKey(d.location))) return true;
       return overlap(t, x.tokens) >= 0.6;
     });
