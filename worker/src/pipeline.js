@@ -801,6 +801,7 @@ export function resendGate(ledger, chatId, eventKey, version, note) {
   let why = null;
   if (L && L.v >= version) why = "already-sent";
   else if (L && !String(note || "").startsWith("⏰") && !/시작일|종료일|취소|비용|접수|마감/.test(note || "") && Date.now() - Date.parse(L.at) < 3 * 86400000) why = "recently-sent";
+  else if (L && note && !String(note).startsWith("⏰") && !/시작일|종료일|취소|비용|접수|마감|장소|시간/.test(note)) why = "not-significant"; // 옛 규칙 대기분(신청 방식·메모만 바뀜)
   if (!why) ledger.set(k, { v: version, at: new Date().toISOString() });
   return why;
 }
@@ -1528,6 +1529,27 @@ export async function missReport(env, body) {
   if (!(await claimNotice(env, `miss-report:${String(body.key || localDate(env)).slice(0, 40)}`))) return { ok: true, sent: false, reason: "already sent" };
   const d = await notifyOwner(env, text);
   return { ok: true, sent: !!d.ok };
+}
+
+// 옛 규칙으로 쌓인 '변경' 알림 재점검(11-28): 이미 그 행사를 받은 사람의 대기 알림 중, 바뀐 점이 결정에 영향 없는 것(신청 방식·메모·자격·연령·
+// 먼 행사의 장소·시간 표기)만 있으면 건너뛴다. dry=true 면 목록만.
+export const DECISION_NOTE = /시작일|종료일|취소|비용|접수|마감/;
+export async function outboxRecheck(env, body = {}) {
+  const today = dateIn(DENVER);
+  const rows = await all(env.DB.prepare(
+    "SELECT o.id, o.chat_id, o.event_key, o.version, e.version AS cur_version, e.change_note, e.start_date, json_extract(e.data, '$.title_ko') AS title FROM outbox o JOIN events e ON e.event_key = o.event_key " +
+    "WHERE o.status IN ('pending', 'failed', 'uncertain', 'held') AND o.version > 1 " +
+    "AND EXISTS (SELECT 1 FROM outbox p WHERE p.chat_id = o.chat_id AND p.event_key = o.event_key AND p.status = 'sent')"));
+  const skip = [], keep = [];
+  for (const r of rows) {
+    const note = r.version === r.cur_version ? String(r.change_note || "") : "";
+    const near = r.start_date && r.start_date <= plusDays(today, 14);
+    const ok = note.startsWith("⏰") || DECISION_NOTE.test(note) || (near && /장소|시간/.test(note));
+    (ok ? keep : skip).push({ id: r.id, owner: isOwner(env, r.chat_id), title: r.title, version: r.version, note: note.slice(0, 160) });
+  }
+  if (!body.dry && skip.length) await env.DB.prepare("UPDATE outbox SET status = 'skipped', reason = 'recheck-not-significant' WHERE id IN (SELECT value FROM json_each(?))")
+    .bind(JSON.stringify(skip.map((x) => x.id))).run();
+  return { ok: true, dry: !!body.dry, skipped: skip.length, kept: keep.length, skip, keep };
 }
 
 // 중복 발송 점검(읽기 전용): 소유자가 최근 N일 받은 알림 전부, 행사 키·판·바뀐 점·정보원·주소 포함(같은 행사 여러 번 원인 분석용)

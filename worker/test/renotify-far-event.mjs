@@ -35,3 +35,7 @@ if (resendGate(L, "1", "k", 2, "⏰ 내일 신청 마감") !== null) fail("⏰�
 if (resendGate(new Map([["1|k", { v: 1, at: new Date().toISOString() }]]), "1", "k", 2, "시작일 a → b") !== null) fail("날짜 변경은 통과");
 const M = new Map(); if (resendGate(M, "1", "z", 1, "") !== null || resendGate(M, "1", "z", 1, "") !== "already-sent") fail("한 실행 안 두 봇");
 console.log("ok renotify (실제 사례 8건·관문)");
+{ const G = new Map([["1|k", { v: 1, at: "2026-11-01T00:00:00Z" }]]);
+  if (resendGate(G, "1", "k", 2, "신청 방식 open → unknown, 신분·주민 메모 미확인 → x") !== "not-significant") fail("옛 대기분 신청 방식·메모만 바뀜은 막음");
+  if (resendGate(new Map([["1|k", { v: 1, at: "2026-11-01T00:00:00Z" }]]), "1", "k", 2, "비용 $5 → $10") !== null) fail("비용은 통과"); }
+console.log("ok renotify (옛 대기분)");

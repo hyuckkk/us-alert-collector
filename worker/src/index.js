@@ -666,6 +666,7 @@ export default {
         if (p === "/admin/outbox-preview") return json(await pipeline.outboxPreview(env));
         if (p === "/admin/sent-recent") return json(await pipeline.sentRecent(env, url));
         if (p === "/admin/sent-audit") return json(await pipeline.sentAudit(env, url));
+        if (p === "/admin/outbox-recheck" && POST) return json(await pipeline.outboxRecheck(env, body));
         if (p === "/admin/miss-report" && POST) return json(await pipeline.missReport(env, body));
         if (p === "/admin/catchup" && POST) {
           try { return json(await pipeline.catchup(env, body)); } catch (e) { return json({ ok: false, error: String(e && e.stack || e).slice(0, 1500) }, 500); }
